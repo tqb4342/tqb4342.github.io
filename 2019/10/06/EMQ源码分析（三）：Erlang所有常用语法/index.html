@@ -237,7 +237,7 @@
 <p>% 读值：eqmttd_pubsub.erl第72行<br>route([], #mqtt_delivery&#123;message = #mqtt_message&#123;topic = Topic&#125;&#125;) -&gt;<br>    dropped(Topic), ignore;</code></pre><p>2）进程ID Pid</p><p>就是进程的ID，在EMQ对应的使用：</p><pre><code class="prettyprint lang-c linenums">-record(mqtt_session,<br>        &#123; client_id  :: binary(),<br>          sess_pid   :: pid(),<br>          clean_sess :: boolean()<br>        &#125;).</code></pre><p>如果向某个进程发送消息，可以直接用pid+感叹号的形式，如emqttd_pubsub.erl第112行：</p><pre><code class="prettyprint lang-c linenums">SubPid ! &#123;dispatch, Topic, Msg&#125;;</code></pre><p>消息会放到对应的Mailbox里面。</p><p><code>self() </code>可以获取自己的进程ID。</p><p>3）引用 Reference</p><p>引用通过make_ref/0函数来创建，引用在运行时是全局唯一的，常常在创建定时任务时返回一个引用，通过这个引用来取消定时任务。</p><p>如EMQ的gen_server2.erl第821行：</p><pre><code class="prettyprint lang-c linenums">Tag = make_ref()</code></pre><p>4）函数&nbsp;function</p><p>函数也算是数据类型，函数可以被当作参数去赋值，如EMQ中emqttd_topic.erl第184行：</p><pre><code class="prettyprint lang-c linenums">parse(&lt;&lt;"$local/", Topic1/binary&gt;&gt;, Options) -&gt;<br>    if_not_contain(local, Options, fun() -&gt;<br>                       parse(Topic1, [local | Options])<br>                   end);</code></pre><p>对应接收的函数是emqttd_topic.erl第203行：</p><pre><code class="prettyprint lang-c linenums">if_not_contain(local, Options, Fun) -&gt;<br>    ?IF(lists:member(local, Options), error(invalid_topic), Fun());</code></pre><h1>三、运算符</h1><h2>1、算数运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th></tr><tr><td>&nbsp;+</td><td>&nbsp;加</td></tr><tr><td>&nbsp;-</td><td>&nbsp;减</td></tr><tr><td>&nbsp;*</td><td>&nbsp;乘</td></tr><tr><td>&nbsp;/</td><td>&nbsp;除</td></tr><tr><td>&nbsp;rem</td><td>&nbsp;取余（模）</td></tr><tr><td>&nbsp;div</td><td>&nbsp;整除</td></tr></tbody></table><p><br></p><h2>2、关系运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th><th>备注&nbsp;</th></tr><tr><td>&nbsp;==</td><td>&nbsp;相等</td><td>&nbsp;</td></tr><tr><td>&nbsp;/=</td><td>&nbsp;不等</td><td>&nbsp;注意不等号</td></tr><tr><td>&nbsp;&lt;</td><td>&nbsp;小于</td><td>&nbsp;</td></tr><tr><td>&nbsp;=&lt;</td><td>&nbsp;小于等于</td><td>&nbsp;注意先等后小</td></tr><tr><td>&nbsp;&gt;</td><td>&nbsp;大于</td><td>&nbsp;</td></tr><tr><td>&nbsp;&gt;=</td><td>&nbsp;大于等于</td><td>&nbsp;</td></tr><tr><td>&nbsp;=:=</td><td>&nbsp;恒等于</td><td>&nbsp;重点</td></tr><tr><td>&nbsp;=/=</td><td>&nbsp;恒不等于</td><td>&nbsp;重点</td></tr></tbody></table><br><p>1）恒等于和恒不等于</p><p>等于（==）只需要判断数值： 1 == 1.0 → true</p><p>恒等于（=:=）除了数值还需要判断数据类型：1 =:= 1.0 → false</p><p>不等于（/=）只需要判断数值：1 /= 1.0 → false</p><p>恒不等于（=/=）除了数值还需要判断数据类型：1 =/= 1.0 → true</p><p>测试：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1 == 1.0,<br>  B = 1 =:= 1.0,<br>  C = 1 /= 1.0,<br>  D = 1 =/= 1.0,<br>  io:fwrite("1==1.0: <del>w</del>n1=:=1.0: <del>w</del>n1/=1.0: <del>w</del>n1=/=1.0: <del>w</del>n",[A,B,C,D]).</p>
 <p>% 1==1.0: true<br>% 1=:=1.0: false<br>% 1/=1.0: false<br>% 1=/=1.0: true</code></pre><p>在EMQ中也被使用到，如：</p><pre><code class="prettyprint lang-c linenums">% emqttd_pubsub.erl第77行<br>Node =:= node()<br>% emqttd_trie.erl第83行<br>Name =/= undefined</code></pre><p>2）不同数据类型做比较</p><p>如果数据类型不同，按照如下的方式比较大小：</p><p>number &lt; atom &lt; reference &lt; fun &lt; port &lt; pid &lt; tuple &lt; list &lt; bitstring</p><p>例如，[]&gt;0 → true，因为list&gt;number</p><h2>3、位运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th></tr><tr><td>&nbsp;band</td><td>&nbsp;按位与</td></tr><tr><td>&nbsp;bor</td><td>&nbsp;按位或</td></tr><tr><td>&nbsp;bxor</td><td>&nbsp;按位异或</td></tr><tr><td>&nbsp;bnot</td><td>&nbsp;按位非</td></tr></tbody></table><h2>4、逻辑布尔运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th></tr><tr><td>&nbsp;or</td><td>&nbsp;或</td></tr><tr><td>&nbsp;and</td><td>&nbsp;与</td></tr><tr><td>&nbsp;not</td><td>&nbsp;非</td></tr><tr><td>&nbsp;xor</td><td>&nbsp;异或</td></tr><tr><td>&nbsp;andalso</td><td>&nbsp;短路与</td></tr><tr><td>&nbsp;orelse</td><td>&nbsp;短路或</td></tr></tbody></table><p>默认逻辑运算符是不短路的，短路与和短路或在EMQ中使用得很频繁，如：</p><pre><code class="prettyprint lang-c linenums">% eqmttd_serializer.erl第43行：<br>when ?CONNECT =&lt; Type andalso Type =&lt; ?DISCONNECT -&gt;<br>% emqttd_protocol.erl第427行：<br>when NullId =:= undefined orelse NullId =:= &lt;&lt;&gt;&gt; -&gt;</code></pre><h1>四、变量</h1><p>变量必须以大写字母开头，例如Myvar。</p><h1>五、函数和递归</h1><p>函数和递归是Erlang最核心的部分，Erlang没有for循环，没有while循环，全靠函数和递归了。</p><p>标准语法：</p><pre><code class="prettyprint lang-c linenums"><a href="Pattern11,...,Pattern1N">Name</a> [when GuardSeq1] -&gt;<br>        Body1;<br>...;<br><a href="PatternK1,...,Pa&lt;code&gt;tternKN">Name</a> [when GuardSeqK] -&gt;<br>        BodyK.</code></pre><p>1）简单函数示例</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1&lt;2.</code></pre><p>2）多子句函数示例</p><p>子句用逗号分割，依次执行：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1&lt;2,<br>  io:fwrite("<del>w</del>n",[A]).</code></pre><p>3）带保护序列函数示例</p><p>用when关键字在执行函数前判断执行条件，如果为false则这个函数不会被匹配到：</p><pre><code class="prettyprint lang-c linenums">add(X) when X&gt;3 -&gt;<br>   io:fwrite("<del>w</del>n",[X]). </p>
 <p>start() -&gt;<br>   add(4).</code></pre><p>4）匿名函数</p><p>用fun关键字定义匿名函数，括号里可以带参数如fun(var1,var2)，可以被赋值给变量，例如emqttd_client.erl第259行定义了一个匿名函数，并赋值给StatFun，后面就可以把这个StatFun作为参数传递，或者后面加个括号直接作为函数调用：</p><pre><code class="prettyprint lang-c linenums">StatFun = fun() -&gt;<br>                case Conn:getstat([recv_oct]) of<br>                    &#123;ok, [&#123;recv_oct, RecvOct&#125;]&#125; -&gt; &#123;ok, RecvOct&#125;;<br>                    &#123;error, Error&#125;              -&gt; &#123;error, Error&#125;<br>                end<br>             end</p>
-<p>% 作为参数传递：emqttd_keepalive:start(StatFun, Interval, &#123;keepalive, check&#125;)<br>% 直接调用：StatFun()</code></pre><p>5）多函数声明执行过程示例</p><p>例如EMQ中emqttd_topic.erl第97行：<br></p><pre><code class="prettyprint lang-java linenums">validate2([]) -&gt;<br>    true;<br>validate2(['#']) -&gt; % end with '#'<br>    true;<br>validate2(['#'|Words]) when length(Words) &gt; 0 -&gt;<br>    false;<br>validate2([''|Words]) -&gt;<br>    validate2(Words);<br>validate2(['+'|Words]) -&gt;<br>    validate2(Words);<br>validate2([W|Words]) -&gt;<br>    case validate3(W) of true -&gt; validate2(Words); false -&gt; false end.</code></pre><p>在调用validate2之前，已经将主题”/a/b/c/+/d/#”拆分成了list[a,b,c,+,d,#]，然后调用validate2。</p><p>调用的时候会去比较到底哪个函数的参数类型是匹配的（类似于方法重载的概念），就调��哪个函数。</p><p>如果有多个都可能被匹配的函数，则只匹配写在最前面的第一个函数，例如：</p><pre><code class="prettyprint lang-java linenums">validate2(['#']) -&gt; % end with '#'<br>    true;<br>validate2(['#']) -&gt; % end with '#'<br>    false.</code></pre><p>则匹配[‘#’]只会返回true。</p><p>所以上述逻辑为：</p><ul><li>如果为空，返回true，合法主题，<br></li><li>如果为”#”且是最后一个，返回true，合法主题，<br></li><li>如果为”#”且后面还有层级，返回false，非法主题，<br></li><li>如果为空层，继续匹配，<br></li><li>如果为”+”，继续匹配，<br></li><li>如果为任意字符串，则调用validate3看里面是否有通配符（如果有则是非法主题，通配符必须独占层级）。</li></ul><p>6）递归</p><p>如果调用了自己，就会形成递归，例如上述validate2就调用了自己。</p><h1>六、宏定义</h1><p>宏定义(Macros)通常在include/xxx.hrl文件里，类似C语言的头文件，语法也类似。</p><p>1）宏定义常量示例</p><pre><code class="prettyprint lang-c linenums">% -define(Const, Replacement).<br>-define(PROTOCOL_VERSION, "MQTT/5.0").</code></pre><p>2）宏定义函数示例（支持函数重载）</p><pre><code class="prettyprint lang-c linenums">% -define(Func(Var1,...,VarN), Replacement).<br>-define(ALLOW_DENY(A), ((A =:= allow) orelse (A =:= deny))).</code></pre><p>3）使用宏定义示例</p><pre><code class="prettyprint lang-c linenums">% ?Const<br>% ?Func(Arg1,...,ArgN)<br>compile(&#123;A, all&#125;) when ?ALLOW_DENY(A) -&gt;<br>    &#123;A, all&#125;;</code></pre><p>4）系统预定义宏</p><pre><code class="prettyprint lang-c linenums">% 当前模块名<br>?MODULE<br>% 当前模块名，字符串格式<br>?MODULE_STRING.<br>% 当前模块的文件名<br>?FILE.<br>% 当前行号<br>?LINE.<br>% 当前机器名称<br>?MACHINE.<br>% 当前函数名称<br>?FUNCTION_NAME<br>% 当前函数有多少个参数<br>?FUNCTION_ARITY<br>% OTP版本号<br>?OTP_RELEASE</code></pre><p>5）控制宏</p><p>和C语言概念一致，多用于debug：</p><pre><code class="prettyprint lang-c linenums">% 如果定义了宏，则<br>-ifdef(Macro).<br>% 如果未定义宏，则<br>-ifndef(Macro).<br>% 否则<br>-else.<br>% 结束控制宏流程<br>-endif.<br>% 如果条件为真，则<br>-if(Condition).<br>% 否则如果条件2为真，则<br>-elif(Condition).<br>% 让宏表现得像没有被定义过一样<br>-undef(Macro).</code></pre><h1>七、行为 Behaviour</h1><p>和behaviour的英语含义一致，就是“表现、行为、外观”，类似java的抽象类，规定了共性的函数操作，所有的实现模块自己实现所有特性的函数操作。</p><p>Erlang/OTP有四个经典behaviour：gen_server、gen_fsm、gen_event、supervisor，在前文<a href="http://www.bewindoweb.com/256.html" target="_blank">《EMQ源码分析（二）：Erlang相关概念》</a>已经描述过了：</p><ul><li>gen_server：用于实现C/S结构中的服务端<br></li><li>gen_fsm：用于实现有限状态机<br></li><li>gen_event：用于实现事件处理功能<br></li><li>supervisor：用于实现监督树中的监督进程</li></ul><p>例如EMQ中emqttd_router.erl就采用了行为：</p><pre><code class="prettyprint lang-c linenums">-behaviour(gen_server).</code></pre><h1><span style="font-size: 20px; font-weight: bold;">八、其他EMQ中常见Erlang语法</span></h1><p>1）定义模块名<br></p><pre><code class="prettyprint lang-c linenums">-module(emqttd_router).</code></pre><p>2）定义作者</p><pre><code class="prettyprint lang-c linenums">-author("Feng Lee &lt;<a href="mailto:&#102;&#101;&#x6e;&#103;&#x40;&#x65;&#x6d;&#113;&#116;&#116;&#46;&#105;&#111;">&#102;&#101;&#x6e;&#103;&#x40;&#x65;&#x6d;&#113;&#116;&#116;&#46;&#105;&#111;</a>&gt;").</code></pre><p>3）引入模块或头文件</p><p>这样在调用函数就不需要加前缀了。</p><pre><code class="prettyprint lang-c linenums">-include("emqttd.hrl").</code></pre><p>4）定义函数声明</p><p>在每个函数的前面用-spec编写声明，如emqttd_router.erl第93行：</p><pre><code class="prettyprint lang-c linenums">%% @doc Match Routes.<br>-spec(match(Topic:: binary()) -&gt; [mqtt_route()]).<br>match(Topic) when is_binary(Topic) -&gt;<br>    %% Optimize: ets???<br>    Matched = mnesia:ets(fun emqttd_trie:match/1, [Topic]),<br>    %% Optimize: route table will be replicated to all nodes.<br>    lists:append([ets:lookup(mqtt_route, To) || To &lt;- [Topic | Matched]]).</code></pre><p>5）自定义数据类型</p><pre><code class="prettyprint lang-c linenums">-type(mqtt_qos() :: ?QOS0 | ?QOS1 | ?QOS2).</code></pre><h1>推荐参考资料</h1><p>1���<a href="http://erlang.org/doc/reference_manual/introduction.html" target="_blank">《Erlang官网英文手册》</a><br></p><p>2、<a href="https://www.yiibai.com/erlang/erlang_modules.html" target="_blank">《易百Erlang教程》</a></p><p><br></p>                </div></p>
+<p>% 作为参数传递：emqttd_keepalive:start(StatFun, Interval, &#123;keepalive, check&#125;)<br>% 直接调用：StatFun()</code></pre><p>5）多函数声明执行过程示例</p><p>例如EMQ中emqttd_topic.erl第97行：<br></p><pre><code class="prettyprint lang-java linenums">validate2([]) -&gt;<br>    true;<br>validate2(['#']) -&gt; % end with '#'<br>    true;<br>validate2(['#'|Words]) when length(Words) &gt; 0 -&gt;<br>    false;<br>validate2([''|Words]) -&gt;<br>    validate2(Words);<br>validate2(['+'|Words]) -&gt;<br>    validate2(Words);<br>validate2([W|Words]) -&gt;<br>    case validate3(W) of true -&gt; validate2(Words); false -&gt; false end.</code></pre><p>在调用validate2之前，已经将主题”/a/b/c/+/d/#”拆分成了list[a,b,c,+,d,#]，然后调用validate2。</p><p>调用的时候会去比较到底哪个函数的参数类型是匹配的（类似于方法重载的概念），就调��哪个函数。</p><p>如果有多个都可能被匹配的函数，则只匹配写在最前面的第一个函数，例如：</p><pre><code class="prettyprint lang-java linenums">validate2(['#']) -&gt; % end with '#'<br>    true;<br>validate2(['#']) -&gt; % end with '#'<br>    false.</code></pre><p>则匹配[‘#’]只会返回true。</p><p>所以上述逻辑为：</p><ul><li>如果为空，返回true，合法主题，<br></li><li>如果为”#”且是最后一个，返回true，合法主题，<br></li><li>如果为”#”且后面还有层级，返回false，非法主题，<br></li><li>如果为空层，继续匹配，<br></li><li>如果为”+”，继续匹配，<br></li><li>如果为任意字符串，则调用validate3看里面是否有通配符（如果有则是非法主题，通配符必须独占层级）。</li></ul><p>6）递归</p><p>如果调用了自己，就会形成递归，例如上述validate2就调用了自己。</p><h1>六、宏定义</h1><p>宏定义(Macros)通常在include/xxx.hrl文件里，类似C语言的头文件，语法也类似。</p><p>1）宏定义常量示例</p><pre><code class="prettyprint lang-c linenums">% -define(Const, Replacement).<br>-define(PROTOCOL_VERSION, "MQTT/5.0").</code></pre><p>2）宏定义函数示例（支持函数重载）</p><pre><code class="prettyprint lang-c linenums">% -define(Func(Var1,...,VarN), Replacement).<br>-define(ALLOW_DENY(A), ((A =:= allow) orelse (A =:= deny))).</code></pre><p>3）使用宏定义示例</p><pre><code class="prettyprint lang-c linenums">% ?Const<br>% ?Func(Arg1,...,ArgN)<br>compile(&#123;A, all&#125;) when ?ALLOW_DENY(A) -&gt;<br>    &#123;A, all&#125;;</code></pre><p>4）系统预定义宏</p><pre><code class="prettyprint lang-c linenums">% 当前模块名<br>?MODULE<br>% 当前模块名，字符串格式<br>?MODULE_STRING.<br>% 当前模块的文件名<br>?FILE.<br>% 当前行号<br>?LINE.<br>% 当前机器名称<br>?MACHINE.<br>% 当前函数名称<br>?FUNCTION_NAME<br>% 当前函数有多少个参数<br>?FUNCTION_ARITY<br>% OTP版本号<br>?OTP_RELEASE</code></pre><p>5）控制宏</p><p>和C语言概念一致，多用于debug：</p><pre><code class="prettyprint lang-c linenums">% 如果定义了宏，则<br>-ifdef(Macro).<br>% 如果未定义宏，则<br>-ifndef(Macro).<br>% 否则<br>-else.<br>% 结束控制宏流程<br>-endif.<br>% 如果条件为真，则<br>-if(Condition).<br>% 否则如果条件2为真，则<br>-elif(Condition).<br>% 让宏表现得像没有被定义过一样<br>-undef(Macro).</code></pre><h1>七、行为 Behaviour</h1><p>和behaviour的英语含义一致，就是“表现、行为、外观”，类似java的抽象类，规定了共性的函数操作，所有的实现模块自己实现所有特性的函数操作。</p><p>Erlang/OTP有四个经典behaviour：gen_server、gen_fsm、gen_event、supervisor，在前文<a href="http://www.bewindoweb.com/256.html" target="_blank">《EMQ源码分析（二）：Erlang相关概念》</a>已经描述过了：</p><ul><li>gen_server：用于实现C/S结构中的服务端<br></li><li>gen_fsm：用于实现有限状态机<br></li><li>gen_event：用于实现事件处理功能<br></li><li>supervisor：用于实现监督树中的监督进程</li></ul><p>例如EMQ中emqttd_router.erl就采用了行为：</p><pre><code class="prettyprint lang-c linenums">-behaviour(gen_server).</code></pre><h1><span style="font-size: 20px; font-weight: bold;">八、其他EMQ中常见Erlang语法</span></h1><p>1）定义模块名<br></p><pre><code class="prettyprint lang-c linenums">-module(emqttd_router).</code></pre><p>2）定义作者</p><pre><code class="prettyprint lang-c linenums">-author("Feng Lee &lt;<a href="mailto:&#x66;&#x65;&#x6e;&#x67;&#64;&#101;&#109;&#113;&#x74;&#116;&#46;&#105;&#111;">&#x66;&#x65;&#x6e;&#x67;&#64;&#101;&#109;&#113;&#x74;&#116;&#46;&#105;&#111;</a>&gt;").</code></pre><p>3）引入模块或头文件</p><p>这样在调用函数就不需要加前缀了。</p><pre><code class="prettyprint lang-c linenums">-include("emqttd.hrl").</code></pre><p>4）定义函数声明</p><p>在每个函数的前面用-spec编写声明，如emqttd_router.erl第93行：</p><pre><code class="prettyprint lang-c linenums">%% @doc Match Routes.<br>-spec(match(Topic:: binary()) -&gt; [mqtt_route()]).<br>match(Topic) when is_binary(Topic) -&gt;<br>    %% Optimize: ets???<br>    Matched = mnesia:ets(fun emqttd_trie:match/1, [Topic]),<br>    %% Optimize: route table will be replicated to all nodes.<br>    lists:append([ets:lookup(mqtt_route, To) || To &lt;- [Topic | Matched]]).</code></pre><p>5）自定义数据类型</p><pre><code class="prettyprint lang-c linenums">-type(mqtt_qos() :: ?QOS0 | ?QOS1 | ?QOS2).</code></pre><h1>推荐参考资料</h1><p>1���<a href="http://erlang.org/doc/reference_manual/introduction.html" target="_blank">《Erlang官网英文手册》</a><br></p><p>2、<a href="https://www.yiibai.com/erlang/erlang_modules.html" target="_blank">《易百Erlang教程》</a></p><p><br></p>                </div></p>
 
   </div>
   <div>
@@ -293,7 +293,7 @@
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>314</span>
+    <span>313</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -324,13 +324,6 @@
   <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
-      <a href="/categories/资源分享">
-        <div class="categories-list-item">
-          资源分享
-          <span class="categories-list-item-badge">13</span>
-        </div>
-      </a>
-    
       <a href="/categories/转载">
         <div class="categories-list-item">
           转载
@@ -338,17 +331,31 @@
         </div>
       </a>
     
-      <a href="/categories/技术博客">
+      <a href="/categories/漂来漂去">
         <div class="categories-list-item">
-          技术博客
-          <span class="categories-list-item-badge">38</span>
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
         </div>
       </a>
     
-      <a href="/categories/Java">
+      <a href="/categories/机器学习">
         <div class="categories-list-item">
-          Java
-          <span class="categories-list-item-badge">23</span>
+          机器学习
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
         </div>
       </a>
     
@@ -359,17 +366,24 @@
         </div>
       </a>
     
-      <a href="/categories/机器学习">
+      <a href="/categories/技术博客">
         <div class="categories-list-item">
-          机器学习
+          技术博客
           <span class="categories-list-item-badge">38</span>
         </div>
       </a>
     
-      <a href="/categories/漂来漂去">
+      <a href="/categories/Linux">
         <div class="categories-list-item">
-          漂来漂去
-          <span class="categories-list-item-badge">39</span>
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
         </div>
       </a>
     
@@ -394,20 +408,6 @@
         </div>
       </a>
     
-      <a href="/categories/C语言">
-        <div class="categories-list-item">
-          C语言
-          <span class="categories-list-item-badge">4</span>
-        </div>
-      </a>
-    
-      <a href="/categories/Linux">
-        <div class="categories-list-item">
-          Linux
-          <span class="categories-list-item-badge">5</span>
-        </div>
-      </a>
-    
       <a href="/categories/操作系统">
         <div class="categories-list-item">
           操作系统
@@ -428,33 +428,33 @@
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
-    
     <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
     
-    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
-    
-    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
-    
-    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
     
     <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
     
     <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
     
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
     <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
     
     <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
     
-    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
-    
     <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
     <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
     
     <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    <a href="\tags\hexo" title="hexo"><div class="tags-list-item">hexo</div></a>
     
   </div>
 </div>
