@@ -44,7 +44,16 @@
   gtag('config', 'UA-178024758-1');
 </script>
   
-  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
   
   <script>
     // control reverse button
@@ -239,7 +248,7 @@
  curl \
  gnupg2 \
  software-properties-common&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;加入Docker官方GPG密钥，提示OK：&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;prettyprint lang-bsh linenums&quot;&gt;$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;检查密钥有效性：&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;prettyprint lang-bsh linenums&quot;&gt;$ sudo apt-key fingerprint 0EBFCD88</code></pre>
-<p>你应该能够找到以下的密钥：<br>pub   4096R/0EBFCD88 2017-02-22<br>      Key fingerprint = 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88<br>uid                  Docker Release (CE deb) &lt;<a href="mailto:&#x64;&#111;&#x63;&#107;&#x65;&#114;&#64;&#100;&#x6f;&#99;&#107;&#101;&#x72;&#x2e;&#x63;&#x6f;&#109;">&#x64;&#111;&#x63;&#107;&#x65;&#114;&#64;&#100;&#x6f;&#99;&#107;&#101;&#x72;&#x2e;&#x63;&#x6f;&#109;</a>&gt;<br>sub   4096R/F273FCD8 2017-02-22</code></pre><p>选择安装仓库，这里选择稳定版+amd64：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo add-apt-repository <br>   "deb [arch=amd64] <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian">https://download.docker.com/linux/debian</a> <br>   $(lsb_release -cs) <br>   stable"</code></pre><h2>5、安装Docker</h2><p>更新源：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo apt-get update</code></pre><p>如果要安装最新版，只需要：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo apt-get install docker-ce</code></pre><p>如果要选择版本，先列出所有版本，例如列出18.09.0<del>ce-0</del>debian：</p><pre><code class="prettyprint lang-bsh linenums">$ apt-cache madison docker-ce</code></pre><p>然后安装指定版本，例如填入docker-ce=18.03.0.ce：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo apt-get install docker-ce=&lt;VERSION_STRING&gt;</code></pre><h2>6、运行测试</h2><p>检查安装版本：</p><pre><code class="prettyprint lang-bsh linenums">$ docker --version<br>Docker version 18.06.1-ce, build e68fc7a</code></pre><p>跑Hello-world测试一下：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo docker run hello-world<br>Hello from Docker!<br>This message shows that your installation appears to be working correctly.</code></pre><p>此外还可以通过直接安装deb包去安装Docker，有兴趣可看官网手册。</p><h1>Debian 8 安装DockerCompose</h1><p>DockerCompose安装非常简单。</p><h2>1、安装</h2><p>【第一种方式】直接下载bin包然后设置</p><p>去<a href="https://github.com/docker/compose/releases" target="_blank">github</a>选择合适的版本，这里选1.22.0</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/cf6c7c4c9e79e85e9cafaf9807ad5d05.png" style="max-width:100%;"></p><p>用如下命令获取可执行文件，替换指定版本号即可。（uname -s就是Linux，uname -m就是系统架构x86_64）</p><pre><code class="prettyprint lang-bsh linenums">$ sudo curl -L <a target="_blank" rel="noopener" href="https://github.com/docker/compose/releases/download/1.22.0/docker-compose-%60uname">https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname</a> -s<code>-</code>uname -m` -o /usr/local/bin/docker-compose</code></pre><p>赋予执行权限就搞定了</p><pre><code class="prettyprint lang-bsh linenums">$ sudo chmod +x /usr/local/bin/docker-compose</code></pre><p>【第二种方式】当作python应用，用pip下载</p><p>一行命令搞定：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo pip install -U docker-compose</code></pre><h2>2、检查DockerCompose版本</h2><pre><code class="prettyprint lang-bsh linenums">$ docker-compose --version<br>docker-compose version 1.22.0, build f46880fe</code></pre><p><br></p>                </div></p>
+<p>你应该能够找到以下的密钥：<br>pub   4096R/0EBFCD88 2017-02-22<br>      Key fingerprint = 9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88<br>uid                  Docker Release (CE deb) &lt;<a href="mailto:&#x64;&#111;&#x63;&#x6b;&#101;&#x72;&#x40;&#x64;&#111;&#99;&#x6b;&#x65;&#x72;&#46;&#x63;&#111;&#x6d;">&#x64;&#111;&#x63;&#x6b;&#101;&#x72;&#x40;&#x64;&#111;&#99;&#x6b;&#x65;&#x72;&#46;&#x63;&#111;&#x6d;</a>&gt;<br>sub   4096R/F273FCD8 2017-02-22</code></pre><p>选择安装仓库，这里选择稳定版+amd64：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo add-apt-repository <br>   "deb [arch=amd64] <a target="_blank" rel="noopener" href="https://download.docker.com/linux/debian">https://download.docker.com/linux/debian</a> <br>   $(lsb_release -cs) <br>   stable"</code></pre><h2>5、安装Docker</h2><p>更新源：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo apt-get update</code></pre><p>如果要安装最新版，只需要：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo apt-get install docker-ce</code></pre><p>如果要选择版本，先列出所有版本，例如列出18.09.0<del>ce-0</del>debian：</p><pre><code class="prettyprint lang-bsh linenums">$ apt-cache madison docker-ce</code></pre><p>然后安装指定版本，例如填入docker-ce=18.03.0.ce：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo apt-get install docker-ce=&lt;VERSION_STRING&gt;</code></pre><h2>6、运行测试</h2><p>检查安装版本：</p><pre><code class="prettyprint lang-bsh linenums">$ docker --version<br>Docker version 18.06.1-ce, build e68fc7a</code></pre><p>跑Hello-world测试一下：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo docker run hello-world<br>Hello from Docker!<br>This message shows that your installation appears to be working correctly.</code></pre><p>此外还可以通过直接安装deb包去安装Docker，有兴趣可看官网手册。</p><h1>Debian 8 安装DockerCompose</h1><p>DockerCompose安装非常简单。</p><h2>1、安装</h2><p>【第一种方式】直接下载bin包然后设置</p><p>去<a href="https://github.com/docker/compose/releases" target="_blank">github</a>选择合适的版本，这里选1.22.0</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/cf6c7c4c9e79e85e9cafaf9807ad5d05.png" style="max-width:100%;"></p><p>用如下命令获取可执行文件，替换指定版本号即可。（uname -s就是Linux，uname -m就是系统架构x86_64）</p><pre><code class="prettyprint lang-bsh linenums">$ sudo curl -L <a target="_blank" rel="noopener" href="https://github.com/docker/compose/releases/download/1.22.0/docker-compose-%60uname">https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname</a> -s<code>-</code>uname -m` -o /usr/local/bin/docker-compose</code></pre><p>赋予执行权限就搞定了</p><pre><code class="prettyprint lang-bsh linenums">$ sudo chmod +x /usr/local/bin/docker-compose</code></pre><p>【第二种方式】当作python应用，用pip下载</p><p>一行命令搞定：</p><pre><code class="prettyprint lang-bsh linenums">$ sudo pip install -U docker-compose</code></pre><h2>2、检查DockerCompose版本</h2><pre><code class="prettyprint lang-bsh linenums">$ docker-compose --version<br>docker-compose version 1.22.0, build f46880fe</code></pre><p><br></p>                </div></p>
 
   </div>
   <div>
@@ -255,12 +264,12 @@
 <div class="nav">
   
   <div class="nav-item-prev">
-    <a href="/2019/10/06/Debian 8发送附件邮件到QQ邮箱/" class="nav-link">
+    <a href="/2019/10/06/Debian 8下定时自动备份Mysql数据库/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
         <div class="nav-label">上一篇</div>
         
-        <div class="nav-title">Debian 8发送附件邮件到QQ邮箱 </div>
+        <div class="nav-title">Debian 8下定时自动备份Mysql数据库 </div>
         
       </div>
     </a>
@@ -268,11 +277,11 @@
   
   
   <div class="nav-item-next">
-    <a href="/2019/10/06/EMQ源码分析（一）：在Windows上用IDEA搭建Erlang编译平台/" class="nav-link">
+    <a href="/2019/10/06/Debian 8发送附件邮件到QQ邮箱/" class="nav-link">
       <div>
         <div class="nav-label">下一篇</div>
         
-        <div class="nav-title">EMQ源码分析（一）：在Windows上用IDEA搭建Erlang编译平台 </div>
+        <div class="nav-title">Debian 8发送附件邮件到QQ邮箱 </div>
         
       </div>
       <i class="iconfont icon-right nav-next-icon"></i>
@@ -295,7 +304,7 @@
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>313</span>
+    <span>312</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -481,11 +490,6 @@
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2020-09-15</div>
-        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
-      </div>
-    
-      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-09-14</div>
         <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
       </div>
@@ -498,6 +502,11 @@
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2019-12-24</div>
         <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-19</div>
+        <a href="/2019/12/19/自媒体时代的韭菜/"><div class="recent-posts-item-content">去他妈的月入百万！</div></a>
       </div>
     
   </div>
