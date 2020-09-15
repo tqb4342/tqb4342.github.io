@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="EMQ源码分析（五）：Mnesia数据库">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/EMQ%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9AMnesia%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      EMQ源码分析（五）：Mnesia数据库
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.7k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><p><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/260.html">http://www.bewindoweb.com/260.html</a></p>
+<div class="card-article-text"><h1>前言</h1><p>基于EMQ2.3.11。Mnesia是分布式电信数据库管理系统，有以下特性：</p><ul><li>DBMS查询语言</li><li>数据持久性：表是持久化到存储的</li><li>集群复制：表可以在多个节点上复制</li><li>原子事务：支持事务</li><li>透明：对编程来说是透明的</li><li>实时数据搜索：查询速度很快</li></ul><h1>一、Mnesia表的创建参数</h1><h2>1、type 表类型</h2><p>【取值】</p><ul><li>set：唯一键值，1:1，一个键一条记录</li><li>ordered_set：唯一键值，1:1，带排序</li><li>bag：1:n，一个键可以映射很多条记录</li></ul><h2>2、record_name 记录名称</h2><p>【取值】记录名</p><p>所有表中的记录都必须是同一个记录的实例</p><h2>3、ram_copies 内存复制</h2><p>【取值】节点列表</p><p>可以指定要备份到哪些节点的内存中去，不保证事务更新。可以定时刷盘。</p><h2>4、disc_copies 磁盘复制</h2><p>【取值】节点列表&nbsp;&nbsp;<br></p><p>指定要备份到哪些节点的内存和磁盘中去，内存操作表格，磁盘追加操作日志。</p><h2>5、disc_only_copies 强制磁盘复制</h2><p>【取值】节点列表&nbsp;&nbsp;<br></p><p>指定备份到哪些节点的磁盘中去，操作都是基于磁盘操作，速度慢。</p><h2>6、index 索引</h2><p>【取值】属性名或整数列表<br></p><p>指定额外维护的索引表的元组位置</p><h2>7、local_content 本地内容</h2><p>【取值】true/false，默认false</p><p>表名对其他节点是已知的，但数据只在自己节点上。</p><h2>8、majority&nbsp;</h2><p>【取值】true/false，默认false</p><ul><li>true：大多数表的副本都必须同步成功更新（保证数据一致性）<br></li><li>false：不需要立刻同步，副本数据可能某段时间不一致</li></ul><h2>9、snmp</h2><p>【取值】SNMP键类型</p><p>将基于集合的表自动变为简单网络管理协议（SNMP）有序表。</p><h2>10、attributes</h2><p>【取值】Record的属性列表</p><p>指定要插入哪些属性到表中。</p><p>EMQ的表都是内存复制，而且是用的自行开发的ekka_mnesia库。</p><p>EMQ路由表是bag类型，因为一个Topic可能有多个Node都会订阅，是一个类似Map的表：</p><pre><code class="prettyprint lang-c linenums">-record(mqtt_route,
+      &#123; topic :: binary(),
+        node  :: node()
+      &#125;).
+
+<p>  ok = ekka_mnesia:create_table(mqtt_route, [</p>
+<pre><code>          &#123;type, bag&#125;,
+          &#123;ram_copies, [node()]&#125;,
+          &#123;record_name, mqtt_route&#125;,
+          &#123;attributes, record_info(fields, mqtt_route)&#125;]);&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;EMQ的session是set类型，因为必须要保证clientId唯一性：&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;prettyprint lang-c linenums&quot;&gt;-record(mqtt_session,
+  &#123; client_id  :: binary(),
+    sess_pid   :: pid(),
+    clean_sess :: boolean()
+  &#125;).</code></pre>
+<p>  %% Global Session Table<br>  ok = ekka_mnesia:create_table(mqtt_session, [</p>
+<pre><code>          &#123;type, set&#125;,
+          &#123;ram_copies, [node()]&#125;,
+          &#123;record_name, mqtt_session&#125;,
+          &#123;attributes, record_info(fields, mqtt_session)&#125;]);&lt;/code&gt;&lt;/pre&gt;&lt;h1&gt;二、Mnesia表操作&lt;/h1&gt;&lt;p&gt;这里只简单的记录EMQ用到过的表格操作是什么含义。&lt;/p&gt;&lt;h2&gt;1、select 按条件读取表格&lt;/h2&gt;&lt;p&gt;【原型】&lt;/p&gt;&lt;p&gt;select(Tab, MatchSpec [, Lock]) -&amp;gt; transaction abort | [Object]&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Tab：表名&lt;br&gt;&lt;/li&gt;&lt;li&gt;MatchSpec：匹配参数&lt;br&gt;&lt;/li&gt;&lt;li&gt;Lock：是否加锁读取&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;【示例】&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;prettyprint lang-java linenums&quot;&gt;mnesia:select(mqtt_session, [&#123;#mqtt_session&#123;client_id = &#39;$1&#39;, sess_pid = &#39;$2&#39;, _ = &#39;_&#39;&#125;,[&#123;&#39;==&#39;, &#123;node, &#39;$2&#39;&#125;, Node&#125;], [&#39;$1&#39;]&#125;])&lt;/code&gt;&lt;/pre&gt;&lt;h2&gt;2、write 写记录&lt;/h2&gt;&lt;p&gt;【原型】&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;prettyprint lang-c linenums&quot;&gt;write(Record) -&amp;gt; transaction abort | ok</code></pre>
+<p>write(Tab, Record, LockKind) -&gt; transaction abort | ok</code></pre><ul><li>Tab：表名<br></li><li>Record：记录值<br></li><li>LockKind：write写入锁，sticky_write粘滞写入锁<br></li></ul><p>默认的write/1是本表+记录值+写入锁。</p><blockquote>sticky_write粘滞写入锁是一种用于优化锁获取的机制。如果您使用复制表的目的主要是为了容错（而不是为了快速读取访问），则粘滞锁可能是最佳选择。当获取粘滞写入锁时，将通知所有节点哪个节点被锁定。然后，来自同一节点的粘滞锁定请求将作为本地操作执行，而不与其他节点进行任何通信。即使在事务结束后，粘滞锁仍会留在节点上。&nbsp;&nbsp;<br></blockquote><p>【示例】</p><pre><code class="prettyprint lang-c linenums">mnesia:write(Route).</code></pre><h2>3、delete 删除记录</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">delete(&#123;Tab, Key&#125;) -&gt; transaction abort | ok<br>delete(Tab, Key, LockKind) -&gt; transaction abort | ok</code></pre><p>和前面一致，默认用write写入锁，删除一行数据。</p><p>【示例】</p><pre><code class="prettyprint lang-c linenums">mnesia:delete(&#123;mqtt_trie_node, Topic&#125;)</code></pre><h2>4、delete_object 删除对象</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">delete_object(Record) -&gt; transaction abort | ok<br>delete_object(Tab, Record, LockKind) -&gt; transaction abort | ok</code></pre><p>如果表是bag类型，一对多，可以用这个来删除所有数据，默认写入锁。</p><p>【示例】</p><pre><code class="prettyprint lang-c linenums">mnesia:delete_object(mqtt_route, R, write)</code></pre><h2>5、wread</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">wread(&#123;Tab, Key&#125;) -&gt; transaction abort | RecordList<br>read(Tab, Key, LockKind) -&gt; transaction abort | RecordList</code></pre><p>wread调用的read，使用写入锁（不可写）。</p><p>read的锁可以是：read、write、sticky_write。</p><p>【示例】</p><pre><code class="prettyprint lang-c linenums">mnesia:wread(&#123;mqtt_route, Topic&#125;)</code></pre><h2>6、ets</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">ets(Fun, [, Args]) -&gt; ResultOfFun | exit(Reason)</code></pre><p>调用一个非事务的函数，会去内存取本地ets表，速度很快，相当于取缓存。</p><p>【示例】EMQ只有一处用到了，在订阅树匹配的时候，因为只是读操作，但是操作次数太多，可以容忍脏读，所以用这个直接读内存：<br></p><pre><code class="prettyprint lang-c linenums">Matched = mnesia:ets(fun emqttd_trie:match/1, [Topic])</code></pre><h2>7、transaction 事务</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">transaction(Fun [[, Args], Retries]) -&gt; &#123;aborted, Reason&#125; | &#123;atomic, ResultOfFun&#125;</code></pre><p>以事务的方式执行Fun函数。</p><p>【示例】</p><pre><code class="prettyprint lang-c linenums">mnesia:transaction(Clean)</code></pre><h2>8、abort 中止事务</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">abort(Reason) -&gt; transaction abort</code></pre><p>主动表明事务执行失败，数据库恢复到事务之前的状态。<br></p><p>【示例】在进行delete_path的时候，递归到最后发现找不到指定节点，需要主动表明自己执行失败（因为是业务逻辑错误），所以使用了abort：</p><pre><code class="prettyprint lang-c linenums">mnesia:abort(&#123;node_not_found, NodeId&#125;)</code></pre><h2>9、dirty_read 脏读</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">dirty_read(Tab,Key)-&gt;ValueList | exit(&#123;aborted,Reason&#125;)</code></pre><p>读取当前的数据，不需要事务。</p><p>【示例】</p><pre><code class="prettyprint lang-c linenums">mnesia:dirty_read(mqtt_session, ClientId)</code></pre><h2>10、dirty_delete_object 脏删</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">dirty_delete_object(Tab, Record)</code></pre><p>删除当前数据，不需要事务。</p><p>【示例】</p><pre><code class="prettyprint lang-c linenums">remove_session(Session) -&gt;<br>  mnesia:dirty_delete_object(Session).</code></pre><h2>11、async_dirty 异步执行</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">async_dirty(Fun, [, Args]) -&gt; ResultOfFun | exit(Reason)</code></pre><p>不要事务地执行Fun函数。</p><p>【示例】只在路由表相关操作中使用到，因为增加路由表无需加锁：</p><pre><code class="prettyprint lang-c linenums">add_direct_route(Route) -&gt;<br>  mnesia:async_dirty(fun mnesia:write/1, [Route]).</code></pre><h2>12、dirty_all_keys&nbsp;</h2><p>【原型】</p><pre><code class="prettyprint lang-c linenums">dirty_all_keys(Tab) -&gt; KeyList | exit(&#123;aborted, Reason&#125;)</code></pre><p>注意这里的dirty不是动词，而是只all_keys的脏操作版本，获取表的所有键值。</p><p>【示例】只在一处用到，路由表：</p><pre><code class="prettyprint lang-c linenums">topics() -&gt;<br>  mnesia:dirty_all_keys(mqtt_route).</code></pre><p><br></p><h1>参考资料</h1><p>1、<a href="http://erlang.org/doc/man/mnesia.html" target="_blank">《Erlang官方英文Mnesia手册》</a><br></p><p>2、<a href="https://cloud.tencent.com/developer/section/1124238" target="_blank">《腾讯云开发者文档：mnesia》</a>（相当于手册的中文翻译，基本是机器翻译，很多错误）</p><p><br></p>                </div></p>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/EMQ%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9AMnesia%E6%95%B0%E6%8D%AE%E5%BA%93/">http://tanqingbo.cn/2019/10/06/EMQ%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89%EF%BC%9AMnesia%E6%95%B0%E6%8D%AE%E5%BA%93/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/07/开心就好/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">开心就好 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/OTG外接移动硬盘会巨量耗电/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">OTG外接移动硬盘会巨量耗电 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、Mnesia表的创建参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、type 表类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、record_name 记录名称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、ram_copies 内存复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、disc_copies 磁盘复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、disc_only_copies 强制磁盘复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、index 索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、local_content 本地内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、majority&amp;nbsp;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、snmp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、delete 删除记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、delete_object 删除对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、wread</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、ets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、transaction 事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、abort 中止事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、dirty_read 脏读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、dirty_delete_object 脏删</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">11、async_dirty 异步执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">12、dirty_all_keys&amp;nbsp;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、Mnesia表的创建参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、type 表类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、record_name 记录名称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、ram_copies 内存复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、disc_copies 磁盘复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、disc_only_copies 强制磁盘复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、index 索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、local_content 本地内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、majority&amp;nbsp;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、snmp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、delete 删除记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、delete_object 删除对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、wread</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、ets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、transaction 事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、abort 中止事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、dirty_read 脏读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、dirty_delete_object 脏删</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">11、async_dirty 异步执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">12、dirty_all_keys&amp;nbsp;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、Mnesia表的创建参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、type 表类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、record_name 记录名称</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、ram_copies 内存复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、disc_copies 磁盘复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、disc_only_copies 强制磁盘复制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、index 索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、local_content 本地内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、majority&amp;nbsp;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、snmp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、attributes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、delete 删除记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、delete_object 删除对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、wread</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、ets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、transaction 事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、abort 中止事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、dirty_read 脏读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、dirty_delete_object 脏删</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">11、async_dirty 异步执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">12、dirty_all_keys&amp;nbsp;</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="EMQ源码分析（三）：Erlang所有常用语法">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/EMQ%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AErlang%E6%89%80%E6%9C%89%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      EMQ源码分析（三）：Erlang所有常用语法
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/257.html">http://www.bewindoweb.com/257.html</a><div class="card-article-text"><h1>前言</h1><p>只需要了解EMQ用到过的语法，以EMQ2.3.11为基础，有任何理解错误请指正。</p><h1>一、认识HelloWorld</h1><pre><code class="prettyprint lang-c linenums">% hello world program</li>
+</ul>
+<p>-module(helloworld).<br>-export([start/0]). </p>
+<p>start() -&gt;<br>   io:fwrite(“Hello, world!\n”).</code></pre><p><code>%</code>：注释</p><p><code>-module(模块名)</code>：定义模块，模块名必须和文件名一致（去掉后缀.erl），否则编译会出错。</p><p><code>-export([函数名/参数个数]) </code>：定义外部可以调用的函数，斜杠后面是参数个数</p><p><code>start()</code>：一个函数，名字任意取</p><p><code>io:fwrite</code>：调用io模块的fwrite函数，输出消息到控制台</p><p><code>.</code>：语句结束符</p><h1>二、数据类型</h1><h2>1、标准数据类型</h2><p>Erlang有7种标准数据类型，数字、原子、布尔、位字符串、元组、映射、列表</p><p>1）数字 number</p><p>只有两种，整数integer、浮点数float，例如：40、40.00。</p><p>【进制整数】可以用数字+“#”表示2-36的进制整数，例如emqttd_session.erl第824行中<code>16#FFFF</code>。</p><p>【整数范围】Erlang的则整数精度只受到内存限制，支持大数运算。</p><p>测试：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1234567890*99999999999999999999,<br>  io:fwrite("<del>B</del>n",[A]).</p>
+<p>  % 输出123456788999999999998765432110</code></pre><p>【浮点数的科学计数法】和其他语言类似，用e/E后面带+/-和指数：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 3.468e+3,<br>  io:fwrite("<del>f</del>n",[A]).</p>
+<p>  % 输出3468.000000</code></pre><p>【ASCII】可以用$char来表达ASCII的数字，如<code>$A</code>值为65，<code>$\n</code>值为10。</p><p>2）原子 atom<br></p><p>原子是文字，以小写字母开头，后跟字母、数字、下划线、@。也可以使用单引号，就能跟任何的字符，否则会被识别为变量编译报错：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/95333cd2ad4ba1417d108b30f3a041b8.png" style="max-width:100%;"></p><p><br></p><p>测试：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = ok,<br>  B = error,<br>  C = 'Error',<br>  D = a@12_3Axf,<br>  E = 'error ans',<br>  io:fwrite("<del>w</del>n",[A]).</code></pre><p>【运算】原子的意义就是文字，只支持比较和赋值运算</p><p>【创建】出现即创建，除非系统重启否则不会被清除，单系统最大可用原子数1048576个。</p><p>EMQ通常使用原子来定义一些字符串常量，例如emqttd.hrl第43行自定义类型时，取值只能为两个原子：</p><pre><code class="prettyprint lang-c linenums">-type(pubsub() :: publish | subscribe).</code></pre><p>emqttd_protocol.hrl第101行定义MQTT报文名称时，使用了原子：</p><pre><code class="prettyprint lang-c linenums">-define(TYPE_NAMES, [<br>    'CONNECT',<br>    ……</code></pre><p>emqttd_trie.erl第156行删除订阅树边时，返回的原子：</p><pre><code class="prettyprint lang-c linenums">delete_path([]) -&gt;<br>    ok;</code></pre><p>emqttd_trie.erl第82行，从根节点遍历订阅树时，根节点用的原子：</p><pre><code class="prettyprint lang-c linenums">match(Topic) when is_binary(Topic) -&gt;<br>    TrieNodes = match_node(root, emqttd_topic:words(Topic)),</code></pre><p>3）布尔 boolean</p><p>伪数据类型，其实是两个保留原子，true、false。</p><p>4）位字符串 binary</p><p>二进制序列，操作二进制非常方便的数据结构。通常的二进制串是无符号8bit字节序列，但位串可以是任意bit位数。</p><p>标准语法：双小于、双大于括起来，用逗号隔开。</p><pre><code class="prettyprint lang-c linenums">&lt;&lt;E1, ..., EN&gt;&gt;</code></pre><p>中间的Ei可以是：</p><pre><code class="prettyprint lang-c linenums">Value                                     % 必须是整数、浮点数或另一个位串<br>Value:Size                             % 指定数据的二进制位数<br>Value/TypeSpecifierList         % 指定数据的类型<br>Value:Size/TypeSpecifierList % 指定数据的位数和类型</code></pre><p>示例1：&lt;&lt;1,2,3&gt;&gt;、&lt;&lt;12.1,44.45&gt;&gt;、&lt;&lt;$a,$b,$c&gt;&gt;、&lt;&lt;”abc”&gt;&gt;</p><p>默认的Value，类型可以是整数（8bit）、浮点数（64bit）、位串，自动识别。</p><p>整数如果越界（超过8bit表达的十进制数，如256、257），则和其他语言处理类似，进行高位截断（256→0）。</p><p>&lt;&lt;”abc”&gt;&gt;是&lt;&lt;$a,$b,$c&gt;&gt;的语法糖，在EMQ超级常用，例如emqttd_packet.erl第34行：</p><pre><code class="prettyprint lang-c linenums">protocol_name(?MQTT_PROTO_V5) -&gt; &lt;&lt;"MQTT"&gt;&gt;.</code></pre><p>示例2：&lt;&lt;1:3, 2:4&gt;&gt;、&lt;&lt;42:12&gt;&gt;</p><p>&lt;&lt;1:3, 2:4&gt;&gt;表达式中的位串位数是3+4=7位，二进制被拼接成0b0010010，所以最终得到的值是&lt;&lt;18:7&gt;&gt;。</p><p>如果你用&lt;&lt;18:7&gt;&gt; == &lt;&lt;18&gt;&gt;做比较，会得到false，因为默认8位位数不同。</p><p>无论&lt;&lt;1:3, 2:4&gt;&gt;还是&lt;&lt;18:7&gt;&gt;哪种表达，它们都是同一段二进制数据，只是截断的位置不一样。&nbsp;&nbsp;<br></p><p>&lt;&lt;1,17,42:12&gt;&gt;表达式中的位串位数是8+8+12=28位，二进制高位用0填充，整个串为0b 0000 0010 1010，所以最终得到的值是&lt;&lt;2,10:4&gt;&gt;</p><p>测试：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = &lt;&lt;1:3, 2:4&gt;&gt;,<br>  B = &lt;&lt;18:7&gt;&gt;,<br>  C = A == B,<br>  io:fwrite("<del>w ~w ~w ~n",[A,B,C]).</code></pre><p>示例3：&lt;&lt;1024/utf8&gt;&gt;、&lt;&lt;1024:32/unsigned-little-integer&gt;&gt;、&lt;&lt;”abc”/utf8&gt;&gt; 、&lt;&lt;$a/utf8,$b/utf8,$c/utf8&gt;&gt;.<br></p><p>TypeSpecifierList可以控制编码细节，控制参数用横杠隔开：</p><ul><li>数据类型（Type）：integer、float、bytes/binary、bits/bitstring、utf8、utf16、utf32，其中bytes是binary缩写，bits是bitstring的缩写，作用相同。<br></li><li>符号（Signedness）：signed、unsigned，默认无符号。<br></li><li>大小端（Endianness）：big、little、native，默认大端。<br></li><li>单位（Unit）：unit:1</del>256，默认整数、浮点数都是1bit为单位，位串8bit为单位。<br></li></ul><p>同样的，&lt;&lt;"abc"/utf8&gt;&gt; 是&lt;&lt;$a/utf8,$b/utf8,$c/utf8&gt;&gt;.的语法糖。<br></p><p>我们可以用来定义常见数据类型，如：</p><pre><code class="prettyprint lang-c linenums">-define( UINT, 32/unsigned-little-integer).<br>-define( INT, 32/signed-little-integer).<br>-define( USHORT, 16/unsigned-little-integer).<br>-define( SHORT, 16/signed-little-integer).<br>-define( UBYTE, 8/unsigned-little-integer).<br>-define( BYTE, 8/signed-little-integer).<br>-define( CHAR, 1/binary-unit:8).</code></pre><p>在EMQ中通常被用来定义字符串常量，好处在于，在进行模式匹配的时候速度很快；还被用于解析一些复杂的数据，好处在于，可以控制任意位数，例如emqttd_topic.erl第112行，当在某一层中既含有字符（在validate2已经判断过了），又含有通配符时，判定是非法的格式：</p><pre><code class="prettyprint lang-java linenums">validate3(&lt;&lt;C/utf8, <em>Rest/binary&gt;&gt;) when C == $#; C == $+; C == 0 -&gt;<br>    false;</code></pre><p>5）元组 tuple<br></p><p>将多个实体组合成一个实体，通常用于参数匹配，可以嵌套任意数据类型，包括元组。</p><p>元组定义好就不变了。</p><p>标准语法：<br></p><pre><code class="prettyprint lang-c linenums">A=&#123;Term1, ..., TermN&#125;.</code></pre><p>参数匹配的含义是：</p><pre><code class="prettyprint lang-c linenums">&#123;A, B, C, <em>&#125;  =  &#123;apple, banana, orange, hhhhhh&#125;</code></pre><p>这样就可以将apple赋值给A、banana赋值给B，orange赋值给C，hhhhhh被丢弃。</p><p>在EMQ中也被用来做参数匹配，例如：</p><pre><code class="prettyprint lang-c linenums">% emqttd_protocol.erl第493行，调用函数，发送参数：<br>    case emqttd_topic:validate(&#123;name, Topic&#125;) of<br>        true  -&gt; ok;<br>        false -&gt; &#123;error, badtopic&#125;<br>    end;<br>% emqttd_topic.erl第91行，接受参数：<br>validate(&#123;filter, Topic&#125;) when is_binary(Topic) -&gt;<br>    validate2(words(Topic));</code></pre><p>6）映射 map<br></p><p>map是k-v映射表。</p><p>标准语法：</p><pre><code class="prettyprint lang-java linenums">% 定义map<br>mymap = #&#123;Key1=&gt;Value1,...,KeyN=&gt;ValueN&#125;<br>% 获取值<br>myvalue = maps:get(Key1,mymap)<br>% 设置数据<br>maps:put(Value1, Value2, ..., ValueN)<br>% 更新数据<br>maps:update(Value1, Value2, ..., ValueN)</code></pre><p>例如emqttd_session.erl第397行，更新订阅：</p><pre><code class="prettyprint lang-c linenums">maps:put(Topic, NewQos, SubMap);</code></pre><p>7）列表 list<br></p><p>一堆任意类型的数据组合成的表，可以任意增删数据。</p><p>标准语法：</p><pre><code class="prettyprint lang-c linenums">[Term1,...,TermN]</code></pre><p>使用频率极高，包括像helloworld里面也在使用：</p><pre><code class="prettyprint lang-c linenums">-export([start/0]).</code></pre><p>一个重要特性是：[Term1,…,TermN] 等价于 [Term1|[…|[TermN|[]]]]：</p><pre><code class="prettyprint lang-c linenums">[H|T]=[apple, banana]<br>% H = apple<br>% T = [banana]</code></pre><p>前一个将会匹配独立的元素apple，类型是元素类型，H可以任意取名，这里代表的是Head的含义；</p><p>后一个将会匹配整个列表剩余部分（哪怕只剩一个元素），类型是列表，T可以任意取名，这里代表的是Tail的含义。</p><p>通常元组被用于递归，例如emqttd_topic.erl第87行到第108行：</p><pre><code class="prettyprint lang-java linenums">validate(&#123;</em>, &lt;&lt;&gt;&gt;&#125;) -&gt;<br>    false;<br>validate(&#123;</em>, Topic&#125;) when is_binary(Topic) and (size(Topic) &gt; ?MAX_TOPIC_LEN) -&gt;<br>    false;<br>validate(&#123;filter, Topic&#125;) when is_binary(Topic) -&gt;<br>    validate2(words(Topic));<br>validate(&#123;name, Topic&#125;) when is_binary(Topic) -&gt;<br>    Words = words(Topic),<br>    validate2(Words) and (not wildcard(Words)).</p>
+<p>validate2([]) -&gt;<br>    true;<br>validate2([‘#’]) -&gt; % end with ‘#’<br>    true;<br>validate2([‘#’|Words]) when length(Words) &gt; 0 -&gt;<br>    false;<br>validate2([‘’|Words]) -&gt;<br>    validate2(Words);<br>validate2([‘+’|Words]) -&gt;<br>    validate2(Words);<br>validate2([W|Words]) -&gt;<br>    case validate3(W) of true -&gt; validate2(Words); false -&gt; false end.</code></pre><p>第一个validate用元组，因为只是参数传递；</p><p>第二个validate2用列表，因为在用递归去不断地匹配Topic按斜杠分割后的每一层的Token。</p><h2>2、高级数据类型</h2><p>1）记录 record</p><p>记录相当于C语言中的结构体，它是一个伪数据类型，会在编译阶段被转换成元组。</p><p>定义记录，通常在.hrl头文件中定义：</p><pre><code class="prettyprint lang-c linenums">-record(Name, &#123;Field1 [= Value1],<br>               ...<br>               FieldN [= ValueN]&#125;).</code></pre><p>创建记录：</p><pre><code class="prettyprint lang-java linenums">R = #Name&#123;Field1=Expr1,...,FieldK=ExprK&#125;</code></pre><p>更新记录（可以只更新部分值）：</p><pre><code class="prettyprint lang-java linenums">R2 = R#Name&#123;Field1=Expr1,...,FieldM=ExprM&#125;</code></pre><p>读取值（提取法）：<br></p><pre><code class="prettyprint lang-java linenums">#Name.Field</code></pre><p>��取值（匹配法）：</p><pre><code class="prettyprint lang-java linenums">terminate(_Reason, #state&#123;stats_timer = TRef&#125;) -&gt;<br>    timer:cancel(TRef),<br>    ekka:unmonitor(membership).</code></pre><p>在EMQ中被大量使用，定义一些数据结构：</p><pre><code class="prettyprint lang-java linenums">% 定义：emqttd.hrl 第148行<br>-record(mqtt_delivery,<br>        &#123; sender  :: pid(),          %% Pid of the sender/publisher<br>          message :: mqtt_message(), %% Message<br>          flows   :: list()<br>        &#125;).</p>
+<p>% 创建：emqttd_pubsub.erl第89行<br>delivery(Msg) -&gt; #mqtt_delivery&#123;sender = self(), message = Msg, flows = []&#125;.</p>
+<p>% 更新：eqmttd_pubsub.erl第78行<br>dispatch(To, Delivery#mqtt_delivery&#123;flows = [&#123;route, Node, To&#125; | Flows]&#125;);</p>
+<p>% 读值：eqmttd_pubsub.erl第72行<br>route([], #mqtt_delivery&#123;message = #mqtt_message&#123;topic = Topic&#125;&#125;) -&gt;<br>    dropped(Topic), ignore;</code></pre><p>2）进程ID Pid</p><p>就是进程的ID，在EMQ对应的使用：</p><pre><code class="prettyprint lang-c linenums">-record(mqtt_session,<br>        &#123; client_id  :: binary(),<br>          sess_pid   :: pid(),<br>          clean_sess :: boolean()<br>        &#125;).</code></pre><p>如果向某个进程发送消息，可以直接用pid+感叹号的形式，如emqttd_pubsub.erl第112行：</p><pre><code class="prettyprint lang-c linenums">SubPid ! &#123;dispatch, Topic, Msg&#125;;</code></pre><p>消息会放到对应的Mailbox里面。</p><p><code>self() </code>可以获取自己的进程ID。</p><p>3）引用 Reference</p><p>引用通过make_ref/0函数来创建，引用在运行时是全局唯一的，常常在创建定时任务时返回一个引用，通过这个引用来取消定时任务。</p><p>如EMQ的gen_server2.erl第821行：</p><pre><code class="prettyprint lang-c linenums">Tag = make_ref()</code></pre><p>4）函数&nbsp;function</p><p>函数也算是数据类型，函数可以被当作参数去赋值，如EMQ中emqttd_topic.erl第184行：</p><pre><code class="prettyprint lang-c linenums">parse(&lt;&lt;"$local/", Topic1/binary&gt;&gt;, Options) -&gt;<br>    if_not_contain(local, Options, fun() -&gt;<br>                       parse(Topic1, [local | Options])<br>                   end);</code></pre><p>对应接收的函数是emqttd_topic.erl第203行：</p><pre><code class="prettyprint lang-c linenums">if_not_contain(local, Options, Fun) -&gt;<br>    ?IF(lists:member(local, Options), error(invalid_topic), Fun());</code></pre><h1>三、运算符</h1><h2>1、算数运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th></tr><tr><td>&nbsp;+</td><td>&nbsp;加</td></tr><tr><td>&nbsp;-</td><td>&nbsp;减</td></tr><tr><td>&nbsp;*</td><td>&nbsp;乘</td></tr><tr><td>&nbsp;/</td><td>&nbsp;除</td></tr><tr><td>&nbsp;rem</td><td>&nbsp;取余（模）</td></tr><tr><td>&nbsp;div</td><td>&nbsp;整除</td></tr></tbody></table><p><br></p><h2>2、关系运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th><th>备注&nbsp;</th></tr><tr><td>&nbsp;==</td><td>&nbsp;相等</td><td>&nbsp;</td></tr><tr><td>&nbsp;/=</td><td>&nbsp;不等</td><td>&nbsp;注意不等号</td></tr><tr><td>&nbsp;&lt;</td><td>&nbsp;小于</td><td>&nbsp;</td></tr><tr><td>&nbsp;=&lt;</td><td>&nbsp;小于等于</td><td>&nbsp;注意先等后小</td></tr><tr><td>&nbsp;&gt;</td><td>&nbsp;大于</td><td>&nbsp;</td></tr><tr><td>&nbsp;&gt;=</td><td>&nbsp;大于等于</td><td>&nbsp;</td></tr><tr><td>&nbsp;=:=</td><td>&nbsp;恒等于</td><td>&nbsp;重点</td></tr><tr><td>&nbsp;=/=</td><td>&nbsp;恒不等于</td><td>&nbsp;重点</td></tr></tbody></table><br><p>1）恒等于和恒不等于</p><p>等于（==）只需要判断数值： 1 == 1.0 → true</p><p>恒等于（=:=）除了数值还需要判断数据类型：1 =:= 1.0 → false</p><p>不等于（/=）只需要判断数值：1 /= 1.0 → false</p><p>恒不等于（=/=）除了数值还需要判断数据类型：1 =/= 1.0 → true</p><p>测试：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1 == 1.0,<br>  B = 1 =:= 1.0,<br>  C = 1 /= 1.0,<br>  D = 1 =/= 1.0,<br>  io:fwrite("1==1.0: <del>w</del>n1=:=1.0: <del>w</del>n1/=1.0: <del>w</del>n1=/=1.0: <del>w</del>n",[A,B,C,D]).</p>
+<p>% 1==1.0: true<br>% 1=:=1.0: false<br>% 1/=1.0: false<br>% 1=/=1.0: true</code></pre><p>在EMQ中也被使用到，如：</p><pre><code class="prettyprint lang-c linenums">% emqttd_pubsub.erl第77行<br>Node =:= node()<br>% emqttd_trie.erl第83行<br>Name =/= undefined</code></pre><p>2）不同数据类型做比较</p><p>如果数据类型不同，按照如下的方式比较大小：</p><p>number &lt; atom &lt; reference &lt; fun &lt; port &lt; pid &lt; tuple &lt; list &lt; bitstring</p><p>例如，[]&gt;0 → true，因为list&gt;number</p><h2>3、位运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th></tr><tr><td>&nbsp;band</td><td>&nbsp;按位与</td></tr><tr><td>&nbsp;bor</td><td>&nbsp;按位或</td></tr><tr><td>&nbsp;bxor</td><td>&nbsp;按位异或</td></tr><tr><td>&nbsp;bnot</td><td>&nbsp;按位非</td></tr></tbody></table><h2>4、逻辑布尔运算符</h2><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>符号&nbsp;</th><th>含义&nbsp;</th></tr><tr><td>&nbsp;or</td><td>&nbsp;或</td></tr><tr><td>&nbsp;and</td><td>&nbsp;与</td></tr><tr><td>&nbsp;not</td><td>&nbsp;非</td></tr><tr><td>&nbsp;xor</td><td>&nbsp;异或</td></tr><tr><td>&nbsp;andalso</td><td>&nbsp;短路与</td></tr><tr><td>&nbsp;orelse</td><td>&nbsp;短路或</td></tr></tbody></table><p>默认逻辑运算符是不短路的，短路与和短路或在EMQ中使用得很频繁，如：</p><pre><code class="prettyprint lang-c linenums">% eqmttd_serializer.erl第43行：<br>when ?CONNECT =&lt; Type andalso Type =&lt; ?DISCONNECT -&gt;<br>% emqttd_protocol.erl第427行：<br>when NullId =:= undefined orelse NullId =:= &lt;&lt;&gt;&gt; -&gt;</code></pre><h1>四、变量</h1><p>变量必须以大写字母开头，例如Myvar。</p><h1>五、函数和递归</h1><p>函数和递归是Erlang最核心的部分，Erlang没有for循环，没有while循环，全靠函数和递归了。</p><p>标准语法：</p><pre><code class="prettyprint lang-c linenums"><a href="Pattern11,...,Pattern1N">Name</a> [when GuardSeq1] -&gt;<br>        Body1;<br>...;<br><a href="PatternK1,...,Pa&lt;code&gt;tternKN">Name</a> [when GuardSeqK] -&gt;<br>        BodyK.</code></pre><p>1）简单函数示例</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1&lt;2.</code></pre><p>2）多子句函数示例</p><p>子句用逗号分割，依次执行：</p><pre><code class="prettyprint lang-c linenums">start() -&gt;<br>  A = 1&lt;2,<br>  io:fwrite("<del>w</del>n",[A]).</code></pre><p>3）带保护序列函数示例</p><p>用when关键字在执行函数前判断执行条件，如果为false则这个函数不会被匹配到：</p><pre><code class="prettyprint lang-c linenums">add(X) when X&gt;3 -&gt;<br>   io:fwrite("<del>w</del>n",[X]). </p>
+<p>start() -&gt;<br>   add(4).</code></pre><p>4）匿名函数</p><p>用fun关键字定义匿名函数，括号里可以带参数如fun(var1,var2)，可以被赋值给变量，例如emqttd_client.erl第259行定义了一个匿名函数，并赋值给StatFun，后面就可以把这个StatFun作为参数传递，或者后面加个括号直接作为函数调用：</p><pre><code class="prettyprint lang-c linenums">StatFun = fun() -&gt;<br>                case Conn:getstat([recv_oct]) of<br>                    &#123;ok, [&#123;recv_oct, RecvOct&#125;]&#125; -&gt; &#123;ok, RecvOct&#125;;<br>                    &#123;error, Error&#125;              -&gt; &#123;error, Error&#125;<br>                end<br>             end</p>
+<p>% 作为参数传递：emqttd_keepalive:start(StatFun, Interval, &#123;keepalive, check&#125;)<br>% 直接调用：StatFun()</code></pre><p>5）多函数声明执行过程示例</p><p>例如EMQ中emqttd_topic.erl第97行：<br></p><pre><code class="prettyprint lang-java linenums">validate2([]) -&gt;<br>    true;<br>validate2(['#']) -&gt; % end with '#'<br>    true;<br>validate2(['#'|Words]) when length(Words) &gt; 0 -&gt;<br>    false;<br>validate2([''|Words]) -&gt;<br>    validate2(Words);<br>validate2(['+'|Words]) -&gt;<br>    validate2(Words);<br>validate2([W|Words]) -&gt;<br>    case validate3(W) of true -&gt; validate2(Words); false -&gt; false end.</code></pre><p>在调用validate2之前，已经将主题”/a/b/c/+/d/#”拆分成了list[a,b,c,+,d,#]，然后调用validate2。</p><p>调用的时候会去比较到底哪个函数的参数类型是匹配的（类似于方法重载的概念），就调��哪个函数。</p><p>如果有多个都可能被匹配的函数，则只匹配写在最前面的第一个函数，例如：</p><pre><code class="prettyprint lang-java linenums">validate2(['#']) -&gt; % end with '#'<br>    true;<br>validate2(['#']) -&gt; % end with '#'<br>    false.</code></pre><p>则匹配[‘#’]只会返回true。</p><p>所以上述逻辑为：</p><ul><li>如果为空，返回true，合法主题，<br></li><li>如果为”#”且是最后一个，返回true，合法主题，<br></li><li>如果为”#”且后面还有层级，返回false，非法主题，<br></li><li>如果为空层，继续匹配，<br></li><li>如果为”+”，继续匹配，<br></li><li>如果为任意字符串，则调用validate3看里面是否有通配符（如果有则是非法主题，通配符必须独占层级）。</li></ul><p>6）递归</p><p>如果调用了自己，就会形成递归，例如上述validate2就调用了自己。</p><h1>六、宏定义</h1><p>宏定义(Macros)通常在include/xxx.hrl文件里，类似C语言的头文件，语法也类似。</p><p>1）宏定义常量示例</p><pre><code class="prettyprint lang-c linenums">% -define(Const, Replacement).<br>-define(PROTOCOL_VERSION, "MQTT/5.0").</code></pre><p>2）宏定义函数示例（支持函数重载）</p><pre><code class="prettyprint lang-c linenums">% -define(Func(Var1,...,VarN), Replacement).<br>-define(ALLOW_DENY(A), ((A =:= allow) orelse (A =:= deny))).</code></pre><p>3）使用宏定义示例</p><pre><code class="prettyprint lang-c linenums">% ?Const<br>% ?Func(Arg1,...,ArgN)<br>compile(&#123;A, all&#125;) when ?ALLOW_DENY(A) -&gt;<br>    &#123;A, all&#125;;</code></pre><p>4）系统预定义宏</p><pre><code class="prettyprint lang-c linenums">% 当前模块名<br>?MODULE<br>% 当前模块名，字符串格式<br>?MODULE_STRING.<br>% 当前模块的文件名<br>?FILE.<br>% 当前行号<br>?LINE.<br>% 当前机器名称<br>?MACHINE.<br>% 当前函数名称<br>?FUNCTION_NAME<br>% 当前函数有多少个参数<br>?FUNCTION_ARITY<br>% OTP版本号<br>?OTP_RELEASE</code></pre><p>5）控制宏</p><p>和C语言概念一致，多用于debug：</p><pre><code class="prettyprint lang-c linenums">% 如果定义了宏，则<br>-ifdef(Macro).<br>% 如果未定义宏，则<br>-ifndef(Macro).<br>% 否则<br>-else.<br>% 结束控制宏流程<br>-endif.<br>% 如果条件为真，则<br>-if(Condition).<br>% 否则如果条件2为真，则<br>-elif(Condition).<br>% 让宏表现得像没有被定义过一样<br>-undef(Macro).</code></pre><h1>七、行为 Behaviour</h1><p>和behaviour的英语含义一致，就是“表现、行为、外观”，类似java的抽象类，规定了共性的函数操作，所有的实现模块自己实现所有特性的函数操作。</p><p>Erlang/OTP有四个经典behaviour：gen_server、gen_fsm、gen_event、supervisor，在前文<a href="http://www.bewindoweb.com/256.html" target="_blank">《EMQ源码分析（二）：Erlang相关概念》</a>已经描述过了：</p><ul><li>gen_server：用于实现C/S结构中的服务端<br></li><li>gen_fsm：用于实现有限状态机<br></li><li>gen_event：用于实现事件处理功能<br></li><li>supervisor：用于实现监督树中的监督进程</li></ul><p>例如EMQ中emqttd_router.erl就采用了行为：</p><pre><code class="prettyprint lang-c linenums">-behaviour(gen_server).</code></pre><h1><span style="font-size: 20px; font-weight: bold;">八、其他EMQ中常见Erlang语法</span></h1><p>1）定义模块名<br></p><pre><code class="prettyprint lang-c linenums">-module(emqttd_router).</code></pre><p>2）定义作者</p><pre><code class="prettyprint lang-c linenums">-author("Feng Lee &lt;<a href="mailto:&#102;&#101;&#x6e;&#103;&#x40;&#x65;&#x6d;&#113;&#116;&#116;&#46;&#105;&#111;">&#102;&#101;&#x6e;&#103;&#x40;&#x65;&#x6d;&#113;&#116;&#116;&#46;&#105;&#111;</a>&gt;").</code></pre><p>3）引入模块或头文件</p><p>这样在调用函数就不需要加前缀了。</p><pre><code class="prettyprint lang-c linenums">-include("emqttd.hrl").</code></pre><p>4）定义函数声明</p><p>在每个函数的前面用-spec编写声明，如emqttd_router.erl第93行：</p><pre><code class="prettyprint lang-c linenums">%% @doc Match Routes.<br>-spec(match(Topic:: binary()) -&gt; [mqtt_route()]).<br>match(Topic) when is_binary(Topic) -&gt;<br>    %% Optimize: ets???<br>    Matched = mnesia:ets(fun emqttd_trie:match/1, [Topic]),<br>    %% Optimize: route table will be replicated to all nodes.<br>    lists:append([ets:lookup(mqtt_route, To) || To &lt;- [Topic | Matched]]).</code></pre><p>5）自定义数据类型</p><pre><code class="prettyprint lang-c linenums">-type(mqtt_qos() :: ?QOS0 | ?QOS1 | ?QOS2).</code></pre><h1>推荐参考资料</h1><p>1���<a href="http://erlang.org/doc/reference_manual/introduction.html" target="_blank">《Erlang官网英文手册》</a><br></p><p>2、<a href="https://www.yiibai.com/erlang/erlang_modules.html" target="_blank">《易百Erlang教程》</a></p><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/EMQ%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AErlang%E6%89%80%E6%9C%89%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/">http://tanqingbo.cn/2019/10/06/EMQ%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AErlang%E6%89%80%E6%9C%89%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/API集成管理平台YAPI的搭建和使用/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">API集成管理平台YAPI的搭建和使用 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/Jquery使用ajax过程中禁止点a标签/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Jquery使用ajax过程中禁止点a标签 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、认识HelloWorld</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、标准数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、高级数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、算数运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、关系运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、位运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、逻辑布尔运算符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">五、函数和递归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">六、宏定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">七、行为 Behaviour</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">八、其他EMQ中常见Erlang语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">推荐参考资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、认识HelloWorld</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、标准数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、高级数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、算数运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、关系运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、位运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、逻辑布尔运算符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">五、函数和递归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">六、宏定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">七、行为 Behaviour</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">八、其他EMQ中常见Erlang语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">推荐参考资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、认识HelloWorld</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、标准数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、高级数据类型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、算数运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、关系运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、位运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、逻辑布尔运算符</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">五、函数和递归</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">六、宏定义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">七、行为 Behaviour</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">八、其他EMQ中常见Erlang语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">推荐参考资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

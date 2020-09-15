@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="也谈2%与98%的问题">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E8%B0%88%E8%B0%88%E7%99%BE%E5%88%86%E4%B9%8B%E4%BA%8C%E4%B8%8E%E7%99%BE%E5%88%86%E4%B9%8B%E4%B9%9D%E5%8D%81%E5%85%AB%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-05">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      也谈2%与98%的问题
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T02:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/漂来漂去/" class="post-meta-link">漂来漂去</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.3k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>《智能时代》里面有一句话说，<strong>在未来的智能时代里，受益者只有2%。</strong>那么为什么有的人成为了2%的人，而有的人则走到了金字塔的底部。作者在《智能时代》里讲到，一个很重要的原因是很多人没有踏上新的技术革命的大潮，落伍了。另外一个原因就是不同人的思维方式不同，<strong>思维方式对个人的最终影响要远远高于智力、学历和家庭因素。</strong></p>
+<p>那么2%的人和98%的人思维方式有什么不同呢？给大家举个例子吧！很多人应该都听过几年前阿里巴巴有5位员工写程序抢月饼被开除的事情，这件事已经过去很久，阿里是否该开除他们已经变得不重要了。但有意思的是大部分IT从业者对这件事的态度分成了界限非常清晰的两个阵营。第一个阵营是明确支持阿里决定的人，占少数，大部分都是行业中的资深人士和管理者；另一个阵营要么认为用程序抢月饼的人做得并没有错，要么认为即便有错，改了就好，阿里不应该用极刑，这个阵营中，大多数是IT行业里底层的工程师和程序员。这一件事情实际上是试金石，轻易地把大众分到了两个阵营中。</p>
+<p>其实这个事情没有绝对的对与错，老板有老板的想法，员工有员工的想法，但他之所以成为老板，在背后必有他的原因，这不仅仅是能力强、运气好、情商高可以解释的。同样，一些长期处在公司底层的人，则需要检讨一下自己的思维方式。</p>
+<p>在任何一个注重干部培养、有一定规模的公司里，都会对干部进行定期培训。在任何这一类的培训中，教授们都要不断告诉学员们两件事，<strong>首先，所有的功劳要给下面的员工。其次，每一个人都要帮助你的老板成功。</strong>怎么理解第二句话？如果一个人想被提升到他老板的位置，他就必须有他老板的思维方式和眼光，不能只盯着自己那一亩三分田，要从上一级部门乃至整个公司的利益出发考虑问题。</p>
+<p>站在自己的立场，或者自己部门的立场，一个人可能会有一个想法，但是同样这件事，站在老板的立场上、大部门的立场上，会有不同的考虑。帮助自己的老板成功，就意味着能够站在老板的立场上考虑问题，这样，公司才会把更重要的职责交给这个人。可以想象一下，如果在阿里内部，某个员工坚持站在自己的利益上，认为这五个人的行为没有问题，那么公司是否敢把安全性很重要的事情交给那些人呢？如果公司不觉得这些员工可堪大用，这些员工又怎么可能晋级呢？</p>
+<p>再谈一个和阿里巴巴有关的事，在阿里巴巴之前，有一个很火的电商网站叫8848，但是后来关门了，同时关门的还有一大批类似的电商网站。最后，这些搞电子商务的人讲，中国不适合搞电子商务，<strong>因为没有支付手段，大家不诚信，没有物流等等。</strong></p>
+<p>他们说的都没有错，但是他们采取的是一种消极态度。比他们稍晚的阿里巴巴也遇到同样的问题，但是马云用的是另一种态度，没有支付手段就搞一个支付宝，没有诚信就搞一个商家评价体系，没有物流就由公司出面和物流公司谈专门的服务协议等等。</p>
+<p>这就是一种积极的思维方式。如果再往高了讲，马云这是站在他的老板——那些商家的角度，来思考这个问题，帮助商家成功，就是帮助阿里巴巴成功。</p>
+<p>98%的人在思维上常常犯的另一个错误就是不能够公正地就事论事。我们经常看到这样一个例子，张三犯了一个错误，别人给他指出来，张三不检讨自己的问题，经常用“李四曾经也这样”来狡辩。</p>
+<p>第一，这种思维是一种失败者的思维，不论李四是否曾经做了类似的事情，张三自己这么说，其实是默认了别人对他的指控。</p>
+<p>第二，张三这种做法非常情绪化，我们做事情应该就事论事，不掺杂太多感情的因素。张三正确的做法是，如果真是他的问题，他不妨虚心接受，然后反思一下自己为什么会犯如此的错误，以后避免就好，<strong>这样的人在社会任何地方，都受人欢迎。</strong></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E8%B0%88%E8%B0%88%E7%99%BE%E5%88%86%E4%B9%8B%E4%BA%8C%E4%B8%8E%E7%99%BE%E5%88%86%E4%B9%8B%E4%B9%9D%E5%8D%81%E5%85%AB%E7%9A%84%E9%97%AE%E9%A2%98/">http://tanqingbo.cn/2019/10/06/%E8%B0%88%E8%B0%88%E7%99%BE%E5%88%86%E4%B9%8B%E4%BA%8C%E4%B8%8E%E7%99%BE%E5%88%86%E4%B9%8B%E4%B9%9D%E5%8D%81%E5%85%AB%E7%9A%84%E9%97%AE%E9%A2%98/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/公众号号文章排版规范/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">公众号号文章排版规范 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/05/吴军和三位美国大学教授聊大学教育/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">不懂了吧！这才是名校的正确打开方式 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="八大排序算法">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2016/03/31/%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2016-03-31">
+  <meta property="og:article:modified_time" content="2016-04-01">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  <meta property="og:article:tag" content="算法">
+  
+  <meta property="og:article:tag" content="排序">
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      八大排序算法
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2016-03-31T12:45:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2016-03-31</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.8k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/算法/" class="post-meta-link">算法</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/排序/" class="post-meta-link">排序</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="八大排序算法–Java实现"><a href="#八大排序算法–Java实现" class="headerlink" title="八大排序算法–Java实现"></a>八大排序算法–Java实现</h2><h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><ul>
+<li>基本思想：每步将一个待排序的纪录，按其关键码值的大小插入前面已经排序的文件中适当位置上，直到全部插入完为止。</li>
+<li>算法适用于少量数据的排序，时间复杂度为O(n^2)。是稳定的排序方法。</li>
+<li>代码：<blockquote>
+<pre><code>          public static void insertionSort(int[] array)&#123;
+              int tmp;
+              for(int i=1;i&lt;array.length;i++)&#123;
+                  tmp = array[i];  //将当前位置的数给tmp
+                  int j = i;
+                  for(;j&gt;0&amp;&amp;array[j-1]&gt;tmp;j--)&#123;
+                      /*
+                       * 往右移，腾出左边的位置,
+                       * array[j-1]&gt;tmp:大于号是升序排列，小于号是降序排列
+                       */
+                      array[j] = array[j-1];
+                  &#125;
+                  //将当前位置的数插入到合适的位置
+                  array[j] = tmp;
+              &#125;
+          &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><ul>
+<li>基本思想：持续比较相邻的元素。如果第一个比第二个大，就交换他们两个。直到没有任何一对数字需要比较。</li>
+<li>冒泡排序最好的时间复杂度为O(n)。冒泡排序的最坏时间复杂度为O(n^2)。因此冒泡排序总的平均时间复杂度为O(n^2)。</li>
+<li>算法适用于少量数据的排序，是稳定的排序方法。</li>
+<li>代码：<blockquote>
+<pre><code>     public static void bubbleSort(int[] array)&#123;
+          int tmp;
+          boolean flag = false;  //设置是否发生交换的标志
+          for(int i = array.length-1;i &gt;= 0;i--)&#123;
+              for(int j=0;j&lt;i;j++)&#123;          //每一轮都找到一个最大的数放在右边
+                  if(array[j]&gt;array[j+1])&#123;
+                      tmp = array[j];
+                      array[j] = array[j+1];
+                      array[j+1] = tmp;
+                      flag = true;   //发生了交换
+                  &#125;
+              &#125;
+              if(!flag)  break;   //这一轮循环没有发生交换，说明排序已经完成，退出循环
+          &#125;
+      &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><ul>
+<li>基本思想：每一次从待排序的数据元素中选出最小（或最大）的一个元素，存放在序列的起始位置，直到全部待排序的数据元素排完。</li>
+<li>选择排序是不稳定的排序方法。时间复杂度 O(n^2)。</li>
+<li>代码：<blockquote>
+<pre><code>   public static void selectSort(int[] array)&#123;
+      for(int i = 0;i&lt;array.length-1;i++)&#123;
+          int    min = array[i];
+          int minindex = i;
+          for(int j = i;j&lt;array.length;j++)&#123;
+              if(array[j]&lt;min)&#123;  //选择当前最小的数
+                  min = array[j];
+                  minindex = j;
+              &#125;
+          &#125;
+          if(i != minindex)&#123; //若i不是当前元素最小的，则和找到的那个元素交换
+              array[minindex] = array[i];
+              array[i] = min;
+          &#125;
+      &#125;
+  &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><ul>
+<li>基本思想：先取一个小于n的整数d1作为第一个增量，把文件的全部记录分组。所有距离为d1的倍数的记录放在同一个组中。先在各组内进行直接插入排序；然后，取第二个增量d2&lt;d1重复上述的分组和排序，直至所取的增量dt=1(dt&lt;dt-1…&lt;d2&lt;d1)，即所有记录放在同一组中进行直接插入排序为止。</li>
+<li>在使用增量dk的一趟排序之后，对于每一个i，我们都有a[i]&lt;=a[i+dk],即所有相隔dk的元素都被排序。</li>
+<li>如图：增量序列为5，3，1，每一趟排序之后，相隔对应增量的元素都被排序了。当增量为1时，数组元素全部被排序。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://i.imgur.com/BSvBPrd.png" class="lozad post-image"src="http://i.imgur.com/BSvBPrd.png"></li>
+<li>希尔排序不稳定，时间复杂度 平均时间 O(nlogn) 最差时间O(n^2) </li>
+<li>代码：<blockquote>
+<pre><code>      public static void shellSort(int[] array)&#123;
+          int j;
+          for(int gap = array.length/2; gap&gt;0; gap /= 2)&#123;
+              //定义一个增长序列，即分割数组的增量,d1=N/2   dk=(d(k-1))/2
+              for(int i = gap; i&lt;array.length;i++)&#123;
+                  int tmp = array[i];
+                  for( j =i; j&gt;=gap&amp;&amp;tmp&lt;array[j-gap]; j -= gap)&#123;
+                      //将相距为Dk的元素进行排序
+                      array[j] = array[j-gap];
+                  &#125;
+                  array[j] = tmp;
+              &#125;
+          &#125;
+      &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h3><ul>
+<li><p>预备知识：</p>
+<blockquote>
+<p>二叉堆是完全二元树（二叉树）或者是近似完全二元树（二叉树）。<br>二叉堆有两种：最大堆和最小堆。<br>大根堆：父结点的键值总是大于或等于任何一个子节点的键值；<br>小根堆：父结点的键值总是小于或等于任何一个子节点的键值。<br>二叉堆一般用数组来表示。例如，根节点在数组中的位置是0，第n个位置的子节点分别在2n+1和 2n+2。因此，第0个位置的子节点在1和2，1的子节点在3和4。以此类推。这种存储方式便於寻找父节点和子节点。<br>例如初始要排序的数组为：49, 38, 65, 97, 76, 13, 27, 49<br>构造成大根堆之后的数组为：97 76 65 49 49 13 27 38<br>实际树形结构如图（最大堆）：</p>
+</blockquote>
+<p><img src="http://i.imgur.com/VtCg8e9.png" alt="最大堆的空间结构" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://i.imgur.com/VtCg8e9.png" class="lozad post-image"></p>
+</li>
+<li><p>堆排序基本思想：在排序过程中，将R[l..n]看成是一棵完全二叉树的顺序存储结构，利用完全二叉树中双亲结点和孩子结点之间的内在关系【参见二叉树的顺序存储结构】，在当前无序区中选择关键字最大(或最小)的记录。堆排序利用了大根堆(或小根堆)堆顶记录的关键字最大(或最小)这一特征，使得在当前无序区中选取最大(或最小)关键字的记录变得简单。</p>
+</li>
+<li><p>堆排序是一种选择排序,其时间复杂度为O(nlogn)。堆排序是不稳定的</p>
+</li>
+<li><p>代码：</p>
+<blockquote>
+<pre><code>       /*
+       * 堆排序
+       * 调整最大堆，交换根元素和最后一个元素。
+       * 参数说明：
+       *     a -- 待排序的数组
+       */
+      public static void heapSort(int[] a) &#123;
+          int n = a.length;
+          int i,tmp;
+          // 从(n/2-1) --&gt; 0逐次遍历。遍历之后，得到的数组实际上是一个(最大)二叉堆。
+          for (i = n / 2 - 1; i &gt;= 0; i--)
+              maxHeapDown(a, i, n-1);
+          // 从最后一个元素开始对序列进行调整，不断的缩小调整的范围直到第一个元素
+          for (i = n - 1; i &gt; 0; i--) &#123;
+              // 交换a[0]和a[i]。交换后，a[i]是a[0...i]中最大的。
+              tmp = a[0];
+              a[0] = a[i];
+              a[i] = tmp;
+              // 调整a[0...i-1]，使得a[0...i-1]仍然是一个最大堆。
+              // 即，保证a[i-1]是a[0...i-1]中的最大值。
+              maxHeapDown(a, 0, i-1);
+          &#125;
+      &#125;
+      /*
+       * 注：数组实现的堆中，第N个节点的左孩子的索引值是(2N+1)，右孩子的索引是(2N+2)。
+       *     其中，N为数组下标索引值，如数组中第1个数对应的N为0。
+       *
+       * 参数说明：
+       *     a -- 待排序的数组
+       *     start -- 被下调节点的起始位置(一般为0，表示从第1个开始)
+       *     end   -- 截至范围(一般为数组中最后一个元素的索引)
+       */
+      public static void maxHeapDown(int[] a, int start, int end) &#123;
+          int c = start;            // 当前(current)节点的位置
+          int l = 2*c + 1;        // 左(left)孩子的位置
+          int tmp = a[c];            // 当前(current)节点的大小
+          for (; l &lt;= end; c=l,l=2*l+1) &#123;
+              // &quot;l&quot;是左孩子，&quot;l+1&quot;是右孩子
+              if ( l &lt; end &amp;&amp; a[l] &lt; a[l+1])
+                  l++;        // 左右两孩子中选择较大者，即m_heap[l+1] 
+              if (tmp &gt;= a[l])
+                  break;        // 调整结束
+              else &#123;            // 交换值
+                  a[c] = a[l];
+                  a[l]= tmp;
+              &#125;
+          &#125;
+      &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><ul>
+<li><p>归并排序的原理</p>
+<blockquote>
+<p>将待排序的数组分成前后两个部分，再递归的将前半部分数据和后半部分的数据各自归并排序，得到的两部分数据，然后使用merge合并算法（算法见代码）将两部分算法合并到一起。<br>例如：如果N=1；那么只有一个数据要排序，N=2，只需要调用merge函数将前后合并，N=4，………..  也就是将一个很多数据的数组分成前后两部分，然后不断递归归并排序，再合并，最后返回有序的数组。</p>
+</blockquote>
+</li>
+<li><p>归并排序的时间复杂度</p>
+<blockquote>
+<p>归并排序的最好、最坏和平均时间复杂度都是O(nlogn)，而空间复杂度是O(n)，比较次数介于(nlogn)/2和(nlogn)-n+1，赋值操作的次数是(2nlogn)。因此可以看出，归并排序算法比较占用内存，但却是效率高且稳定的排序算法。</p>
+</blockquote>
+</li>
+<li><p>代码：</p>
+<blockquote>
+<pre><code>    public class MergeSort &#123;
+      private static void mergeSort(int[] array,int[] tmp,int left,int right)&#123;
+          if(left&lt;right)&#123;
+              int center = ( left + right ) / 2;//取数组的中点
+              mergeSort(array,tmp,left,center);//归并排序数组的前半部分
+              mergeSort(array,tmp,center+1,right);//归并排序数组的后半部分
+              merge(array,tmp,left,center+1,right);//将数组的前后半部分合并
+          &#125;
+      &#125;
+      /*
+       * 超简单的合并函数
+       */
+      private static void merge(int[] array, int[] tmp, int leftPos, int rightPos, int rightEnd) &#123;
+          // TODO Auto-generated method stub
+          int leftEnd = rightPos - 1;
+          int tmpPos = leftPos;
+          int numElements = rightEnd - leftPos + 1;
+          while(leftPos &lt;= leftEnd &amp;&amp; rightPos &lt;= rightEnd)&#123;
+              if(array[leftPos]&lt;=array[rightPos])&#123;
+                  tmp[tmpPos++] = array[leftPos++];
+              &#125;else&#123;
+                  tmp[tmpPos++] = array[rightPos++];
+              &#125;
+          &#125;
+          while(leftPos &lt;= leftEnd)&#123;
+              tmp[tmpPos++] = array[leftPos++];
+          &#125;
+          while(rightPos &lt;= rightEnd)&#123;
+              tmp[tmpPos++] = array[rightPos++];
+          &#125;
+          for(int i=0;i&lt;numElements;i++,rightEnd--)&#123;
+              array[rightEnd] = tmp[rightEnd];
+          &#125;
+      &#125;
+      public static void mergeSort(int[] array)&#123;
+          int[] tmp = new int[array.length];//声明一个用来合并的数组
+          mergeSort(array,tmp,0,array.length-1);//调用排序函数，传入数字的起点和终点
+      &#125;
+  &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><ul>
+<li><p>快速排序原理：</p>
+<blockquote>
+<ol>
+<li>如果数组S中元素是0或者1，则返回；</li>
+<li>区数组S中任一元素v，称之为枢纽元；</li>
+<li>将S-{v}（S中剩余的元素）划分成连个不相交的集合：S1={S-{v}|x&lt;=v}和S2={S-{v}|x&gt;=v};</li>
+<li>返回{quicksort(s1)}后跟v，继而返回{quicksort(S2)}。</li>
+</ol>
+</blockquote>
+</li>
+<li><p>选取枢纽元（三数中值分割法）</p>
+<blockquote>
+<p>一般的做法是使用左端、右端和中心位置上的三个元素的中值作为基元。<br>分割策略：<br>在分割阶段吧所有小元素移到数组的左边，大元素移到数组右边。，大小是相对于枢纽元素而言的。<br>当i在j的左边时，将i右移，移过哪些小于枢纽元的元素，并将j左移，已过那些大于枢纽元的元素，当i和j停止时，i指向一个大元素，而j指向一个小元素，如果i在j的左边，那么将这两个元素交换，其效果是把一个大元素推向右边，而把小元素推向左边。效果如图：</p>
+<p><img src="http://ww1.sinaimg.cn/large/e40462dbgw1f2g8k6ibxqj20ge0k9dhv.jpg" alt="分割策略" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://ww1.sinaimg.cn/large/e40462dbgw1f2g8k6ibxqj20ge0k9dhv.jpg" class="lozad post-image"></p>
+</blockquote>
+</li>
+<li><p>快速排序平均时间复杂度为O(nlogn)，最坏情况为O(n^2)，n越大，速度越快。不是稳定的排序算法。</p>
+</li>
+<li><p>代码：</p>
+<blockquote>
+<pre><code>    /*
+   * 快速排序
+   * 两个方向，左边的i下标一直往右走，当a[i] &lt;= a[center_index]，
+   * 其中center_index是中枢元素的数组下标，而右边的j下标一直往左走，当a[j] &gt; a[center_index]
+   * 如果i和j都走不动了，i &lt;= j, 交换a[i]和a[j],重复上面的过程，直到i&gt;j
+   * 交换a[j]和a[center_index]，完成一趟快速排序
+   * 枢轴采用三数中值分割法可以优化
+   */
+  //递归快速排序
+  public static void quickSort(int a[])&#123;
+      qSort(a, 0, a.length - 1);
+  &#125;
+  //递归排序，利用两路划分
+  public static void qSort(int a[],int low,int high)&#123;
+      int pivot = 0;
+      if(low &lt; high)&#123;
+          //将数组一分为二
+          pivot = partition(a,low,high);
+          //对第一部分进行递归排序
+          qSort(a,low,pivot);
+          //对第二部分进行递归排序
+          qSort(a,pivot + 1,high);
+      &#125;
+  &#125;
+  //partition函数，实现三数中值分割法
+  public static int partition(int a[],int low,int high)&#123;
+      int pivotkey = a[low];   //选取第一个元素为枢轴记录
+      while(low &lt; high)&#123;
+          //将比枢轴记录小的交换到低端
+          while(low &lt; high &amp;&amp; a[high] &gt;= pivotkey)&#123;
+              high--;
+          &#125;
+          //采用替换而不是交换的方式操作
+          a[low] = a[high];
+          //将比枢轴记录大的交换到高端
+          while(low &lt; high &amp;&amp; a[low] &lt;= pivotkey)&#123;
+              low++;
+          &#125;
+          a[high] = a[low];
+      &#125;
+      //枢纽所在位置赋值
+      a[low] = pivotkey;
+      //返回枢纽所在的位置
+      return low;
+  &#125;</code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="桶式排序"><a href="#桶式排序" class="headerlink" title="桶式排序"></a>桶式排序</h3><ul>
+<li><p>桶式排序不再是一种基于比较的排序方法，它是一种比较巧妙的排序方式，但这种排序方式需要待排序的序列满足以下两个特征：<br>待排序列所有的值处于一个可枚举的范围之类；<br>待排序列所在的这个可枚举的范围不应该太大，否则排序开销太大。</p>
+</li>
+<li><p>排序的具体步骤如下：</p>
+<blockquote>
+<p>(1)对于这个可枚举范围构建一个buckets数组，用于记录“落入”每个桶中元素的个数；<br>(2)将（1）中得到的buckets数组重新进行计算，按如下公式重新计算：</p>
+<pre><code>      buckets[i] = buckets[i] +buckets[i-1] (其中1&lt;=i&lt;buckets.length);</code></pre>
+</blockquote>
+</li>
+<li><p>桶式排序是一种非常优秀的排序算法，时间效率极高，它只要通过2轮遍历：第1轮遍历待排数据，统计每个待排数据“落入”各桶中的个数，第2轮遍历buckets用于重新计算buckets中元素的值，2轮遍历后就可以得到每个待排数据在有序序列中的位置，然后将各个数据项依次放入指定位置即可。</p>
+</li>
+<li><p>桶式排序的空间开销较大，它需要两个数组，第1个buckets数组用于记录“落入”各桶中元素的个数，进而保存各元素在有序序列中的位置，第2个数组用于缓存待排数据.</p>
+</li>
+<li><p>桶式排序是稳定的。如果待排序数据的范围在0~k之间，那么它的时间复杂度是O(k+n)的.</p>
+</li>
+<li><p>但是它的限制多，比如它只能排整形数组。而且当k较大，而数组长度n较小，即k&gt;&gt;n时，辅助数组C[k+1]的空间消耗较大。当数组为整形，且k和n接近时, 可以用此方法排序。 </p>
+</li>
+<li><p>代码实现：</p>
+<blockquote>
+<pre><code>        //min的值为0，max的值为待排序数组中最大值+1
+        public static void bucketSort(int[] data, int min, int max) &#123;  
+          // 缓存数组  
+          int[] tmp = new int[data.length];  
+          // buckets用于记录待排序元素的信息  
+          // buckets数组定义了max-min个桶  
+          int[] buckets = new int[max - min];  
+          // 计算每个元素在序列出现的次数  
+          for (int i = 0; i &lt; data.length; i++) &#123;  
+              buckets[data[i] - min]++;  
+          &#125;  
+          // 计算“落入”各桶内的元素在有序序列中的位置  
+          for (int i = 1; i &lt; max - min; i++) &#123;  
+              buckets[i] = buckets[i] + buckets[i - 1];  
+          &#125;  
+          // 将data中的元素完全复制到tmp数组中  
+          System.arraycopy(data, 0, tmp, 0, data.length);  
+          // 根据buckets数组中的信息将待排序列的各元素放入相应位置  
+          for (int k = data.length - 1; k &gt;= 0; k--) &#123;  
+              data[--buckets[tmp[k] - min]] = tmp[k];  
+          &#125;  
+      &#125;  </code></pre>
+</blockquote>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>下面是一个总的表格，大致总结了我们常见的所有的排序算法的特点。</p>
+<table width=100%>
+<tr><th>排序法<th>平均时间<th>最差情形<th>稳定度<th>额外空间<th>备注
+<tr><td>冒泡<td>O(n2)<td>  O(n2)<td> 稳定<td>O(1)<td>n小时较好
+<tr><td>选择<td>O(n2)<td>  O(n2)<td> 不稳定<td>O(1)<td>n小时较好
+<tr><td>插入<td>O(n2)<td>  O(n2)<td> 稳定<td>O(1)<td>大部分已排序时较好
+<tr><td>Shell(希尔)<td>O(nlogn)<td>O(ns)<td> 不稳定<td>O(1)<td>    s是所选分组
+<tr><td>快速<td>O(nlogn)<td>  O(n2)<td> 不稳定<td>O(nlogn)<td>n大时较好
+<tr><td>归并<td>O(nlogn)<td>  O(nlogn)<td> 稳定<td>O(1)<td>n大时较好
+<tr><td>堆<td>O(nlogn)<td>  O(nlogn)<td> 不稳定<td>O(1)<td>n大时较好
+<tr><td>桶式<td>O(k+n)<td>  O(k+n)<td> 稳定<td>O(1)<td>只能排整形数组
+</table></li>
+<li><p>性能测试</p>
+<p>  <img src="http://ww2.sinaimg.cn/large/e40462dbjw1f2gbyba6jcj20440460t0.jpg" alt="100000个随机数测试" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://ww2.sinaimg.cn/large/e40462dbjw1f2gbyba6jcj20440460t0.jpg" class="lozad post-image"></p>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2016/03/31/%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">http://tanqingbo.cn/2016/03/31/%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2016/04/01/操作系统的运行环境/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">操作系统的运行环境 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2016/03/31/计算机网络体系与参考模型/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">计算机网络体系与参考模型 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E2%80%93Java%E5%AE%9E%E7%8E%B0"><span class="toc-text">八大排序算法–Java实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F"><span class="toc-text">希尔排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-text">堆排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%B6%E5%BC%8F%E6%8E%92%E5%BA%8F"><span class="toc-text">桶式排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E2%80%93Java%E5%AE%9E%E7%8E%B0"><span class="toc-text">八大排序算法–Java实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F"><span class="toc-text">希尔排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-text">堆排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%B6%E5%BC%8F%E6%8E%92%E5%BA%8F"><span class="toc-text">桶式排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E2%80%93Java%E5%AE%9E%E7%8E%B0"><span class="toc-text">八大排序算法–Java实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F"><span class="toc-text">希尔排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-text">堆排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%B6%E5%BC%8F%E6%8E%92%E5%BA%8F"><span class="toc-text">桶式排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

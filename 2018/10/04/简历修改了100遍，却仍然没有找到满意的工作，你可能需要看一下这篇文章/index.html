@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2018/10/04/%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B9%E4%BA%86100%E9%81%8D%EF%BC%8C%E5%8D%B4%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E6%BB%A1%E6%84%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%BD%A0%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2018-10-04">
+  <meta property="og:article:modified_time" content="2018-10-04">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2018-10-04T09:23:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2018-10-04</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/漂来漂去/" class="post-meta-link">漂来漂去</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.6k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h1 id="简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章"><a href="#简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章" class="headerlink" title="简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章"></a>简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章</h1><p>最近恰逢秋招，身边很多朋友都跟我抱怨说，简历投出去了不少，可是很多都是石沉大海，没有了回音。于是就急的不行，纷纷跑过来请教简历制作大法。</p>
+<p>话说为啥问我这个没找过工作且非人力资源专业的人呢？我啥也不懂啊，于是便向我的某知名外企HR朋友请教。</p>
+<p>她说，你的朋友有时间去了解你，可是HR没有，顶多给你一分钟的展示时间。如果你的简历内容明确，精致表现，能够快速让HR了解到你的特点和优势，那么这份简历就是出色的，赢面也就更大。</p>
+<p>杨澜说过，没有人有义务必须透过连你自己都毫不在意的邋遢外表去发现你优秀的内在，对简历来说也适用。</p>
+<p>所以检验一份好的简历的标准就是看HR是否看了就想约你面试。那么怎样在写简历的时候都有哪些坑需要我们去避开的呢？我的这位HR朋友说，她在看了几千份简历后，很多人的简历都存在以下几个问题：</p>
+<h3 id="问题一：一份简历从头用到尾"><a href="#问题一：一份简历从头用到尾" class="headerlink" title="问题一：一份简历从头用到尾"></a>问题一：一份简历从头用到尾</h3><p>不同的岗位有不同的岗位需求，因此每投一个岗位、一个公司，简历都要经过修改，我想这应该是常识吧。可是我的朋友听我说这句话的时候，她只回了我两个字：呵呵！</p>
+<p>你看，就是会有这么不走心的同学，所以如果你的简历总是频频被刷，那就赶紧反省一下自己是否偷懒了。毕竟老是被刷，你心里应该有数了。</p>
+<h3 id="问题二：简历过于繁琐"><a href="#问题二：简历过于繁琐" class="headerlink" title="问题二：简历过于繁琐"></a>问题二：简历过于繁琐</h3><p>由于HR每天需要审阅大量的简历，查看你的个人简历的时候可能只花了很短的时间就决定是否召见你，所以一页纸的简历效果是最好的。朋友说她亲眼看过一份超三页纸的简历在她老大手里没超过2秒就直接next one了。</p>
+<p>一些人在写简历的时候习惯把所有个人资料都罗列上（政治面貌、健康状况、血型、星座、婚姻状况等）。这样不仅使简历啰嗦冗长，一些个人信息还可能成为获得面试机会的障碍，可以说是“偷鸡不成蚀把米”。</p>
+<h3 id="问题三：求职照太过随意"><a href="#问题三：求职照太过随意" class="headerlink" title="问题三：求职照太过随意"></a>问题三：求职照太过随意</h3><p>都说这是个看脸的世界，HR也不例外。 朋友说她有一次看到有人直接拿用自拍的头像来作为简历照片，也是很勇敢了！！</p>
+<p>所以，敲黑板划重点了，简历上一定要放有职业感的照片，如果没有，那就花几十块钱去照相馆拍一张，那种学校打印店10块钱拍一次的那种证件照还是别拿出来了。</p>
+<h2 id="简历制作的一些小技巧"><a href="#简历制作的一些小技巧" class="headerlink" title="简历制作的一些小技巧"></a>简历制作的一些小技巧</h2><p>在千篇一律的简历面前，一点小心思有时候说不定就能有大惊喜。朋友她总结了一下之前见到过的心思小技巧，拿来分享给大家！</p>
+<p>不要用表格式模板，看起来千篇一律，显得死板；过多的框框给人一种束缚感。</p>
+<p>也不建议采用密集文字式模板，过多文字使得简历看上去不清晰。</p>
+<h3 id="死得快型选手"><a href="#死得快型选手" class="headerlink" title="死得快型选手"></a>死得快型选手</h3><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/qnAEO4m.png" class="lozad post-image"src="https://i.imgur.com/qnAEO4m.png"></p>
+<h3 id="看简历都想录用型选手"><a href="#看简历都想录用型选手" class="headerlink" title="看简历都想录用型选手"></a>看简历都想录用型选手</h3><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/RO13X3Y.png" class="lozad post-image"src="https://i.imgur.com/RO13X3Y.png"></p>
+<p>▲用结果强调工作经验</p>
+<ul>
+<li>个人工作经历过程很重要，但是结果才是最能体现你个人能力的证明。因此，在描述自己的工作经验时，一定要写上结果来证明你的能力。</li>
+</ul>
+<p>▲关键词突出醒目</p>
+<ul>
+<li>个人简历的外表一定要醒目，重点可以使用斜体、大写、下划线、首字突出或箭头等标示出来。</li>
+</ul>
+<p>▲定位精准</p>
+<ul>
+<li>HR一般很忙的，如果不能很快找到想要的信息，你就很可能变成谢谢参与了。因此，每个人都要为自己的简历精准定位，突出重点。</li>
+</ul>
+<p>▲字句文法不能出错</p>
+<ul>
+<li>HR一般很讨厌个人简历中有错别字，没有之一。所以简历写完之后记得全面检查一遍。</li>
+</ul>
+<p>▲简历命名一目了然</p>
+<ul>
+<li>HR每天招的职位很多，直接在文件命名的时候就能准确传递重要信息，给HR省不少功夫。很多不省心的求职者，非得让HR打开邮件下载简历才能看到你的基本信息。<br>如没有特殊要求，简历文件命名一般是姓名+投递职位+地区，这样HR对你的印象分就不会低。</li>
+</ul>
+<p>如果看完上面这些，你还是不知道怎么编辑你的简历，那也没有关系，我有几个在大厂做HR的朋友，实验室也有不少BAT、微软等大厂offer都拿到手的大神， 你可以加我微信，我让他们一对一、手把手教你如何打造一份出色的简历，并教你在面试中如何应对面试官的问题。因为我也是请人办事，所以这个服务可能得收取部分酬劳。99元一位，可能还不够下馆子请人吃一顿饭的钱，如果不收钱的话，你们也不会相信我们会认真指导，所以暂且定这个价吧~</p>
+<p>我一直都觉得，如果一个人琢磨的话，不知道要撞多少回南墙，也不一定能找的到出路，但如果有一个人能带你一下，说不定能起到打通任督二脉的效果，帮你瞬间缩短探索的时间和试错的成本。</p>
+<p>我要做的就是，在你求职的过程中，请一些职场大牛，帮你完善简历，带你避开一些求职的坑，缩短你的试错成本，助你找到理想的工作。</p>
+<p>此外，为了给大家谋取更多的福利，同时让更多的人了解我们的这个服务，如果你能拉来一个朋友来关顾我们的服务，给你打5折，拉两个朋友过来，打2折，拉3个朋友过来的话，免费给你修改简历和指导~</p>
+<h3 id="我的微信"><a href="#我的微信" class="headerlink" title="我的微信"></a>我的微信</h3><p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/NRNqIWh.jpg" class="lozad post-image"src="https://i.imgur.com/NRNqIWh.jpg"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2018/10/04/%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B9%E4%BA%86100%E9%81%8D%EF%BC%8C%E5%8D%B4%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E6%BB%A1%E6%84%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%BD%A0%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0/">http://tanqingbo.cn/2018/10/04/%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B9%E4%BA%86100%E9%81%8D%EF%BC%8C%E5%8D%B4%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E6%BB%A1%E6%84%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%BD%A0%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2018/10/06/论文笔记：用于语义分割的全卷积网络 （fully convolutional networks for semantic segmentation）/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">论文笔记：用于语义分割的全卷积网络 （fully convolutional networks for semantic segmentation） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2018/09/07/基于pandas的数据预处理总结/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">基于pandas的数据预处理总结 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B9%E4%BA%86100%E9%81%8D%EF%BC%8C%E5%8D%B4%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E6%BB%A1%E6%84%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%BD%A0%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0"><span class="toc-text">简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E4%B8%80%E4%BB%BD%E7%AE%80%E5%8E%86%E4%BB%8E%E5%A4%B4%E7%94%A8%E5%88%B0%E5%B0%BE"><span class="toc-text">问题一：一份简历从头用到尾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E7%AE%80%E5%8E%86%E8%BF%87%E4%BA%8E%E7%B9%81%E7%90%90"><span class="toc-text">问题二：简历过于繁琐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89%EF%BC%9A%E6%B1%82%E8%81%8C%E7%85%A7%E5%A4%AA%E8%BF%87%E9%9A%8F%E6%84%8F"><span class="toc-text">问题三：求职照太过随意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">简历制作的一些小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E5%BE%97%E5%BF%AB%E5%9E%8B%E9%80%89%E6%89%8B"><span class="toc-text">死得快型选手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8B%E7%AE%80%E5%8E%86%E9%83%BD%E6%83%B3%E5%BD%95%E7%94%A8%E5%9E%8B%E9%80%89%E6%89%8B"><span class="toc-text">看简历都想录用型选手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E5%BE%AE%E4%BF%A1"><span class="toc-text">我的微信</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B9%E4%BA%86100%E9%81%8D%EF%BC%8C%E5%8D%B4%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E6%BB%A1%E6%84%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%BD%A0%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0"><span class="toc-text">简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E4%B8%80%E4%BB%BD%E7%AE%80%E5%8E%86%E4%BB%8E%E5%A4%B4%E7%94%A8%E5%88%B0%E5%B0%BE"><span class="toc-text">问题一：一份简历从头用到尾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E7%AE%80%E5%8E%86%E8%BF%87%E4%BA%8E%E7%B9%81%E7%90%90"><span class="toc-text">问题二：简历过于繁琐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89%EF%BC%9A%E6%B1%82%E8%81%8C%E7%85%A7%E5%A4%AA%E8%BF%87%E9%9A%8F%E6%84%8F"><span class="toc-text">问题三：求职照太过随意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">简历制作的一些小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E5%BE%97%E5%BF%AB%E5%9E%8B%E9%80%89%E6%89%8B"><span class="toc-text">死得快型选手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8B%E7%AE%80%E5%8E%86%E9%83%BD%E6%83%B3%E5%BD%95%E7%94%A8%E5%9E%8B%E9%80%89%E6%89%8B"><span class="toc-text">看简历都想录用型选手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E5%BE%AE%E4%BF%A1"><span class="toc-text">我的微信</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B9%E4%BA%86100%E9%81%8D%EF%BC%8C%E5%8D%B4%E4%BB%8D%E7%84%B6%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E6%BB%A1%E6%84%8F%E7%9A%84%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%BD%A0%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0"><span class="toc-text">简历修改了100遍，却仍然没有找到满意的工作，你可能需要看一下这篇文章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9A%E4%B8%80%E4%BB%BD%E7%AE%80%E5%8E%86%E4%BB%8E%E5%A4%B4%E7%94%A8%E5%88%B0%E5%B0%BE"><span class="toc-text">问题一：一份简历从头用到尾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E7%AE%80%E5%8E%86%E8%BF%87%E4%BA%8E%E7%B9%81%E7%90%90"><span class="toc-text">问题二：简历过于繁琐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E4%B8%89%EF%BC%9A%E6%B1%82%E8%81%8C%E7%85%A7%E5%A4%AA%E8%BF%87%E9%9A%8F%E6%84%8F"><span class="toc-text">问题三：求职照太过随意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8E%86%E5%88%B6%E4%BD%9C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">简历制作的一些小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E5%BE%97%E5%BF%AB%E5%9E%8B%E9%80%89%E6%89%8B"><span class="toc-text">死得快型选手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%8B%E7%AE%80%E5%8E%86%E9%83%BD%E6%83%B3%E5%BD%95%E7%94%A8%E5%9E%8B%E9%80%89%E6%89%8B"><span class="toc-text">看简历都想录用型选手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E5%BE%AE%E4%BF%A1"><span class="toc-text">我的微信</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

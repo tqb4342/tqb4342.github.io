@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="MQTT通信流程和Broker的任务">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/MQTT%E9%80%9A%E4%BF%A1%E6%B5%81%E7%A8%8B%E5%92%8CBroker%E7%9A%84%E4%BB%BB%E5%8A%A1/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      MQTT通信流程和Broker的任务
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.1k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/243.html">http://www.bewindoweb.com/243.html</a><div class="card-article-text"><h1>��、MQTT报文通信流程</h1><p>要做消息代理，首先需要解析协议。我们从抽象层面去考虑协议，不去更深挖到底哪个比特组合代表什么含义，这样有利于理清逻辑，而且早就有很多组件可以直接使用，只需要True和False代表什么含义，不需要知道001和010代表什么含义。以<a href="http://mcxiaoke.github.io/mqtt/protocol/MQTT-3.1.1-CN.html" target="_blank">MQTT 3.1.1</a>为例来描述细节。</p><h2>1、术语定义</h2><p><span style="font-weight: bold;">1）客户端 Client</span></p><p>使用MQTT的程序或设备，它可以做的操作是：</p><ul><li>发布消息给其他客户端</li><li>订阅主题</li><li>取消订阅主题</li><li>断开连接</li></ul><p><span style="font-weight: bold;">2）服务端 Server</span></p><p>作为发送消息的客户端和请求订阅的客户端之间的中介，也就是MQTT Broker，它可以：</p><ul><li>接受网络连接</li><li>接受客户端发布的应用消息</li><li>处理客户端的订阅和取消订阅请求</li><li>转发应用消息给符合条件的已订阅客户端</li></ul><p><span style="font-weight: bold;">3）订阅 Subscription</span></p><p>包含一个主题过滤器（Topic Filter）、一个最大服务质量等级QoS。</p><p><span style="font-weight: bold;">4）主题名 Topic Name</span></p><p>附加在应用消息上的一个标签，也就是发布（Publish）消息所携带的主题名称。</p><p><span style="font-weight: bold;">5）主题过滤器 Topic Filter</span></p><p>订阅中包含的一个表达式，用于表示相关的一个或多个主题，可以使用通配符，也就是订阅（Subscribe）消息所携带的主题名称。</p><p><span style="font-weight: bold;">6）会话 Session</span></p><p>就和HTTP的会话概念一致，每一个会话里包含着客户端的信息、客户端订阅了哪些主题、以及一些保存的消息等等。</p><p><span style="font-weight: bold;">7）控制报文 MQTT Control Packet</span></p><p>MQTT的信息数据包，一共有14种。</p><h2>2、MQTT通信图</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/869943599dc44cde7fba08f5770294b5.png" style="max-width:100%;"></p><p>客户端首先通过发包CONNECT、收包CONNACK来建立MQTT连接；然后通过发心跳包PINGREQ、收心跳包PINGRESP来建立心跳，维护通信链路。</p><p>连接建立后，可以通过发包SUBSCRIBE、收包SUBACK来订阅主题，通过发包UNSUBSCRIBE、收包UNSUBACK来取消订阅主题。</p><p>对于QoS0的消息，直接发送PUBLISH即可，不需要接受回包。</p><p>对于QoS1的消息，发包PUBLISH、收包PUBACK，才算是消息发送成功了。</p><p>对于QoS2的消息，发包PUBLISH、收包PUBREC；再次发包PUBREL，再次收包PUBCOMP，消息才发送成功。</p><h1>二、Broker的任务</h1><h2>1、CONNECT/CONNACK 连接服务端</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/addad29b943d789b131911e14ca148bd.png" style="max-width:100%;"></p><p><span style="font-weight: bold;">1）判断是否是合法的MQTT包</span></p><p>是否是MQTT协议：不是，断开连接。</p><p>是否是支持的MQTT版本：不支持，返回CONNACK[不支持的协议级别]报文，断开连接。</p><p><span style="font-weight: bold;">2）用户名和密码是否正确</span></p><p>用户名是否合法：UTF-8、字符串，不合法，返回CONNACK[无效的用户名或密码]，断开连接。</p><p>密码是否合法：0~65535字节，不合法，返回CONNACK[无效的用户名或密码]，断开连接。</p><p>用户名、密码是否正确：密码完全可以不用明文密码，采用JWT等验证方式的数据，不正确，返回CONNACK[未授权]，断开连接。</p><p><span style="font-weight: bold;">3）审查连接情况</span></p><p>ClientID是否合法：必须不为空，必须是UTF-8编码、大小写字母和数字、1~23字节长（1~23个数字或字母），不合法，返回CONNACK[标识符不合格]，断开连接。</p><blockquote>【自定义】协议规定服务端可以自己设计ClientID长度、字符，可以是零字节。如果是零字节，则服务器需要辅助生成ClientID，并且只能是临时会话（Clean Session为1），因为断开后下一次服务器就不认识这个客户端了。</blockquote><p>是否已有在线连接占用了这个ClientID：MQTT要求ClientID唯一，如果占用，则踢掉旧会话，维持这个新会话。</p><p>是否清理会话：</p><p>① 如果不清理会话（要求持久化会话，CleanSession为False），那么服务端必须在客户端离线之后保留客户端的会话状态，包括：</p><ul><li>客户端的订阅信息</li><li>已经发送给客户端，还未确认的QoS1、QoS2消息</li><li>离线接收的QoS1、QoS2消息</li><li>已从客户端接收，还未确认的QoS2消息</li><li>可选，准备发给客户端的QoS0消息</li></ul><p>持久化Session虽然是持久化，也需要设置过期时间</p><p>② 如果清理会话（临时会话，CleanSession为True），则服务端丢弃之前的所有数据，并开始一个新的临时会话。</p><blockquote>如果客户端想要清理之前的数据，重新开始一个新连接，那么需要先CleanSession=True连接一次，断开连接，再重新建立新连接。</blockquote><p><span style="font-weight: bold;">4）是否有遗嘱消息</span></p><p>遗嘱主题是否合法：UTF-8，字符串</p><p>遗嘱消息是否合法：0~65535字节</p><p>遗嘱消息是否保留：如果设置了保留，服务端将为这个遗嘱主题保留这条消息。</p><p>遗嘱消息会在以下情况下分发：</p><ul><li>服务端检测到I/O错误或者网络故障<br></li><li>客户端在保持连接（Keep Alive）的时间段内未能通讯</li><li>客户端没发送DISCCONECT报文强行关闭了连接</li><li>由于协议错误服务端主动关闭了连接</li></ul><p>遗嘱消息会在以下情况下被清理：</p><ul><li>客户端发送了DISCONNECT报文正常退出（无论是否是持久会话）</li></ul><p><b>5）保持心跳</b></p><p>Keep Alive声明了客户端想要保持的心跳间隔，以秒为单位，一共2个字节。一般是设置为60秒或几分钟，最大值为18小时12分15秒。</p><p>如果值非零，服务端如果在1.5倍KeepAlive时间内没有收到任何控制报文，则视为客户端离开，需要断开连接。</p><p>如果值为零，服务端不需要判断客户端是否活跃，但只要服务端认为不活跃，就可以主动断开连接。</p><blockquote>需要核查客户端声明的心跳间隔，否则如果时间过短服务端承受不了那么大的压力。</blockquote><p><span style="font-weight: bold;">6）返回CONNACK</span></p><p>设置Session Present：</p><p>如果CleanSession为0（要求持久化会话），并且服务端保存了旧会话的数据，那么必须将SessionPresent设置为1，表明服务端存在旧会话，方便客户端选择是否要使用这个旧会话。其余情况均设置SessionPresent为0。</p><p>返回报文：</p><p>除了明确的异常断开的情况，其他所有异常返回CONNACK[服务端不可用]。</p><p>如果连接被接受，则返回CONNACK[已接受]。</p><h2>2、DISCONNECT 断开连接</h2><p><span style="font-weight: bold;">1）丢弃遗嘱消息</span></p><p><span style="font-weight: bold;">2）断开网络连接</span></p><h2>3、SUBSCRIBE/SUBACK 订阅主题</h2><p><span style="font-weight: bold;">1）解析订阅请求</span></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/296c7ec65a6f7a7425063d1609b036a4.png" style="max-width:100%;"></p><p>一个SUBSCRIBE报文可以包含一系列的主题过滤器，以及对应的QoS等级。</p><p><span style="font-weight: bold;">2）权限检查</span></p><p>如果客户端没有权限订阅这个主题过滤器，则需要标记订阅失败。</p><p><span style="font-weight: bold;">3）发布主题的保留消息</span></p><p>对于设置了保留消息的主题，如果任何的主题过滤器能够匹配上，都需要将保留消息发布���该客户端。</p><p>如果订阅的主题过滤器已经存在（可能QoS等级不同），那么用新的订阅替换旧订阅，并重发匹配主题的保留消息。&nbsp;&nbsp;<br></p><p><b>4）回复SUBACK</b></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7155f06999c602ba7df160df6612281b.png" style="max-width:100%;"></p><p>如果SUBSCRIBE是多个主题过滤器，那么回复也必须在一个SUBACK报文中回复全部的主题过滤器订阅结果。</p><p>一个主题过滤器的订阅结果包含主题过滤器、QoS等级。如果服务端不支持这么高的服务质量，QoS等级回复支持的最大服务质量或者回复订阅失败。如果主题过滤器不合法，QoS等级则是订阅失败。</p><h2>4、UNSUBSCRIBE/UNSUBACK 取消订阅</h2><p>同样在一个报文可以包含希望取消的多个主题过滤器。在取消订阅后，已经在分发的消息仍然可以继续分发，但服务端不能在接受任何该主题的新消息了。</p><blockquote>服务端是无法清空所有订阅的，如果要清空，需要客户端准确的取消订阅所有订阅主题，或者清除服务端的Session重新连接。</blockquote><h2>5、PUBLISH 发布消息</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d7869177df010a16e1b34613a6b724fe.png" style="max-width:100%;"></p><p><b>1）检查主题名是否正确</b></p><p>主题名只有一个，而且是精确的主题，不能包含任何通配符。</p><p><b>2）检查客户端是否有权限向某个主题发布消息</b></p><p>防止客户端非法地发布消息。</p><p><b>3）重发标志DUP</b></p><p>如果收到重发标志，则表明这是重发的PUBLISH报文。</p><p>唯一要求重发的场景是客户端设置CleanSession为0（持久化会话）重连，服务端需要重发未确认的PUBLISH报文和PUBREL报文。</p><blockquote>这里有个疑问是，假设服务端发送了QoS1的PUBLISH报文，在一定时间内没有收到PUBACK报文，那么需要重新尝试分发吗？虽然底层是TCP保证了消息不会丢失，但可能客户端出了错或者发生了什么，导致没有回复PUBACK报文。我的理解是当然需要重发，因为在发布客户端那边，我们已经做完了QoS1通信，发布客户端会以为消息已经按QoS1送达了，而Broker转发给接受客户端这边，必须确保接收客户端收到了这条消息，所以一旦超时，必须要重发。</blockquote><p>消息排序：重发任何之前的PUBLISH报文时，必须按原始PUBLISH报文的发送顺序重发。这里不是说要等待前一条消息确认后才能下发新一条消息，否则就变成同步了效率低下，这里是说当未收到ACK需要重发的时候，需要按照相同的顺序进行重发。例如发布1、2、3、4消息，订阅者收到的可能是1、2、3、2、3、4，后面的2、3是重发的报文，必须按照2、3的顺序，整个过程也并不是同步的而是并发的，否则应该是1、2、2、3、3、4了。</p><p><b>4）保留消息Retain</b></p><p>一个主题的保留消息只有一条。</p><p>作用：如果Retain为1��True），则服务端需要保存这条消息及其QoS，以便分发给未来的新订阅者。</p><p>设置：如果Retain为1，则服务端必须丢弃之前为这个主题的保留消息，将这条消息作为最新的保留消息保存。</p><p>清除：如果Retain为1且有效载荷为0字节，那么会被当做正常消息进行分发，并且该主题的保留消息会被移除，服务端不能存储零字节的保留消息。</p><p>下发：如果客户端的新订阅匹配了一条保留消息，那么服务端给它发送的PUBLISH报文的Retain标志必须置为1，以提醒客户端这是来自于主题的保留消息而非正常消息。&nbsp;&nbsp;<br></p><p><span style="font-weight: bold;">5）主题名</span></p><p>主题名只能是精确的，不能包含通配符。那如果我们有需求是向“北京地区”的客户端分发消息应该怎么办呢？那就需要北京地区的客户端订阅通配符主题表明自己是北京地区的，而不是发送者向通配符主题发送消息。</p><p>如果客户端同时订阅了通配符和精确匹配的主题，那么匹配的通配符和精确匹配的主题过滤器都将会收到消息。例如订阅了/abc/#和/abc/123，当发布/abc/123的时候，两个主题都会收到消息，哪怕它们是一个客户端订阅的。&nbsp;&nbsp;<br></p><p>① 主题由主题层级分隔符（Topic Level Separator）斜杠“/”进行分隔，两个斜杠可以相邻，表示一个零长度的主题层级，虽然不推荐这样做。</p><p>② 多层通配符（Mutil-Level wildcard）井号"#"可以匹配任意层级，但必须跟在主题层级分隔符之后，并且必须是最后一个字符。</p><p>【非法格式】</p><p>"sport/tennis#"是无效的，因为tennis和#处于了同一层级</p><p>"sport/tennis/#/ranking"是无效的，因为它不是最后一个字符。</p><p>"sport/tennis/#ranking"是无效的，因为它不是最后一个字符。&nbsp;&nbsp;<br></p><p>【匹配策略】</p><p>如果客户端订阅了"sport/tennis/player1/#"，那么：</p><p>"sport/tennis/player1"可以发布消息给它；</p><p>"sport/tennis/player1/ranking"可以发布消息给它；<br></p><p>"sport/tennis/player1/score/wimbledon"可以发布消息给它；<br></p><p>③ 单层通配符加号“+”可以匹配单层，可以放到任意位置，可以和多层通配符一起使用，但必须独占整个层级。</p><p>【非法格式】</p><p>"sport+"是无效的，因为没有独占整个层级。</p><p>【匹配策略】</p><p>如果客户端订阅了"sport/tennis/+"，那么：</p><p>"sport/tennis/player1"可以发消息给它；</p><p>"sport/tennis/player1/ranking"不能发消息给它，因为多了一层。</p><p>&nbsp; "sport/tennis/"可以发消息给它，斜杠后面没有数据视为零长度的层级。<br></p><p>④ $开头的主题</p><p>通配符（#或+）不能匹配以$开头的主题，例如发布消息到"$TEST/monitor"，订阅"#"、"+/monitor"的主题将不会收到消息，只有“$TEST/#”等头部精确匹配的才会收到消息。</p><p>通常$SYS会被用作服务器内部的统计信息主题。</p><p>⑤ 主题格式规定</p><p>主题名至少包含1个字符（不能为空）；</p><p>主题名大小写敏感；</p><p>主题名可以包含空格；</p><p>只包含一个“/”的主题名是合法的，含义为[空]/[空]；</p><p>主题名是UTF-8字符串，不能超过65535个字节。</p><p><b>6）报文标识符</b></p><p>报文标识符只会在QoS1、QoS2出现，它用来标记一对完整的通信：</p><p>QoS1-PUBLISH / QoS1-PUBACK</p><p>QoS2-PUBLISH / QoS2- PUBREC</p><p>QoS2-PUBREL / QoS2-PUBCOMP</p><p>由于发送消息不是同步等待发完一条收到回包再发下一条的，而是同时发送多条消息同时等待回包，所以通信双方通过设定的报文标识符来知道这是哪一次通信，从而去做相应处理。</p><p>报文标识符范围是1~65535，注意是非零的。</p><p><span style="font-weight: bold;">7）QoS的具体流程</span></p><p>QoS0，只需要简单��接受PUBLISH报文，然后投递的时候也发送PUBLISH报文即可，不需要管回包。</p><p><br></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1c76dc201a20bf156b7b30c81907827f.png" style="max-width:100%;"></p><p>QoS1：&nbsp;&nbsp;</p><p>1.1 发布者发布消息给Broker</p><p>1.2 Broker持久化这条消息</p><p>1.3 以相同packetId=12回复ACK</p><p>2.1 Broker发布消息给订阅者</p><p>2.2 订阅者以相同packetId=631回复ACK</p><p>2.3 Broker删除持久化的消息</p><p>对于Broker来说，需要关注收到消息后的操作；对于订阅者来说，当Broker未收到ACK的时候会持续重复发送Publish消息，所以可能重复但必定到达；两侧的packetId是由各自的客户端session分别维护的，没有任何关系。</p><p><br></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/8137968ac07e2f8d49c15b12ee48ee7c.png" style="max-width:100%;"></p><p>QoS2：&nbsp;&nbsp;</p><p>1.1 发布者发布消息给Broker</p><p>1.2 Broker存储消息</p><p>2.1 Broker回复发布者Publish REC，此后收到任何packetId=13的Publish消息都视为重复消息进行丢弃。</p><p>2.2 发布者发布Publish REL，Broker将存储的消息移动到下发队列，向订阅者下发消息</p><p>2.3 Broker回复发布者Publish COMP，完成发布端的QoS2全部阶段。</p><p>3.1 订阅者回复Publish REC，Broker删除存储的Publish消息（第一阶段），重新存储一个Publish REL消息并下发。</p><p>3.2 订阅者回复Publish REL，Broker删除存储的Publish REL消息（第二阶段），回复订阅者Publish COMP，完成订阅端的QoS2全部阶段。</p><p>订阅者此时才会向上转发消息，上层收到的QoS2消息有且只会有一条。&nbsp;&nbsp;</p><blockquote>也许你会担心例如联网的天然气灶，如果之前一直发送打开消息没有发送成功，半夜的时候突然重连上网络，接收到了打开消息怎么办！或者联网的防盗门，半夜才重连，接收到了打开消息怎么办！不用担心，一般这种消息都会带有时间戳的，完全可以在客户端上做逻辑操作，例如超时5分钟则丢弃消息；同时服务器保存的session具有过期时间，一般为2小时，过期后哪怕是持久化的会话，所有离线消息也都将被丢弃。</blockquote><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/MQTT%E9%80%9A%E4%BF%A1%E6%B5%81%E7%A8%8B%E5%92%8CBroker%E7%9A%84%E4%BB%BB%E5%8A%A1/">http://tanqingbo.cn/2019/10/06/MQTT%E9%80%9A%E4%BF%A1%E6%B5%81%E7%A8%8B%E5%92%8CBroker%E7%9A%84%E4%BB%BB%E5%8A%A1/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/Jquery使用ajax过程中禁止点a标签/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Jquery使用ajax过程中禁止点a标签 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/MQTT Broker的需求和各大Broker对比/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">MQTT Broker的需求和各大Broker对比 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��、MQTT报文通信流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、术语定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、MQTT通信图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Broker的任务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、CONNECT&#x2F;CONNACK 连接服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、DISCONNECT 断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、SUBSCRIBE&#x2F;SUBACK 订阅主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、UNSUBSCRIBE&#x2F;UNSUBACK 取消订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、PUBLISH 发布消息</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��、MQTT报文通信流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、术语定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、MQTT通信图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Broker的任务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、CONNECT&#x2F;CONNACK 连接服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、DISCONNECT 断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、SUBSCRIBE&#x2F;SUBACK 订阅主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、UNSUBSCRIBE&#x2F;UNSUBACK 取消订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、PUBLISH 发布消息</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��、MQTT报文通信流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、术语定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、MQTT通信图</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Broker的任务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、CONNECT&#x2F;CONNACK 连接服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、DISCONNECT 断开连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、SUBSCRIBE&#x2F;SUBACK 订阅主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、UNSUBSCRIBE&#x2F;UNSUBACK 取消订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、PUBLISH 发布消息</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

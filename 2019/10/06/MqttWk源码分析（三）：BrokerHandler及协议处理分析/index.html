@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="MqttWk源码分析（三）：BrokerHandler及协议处理分析">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/MqttWk%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9ABrokerHandler%E5%8F%8A%E5%8D%8F%E8%AE%AE%E5%A4%84%E7%90%86%E5%88%86%E6%9E%90/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      MqttWk源码分析（三）：BrokerHandler及协议处理分析
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.9k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><p><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/250.html">http://www.bewindoweb.com/250.html</a></p>
+<div class="card-article-text"><h1>前言</h1><p>基于MqttWk v1.0.7。&nbsp;&nbsp;<br></p><h1>一、BrokerHandler</h1><h2>channelActive()</h2><pre><code class="prettyprint lang-java linenums">@Override
+  public void channelActive(ChannelHandlerContext ctx) throws Exception &#123;
+      super.channelActive(ctx);
+      this.channelGroup.add(ctx.channel());
+      this.channelIdMap.put(ctx.channel().id().asShortText(), ctx.channel().id());
+  &#125;</code></pre><p>当channel刚生效（客户端刚连接），将其channel信息存起来。</p><p>Netty默认提供了channel管理，这里自己做channel管理是为了方便根据channelId快速找到对应channel好下发消息。</p><h2>channelInactive()</h2><pre><code class="prettyprint lang-java linenums">@Override
+  public void channelInactive(ChannelHandlerContext ctx) throws Exception &#123;
+      super.channelInactive(ctx);
+      this.channelGroup.remove(ctx.channel());
+      this.channelIdMap.remove(ctx.channel().id().asShortText());
+  &#125;</code></pre><p>当channel失效时，将channel信息移除。</p><h2>exceptionCaught()</h2><pre><code class="prettyprint lang-java linenums">@Override
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception &#123;
+      if (cause instanceof IOException) &#123;
+          // 远程主机强迫关闭了一个现有的连接的异常
+          ctx.close();
+      &#125; else &#123;
+          super.exceptionCaught(ctx, cause);
+      &#125;
+  &#125;</code></pre><p>连接发生IO异常时，关闭channel。</p><p>如果你想要做更多处理，比如发生自定义的异常处理逻辑，也可以在这里做。</p><p>在这个方法运行完后，会去因为关闭连接触发channelInactive，所以如果在channelInactive那里做了清理工作，这里就不要重复做了。</p><h2>userEventTriggered()</h2><pre><code class="prettyprint lang-java linenums">@Override
+  public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception &#123;
+      if (evt instanceof IdleStateEvent) &#123;
+          IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
+          if (idleStateEvent.state() == IdleState.ALL_IDLE) &#123;
+              Channel channel = ctx.channel();
+              String clientId = (String) channel.attr(AttributeKey.valueOf("clientId")).get();
+              // 发送遗嘱消息
+              if (this.protocolProcess.getSessionStoreService().containsKey(clientId)) &#123;
+                  SessionStore sessionStore = this.protocolProcess.getSessionStoreService().get(clientId);
+                  if (sessionStore.getWillMessage() != null) &#123;
+                      this.protocolProcess.publish().processPublish(ctx.channel(), sessionStore.getWillMessage());
+                  &#125;
+              &#125;
+              ctx.close();
+          &#125;
+      &#125; else &#123;
+          super.userEventTriggered(ctx, evt);
+      &#125;
+  &#125;</code></pre><p>userEventTrigger可以编写自定义的事件发生后处理逻辑。这里是判断当客户端一直没有发送消息也没有接收的时候，就触发IdleState，然后发送遗嘱消息并关闭连接。我觉得这里的逻辑有问题，因为遗嘱消息的标准分发条件是：</p><ul><li>服务端检测到了I/O错误或网络故障</li><li>客户端在KeepAlive的时间内未能通讯</li><li>客户端没有发送DISCONNECT报文直接关闭连接</li><li>由于协议错误关闭了网络连接</li></ul><p>所以不只是“未能通讯”才分发，抛出异常也会分发的。</p><h2>channelRead0()</h2><pre><code class="prettyprint lang-java linenums">@Override
+  protected void channelRead0(ChannelHandlerContext ctx, MqttMessage msg) throws Exception &#123;
+      if (msg.decoderResult().isFailure()) &#123;
+          Throwable cause = msg.decoderResult().cause();
+          if (cause instanceof MqttUnacceptableProtocolVersionException) &#123;
+              ctx.writeAndFlush(MqttMessageFactory.newMessage(
+                      new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+                      new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_UNACCEPTABLE_PROTOCOL_VERSION, false),
+                      null));
+          &#125; else if (cause instanceof MqttIdentifierRejectedException) &#123;
+              ctx.writeAndFlush(MqttMessageFactory.newMessage(
+                      new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+                      new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_IDENTIFIER_REJECTED, false),
+                      null));
+          &#125;
+          ctx.close();
+          return;
+      &#125;
+
+<pre><code>  switch (msg.fixedHeader().messageType()) &#123;
+      case CONNECT:
+          protocolProcess.connect().processConnect(ctx.channel(), (MqttConnectMessage) msg);
+          break;
+      case CONNACK:
+          break;
+      case PUBLISH:
+          protocolProcess.publish().processPublish(ctx.channel(), (MqttPublishMessage) msg);
+          break;
+      case PUBACK:
+          protocolProcess.pubAck().processPubAck(ctx.channel(), (MqttMessageIdVariableHeader) msg.variableHeader());
+          break;
+      case PUBREC:
+          protocolProcess.pubRec().processPubRec(ctx.channel(), (MqttMessageIdVariableHeader) msg.variableHeader());
+          break;
+      case PUBREL:
+          protocolProcess.pubRel().processPubRel(ctx.channel(), (MqttMessageIdVariableHeader) msg.variableHeader());
+          break;
+      case PUBCOMP:
+          protocolProcess.pubComp().processPubComp(ctx.channel(), (MqttMessageIdVariableHeader) msg.variableHeader());
+          break;
+      case SUBSCRIBE:
+          protocolProcess.subscribe().processSubscribe(ctx.channel(), (MqttSubscribeMessage) msg);
+          break;
+      case SUBACK:
+          break;
+      case UNSUBSCRIBE:
+          protocolProcess.unSubscribe().processUnSubscribe(ctx.channel(), (MqttUnsubscribeMessage) msg);
+          break;
+      case UNSUBACK:
+          break;
+      case PINGREQ:
+          protocolProcess.pingReq().processPingReq(ctx.channel(), msg);
+          break;
+      case PINGRESP:
+          break;
+      case DISCONNECT:
+          protocolProcess.disConnect().processDisConnect(ctx.channel(), msg);
+          break;
+      default:
+          break;
+  &#125;</code></pre>
+<p>  }</code></pre><p>这里用channelRead0而不是channelRead是因为作者继承的SimpleChannelInboundHandler&lt;MqttMessage&gt;而不是ChannelInboundHandlerAdapter。</p><p>ChannelInboundHandlerAdapter是Netty默认的入站消息处理类；SimpleChannelInboundHandler继承了它并实现了一些基础的方法，更方便一些。</p><p>在里面，首先判断是否是合法的包、合法的协议、合法的ClientID，然后根据不同的报文类型去分发到protocol里不同的处理类处理。</p><h1>二、protocol包</h1><h2>1、PingReq</h2><pre><code class="prettyprint lang-java linenums">public void processPingReq(Channel channel, MqttMessage msg) &#123;</p>
+<pre><code>  MqttMessage pingRespMessage = MqttMessageFactory.newMessage(
+      new MqttFixedHeader(MqttMessageType.PINGRESP, false, MqttQoS.AT_MOST_ONCE, false, 0), null, null);
+  LOGGER.debug(&quot;PINGREQ - clientId: &#123;&#125;&quot;, (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get());
+  channel.writeAndFlush(pingRespMessage);</code></pre>
+<p>  }</code></pre><p>简单的心跳回包，心跳包是单向的，总是由客户端发给服务端，服务端回包即可。</p><h2>2、Connect</h2><pre><code class="prettyprint lang-java linenums">public void processConnect(Channel channel, MqttConnectMessage msg) &#123;</p>
+<pre><code>  // 消息解码���出现异常
+  if (msg.decoderResult().isFailure()) &#123;
+      Throwable cause = msg.decoderResult().cause();
+      if (cause instanceof MqttUnacceptableProtocolVersionException) &#123;
+          // 不支持的协议版本
+          MqttConnAckMessage connAckMessage = (MqttConnAckMessage) MqttMessageFactory.newMessage(
+                  new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+                  new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_UNACCEPTABLE_PROTOCOL_VERSION, false), null);
+          channel.writeAndFlush(connAckMessage);
+          channel.close();
+          return;
+      &#125; else if (cause instanceof MqttIdentifierRejectedException) &#123;
+          // 不合格的clientId
+          MqttConnAckMessage connAckMessage = (MqttConnAckMessage) MqttMessageFactory.newMessage(
+                  new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+                  new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_IDENTIFIER_REJECTED, false), null);
+          channel.writeAndFlush(connAckMessage);
+          channel.close();
+          return;
+      &#125;
+      channel.close();
+      return;
+  &#125;
+  // clientId为空或null的情况, 这里要求客户端必须提供clientId, 不管cleanSession是否为1, 此处没有参考标准协议实现
+  if (StrUtil.isBlank(msg.payload().clientIdentifier())) &#123;
+      MqttConnAckMessage connAckMessage = (MqttConnAckMessage) MqttMessageFactory.newMessage(
+              new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+              new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_IDENTIFIER_REJECTED, false), null);
+      channel.writeAndFlush(connAckMessage);
+      channel.close();
+      return;
+  &#125;
+  if (brokerProperties.getMqttPasswordMust()) &#123;
+      // 用户名和密码验证, 这里要求客户端连接时必须提供用户名和密码, 不管是否设置用户名标志和密码标志为1, 此处没有参考标准协议实现
+      String username = msg.payload().userName();
+      String password = msg.payload().passwordInBytes() == null ? null : new String(msg.payload().passwordInBytes(), CharsetUtil.UTF_8);
+      if (!authService.checkValid(username, password)) &#123;
+          MqttConnAckMessage connAckMessage = (MqttConnAckMessage) MqttMessageFactory.newMessage(
+                  new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+                  new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD, false), null);
+          channel.writeAndFlush(connAckMessage);
+          channel.close();
+          return;
+      &#125;
+  &#125;
+  // 如果会话中已存储这个新连接的clientId, 就关闭之前该clientId的连接
+  if (sessionStoreService.containsKey(msg.payload().clientIdentifier())) &#123;
+      SessionStore sessionStore = sessionStoreService.get(msg.payload().clientIdentifier());
+      Boolean cleanSession = sessionStore.isCleanSession();
+      if (cleanSession) &#123;
+          sessionStoreService.remove(msg.payload().clientIdentifier());
+          subscribeStoreService.removeForClient(msg.payload().clientIdentifier());
+          dupPublishMessageStoreService.removeByClient(msg.payload().clientIdentifier());
+          dupPubRelMessageStoreService.removeByClient(msg.payload().clientIdentifier());
+      &#125;
+      try &#123;
+          ChannelId channelId = channelIdMap.get(sessionStore.getChannelId());
+          if(channelId!=null) &#123;
+              Channel previous = channelGroup.find(channelId);
+              if (previous != null) previous.close();
+          &#125;
+      &#125;catch (Exception e)&#123;
+          e.printStackTrace();
+      &#125;
+  &#125;
+  // 处理遗嘱信息
+  SessionStore sessionStore = new SessionStore(msg.payload().clientIdentifier(), channel.id().asShortText(), msg.variableHeader().isCleanSession(), null);
+  if (msg.variableHeader().isWillFlag()) &#123;
+      MqttPublishMessage willMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
+              new MqttFixedHeader(MqttMessageType.PUBLISH, false, MqttQoS.valueOf(msg.variableHeader().willQos()), msg.variableHeader().isWillRetain(), 0),
+              new MqttPublishVariableHeader(msg.payload().willTopic(), 0), Unpooled.buffer().writeBytes(msg.payload().willMessageInBytes()));
+      sessionStore.setWillMessage(willMessage);
+  &#125;
+  // 处理连接心跳包
+  if (msg.variableHeader().keepAliveTimeSeconds() &amp;gt; 0) &#123;
+      if (channel.pipeline().names().contains(&quot;idle&quot;)) &#123;
+          channel.pipeline().remove(&quot;idle&quot;);
+      &#125;
+      channel.pipeline().addFirst(&quot;idle&quot;, new IdleStateHandler(0, 0, Math.round(msg.variableHeader().keepAliveTimeSeconds() * 1.5f)));
+  &#125;
+  // 至此存储会话信息及返回接受客户端连接
+  sessionStoreService.put(msg.payload().clientIdentifier(), sessionStore);
+  // 将clientId存储到channel的map中
+  channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).set(msg.payload().clientIdentifier());
+  Boolean sessionPresent = sessionStoreService.containsKey(msg.payload().clientIdentifier()) &amp;amp;&amp;amp; !msg.variableHeader().isCleanSession();
+  MqttConnAckMessage okResp = (MqttConnAckMessage) MqttMessageFactory.newMessage(
+          new MqttFixedHeader(MqttMessageType.CONNACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+          new MqttConnAckVariableHeader(MqttConnectReturnCode.CONNECTION_ACCEPTED, sessionPresent), null);
+  channel.writeAndFlush(okResp);
+  LOGGER.debug(&quot;CONNECT - clientId: &#123;&#125;, cleanSession: &#123;&#125;&quot;, msg.payload().clientIdentifier(), msg.variableHeader().isCleanSession());
+  // 如果cleanSession为0, 需要重发同一clientId存储的未完成的QoS1和QoS2的DUP消息
+  if (!msg.variableHeader().isCleanSession()) &#123;
+      List&amp;lt;DupPublishMessageStore&amp;gt; dupPublishMessageStoreList = dupPublishMessageStoreService.get(msg.payload().clientIdentifier());
+      List&amp;lt;DupPubRelMessageStore&amp;gt; dupPubRelMessageStoreList = dupPubRelMessageStoreService.get(msg.payload().clientIdentifier());
+      dupPublishMessageStoreList.forEach(dupPublishMessageStore -&amp;gt; &#123;
+          MqttPublishMessage publishMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
+                  new MqttFixedHeader(MqttMessageType.PUBLISH, true, MqttQoS.valueOf(dupPublishMessageStore.getMqttQoS()), false, 0),
+                  new MqttPublishVariableHeader(dupPublishMessageStore.getTopic(), dupPublishMessageStore.getMessageId()), Unpooled.buffer().writeBytes(dupPublishMessageStore.getMessageBytes()));
+          channel.writeAndFlush(publishMessage);
+      &#125;);
+      dupPubRelMessageStoreList.forEach(dupPubRelMessageStore -&amp;gt; &#123;
+          MqttMessage pubRelMessage = MqttMessageFactory.newMessage(
+                  new MqttFixedHeader(MqttMessageType.PUBREL, true, MqttQoS.AT_MOST_ONCE, false, 0),
+                  MqttMessageIdVariableHeader.from(dupPubRelMessageStore.getMessageId()), null);
+          channel.writeAndFlush(pubRelMessage);
+      &#125;);
+  &#125;</code></pre>
+<p>  }</code></pre><p>1）���里又处理了一次非法值返回码，我想作者可能是忘记了前面处理过。</p><p>2）clientID要求必须不为空，协议规定为空是可以的，但只能出现在cleansession=1（非持久化）会话上，服务器帮助客户端生成一个随机clientID，一旦断开连接，客户端的ClientID就会发生变化，所以只能非持久化会话。这里没有实现这个逻辑，要求必须不为空。</p><p>3）用户名和密码认证，协议规定为空是可以的，这里要求必须提供。实际上真实的服务器可能不需要username，因为password很可能是JWT之类的数据，已经足够验证客户端身份了，不需要username。</p><p>4）获取旧会话，关闭相同clientID的连接。只能同时有一个clientID在线，如果有重复clientID则需要踢掉旧会话。这里的踢操作依赖于本地的channelgroup，所以只会踢掉本地的client，不会踢掉其他Broker上的client，可以说是一个Bug……作者集群做得不好。</p><p>5）处理遗嘱信息，如果有存起来就好。</p><p>6）连接心跳包，如果设置了keepAlive的值，则设置Netty的IdleHandler为那个值，如果为0，则保持默认的前面在BrokerServer设置的值。这里其实还应该判断keepAlive是否设置得合法，因为过短的心跳间隔会造成服务器压力很大，应该检查客户端要求的心跳间隔是否服务器能承受，否则就断开连接。作者没有检查。</p><p>7）如果cleansession为0（持久会话），则重新下发未ACK的QoS1、QoS2消息，第二阶段未完成的QoS2消息。作者保存这些消息都是没有顺序的，是直接Hash到Redis，但理论上应该保证重发顺序。</p><h2>3、Disconnect</h2><pre><code class="prettyprint lang-java linenums">public void processDisConnect(Channel channel, MqttMessage msg) &#123;</p>
+<pre><code>  String clientId = (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get();
+  SessionStore sessionStore = sessionStoreService.get(clientId);
+  if (sessionStore != null &amp;amp;&amp;amp; sessionStore.isCleanSession()) &#123;
+      subscribeStoreService.removeForClient(clientId);
+      dupPublishMessageStoreService.removeByClient(clientId);
+      dupPubRelMessageStoreService.removeByClient(clientId);
+  &#125;
+  LOGGER.debug(&quot;DISCONNECT - clientId: &#123;&#125;, cleanSession: &#123;&#125;&quot;, clientId, sessionStore.isCleanSession());
+  sessionStoreService.remove(clientId);
+  channel.close();</code></pre>
+<p>  }</code></pre><p>根据是否是持久会话清理掉session即可。<br></p><h2>4、Publish</h2><pre><code class="prettyprint lang-java linenums">public void processPublish(Channel channel, MqttPublishMessage msg) &#123;</p>
+<pre><code>  String clientId = (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get();
+  // QoS=0
+  if (msg.fixedHeader().qosLevel() == MqttQoS.AT_MOST_ONCE) &#123;
+      byte[] messageBytes = new byte[msg.payload().readableBytes()];
+      msg.payload().getBytes(msg.payload().readerIndex(), messageBytes);
+      InternalMessage internalMessage = new InternalMessage().setTopic(msg.variableHeader().topicName())
+              .setMqttQoS(msg.fixedHeader().qosLevel().value()).setMessageBytes(messageBytes)
+              .setDup(false).setRetain(false).setClientId(clientId);
+      internalCommunication.internalSend(internalMessage);
+      this.sendPublishMessage(msg.variableHeader().topicName(), msg.fixedHeader().qosLevel(), messageBytes, false, false);
+  &#125;
+  // QoS=1
+  if (msg.fixedHeader().qosLevel() == MqttQoS.AT_LEAST_ONCE) &#123;
+      byte[] messageBytes = new byte[msg.payload().readableBytes()];
+      msg.payload().getBytes(msg.payload().readerIndex(), messageBytes);
+      InternalMessage internalMessage = new InternalMessage().setTopic(msg.variableHeader().topicName())
+              .setMqttQoS(msg.fixedHeader().qosLevel().value()).setMessageBytes(messageBytes)
+              .setDup(false).setRetain(false).setClientId(clientId);
+      internalCommunication.internalSend(internalMessage);
+      this.sendPublishMessage(msg.variableHeader().topicName(), msg.fixedHeader().qosLevel(), messageBytes, false, false);
+      this.sendPubAckMessage(channel, msg.variableHeader().packetId());
+  &#125;
+  // QoS=2
+  if (msg.fixedHeader().qosLevel() == MqttQoS.EXACTLY_ONCE) &#123;
+      byte[] messageBytes = new byte[msg.payload().readableBytes()];
+      msg.payload().getBytes(msg.payload().readerIndex(), messageBytes);
+      InternalMessage internalMessage = new InternalMessage().setTopic(msg.variableHeader().topicName())
+              .setMqttQoS(msg.fixedHeader().qosLevel().value()).setMessageBytes(messageBytes)
+              .setDup(false).setRetain(false).setClientId(clientId);
+      internalCommunication.internalSend(internalMessage);
+      this.sendPublishMessage(msg.variableHeader().topicName(), msg.fixedHeader().qosLevel(), messageBytes, false, false);
+      this.sendPubRecMessage(channel, msg.variableHeader().packetId());
+  &#125;
+  // retain=1, 保留消息
+  if (msg.fixedHeader().isRetain()) &#123;
+      byte[] messageBytes = new byte[msg.payload().readableBytes()];
+      msg.payload().getBytes(msg.payload().readerIndex(), messageBytes);
+      if (messageBytes.length == 0) &#123;
+          retainMessageStoreService.remove(msg.variableHeader().topicName());
+      &#125; else &#123;
+          RetainMessageStore retainMessageStore = new RetainMessageStore().setTopic(msg.variableHeader().topicName()).setMqttQoS(msg.fixedHeader().qosLevel().value())
+                  .setMessageBytes(messageBytes);
+          retainMessageStoreService.put(msg.variableHeader().topicName(), retainMessageStore);
+      &#125;
+  &#125;</code></pre>
+<p>  }</code></pre><p>回顾一下Publish的流程：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e1aecacf471595e90bbe3720d391ec5c.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/f5aa9fccab7ff9437f956780b522e060.png" style="max-width:100%;"></p><p>如果是QoS0，直接发送；</p><p>如果是QoS1，除了发送还需要回复PubAck给发送者；</p><p>如果是QoS2，除了发送还需要回复PubRec给发送者；</p><p>如果是保留消息，长度为0则清除该主题的保留消息，否则保存该主题的保留消息。</p><p>如果开启了集群功能，会通过Redis广播；如果开启了Kafka转发，会进行转发。</p><pre><code class="prettyprint lang-java linenums">private void sendPublishMessage(String topic, MqttQoS mqttQoS, byte[] messageBytes, boolean retain, boolean dup) &#123;</p>
+<pre><code>  List&amp;lt;SubscribeStore&amp;gt; subscribeStores = subscribeStoreService.search(topic);
+  subscribeStores.forEach(subscribeStore -&amp;gt; &#123;
+      if (sessionStoreService.containsKey(subscribeStore.getClientId())) &#123;
+          // 订阅者收到MQTT消息的QoS级别, 最终取决于发布消息的QoS和主题订阅的QoS
+          MqttQoS respQoS = mqttQoS.value() &amp;gt; subscribeStore.getMqttQoS() ? MqttQoS.valueOf(subscribeStore.getMqttQoS()) : mqttQoS;
+          if (respQoS == MqttQoS.AT_MOST_ONCE) &#123;
+              MqttPublishMessage publishMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
+                      new MqttFixedHeader(MqttMessageType.PUBLISH, dup, respQoS, retain, 0),
+                      new MqttPublishVariableHeader(topic, 0), Unpooled.buffer().writeBytes(messageBytes));
+              LOGGER.debug(&quot;PUBLISH - clientId: &#123;&#125;, topic: &#123;&#125;, Qos: &#123;&#125;&quot;, subscribeStore.getClientId(), topic, respQoS.value());
+              ChannelId channelId = channelIdMap.get(sessionStoreService.get(subscribeStore.getClientId()).getChannelId());
+              if(channelId!=null) &#123;
+                  Channel channel = channelGroup.find(channelId);
+                  if (channel != null) channel.writeAndFlush(publishMessage);
+              &#125;
+          &#125;
+          if (respQoS == MqttQoS.AT_LEAST_ONCE) &#123;
+              int messageId = messageIdService.getNextMessageId();
+              MqttPublishMessage publishMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
+                      new MqttFixedHeader(MqttMessageType.PUBLISH, dup, respQoS, retain, 0),
+                      new MqttPublishVariableHeader(topic, messageId), Unpooled.buffer().writeBytes(messageBytes));
+              LOGGER.debug(&quot;PUBLISH - clientId: &#123;&#125;, topic: &#123;&#125;, Qos: &#123;&#125;, messageId: &#123;&#125;&quot;, subscribeStore.getClientId(), topic, respQoS.value(), messageId);
+              DupPublishMessageStore dupPublishMessageStore = new DupPublishMessageStore().setClientId(subscribeStore.getClientId())
+                      .setTopic(topic).setMqttQoS(respQoS.value()).setMessageBytes(messageBytes).setMessageId(messageId);
+              dupPublishMessageStoreService.put(subscribeStore.getClientId(), dupPublishMessageStore);
+              ChannelId channelId = channelIdMap.get(sessionStoreService.get(subscribeStore.getClientId()).getChannelId());
+              if(channelId!=null) &#123;
+                  Channel channel = channelGroup.find(channelId);
+                  if (channel != null) channel.writeAndFlush(publishMessage);
+              &#125;
+          &#125;
+          if (respQoS == MqttQoS.EXACTLY_ONCE) &#123;
+              int messageId = messageIdService.getNextMessageId();
+              MqttPublishMessage publishMessage = (MqttPublishMessage) MqttMessageFactory.newMessage(
+                      new MqttFixedHeader(MqttMessageType.PUBLISH, dup, respQoS, retain, 0),
+                      new MqttPublishVariableHeader(topic, messageId), Unpooled.buffer().writeBytes(messageBytes));
+              LOGGER.debug(&quot;PUBLISH - clientId: &#123;&#125;, topic: &#123;&#125;, Qos: &#123;&#125;, messageId: &#123;&#125;&quot;, subscribeStore.getClientId(), topic, respQoS.value(), messageId);
+              DupPublishMessageStore dupPublishMessageStore = new DupPublishMessageStore().setClientId(subscribeStore.getClientId())
+                      .setTopic(topic).setMqttQoS(respQoS.value()).setMessageBytes(messageBytes).setMessageId(messageId);
+              dupPublishMessageStoreService.put(subscribeStore.getClientId(), dupPublishMessageStore);
+              ChannelId channelId = channelIdMap.get(sessionStoreService.get(subscribeStore.getClientId()).getChannelId());
+              if(channelId!=null) &#123;
+                  Channel channel = channelGroup.find(channelId);
+                  if (channel != null) channel.writeAndFlush(publishMessage);
+              &#125;
+          &#125;
+      &#125;
+  &#125;);</code></pre>
+<p>  }</code></pre><p>和发送者通信的时候才会收到Publish。</p><p>发送的具体代码流程是：</p><p>搜寻订阅这个主题的订阅者；</p><p>如果是QoS0，直接下发（QoS0的messageId为0）；</p><p>如果是QoS1，先获取一个未被占用的messageId，缓存一份DupPublish消息，再下发；</p><p>如果是QoS2，先获取一个未被占用的messageId，缓存一份DupPublish消息，再下发。</p><h2>5、PubRel</h2><pre><code>public void processPubRel(Channel channel, MqttMessageIdVariableHeader variableHeader) &#123;</p>
+<pre><code>  MqttMessage pubCompMessage = MqttMessageFactory.newMessage(
+      new MqttFixedHeader(MqttMessageType.PUBCOMP, false, MqttQoS.AT_MOST_ONCE, false, 0),
+      MqttMessageIdVariableHeader.from(variableHeader.messageId()), null);
+  LOGGER.debug(&quot;PUBREL - clientId: &#123;&#125;, messageId: &#123;&#125;&quot;, (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), variableHeader.messageId());
+  channel.writeAndFlush(pubCompMessage);</code></pre>
+<p>  }</code></pre><p>和发送者通信的时候才会收到PubRel，处于QoS2第二阶段，服务器需要会送一个PubComp让发送者知道QoS2已经完成了。</p><h2>6、PubAck</h2><pre><code class="prettyprint lang-java linenums">public void processPubAck(Channel channel, MqttMessageIdVariableHeader variableHeader) &#123;</p>
+<pre><code>  int messageId = variableHeader.messageId();
+  LOGGER.debug(&quot;PUBACK - clientId: &#123;&#125;, messageId: &#123;&#125;&quot;, (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), messageId);
+  dupPublishMessageStoreService.remove((String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), messageId);</code></pre>
+<p>  }</code></pre><p>和接收者通信的时候才会收到PubAck，表明QoS1已经完成，移除缓存的DupPublish消息。</p><h2>7、PubRec</h2><pre><code class="prettyprint lang-java linenums">public void processPubRec(Channel channel, MqttMessageIdVariableHeader variableHeader) &#123;</p>
+<pre><code>  MqttMessage pubRelMessage = MqttMessageFactory.newMessage(
+      new MqttFixedHeader(MqttMessageType.PUBREL, false, MqttQoS.AT_MOST_ONCE, false, 0),
+      MqttMessageIdVariableHeader.from(variableHeader.messageId()), null);
+  LOGGER.debug(&quot;PUBREC - clientId: &#123;&#125;, messageId: &#123;&#125;&quot;, (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), variableHeader.messageId());
+  dupPublishMessageStoreService.remove((String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), variableHeader.messageId());
+  DupPubRelMessageStore dupPubRelMessageStore = new DupPubRelMessageStore().setClientId((String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get())
+      .setMessageId(variableHeader.messageId());
+  dupPubRelMessageStoreService.put((String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), dupPubRelMessageStore);
+  channel.writeAndFlush(pubRelMessage);</code></pre>
+<p>  }</code></pre><p>和接收者通信的时候才会收到PubRec，表明QoS2的第一阶段完成，移除缓存的Publish消息，重新缓存一份PubRel消息，并下发PubRel消息，开启第二阶段。</p><h2>8、PubComp</h2><pre><code class="prettyprint lang-java linenums">public void processPubComp(Channel channel, MqttMessageIdVariableHeader variableHeader) &#123;</p>
+<pre><code>  int messageId = variableHeader.messageId();
+  LOGGER.debug(&quot;PUBCOMP - clientId: &#123;&#125;, messageId: &#123;&#125;&quot;, (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), messageId);
+  dupPubRelMessageStoreService.remove((String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get(), variableHeader.messageId());</code></pre>
+<p>  }</code></pre><p>和接收者通信的时候才会收到PubComp，表明QoS2已经完成，移除缓存的PubRel消息。</p><h2>9、Subscribe</h2><pre><code class="prettyprint lang-java linenums">public void processSubscribe(Channel channel, MqttSubscribeMessage msg) &#123;</p>
+<pre><code>  List&amp;lt;MqttTopicSubscription&amp;gt; topicSubscriptions = msg.payload().topicSubscriptions();
+  if (this.validTopicFilter(topicSubscriptions)) &#123;
+      String clientId = (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get();
+      List&amp;lt;Integer&amp;gt; mqttQoSList = new ArrayList&amp;lt;Integer&amp;gt;();
+      topicSubscriptions.forEach(topicSubscription -&amp;gt; &#123;
+          String topicFilter = topicSubscription.topicName();
+          MqttQoS mqttQoS = topicSubscription.qualityOfService();
+          SubscribeStore subscribeStore = new SubscribeStore(clientId, topicFilter, mqttQoS.value());
+          subscribeStoreService.put(topicFilter, subscribeStore);
+          mqttQoSList.add(mqttQoS.value());
+          LOGGER.debug(&quot;SUBSCRIBE - clientId: &#123;&#125;, topFilter: &#123;&#125;, QoS: &#123;&#125;&quot;, clientId, topicFilter, mqttQoS.value());
+      &#125;);
+      MqttSubAckMessage subAckMessage = (MqttSubAckMessage) MqttMessageFactory.newMessage(
+          new MqttFixedHeader(MqttMessageType.SUBACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+          MqttMessageIdVariableHeader.from(msg.variableHeader().messageId()),
+          new MqttSubAckPayload(mqttQoSList));
+      channel.writeAndFlush(subAckMessage);
+      // 发布保留消息
+      topicSubscriptions.forEach(topicSubscription -&amp;gt; &#123;
+          String topicFilter = topicSubscription.topicName();
+          MqttQoS mqttQoS = topicSubscription.qualityOfService();
+          this.sendRetainMessage(channel, topicFilter, mqttQoS);
+      &#125;);
+  &#125; else &#123;
+      channel.close();
+  &#125;</code></pre>
+<p>  }</code></pre><p>先校验所有的Topic是否正确，如果正确，则回复对应的SubAck报文，并把订阅信息存储起来。</p><p>对于有保留消息的主题，需要保存该主题的保留消息。</p><pre><code class="prettyprint lang-java linenums">private boolean validTopicFilter(List&lt;MqttTopicSubscription&gt; topicSubscriptions) &#123;</p>
+<pre><code>  for (MqttTopicSubscription topicSubscription : topicSubscriptions) &#123;
+      String topicFilter = topicSubscription.topicName();
+      // 以#或+符号开头的、以/符号结尾的订阅按非法订阅处理, 这里没有参考标准协议
+      if (StrUtil.startWith(topicFilter, &#39;+&#39;) || StrUtil.endWith(topicFilter, &#39;/&#39;))
+          return false;
+      if (StrUtil.contains(topicFilter, &#39;#&#39;)) &#123;
+          // 如果出现多个#符号的订阅按非法订阅处理
+          if (StrUtil.count(topicFilter, &#39;#&#39;) &amp;gt; 1) return false;
+      &#125;
+      if (StrUtil.contains(topicFilter, &#39;+&#39;)) &#123;
+          //如果+符号和/+字符串出现的次数不等的情况按非法订阅处理
+          if (StrUtil.count(topicFilter, &#39;+&#39;) != StrUtil.count(topicFilter, &quot;/+&quot;)) return false;
+      &#125;
+  &#125;
+  return true;</code></pre>
+<p>  }</code></pre><p>验证Topic的正确性只限制了一些格式，没有对“是否有权限订阅”进行权限验证。</p><h2>10、Unsubscribe</h2><pre><code class="prettyprint lang-java linenums">public void processUnSubscribe(Channel channel, MqttUnsubscribeMessage msg) &#123;</p>
+<pre><code>  List&amp;lt;String&amp;gt; topicFilters = msg.payload().topics();
+  String clinetId = (String) channel.attr(AttributeKey.valueOf(&quot;clientId&quot;)).get();
+  topicFilters.forEach(topicFilter -&amp;gt; &#123;
+      subscribeStoreService.remove(topicFilter, clinetId);
+      LOGGER.debug(&quot;UNSUBSCRIBE - clientId: &#123;&#125;, topicFilter: &#123;&#125;&quot;, clinetId, topicFilter);
+  &#125;);
+  MqttUnsubAckMessage unsubAckMessage = (MqttUnsubAckMessage) MqttMessageFactory.newMessage(
+      new MqttFixedHeader(MqttMessageType.UNSUBACK, false, MqttQoS.AT_MOST_ONCE, false, 0),
+      MqttMessageIdVariableHeader.from(msg.variableHeader().messageId()), null);
+  channel.writeAndFlush(unsubAckMessage);</code></pre>
+<p>  }</code></pre><p>移除订阅信息就好了。</p><h1>总结</h1><p>MqttWk的协议处理有一些地方不妥，但是整体结构非常清晰。</p><p><br></p>                </div></p>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/MqttWk%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9ABrokerHandler%E5%8F%8A%E5%8D%8F%E8%AE%AE%E5%A4%84%E7%90%86%E5%88%86%E6%9E%90/">http://tanqingbo.cn/2019/10/06/MqttWk%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9ABrokerHandler%E5%8F%8A%E5%8D%8F%E8%AE%AE%E5%A4%84%E7%90%86%E5%88%86%E6%9E%90/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/搭建自己的git服务器管理网站代码/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">搭建自己的git服务器管理网站代码 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/Java中的单例模式分析和实践/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Java中的单例模式分析和实践 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、BrokerHandler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelActive()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelInactive()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">exceptionCaught()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">userEventTriggered()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelRead0()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、protocol包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、PingReq</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、Connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、Disconnect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、Publish</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、PubRel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、PubAck</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、PubRec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、PubComp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、Subscribe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、Unsubscribe</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、BrokerHandler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelActive()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelInactive()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">exceptionCaught()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">userEventTriggered()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelRead0()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、protocol包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、PingReq</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、Connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、Disconnect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、Publish</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、PubRel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、PubAck</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、PubRec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、PubComp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、Subscribe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、Unsubscribe</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、BrokerHandler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelActive()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelInactive()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">exceptionCaught()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">userEventTriggered()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">channelRead0()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、protocol包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、PingReq</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、Connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、Disconnect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、Publish</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、PubRel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、PubAck</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、PubRec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、PubComp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、Subscribe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、Unsubscribe</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

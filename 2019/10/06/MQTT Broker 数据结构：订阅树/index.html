@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="MQTT Broker 数据结构：订阅树">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/MQTT%20Broker%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E8%AE%A2%E9%98%85%E6%A0%91/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      MQTT Broker 数据结构：订阅树
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.2k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/268.html">http://www.bewindoweb.com/268.html</a><div class="card-article-text"><h1>一、MQTT主题和主题过滤器匹配需求</h1><p>MQTT协议规定，客户端可以订阅（Subscribe）主题过滤器（TopicFilter），主题过滤器可能为：</p><ul><li>完全精确的主题过滤器。例如：abc/def/123</li><li>含有单层通配符（+，SINGLE）的主题过滤器。例如：abc/+/123</li><li>含有多层通配符（#，MULTI）的主题过滤器。例如：abc/#</li></ul><p>同时，客户端还可以向某个主题（Topic）发布（Publish）消息，比如abc/def/123，主题不能含有通配符。MQTT Broker需要查询有哪些客户端订阅了匹配这个主题的主题过滤器，并将消息发送给它们。例如下图所示情况：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6cca5902f9a3ecb2d5e7ce92653519f0.png" style="max-width:100%;"></p><p>客户端X是发布者，将数据发布到主题"abc/def/123"；客户端A、B、C、D都是订阅者，但只有A、B、C订阅的主题过滤器和该主题匹配：</p><ul><li>A订阅"abc/+/123"，"+"匹配了单层任意字符"def"；</li><li>B订阅"abc/#"，"#"匹配了多层任意字符"def/123"；</li><li>C订阅"abc/def/123"，完全精确地匹配。</li></ul><p>那么，MQTT消息代理（MQTT Broker）应该如何做“主题”到“主题过滤器”的匹配呢？很容易想到一种基础实现——“暴力扫描”。</p><pre><code class="prettyprint lang-c linenums">算法1-1 暴力扫描伪代码 
+/**</li>
+</ul>
+<ul>
+<li>查询Topic匹配的订阅者</li>
+<li>*/<br>FUNCTION Set findSubscriber（subscriptionArray, publishTopic）<br>   // 订阅者<br>   subscribers = []<br>   // 发布主题token数组<br>   topicTokenArray = split(publishTopic,”/“)<br>   // 遍历所有订阅<br>   FOR i = 0 to size(subscriptionArray)<pre><code>   // 订阅主题过滤器token数组
+   topicFilterTokenArray = split(subscriptionArray[i].topicFilter,&quot;/&quot;)
+   //逐个比对是否匹配
+   IF matchTopic(topicTokenArray, TopicFilterTokenArray)
+       subscribers.add(subscriptionArray[i])
+   END</code></pre>
+   END<br>   RETURN subscribers<br>END</li>
+</ul>
+<p>/**</p>
+<ul>
+<li>匹配主题和主题过滤器</li>
+<li>*/<br>FUNCTION boolean matchTopic(topicTokenArray, topicFilterTokenArray)<br>   topicSize = size(topicTokenArray)<br>   topicFilterSize = size(topicFilterTokenArray)<br>   // 遍历所有主题token，逐个token比对<br>   FOR i = 0 to topicSize<pre><code>   // 如果filter是单层通配符，或者token相同，则匹配
+   IF topicTokenFilterArray[i] == &quot;+&quot; || topicTokenFilterArray[i] == topicTokenArray[i]
+       CONTINUE
+   // 如果filter是多层通配符且在最后，则完全匹配
+   ELSEIF topicTokenFilterArray[i] == &quot;#&quot; &amp;amp;&amp;amp; i == topicFilterSize
+       RETURN true
+   // 不匹配，直接返回
+   ELSE
+       RETURN false</code></pre>
+   END<br>   // 如果遍历完成，说明topic过了一遍都匹配，则当二者长度相等时，说明完全匹配<br>   IF (topicSize == topicFilterSize)<pre><code>   RETURN true</code></pre>
+   ELSE<pre><code>   RETURN false</code></pre>
+   END<br>END</code></pre><p>很��易看出，两层for循环，时间复杂度O(S✖T)，其中S是订阅信息数量（Subscription，不是订阅者Subscriber数量），T是发布主题的平均长度（划分成token的平均个数）。</p><p>仔细想一想，虽然实现了功能，但是在生产环境上，假设一个Broker连接2W设备，每个设备订阅10个TopicFilter，发布主题的平均长度约为10，执行一次匹配，要执行200W次token比较，要知道这还没有计算每秒钟客户端会发送多少条消息，这个时延都已经完全无法接受。</p><h1>二、订阅树简介</h1><h2>2.1 订阅树的定义</h2><p>订阅树（Topic Tree / Subscription Tree）是解决这个匹配问题的一种方法。TopicTree本质是一棵按token划分的字典树（Trie Tree），每个节点上存储着订阅信息，一棵典型的订阅树如下图所示：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5b82c47150b8a28d0006a2991faee8ee.png" style="max-width:100%;"></p><p>订阅树有如下性质：</p><p>（1）有一个根节点Root，一个父节点可以有多个子节点</p><p>（2）每条边代表一个Token，从根节点遍历到子节点所经历的路径定义为TopicFilter</p><p>（3）任何节点的内容都可能为空，也可能包含订阅信息</p><p>例如，这棵订阅树有一个根节点Root，每条边上都有一个token。从��节点遍历到最左边的叶子节点经历的路径“abc/+/123”就是一个TopicFilter。叶子节点包含了一条订阅信息{客户端A以QoS0的质量订阅了abc/+/123}。并且中间的节点可能为空，也可能包含订阅信息；叶子节点可能包含订阅信息，也可能为空。</p><h2>2.2 订阅树的匹配过程</h2><p>有了订阅树的数据结构，如何匹配Topic和TopicFilter呢？仍以这棵树为例，我们给节点加上编号：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/64d58d14c6e8335f24bb7e4293ef1529.png" style="max-width:100%;"></p><p>其中，订阅信息为：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;节点编号&nbsp;</th><th>&nbsp;订阅客户端&nbsp;</th><th>&nbsp;订阅主题&nbsp;</th><th>&nbsp;订阅质量&nbsp;</th></tr><tr><td>&nbsp;N5</td><td>A&nbsp;</td><td>&nbsp;abc/+/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N3</td><td>B&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;1</td></tr><tr><td>&nbsp;N3</td><td>A&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N4</td><td>B&nbsp;</td><td>&nbsp;abc/def</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>B</td><td>&nbsp;abc/def/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>C&nbsp;</td><td>&nbsp;abc/def/123</td><td>&nbsp;1</td></tr><tr><td>&nbsp;N7</td><td>&nbsp;D</td><td>&nbsp;abc/def/456</td><td>&nbsp;0</td></tr></tbody></table><p>整个匹配过程是宽度优先搜索（BFS）或深度优先搜索（DFS）的过程，这里按DFS描述，假设客户端X发布主题为“abc/def/123”，从根节点开始遍历：</p><p>（1）进入Root，查找匹配的边，只有一条边abc，且和第一个token“abc”匹配，进入子节点N1</p><p>（2）查找匹配的边，找到三条边“+”、“#”、“def”</p><p>（3.1.1）进入子节点N2，查找匹配的边，找到匹配边“123”，进入N5</p><p>（3.1.2）进入N5，匹配完成，返回订阅信息｛A，”abc/+/123”，0｝</p><p>（3.2.1）进入子节点N3，匹配完成，返回订阅信息{B，“abc/#”，1}和订阅信息｛A，“abc/#”，0｝</p><p>（3.3.1）进入子节点N4，查找匹配的边，只有一条边“123”，进入N6</p><p>（3.3.2）进入子节点N6，匹配完成，返回订阅信息{B，“abc/def/123”，0}和订阅信息{C，“abc/def/123”，1}</p><p>（4）回退到Root，查找结束</p><p>我们就得到了匹配这个主题的5条订阅信息：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;节点编号&nbsp;</th><th>&nbsp;订阅客户端&nbsp;</th><th>&nbsp;订阅主题&nbsp;</th><th>&nbsp;订阅质量&nbsp;</th></tr><tr><td>&nbsp;N5</td><td>A&nbsp;</td><td>&nbsp;abc/+/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N3</td><td>B&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;1</td></tr><tr><td>&nbsp;N3</td><td>A&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>B</td><td>&nbsp;abc/def/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>C&nbsp;</td><td>&nbsp;abc/def/123</td><td>&nbsp;1</td></tr></tbody></table><p>注意，在这里A订阅的两个主题“abc/+/123”、”abc/#”都成功匹配，但下发给客户端A的时候要去重，只能下发1条消息，因为Broker是依赖MQTT-Publish给客户端下发消息的，发布的主题就是客户端X发布的主题“abc/+/123”，区分不出是客户端哪条订阅匹配的，所以发过去由客户端自己本地匹配出2条订阅（客户端本地也有订阅结构）。回头来看，客户端A这种“重复主题过滤器”的设计是不好的，在实际应用上应该极力避免这种设计，一个客户端的各个订阅都最好都是独立接受消息的。</p><p>如果区分出通配符和非通配符，那么查找的时间复杂度就是字典树的查找时间复杂度，为O(T)，其中T是发布主题的平均长度（划分成token的平均个数）。</p><h2>2.3 增加订阅</h2><p>（1）增加订阅时部分节点不存在</p><p>当增加新订阅时，对于划分出来的token，订阅树可能会有一部分节点/边已经存在，有一部分节点/边不存在，那么就需要增加不存在的新节点/边。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b4f838817014f5ff42a222e270573705.png" style="max-width:100%;"></p><p>如图所示，客户端F以QoS0的质量订阅新主题过滤器“abc/ghi/789”，这个时候“abc”是存在的，“ghi”、”789”都是不存在的，那么我们需要增加两个新节点和两条新边，并在最下面的节点放置F的这条订阅信息。</p><p>（2）添加订阅时节点已存在</p><p>如果节点已经存在，只需要增加订阅信息到对应节点中去即可。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1773c1abbb79edc160e7940dc00785b3.png" style="max-width:100%;"></p><p>如图所示，左侧为客户端F订阅“abc/+”，节点都已存在，将F加入到空节点中；</p><p>右侧为客户端F订阅“abc/+/123”，节点都已存在，A所在节点增加一条订阅信息F。</p><p>插入的时间复杂度同样为O(T)，其中T是发布主题的平均长度（划分成token的平均个数）。</p><h2>2.4 取消订阅</h2><p>（1）取消订阅后没有订阅者</p><p>如果取消订阅后没有订阅者，可以不用管（可能存在内存溢出的风险），也可以通过一些方式删除该节点。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/67e7aaaa761c3ae3972fa5b264d6ff27.png" style="max-width:100%;"></p><p>如图所示，假设客户端A取消了订阅“abc/+/123”，节点没有任何其他订阅信息了，那么该节点（灰色节点）可以被删除掉。</p><p>（2）取消订阅后仍然有订阅者</p><p>如果取消订阅后仍然有订阅者，那么只需要移除该订阅信息即可。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b2346418c4442d54f54455e809631315.png" style="max-width:100%;"></p><p>如图所示，假设客户端C取消了订阅“abc/def/123”，客户端B仍然存在订阅“abc/def/123”，那么只需要去掉此节点上C的订阅信息。</p><h1>三、订阅树实现难点和业界解决方案</h1><h2>3.1 订阅树实现难点</h2><p><span style="font-weight: bold;">（1）MQTT客户端可能并发地订阅、取消订阅，如何保证并发安全？</span></p><p>例如：A订阅abc/+的时候，B也订阅、取消订阅abc/+，需要保证并发安全。</p><p><span style="font-weight: bold;">（2）订阅树是内存结构，在分布式环境下如何同步？</span></p><p>例如：如下订阅、发布情况，Broker2怎么知道Broker1上有客户端订阅了这个主题？</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c09007f5eb91a54d00c694c031edf4ba.jpeg" style="max-width:100%;"></p><p><span style="font-weight: bold;">（3）MQTT客户端订阅数据量非常大的时候，如何加快查找速度？</span></p><p>例如：10W客户端，每个客户端40个订阅，如果采用锁的机制控制并发，订阅/取消订阅会产生大量冲突造成查询获锁缓慢。</p><h2>3.2 业界订阅树的实现</h2><p>（1）并发安全</p><ul><li>EMQ：底层采用Erlang的Mnesia分布式数据库，利用分布式数据库的事务保证并发 —— Erlang语言开发者很少</li><li>JMQTT：采用锁的机制控制并发 &nbsp;</li><li>Moquette：利用CAS控制并发&nbsp;</li><li>Mosquitto：采用锁的机制控制并发&nbsp;</li><li>MqttWk：无内存订阅树结构，订阅存放在分布式Redis里（通配符直接扫描），由Redis保证并发 —— 通配符扫描效率极低</li><li>知乎网关：采用锁的机制控制并发（单Broker2<del>3万客户端、2</del>3万订阅量）</li></ul><p>（2）分布式同步</p><ul><li>EMQ：底层采用Erlang的Mnesia分布式数据库保证同步 —— Erlang语言开发者很少</li><li>JMQTT 1.x：单机，无同步</li><li>Moquette 0.10：采用Hazelcast，靠订阅数据全量广播来同步 ——量太大且不可靠（同时宕机数据丢失），水平扩展无法扩展消费速率</li><li>Moquette 0.12+：单机，无同步</li><li>Mosquitto：可通过“桥接”搭建伪分布式，靠订阅数据全量广播来同步 ——量太大且不可靠 ，水平扩展无法扩展消费速率</li><li>MqttWk：无内存订阅树结构，订阅存放在分布式Redis里（通配符直接扫描），不需要同步</li><li>百度IoT：由Kafka存储订阅数据，靠读取Kafka同步 —— 比较好的实现机制</li><li>HiveMQ：自制向量时钟组件，可以分析本地订阅树数据之间的差异，通过Jgroups将差异部分协商同步 —— 代码不开源，自己实现困难&nbsp;</li><li>某车联网代码：Broker自己作为MQTT客户端连接到其他Broker上，当真实的客户端在自己节点订阅时，自己再发出一个订阅请求到所有其他Broker节点 —— 类似桥接模式，非标准分布式模式，且订阅数量较少、客户端较少（一台5万连接）</li></ul><p>（3）查找速度</p><ul><li>EMQ：底层采用Erlang的Mnesia分布式数据库保证速度 —— Erlang语言开发者很少</li><li>JMQTT：无优化&nbsp;</li><li>Moquette 0.10：无优化&nbsp;</li><li>Moquette 0.12+：无优化</li><li>Mosquitto：无优化 修改版</li><li>Mosquitto：分离精确订阅和通配符订阅，精确订阅采用Hash表，通配符订阅采用订阅树 —— 比较好的优化方向</li><li>MqttWk：无优化&nbsp;</li><li>知乎网关：根据clientId进行Hash，划分到100+个哈希表空间（没有通配符所以没用订阅树） —— 比较好的优化方向</li></ul><h1>总结</h1><p>MQTT的订阅匹配最好这样处理：</p><ul><li>订阅树 —— 负责通配符的匹配，查找速率O(T)，需要注意控制树的深度宽度、取消订阅的内存回收</li><li>哈希表 —— 负责精确匹配，查找速率O(1)，需要注意并发冲突</li></ul><p>这是带通配符字符串匹配的常见解决方案——精确用表、前缀用树。具体判断用什么数据结构，主要依靠如下三点衡量：</p><ul><li>数据总量有多大 —— 数据量较大，尽量不用树。</li><li>数据是否持续增长 —— 连接量有上限、订阅量有上限，所以订阅数据有上限，如果没有上限的话，重哈希会比较耗时。</li><li>查找是否频繁 —— 物联网消息非常多，非常频繁，因此能用哈希表就用哈希表。</li></ul><p>订阅树的原理很简单，但是上了并发和分布式就会有很多问题，这些解决方案都需要压力测试和生产环境检验。</p><p><br></p>                </div></li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/MQTT%20Broker%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E8%AE%A2%E9%98%85%E6%A0%91/">http://tanqingbo.cn/2019/10/06/MQTT%20Broker%20%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E8%AE%A2%E9%98%85%E6%A0%91/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/Jquery实现文章目录侧边栏导航/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Jquery实现文章目录侧边栏导航 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/MQTT Broker测试工具推荐/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">MQTT Broker测试工具推荐 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、MQTT主题和主题过滤器匹配需求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、订阅树简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.1 订阅树的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.2 订阅树的匹配过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.3 增加订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.4 取消订阅</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、订阅树实现难点和业界解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.1 订阅树实现难点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.2 业界订阅树的实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、MQTT主题和主题过滤器匹配需求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、订阅树简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.1 订阅树的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.2 订阅树的匹配过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.3 增加订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.4 取消订阅</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、订阅树实现难点和业界解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.1 订阅树实现难点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.2 业界订阅树的实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、MQTT主题和主题过滤器匹配需求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、订阅树简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.1 订阅树的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.2 订阅树的匹配过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.3 增加订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.4 取消订阅</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、订阅树实现难点和业界解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.1 订阅树实现难点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.2 业界订阅树的实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

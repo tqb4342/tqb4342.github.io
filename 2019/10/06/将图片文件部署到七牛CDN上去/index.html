@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="将图片文件部署到七牛CDN上去">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E5%B0%86%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%83%E7%89%9BCDN%E4%B8%8A%E5%8E%BB/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      将图片文件部署到七牛CDN上去
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.5k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/112.html">http://www.bewindoweb.com/112.html</a><div class="card-article-text"><h1>一、教程内容</h1><p>1、七牛CDN的部署</p><p>2、nginx的<span style="line-height: 1.5;">ngx_http_substitutions_filter_module模块</span></p><h1>二、具体操作</h1><h2>引言</h2><p>本来一开始只想做简单的博客，可以看到到今天为止（2017.11.25）“首页”连一张图片都没有（又想哭穷了，此站为最便宜的1M带宽50G存储……）。后来由于自己需求太多，做了大量有图片的网页，网页的加载速度可想而知，于是开始想用知名已久的免费CDN：七牛云存储，来将图片引流。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/602f6a25b3920d84b32a758733079ae7.png" style="max-width:100%;" class=""></p><h2>配置七牛CDN骚操作</h2><p>1、进入<a href="https://www.qiniu.com/" target="_blank">七牛官网</a>。这里介绍一下CDN的策略。众所周知，访问网页觉得慢，肯定不仅仅是这些HTML、JS、CSS代码传给你慢，而是占用带宽的大头，一些图片资源、音视频资源、下载的资源之类，因此就诞生了CDN。CDN会帮你将一些静态资源比如HTML、JS、CSS、图片、音视频、下载文件等等分发到它在各地部署的服务器上，这样你如果想要取这个资源，它会直接就近将资源发给你，这样当然是最快的啦。以前的CDN总是全站拷贝，直接将域名解析到他们的CNAME就可以了，这样的好处是省事，坏处是动态页面会遇到问题。而七牛的存储策略则是自建一个空间，然后将CDN解析到上面去，这样只需要把静态资源如图片放上去就可以了，动态的如PHP仍然通过源站访问。</p><p>2、<code>注册</code> → <code>验证</code>个人站长身份（大概1小时）。</p><p>3、单击左侧的<code>对象存储</code>，然后<code>创建一个存储空间</code>，这个空间可以任意命名，以后你的所有文件都会放到这个空间里去。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9d3c6e0dc576d218854d737a766d0f08.png" style="max-width:100%;"></p><p>4、单击左侧的<code>融合CDN</code>，然后<code>新建一个加速域名</code></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e7e05826e15bbd364df379cf69306342.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/42bf9989c7aece3ca591e00d23a1819d.png" style="max-width:100%;"></p><p>这里要填写的重要信息：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;名称</th><th>说明&nbsp;</th><th>举例&nbsp;</th></tr><tr><td>&nbsp;域名类型</td><td>&nbsp;选普通域名</td><td>&nbsp;</td></tr><tr><td>&nbsp;加速域名</td><td>&nbsp;你要添加的二级域名，后缀一定要是你的网站</td><td>cdn.bewindoweb.cn&nbsp;</td></tr><tr><td>&nbsp;源站配置</td><td>&nbsp;选择你刚才建立的存储空间</td><td>&nbsp;</td></tr></tbody></table><p>5、回到<code>对象存储</code>，<code>空间概览</code>，右侧的<code>融合CDN加速域名</code>，会发现你的二级域名正在<code>配置中</code>，一会过后会变成<code>等待CNAME</code>，然后点击右边的CNAME图标，就会弹出这样一个域名。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7f778de065023cdf8239c7fc71b49f1e.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dfe6b42e39c40a53b683c8248075540e.png" style="max-width:100%;"></p><p>6、这时候我们需要去自己网站解析地址的地方配置一下<code>二级域名的CNAME</code>，比如我服务器是腾讯云，腾讯云帮我解析的，我就去腾讯云，在<code>云解析</code>→<code>管理</code><span style="line-height: normal;">→<code>域名解析</code>里面，添加一条这样的CNAME：</span></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/835f35367bc8aa9125e2c97e109bbf02.png" style="max-width:100%;"></p><spanhelvetica neue',="" helvetica,="" 'pingfang="" sc',="" 微软雅黑,="" tahoma,="" arial,="" sans-serif;="" font-size:="" 14px;="" font-style:="" normal;="" font-variant:="" font-weight:="" letter-spacing:="" line-height:="" 30px;="" orphans:="" auto;="" text-align:="" start;="" text-indent:="" 0px;="" text-transform:="" none;="" white-space:="" widows:="" word-spacing:="" -webkit-text-stroke-width:="" display:="" inline="" !important;="" float:="" background-color:="" rgb(255,="" 255,="" 255);"="">&nbsp;其中关键信息如下：</spanhelvetica><div><table border="0" width="100%" cellpadding="0" cellspacing="0" helvetica="" neue',="" helvetica,="" 'pingfang="" sc',="" 微软雅黑,="" tahoma,="" arial,="" sans-serif;="" font-size:="" 14px;="" font-style:="" normal;="" font-variant:="" font-weight:="" letter-spacing:="" orphans:="" auto;="" text-align:="" start;="" text-transform:="" none;="" white-space:="" widows:="" word-spacing:="" 0px;="" -webkit-text-stroke-width:="" background-color:="" rgb(255,="" 255,="" 255);"=""><tbody><tr><th>&nbsp;名称</th><th>说明&nbsp;</th><th>举例&nbsp;</th></tr><tr><td>&nbsp;主机记录</td><td>&nbsp;刚才填的二级域名的前缀</td><td>&nbsp;比如cdn.xxx.cn就填cdn</td></tr><tr><td>&nbsp;记录类型</td><td>&nbsp;填CNAME</td><td>&nbsp;</td></tr><tr><td>&nbsp;记录值</td><td>&nbsp;填入刚才七牛弹出来的域名</td><td>&nbsp;注意填完com后会加个点，不要去改它</td></tr></tbody></table><p>7、等待10-20分钟，七牛会显示成功。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/680fb51edc285761694de3e2e289c78e.png" style="max-width:100%;"></p><p>8、点击<code>镜像存储</code>，绑定你的网站，保存。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a8e96437ecdb428378d343b29c73815a.png" style="max-width:100%;"></p><p>9、<code>内容管理</code>里面，将<code>外链默认域名</code>选为你自己建立的二级域名，<span style="line-height: normal;">七牛CDN就配置好啦。</span></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b4c7f2f71f0ea5ffce25f9fef9afc8a0.png" style="max-width:100%;"></p><h2>懒人站长如何使用CDN</h2></div><div>从这里开始，网上的内容大多都教如何配置wordpress的后台，然后添加CDN功能，直接填个网址完事，这里<a href="https://liuyanzhao.com/2176.html" target="_blank">保留个链接</a>以备不时之需吧。</div><div>可是这个网站是我自己写的啊！我也想能填个网址了事……而且我也不想修改关键的内容，一是考虑到CDN是免费的，万一崩了呢？二是我不想去每个地方改php代码，不然所有的网页都得改一遍，到时候维护起来超级无敌宇宙大麻烦。我想到是用nginx进行的反向代理php-fpm解析的，那在nginx解析的时候，直接把字符串替换过去不就完事啦~果然真的有……</div><h2></h2><h2>http_substitutions_filter_module配置CDN</h2><p>这里参考的是<a href="https://zhangge.net/5116.html" target="_blank">Nginx内容替换模块http_substitutions_filter_module及实用案例分享</a>，由于没有使用过ngxin自带的subs_filter，所以也不知道这两个的区别利弊，当然直接用最新的好啦。</p><p>1、编译集成<span style="line-height: normal;">ngx_http_substitutions_filter_module</span></p><p><span style="line-height: normal;">（1）下载</span><span style="line-height: normal;">ngx_http_substitutions_filter_module</span><span style="line-height: normal;">模块文件后解压，</span></p><div><spanmicrosoft yahei',="" helvetica,="" arial,="" 'lucida="" grande',="" tahoma,="" sans-serif;="" font-size:="" 15px;="" font-style:="" normal;="" font-variant:="" font-weight:="" letter-spacing:="" line-height:="" 27px;="" orphans:="" auto;="" text-align:="" start;="" text-indent:="" 30px;="" text-transform:="" none;="" white-space:="" widows:="" word-spacing:="" 0px;="" -webkit-text-stroke-width:="" display:="" inline="" !important;="" float:="" background-color:="" rgb(255,="" 255,="" 255);"=""><pre><code class='prettyprint lang-c linenums'>[root@MyServer ~]# wget -O ngx_http_substitutions_filter_module-master.zip https://github.com/yaoweibin/ngx_http_substitutions_filter_module/archive/master.zip
+[root@MyServer ~]# unzip ngx_http_substitutions_filter_module-master.zip
+[root@MyServer ~]# cd ngx_http_substitutions_filter_module-master &amp;&amp; pwd 
+/root/ngx_http_substitutions_filter_module-master</code></pre><p>（2）服务器上执行<code>nginx -V</code> ���看编译参数</p><pre><code class='prettyprint lang-c linenums'>[root@MyServer ~]# /usr/local/nginx/sbin/nginx  -V
+Tengine version: Tengine/2.1.2 (nginx/1.6.2)
+built by gcc 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC) 
+TLS SNI support enabled
+configure arguments: --prefix=/usr/local/nginx --with-http_v2_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --add-module=../ngx_cache_purge-2.3 --with-http_sub_module</code></pre><p>（3）加上模块参数，重新编译nginx</p><pre><code class='prettyprint lang-c linenums'>./configure [+原有参数+] --add-module=/root/ngx_http_substitutions_filter_module-master/</code></pre><p>（4）平滑升级nginx</p><p>参考<a href="https://zhangge.net/4856.html" target="_blank">这篇文章</a>，我没有尝试过所以不写。</p><p>这里我在第2步编译的时候卡壳了，我当时是<code>apt-get install nginx</code>安装的nginx……版本是<code>nginx/1.12.1</code>，我的编译参数是：</p><pre><code class='prettyprint lang-c linenums'>--with-cc-opt='-g -O2 -fstack-protector-strong -Wformat -Werror=format-security -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-z,relro -Wl,-z,now' --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid --modules-path=/usr/lib/nginx/modules --http-client-body-temp-path=/var/lib/nginx/body --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --http-proxy-temp-path=/var/lib/nginx/proxy --http-scgi-temp-path=/var/lib/nginx/scgi --http-uwsgi-temp-path=/var/lib/nginx/uwsgi --with-debug --with-pcre-jit --with-http_ssl_module --with-http_stub_status_module --with-http_realip_module --with-http_auth_request_module --with-http_v2_module --with-http_dav_module --with-file-aio --with-threads --with-http_addition_module --with-http_geoip_module=dynamic --with-http_gunzip_module --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_secure_link_module --with-http_sub_module --with-http_xslt_module=dynamic --with-stream=dynamic --with-stream_realip_module --with-stream_geoip_module --with-stream_ssl_module --with-stream_ssl_preread_module --with-mail=dynamic --with-mail_ssl_module --add-dynamic-module=/usr/src/builddir/debian/modules/nginx-auth-pam --add-module=/usr/src/builddir/debian/modules/nginx-dav-ext-module --add-module=/usr/src/builddir/debian/modules/nginx-echo --add-module=/usr/src/builddir/debian/modules/nginx-upstream-fair --add-module=/usr/src/builddir/debian/modules/ngx_http_substitutions_filter_module --add-module=/usr/src/builddir/debian/modules/nginx-cache-purge</code></pre><p>然后按照教程做了后报错：</p><pre><code class='prettyprint lang-c linenums'>./configure: error: no /usr/src/builddir/debian/modules/nginx-dav-ext-module/config was found</code></pre><p>用which，whereis也找不到这个叫<code>nginx-dav-ext-module</code>的插件，于是乎我开始准备一个一个查找这些--add-module增加的插件是否有用，每想到找着找着找到了这个：</p><pre><code class='prettyprint lang-c linenums'>--add-module=/usr/src/builddir/debian/modules/ngx_http_substitutions_filter_module</code></pre><p>呀，这不是我们要加的插件吗，原来在这个版本已经集成了，那就不用那么麻烦升级了……于是跳过了所有的步骤……进入使用阶段。</p><p>2、配置nginx，替换字符串。</p><p><a href="https://github.com/yaoweibin/ngx_http_substitutions_filter_module" target="_blank">ngx_http_substitutions_filter_module的github文档</a><br></p><p>用法说明：</p><pre><code class='prettyprint lang-c linenums'>* subs_filter_types
+subs_filter_types 语法： subs_filter_types mime-type [mime-types]
+默认： subs_filter_types text/html
+适用： http， server， location
+subs_filter_types 是用来指定替换文件类型的 默认仅仅替换text/html类型的文件。
+</li>
+</ul>
+<ul>
+<li>subs_filter<br>subs_filter 语法： subs_filter source_str destination_str [gior]<br>默认： none<br>适用： http，server，location<br>subs_filter 是用来替换文本的，可以使用正则<br>g（默认）：替换匹配项。<br>i  ：区分大小写的匹配<br>o : 只匹配发现的第一个。<br>r  : 正则匹配（默认是字符串匹配）。</code></pre><p>于是在ngxin的<code>xxx.conf</code>下，配置我的cdn：</p><pre><code class='prettyprint lang-c linenums'>subs_filter <a target="_blank" rel="noopener" href="http://www.bewindoweb.cn/([^&quot;/&#39;]*?)\.(jpg|png|js|css|jpeg|bmp|gif)">http://www.bewindoweb.cn/([^&quot;\&#39;]*?)\.(jpg|png|js|css|jpeg|bmp|gif)</a> <a target="_blank" rel="noopener" href="http://cdn.bewindoweb.cn/$1.$2">http://cdn.bewindoweb.cn/$1.$2</a> igr;</code></pre><p>这里注意，我对php进行了php-fpm的配置，所以在<code>location /</code>下配置这一句是无效的，要在<code>location php</code>的下面才有效哦。</p><p>最后的效果：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/932dd0fcfea358e472a329011815f268.png" style="max-width:100%;"></p></spanmicrosoft></div><p>图片加载速度快得让人想哭呢……</p><p><br></p>                </div></li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E5%B0%86%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%83%E7%89%9BCDN%E4%B8%8A%E5%8E%BB/">http://tanqingbo.cn/2019/10/06/%E5%B0%86%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%83%E7%89%9BCDN%E4%B8%8A%E5%8E%BB/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/简单又复杂的“整数类型”/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">简单又复杂的“整数类型” </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/开启头条号之旅/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">开启头条号之旅 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、教程内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、具体操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">配置七牛CDN骚操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">懒人站长如何使用CDN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">http_substitutions_filter_module配置CDN</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、教程内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、具体操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">配置七牛CDN骚操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">懒人站长如何使用CDN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">http_substitutions_filter_module配置CDN</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、教程内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、具体操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">配置七牛CDN骚操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">懒人站长如何使用CDN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">http_substitutions_filter_module配置CDN</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="如果你想做java研发的话，这几样工具你肯定用得到">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2017/08/04/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E5%81%9Ajava%E7%A0%94%E5%8F%91%E7%9A%84%E8%AF%9D%EF%BC%8C%E8%BF%99%E5%87%A0%E6%A0%B7%E5%B7%A5%E5%85%B7%E4%BD%A0%E8%82%AF%E5%AE%9A%E7%94%A8%E5%BE%97%E5%88%B0/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2017-08-04">
+  <meta property="og:article:modified_time" content="2017-08-04">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      如果你想做java研发的话，这几样工具你肯定用得到
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2017-08-04T06:14:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2017-08-04</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/资源分享/" class="post-meta-link">资源分享</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>480 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="Eclipse-IDE-for-Java-EE-Developers"><a href="#Eclipse-IDE-for-Java-EE-Developers" class="headerlink" title="Eclipse IDE for Java EE Developers"></a>Eclipse IDE for Java EE Developers</h2><ul>
+<li>该版本集成了Java ee开发常用插件，方便动态web网站开发。适合Java web开发者使用。集成了XML编辑器、数据库查看工具，提供jsp可视化编辑器。<h3 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1hsBZi2g">http://pan.baidu.com/s/1hsBZi2g</a> </li>
+<li>密码：y05m</li>
+</ul>
+<h2 id="jdk（包含1-7和1-8两个版本）"><a href="#jdk（包含1-7和1-8两个版本）" class="headerlink" title="jdk（包含1.7和1.8两个版本）"></a>jdk（包含1.7和1.8两个版本）</h2><ul>
+<li>JDK是 Java 语言的软件开发工具包，主要用于移动设备、嵌入式设备上的java应用程序。JDK是整个java开发的核心，它包含了JAVA的运行环境（JVM+Java系统类库）和JAVA工具。<h3 id="获取地址-1"><a href="#获取地址-1" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1nu96J3N">http://pan.baidu.com/s/1nu96J3N</a> </li>
+<li>密码：4wfv</li>
+</ul>
+<h2 id="tomcat（包含7-0和8-0两个版本）"><a href="#tomcat（包含7-0和8-0两个版本）" class="headerlink" title="tomcat（包含7.0和8.0两个版本）"></a>tomcat（包含7.0和8.0两个版本）</h2><ul>
+<li>Tomcat 服务器是一个免费的开放源代码的Web 应用服务器，属于轻量级应用服务器，在中小型系统和并发访问用户不是很多的场合下被普遍使用，是开发和调试JSP 程序的首选。对于一个初学者来说，可以这样认为，当在一台机器上配置好Apache 服务器，可利用它响应HTML（标准通用标记语言下的一个应用）页面的访问请求。<h3 id="获取地址-2"><a href="#获取地址-2" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1miRzXXI">http://pan.baidu.com/s/1miRzXXI</a> </li>
+<li>密码：hg24</li>
+</ul>
+<h2 id="mysql数据库"><a href="#mysql数据库" class="headerlink" title="mysql数据库"></a>mysql数据库</h2><ul>
+<li>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目前属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件。<h3 id="获取地址-3"><a href="#获取地址-3" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1gfJ2Jar">http://pan.baidu.com/s/1gfJ2Jar</a> </li>
+<li>密码：sucw</li>
+</ul>
+<h2 id="navicat-for-mySQL破解版"><a href="#navicat-for-mySQL破解版" class="headerlink" title="navicat for mySQL破解版"></a>navicat for mySQL破解版</h2><ul>
+<li>Navicat是一套快速、可靠并价格相当便宜的数据库管理工具，专为简化数据库的管理及降低系统管理成本而设。<h3 id="获取地址-4"><a href="#获取地址-4" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1nvoOu97">http://pan.baidu.com/s/1nvoOu97</a> </li>
+<li>密码：8swq</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2017/08/04/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E5%81%9Ajava%E7%A0%94%E5%8F%91%E7%9A%84%E8%AF%9D%EF%BC%8C%E8%BF%99%E5%87%A0%E6%A0%B7%E5%B7%A5%E5%85%B7%E4%BD%A0%E8%82%AF%E5%AE%9A%E7%94%A8%E5%BE%97%E5%88%B0/">http://tanqingbo.cn/2017/08/04/%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E5%81%9Ajava%E7%A0%94%E5%8F%91%E7%9A%84%E8%AF%9D%EF%BC%8C%E8%BF%99%E5%87%A0%E6%A0%B7%E5%B7%A5%E5%85%B7%E4%BD%A0%E8%82%AF%E5%AE%9A%E7%94%A8%E5%BE%97%E5%88%B0/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2017/08/08/据说想要学好C++，这几本书一定要看/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">据说想要学好C++，这几本书一定要看 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2017/08/02/青春兵荒马乱，我们潦草地离散/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">青春兵荒马乱，我们潦草地离散 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Eclipse-IDE-for-Java-EE-Developers"><span class="toc-text">Eclipse IDE for Java EE Developers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jdk%EF%BC%88%E5%8C%85%E5%90%AB1-7%E5%92%8C1-8%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">jdk（包含1.7和1.8两个版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-1"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tomcat%EF%BC%88%E5%8C%85%E5%90%AB7-0%E5%92%8C8-0%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">tomcat（包含7.0和8.0两个版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-2"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">mysql数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-3"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#navicat-for-mySQL%E7%A0%B4%E8%A7%A3%E7%89%88"><span class="toc-text">navicat for mySQL破解版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-4"><span class="toc-text">获取地址</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Eclipse-IDE-for-Java-EE-Developers"><span class="toc-text">Eclipse IDE for Java EE Developers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jdk%EF%BC%88%E5%8C%85%E5%90%AB1-7%E5%92%8C1-8%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">jdk（包含1.7和1.8两个版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-1"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tomcat%EF%BC%88%E5%8C%85%E5%90%AB7-0%E5%92%8C8-0%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">tomcat（包含7.0和8.0两个版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-2"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">mysql数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-3"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#navicat-for-mySQL%E7%A0%B4%E8%A7%A3%E7%89%88"><span class="toc-text">navicat for mySQL破解版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-4"><span class="toc-text">获取地址</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Eclipse-IDE-for-Java-EE-Developers"><span class="toc-text">Eclipse IDE for Java EE Developers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jdk%EF%BC%88%E5%8C%85%E5%90%AB1-7%E5%92%8C1-8%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">jdk（包含1.7和1.8两个版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-1"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tomcat%EF%BC%88%E5%8C%85%E5%90%AB7-0%E5%92%8C8-0%E4%B8%A4%E4%B8%AA%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-text">tomcat（包含7.0和8.0两个版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-2"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mysql%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">mysql数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-3"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#navicat-for-mySQL%E7%A0%B4%E8%A7%A3%E7%89%88"><span class="toc-text">navicat for mySQL破解版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-4"><span class="toc-text">获取地址</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

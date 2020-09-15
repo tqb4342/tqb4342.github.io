@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="基于amwiki搭建属于自己的维基百科">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E5%9F%BA%E4%BA%8Eamwiki%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      基于amwiki搭建属于自己的维基百科
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>482 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/199.html">http://www.bewindoweb.com/199.html</a><div class="card-article-text"><h1>前言</h1><p>最近突然意识到，我把过多的内容放到这个博客里面了，是时候把编程、生活日记、工具wiki三者分开了：</p><p>（1）<a href="http://www.bewindoweb.com" target="_blank">个人博客</a><span style="line-height: 1.5;">应该记录编程的内容，比如有趣的小实验、小项目、优美的算法、数学等等，它应该是以后工作的名片。</span></p><p>（2）生活日记记录的才是自己去哪儿玩儿了，昨天做什么梦了，有啥想买想吃的东西。</p><p>（3）<a href="http://wiki.bewindoweb.com/" target="_blank">wiki</a>则应该记录一些常用的、系统的知识，比如快捷键、中文文档的翻译、软件程序出错解决手册。它应该是经过多次验证的工具书，不同于平时使用的印象笔记，印象笔记都是杂乱的思绪，突然想到的方法，突然想做的事情，或者在做事过程中边做边记录不需要考虑格式问题的草稿。wiki记录的则是可以快速搜索查找、具有条理的但是非常无聊、平时不会看，关键时候又需要翻一翻的东西。</p><p>因此诞生了制作自己的wiki的想法。</p><h1>需求分析</h1><p>我主要有三个需求：</p><p>（1）可以放在服务器上便于在任何地方查看，这需要体积小巧。</p><p>（2）支持Markdown的语法，支持中文。</p><p>（3）���强大的搜索功能，能够搜索内容中的关键字而不仅仅是标题。</p><p>我的小伙伴钉子在<a href="http://blog.dimpurr.com/tiddly-wiki/" target="_blank">《使用 TiddlyWiki 打造轻便个人 Wiki 知识库》</a><span style="line-height: 1.5;">中已经提到了用TiddlyWiki，TiddlyWiki非常有用：</span></p><p><span style="line-height: 1.5;">（1）单HTML文件，可以随时装在U盘里离线查看</span></p><p><span style="line-height: 1.5;">（2）不需要任何服务器的配置，也不需要任何安装</span></p><p><span style="line-height: 1.5;">（3）很多人使用，已经具有很多成熟的插件</span></p><p><span style="line-height: 1.5;">（4）有强大的标签和搜索功能</span></p><p><span style="line-height: 1.5;">用钉子的原话说：</span></p><blockquote><spanhiragino sans="" gb="" w3',="" 'hiragino="" gb',="" 'microsoft="" yahei',="" 'droid="" fallback',="" 'source="" sans',="" 'wenquanyi="" micro="" hei',="" hei="" mono',="" zen="" 'apple="" ligothic="" medium',="" simhei,="" 'st="" heiti',="" sharp',="" sans-serif;="" font-size:="" 18px;="" font-style:="" normal;="" font-variant:="" font-weight:="" letter-spacing:="" line-height:="" 31.5px;="" orphans:="" auto;="" text-align:="" start;="" text-indent:="" 0px;="" text-transform:="" none;="" white-space:="" widows:="" word-spacing:="" -webkit-text-stroke-width:="" display:="" inline="" !important;="" float:="" none;"="">&nbsp;</spanhiragino><span style="line-height: 1.5;">笔记软件，例如 EverNote 、 WizNote 、 OneNote 的确十分不错，但是也会带来客户端是否跨平台、启动速度是否好看甚至默认文字排版是否美观的问题；而且，常规的笔记软件也达不到 Wiki 级别方便的 Tag 标签系统。当然， Wiki 系统有经典的 MediaWiki 系统，还有许许多多的静态 Wiki 系统、 Wiki 知识库类客户端。然而， MediaWiki 庞大、复杂和丑陋； Wiki 客户端程序有好有坏，有设计简陋也有强大美观，但是最大的限制还是往往不跨平台；一些可以用 Github Pages 部署的，基于 Markdown 的 Wiki 系统尽管几乎能在功能上满足我的需求，但是每一次撰写新条目和部署的复杂度还是令人难以接受。你可能已经看出了我口味相当的刁钻和需求相当的诡异 …… 在我看来，管理以文字、代码和数学公式为主的个人知识库， TiddlyWiki 可谓是最好的选择之一。</span></blockquote><p><span style="line-height: 1.5;">然而其实不太符合我的需求：</span></p><p><span style="line-height: 1.5;">（1）无法放到小水管服务器上。</span></p><p><span style="line-height: 1.5;">存储在单一HTML文件里，再装几个插件，写点文字，文件会原来越大，钉子的Tiddly已经到5M了，5M的东西要用1M也就是128kb/s的水管传输……而钉子的服务器是80块一个月的Linode，非常适合：</span></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6a46054ecba9b529202374ff9bd9680b.png" style="max-width:30%;"></p><p>（2）不支持markdown语法</p><p>Tiddlywiki用的是WikiText，虽然说差不多，但是也需要学习。</p><p>（3）界面凌乱</p><p>由于只有一个html文件，作者编辑和读者看是一个界面，虽然读者不会保存修改操作，但看着并不会使用却放在那里的按钮很难受。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ab875cf01cd78b7bfb11c07a52072f2d.png" style="max-width:100%;"></p><p>（4）对浏览器的支持不太好</p><p>搜狗浏览器打开：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c8056cd182d209a53d55d93a03f72f5c.png" style="max-width:100%;"></p><p>不过以后有机会还是想用一用TiddlyWiki的，比如等我租到大带宽服务器……</p><h1>amwiki简介</h1><p>在查了一些资料，并且排除了钉子所说的不太好用的那些wiki后，发现了amwiki。<a href="https://github.com/TevinLi/amWiki" target="_blank">amwiki</a>是国人TevinLi开发的在github���开源的wiki程序，起源也是因为觉得wiki都不太好用，于是他自己开发了一个。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/75b4cb75007b14873dbc4f44fda29a33.png" style="max-width:100%;"></p><h2>amwiki优点</h2><p>（1）支持markdown语法、支持中文。<span style="font-weight: bold;">国人</span>基于<span style="font-weight: bold;">Atom</span>开发的产物……太棒了。</p><p>（2）有自动构建工具。写完markdown后只需要按一下按钮更新目录即可。</p><p>（3）无需数据库。所有的markdown写完都保存为.md文件，它能够自动加载，省去了数据库的备份麻烦。</p><p>（4）支持粘贴图片。非常非常实用的功能，QQ截图后在Atom里面粘贴图片，自动把图片保存到assets目录下，并且自动创建文件夹、命名，自动把markdown语句写好……无敌。</p><p>（5）支持导出github wiki。因为amwiki最开始是为github项目写wiki用的。</p><p>（6）支持全库搜索。支持标题搜索、支持内容搜索。</p><p>（7）支持手机浏览</p><h2>amwiki缺点</h2><p>（1）没有更新了。amwiki的最后一次更新是在2018年1月3日，5个月没更新了，估计作者要弃坑了……有什么问题得自己去改。</p><p>（2）不支持公式。amwiki毕竟是小项目，没有成熟的插件。</p><p>（3）加载缓慢。由于没用数据库，还要在加载过程中转换为html，加载也是比较缓慢的。不过，amwiki是有缓存机制的，而且不需要像Tiddlywiki一样一次性加载完所有的文档。</p><h2>未来的amwiki</h2><p>注意到在计划中的下一个版本作者准备支持数学公式了，<span style="line-height: normal;">罒ω罒，包括评论系统，都是值得期待的，不过不知道何年何月才能等到……</span></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9ae169742a123d78b167895c93f0cf6d.png" style="max-width:100%;"></p><h1>上手amwiki</h1><h2>amwiki下载和安装</h2><p>（1）从<a href="https://github.com/TevinLi/amWiki" target="_blank">github</a>上点击<code>Clone or download</code>下载ZIP，这里提供一个百度网盘<a href="https://pan.baidu.com/s/1i4uNkF_bP59N847yJl0GYQ" target="_blank">amwikiv1.2.1</a><span style="line-height: 1.5;">（密码</span>xvnk<span style="line-height: 1.5;">）</span></p><p>（2）安装<a href="https://atom.io/" target="_blank">Atom编辑器</a>，安装过程是自动的，强制安装到C盘。这是一款github开发的开源免费的编辑器，amwiki是作为Atom的插件开发的。同样提供<a href="https://pan.baidu.com/s/1rxafb2eo7liGzcLPeGBsvA" target="_blank">百度网盘</a>（密码8bui）备份下载，不过注意这个文件是<span style="font-weight: bold;">v1.27.2 For Windows7(64bit) or later</span>的，我的操作系统是<span style="font-weight: bold;">windows8 64</span>位，所以如果你的操作系统不同，需要自己去官网下载对应版本。</p><p>（3）将amwiki手动安装至Atom。</p><p>① 进入<code>C:\Users\BEWINDOWEB\.atom\packages</code>文件夹，这里的<code>BEWINDOWEB</code>是你计算机的名字，<code>.atom</code>是一个隐藏文件夹。</p><p>② 将amwiki的ZIP文件解压到这个文件夹，如果解压后的名字不是<code>amWiki</code>的话，比如是<code>amWiki-master</code>，需要把<code>amWiki-master</code>重命名为<code>amWiki</code>。</p><p>（4）顺手装一个Atom汉化插件，同样的安装方法，下载→解压到packages目录。插件名字叫atom-simplified-chinese-menu-master，给一个<a href="https://pan.baidu.com/s/1Mvuqqt7qLBrOgQP7S4uuiw" target="_blank">百度网盘</a>（密码qqa7）地址。</p><p>（5）打开Atom，发现上面的英文菜单栏变为了中文，并且多了一个amWiki轻文库的菜单，说明安装成功了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3bb8a7805e51a39c75f9fadeac263eaf.png" style="max-width:100%;"></p><h2>amWiki的Hello World</h2><p>（1）新建一个项目文��夹。我们在喜欢的地方建立一个文件夹，比如<code>G:\githubWorkspace\Helloworld\</code>，然后在Atom里面选择<code>文件</code>→<code>添加项目文件夹</code>→<code>选中这个Helloworld</code>，一个项目文件夹就建好了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0e8f200f4259314076c982b8cc53011b.png" style="max-width:100%;"></p><p>（2）编写config.json。在这个Helloworld文件夹下创建一个config.json文件，写入内容：</p><pre><code class="prettyprint lang-txt linenums">&#123;
+"name": "Hello wiki"
+&#125;</code></pre><p>（3）生成amwiki。菜单栏<code>amWiki轻文库</code>→<code>通过config.json创建新文库</code>，会在这个目录下自动生成很多文件：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6148dbd3f2802064e02186631d0ce10b.png" style="max-width:100%;"></p><p>（4）启动本地服务器。菜单栏<span style="line-height: normal;"><code>amWiki轻文库</code>→<code>启动本地静态Web服务器</code>，可能会提示联网，允许就好了。</span></p><p>（5）查看Hello wiki内容。</p><p>① 进入library目录，选择home-首页.md：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/42344302a500974fa0c868bff90eb840.png" style="max-width:100%;"></p><p>② 然后菜单栏amWiki轻文库→在浏览器中打开当前文档，Helloworld！（<span style="line-height: normal;">注意这里不能直接去打开index.html，因为会有跨域的问题，很多文件无法引用，需要从静态Web服务器来操作</span>）</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6ec44199e64cade7c51b3624351f511c.png" style="max-width:100%;"></p><h2>修改amwiki</h2><p>（1）看���么都不如看官方文档，<a href="http://amwiki.org/" target="_blank">amwiki官网</a>，<a href="http://amwiki.org/doc" target="_blank">amwiki文档中心</a>。</p><p>（2）修改config.json。</p><p>由于amwiki是自动生成的，所以你手动去更改内容非常麻烦，一切的修改都应该基于config.json，作者提供了<a href="http://amwiki.org/doc/?file=030-%E6%96%87%E6%A1%A3%E6%8A%80%E6%9C%AF%E7%AF%87/100-config%E9%85%8D%E7%BD%AE" target="_blank">以下接口</a>：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;参数名</th><th>默认值&nbsp;</th><th>修改示例&nbsp;</th><th>作用&nbsp;</th></tr><tr><td>name</td><td>amWiki轻文库</td><td>Hello wiki&nbsp;</td><td>wiki名称&nbsp;</td></tr><tr><td>ver</td><td>by Tevin</td><td>v0.0.1</td><td>wiki版本</td></tr><tr><td>logo</td><td>amwiki/images/logo.png</td><td>/assets/logo.png</td><td>logo图片&nbsp;</td></tr><tr><td>colour</td><td>#4296eb</td><td>/assets/logo</td><td>界面颜色</td></tr><tr><td>github-url</td><td>无</td><td>你的github项目url</td><td>作为github附属wiki</td></tr><tr><td>page-mounts</td><td>false&nbsp;</td><td>true</td><td><a href="http://amwiki.org/doc/?file=030-%E6%96%87%E6%A1%A3%E6%8A%80%E6%9C%AF%E7%AF%87/100-config%E9%85%8D%E7%BD%AE#page-mounts-" target="_blank">页面挂载数据</a><br></td></tr><tr><td>imports</td><td>无</td><td>assets/bwb.css</td><td><spanhelvetica neue',="" helvetica,="" 'pingfang="" sc',="" 微软雅黑,="" tahoma,="" arial,="" sans-serif;="" font-size:="" 14px;="" font-style:="" normal;="" font-variant:="" font-weight:="" letter-spacing:="" line-height:="" 28px;="" orphans:="" auto;="" text-align:="" left;="" text-indent:="" 0px;="" text-transform:="" none;="" white-space:="" widows:="" word-spacing:="" -webkit-text-stroke-width:="" display:="" inline="" !important;="" float:="" background-color:="" rgb(255,="" 255,="" 255);"="">引入自己的css/js &nbsp;</spanhelvetica></td></tr></tbody></table><p>最好的地方就是，作者允许使用自己的css/js，举个例子：</p><p>① 可玩点一：修改界面样式。</p><p>我希望把文库也改成类似自己博客的界面，风格统一，那么可以建立一个assets文件夹，创建文件bwb.css。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b787dbbbb17077988d526f4a94e7258c.png" style="max-width:100%;"></p><p>在bwb.css中，通过复写元素的样式就能够覆盖，比如审查头部的背景，class名称叫header：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/706265162f784a0ddabf1967ac1a2a95.png" style="max-width:100%;"></p><p>我们编写一个：</p><pre><code class="prettyprint lang-css linenums">/*头部*/
+.header&#123;
+background-color: #242424;
+border-top:none;
+&#125;</code></pre><p>头部就从蓝白变成了全黑：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9315c6f9b415d8ecdd41a8ae8773caae.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/8264ed4ffaabeb0f4859715e689952e4.png" style="max-width:100%;"></p><p>完整的界面对比和bwb.css代码如下，你可以参考：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e685ec60a6c7a673eca67bd8377feb1a.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/46939b8696e05bae70f3eed86b74727c.png" style="max-width:100%;"></p><pre><code class="prettyprint lang-css linenums">a&#123;
+color:#478cdc;
+&#125;
+/*头部*/
+.header&#123;
+background-color: #242424;
+border-top:none;
+&#125;
+.header .logo &#123;
+padding-top: 5px;
+&#125;
+
+</li>
+</ul>
+<p>.header .logo img &#123;<br>  max-height: 59px;<br>&#125;</p>
+<p>.header .logo i &#123;<br>  display:none;<br>&#125;</p>
+<p>.header .logo b &#123;<br>  height: 59px;<br>  color:#f2f2f2;<br>  line-height:59px;<br>&#125;<br>/<em>主体背景</em>/<br>.container&#123;<br>  background-color:#f1f5f8;<br>  border: none;<br>  border-radius: 4px;<br>  box-shadow: 0px 0px 5px #f2f2f2;<br>  box-sizing: border-box;<br>  overflow:hidden;<br>&#125;<br>/<em>左侧菜单</em>/<br>.menubar&#123;<br>  border-right: 1px solid #eee;<br>&#125;<br>.menu-filter svg &#123;<br>  color:#478cdc;<br>&#125;<br>.menu-search svg &#123;<br>  color:#478cdc;<br>&#125;<br>.menubar h4.on svg &#123;<br>  color:#478cdc;<br>&#125;<br>.menubar h4.on a &#123;<br>  color:#478cdc;<br>&#125;<br>.menubar h4, .menubar h5 &#123;<br>  border:1px solid #FFFFFF;<br>&#125;<br>.menu-search&#123;<br>  border-left:none;<br>  border-bottom: 1px solid #eee;<br>&#125;<br>.menu-filter&#123;<br>  border-bottom: 1px solid #eee;<br>  padding-left: 6px;<br>  width: 205px;<br>&#125;<br>.menu-filter input &#123;<br>  border-bottom: none;<br>  width:170px;<br>  text-align: left;<br>  height:30px;<br>&#125;<br>.menu-filter i &#123;<br>  line-height: 36px;<br>  margin-top:2px;<br>&#125;<br>.menu-filter:hover input &#123;<br>  border-bottom: none;<br>&#125;<br>.menu-filter input:focus &#123;<br>outline: none;<br>  border-bottom: none;<br>&#125;<br>.menu-filter svg&#123;<br>  display:none;<br>&#125;<br>.container .nav &#123;<br>  background-color: #ffffff;<br>  border:none;<br>&#125;<br>/<em>右侧内容</em>/<br>.main-inner&#123;<br>  background-color: #ffffff;<br>  border:none;<br>&#125;<br>/<em>搜索功能</em>/<br>.search-update input &#123;<br>  background-color: #eee;<br>  font-weight: 300;<br>  text-decoration: none;<br>  text-align: center;<br>  cursor: pointer;<br>  border: none;<br>  border-radius: 15px;<br>  height: 30px;<br>  line-height: 28px;<br>  padding: 1px 10px;<br>  width: 110px;<br>  font-size:14px;<br>  color: #666;<br>&#125;<br>.search-update input[disabled] &#123;<br>  color: #ccc;<br>  background: #f2f2f2;<br>  border: #aaa 1px solid;<br>  padding: 1px 10px;<br>  border-radius: 15px;<br>  cursor:not-allowed;<br>&#125;<br>.search-update input:hover&#123;<br>  background-color: #f4f4f4;<br>&#125;<br>.search-input input[type=”button”] &#123;<br>  font-size: 14px;<br>  background-color: #1B9AF7;<br>  color:#f2f2f2;<br>  border: none;<br>  height: 44px;<br>  padding-left:3px;<br>  padding-right:3px;<br>  outline:none;<br>&#125;<br>.search-input input[type=”button”]:hover&#123;<br>  background-color: #41afff;<br>&#125;</p>
+<p>.search-input&#123;<br>  padding-right: 105px;<br>&#125;</p>
+<p>.search-input input[type=”text”]&#123;<br>  border-color:#eee;<br>  font-size: 14px;<br>  padding:11px;<br>&#125;<br>.search-input input[type=”text”]:focus&#123;<br>  border-color:#478cdc;<br>  box-shadow: none;<br>&#125;</p>
+<p>/<em>返回顶部</em>/<br>aside .contents&#123;<br>  background: #eee;<br>  color: #666;<br>  box-shadow: 0px 0px 5px #f2f2f2;<br>  border: 1px solid #f2f2f2;<br>&#125;<br>aside .contents-list&#123;<br>  background: #fafafa;<br>  border: 1px solid #eee;<br>&#125;<br>aside .contents a&#123;<br>  color: #444;<br>&#125;</p>
+<p>aside .contents a:hover&#123;<br>  color: #478cdc;<br>&#125;<br>aside .contents .markdown-contents ol li&gt;i&#123;<br>  color: #666;<br>  background-color: #f2f2f2;<br>  padding: 0 5px;<br>  border-radius: 4px;<br>  line-height: 20px;<br>&#125;<br>aside .back-top&#123;<br>  background: #eee;<br>  color: #666;<br>  box-shadow: 0px 0px 5px #f2f2f2;<br>  border: 1px solid #f2f2f2;<br>&#125;</p>
+<p>/<em>底部签名</em>/<br>.signature&#123;<br>  display:none;<br>&#125;</p>
+<p>/<em>markdown语法</em>/<br>.markdown-body h1 &#123;<br>  margin-top: 50px;<br>  font-size: 30px;<br>&#125;<br>.markdown-body h2 &#123;<br>  font-size: 26px;<br>&#125;<br>.markdown-body h3 &#123;<br>  font-size: 22px;<br>&#125;<br>.markdown-body code, .markdown-body tt &#123;<br>padding: 0;<br>font-size:14px;<br>background-color:#f1f8ff;<br>color: #0366d6;<br>height:20px;<br>margin:5px 3px;<br>padding:3px 0px;<br>white-space: normal;<br>line-height:2.0;<br>&#125;<br>.markdown-body img &#123;<br>  text-align:center;<br>  margin: 10px auto;<br>  display:block;<br>&#125;<br>.markdown-body table &#123;<br>  margin-left:auto;<br>  margin-right:auto;<br>  width:auto;<br>  display:table;<br>&#125;</p>
+<p>.markdown-body pre code &#123;<br>    font-size:14px;<br>&#125;</p>
+<p>@media screen and (max-width: 720px)&#123;<br>  .header .logo img&#123;<br>    display:none;<br>  &#125;<br>  .header .logo b &#123;<br>      line-height:49px;<br>      height:49px;<br>  &#125;<br>  .header .logo &#123;<br>    padding-top: 0;<br>  &#125;<br>  .container&#123;<br>    background-color:#f1f5f8;<br>    border: none;<br>    border-radius: none;<br>    box-shadow: none;<br>    box-sizing: border-box;<br>    overflow:hidden;<br>  &#125;<br>  .container .nav&#123;<br>    background: #242424;<br>  &#125;<br>  .menu-filter&#123;<br>    width:100%;<br>  &#125;<br>&#125;</code></pre><p>② 可玩点二：引入一些成熟的CSS。</p><p>作者只允许在config.json中引入一个CSS，其他的CSS会失效，但是我们可以在CSS里面写引入的语句。这使得功能变得强大，比如我想要使用font-awesome4.7.0的图标，<a href="https://pan.baidu.com/s/1odawArgQDSRJQF_T_B4MxA" target="_blank">百度网盘</a>（密码vxl4），那么把font-awesome插件下载到assets目录下：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ff49575ab58a9670833a5b39634c52d7.png" style="max-width:100%;"></p><p>再在bwb.css开头（注意是开头，写在结尾无效）写引入语句：</p><pre><code class="prettyprint lang-css linenums">/<em>引入其他css</em>/<br>@import "font-awesome/css/font-awesome.min.css";</code></pre><p>就能够在markdown里面使用啦<del></p><pre><code class="prettyprint lang-html linenums">&lt;font color="#478cdc"&gt;&lt;i class="fa fa-globe"&gt;&lt;/i&gt;&lt;/font&gt;</code></pre><p>效果：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/66b626db4deb0dd0a157c8b357cf88c1.png" style="max-width:100%;"></p><h2>使用amwiki的姿势</h2><p>（1）剪贴板功能</p><p>QQ截图后，直接使用ctrl+shift+v，或者菜单栏amWiki轻文库→从剪贴板粘贴截图，就能够自动帮你保存图片并写好markdown：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/53205424288e179c5297eb82ab6ec47f.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e29c5b516741906ff5091d13aba0a03f.png" style="max-width:100%;"></p><p>更好的是，它可以根据文档所在目录自动创建文件夹，让你的图片可以按文章分类。</p><p>（2）善用搜索功能</p><p>虽然amwiki没有标签，但是可以搜索文章内容是非常无敌的。先更新缓存到100%，再搜索：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1271bb36261d3669970d96c965e49fd8.png" style="max-width:100%;"></p><p>（3）手机端观看</p><p>amwiki支持自适应（虽然写得并不太好），手机端也是可以浏览、搜索、查看的哦。</p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fd6d6a4972e5d22108d1dbc4af752f6e.png" style="max-width:100%;"></p><p>（4）打开实时预览编写Markdown</p><p>在Atom中按Ctrl+shift+m可以打开Markdown实时预览</del></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4c09754ff423454fd9bdfdf5f9c8b533.png" style="max-width:100%;"></p><h1>amwiki v1.2.1的bug</h1><h2>字符被转码</h2><p>当输入<code>\n</code>的时候会被转义为<code>&amp;#39;</code>。原因是这一段，来源于<code>amWiki\js\amWiki.docs.js</code>：</p><pre><code class="prettyprint lang-js linenums">content = content.replace(/\(.)/g, function (m, s1) &#123;<br>      return '&amp;#' + s1.charCodeAt(0) + ';';<br>&#125;);</code></pre><p>看��下作者的wiki：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3b232f7f1b99ea7c2edb731982ce1756.png" style="max-width:100%;"></p><p>………………目测是开发中状态，而且和作者交流后，发现作者已经用上了自己开发好了的版本了……没办法，把这段注释掉就好了，不过用不上这个新功能了。记得注释<code>C:\Users\BEWINDOWEB.atom\packages\amWiki\files</code>下<code>amWiki.docs.js</code>中的内容，这样再次用<code>config.json</code>生成的时候就一直会是注释状态，否则只注释项目内的<code>amWiki.docs.js</code>，重新生成的时候会被重写。</p><h2>img.toPng() is not a function</h2><p>Atom 1.28.0版本已经将Electron升级到2.0版本了。而Electron v2.0的NativeImage.toPng函数已经被移除，取而代之的是NativeImage.toPNG。所以修改这个代码即可。解决方法参见<a href="http://wiki.bewindoweb.com/?file=001-%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%89%8B%E5%86%8C%EF%BC%88%E7%BC%96%E7%A8%8B%E7%B1%BB%EF%BC%89/00041-amwiki%E6%8A%A5%E9%94%99%EF%BC%9Aimg.toPng%20is%20not%20a%20function" target="_blank">《amwiki报错：img.toPng is not a function》</a></p><h1>使用github托管wiki</h1><p>如果没有合适的服务器，完全可以用github来托管，和普通的上传项目的方式一致：create项目→ push本地仓库 → push到github。不过建立的项目名称必须为：<span style="font-weight: bold;">username.github.io</span>，比如我的wiki为<a href="https://bewindoweb.github.io" target="_blank">bewindoweb.github.io</a>，他会自动识别的，一打开就是<code>home-首页.md</code>的内容。赶紧尝试动手搭一个吧~</p><p>你还可以通过<code>github项目</code>→<code>Settings</code>→<code>Github Pages</code>→<code>Custom domain</code>自定义其他的域名。当然，你要提前在域名解析上面添加CNAME指向wiki的地址。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a3901e1e3128ca143aee68e329f28122.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9275c3461ebb88a1b55c22d9e6ef6ac4.png" style="max-width:100%;"></p><p>还能够强制启用HTTPS，不过这个证书是github的，在Chrome上会有拦截信息，这样<a href="wiki.bewindoweb.com" target="_blank">wiki.bewindoweb.com</a>也能访问它了。</p><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E5%9F%BA%E4%BA%8Eamwiki%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91/">http://tanqingbo.cn/2019/10/06/%E5%9F%BA%E4%BA%8Eamwiki%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/搭建strongswan服务器/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">搭建strongswan服务器 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/计网必问经典问题：输入网址之后发生了什么/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">计网必问经典问题：输入网址之后发生了什么 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">amwiki简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">未来的amwiki</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">上手amwiki</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki下载和安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amWiki的Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">修改amwiki</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">使用amwiki的姿势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">amwiki v1.2.1的bug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">字符被转码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">img.toPng() is not a function</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">使用github托管wiki</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">amwiki简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">未来的amwiki</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">上手amwiki</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki下载和安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amWiki的Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">修改amwiki</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">使用amwiki的姿势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">amwiki v1.2.1的bug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">字符被转码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">img.toPng() is not a function</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">使用github托管wiki</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">amwiki简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">未来的amwiki</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">上手amwiki</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amwiki下载和安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">amWiki的Hello World</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">修改amwiki</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">使用amwiki的姿势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">amwiki v1.2.1的bug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">字符被转码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">img.toPng() is not a function</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">使用github托管wiki</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

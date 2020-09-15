@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="Hello Docker">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/Hello%20Docker/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Hello Docker
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/145.html">http://www.bewindoweb.com/145.html</a><div class="card-article-text"><h1>一、什么是Docker</h1><p>docker是基于Go语言实现的云开源项目，诞生于2013年，由dotCloud公司发起。</p><p>官方定义如下：</p><blockquote><p>docker是一个开源的软件部署解决方案；</p><p>docker也是轻量级的应用容器框架；</p><p>docker可以打包、发布、运行任何的应用。</p></blockquote><p>另一定义：</p><blockquote><p>Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare metal、OpenStack 集群和其他的基础应用平台。&nbsp;</p></blockquote><p>根据我目前所知的理解，docker是随时可以运行的完整环境，它并不保持一个恒定的状态，而是有所需则取所需，更像是一个“<span style="line-height: normal;">操作系统+相关依赖+主要内容.exe</span><span style="line-height: normal;">&nbsp;</span>”，自己把需要的环境都已经部署好了，在别的计算机上能够完美地复现。</p><p>docker的三大核心：镜像（Image）、容器（Container）、仓库（Repository）。</p><h1>二、轻松安装Docker</h1><p>根据官方文章《<a href="http://www.docker.org.cn/book/install/supported-platform-17.html" target="_blank">Docker安装手册</a>》，看评论说Docker基于Linux 64位的，因此需要64bit操作系统，不过我也查到一些32位的安装网页，以后懂了再来重写这段吧，那么，在更熟悉一点的Debian 8下实施安装：</p><p>【系统环境】阿里云服务器，Debian 8.9 64位。</p><p>【配置说明】Debian 8自带了3.16的内核，已经满足Docker的运行条件，由于Go语言包版本问题，docker.io包被放在了backports里而不是stable里。</p><h2>1、添加backports源</h2><pre><code class="prettyprint lang-c linenums">vi /etc/apt/sources.list
+deb http://http.debian.net/debian jessie-backports main
+apt-get update
+</code></pre><p>如果你刚刚装上新系统，都还没有基础的一些deb，比如Vim编辑器都还没有安装，那么可以参考这个debian 8 deb来设置，这是163的源：&nbsp;&nbsp;</p><pre><code class="prettyprint lang-bsh linenums">deb http://packages.dotdeb.org jessie all
+deb-src http://packages.dotdeb.org jessie all
+deb http://mirrors.163.com/debian/ jessie main non-free contrib
+deb http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb http://mirrors.baidubce.com/debian jessie-backports main contrib non-free
+deb-src http://mirrors.baidubce.com/debian jessie-backports main contrib non-free
+deb http://http.debian.net/debian jessie-backports main</code></pre><h2><span style="font-size: 16px; font-weight: bold;">2、安装docker.io包</span></h2><pre><code class="prettyprint lang-c linenums">apt-get install docker.io</code></pre><h2>3、确认docker运行是否正常</h2><pre><code class="prettyprint lang-c linenums">docker run --rm hello-world <br></code></pre><p>会提示：</p><p>本地没有找到hello-world项目 → 正在拉取hello world项目 → Hello from Docker！This message shows that your installation appears to be working correctly.</p><h1>三、Hello Docker</h1><h2>准备</h2><p>Docker系统有两个程序：docker服务端和docker客户端。其中docker服务端是一个服务进程，管理着所有的容器。docker客户端则扮演着docker服务端的远程控制器，可以用来控制docker的服务端进程。大部分情况下，docker服务端和客户端运行在一台机器上。</p><h2>查看docker版本</h2><pre><code class="prettyprint lang-c linenums">docker version
+提示：
+<font color="#f9963b">Client version</font>: 1.6.2
+Client API version: 1.18
+Go version (client): go1.3.3
+Git commit (client): 7c8fca2
+OS/Arch (client): linux/amd64
+<font color="#f9963b">Server version</font>: 1.6.2
+Server API version: 1.18
+Go version (server): go1.3.3
+Git commit (server): 7c8fca2
+OS/Arch (server): linux/amd64</code></pre><h2>搜索可用的docker镜像</h2><p>用docker search命令来检索docker可用的镜像</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker search</font> tutorial</code></pre><p>镜像都是按照<code>用户名/镜像名</code>来存储的：</p><pre><code class="prettyprint lang-c linenums">NAME                                                DESCRIPTION                                                            STARS     OFFICIAL   AUTOMATED
+<font color="#f9963b">learn</font>/<font color="#46acc8">tutorial</font>                                                                                                                        36                   
+<font color="#f9963b">georgeyord</font>/<font color="#46acc8">reactjs-tutorial </font>            This is the backend of the React comment b...        5                               [OK]
+<font color="#f9963b">mhausenblas</font>/<font color="#46acc8">kairosdb-tutorial</font>      GitHub fetcher for KairosDB tutorial                         1                               [OK]
+<font color="#f9963b">linkedin</font>/<font color="#46acc8">photon-ml-tutorial </font>          An interactive tutorial of the Photon ML m...           1</code></pre><p>有的镜像经过了官方验证，可以不用用户名，直接以镜像名存储，如：</p><pre><code class="prettyprint lang-c linenums">NAME                                                   DESCRIPTION                                                         STARS     OFFICIAL   AUTOMATED
+<font color="#f9963b">ubuntu    </font>                                             Ubuntu is a Debian-based Linux operating s...    7340                          [OK]       
+dorowu/ubuntu-desktop-lxde-vnc    Ubuntu with openssh-server and NoVNC            165                            [OK]
+rastasheep/ubuntu-sshd                     Dockerized SSH service, built on top of of...        132                            [OK]</code></pre><h2>下载可用的docker镜像</h2><p>下载docker镜像时需要把<code>用户名/镜像名</code>写完整，使用docker pull命令拉取，如：</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker pull </font>learn/tutorial</code></pre><h2>在docker容器中运行命令</h2><p>docker容器就像是一个拥有所有环境的沙盒进程，它默认是不运行任何程序的，需要你运行一个进程来启动一个容器，当运行的进程结束时，容器也会停止。利用刚刚下载的learn/tutorial来进行Hello world，命令为 <code>docker run [用户名/镜像名] [命令语句]</code>，例如：</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker run</font><font color="#46acc8"> learn/tutorial</font> echo "hello world"
+hello world</code></pre><h2>在docker容器中安装新程序</h2><p>利用刚刚的run命令，learn/tutorial是基于ubuntu的，因此用apt-get install -y来执行安装，-y是为了不进行交互，因为docker是无法响应这种交互的（不过尝试后发现docker只是停顿了几秒，也能成功安装）。来安装一个ping程序：</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker run</font> <font color="#46acc8">learn/tutorial</font> apt-get install -y ping</code></pre><h2>保存对docker容器的修改</h2><p>利用docker ps -l命令，即可查看进行操作后docker容器的容器ID号，再利用<code>docker commit [容器id] [用户名/镜像名]</code>就能提交。</p><p>整个过程保存了新旧状态之间的区别，从而产生了一个新版本，注意commit命令提交的容器id只需要简写前面几个字符即可识别。</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker ps -l</font>
+CONTAINER ID        IMAGE                      COMMAND             CREATED             STATUS                                 PORTS               NAMES
+<font color="#46acc8">2bef2995887e</font>        learn/tutorial:latest  <font color="#46acc8">apt-get install -y</font>      4 seconds ago        Exited (0) 1 seconds ago                            silly_bohr
+<font color="#f9963b">docker commit</font> <font color="#46acc8">2bef</font> learn/ping
+<font color="#46acc8">9660801322a6953232e3663a7deed632027898b8d23c4b58596a3dd8aebe6040</font></code></pre><h2>使用新的docker容器</h2><p>刚刚保存为了learn/ping，因此使用新的名字就能用新的容器了，测试如下：</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker run</font><font color="#46acc8"> learn/ping</font> ping www.baidu.com
+PING www.a.shifen.com (115.239.211.112) 56(84) bytes of data.
+64 bytes from 115.239.211.112: icmp_req=1 ttl=53 time=29.7 ms
+64 bytes from 115.239.211.112: icmp_req=2 ttl=53 time=29.6 ms
+64 bytes from 115.239.211.112: icmp_req=3 ttl=53 time=29.6 ms</code></pre><p>按ctrl+C即可停止</p><h2>查看运行中的镜像</h2><p><code>docker ps</code>可以查看所有正在运行中的镜像，<code>docker inspect [容器id]</code>可以查看某个容器的详细运行信息。</p><p>例如，我们一个SSH运行ping的docker：</p><pre><code class="prettyprint lang-c linenums">docker run learn/ping ping www.baidu.com</code></pre><p>另开一个SSH来检查这个运行中的docker：</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker ps</font>
+CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS               NAMES
+<font color="#46acc8">5f76db829af0</font>        learn/ping:latest   "ping www.baidu.com"   9 seconds ago       Up 8 seconds                            nostalgic_lovelace</code></pre><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker inspect</font> <font color="#46acc8">5f7</font>
+[&#123;
+  "AppArmorProfile": "",
+<font color="#46acc8">    "Args": [
+      "www.baidu.com"
+  ],</font>
+  "Config": &#123;
+      "AttachStderr": true,
+      "AttachStdin": false,
+      "AttachStdout": true,
+<font color="#46acc8">        "Cmd": [
+          "ping",
+          "www.baidu.com"
+      ],</font>
+      "CpuShares": 0,
+      "Cpuset": "",
+      "Domainname": "",
+      "Entrypoint": null,
+      "Env": [],
+      "ExposedPorts": &#123;&#125;,
+<font color="#46acc8">        "Hostname": "5f76db829af0",
+      "Image": "learn/ping",</font>
+      "Labels": &#123;&#125;,
+      "MacAddress": "",
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkDisabled": false,
+      "OnBuild": null,
+      "OpenStdin": false,
+      "PortSpecs": null,
+      "StdinOnce": false,
+      "Tty": false,
+      "User": "",
+      "Volumes": &#123;&#125;,
+      "WorkingDir": ""
+  &#125;,
+  <font color="#46acc8">"Created": "2018-03-07T12:52:43.618113724Z",</font>
+  "Driver": "aufs",
+  "ExecDriver": "native-0.2",
+  "ExecIDs": null,
+  "HostConfig": &#123;
+      "Binds": null,
+      "CapAdd": null,
+      "CapDrop": null,
+      "CgroupParent": "",
+      "ContainerIDFile": "",
+      "CpuShares": 0,
+      "CpusetCpus": "",
+      "Devices": [],
+      "Dns": null,
+      "DnsSearch": null,
+      "ExtraHosts": null,
+      "IpcMode": "",
+      "Links": null,
+      "LogConfig": &#123;
+          "Config": null,
+          "Type": "json-file"
+      &#125;,
+      "LxcConf": [],
+      "Memory": 0,
+      "MemorySwap": 0,
+      "NetworkMode": "bridge",
+      "PidMode": "",
+      "PortBindings": &#123;&#125;,
+      "Privileged": false,
+      "PublishAllPorts": false,
+      "ReadonlyRootfs": false,
+      "RestartPolicy": &#123;
+          "MaximumRetryCount": 0,
+          "Name": "no"
+      &#125;,
+      "SecurityOpt": null,
+      "Ulimits": null,
+      "VolumesFrom": null
+  &#125;,
+  "HostnamePath": "/var/lib/docker/containers/5f76db829af03f915c67495cd025c4fa401bf862d8f056763b2868b9b830c6d1/hostname",
+  "HostsPath": "/var/lib/docker/containers/5f76db829af03f915c67495cd025c4fa401bf862d8f056763b2868b9b830c6d1/hosts",
+<font color="#46acc8">    "Id": "5f76db829af03f915c67495cd025c4fa401bf862d8f056763b2868b9b830c6d1",
+  "Image": "798a12b7257efd2fb2c91a5581dfa7d258af136fa05a447650748caa577620af",</font>
+  "LogPath": "/var/lib/docker/containers/5f76db829af03f915c67495cd025c4fa401bf862d8f056763b2868b9b830c6d1/5f76db829af03f915c67495cd025c4fa401bf862d8f056763b2868b9b830c6d1-json.log",
+  "MountLabel": "",
+  "Name": "/nostalgic_lovelace",
+  "NetworkSettings": &#123;
+      "Bridge": "docker0",
+      "Gateway": "192.168.42.1",
+      "GlobalIPv6Address": "",
+      "GlobalIPv6PrefixLen": 0,
+      "IPAddress": "192.168.42.19",
+      "IPPrefixLen": 24,
+      "IPv6Gateway": "",
+      "LinkLocalIPv6Address": "fe80::42:c0ff:fea8:2a13",
+      "LinkLocalIPv6PrefixLen": 64,
+      "MacAddress": "02:42:c0:a8:2a:13",
+      "PortMapping": null,
+      "Ports": &#123;&#125;
+  &#125;,
+  "Path": "ping",
+  "ProcessLabel": "",
+  "ResolvConfPath": "/var/lib/docker/containers/5f76db829af03f915c67495cd025c4fa401bf862d8f056763b2868b9b830c6d1/resolv.conf",
+  "RestartCount": 0,
+  "State": &#123;
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 1790,
+      "Restarting": false,
+      "Running": true,
+      "StartedAt": "2018-03-07T12:52:43.713174245Z"
+  &#125;,
+  "Volumes": &#123;&#125;,
+  "VolumesRW": &#123;&#125;
+&#125;
+]</code></pre><h1>四、发布自己的docker镜像</h1><p>使用<code>docker images</code>可以查看当前所有的镜像：</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker images</font>
+REPOSITORY          TAG             IMAGE ID               CREATED                  VIRTUAL SIZE
+<font color="#46acc8">learn/ping</font>          latest              798a12b7257e       12 minutes ago        139.9 MB
+&lt;none&gt;              &lt;none&gt;         455fcbe970b7        12 minutes ago        139.9 MB
+&lt;none&gt;              &lt;none&gt;         9660801322a6        19 minutes ago        139.9 MB
+hello-world         latest              690d80202531       3 months ago           1.848 kB
+learn/tutorial      latest              8dbd9e392a96       4.905907 years ago   128 MB</code></pre><p>使用<code>docker push [用户名/镜像名]</code>可以发布到自己的用户名下面（需要输入登录信息）</p><pre><code class="prettyprint lang-c linenums"><font color="#f9963b">docker push</font> <font color="#46acc8">learn/ping</font>
+The push refers to a repository [learn/ping] (len: 1)
+798a12b7257e: Image push failed 
+798a12b7257e: Buffering to Disk 
+Please login prior to push:
+<font color="#46acc8">Username: 123
+Password: 
+Email: qewr</font>
+FATA[0014] Error response from daemon: Registration: "Wrong username format (it has to match \"^[a-z0-9]&#123;4,30&#125;$\")"</code></pre><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/Hello%20Docker/">http://tanqingbo.cn/2019/10/06/Hello%20Docker/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/Github协议详解/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Github协议详解 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/JavaWeb的HelloWorld/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">JavaWeb的HelloWorld </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、什么是Docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、轻松安装Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、添加backports源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、安装docker.io包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、确认docker运行是否正常</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、Hello Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">查看docker版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">搜索可用的docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">下载可用的docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">在docker容器中运行命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">在docker容器中安装新程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">保存对docker容器的修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">使用新的docker容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">查看运行中的镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、发布自己的docker镜像</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、什么是Docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、轻松安装Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、添加backports源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、安装docker.io包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、确认docker运行是否正常</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、Hello Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">查看docker版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">搜索可用的docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">下载可用的docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">在docker容器中运行命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">在docker容器中安装新程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">保存对docker容器的修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">使用新的docker容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">查看运行中的镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、发布自己的docker镜像</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、什么是Docker</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、轻松安装Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、添加backports源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、安装docker.io包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、确认docker运行是否正常</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、Hello Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">查看docker版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">搜索可用的docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">下载可用的docker镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">在docker容器中运行命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">在docker容器中安装新程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">保存对docker容器的修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">使用新的docker容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">查看运行中的镜像</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">四、发布自己的docker镜像</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

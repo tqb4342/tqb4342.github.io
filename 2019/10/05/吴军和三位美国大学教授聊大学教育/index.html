@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="不懂了吧！这才是名校的正确打开方式">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/05/%E5%90%B4%E5%86%9B%E5%92%8C%E4%B8%89%E4%BD%8D%E7%BE%8E%E5%9B%BD%E5%A4%A7%E5%AD%A6%E6%95%99%E6%8E%88%E8%81%8A%E5%A4%A7%E5%AD%A6%E6%95%99%E8%82%B2/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-05">
+  <meta property="og:article:modified_time" content="2019-10-05">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      不懂了吧！这才是名校的正确打开方式
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-05T02:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-05</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/漂来漂去/" class="post-meta-link">漂来漂去</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.9k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <p>最近在听吴军老师《硅谷来信》专栏，其中有一封信聊到了本科生的教育，我听完之后受益匪浅，把内容整理了一下，分享给大家！</p>
+<h3 id="1、在学校要学习校外很难获得的技能"><a href="#1、在学校要学习校外很难获得的技能" class="headerlink" title="1、在学校要学习校外很难获得的技能"></a>1、<strong>在学校要学习校外很难获得的技能</strong></h3><p>现在网上有很多公开课，大部分主讲人都是领域中的专家，课讲得也很好。如果学生们在大学里只是学习那些可以在课外能够以更低的成本学到的知识，那么上大学就没有什么必要了，或者说时间就利用得不是那么有效了。因此，在大学里就要学习校外学不到的东西，特别是那些很难自学的基础课程和专业知识。</p>
+<p><strong>那么什么课程难以学习呢？</strong>像数学、统计、法律、会计、工程理论（比如计算机科学的算法课，电机工程领域的信号处理课）就属于这一类的课程。这些课程需要进行大量的练习，并且接受有丰富经验的教授指导，这些技能将来会在工作中发挥比较长期的作用。</p>
+<p>另外很多技能，即使在工作中没有使用，对生活也很有帮助，比如统计学。当你掌握了基本的统计学原理，在生活中才会对数据的大和小有些概念。</p>
+<h3 id="2、学会写作很重要"><a href="#2、学会写作很重要" class="headerlink" title="2、学会写作很重要"></a>2、学会写作很重要</h3><p>很多人认为，我不做记者，也不当作家，写作能力派不上用场。其实，不管你从事什么职业，都需要写作。能够将复杂而头绪非常多的想法用简单、平实、生动的语言表达出来，这是非常有用的。</p>
+<p>首先，在生活和工作中，有很多东西要写，包括提建议、写报告、简历和信件。比如写电子邮件可能是你与老板和同事沟通的主要途径。虽然很多人认为微信帮助通信，但是为了讲清楚问题，稍微正规一点的，效果更好一点的信件和短文更容易达到目的。</p>
+<p>其次，无论一个毕业生未来是工程师、律师、医生，还是一个商人，都需要有清晰的逻辑思维，善于写作的人说话会更有条理。</p>
+<p>写作也是一个需要在学校里练习的技巧，因为大家有时间，有指导，有需求，有练习的机会（要完成作业）。</p>
+<h3 id="3、尽可能晚的做硬性抉择"><a href="#3、尽可能晚的做硬性抉择" class="headerlink" title="3、尽可能晚的做硬性抉择"></a>3、尽可能晚的做硬性抉择</h3><p>从信息论的角度讲，任何硬性的抉择都会失去信息，也就意味着失去机会。大多数大学生都不知道长大后想要什么，成为什么样的人。在这样的情况下，尽量不要断绝选择的可能性。</p>
+<p>像国内很多名校，学生在入学时不给他们分配将来的专业学院，目的就是推迟学生作硬性选择的时间。为了推迟选择，大学生在头两年应该尽可能广泛地选课，这样才能知道自己喜欢什么，集中选择自己喜欢的课程。</p>
+<h3 id="4、注重授课老师而不是课程名称"><a href="#4、注重授课老师而不是课程名称" class="headerlink" title="4、注重授课老师而不是课程名称"></a>4、<strong>注重授课老师而不是课程名称</strong></h3><p>很多学生很在意自己的成绩单上都列举了什么样的课程，其实除了少数前面提到的基础课和专业基础课是为今后进一步学习打基础外，剩下的大部分课程，走出大学后用不了两年，知识就过时了。</p>
+<p>如果遇到一位不好的老师，教得枯燥无味，即便去听课了，可能也会在睡觉，上课变成了自学，最后就算考试通过获得了学分，也对大家将来的学习和工作没有什么帮助。</p>
+<p>但是，从好的老师那里，你可以学到很多东西，它们不仅来自于课程本身，而且是一整套合乎逻辑的解决问题的思路，这些可以让你今后举一反三地学习新东西。</p>
+<p>我现在仍然记得本科教单片机的老师，虽然他上课讲的内容早就忘了，但是他上课常说的两条建议我至今仍然记得，他说作为一个大学生要去多旅游去看看这个世界，也一定要去更高等的学府瞧瞧，体验他们的学习氛围。</p>
+<h3 id="5、至少掌握好一门外语"><a href="#5、至少掌握好一门外语" class="headerlink" title="5、至少掌握好一门外语"></a>5、至少<strong>掌握好一门外语</strong></h3><p>语言是非常重要的，尽管今天翻译软件让不懂外语的人能够与外国人进行简单的交流，但是要和对方进行深交，甚至成为朋友，就不是靠翻译软件能做到的了。因此，熟练掌握一门常用的外语就变得非常重要。今后的世界是全球化的世界，一个没有国际化能力的人就如同缺了一条腿，行事处处遇到困难。</p>
+<p>不过，吴军老师建议不要花太多时间学外语，毕竟在大学里时间有限。像第二外语这种课，即使需要，是可以在走出校园后学习的。在历史上，瑞士虽然有很好的工程师和商人，却很少出杰出的思想家和科学家，因为他们花了太多时间学习语言（瑞士有德语、法语、意大利语、罗曼什语四种官方语言），而没有太多时间思考哲学问题和科学问题。</p>
+<h3 id="6、尽可能多地去旅行"><a href="#6、尽可能多地去旅行" class="headerlink" title="6、尽可能多地去旅行"></a>6、<strong>尽可能多地去旅行</strong></h3><p>旅行的必要性包括三个方面，<strong>第一方面就是我们一般理解的旅游，</strong>它的目的是了解和自己过去生活环境完全不同的地区，在那里你会了解当地的人和文化，毕竟我们将来可能要和世界各地的人打交道，而他们的习惯和我们可能相去甚远。</p>
+<p><strong>第二方面是利用暑期到各个不同地方的单位做实习，</strong>这样可以更早地知道自己将来想做什么，到什么地方去做，同时为了做那些事情需要学习什么。</p>
+<p><strong>第三方面是走出舒适区。</strong>我们常说在家百日易，出门一日难。我们只有离开家，走出校园，才能知道世事艰辛，才能更珍惜校园时光，在走出校门后，才能更快地适应社会。</p>
+<h3 id="7、多交流你的思想"><a href="#7、多交流你的思想" class="headerlink" title="7、多交流你的思想"></a><strong>7、多交流你的思想</strong></h3><p>多和同学或者老师进行思想交流，这有两个目的，首先是通过交流不断更新自己的想法，毕竟学习的场所不仅仅是课堂。其次，也是更重要的一点，在校的年轻人有犯错误的权利，要好好利用这个权利。</p>
+<p>每一个人或多或少地有些错误的、别人不喜欢的想法，这些想法必须改正。而一种想法在说出来以前，你并不知道别人不喜欢，并不能意识到它可能伤害甚至激怒别人，给你带来大麻烦。当你走出校园后，如果犯了这样的错误，可能就不会被别人原谅，甚至惹来大麻烦，因为大家理所应当地把你当成熟的人来看待了。但是在学校里，别人会相对宽容一些。</p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/05/%E5%90%B4%E5%86%9B%E5%92%8C%E4%B8%89%E4%BD%8D%E7%BE%8E%E5%9B%BD%E5%A4%A7%E5%AD%A6%E6%95%99%E6%8E%88%E8%81%8A%E5%A4%A7%E5%AD%A6%E6%95%99%E8%82%B2/">http://tanqingbo.cn/2019/10/05/%E5%90%B4%E5%86%9B%E5%92%8C%E4%B8%89%E4%BD%8D%E7%BE%8E%E5%9B%BD%E5%A4%A7%E5%AD%A6%E6%95%99%E6%8E%88%E8%81%8A%E5%A4%A7%E5%AD%A6%E6%95%99%E8%82%B2/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/谈谈百分之二与百分之九十八的问题/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">也谈2%与98%的问题 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/09/20/对不起，你不是祖国的花朵，是韭菜/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">对不起，你不是祖国的花朵，是韭菜 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%9C%A8%E5%AD%A6%E6%A0%A1%E8%A6%81%E5%AD%A6%E4%B9%A0%E6%A0%A1%E5%A4%96%E5%BE%88%E9%9A%BE%E8%8E%B7%E5%BE%97%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-text">1、在学校要学习校外很难获得的技能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AD%A6%E4%BC%9A%E5%86%99%E4%BD%9C%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-text">2、学会写作很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%B0%BD%E5%8F%AF%E8%83%BD%E6%99%9A%E7%9A%84%E5%81%9A%E7%A1%AC%E6%80%A7%E6%8A%89%E6%8B%A9"><span class="toc-text">3、尽可能晚的做硬性抉择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%B3%A8%E9%87%8D%E6%8E%88%E8%AF%BE%E8%80%81%E5%B8%88%E8%80%8C%E4%B8%8D%E6%98%AF%E8%AF%BE%E7%A8%8B%E5%90%8D%E7%A7%B0"><span class="toc-text">4、注重授课老师而不是课程名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E8%87%B3%E5%B0%91%E6%8E%8C%E6%8F%A1%E5%A5%BD%E4%B8%80%E9%97%A8%E5%A4%96%E8%AF%AD"><span class="toc-text">5、至少掌握好一门外语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%B0%BD%E5%8F%AF%E8%83%BD%E5%A4%9A%E5%9C%B0%E5%8E%BB%E6%97%85%E8%A1%8C"><span class="toc-text">6、尽可能多地去旅行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81%E5%A4%9A%E4%BA%A4%E6%B5%81%E4%BD%A0%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-text">7、多交流你的思想</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%9C%A8%E5%AD%A6%E6%A0%A1%E8%A6%81%E5%AD%A6%E4%B9%A0%E6%A0%A1%E5%A4%96%E5%BE%88%E9%9A%BE%E8%8E%B7%E5%BE%97%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-text">1、在学校要学习校外很难获得的技能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AD%A6%E4%BC%9A%E5%86%99%E4%BD%9C%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-text">2、学会写作很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%B0%BD%E5%8F%AF%E8%83%BD%E6%99%9A%E7%9A%84%E5%81%9A%E7%A1%AC%E6%80%A7%E6%8A%89%E6%8B%A9"><span class="toc-text">3、尽可能晚的做硬性抉择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%B3%A8%E9%87%8D%E6%8E%88%E8%AF%BE%E8%80%81%E5%B8%88%E8%80%8C%E4%B8%8D%E6%98%AF%E8%AF%BE%E7%A8%8B%E5%90%8D%E7%A7%B0"><span class="toc-text">4、注重授课老师而不是课程名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E8%87%B3%E5%B0%91%E6%8E%8C%E6%8F%A1%E5%A5%BD%E4%B8%80%E9%97%A8%E5%A4%96%E8%AF%AD"><span class="toc-text">5、至少掌握好一门外语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%B0%BD%E5%8F%AF%E8%83%BD%E5%A4%9A%E5%9C%B0%E5%8E%BB%E6%97%85%E8%A1%8C"><span class="toc-text">6、尽可能多地去旅行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81%E5%A4%9A%E4%BA%A4%E6%B5%81%E4%BD%A0%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-text">7、多交流你的思想</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%9C%A8%E5%AD%A6%E6%A0%A1%E8%A6%81%E5%AD%A6%E4%B9%A0%E6%A0%A1%E5%A4%96%E5%BE%88%E9%9A%BE%E8%8E%B7%E5%BE%97%E7%9A%84%E6%8A%80%E8%83%BD"><span class="toc-text">1、在学校要学习校外很难获得的技能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%AD%A6%E4%BC%9A%E5%86%99%E4%BD%9C%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-text">2、学会写作很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%B0%BD%E5%8F%AF%E8%83%BD%E6%99%9A%E7%9A%84%E5%81%9A%E7%A1%AC%E6%80%A7%E6%8A%89%E6%8B%A9"><span class="toc-text">3、尽可能晚的做硬性抉择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%B3%A8%E9%87%8D%E6%8E%88%E8%AF%BE%E8%80%81%E5%B8%88%E8%80%8C%E4%B8%8D%E6%98%AF%E8%AF%BE%E7%A8%8B%E5%90%8D%E7%A7%B0"><span class="toc-text">4、注重授课老师而不是课程名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E8%87%B3%E5%B0%91%E6%8E%8C%E6%8F%A1%E5%A5%BD%E4%B8%80%E9%97%A8%E5%A4%96%E8%AF%AD"><span class="toc-text">5、至少掌握好一门外语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%B0%BD%E5%8F%AF%E8%83%BD%E5%A4%9A%E5%9C%B0%E5%8E%BB%E6%97%85%E8%A1%8C"><span class="toc-text">6、尽可能多地去旅行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81%E5%A4%9A%E4%BA%A4%E6%B5%81%E4%BD%A0%E7%9A%84%E6%80%9D%E6%83%B3"><span class="toc-text">7、多交流你的思想</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

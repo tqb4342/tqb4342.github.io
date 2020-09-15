@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="简单又复杂的“整数类型”">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E7%AE%80%E5%8D%95%E5%8F%88%E5%A4%8D%E6%9D%82%E7%9A%84%E2%80%9C%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E2%80%9D/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      简单又复杂的“整数类型”
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.4k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/203.html">http://www.bewindoweb.com/203.html</a><div class="card-article-text"><h1>前言</h1><p>因为一道题目让我不断地深追下去，挖出了我多年的噩梦——数据类型的范围与长度。每次都想得头痛，因为平台不同、编译器不同、编程语言不同等等因素，又没去做实验，网上那么多说法该相信谁都不知道……那不如趁现在就来详细地解决掉它吧。</p><h1>一、原码、反码和补码</h1><h2>基础知识</h2><p>相信在大学的《数字逻辑》课上都学过这个内容了，原码、反码和补码都是基于<span style="font-weight: bold;">二进制</span>而言的：</p><p>【原码】第1位表示符号位，其余位是这个数的绝对值。这是最简单能够马上想到的表示方式了。</p><p>【反码】正数的反码是其本身；负数的反码：在原码的基础上，符号位不变，其余位取反。</p><p>【补码】正数的补码是其本身；负数的补码：在原码的基础上，符号位不变，其余位取反，最后+1。</p><p>举个例子，假设整数在机器上是用<span style="font-weight: bold;">8位二进制数</span>表示的（8位就和我们经常说的32位、64位是一样的含义）：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>整数&nbsp;</th><th>二进制&nbsp;</th><th>原码&nbsp;</th><th>反码&nbsp;</th><th>补码&nbsp;</th></tr><tr><td>&nbsp;3</td><td>0000 0011</td><td>0000 0011&nbsp;</td><td>0000 0011&nbsp;</td><td>0000 0011&nbsp;</td></tr><tr><td>&nbsp;-3</td><td>无法表示</td><td>1000 0011</td><td>1111 1100</td><td>1111 1101</td></tr><tr><td>&nbsp;-2</td><td>无法表示</td><td>1000 0010</td><td>1111 1101</td><td>1111 1110</td></tr></tbody></table><h2>为什么要用原码、反码和补码呢？</h2><p><span style="font-weight: bold;">原码的来源</span></p><p>为了让二进制能够表示负数，产生了原码。</p><p><span style="font-weight: bold;">反码的来源</span></p><p>一个正数和一个负数运算需要辨别符号位，然而单独去辨别符号位会给电路设计带来极大的复杂度，因此人们想只设计加法电路，让符号位直接参与加法运算达到减法的目的，产生了反码。例如：3-2 = 3+(-2) = [0000 0011]反+[1111 1101]反 = [0000 0001]反 = [0000 0001]原=1（注意反码的加法当最高位进位的时候，最低位需要+1，不再详细描述，参考百度百科《<a href="https://baike.baidu.com/item/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8F%8D%E7%A0%81%E6%B1%82%E5%92%8C" target="_blank">二进制反码求和</a>》）。这样符号位就能够参与运算了。</p><p><span style="font-weight: bold;">补码的来源</span></p><p>反码看起来很完美，但是仍然存在问题。例如3-3 = 3+(-3) = [0000 0011]反+[1111 1100]反 = [1111 1111]反 = [1000 0000]原=-0，而[0000 0000]反=[0000 0000]原 = +0，也就是说，零可以表示为两种形式，这种歧义同样不利于电路实现。并且由于反码的加减法还需要对溢出位进行处理，于是产生了补码。补码对溢出位直接丢弃，而0的表示只有一种[0000 0000]补，[1000 0000]补则看成是-128，解决了所有问题。</p><h2>原码、反码和补码的范围问题</h2><p>值得注意的是，8位的原码和反码都只能表示[-127, +127]范围内的整数，而补码可以表示[-128, +127]范围，多一个-128。<span style="font-weight: bold;">这里的-128是计算得到的，而不是从反码推出的</span>，-128根本无法用反码表示，却能够用补码计算，比如-127+(-1) = [1000 0001]补+[1111 1111]补 = [1000 0000]补。所以我们经常背的整数取值范围[-32768, +32767]之类的东西为什么负数总比整数的真值大1，就是这样来的。</p><h2>计算机中按位取反会发生什么？</h2><p>既然计算机表示的时候用的是补码，那么如果对十进制的整数【按位取反】操作到底操作的是<span style="font-weight: bold;">补码</span>还是<span style="font-weight: bold;">二进制</span>呢？</p><p>实验一下吧：</p><pre><code class="prettyprint lang-c linenums">printf("%d\n", ~(3));
+printf("%d\n", ~(-3));</code></pre><p>【平台】windows 8 64位<br></p><p>【IDE】vs2013 32位</p><p>【语言】C语言</p><p>【取反操作】~</p><p>【取反结果】~3 = -4，~(-3) = 2</p><p>数值比较小，最高位没有影响，就按照8位来仔细观察第一组数据：</p><p>3 = [0000 0011]b = [0000 0011]原 = [0000 0011]反 = [<span style="font-weight: bold;">0000 0011</span>]补</p><p>-4 = [无法表示]b = [1000 0100]原 = [1111 1011]反 = [<span style="font-weight: bold;">1111 1100</span>]补</p><p>对补码取的反，再来看第二组：</p><p>-3 = [无法表示]b = [1000 0011]原 = [1111 1100]反 = [<span style="font-weight: bold;">1111 1101</span>]补</p><p>2 = [0000 0010]b = [0000 0010]原 = [0000 0010]反 = [<span style="font-weight: bold;">0000 0010</span>]补</p><p>可以确信100%是对补码取的反了，纯的。</p><h1>二、C语言中的整数类型的大小和范围</h1><p>以前我们常常会去记忆[-32767, +32768]，尤其是在学pascal的时候，然而现在仔细想想，pascal都是多少年前的编程语言了，那时的电脑和现在的电脑完全不相同，记这个根本没用。整数类型的大小和范围和操作系统、编译器、编程语言都息息相关，抛开运行环境谈论sizeof出什么结果的题目都是耍流氓，然而笔试题这种流氓经常存在………</p><h2>整数类型的范围与表示位数</h2><p>用不同位数表示整数，取值的范围就不相同，由于采用补码，总可以多表示一个负数：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;表示位数</th><th>最小值&nbsp;</th><th>最大值&nbsp;</th></tr><tr><td>&nbsp;8</td><td>-128</td><td>127</td></tr><tr><td>&nbsp;16</td><td>-32768</td><td>32767&nbsp;</td></tr><tr><td>&nbsp;32</td><td>-21 4748 3648</td><td><p>21 4748 3647</p></td></tr><tr><td>&nbsp;64</td><td><p>-922 3372 0368 5477 5808</p></td><td><p>922 3372 0368 5477 5807</p></td></tr></tbody></table><h2>无符号unsigned</h2><p>无符号的时候，就可以不用担心符号位了，也就是可以表示0~2^bit-1个数，比如：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>表示位数&nbsp;</th><th>最小值&nbsp;</th><th>最大值&nbsp;</th></tr><tr><td>&nbsp;8</td><td>&nbsp;0</td><td>&nbsp;255</td></tr></tbody></table><h2>C语言中的整数类型及其长度</h2><p>基本整数类型有：char、short int、int、long、long long（c99新增）。</p><p>我总是在死记长度，总以为long比int更长，但其实C语言标准是这样规定的：</p><blockquote>int最少16位（2字节），long不能比int短，short不能比int长，具体位长由编译器开发商根据各种情况自己决定。</blockquote><p>好一个“自己决定”……好一个“不能比”……还是通常情况吧，列个表：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>整数类型&nbsp;</th><th>32位通常大小&nbsp;</th><th>64位通常大小&nbsp;</th></tr><tr><td>char</td><td>1字节</td><td>1字节</td></tr><tr><td>short int&nbsp;</td><td>2字节</td><td>2字节</td></tr><tr><td>int</td><td>4字节</td><td>4字节</td></tr><tr><td>long int</td><td><span style="font-weight: bold;">4字节</span></td><td>8字节</td></tr><tr><td>long long</td><td>8字节</td><td>8字节</td></tr></tbody></table><p>32位表示方式中，long int和int是一样大的！同时还反映了一个问题：64位运行的代码不一定能在32位上运行。</p><h2>C语言数据类型名称、输出和编译器的关系</h2><p><span style="font-weight: bold;">g++和gcc</span></p><p>g++把.c和.cpp程序都认为是c++程序，gcc则会用C语言的方式编译.c，用C++的方式编译.cpp。也就是说，如果你用C写的程序，用g++编译，很可能会报语法错误，因为g++对语法要求更严格，尽管C++是C语言的超集。其他的区别就是，g++能够自动链接c++的库，而gcc需要手动设置参数。</p><p><span style="font-weight: bold;">gcc/g++与cl</span></p><p>vs使用的编译器是cl.exe，这是微软自己开发的编译器。CL.exe是控制 Microsoft C 和 C++ 编译器与链接器的 32 位工具。cl和clang是不同的，在Visual Studio 2015已经整合了clang编译器，但它是被用于Android和 iOS上的应用开发。</p><p><span style="font-weight: bold;">整数类型不同表示方式以及输出</span></p><p>Visual Studio是在windows下运行的，通常支持__intxx这种写法来定义不同位数的整数，这是gcc/g++通常不支持的（没有实验过）。而long long这种写法在Visual C++ 6.0上是不支持的（没有实验过）。不过，在Visual Studio 2013上，<span style="font-weight: bold;">全部的写法都支持</span>，很可靠，列个表：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>整数类型&nbsp;</th><th>Visual Studio 2013&nbsp;</th></tr><tr><td>long</td><td>支持</td></tr><tr><td>long int</td><td>支持</td></tr><tr><td>long long</td><td>支持</td></tr><tr><td>long long int&nbsp;</td><td>支持</td></tr><tr><td>__int8</td><td>支持</td></tr><tr><td>__int16</td><td>支持</td></tr><tr><td>__int32</td><td>支持</td></tr><tr><td>__int64</td><td>支持</td></tr><tr><td>__int128</td><td>支持</td></tr></tbody></table><div><p>并且，所有的printf写法都支持：<br></p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>printf标记&nbsp;</th><th>数据类型&nbsp;</th><th>Visual Studio 2013&nbsp;</th></tr><tr><td>%ld</td><td>long/__int32</td><td>支持</td></tr><tr><td>%lld</td><td>long long/__int64</td><td>支持&nbsp;</td></tr><tr><td>%I64d</td><td>long long/__int64</td><td>支持</td></tr></tbody></table><p>做个实验：</p><p>【操作系统】windows 8 64位</p><p>【IDE】Microsoft Visual Studio 2013 32位</p><p>【编译器】cl.exe win32</p><p>【代码】</p><pre><code class="prettyprint lang-c linenums">long long a = 1231321313131313131;
+__int64 b = 1231321313131313131;
+
+</li>
+</ul>
+<p>printf(“ type=long long\n d=%d\n ld=%ld\n lld=%lld\n I64d=%I64d\n —\n”, a,a,a,a);<br>printf(“ type=__int64\n d=%d\n ld=%ld\n lld=%lld\n I64d=%I64d\n”, b,b,b,b);</code></pre><p>【输出结果】</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/094610967927fd5dcf7cd9aae4eb8503.png" style="max-width:100%;"></p><p>d和ld都溢出了，而lld、I64d可以工作得很好，而且对long long 和__int64没有任何区别</p><h2>整数类型越界会发生什么？</h2><p>这是一直都很好奇的事情，那就来实验一下。</p><p>【操作系统】windows 8 64位</p><p>【IDE】Microsoft Visual Studio 2013 32位</p><p>【编译器】cl.exe win32</p><p>【实验结果】</p><pre><code class="prettyprint lang-c linenums">取值范围<br>unsigned short int 0~65535<br>unsigned int   0～4294967295<br>int -2147483648～2147483647<br>long -2147483648 ~ 2147483647<br>long long -9223372036854775808 ~  9223372036854775807</p>
+<p>超上限（越来越大）会从最小值开始重新增长：<br>unsigned short int 65536=0  |  65537= 1<br>unsigned int   4294967296=0 |  4294967297= 1<br>int 2147483648=-2147483648 | 2147483649 = -2147483647<br>long 2147483648=-2147483648 | 2147483649 = -2147483647<br>long long 9223372036854775808 =  -9223372036854775808 | 9223372036854775809 = -9223372036854775807</p>
+<p>超下限（越来越小）会从最大值开始重新减小：<br>unsigned short int -1=65535  |  -2=65534<br>unsigned int   -1=4294967295 |  -2=4294967294<br>int -2147483649=2147483647 | -2147483650=2147483646<br>long -2147483649=2147483647 | -2147483650=2147483646<br>long long  -9223372036854775809 =  -9223372036854775807 |  9223372036854775810 = -9223372036854775806</code></pre><p>【探究原因】</p><p>想一下刚才的补码，假设32位，int取最大值2147483647，打开你的计算器，选择查看→程序员，输入这个数字，看到它的补码：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dd9b1b002066df3fe50d11a628f1f1ad.png" style="max-width:100%;"></p><p>[0111 1111 1111 1111&nbsp; &nbsp;1111 1111 1111 1111]补 + [0000 0000 0000 0000&nbsp; &nbsp; 0000 0000 0000 0001]补的结果是[1000 0000 0000 0000&nbsp; &nbsp; 0000 0000 0000 0000]补 = -2147483648。</p><p>这就是为什么越界的2147483648，打印输出-2147483648的原因了。</p><p>【其他】</p><p>注意如果你直接进行赋值：</p><pre><code class="prettyprint lang-c linenums">int a = -2147483648;</code></pre><p>VS是会报错的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d496741fbfedb46cd1ce6ce0a565e220.png" style="max-width:100%;"></p><p>long long 也是如此，因此这时候应该用：</p><pre><code class="prettyprint lang-c linenums">int a = INT_MIN;<br>long long b = LLONG_MIN;</code></pre><p>来表示，可以看到它们的宏定义：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/96df9e40b86c3ee93bdde30271335d06.png" style="max-width:100%;"></p><p>说好的可以多表示一个负数呢，怎么不行了呢，具体原因参考wiki《<a href="http://wiki.bewindoweb.com/?file=001-%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%89%8B%E5%86%8C%EF%BC%88%E7%BC%96%E7%A8%8B%E7%B1%BB%EF%BC%89/00040-VS%E7%BC%96%E5%86%99C%E7%A8%8B%E5%BA%8F%E6%8A%A5%E9%94%99error%20C4146%EF%BC%9A%E4%B8%80%E5%85%83%E8%B4%9F%E8%BF%90%E7%AE%97%E7%AC%A6%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%B1%BB%E5%9E%8B%EF%BC%8C%E7%BB%93%E6%9E%9C%E4%BB%8D%E4%B8%BA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%B1%BB" target="_blank">VS编写C程序报错error C4146: 一元负运算符应用于无符号类型，结果仍为无符号类</a>》</p><h1>三、JAVA语言中的整数类型的大小和范围</h1><h2>基本信息</h2><p>因为我在尽量主学Java副学Python，所以这里也记录一下java的整数类型。java的整数类型比较神奇，有四种基本整数类型：byte、short、int、long，但由于java的设计初衷是跨平台运行的，Write Once and Run Anywhere，所以这几种类型的字长都是固定的，与任何其他的32位64位都无关，列个表：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>整数类型&nbsp;</th><th>字长大小&nbsp;</th><th>取值范围</th></tr><tr><td>&nbsp;byte</td><td>1字节</td><td>-128<del>127</td></tr><tr><td>&nbsp;short</td><td>2字节</td><td>-32768</del>32767</td></tr><tr><td>&nbsp;int</td><td>4字节</td><td>-2147483648<del>2147483647</td></tr><tr><td>&nbsp;long</td><td>8字节</td><td><p>-9223372036854775808</del>-9223372036854775807</p></td></tr></tbody></table><p>你可以自己测试一下：</p><pre><code class="prettyprint lang-java linenums">System.out.println("Byte: " + Byte.SIZE/8);<br>System.out.println("Short: " + Short.SIZE/8);<br>System.out.println("Integer: " + Integer.SIZE/8);<br>System.out.println("Long: " + Long.SIZE/8);</code></pre><p><span style="font-size: 16px; font-weight: bold;">java中的unsigned类型</span><br></p><p>java是<span style="font-weight: bold;">几乎没有unsigned类型</span>的。为什么说几乎呢，因为在多年的呼吁之后，最新的jdk8支持了unsigned的静态方法调用（也就是说不支持直接写unsigned int这种写法，只能通过Integer.xxxx来调用），参看《<a href="https://blogs.oracle.com/darcy/unsigned-integer-arithmetic-api-now-in-jdk-8" target="_blank">Unsigned Integer Arithmetic API now in JDK 8</a>》。真应了那句老话：<span style="font-weight: bold;">真香！</span>为什么大家那么希望有unsigned类型呢？因为常常需要处理图片，而我们知道通常的图片数据是从0变化到255的，如果有unsigned byte，那不就刚好了嘛<del>由于没有unsigned，目前主流的做法是使用更大的类型比如short或者int。值得注意的是，如果要把表达0</del>255取值的byte转换到short/int，要处理一下符号。因为当从0<del>255的short/int转换为byte时，考虑他们的补码，例如255：</p><p>255 = short [0000 0000 1111 1111]补 → byte [1111 1111]补 = -1</p><p>128 = short [0000 0000 1000 0000]补 → byte[1000 0000]补 = -128</p><p>0 = short [0000 0000 0000 0000]补 → byte[0000 0000]补 = 0</p><p>127 = short[0000 0000 0111 1111]补 → byte[0111 1111]补 = 127</p><p>可以看出，0</del>127(short)被映射到0<del>127（byte），而128</del>255则被映射到（-128<del>-1）了，因此在byte转回short/int时，如果不加处理，得到的值会是-128：</p><p>-128 = byte[1000 0000]补 → short [1111 1111 1000 0000]补 = -128</p><p>处理的方法很简单，加个掩码0xff屏蔽掉高位的符号扩展即可，也就是将byte的值与0xff进行按位与：</p><p>-128 &amp; 0xff = byte[1000 0000]补 &amp; [1111 1111] → short[1111 1111 1000 0000]补 &amp; [0000 0000 1111 1111] = [0000 0000 1000 0000]补 = 128</p><p>得到的值就正常了，用代码实验一下：</p><pre><code class="prettyprint lang-java linenums">short s_init = 128,s_force,s_and;<br>        byte b_force;<br>        b_force = (byte)s_init;<br>        s_force = (short)b_force;<br>        s_and = (short)(b_force &amp; 0xFF);<br>        System.out.println("初始short值= "+s_init+"\n转为byte= "+b_force+"\nbyte转为short= "+s_force+"\nbyte掩码后转为short= "+s_and);</code></pre><p>得到的结果是：</p><pre><code class="prettyprint lang-java linenums">初始short值= 128<br>转为byte= -128<br>byte转为short= -128<br>byte掩码后转为short= 128</code></pre><h2>java中的char</h2><p>char类型长度2个字节，而且取值是无符号的0</del>65535，其他编程语言通常都是1个字节。java的char是Unicode编码，可以存放中文字符。那么为什么不用它来作为unsigned int 用呢？</p><p>【原因1】输出为字符。</p><p>java的char类型是设计为存储unicode字符的，采用UTF-16固定宽度的编码格式。虽然赋值的是数值88，但当调用<code>System.out.println(a);</code>的时候，出现的是字母<code>X</code>。</p><p>【原因2】运算困难。</p><pre><code class="prettyprint lang-java linenums">char a = 88;<br>a = a + 1;</code></pre><p>编译器会报错<code>需要char类型，而给的是int</code>，因为当char类型运算后就是int类型了，不能直接存回char类型，需要进行强制转换：</p><pre><code class="prettyprint lang-java linenums">a = (char)(a + 1);</code></pre><p>既然这么麻烦，为何不直接用int呢？</p><h2>java中整数类型越界会发生什么？</h2><p>和C语言是一样的：当越上界，会从最小值继续累加；当越下界，会从最大值继续减小。原因同样是因为补码溢出位被丢弃，在测试的时候，不能直接赋值越界数值，否则会提示<code>类型不匹配</code>或者<code>整数太大了</code>。使用常量+1再强制转换类型，达到越界目的。</p><pre><code class="prettyprint lang-java linenums">byte a = (byte)(Byte.MAX_VALUE+1);</code></pre><p>输出结果：-128</p></div><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E7%AE%80%E5%8D%95%E5%8F%88%E5%A4%8D%E6%9D%82%E7%9A%84%E2%80%9C%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E2%80%9D/">http://tanqingbo.cn/2019/10/06/%E7%AE%80%E5%8D%95%E5%8F%88%E5%A4%8D%E6%9D%82%E7%9A%84%E2%80%9C%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B%E2%80%9D/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/计网必问经典问题：输入网址之后发生了什么/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">计网必问经典问题：输入网址之后发生了什么 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/将图片文件部署到七牛CDN上去/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">将图片文件部署到七牛CDN上去 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、原码、反码和补码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么要用原码、反码和补码呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">原码、反码和补码的范围问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">计算机中按位取反会发生什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、C语言中的整数类型的大小和范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整数类型的范围与表示位数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">无符号unsigned</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">C语言中的整数类型及其长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">C语言数据类型名称、输出和编译器的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整数类型越界会发生什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、JAVA语言中的整数类型的大小和范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">java中的char</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">java中整数类型越界会发生什么？</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、原码、反码和补码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么要用原码、反码和补码呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">原码、反码和补码的范围问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">计算机中按位取反会发生什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、C语言中的整数类型的大小和范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整数类型的范围与表示位数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">无符号unsigned</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">C语言中的整数类型及其长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">C语言数据类型名称、输出和编译器的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整数类型越界会发生什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、JAVA语言中的整数类型的大小和范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">java中的char</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">java中整数类型越界会发生什么？</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、原码、反码和补码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么要用原码、反码和补码呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">原码、反码和补码的范围问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">计算机中按位取反会发生什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、C语言中的整数类型的大小和范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整数类型的范围与表示位数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">无符号unsigned</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">C语言中的整数类型及其长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">C语言数据类型名称、输出和编译器的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">整数类型越界会发生什么？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、JAVA语言中的整数类型的大小和范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">java中的char</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">java中整数类型越界会发生什么？</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

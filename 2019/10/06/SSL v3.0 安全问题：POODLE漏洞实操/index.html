@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="SSL v3.0 安全问题：POODLE漏洞实操">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/SSL%20v3.0%20%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9APOODLE%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%93%8D/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      SSL v3.0 安全问题：POODLE漏洞实操
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.1k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/272.html">http://www.bewindoweb.com/272.html</a><div class="card-article-text"><h1>��言</h1><p>各大浏览器、操作系统都屏蔽掉了SSLv2.0、SSLv3.0，原因是“不安全”，我们来分析SSL v3.0为什么不安全。</p><h1>一、 POODLE简介</h1><p>2014年9月Google的一份研究报告<a href="https://www.openssl.org/~bodo/ssl-poodle.pdf" target="_blank">《This POODLE Bites: Exploiting The SSL 3.0 Fallback》</a>指出，SSL存在安全漏洞CVE­-2014-3566，代号为POODLE（Padding Oracle On Downgraded Legacy Encryption，基于降级旧加密协议的填充提示），该漏洞可以使得攻击者获取到一段明文数据，比如HTTP的cookie，且除了完全禁用SSL，或者利用TLS_FALLBACK_SCSV字段禁止协议降级到SSL，没有其他更好的手段可以防御。</p><h1>二、Padding Oracle 攻击原理</h1><p>Padding Oracle是Web程序渗透的经典攻击方式，由Juliano Rizzo和Thai Duong于2010年<a href="http://netifera.com/research/" target="_blank">《Practical Padding Oracle Attacks》</a>提出，该攻击利用CBC（Cipher-block chaining，密码块链接模式）加密模式中的填充漏洞给出的提示信息逐步推导出明文数据。</p><h2><b>2.1 CBC密码块链接模式——加密</b></h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c8bc7883b4182ce2c79bab7ce409524c.jpeg" style="max-width:100%;"></p><p>（1）对明文进行分组，每组长度相同（一般为8字节或16字节），对长度不足的分组需要进行填充（Padding）。</p><p>填充通常遵循的是PKCS5标准，即填充的字符是需要填充字符的个数。</p><p>例如，这里的明文字符串为“GET /a HTTP/1.1\r”，那么按ASCII的十六进制就可以表示为：</p><ul><li>第一组明文：“0x47、0x45、0x54、0x20、0x2F、0x61、0x20、0x48”</li><li>第二组明文：“0x54、0x54、0x50、0x2F、0x31、0x2E、0x31、0x0D”</li></ul><p>假设后面还有字符不能构成8字节的一组，那么需要进行填充，例如（前面字符没有用十六进制表示）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/61c9189ba1ebabd918364caf31f3b59c.jpeg" style="max-width:100%;"></p><p>当然，一般不会有全填充的组。</p><p>（2）随机生成一个初始化向量IV，与第一个明文分组进行异或运算得到中间值（Intermediary Value）。</p><p>例如这里随机生成的IV为“0x01、0x02、0x03、0x04、0x05、0x06、0x07、0x08”，与第一个分组“0x47、0x45、0x54、0x20、0x2F、0x61、0x20、0x48”进行异或后得到“0x46、0x47、0x57、0x24、0x2A、0x67、0x27、0x40”。</p><p>（3）将异或结果进行加密，得到第一个明文分组的密文。</p><p>一般会使用密钥（key）加密，这里简单假设密钥加密效果等同于加密函数y = f(x) = x + 1，那么可以得到第一组密文“0x47、0x48、0x58、0x25、0x2B、0x68、0x28、0x41”。</p><p>（4）从第二个明文分组开始，将上一组密文当作IV，进行异或运算，再进行加密，得到该组密文。</p><p>例如这里由第一组密文“0x47、0x48、0x58、0x25、0x2B、0x68、0x28、0x41”与第二组明文“0x54、0x54、0x50、0x2F、0x31、0x2E、0x31、0x0D”进行异或，得到“0x13、0x1C、0x08、0x0A、0x1A、0x46、0x19、0x4C”，再进行相同加密，得到“0x14、0x1D、0x09、0x0B、0x1B、0x47、0x1A、0x4D”，这就是第二组密文。</p><h2><span style="font-weight: bold;">2.2 CBC密码块链接模式——解密</span></h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/42fd3d3db30f926fe4c93bd62cdbbd6d.jpeg" style="max-width:100%;"></p><p>加密的IV是随机生成的，而解密则必须使用这个IV。</p><p>（1）对密文进行分组，每组长度相同（一般为8字节或16字节）。</p><p>例如这里将密文分为了两组：</p><ul><li>第一组密文：“0x47、0x48、0x58、0x25、0x2B、0x68、0x28、0x41”</li><li>第二组密文：“0x14、0x1D、0x09、0x0B、0x1B、0x47、0x1A、0x4D”</li></ul><p>（2）对密文进行解密，得到中间值。</p><p>一般使用密钥，同样的这里假设密钥效果等同于函数x = f(y) = y - 1</p><ul><li>第一组中间值：“0x46、0x47、0x57、0x24、0x2A、0x67、0x27、0x40”</li><li>第二组中间值：“0x13、0x1C、0x08、0x0A、0x1A、0x46、0x19、0x4C”</li></ul><p>（3）使用初始化向量IV，与第一个分组进行异或运算得到第一组明文。</p><p>这是利用异或的性质：a⊕b=c，a⊕c=b，b⊕c=a，所以无论如何异或都能得到唯一的第三个数。</p><p>例如这里IV为“0x01、0x02、0x03、0x04、0x05、0x06、0x07、0x08”，第一个数0x01与第一组第一个中间值0x46异或结果为0x47，就是明文“G”的ASCII十六进制表示，于是得到第一组明文“0x47、0x45、0x54、0x20、0x2F、0x61、0x20、0x48”</p><p>（4）从第二组开始，依次将前一组密文和该组中间值异或，得到该组明文。</p><p>例如第一组密文“0x47、0x48、0x58、0x25、0x2B、0x68、0x28、0x41”和第二组中间值“0x13、0x1C、0x08、0x0A、0x1A、0x46、0x19、0x4C”异或得到第二组明文“0x54、0x54、0x50、0x2F、0x31、0x2E、0x31、0x0D”。</p><p>值得注意的是，解密可以并行计算，因为密文都是已经获取好的；加密则不行，因为前一组密文必须要计算出来。</p><h2><span style="font-weight: bold;">2.3 Padding Oracle 攻击</span></h2><p>现在假设密文仍然是上述字段“GET /a HTTP/1.1\r”，且用户连接到的是公共WIFI，攻击者可以通过抓包获取CBC密文以及初始化向量IV（当然要把IV明文传给服务器否则服务器无法解密第一个分组）。</p><p>我们现在希望通过密文和IV获取明文，由于“IV⊕中间值=明文”，问题转变为如何求IV对应的中间值。</p><p>我们知道，对大多数Web服务器而言：</p><ul><li>如果参数解密成功，且数据合法，返回HTTP 200 OK，提示成功</li><li>如果参数解密成功，但数据非法，返回HTTP 200 OK，提示非法，或Rest风格接口会返回HTTP 400 Bad Request，提示非法</li><li>如果参数解密失败，服务器将抛出异常，返回HTTP 500 Internal Server Error</li></ul><p>这给攻击者提供了判断依据：</p><ul><li>如果提示HTTP 200或HTTP 400，说明解密成功；</li><li>如果提示HTTP 500，说明解密失败。</li></ul><p>IV出现在解密的最后一步，而且是可以构造的，那么攻击者可以通过构造特殊的IV，直到符合“填充”规则通过解密流程（虽然不一定能通过数据合法性校验），具体而言：</p><p>（1）构造“0x00、0x00、0x00、0x00、0x00、0x00、0x00、0x00”的特殊IV发送给服务端，不断尝试递增最后一位并发送给服务端，直到服务端解密成功。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b7d2c42318870e194ffe5bf125f6a6c0.jpeg" style="max-width:100%;"></p><p>此时必然产生了1位填充（因为我们已经知道IV是0x01、0x02、0x03、0x04、0x05、0x06、0x07、0x08），最多尝试次数为256次。</p><p>（2）计算出末位中间值，其值等于伪造向量末位异或0x01：0x41⊕0x01=0x40</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ae85d253576a22053c7e6f72c54802b2.jpeg" style="max-width:100%;"></p><p>（3）利用原始向量末位值异或中间值，得到明文0x48，即字符“H”：0x40⊕0x08=0x48</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1db767f1a64fb8a84da8c80038dbe9e0.jpeg" style="max-width:100%;"></p><p>（4）利用中间值计算出末位为0x02的伪造向量应有值：0x40⊕0x02=0x42</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4598dae5dada043bf1aa085837e80ff0.jpeg" style="max-width:100%;"></p><p>（5）通过改变倒数第二位，直到生成0x020x02的末位明文填充字符，符合2位填充规则，然后类似地推测倒数第二位的中间值：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9a93974acc1def3a2247974deb3a6392.jpeg" style="max-width:100%;"></p><p>重复上述步骤，就能够���到完整的明文信息，这就是Padding Oracle 填充提示攻击。</p><h1>三、POODLE攻击原理</h1><h2><span style="font-weight: bold;">3.1 SSLv3.0存在的问题</span></h2><p>SSLv3.0的记录层可以使用如下加密方式：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;加密类型&nbsp;</th><th>&nbsp;加密方式</th></tr><tr><td>&nbsp;块加密 Block Cipher</td><td>&nbsp;IDEA&nbsp;</td></tr><tr><td>&nbsp;块加密 Block Cipher</td><td>&nbsp;RC2-40</td></tr><tr><td>&nbsp;块加密 Block Cipher</td><td>&nbsp;DES-40</td></tr><tr><td>&nbsp;块加密 Block Cipher</td><td>&nbsp;DES</td></tr><tr><td>&nbsp;块加密 Block Cipher</td><td>&nbsp;3DES</td></tr><tr><td>&nbsp;块加密 Block Cipher</td><td>&nbsp;FORTEZZA</td></tr><tr><td>&nbsp;流加密 Stream Cipher</td><td>&nbsp;RC-40</td></tr><tr><td>&nbsp;流加密 Stream Cipher</td><td>&nbsp;RC4-128</td></tr></tbody></table><p>流加密这里不讨论，也是有安全问题，主要讨论CBC块加密。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/94469b27e8b0d6c34f2d243e5fe63dfb.jpeg" style="max-width:100%;"></p><p>SSL记录层加密的是原始数据+MAC（消息验证码）信息摘要+填充字节，MAC一般是Hash值，SSLv3.0中MAC通常为20字节。也就是说，SSL先对数据做完整性校验，再进行CBC加密。在CBC解密的一端（服务器），SSL没有规定padding填充块字节内容，只校验填充块最后一个字节，该字节为填充长度，然后去掉填充的字符，再进行MAC验证，最后获得明文数据。</p><ul><li>先校验完整性，再加密，使得对端收到数据后先解密，后校验完整性，解密是否成功为攻击提供了判断依据；</li><li>只验证填充块的最后一个字节，因此填充块可以填充任意字符，且最后字符固定使得攻击者可以利用类似Padding Oracle的攻击机制。</li></ul><p>我们可以利用类似前面Padding Oracle的思路，将要解密的字符放到最后一个块末尾，不断地调整前一个IV的值（可能是初始化向量，也可能是前一段的密文，并且无论是哪个攻击者都是知道的），直到成功通过解密，此时明文必定为0x07或0x15（16字节一块的话），最多尝试256次（或512次），就能够通过服务器验证，从而推导出对应的中间值，然后利用该中间值和IV推导出明文。这期间不用担心修改IV导致MAC校验失败，因为那是CBC解密之后的事情。</p><h2><span style="font-weight: bold;">3.2 利用SSL漏洞进行POODLE攻击</span></h2><p>假设攻击者B代理了客户端A的HTTPS访问服务器C的请求，可以截获到SSL密文数据以及SSL握手阶段的IV，且可以通过A去发送HTTPS请求，此时如果A没有退出登录，都会自动携带上Cookie。这样，B可以控制A发送的HTTP请求中的请求路径Path和请求体Body，并通过调整Path和Body，让A发出的请求满足两个条件：</p><ul><li>填充字段恰好填充了一个块长度</li><li>Cookie的第一个未知字符刚好出现在前面某个块的末尾</li></ul><p>例如，加密采用3DES，8字节一个块，且SSL上层为HTTP协议，发送的明文为：<br></p><pre><code class="prettyprint lang-html linenums">GET / HTTP/1.1\r\nCookie: abcdefgh \r\n\r\nXXXX MAC数据 XXXXXX7</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4343d6e74ca6d402f60be08d3af7e425.jpeg" style="max-width:100%;"></p><p>MAC数据可能并不是刚好8字节，不过无所谓。攻击者并不知道明文，但知道Cookie密文的位置，知道此时想要解密的cookie的最后一个字符在第4个块末尾。然后攻击者将整个块的密文复制到最后一个填充块密文上：<br></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/865b1480ac514fd22f27de5b08825418.jpeg" style="max-width:100%;"></p><p>然后不断调整前一块（MAC数据）对应密文位置的值，直到通过解密校验，根据SSL的漏洞，此时最后一块最后一个值必然为0x07：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/be0160296022f639c6aa6c25b3917167.jpeg" style="max-width:100%;"></p><p>这里例子举得不好，0x07密文也是0x07，后面用0x07明、0x07密来区分，此时我们假设未知加密函数为f(x)，其逆为g(y)，那么根据CBC���密流程，有：</p><p></p><pre><code class="prettyprint lang-c linenums">0x07明 = g(0x07密) ⊕  0x01  =&gt; g(0x07密) = 0x06</code></pre><p>现在要求：<br></p><pre><code class="prettyprint lang-c linenums">x = 0x6E ⊕ g(0x07密）</code></pre><p></p><p>因此x = 0x68，即字符"h"，得到解密明文"h"。</p><p>同理，通过控制请求路径，例如GET /a、GET /aa，不断地把已经解密的Cookie字符挤出，把未知字符留在该块末尾，然后循环进行前述操作，即可得到完整的Cookie字段。</p><h2><span style="font-weight: bold;">3.3 Padding验证和MAC验证返回结果不同的情况</span></h2><p>前面的操作都是建立在Padding验证和MAC验证返回结果不同的基础之上，如果返回结果相同，那么MAC会校验不过导致失去判断Padding验证成功的依据。此时攻击者需要利用响应时间的差异来进行判断。如果响应时间仍然相同，那么这种攻击就无效了。</p><h2>​3<span style="font-weight: bold;">.4 POODLE中“降级”的体现</span></h2><p>POODLE只在SSLv3.0以下版本才容易攻击成功，TLS会检查填充字符，所以TLS构造的padding通过服务器验证概率极低，TLSv1.3以后则完全避免了该漏洞。2014年，TLS已经得到广泛应用，但不乏少数服务器、客户端（比如IE6）和中间网络设备仍然采用SSL协议。因此为了平滑过渡增加用户体验，TLS1.2、TLS1.1、TLS1.0协议实现都会向后兼容SSLv3.0协议，最终协商通信协议为服务端和客户端支持的最高版本协议。如果记录协议中采用的是RC4流加密或者CBC模式的块加密，那么攻击者就可以进行POODLE攻击。</p><h1>参考资料</h1><p>1、<a href="https://www.jianshu.com/p/ad8bdd87e131" target="_blank">《Web狗要懂的Padding Oracle攻击》</a>：很详细</p><p>2、<a href="https://www.jianshu.com/p/1851f778e579" target="_blank">《Padding Oracle》</a></p><p>3、<a href="https://baike.baidu.com/item/Padding%20Oracle/3530091?fr=aladdin" target="_blank">《百度百科：Padding Oracle》</a></p><p>4、<a href="https://baike.baidu.com/item/ASCII/309296?fr=aladdin" target="_blank">《ASCII表》</a>和<a href="https://www.23bei.com/tool-531.html" target="_blank">在线异或计算器</a>：便于实验</p><p>5、<a href="https://www.cnblogs.com/xzjf/p/8251651.html" target="_blank">《HTTPS 协议降级攻击原理》</a>：对攻击原理理解透彻</p><p>6、<a href="http://www.vuln.cn/6135" target="_blank">《CVE-2014-3566 SSLv3 POODLE原理分析 – insight-labs》</a>：有些许理解错误，注意辨别</p><p>7、<a href="https://www.imperialviolet.org/2014/10/14/poodle.html" target="_blank">《POODLE attacks on SSLv3 (14 Oct 2014)》</a>：英文原文例子</p><p>8、<a href="https://blog.csdn.net/howeverpf/article/details/40350113" target="_blank">《漏洞分析---SSLv3降级加密协议Padding Oracle攻击（POODLE）技术分析》</a>：例子详细</p><p>9、<a href="http://www.bubuko.com/infodetail-413104.html" target="_blank">《SSLv3 POODLE 攻击分析》</a>：最正确的一篇分析</p><p>10、<a href="https://www.openssl.org/~bodo/ssl-poodle.pdf" target="_blank">《This POODLE Bites: Exploiting The SSL 3.0 Fallback》</a>：Google研究报告原文</p><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/SSL%20v3.0%20%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9APOODLE%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%93%8D/">http://tanqingbo.cn/2019/10/06/SSL%20v3.0%20%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98%EF%BC%9APOODLE%E6%BC%8F%E6%B4%9E%E5%AE%9E%E6%93%8D/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/QQ三国.pkg文件解析/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">QQ三国.pkg文件解析 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/ShadowSocks使用体验/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">ShadowSocks使用体验 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、 POODLE简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Padding Oracle 攻击原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.1 CBC密码块链接模式——加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.2 CBC密码块链接模式——解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.3 Padding Oracle 攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、POODLE攻击原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.1 SSLv3.0存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.2 利用SSL漏洞进行POODLE攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.3 Padding验证和MAC验证返回结果不同的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">​3.4 POODLE中“降级”的体现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、 POODLE简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Padding Oracle 攻击原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.1 CBC密码块链接模式——加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.2 CBC密码块链接模式——解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.3 Padding Oracle 攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、POODLE攻击原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.1 SSLv3.0存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.2 利用SSL漏洞进行POODLE攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.3 Padding验证和MAC验证返回结果不同的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">​3.4 POODLE中“降级”的体现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、 POODLE简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、Padding Oracle 攻击原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.1 CBC密码块链接模式——加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.2 CBC密码块链接模式——解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2.3 Padding Oracle 攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、POODLE攻击原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.1 SSLv3.0存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.2 利用SSL漏洞进行POODLE攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3.3 Padding验证和MAC验证返回结果不同的情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">​3.4 POODLE中“降级”的体现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

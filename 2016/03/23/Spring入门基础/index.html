@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="Sping入门">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2016/03/23/Spring%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2016-03-23">
+  <meta property="og:article:modified_time" content="2016-10-23">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  <meta property="og:article:tag" content="Java">
+  
+  <meta property="og:article:tag" content="Sping">
+  
+  <meta property="og:article:tag" content="框架">
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Sping入门
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2016-03-23T09:13:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2016-03-23</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>746 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Java/" class="post-meta-link">Java</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Sping/" class="post-meta-link">Sping</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/框架/" class="post-meta-link">框架</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h1 id="Sping入门"><a href="#Sping入门" class="headerlink" title="Sping入门"></a>Sping入门</h1><h3 id="一些资源"><a href="#一些资源" class="headerlink" title="一些资源"></a>一些资源</h3><ul>
+<li>sping.io</li>
+<li>projects.spring.io/spring-framework</li>
+<li>其他<h3 id="Spring是什么"><a href="#Spring是什么" class="headerlink" title="Spring是什么"></a>Spring是什么</h3></li>
+<li>Spring是一个开源框架，为了解决企业应用开发的复杂性而创建的，但是现在已经不止于应用于企业应用</li>
+<li>是一个轻量级的控制反转（IoC）和面向切面的容器框架</li>
+<li>在Spring上开发应用更简单、方便、快捷，Spring带来了复杂的javaee开发的春天</li>
+</ul>
+<h3 id="Spring作用"><a href="#Spring作用" class="headerlink" title="Spring作用"></a>Spring作用</h3><ul>
+<li>容器</li>
+<li>提供了多种技术支持（JMS   MQ支持  UnitTest）</li>
+<li>AOP(事务管理、日志等)</li>
+<li>提供了众多方便应用的辅助类（JDBC Template等）</li>
+<li>对主流应用框架（Hibernate等）提供了良好的支持</li>
+<li>spring是一个一站式的框架；</li>
+<li>spring主要有两个思想：IOC和AOP；</li>
+<li>spring的主要的功能是整合其它框架；<h3 id="适应范围"><a href="#适应范围" class="headerlink" title="适应范围"></a>适应范围</h3></li>
+<li>构建企业应用（SpringMVC+Spring+Hibernate/mybatis）</li>
+<li>单独使用Bean容器（Bean管理）</li>
+<li>单独使用AOP进行切面处理</li>
+<li>其他的Spring功能，如：对消息的支持等</li>
+<li>在互联网中应用</li>
+<li>抽象类代表一个概念（例如：飞机），接口代表一种能力（会飞的）<h4 id="ioc是反转控制；"><a href="#ioc是反转控制；" class="headerlink" title="ioc是反转控制；"></a>ioc是反转控制；</h4></li>
+<li>指的就是组件和组件之间的关系并不是由任意一端来进行维护的，而有由第三方来维护的；<h3 id="第一个Spring程序"><a href="#第一个Spring程序" class="headerlink" title="第一个Spring程序"></a>第一个Spring程序</h3></li>
+<li>创建工程，增加spring支持</li>
+<li>在applicationContext.xml文件中定义bean</li>
+<li>创建工厂<blockquote>
+<pre><code>创建一个Spring工厂
+BeanFactory factory=new ClassPathXmlApplicationContext(&quot;aplicationContxt.xml&quot;);
+在工厂重获对象,默认bean是单例模式
+factory.getBean(&quot;name&quot;);</code></pre>
+</blockquote>
+</li>
+</ul>
+<h4 id="关于bean的配置"><a href="#关于bean的配置" class="headerlink" title="关于bean的配置"></a>关于bean的配置</h4><ul>
+<li>默认bean是单例的（scope=”singleton”），但可以通过 scope属性修改成prototype;</li>
+<li>spring工厂赋值在init方法之前<h4 id="装配方式"><a href="#装配方式" class="headerlink" title="装配方式"></a>装配方式</h4></li>
+</ul>
+<ol>
+<li>属性装配</li>
+<li>构造方法装配<h4 id="装配的内容"><a href="#装配的内容" class="headerlink" title="装配的内容"></a>装配的内容</h4></li>
+</ol>
+<ul>
+<li>bean</li>
+<li>null</li>
+<li>集合</li>
+<li>map</li>
+<li>ref</li>
+<li>value<h4 id="自动装配的方式-四种"><a href="#自动装配的方式-四种" class="headerlink" title="自动装配的方式(四种)"></a>自动装配的方式(四种)</h4></li>
+<li>案例代码<a target="_blank" rel="noopener" href="https://github.com/tqb4342/spring/tree/master/property">下载</a><blockquote>
+<pre><code> default-autowire = byName
+          byType
+          constructor
+          autoDetect</code></pre>
+</blockquote>
+</li>
+</ul>
+<h2 id="Annotation的配置方法"><a href="#Annotation的配置方法" class="headerlink" title="Annotation的配置方法"></a>Annotation的配置方法</h2><ul>
+<li><p>案例代码<a target="_blank" rel="noopener" href="https://github.com/tqb4342/spring/tree/master/Annotation">下载</a></p>
+</li>
+<li><p>控制层 　　　业务层      　　　　    持久层</p>
+</li>
+<li><p>action     　　　  service   　　　　  dao</p>
+<h4 id="annotation的配置步骤"><a href="#annotation的配置步骤" class="headerlink" title="annotation的配置步骤"></a>annotation的配置步骤</h4></li>
+<li><p>在配置文件中增加一个schema ，名子是context;</p>
+</li>
+<li><p>使用&lt;context:componet-scan &gt;标记来扫描包；</p>
+<blockquote>
+<pre><code>#这个配置可以自动扫描com.dao,service,com.action三个包中的类，并且实例化
+&lt;context:component-scan base-package=&quot;com.dao,service,com.action&quot;&gt;&lt;/context:component-scan&gt;</code></pre>
+</blockquote>
+<h3 id="用于创建bean的注解"><a href="#用于创建bean的注解" class="headerlink" title="用于创建bean的注解"></a>用于创建bean的注解</h3><pre><code>      @Component    三层都可以  
+      @Repository   写dao  （持久层）
+
+      eg:
+      @Repository(&quot;DeptDao&quot;)（如果只是@Repository，
+      则factory.getBean(&quot;deptDaoImpl&quot;);中的&quot;deptDaoImpl&quot;和源类名不一样，第一个字母是小写）
+      public class DeptDaoImpl implements DeptDao &#123;
+          ......
+      &#125;
+      这样就可以在主函数里获得DeptDaoImpl类的实例：
+      DeptDao dao =  (DeptDao) factory.getBean(&quot;DeptDao&quot;);
+
+      @Service      写service （业务层 ） 
+      @Controller   写action（控制层）</code></pre>
+<h3 id="用于控制bean的作用域注解，可将单例变成非单例"><a href="#用于控制bean的作用域注解，可将单例变成非单例" class="headerlink" title="用于控制bean的作用域注解，可将单例变成非单例"></a>用于控制bean的作用域注解，可将单例变成非单例</h3><pre><code>      @Scope(&quot;prototype&quot;)
+      eg：
+      @Controller
+      @Scope(&quot;prototype&quot;)
+      public class DeptAction &#123;...&#125;</code></pre>
+<h3 id="用于装配的注解，为类中的其他类属性实例化"><a href="#用于装配的注解，为类中的其他类属性实例化" class="headerlink" title="用于装配的注解，为类中的其他类属性实例化"></a>用于装配的注解，为类中的其他类属性实例化</h3><pre><code>          @Autowired  :建议使用
+          @Resource
+          @Inject
+
+          eg:
+          @Autowired   //实例化类DeptServise
+          DeptServise deptService;</code></pre>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2016/03/23/Spring%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80/">http://tanqingbo.cn/2016/03/23/Spring%E5%85%A5%E9%97%A8%E5%9F%BA%E7%A1%80/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2016/03/25/Java面试基础（一）/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Java面试基础(一) </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2016/03/22/JavaEE介绍/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">JavaEE介绍 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sping%E5%85%A5%E9%97%A8"><span class="toc-text">Sping入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E8%B5%84%E6%BA%90"><span class="toc-text">一些资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">Spring是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E4%BD%9C%E7%94%A8"><span class="toc-text">Spring作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%BA%94%E8%8C%83%E5%9B%B4"><span class="toc-text">适应范围</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ioc%E6%98%AF%E5%8F%8D%E8%BD%AC%E6%8E%A7%E5%88%B6%EF%BC%9B"><span class="toc-text">ioc是反转控制；</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AASpring%E7%A8%8B%E5%BA%8F"><span class="toc-text">第一个Spring程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Ebean%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">关于bean的配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">装配方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-text">装配的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E7%9A%84%E6%96%B9%E5%BC%8F-%E5%9B%9B%E7%A7%8D"><span class="toc-text">自动装配的方式(四种)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-text">Annotation的配置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#annotation%E7%9A%84%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">annotation的配置步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BAbean%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="toc-text">用于创建bean的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E6%8E%A7%E5%88%B6bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%B3%A8%E8%A7%A3%EF%BC%8C%E5%8F%AF%E5%B0%86%E5%8D%95%E4%BE%8B%E5%8F%98%E6%88%90%E9%9D%9E%E5%8D%95%E4%BE%8B"><span class="toc-text">用于控制bean的作用域注解，可将单例变成非单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E8%A3%85%E9%85%8D%E7%9A%84%E6%B3%A8%E8%A7%A3%EF%BC%8C%E4%B8%BA%E7%B1%BB%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%AE%9E%E4%BE%8B%E5%8C%96"><span class="toc-text">用于装配的注解，为类中的其他类属性实例化</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sping%E5%85%A5%E9%97%A8"><span class="toc-text">Sping入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E8%B5%84%E6%BA%90"><span class="toc-text">一些资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">Spring是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E4%BD%9C%E7%94%A8"><span class="toc-text">Spring作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%BA%94%E8%8C%83%E5%9B%B4"><span class="toc-text">适应范围</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ioc%E6%98%AF%E5%8F%8D%E8%BD%AC%E6%8E%A7%E5%88%B6%EF%BC%9B"><span class="toc-text">ioc是反转控制；</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AASpring%E7%A8%8B%E5%BA%8F"><span class="toc-text">第一个Spring程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Ebean%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">关于bean的配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">装配方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-text">装配的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E7%9A%84%E6%96%B9%E5%BC%8F-%E5%9B%9B%E7%A7%8D"><span class="toc-text">自动装配的方式(四种)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-text">Annotation的配置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#annotation%E7%9A%84%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">annotation的配置步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BAbean%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="toc-text">用于创建bean的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E6%8E%A7%E5%88%B6bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%B3%A8%E8%A7%A3%EF%BC%8C%E5%8F%AF%E5%B0%86%E5%8D%95%E4%BE%8B%E5%8F%98%E6%88%90%E9%9D%9E%E5%8D%95%E4%BE%8B"><span class="toc-text">用于控制bean的作用域注解，可将单例变成非单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E8%A3%85%E9%85%8D%E7%9A%84%E6%B3%A8%E8%A7%A3%EF%BC%8C%E4%B8%BA%E7%B1%BB%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%AE%9E%E4%BE%8B%E5%8C%96"><span class="toc-text">用于装配的注解，为类中的其他类属性实例化</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sping%E5%85%A5%E9%97%A8"><span class="toc-text">Sping入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E8%B5%84%E6%BA%90"><span class="toc-text">一些资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">Spring是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E4%BD%9C%E7%94%A8"><span class="toc-text">Spring作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%BA%94%E8%8C%83%E5%9B%B4"><span class="toc-text">适应范围</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ioc%E6%98%AF%E5%8F%8D%E8%BD%AC%E6%8E%A7%E5%88%B6%EF%BC%9B"><span class="toc-text">ioc是反转控制；</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AASpring%E7%A8%8B%E5%BA%8F"><span class="toc-text">第一个Spring程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Ebean%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-text">关于bean的配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">装配方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A3%85%E9%85%8D%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-text">装配的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E7%9A%84%E6%96%B9%E5%BC%8F-%E5%9B%9B%E7%A7%8D"><span class="toc-text">自动装配的方式(四种)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Annotation%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-text">Annotation的配置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#annotation%E7%9A%84%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">annotation的配置步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BAbean%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="toc-text">用于创建bean的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E6%8E%A7%E5%88%B6bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%B3%A8%E8%A7%A3%EF%BC%8C%E5%8F%AF%E5%B0%86%E5%8D%95%E4%BE%8B%E5%8F%98%E6%88%90%E9%9D%9E%E5%8D%95%E4%BE%8B"><span class="toc-text">用于控制bean的作用域注解，可将单例变成非单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E8%A3%85%E9%85%8D%E7%9A%84%E6%B3%A8%E8%A7%A3%EF%BC%8C%E4%B8%BA%E7%B1%BB%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E7%B1%BB%E5%B1%9E%E6%80%A7%E5%AE%9E%E4%BE%8B%E5%8C%96"><span class="toc-text">用于装配的注解，为类中的其他类属性实例化</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

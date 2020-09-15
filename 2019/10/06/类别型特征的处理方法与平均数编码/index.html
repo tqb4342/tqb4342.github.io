@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="类别型特征的处理方法与平均数编码">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E7%B1%BB%E5%88%AB%E5%9E%8B%E7%89%B9%E5%BE%81%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E4%B8%8E%E5%B9%B3%E5%9D%87%E6%95%B0%E7%BC%96%E7%A0%81/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      类别型特征的处理方法与平均数编码
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.6k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/217.html">http://www.bewindoweb.com/217.html</a><div class="card-article-text"><h1 id="c0">前言</h1><p>《百面》第二章「类别型特征」，提出一个问题：</p><blockquote>在对数据进行预处理时，应该怎样处理类别型特征？</blockquote><p>仔细研究才发现，这里面竟然有很多以前从未听过的知识——毕竟研究生不会有人手把手教你这么系统地去学，只有老板给什么就去实现什么而已……那么开始吧~</p><h1>什么是类别型特征</h1><p>看名字就知道，是机器学习的输入数据中，表示类别的特征。比如：</p><pre><code class="prettyprint lang-txt linenums">数据ID | 性别 | 学历  | 出生城市 | 10年内深圳买房（y）
+1      | 男   | 博士  | 深圳     | 是
+2      | 女   | 硕士  | 重庆     | 否
+3      | 男   | 大学  | 哈尔滨   | 否
+4      | 女   | 高中  | 成都     | 是
+5      | 男   | 初中  | 湖南     | 是</code></pre><p>这些数据需要被通过某种方法转换为数字，也就是所谓的<span style="font-weight: bold;">编码</span>，才能更好地被那些机器学习算法中建立的各种数学模型来使用。我以前的转换手段就是暴力的：</p><pre><code class="prettyprint lang-txt linenums">女=0，男=1
+初中=0，高中=1，大学=2，硕士=3，博士=4
+深圳=0，重庆=1，哈尔滨=2，成都=3，湖南=4
+否=0，是=1</code></pre><p>非常简单，然而这其实并不是最好的处理方式，好在，我一直学习和使用的都是树模型……</p><h1>类别型特征的处理方法</h1><h2>序号编码（Label Encoding）</h2><p>上面的暴力方法就是序号编码，通过数字和值的一一映射达到编码的目的。但它适合于处理<span style="font-weight: bold;">具有大小关系</span>的特征，比如学历从低到高正好对应了数字从小到大，没有改变特征的特性。如果把它用于处理没有任何大小关系的特征，比如出生城市，所有的城市都是平级的，转变为数值之后却莫名地增加了一层大小关系，这对于数值大小敏感的模型（比如SVM支持向量机）是致命的——因为会影响损失函数之类计算结果。</p><p>python的机器学习包sklearn的LabelEncoder实现了序号编码。</p><h2>独热编码（One-hot Encoding）</h2><p>独热编码也成为哑变量编码（Dummy Encoding）（不过有的也将哑变量编码区分为“随机去项的降维独热编码”），指的是，将原始特征变量转换为原始特征值分类的多维度变量，在每个维度上使用0/1来进行是/否、有/无的量化。通俗来说就是，把每个取值作为一个新特征，一行数据中，取到了这个值就是1，没取到这个值就是0。用出生城市来举个例子：</p><pre><code class="prettyprint lang-txt linenums">数据ID | 出生城市=深圳 | 出生城市=重庆 | 出生城市=哈尔滨 | 出生城市=成都 | 出生城市=湖南
+1      | 1             | 0             | 0               | 0             | 0
+2      | 0             | 1             | 0               | 0             | 0
+3      | 0             | 0             | 1               | 0             | 0
+4      | 0             | 0             | 0               | 1             | 0
+5      | 0             | 0             | 0               | 0             | 1</code></pre><p>这样做的好处在于：</p><p>（1）没有了数值大小关系，SVM也可以尽情使用哦~</p><p>（2）扩充了特征，将一个“出生城市”的特征扩充为了5个新特征，有效地减少了过拟合风险。</p><p>然而也很容易看出缺点：</p><p>（1）如果取值较多，很可能会分裂出大量的新特征，导致维度过高不容易处理。</p><p>（2）非常不适合树模型。如果特征很多，取这个值的数量又很少，那么一些特征变量很可能因为树模型的参数配置而无法向下分裂，导致这些信息白白丢失掉了。</p><p>（3）一个特征变为多个特征，当数据条数越多的时候，整体的数据量会暴增。</p><p>所以，在使用独热编码的时候可以这样做：</p><p>（1）使用稀疏向量节省空间。独热编码只有一个取值1，其余为0，符合稀疏向量的特性。也就是说，我们把上述出生城市改写为：</p><pre><code class="prettyprint lang-txt linenums">数据ID | 出生城市
+1      | 5, (1,1)
+2      | 5, (2,1)
+3      | 5, (3,1)
+4      | 5, (4,1)
+5      | 5, (5,1)</code></pre><p>只是表述方式上变了，数据量减小了，但仍然是拆分成了5个特征。</p><p>（2）配合特征选择来降低维度。我们都知道，K近邻算法需要有效地去衡量两点之间的距离，因此通常需要进行降维。独热编码带来的维度灾难副作用可以通过降维来减少其影响。常见的降维方式有PCA主成分分析、随机特征选择等等。我个人是最喜欢用随机了，因为通常采用的是树模型，而且随机能有效减少树的过拟合，实现起来又简单。</p><p>python的机器学习包sklearn的OneHotEncoder实现了独热编码，pandas的get_dummies同样实现了独热编码，推荐pandas。<br></p><h2>二进制编码（Binary Encoding）</h2><p>就是用二进制去表示类别，比如出生城市可以表示为：</p><pre><code class="prettyprint lang-txt linenums">数据ID | 出生城市F1 | 出生城市F2 | 出生城市F3 
+1      | 0          | 0          | 0
+2      | 0          | 0          | 1
+3      | 0          | 1          | 0
+4      | 0          | 1          | 1
+5      | 1          | 0          | 0</code></pre><p>有的同学会说，哎这不是有大小关系了吗。但仔细看会发现，这种大小关系在单独一列中是不会体现出来的。不过似乎没有看到过这种二进制编码有具体应用，只看见过理解神经网络的中间层原理的时候，发现它利用了这种二进制机制。</p><h2>平均数编码（Mean Encoding）</h2><p>划重点！</p><p>这个方法是在kaggle圈的各位大佬们针对“高基数类别型特征（High-Cardinality Categorical  Attributes）”使用之后发现非常有效（AUC的提升）的方法，它并没有被大量研究，中文资料甚至更少，但是实践真的有奇效。平均数编码的提出是在2001年的论文<a href="http://xueshu.baidu.com/s?wd=paperuri%3A%280ffbaf9c58be95a2163102ead2af006d%29&amp;filter=sc_long_sign&amp;sc_ks_para=q%3DA%20preprocessing%20scheme%20for%20high-cardinality%20categorical%20attributes%20in%20classification%20and%20prediction%20problems&amp;sc_us=12195552390199685959&amp;tn=SE_baiduxueshu_c1gjeupa&amp;ie=utf-8" target="_blank">《A Preprocessing Scheme for High-Cardinality Categorical Attributes in Classification and Prediction Problems》</a>（<a href="https://pan.baidu.com/s/1Ef0nV7iyyhp0aOpeYDd0Tg" target="_blank">百度云盘下载</a>密码：bm8x），其实是相当古老的论文了，只有2017年的一篇<a href="http://xueshu.baidu.com/s?wd=paperuri:(35abdaa9de5acb3932bd21a85a505a83)&amp;filter=sc_long_sign&amp;sc_ks_para=q%3DCatBoost%3A+unbiased+boosting+with+categorical+features&amp;tn=SE_baiduxueshu_c1gjeupa&amp;ie=utf-8&amp;sc_us=11088713692861310784" target="_blank">《CatBoost: unbiased boosting with categorical features》</a>提到了它。</p><p><span style="font-weight: bold;">1、clustering和smoothing</span></p><p>平均数编码主要用于处理高基数类别型特征，高基数的意思就是类别非常多，比如邮编（000001-999999）、区号、IP、家庭住址，这类特征如果直接用独热编码就不要想了。所以目前常见的做法就是：</p><p>（1）将1到N（N非常大）的映射问题通过聚类转换为1到K（K&lt;&lt;N）</p><p>（2）然后再进行独热编码</p><p>这种方法统称为<code>clustering</code>。</p><p>举个直观但不真实的例子，虽然颜色可能有[深蓝、浅蓝、湖蓝、碧蓝、靛蓝、钴蓝、蔚蓝、宝蓝、藏蓝、冰蓝、宝石蓝、海蓝、湛蓝、橙红、粉红、紫红]（N=16），那么我们根据分类取值（Y=0/1）把这些颜色都聚合为[蓝色、红色]（K=2）这两个值，一下就减少了大量的特征取值。然后再将[蓝色、红色]通过独热编码变为2列，就完成了类别值到数值的转换。然而这种做法导致了特征信息的丢失（本来有很多种蓝色特征，结果我都看成一种蓝色特征了）。</p><p>那么我们把这种clustering泛化一下，不要强迫为[蓝色、红色]（=0、=1）了，改成概率估计[是蓝色的概率，是红色的概率]（=0~1之间的小数），也就产生了<code>smoothing</code>。</p><p>平均数编码就是smoothing的一种实现。</p><p><span style="font-weight: bold;">2、以二值目标分类理解平均数编码</span></p><p>假设我们有一个二值分类问题，给定特征X是高基数类别型特征，Y∈{0,1}，那么对于特定的取值X=Xi，我们希望得到它后验概率（看到这种特征取这个值，这个样本的分类是Y=1的概率），那么可以用标量Si去估计这个后验概率：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5c3bd1f6871347be4bb26fb77ad69e14.png" style="max-width:100%;"></p><p></p><p>由于后面需要用这些特征去训练机器学习模型，所以在特征处理这一步，我们只能使用训练数据去估计这个特征值的后验概率。设训练集有n_TR个样本，测试集有n_TS个样本，如果训练集在X的每个取值Xi上都能取到足够多的样本，那么很明显我们可以用最简单的样本数目来做这个后验概率的估计：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fbc66f266d93212f0faa946c3226a6f5.png" style="max-width:100%;"></p><p>其中n_iY表示在X取Xi值的时候，Y=1的样本数目；ni表示X取Xi值的样本数目。然而在实际的场景中，ni的数量很小（因为有大量的Xi值可以取，取每个值的样本数目非常有可能不均衡），所以这个估计是不可信的。为了削弱样本数目小带来的负面影响，我们混合先验概率和后验概率：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/552a58fbd8f29c34bc15323ee2f453dc.png" style="max-width:100%;"></p><p>其中，λ是阈值为[0,1]的单调递增函数。很容易理解这个式子：当Xi取值内样本数量非常多的时候，
+
+</li>
+</ul>
+<p>n_i→∞，n_iY→∞ ，λ(ni)→1，相当于在使用之前的式子计算；当Xi取值内样本数量非常少的时候，</p>
+<p>&nbsp;n_i→0，n_iY→0 ，&nbsp; λ(ni)→0，那么我们直接采用Y=1的先验概率作为估计，也就是说这时候X=Xi已经不重要了，提供不了任何能判断Y=1的信息，那就直接用整个训练样本中正样本数占总样本数的比例来作为估计就好了。</p><p>λ采用这样的函数：<br></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/72361e60060b7e9a1f412b182db98b9b.png" style="max-width:100%;"></p><p>对比一下神经网络中常常使用的Sigmod函数：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/f61498d82c1b2fcf22c2f0ebf966e77d.png" style="max-width:100%;"></p><p>从图像上说，相当于把Sigmod函数图像向右平移k个单位+拉伸f倍。</p><p>从意义上说，k决定了我们完全信任基于这些取值内的样本得到的估计的最小样本数的一半，因为当n=k时λ会等于0.5，这时候我们一半相信先验概率，一半相信后验概率；f控制函数在转折点的斜率，决定了先验概率和后验概率之间的平衡，因为当f→∞的时候，λ→0，不论n为什么值，都几乎是0.5先验+0.5后验。</p><p>以上Si的计算公式其实来源于经验贝叶斯（Empirical Bayesian），λ就是经验贝叶斯公式中的收缩因子（shrinkage factor）Bi的泛化形式。</p><p><span style="font-weight: bold;">3、处理缺失值</span></p><p>我们只用了训练数据，在测试数据里很可能有根本没有出现过的取值，对于这个公式来讲，处理缺失值非常简单，只需要增加一个空缺值X=X0的估计即可：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6cdaff72eb4f153e7f4149155819527b.png" style="max-width:100%;"></p><p>这样做的好处在于，如果缺失值和分类有很大相关性，那么这个公式就可以很好地表达这种相关信息；反之如果缺失值和分类没有太大关系，那么S0也会很快收敛于先验概率，符合通常情况下对缺失值的中立表示。</p><p><span style="font-weight: bold;">4、多分类问题</span></p><p>只需要将估计的概率转变一下就好啦：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c789b772e3188016b10c3e13571208b7.png" style="max-width:100%;"></p><p>注意之前二分类的时候我们是直接替换的那些类别型特征值，而这里多分类的时候，假设有C个类，会产生C列。为什么之前C=2的时候只有1列呢？因为特征线性相关了，比如求P(Y=1|X=Xi)的概率，也就知道了P(Y=0|X=Xi)的概率。所以同样的，这里产生了C列也需要去除最后一列。</p><p><span style="font-weight: bold;">5、连续型类别问题（回归）</span></p><p>对于回归来说，只需要把概率估计改为期望估计就可</p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ce6277f2b5c153e5c3dd0716de7fb0f8.png" style="max-width:100%;"><div><p style="text-align: left;">如果把二分类的类别标记为0/1，那么二分类和回归可以用相同的公式计算。</p><p style="text-align: left;"><span style="font-weight: bold;">6、具有层次结构的类别型特征</span></p><p style="text-align: left;">有的时候我们的类别型特征可能具有层级结构，比如邮编，北京市前两位全是10开头的，然后再继续往后细分是哪个区。我们可以利用这种层级关系来使得每个取值的样本数目更加合适一点。设5位邮编为ZIP5，4位ZIP4，以此类推。那么最开始的计算公式是这样的：</p><p style="text-align: left;"><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/da71703e90005620110caa16dfa0b437.png" style="max-width:100%;"></p><p style="text-align: left;">当ZIP5样本很稀疏的时候，它几乎所有的取值都会依赖于先验概率。而我们可以用这种层次结构来尽可能地提取出新的信息。很明显，ZIP5的先验概率可以用ZIP4去估计：</p><p style="text-align: left;"><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4b61a03af79dd824b9428ed918a229e3.png" style="max-width:100%;"></p><p style="text-align: left;">当样本充足时，会用ZIP5的后验概率，当样本不充足时，会去考虑ZIP4的后验概率，逐级向上，相当于根据数据密度进行了自动调节。</p><p style="text-align: left;"><span style="font-weight: bold;">7、平均数编码的过拟合问题</span></p><p style="text-align: left;">有同学在实践中发现，如果使用全部训练数据去处理特征，那么之后的机器学习模型会产生过拟合问题。所以一种解决方法是，分成k份，每份内的特征值处理采用其他k-1份组成的数据集来训练平均数编码模型，再替换自己的值。</p><h1>总结</h1><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;编码方式</th><th>适用类型&nbsp;</th><th>实现难度&nbsp;</th><th>效果&nbsp;</th></tr><tr><td>序号编码&nbsp;</td><td>&nbsp;大小不敏感模型（树）</td><td>&nbsp;容易</td><td>&nbsp;好</td></tr><tr><td>独热编码</td><td>&nbsp;特征取值少、非树模型</td><td>&nbsp;容易</td><td>&nbsp;好</td></tr><tr><td>二进制编码</td><td>&nbsp;-</td><td>&nbsp;容易</td><td>&nbsp;-</td></tr><tr><td>平均数编码</td><td>&nbsp;高基数类别型特征</td><td>&nbsp;困难</td><td>&nbsp;非常好</td></tr></tbody></table><p><br></p><h1>参考资料</h1><p>1、《百面机器学习》</p><p>2、<a href="https://blog.csdn.net/jin_tmac/article/details/80611676" target="_blank">《类别特征编码》</a></p><p>3、<a href="https://blog.csdn.net/luguanyou/article/details/80598122" target="_blank">《非数值型特征如何进行编码》</a></p><p>4、<a href="https://blog.csdn.net/luguanyou/article/details/80599666" target="_blank">《处理分类数据 非数值型编码》</a></p><p>5、<a href="https://www.cnblogs.com/lianyingteng/p/7792693.html" target="_blank">《离散型特征编码方式：one-hot与哑变量》</a></p><p>6、<a href="https://blog.csdn.net/zcc_0015/article/details/76595447" target="_blank">《机器学习之特征编码总结》</a></p><p>7、<a href="https://cloud.tencent.com/developer/article/1339804" target="_blank">《机器学习“特征编码”的经验分享：鱼还是熊掌？》</a></p><p>8、<a href="https://zhuanlan.zhihu.com/p/26308272" target="_blank">《平均数编码：针对高基数定性特征（类别特征）的数据预处理/特征工程》</a></p><p>9、<a href="http://doc.okbase.net/bjwu/archive/297188.html" target="_blank">《高数量类别特征（high-cardinality categorical attributes）的预处理方法》</a></p><p>10、<a href="https://blog.csdn.net/guoyuhaoaaa/article/details/80510131" target="_blank">《一种处理高维categorical特征的处理方法-TBS (Target based statistic)》</a></p><p>11、<a href="https://blog.csdn.net/u010665216/article/details/78511908" target="_blank">《在分类及预测任务中对高维类别（category）变量的预处理方法》</a></p><p>&nbsp;</p></div><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E7%B1%BB%E5%88%AB%E5%9E%8B%E7%89%B9%E5%BE%81%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E4%B8%8E%E5%B9%B3%E5%9D%87%E6%95%B0%E7%BC%96%E7%A0%81/">http://tanqingbo.cn/2019/10/06/%E7%B1%BB%E5%88%AB%E5%9E%8B%E7%89%B9%E5%BE%81%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E4%B8%8E%E5%B9%B3%E5%9D%87%E6%95%B0%E7%BC%96%E7%A0%81/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/开启头条号之旅/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">开启头条号之旅 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/利用extundelete找回rm-rf彻底删除的文件/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">利用extundelete找回rm-rf彻底删除的文件 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#c0"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">什么是类别型特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">类别型特征的处理方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">序号编码（Label Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">独热编码（One-hot Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">二进制编码（Binary Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">平均数编码（Mean Encoding）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#c0"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">什么是类别型特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">类别型特征的处理方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">序号编码（Label Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">独热编码（One-hot Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">二进制编码（Binary Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">平均数编码（Mean Encoding）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#c0"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">什么是类别型特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">类别型特征的处理方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">序号编码（Label Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">独热编码（One-hot Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">二进制编码（Binary Encoding）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">平均数编码（Mean Encoding）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

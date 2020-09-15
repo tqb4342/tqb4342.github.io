@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="用winpcap测试自己的通信协议（二）">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E7%94%A8winpcap%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      用winpcap测试自己的通信协议（二）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.2k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/212.html">http://www.bewindoweb.com/212.html</a><div class="card-article-text"><h1>一、通信协议的详细方案</h1><p>前文说到，我们设计了这么一个BTP(BWB Transport Protocol)通信协议：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a9c8377d1645185a5dc34697c01ab982.png" style="max-width:100%;"></p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>序号</th><th>BTP字段名</th><th>占用空间</th><th>说明</th></tr><tr><td>&nbsp;1</td><td>协议标识</td><td>1字节</td><td>&nbsp;0x42（大写的'B'）</td></tr><tr><td>&nbsp;2</td><td>协议版本</td><td>1字节</td><td>&nbsp;0x01（1.0版本）</td></tr><tr><td>&nbsp;3</td><td>包类型</td><td>1字节</td><td>&nbsp;握手请求包：0x01<br>&nbsp;握手响应包：0x02<br>&nbsp;心跳请求包：0x03<br>&nbsp;心跳响应包：0x04<br>&nbsp;数据包：0x05<br>&nbsp;断开请求包：0x06<br>&nbsp;断开响应包：0x07</td></tr><tr><td>&nbsp;4</td><td>包序号</td><td>1字节</td><td>&nbsp;0x00~0xFF循环使用</td></tr><tr><td>&nbsp;5</td><td>数据长度</td><td>2字节</td><td>&nbsp;0x0000~0xFFFF</td></tr><tr><td>&nbsp;6</td><td>数据</td><td>0~65535字节</td><td>&nbsp;要传输的数据，可以为空&nbsp;</td></tr><tr><td>&nbsp;7</td><td>校验和&nbsp;</td><td>4字节</td><td>&nbsp;采用经典的CRC32</td></tr></tbody></table><p>（1）包序号</p><p>每次开始发送数据时，总是从0x00到0xFF随机挑选一个初始数字，发包和回包必须携带相同的数字，并且下一个包为这一个包序号+1，如果超过0xFF，则从0x00重新开始。</p><p>（2）握手请求包0x01与握手响应包0x02</p><p>a. 规定数据长度为0，数据为空。</p><p>b. 发送者发送握手请求包，接收者接收握手请求包后立即响应握手应答包。</p><p>c. 只发送一次，1秒超时则认为握手失败。</p><p>d. 握手必须确认协议标识和版本号，否则认为不是BTP包或者版本不相同进行丢弃（一般的协议都是返回一个带错误码的包，这里直接进行简单丢弃）。</p><p>（3）心跳请求包0x03与心跳响应包0x04</p><p>a. 规定数据长度为0，数据为空。</p><p>b. 在成功握手之后，每隔5秒发送一次心跳请求包，接收者必须立即回应心跳响应包，用来维护链路。</p><p>c. 1秒超时则认为链路断开。</p><p>（4）数据包0x05</p><p>携带着要发送的数据。</p><p>（5）断开请求包0x06和断开响应包0x07</p><p>a. 规定数据长度为0，数据为空。&nbsp;&nbsp;<br></p><p>b. 当接收者接收到发送者的断开请求包后，立即回应断开响应包，双方各自进行清理工作，结束通信。</p><p>OK，方案设计完成。</p><h1>二、winpcap的发送者和接收者的实现</h1><h2>1、实现思路</h2><p>前面已经实现了基本的发包和收包，要想实现发送者和接收者，核心是要让程序能够同时进行发包和收包。为了方便说明，仍然使用PA进行作为通信发起者，PB作为通信接收者。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/cde99407e679b3dfd625195330c1c6a0.png" style="max-width:100%;"></p><p><span style="font-weight: bold;">方案一</span></p><p>对于PB来说，用一个全局变量维护当前状态，然后在回调函数里面收到包后进行发包操作即可。</p><p>对于PA来说，也使用全局变量维护当前状态，在发送第一个握手包之后，就陷入监听，然后在回调函数里实现类似的收包发包操作。</p><p>但这种方案维护起来很麻烦，比较差。</p><p><span style="font-weight: bold;">方案二（采用）</span></p><p>多线程，用全局变量来进行同步，使用互斥锁进行写操作。</p><p>【PB】</p><p>只需要进行反射发包，所以仅仅需要收到特定包后回送特定包，根据状态机前进，两个线程，一个主线程发射发包，一个计时线程计时心跳。</p><p>如果心跳超时，强行中断所有线程。</p><p>（这和直接接受心跳包然后计算时间差来判断有什么区别呢？区别在于，如果对方断开了连接，那么永远也接受不到心跳包，也就计算不了时间差了；而线程自己计时则能够自己控制）</p><p>【PA】</p><p>线程1为发包线程，在特定条件满足后，开始发送特定包（数据包）或进行特定操作（开启心跳线程）。</p><p>线程2为接收线程，在接收到特定包后（比如接收到握手包），进行唤醒操作（比如每隔1秒唤醒发包线程，每隔5秒同时唤醒心跳线程）。</p><p>线程3为心跳线程，在特定条件满足后，开始发送心跳包。</p><p>线程4为计时线程，如果超时，强行中断所有线程。&nbsp;&nbsp;<br></p><p>哎，就很舒服~但是实现起来比较麻烦，一步一步来。</p><h2>2、实现过程</h2><p>（1）配置pthread2.9.1&nbsp;<a href="https://pan.baidu.com/s/1WY9CbhlWIfMuUMAA-Q2pNA" target="_blank">下载地址</a>（密码：vyqi）</p><p>和前面配置winpcap类似，首先把pthread源代码文件解压到英文目录，比如<code>E:\pthreads2.9.1</code>。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/df7cd0b7ddeccf87bd498b967ff9ede1.png" style="max-width:100%;"></p><p>然后添加lib支持，告诉编译器链接的时候先去找这个库。调试→属性→配置属性→链接器→输入，添加：</p><pre><code class="prettyprint lang-c linenums">pthreadVC2.lib;pthreadVCE2.lib;pthreadVSE2.lib;</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/717845b137604906156e47711df8ebf5.png" style="max-width:100%;"></p><p>最后添加包含目录和库目录，<span style="font-size: 10.5pt; font-family: 宋体;">调试→属性→配置属性→</span><span lang="EN-USCalibri&quot;,&quot;sans-serif&quot;;" mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:="" minor-fareast;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:"times="" new="" roman";="" mso-bidi-theme-font:minor-bidi;mso-ansi-language:en-us;mso-fareast-language:="" zh-cn;mso-bidi-language:ar-sa'="">VC++</span><span style="font-size: 10.5pt; font-family: 宋体;">目录</span><span style="font-size: 10.5pt; font-family: 宋体;">，添加：</span></p><pre><code class="prettyprint lang-c linenums">包含目录添加     E:\pthreads2.9.1\Pre-built.2\include;
+库目录添加        E:\pthreads2.9.1\Pre-built.2\lib\x86;</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9a85874b1f7af22f732507129c0c3148.png" style="max-width:100%;"></p><p>这里很可能还是没配置好，运行时还会报错：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/70675e98a7aafd78728d64183bfc32de.png" style="max-width:100%;"></p><p>这是因为之前配置的winpcap在很多软件安装的时候都会自动安装，比如安装wireshark都会提示你安装winpcap否则wireshark不会正常工作，他们把dll文件都拷贝进了C:\Windows\System32里面。所以之前能够找到winpcap的动态链接库dll，这里却找不到了。pthread很可能我们只用一次而已，拷贝进系统dll不可取，拷贝进项目dll不方便，因此我们依然采用设置的方法：</p><p>调试→属性→配置属性→调试→环境，添加：<br></p><pre><code class="prettyprint lang-c linenums">path=E:\pthreads2.9.1\Pre-built.2\dll\x86</code></pre><p>编译环境就OK了。但是我们这个exe是要放到windows xp下运行的，由于官方的lib是动态的，依然会提示错误，有兴趣可以看看
+
+</li>
+</ul>
+<p><a href="https://download.csdn.net/download/eugenelyq/3604896" target="_blank">《pthread-win32静态库的编译和使用方法》</a>&nbsp;， 这时候我们采用复制dll的方法，把需要的dll赋值到EXE所���目录，反正都是虚拟机，无所谓，这样就能成功运行啦：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ee84a784ace669178e6f88d1191a0410.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c9465bf86f5f4ed2e02de42083d9296a.png" style="max-width:100%;"></p><p>（2）编写接收者<br></p><p>BTPrecver.h</p><pre><code class="prettyprint lang-c linenums">#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;pcap.h&gt;<br>#include &lt;winsock.h&gt;<br>#include &lt;pthread.h&gt;</p>
+<p>#define SEND_BUFSIZE                    1024<br>#define TIMER_SLEEPTIME                 2000<br>#define ERROR_GENERAL                   -1<br>#define ERROR_FINDALLDEVS_FAILURE       -2<br>#define ERROR_INTERFACES_NOT_FOUND      -3<br>#define ERROR_BAD_INPUT                 -4<br>#define ERROR_OPEN_ADAPTER_FAILURE      -5<br>#define ERROR_SENDING_FAILURE           -6<br>#define ERROR_INVALID_DATALINK_TYPE     -7<br>#define ERROR_COMPILE_FILTER_FALIURE    -8<br>#define ERROR_SET_FILTER_FALIURE        -9<br>#define ERROR_CREATE_THREAD             -10<br>#define ERROR_BTP_HELLO_FAILED          -11<br>#define ERROR_BTP_HEARTBEAT_FAILED      -12<br>#define ERROR_BTP_BYE_FAILED            -13<br>#define ERROR_BTP_TIMEOUT               -14<br>#define ERROR_BAD_VERSION               -15</p>
+<p>#define BTP_HELLO_REQUEST       0x01<br>#define BTP_HELLO_RESPONSE      0x02<br>#define BTP_HEARTBEAT_REQUEST   0x03<br>#define BTP_HEARTBEAT_RESPONSE  0x04<br>#define BTP_DATA                0x05<br>#define BTP_BYE_REQUEST         0x06<br>#define BTP_BYE_RESPONSE        0x07<br>#define BTP_PROTOCOL            0x42<br>#define BTP_VERSION             0x01</p>
+<p>typedef struct ETH_HEADER<br>&#123;<br>    u_char dest_mac[6];<br>    u_char src_mac[6];<br>    u_short etype;<br>&#125;ETH_HEADER;</p>
+<p>typedef struct BTP_HEADER&#123;<br>    u_char protocol;<br>    u_char version;<br>    u_char type;<br>    u_char pid;<br>    u_short data_length;<br>&#125;BTP_HEADER;</p>
+<p>typedef struct BTP_STATE&#123;<br>    int state; /* 状态：0=初始（可握手） 1=握手后（可心跳、可数据、可断开）*/<br>    pthread_t pids[1]; /* 只有一个心跳线程 <em>/<br>    int timeout_flag; /</em> 心跳超时标记，每次收包都进行+1，如果计时线程发现两次的flag都相同，说明断开了 */<br>    pcap_t <em>adapter; /</em> 网卡句柄 */<br>&#125;BTP_STATE;</p>
+<p>void packet_handler(u_char <em>param, const struct pcap_pkthdr *header, const u_char *pkt_data);/</em> 抓包回调函数 */<br>void format_mac(LPSTR lpHWAddrStr, const unsigned char <em>HWAddr);/</em> mac地址格式化函数 */</p>
+<p>int btp_send(ETH_HEADER* eth_header, BTP_HEADER *btp_header, u_char type);<br>void *timer(void *arg);<br>void kill_all(char *msg, int error_code);</p>
+<p>void copy_mac(u_char *mac1, u_char <em>mac2);<br>char</em> rec_type(u_char type);</code></pre><p>BTPrecver.c</p><pre><code class="prettyprint lang-c linenums">#include "BTPrecver.h"</p>
+<p>BTP_STATE btp_state;</p>
+<p>int main()<br>&#123;<br>    char errbuf[PCAP_ERRBUF_SIZE]; /* 错误信息buffer <em>/<br>    u_int netmask; /</em> 掩码信息 <em>/<br>    char packet_filter[] = “ether src 00:50:56:C0:00:08 and ether dst 00:0C:29:86:B8:C8”; /</em> 过滤规则 <em>/<br>    struct bpf_program fcode; /</em> 存储编译好的过滤码 */</p>
+<pre><code>pcap_if_t *alldevs; /* 全部网卡列表 */
+pcap_if_t *d; /* 一个网卡 */
+int did; /* 选择的网卡ID */
+
+int i = 0; /* 迭代 */
+
+/*查找网卡*/
+if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &amp;amp;alldevs, errbuf) == -1) &#123;
+    fprintf(stderr, &quot;[ERROR] pcap_findalldevs error: %s\n&quot;, errbuf);
+    return ERROR_FINDALLDEVS_FAILURE;
+&#125;
+
+/* 选择网卡d */
+for (d = alldevs, i = 0; d; d = d-&amp;gt;next) &#123;
+    if (d-&amp;gt;description)
+        printf(&quot;NO.%d: %s\n&quot;, ++i, d-&amp;gt;description);
+    else
+        printf(&quot;[WARN] No description available\n&quot;);
+&#125;
+
+if (i == 0) &#123;
+    printf(&quot;[ERROR] No interfaces found! Make sure WinPcap is installed.\n&quot;);
+    return ERROR_INTERFACES_NOT_FOUND;
+&#125;
+
+printf(&quot;[INFO] Enter the interface number (1-%d):&quot;, i);
+scanf(&quot;%d&quot;, &amp;amp;did);
+
+if (did &amp;lt; 1 || did &amp;gt; i) &#123;
+    printf(&quot;[ERROR] Interface number out of range.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_BAD_INPUT;
+&#125;
+
+for (d = alldevs, i = 0; i &amp;lt; did - 1; d = d-&amp;gt;next, i++);
+
+/* 打开网卡 */
+if ((btp_state.adapter = pcap_open_live(d-&amp;gt;name, /* 设备名 */
+    65536, /* 捕获数据包的长度（65536捕获所有数据包） */
+    1, /* 混杂模式（非0表示使用混杂模式） */
+    1000, /* 超时时间（0表示没有超时限制） */
+    errbuf /* 错误缓存（存储错误信息） */
+    )) == NULL) &#123;
+    fprintf(stderr, &quot;[ERROR] Unable to open the adapter. %s is not supported by WinPcap\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_OPEN_ADAPTER_FAILURE;
+&#125;
+
+/* 检查链路层类型 */
+if (pcap_datalink(btp_state.adapter) != DLT_EN10MB) /* DLT_EN10MB指10Mb以太网 */
+&#123;
+    fprintf(stderr, &quot;[ERROR] This program works only on Ethernet networks.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_INVALID_DATALINK_TYPE;
+&#125;
+
+/* 检查地址类型 */
+if (d-&amp;gt;addresses != NULL) /* 如果有IP地址 */
+    netmask = ((struct sockaddr_in *)(d-&amp;gt;addresses-&amp;gt;netmask))-&amp;gt;sin_addr.S_un.S_addr; /* 使用第一个掩码 */
+else /* 如果没有IP地址，说明是C类网络（局域网） */
+    netmask = 0xffffff; /* 掩码设置为255.255.255.0 */
+
+
+/* 编译过滤器 */
+if (pcap_compile(btp_state.adapter, &amp;amp;fcode, packet_filter, 1, netmask) &amp;lt; 0) /* 1表示自动进行优化 */
+&#123;
+    fprintf(stderr, &quot;[ERROR] Unable to compile the packet filter. Check the syntax.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_COMPILE_FILTER_FALIURE;
+&#125;
+
+/* 应用过滤器 */
+if (pcap_setfilter(btp_state.adapter, &amp;amp;fcode) &amp;lt; 0)
+&#123;
+    fprintf(stderr, &quot;[ERROR] Error setting the filter.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_SET_FILTER_FALIURE;
+&#125;
+
+/* 开始抓包 */
+btp_state.state = 0;
+btp_state.timeout_flag = 0;
+printf(&quot;listening on %s...\n&quot;, d-&amp;gt;description);
+pcap_freealldevs(alldevs);
+pcap_loop(btp_state.adapter, 0, packet_handler, NULL);
+
+system(&quot;pause&quot;);
+return 0;</code></pre>
+<p>}</p>
+<p>/* 抓包回调函数 <em>/<br>void packet_handler(u_char <em>param, const struct pcap_pkthdr *header, const u_char *pkt_data)<br>{<br>    time_t local_tv_sec; /</em> 时间戳 */<br>    struct tm *ltime; /</em> 本地时间 <em>/<br>    char timestr[16]; /</em> 格式化后的本地时间 */<br>    ETH_HEADER <em>eth_header; /</em> 以太网帧包头 <em>/<br>    char str_mac[50]; /</em> 源MAC地址 */<br>    BTP_HEADER *btp_header;<br>    char *data;<br>    int i;</p>
+<pre><code>/* 没有使用param */
+(VOID)(param);
+
+/* 格式化当前时间 */
+local_tv_sec = header-&amp;gt;ts.tv_sec;
+ltime = localtime(&amp;amp;local_tv_sec);
+strftime(timestr, sizeof timestr, &quot;%H:%M:%S&quot;, ltime);
+
+/* 解析以太网帧 */
+eth_header = (ETH_HEADER *)pkt_data;
+format_mac(str_mac, eth_header-&amp;gt;src_mac);
+printf(&quot;[ %s.%.6d ] receive package from %s:\n&quot;,
+    timestr, header-&amp;gt;ts.tv_usec, str_mac);
+
+/* 解析数据域 */
+btp_header = (BTP_HEADER *)(pkt_data + sizeof(ETH_HEADER));
+if (btp_header-&amp;gt;protocol == BTP_PROTOCOL)&#123; /* 确认是btp包 */
+    printf(&quot;protocol=\tBTP \nversion=\t%d \ntype=\t%s \npid=\t%d \ndata_length=\t%d \n&quot;,
+        btp_header-&amp;gt;version, rec_type(btp_header-&amp;gt;type), btp_header-&amp;gt;pid, btp_header-&amp;gt;data_length);
+
+    if (btp_header-&amp;gt;version &amp;gt; BTP_VERSION)&#123;
+        kill_all(&quot;[ERROR] version mismatch.&quot;, ERROR_BAD_VERSION);
+    &#125;
+
+    switch (btp_header-&amp;gt;type)&#123;
+    case BTP_HELLO_REQUEST:
+        if (btp_state.state == 0)&#123;/* 初始，可握手 */
+            if (!btp_send(eth_header, btp_header, BTP_HELLO_RESPONSE))&#123;
+                if (pthread_create(&amp;amp;btp_state.pids[0], NULL, timer, NULL) == -1)&#123;/* 开启心跳线程 */
+                    kill_all(&quot;[ERROR] create thread failed.&quot;, ERROR_CREATE_THREAD);
+                &#125;
+                btp_state.state = 1;/*握手后，可心跳，可数据，可断开*/
+            &#125;
+            else&#123;
+                kill_all(&quot;[ERROR] btp hello failed.&quot;, ERROR_BTP_HELLO_FAILED);
+            &#125;
+        &#125;
+        break;
+    case BTP_HEARTBEAT_REQUEST:
+        if (btp_state.state == 1)&#123;
+            btp_state.timeout_flag = (btp_state.timeout_flag + 1) % 1000;
+            if (btp_send(eth_header, btp_header, BTP_HEARTBEAT_RESPONSE) != 0)
+                kill_all(&quot;[ERROR] btp heartbeat failed.&quot;, ERROR_BTP_HEARTBEAT_FAILED);
+        &#125;
+        break;
+    case BTP_DATA:
+        if (btp_state.state == 1)&#123;
+            data = (char*)(pkt_data + sizeof(ETH_HEADER)+sizeof(BTP_HEADER));
+            printf(&quot;recv data: &quot;);
+            for (i = 0; i &amp;lt; btp_header-&amp;gt;data_length; i++)
+                printf(&quot;%c&quot;, data[i]);
+            printf(&quot;\n&quot;);
+        &#125;
+        break;
+    case BTP_BYE_REQUEST:
+        if (btp_state.state == 1)&#123;
+            if (btp_send(eth_header, btp_header, BTP_BYE_RESPONSE) != 0)
+                kill_all(&quot;[ERROR] btp bye failed.&quot;, ERROR_BTP_BYE_FAILED);
+            else
+                kill_all(&quot;[INFO] btp finished.&quot;, 0);
+        &#125;
+        break;
+    &#125;
+&#125;</code></pre>
+<p>}</p>
+<p>int btp_send(ETH_HEADER* eth_header, BTP_HEADER <em>btp_header, u_char type){<br>    int index;<br>    u_char sendbuf[SEND_BUFSIZE]; /</em> 发送buffer */<br>    u_char temp_mac[6];</p>
+<pre><code>/* 制作新的eth_header */
+copy_mac(temp_mac, eth_header-&amp;gt;src_mac);
+copy_mac(eth_header-&amp;gt;src_mac, eth_header-&amp;gt;dest_mac);
+copy_mac(eth_header-&amp;gt;dest_mac, temp_mac);
+
+/* 制作新的btp_header */
+btp_header-&amp;gt;type = type;
+btp_header-&amp;gt;data_length = 0;
+
+/* 发包 */
+memcpy(sendbuf, eth_header, sizeof(ETH_HEADER));
+index = sizeof(ETH_HEADER);
+memcpy(&amp;amp;sendbuf[index], btp_header, sizeof(BTP_HEADER));
+index += sizeof(BTP_HEADER);
+
+if (pcap_sendpacket(btp_state.adapter, /* 网卡句柄 */
+    sendbuf, /* 要发送的帧 */
+    index /* 帧的大小 */
+    ) != 0) &#123;
+    fprintf(stderr, &quot;[ERROR] Error sending the packet: %s\n&quot;, pcap_geterr(btp_state.adapter));
+    return ERROR_SENDING_FAILURE;
+&#125;
+printf(&quot;response a %s package.\n&quot;, rec_type(type));
+return 0;</code></pre>
+<p>}</p>
+<p>void *timer(void <em>arg){<br>    int timeout_flag;<br>    printf(“timer start.\n”);<br>    while (1){<br>        timeout_flag = btp_state.timeout_flag;<br>        Sleep(3000);<br>        if (timeout_flag == btp_state.timeout_flag){ /</em> 没有改变 */<br>            kill_all(“[ERROR] time out.”, ERROR_BTP_TIMEOUT);<br>            break;<br>        }<br>        printf(“timer ok\n”);<br>    }<br>    return NULL;<br>}</p>
+<p>void kill_all(char *msg, int error_code){<br>    printf(“%s\n”, msg);<br>    pcap_breakloop(btp_state.adapter);<br>    system(“pause”);<br>    exit(error_code);<br>}</p>
+<p>char* rec_type(u_char type){<br>    switch (type){<br>    case BTP_HELLO_REQUEST:<br>        return “BTP_HELLO_REQUEST”;<br>    case BTP_HELLO_RESPONSE:<br>        return “BTP_HELLO_RESPONSE”;<br>    case BTP_HEARTBEAT_REQUEST:<br>        return “BTP_HEARTBEAT_REQUEST”;<br>    case BTP_HEARTBEAT_RESPONSE:<br>        return “BTP_HEARTBEAT_RESPONSE”;<br>    case BTP_DATA:<br>        return “BTP_DATA”;<br>    case BTP_BYE_REQUEST:<br>        return “BTP_BYE_REQUEST”;<br>    case BTP_BYE_RESPONSE:<br>        return “BTP_BYE_RESPONSE”;<br>    default:<br>        return “BAD_TYPE”;<br>    }<br>}<br>void copy_mac(u_char *mac1, u_char *mac2){<br>    mac1[0] = mac2[0];<br>    mac1[1] = mac2[1];<br>    mac1[2] = mac2[2];<br>    mac1[3] = mac2[3];<br>    mac1[4] = mac2[4];<br>    mac1[5] = mac2[5];<br>}</p>
+<p>void format_mac(char* lpHWAddrStr, const unsigned char *HWAddr)<br>{<br>    int i;<br>    short temp;<br>    char szStr[3];</p>
+<pre><code>strcpy(lpHWAddrStr, &quot;&quot;);
+for (i = 0; i &amp;lt; 6; ++i)
+&#123;
+    temp = (short)(*(HWAddr + i));
+    _itoa(temp, szStr, 16);
+    if (strlen(szStr) == 1)
+        strcat(lpHWAddrStr, &quot;0&quot;);
+    strcat(lpHWAddrStr, szStr);
+    if (i &amp;lt; 5)
+        strcat(lpHWAddrStr, &quot;:&quot;);
+&#125;</code></pre>
+<p>}</code></pre><p>注意这里的kill_all函数，你可以自己去编写中止线程的方法，比如cancel或者kill，并且<code>pcap_breakloop(btp_state.adapter);</code>这一句不是必须的，是因为我使用了<code>system("pause");</code>想查看一下输出结果，造成<code>exit(error_code);</code>没有执行，所以使用这一句来结束winpcap抓包。正常的来说，你可以使用打印输出到文件而不是到屏幕，然后注释掉这句，让exit执行，就能够中止所有线程了。</p><p>整体思路很容易看懂，state就是状态机；pids保存着线程的结构体，用来结束线程；每次收到心跳包后就更新timeout_flag，timer根据这个值是否更新来判断是否心跳超时了，从而判断是否断开连接了，注意接收者是不需要发包计时线程的，因为它只管接受新包和回包，不需要期待对面回包；adapter是网卡句柄。</p><p>（3）测试接收者</p><p>把sender稍微改造一下。</p><p>BTPsender.h</p><pre><code class="prettyprint lang-c linenums">#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;pcap.h&gt;<br>#include &lt;winsock.h&gt;<br>#include &lt;pthread.h&gt;</p>
+<p>#define SEND_BUFSIZE                    1024<br>#define TIMER_SLEEPTIME                 2000<br>#define ERROR_GENERAL                   -1<br>#define ERROR_FINDALLDEVS_FAILURE       -2<br>#define ERROR_INTERFACES_NOT_FOUND      -3<br>#define ERROR_BAD_INPUT                 -4<br>#define ERROR_OPEN_ADAPTER_FAILURE      -5<br>#define ERROR_SENDING_FAILURE           -6<br>#define ERROR_INVALID_DATALINK_TYPE     -7<br>#define ERROR_COMPILE_FILTER_FALIURE    -8<br>#define ERROR_SET_FILTER_FALIURE        -9<br>#define ERROR_CREATE_THREAD             -10<br>#define ERROR_BTP_HELLO_FAILED          -11<br>#define ERROR_BTP_HEARTBEAT_FAILED      -12<br>#define ERROR_BTP_BYE_FAILED            -13<br>#define ERROR_BTP_TIMEOUT               -14<br>#define ERROR_BAD_VERSION               -15</p>
+<p>#define BTP_HELLO_REQUEST       0x01<br>#define BTP_HELLO_RESPONSE      0x02<br>#define BTP_HEARTBEAT_REQUEST   0x03<br>#define BTP_HEARTBEAT_RESPONSE  0x04<br>#define BTP_DATA                0x05<br>#define BTP_BYE_REQUEST         0x06<br>#define BTP_BYE_RESPONSE        0x07<br>#define BTP_PROTOCOL            0x42<br>#define BTP_VERSION             0x01</p>
+<p>typedef struct ETH_HEADER<br>&#123;<br>    u_char dest_mac[6];<br>    u_char src_mac[6];<br>    u_short etype;<br>&#125;ETH_HEADER;</p>
+<p>typedef struct BTP_HEADER&#123;<br>    u_char protocol;<br>    u_char version;<br>    u_char type;<br>    u_char pid;<br>    u_short data_length;<br>&#125;BTP_HEADER;</p>
+<p>typedef struct BTP_STATE&#123;<br>    int state; /* 状态：0=初始（可握手） 1=握手后（可心跳、可数据、可断开）*/<br>    pthread_t pids[1]; /* 只有一个心跳线程 <em>/<br>    int timeout_flag; /</em> 心跳超时标记，每次收包都进行+1，如果计时线程发现两次的flag都相同，说明断开了 */<br>    pcap_t <em>adapter; /</em> 网卡句柄 */<br>&#125;BTP_STATE;</p>
+<p>void packet_handler(u_char <em>param, const struct pcap_pkthdr *header, const u_char *pkt_data);/</em> 抓包回调函数 */<br>void format_mac(LPSTR lpHWAddrStr, const unsigned char <em>HWAddr);/</em> mac地址格式化函数 */</p>
+<p>int btp_send(ETH_HEADER* eth_header, BTP_HEADER *btp_header, u_char type);<br>void *timer(void *arg);<br>void kill_all(char *msg, int error_code);</p>
+<p>void copy_mac(u_char *mac1, u_char <em>mac2);<br>char</em> rec_type(u_char type);</code></pre><p>BTPsender.c</p><pre><code class="prettyprint lang-c linenums">#include "BTPrecver.h"</p>
+<p>BTP_STATE btp_state;</p>
+<p>int main()<br>&#123;<br>    char errbuf[PCAP_ERRBUF_SIZE]; /* 错误信息buffer <em>/<br>    u_int netmask; /</em> 掩码信息 <em>/<br>    char packet_filter[] = “ether src 00:50:56:C0:00:08 and ether dst 00:0C:29:86:B8:C8”; /</em> 过滤规则 <em>/<br>    struct bpf_program fcode; /</em> 存储编译好的过滤码 */</p>
+<pre><code>pcap_if_t *alldevs; /* 全部网卡列表 */
+pcap_if_t *d; /* 一个网卡 */
+int did; /* 选择的网卡ID */
+
+int i = 0; /* 迭代 */
+
+/*查找网卡*/
+if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &amp;amp;alldevs, errbuf) == -1) &#123;
+    fprintf(stderr, &quot;[ERROR] pcap_findalldevs error: %s\n&quot;, errbuf);
+    return ERROR_FINDALLDEVS_FAILURE;
+&#125;
+
+/* 选择网卡d */
+for (d = alldevs, i = 0; d; d = d-&amp;gt;next) &#123;
+    if (d-&amp;gt;description)
+        printf(&quot;NO.%d: %s\n&quot;, ++i, d-&amp;gt;description);
+    else
+        printf(&quot;[WARN] No description available\n&quot;);
+&#125;
+
+if (i == 0) &#123;
+    printf(&quot;[ERROR] No interfaces found! Make sure WinPcap is installed.\n&quot;);
+    return ERROR_INTERFACES_NOT_FOUND;
+&#125;
+
+printf(&quot;[INFO] Enter the interface number (1-%d):&quot;, i);
+scanf(&quot;%d&quot;, &amp;amp;did);
+
+if (did &amp;lt; 1 || did &amp;gt; i) &#123;
+    printf(&quot;[ERROR] Interface number out of range.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_BAD_INPUT;
+&#125;
+
+for (d = alldevs, i = 0; i &amp;lt; did - 1; d = d-&amp;gt;next, i++);
+
+/* 打开网卡 */
+if ((btp_state.adapter = pcap_open_live(d-&amp;gt;name, /* 设备名 */
+    65536, /* 捕获数据包的长度（65536捕获所有数据包） */
+    1, /* 混杂模式（非0表示使用混杂模式） */
+    1000, /* 超时时间（0表示没有超时限制） */
+    errbuf /* 错误缓存（存储错误信息） */
+    )) == NULL) &#123;
+    fprintf(stderr, &quot;[ERROR] Unable to open the adapter. %s is not supported by WinPcap\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_OPEN_ADAPTER_FAILURE;
+&#125;
+
+/* 检查链路层类型 */
+if (pcap_datalink(btp_state.adapter) != DLT_EN10MB) /* DLT_EN10MB指10Mb以太网 */
+&#123;
+    fprintf(stderr, &quot;[ERROR] This program works only on Ethernet networks.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_INVALID_DATALINK_TYPE;
+&#125;
+
+/* 检查地址类型 */
+if (d-&amp;gt;addresses != NULL) /* 如果有IP地址 */
+    netmask = ((struct sockaddr_in *)(d-&amp;gt;addresses-&amp;gt;netmask))-&amp;gt;sin_addr.S_un.S_addr; /* 使用第一个掩码 */
+else /* 如果没有IP地址，说明是C类网络（局域网） */
+    netmask = 0xffffff; /* 掩码设置为255.255.255.0 */
+
+
+/* 编译过滤器 */
+if (pcap_compile(btp_state.adapter, &amp;amp;fcode, packet_filter, 1, netmask) &amp;lt; 0) /* 1表示自动进行优化 */
+&#123;
+    fprintf(stderr, &quot;[ERROR] Unable to compile the packet filter. Check the syntax.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_COMPILE_FILTER_FALIURE;
+&#125;
+
+/* 应用过滤器 */
+if (pcap_setfilter(btp_state.adapter, &amp;amp;fcode) &amp;lt; 0)
+&#123;
+    fprintf(stderr, &quot;[ERROR] Error setting the filter.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_SET_FILTER_FALIURE;
+&#125;
+
+/* 开始抓包 */
+btp_state.state = 0;
+btp_state.timeout_flag = 0;
+printf(&quot;listening on %s...\n&quot;, d-&amp;gt;description);
+pcap_freealldevs(alldevs);
+pcap_loop(btp_state.adapter, 0, packet_handler, NULL);
+
+system(&quot;pause&quot;);
+return 0;</code></pre>
+<p>}</p>
+<p>/* 抓包回调函数 <em>/<br>void packet_handler(u_char <em>param, const struct pcap_pkthdr *header, const u_char *pkt_data)<br>{<br>    time_t local_tv_sec; /</em> 时间戳 */<br>    struct tm *ltime; /</em> 本地时间 <em>/<br>    char timestr[16]; /</em> 格式化后的本地时间 */<br>    ETH_HEADER <em>eth_header; /</em> 以太网帧包头 <em>/<br>    char str_mac[50]; /</em> 源MAC地址 */<br>    BTP_HEADER *btp_header;<br>    char *data;<br>    int i;</p>
+<pre><code>/* 没有使用param */
+(VOID)(param);
+
+/* 格式化当前时间 */
+local_tv_sec = header-&amp;gt;ts.tv_sec;
+ltime = localtime(&amp;amp;local_tv_sec);
+strftime(timestr, sizeof timestr, &quot;%H:%M:%S&quot;, ltime);
+
+/* 解析以太网帧 */
+eth_header = (ETH_HEADER *)pkt_data;
+format_mac(str_mac, eth_header-&amp;gt;src_mac);
+printf(&quot;[ %s.%.6d ] receive package from %s:\n&quot;,
+    timestr, header-&amp;gt;ts.tv_usec, str_mac);
+
+/* 解析数据域 */
+btp_header = (BTP_HEADER *)(pkt_data + sizeof(ETH_HEADER));
+if (btp_header-&amp;gt;protocol == BTP_PROTOCOL)&#123; /* 确认是btp包 */
+    printf(&quot;protocol=\tBTP \nversion=\t%d \ntype=\t%s \npid=\t%d \ndata_length=\t%d \n&quot;,
+        btp_header-&amp;gt;version, rec_type(btp_header-&amp;gt;type), btp_header-&amp;gt;pid, btp_header-&amp;gt;data_length);
+
+    if (btp_header-&amp;gt;version &amp;gt; BTP_VERSION)&#123;
+        kill_all(&quot;[ERROR] version mismatch.&quot;, ERROR_BAD_VERSION);
+    &#125;
+
+    switch (btp_header-&amp;gt;type)&#123;
+    case BTP_HELLO_REQUEST:
+        if (btp_state.state == 0)&#123;/* 初始，可握手 */
+            if (!btp_send(eth_header, btp_header, BTP_HELLO_RESPONSE))&#123;
+                if (pthread_create(&amp;amp;btp_state.pids[0], NULL, timer, NULL) == -1)&#123;/* 开启心跳线程 */
+                    kill_all(&quot;[ERROR] create thread failed.&quot;, ERROR_CREATE_THREAD);
+                &#125;
+                btp_state.state = 1;/*握手后，可心跳，可数据，可断开*/
+            &#125;
+            else&#123;
+                kill_all(&quot;[ERROR] btp hello failed.&quot;, ERROR_BTP_HELLO_FAILED);
+            &#125;
+        &#125;
+        break;
+    case BTP_HEARTBEAT_REQUEST:
+        if (btp_state.state == 1)&#123;
+            btp_state.timeout_flag = (btp_state.timeout_flag + 1) % 1000;
+            if (btp_send(eth_header, btp_header, BTP_HEARTBEAT_RESPONSE) != 0)
+                kill_all(&quot;[ERROR] btp heartbeat failed.&quot;, ERROR_BTP_HEARTBEAT_FAILED);
+        &#125;
+        break;
+    case BTP_DATA:
+        if (btp_state.state == 1)&#123;
+            data = (char*)(pkt_data + sizeof(ETH_HEADER)+sizeof(BTP_HEADER));
+            printf(&quot;recv data: &quot;);
+            for (i = 0; i &amp;lt; btp_header-&amp;gt;data_length; i++)
+                printf(&quot;%c&quot;, data[i]);
+            printf(&quot;\n&quot;);
+        &#125;
+        break;
+    case BTP_BYE_REQUEST:
+        if (btp_state.state == 1)&#123;
+            if (btp_send(eth_header, btp_header, BTP_BYE_RESPONSE) != 0)
+                kill_all(&quot;[ERROR] btp bye failed.&quot;, ERROR_BTP_BYE_FAILED);
+            else
+                kill_all(&quot;[INFO] btp finished.&quot;, 0);
+        &#125;
+        break;
+    &#125;
+&#125;</code></pre>
+<p>}</p>
+<p>int btp_send(ETH_HEADER* eth_header, BTP_HEADER <em>btp_header, u_char type){<br>    int index;<br>    u_char sendbuf[SEND_BUFSIZE]; /</em> 发送buffer */<br>    u_char temp_mac[6];</p>
+<pre><code>/* 制作新的eth_header */
+copy_mac(temp_mac, eth_header-&amp;gt;src_mac);
+copy_mac(eth_header-&amp;gt;src_mac, eth_header-&amp;gt;dest_mac);
+copy_mac(eth_header-&amp;gt;dest_mac, temp_mac);
+
+/* 制作新的btp_header */
+btp_header-&amp;gt;type = type;
+btp_header-&amp;gt;data_length = 0;
+
+/* 发包 */
+memcpy(sendbuf, ð_header, sizeof(eth_header));
+index = sizeof(eth_header);
+if (pcap_sendpacket(btp_state.adapter, /* 网卡句柄 */
+    sendbuf, /* 要发送的��� */
+    index /* 帧的大小 */
+    ) != 0) &#123;
+    fprintf(stderr, &quot;[ERROR] Error sending the packet: %s\n&quot;, pcap_geterr(btp_state.adapter));
+    return ERROR_SENDING_FAILURE;
+&#125;
+printf(&quot;response a %s package.\n&quot;, rec_type(type));
+return 0;</code></pre>
+<p>}</p>
+<p>void *timer(void <em>arg){<br>    int timeout_flag;<br>    printf(“timer start.\n”);<br>    while (1){<br>        timeout_flag = btp_state.timeout_flag;<br>        Sleep(3000);<br>        if (timeout_flag == btp_state.timeout_flag){ /</em> 没有改变 */<br>            kill_all(“[ERROR] time out.”, ERROR_BTP_TIMEOUT);<br>            break;<br>        }<br>        printf(“timer ok\n”);<br>    }<br>    return NULL;<br>}</p>
+<p>void kill_all(char *msg, int error_code){<br>    printf(“%s\n”, msg);<br>    pcap_breakloop(btp_state.adapter);<br>    system(“pause”);<br>    exit(error_code);<br>}</p>
+<p>char* rec_type(u_char type){<br>    switch (type){<br>    case BTP_HELLO_REQUEST:<br>        return “BTP_HELLO_REQUEST”;<br>    case BTP_HELLO_RESPONSE:<br>        return “BTP_HELLO_RESPONSE”;<br>    case BTP_HEARTBEAT_REQUEST:<br>        return “BTP_HEARTBEAT_REQUEST”;<br>    case BTP_HEARTBEAT_RESPONSE:<br>        return “BTP_HEARTBEAT_RESPONSE”;<br>    case BTP_DATA:<br>        return “BTP_DATA”;<br>    case BTP_BYE_REQUEST:<br>        return “BTP_BYE_REQUEST”;<br>    case BTP_BYE_RESPONSE:<br>        return “BTP_BYE_RESPONSE”;<br>    default:<br>        return “BAD_TYPE”;<br>    }<br>}<br>void copy_mac(u_char *mac1, u_char *mac2){<br>    mac1[0] = mac2[0];<br>    mac1[1] = mac2[1];<br>    mac1[2] = mac2[2];<br>    mac1[3] = mac2[3];<br>    mac1[4] = mac2[4];<br>    mac1[5] = mac2[5];<br>}</p>
+<p>void format_mac(char* lpHWAddrStr, const unsigned char *HWAddr)<br>{<br>    int i;<br>    short temp;<br>    char szStr[3];</p>
+<pre><code>strcpy(lpHWAddrStr, &quot;&quot;);
+for (i = 0; i &amp;lt; 6; ++i)
+&#123;
+    temp = (short)(*(HWAddr + i));
+    _itoa(temp, szStr, 16);
+    if (strlen(szStr) == 1)
+        strcat(lpHWAddrStr, &quot;0&quot;);
+    strcat(lpHWAddrStr, szStr);
+    if (i &amp;lt; 5)
+        strcat(lpHWAddrStr, &quot;:&quot;);
+&#125;</code></pre>
+<p>}</code></pre><p>看看实验结果：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a5c7bf502ed496b86c399cdd088bb54e.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/15c1f6f99b9e827f0d12f15861bc732e.png" style="max-width:100%;"></p><p>后面time out是因为那个心跳线程没有直接结束，原因在前面已经说明了。</p><p>（4）编写发送者</p><p>sender.h</p><pre><code class="prettyprint lang-c linenums">#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;pcap.h&gt;<br>#include &lt;winsock.h&gt;<br>#include &lt;pthread.h&gt;</p>
+<p>#define ETHERTYPE_IP                    0x0800 /* IP */<br>#define ERROR_GENERAL                   -1<br>#define ERROR_FINDALLDEVS_FAILURE       -2<br>#define ERROR_INTERFACES_NOT_FOUND      -3<br>#define ERROR_BAD_INPUT                 -4<br>#define ERROR_OPEN_ADAPTER_FAILURE      -5<br>#define ERROR_SENDING_FAILURE           -6<br>#define ERROR_INVALID_DATALINK_TYPE     -7<br>#define ERROR_COMPILE_FILTER_FALIURE    -8<br>#define ERROR_SET_FILTER_FALIURE        -9<br>#define ERROR_CREATE_THREAD             -10<br>#define ERROR_BTP_HELLO_FAILED          -11<br>#define ERROR_BTP_HEARTBEAT_FAILED      -12<br>#define ERROR_BTP_BYE_FAILED            -13<br>#define ERROR_BTP_TIMEOUT               -14<br>#define ERROR_BAD_VERSION               -15<br>#define ERROR_BTP_DATA_FAILED            -16<br>#define SEND_BUFSIZE                    1024<br>#define SEND_TIMES                      10000<br>#define SEND_INTVAL                     1000<br>#define TIMER_SLEEPTIME                 2000<br>#define TIMER_EXPECT_SLEEPTIME          1000</p>
+<p>#define BTP_HELLO_REQUEST       0x01<br>#define BTP_HELLO_RESPONSE      0x02<br>#define BTP_HEARTBEAT_REQUEST   0x03<br>#define BTP_HEARTBEAT_RESPONSE  0x04<br>#define BTP_DATA                0x05<br>#define BTP_BYE_REQUEST         0x06<br>#define BTP_BYE_RESPONSE        0x07<br>#define BTP_PROTOCOL            0x42<br>#define BTP_VERSION             0x01</p>
+<p>typedef struct ETH_HEADER<br>&#123;<br>    u_char dest_mac[6];<br>    u_char src_mac[6];<br>    u_short etype;<br>&#125;ETH_HEADER;</p>
+<p>typedef struct BTP_HEADER&#123;<br>    u_char protocol;<br>    u_char version;<br>    u_char type;<br>    u_char pid;<br>    u_short data_length;<br>&#125;BTP_HEADER;</p>
+<p>typedef struct BTP_STATE&#123;<br>    int state; /* 状态：0=初始（可发送握手） 1=握手后（可心跳、可数据、可断开）*/<br>    pthread_t pids[3]; /* 0=心跳线程 1=接收线程 2=计时线程 <em>/<br>    int timeout_flag; /</em> 心跳超时标记，每次收包都进行+1，如果计时线程发现两次的flag都相同，说明断开了 <em>/<br>    pcap_t <em>adapter; /</em> 网卡句柄 <em>/<br>    int pid;/</em> 这个是package id，包序号</em>/<br>    u_char sendbuf[SEND_BUFSIZE]; /* 发送buffer <em>/<br>    int index; /</em> 发送buffer偏移 */<br>&#125;BTP_STATE;</p>
+<p>int send_btp_package(pcap_t <em>adapter, u_char <em>sendbuf, int index, u_char type, char</em> data, int len);<br>char</em> rec_type(u_char type);<br>void <em>timer(void *arg);<br>void *timer_expect(void *arg);<br>void *bye(void *arg);<br>void kill_all(char *msg, int error_code);<br>void btp_listen();<br>void packet_handler(u_char *param, const struct pcap_pkthdr *header, const u_char *pkt_data);<br>int send_btp_package(pcap_t *adapter, u_char *sendbuf, int index, int *pid, u_char type, char</em> data, int len, int te);<br>void format_mac(LPSTR lpHWAddrStr, const unsigned char <em>HWAddr);/</em> mac地址格式化函数 */</code></pre><p>sender.c<br></p><pre><code class="prettyprint lang-c linenums">#include "BTPsender.h"<br>BTP_STATE btp_state;</p>
+<p>int main()<br>&#123;<br>    pcap_t <em>adapter; /</em> 网卡句柄 <em>/<br>    char errbuf[PCAP_ERRBUF_SIZE]; /</em> 错误信息buffer <em>/<br>    u_int netmask; /</em> 掩码信息 <em>/<br>    char packet_filter[] = “ether src 00:0C:29:86:B8:C8 and ether dst 00:50:56:C0:00:08”; /</em> 过滤规则 <em>/<br>    struct bpf_program fcode; /</em> 存储编译好的过滤码 <em>/<br>    ETH_HEADER eth_header; /</em> 以太网包头 */</p>
+<pre><code>pcap_if_t *alldevs; /* 全部网卡列表 */
+pcap_if_t *d; /* 一个网卡 */
+int did; /* 选择的网卡ID */
+
+int i; /* 迭代 */
+
+/* 查找网卡 */
+if (pcap_findalldevs_ex(PCAP_SRC_IF_STRING, NULL, &amp;amp;alldevs, errbuf) == -1) &#123;
+    fprintf(stderr, &quot;[ERROR] pcap_findalldevs error: %s\n&quot;, errbuf);
+    return ERROR_FINDALLDEVS_FAILURE;
+&#125;
+
+/* 选择网卡d */
+for (d = alldevs, i = 0; d; d = d-&amp;gt;next) &#123;
+    if (d-&amp;gt;description)
+        printf(&quot;NO.%d: %s\n&quot;, ++i, d-&amp;gt;description);
+    else
+        printf(&quot;[WARN] No description available\n&quot;);
+&#125;
+
+if (i == 0) &#123;
+    printf(&quot;[ERROR] No interfaces found! Make sure WinPcap is installed.\n&quot;);
+    return ERROR_INTERFACES_NOT_FOUND;
+&#125;
+
+printf(&quot;[INFO] Enter the interface number (1-%d):&quot;, i);
+scanf(&quot;%d&quot;, &amp;amp;did);
+
+if (did &amp;lt; 1 || did &amp;gt; i) &#123;
+    printf(&quot;[ERROR] Interface number out of range.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_BAD_INPUT;
+&#125;
+
+for (d = alldevs, i = 0; i &amp;lt; did - 1; d = d-&amp;gt;next, i++);
+
+/* 打开网卡 */
+if ((btp_state.adapter = pcap_open_live(d-&amp;gt;name, /* 设备名 */
+    65536, /* 捕获数据包的长度（65536捕获所有数据包） */
+    1, /* 混杂模式（非0表示使用混杂模式） */
+    1000, /* 超时时间（0表示没有超时限制） */
+    errbuf /* 错误缓存（存储错误信息） */
+    )) == NULL) &#123;
+    fprintf(stderr, &quot;[ERROR] Unable to open the adapter. %s is not supported by WinPcap\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_OPEN_ADAPTER_FAILURE;
+&#125;
+
+/* 检查链路层类型 */
+if (pcap_datalink(btp_state.adapter) != DLT_EN10MB) /* DLT_EN10MB指10Mb以太网 */
+&#123;
+    fprintf(stderr, &quot;[ERROR] This program works only on Ethernet networks.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_INVALID_DATALINK_TYPE;
+&#125;
+
+/* 检查地址类型 */
+if (d-&amp;gt;addresses != NULL) /* 如果有IP地址 */
+    netmask = ((struct sockaddr_in *)(d-&amp;gt;addresses-&amp;gt;netmask))-&amp;gt;sin_addr.S_un.S_addr; /* 使用第一个掩码 */
+else /* 如果没有IP地址，说明是C类网络（局域网） */
+    netmask = 0xffffff; /* 掩码设置为255.255.255.0 */
+
+
+/* 编译过滤器 */
+if (pcap_compile(btp_state.adapter, &amp;amp;fcode, packet_filter, 1, netmask) &amp;lt; 0) /* 1表示自动进行优化 */
+&#123;
+    fprintf(stderr, &quot;[ERROR] Unable to compile the packet filter. Check the syntax.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_COMPILE_FILTER_FALIURE;
+&#125;
+
+/* 应用过滤器 */
+if (pcap_setfilter(btp_state.adapter, &amp;amp;fcode) &amp;lt; 0)
+&#123;
+    fprintf(stderr, &quot;[ERROR] Error setting the filter.\n&quot;);
+    pcap_freealldevs(alldevs);
+    return ERROR_SET_FILTER_FALIURE;
+&#125;
+
+/*目的PB的mac地址*/
+eth_header.dest_mac[0] = 0x00;
+eth_header.dest_mac[1] = 0x0C;
+eth_header.dest_mac[2] = 0x29;
+eth_header.dest_mac[3] = 0x86;
+eth_header.dest_mac[4] = 0xB8;
+eth_header.dest_mac[5] = 0xC8;
+
+/*源PA的mac地址*/
+eth_header.src_mac[0] = 0x00;
+eth_header.src_mac[1] = 0x50;
+eth_header.src_mac[2] = 0x56;
+eth_header.src_mac[3] = 0xC0;
+eth_header.src_mac[4] = 0x00;
+eth_header.src_mac[5] = 0x08;
+
+eth_header.etype = htons(ETHERTYPE_IP);
+
+memcpy(btp_state.sendbuf, ð_header, sizeof(eth_header));
+btp_state.index = sizeof(eth_header);
+
+/* 开启抓包线程 */
+btp_state.state = 0;
+btp_state.timeout_flag = 0;
+printf(&quot;listening on %s...\n&quot;, d-&amp;gt;description);
+pcap_freealldevs(alldevs);
+if (pthread_create(&amp;amp;btp_state.pids[1], NULL, btp_listen, NULL) == -1)&#123;
+    kill_all(&quot;[ERROR] create thread failed.&quot;, ERROR_CREATE_THREAD);
+&#125;
+
+
+/* 发送第一个包 */
+btp_state.pid = 1;
+if (send_btp_package(btp_state.adapter, btp_state.sendbuf, btp_state.index, &amp;amp;btp_state.pid, BTP_HELLO_REQUEST, NULL, 0, 1) != 0)&#123;
+    kill_all(&quot;[ERROR] send hello failed.&quot;, ERROR_BTP_HELLO_FAILED);
+&#125;
+/* 发包 
+
+Sleep(SEND_INTVAL);
+send_btp_package(adapter, sendbuf, index, &amp;amp;pid, BTP_HEARTBEAT_REQUEST, NULL, 0);
+send_btp_package(adapter, sendbuf, index, &amp;amp;pid, BTP_DATA, data, strlen(data));
+Sleep(SEND_INTVAL);
+send_btp_package(adapter, sendbuf, index, &amp;amp;pid, BTP_BYE_REQUEST, NULL, 0);
+*/
+
+pthread_join(btp_state.pids[1], NULL);
+
+pcap_close(btp_state.adapter);
+system(&quot;pause&quot;);
+return 0;</code></pre>
+<p>}</p>
+<p>void *timer(void <em>arg){<br>    int timeout_flag;<br>    printf(“timer start.\n”);<br>    while (1){<br>        timeout_flag = btp_state.timeout_flag;<br>        Sleep(3000);<br>        if (timeout_flag == btp_state.timeout_flag){ /</em> 没有改变 */<br>            kill_all(“[ERROR] time out.”, ERROR_BTP_TIMEOUT);<br>            break;<br>        }<br>        printf(“timer ok\n”);<br>    }<br>    return NULL;<br>}</p>
+<p>void *timer_expect(void *arg){<br>    Sleep(TIMER_EXPECT_SLEEPTIME);<br>    pthread_testcancel();<br>    kill_all(“[ERROR] timer_expect time out.”, ERROR_BTP_TIMEOUT);<br>}</p>
+<p>void *bye(void *arg){<br>    Sleep(10000);<br>    if (send_btp_package(btp_state.adapter, btp_state.sendbuf, btp_state.index, &amp;btp_state.pid,<br>        BTP_BYE_REQUEST, NULL, 0, 1)<br>        != 0){<br>        kill_all(“[ERROR] send bye failed.”, ERROR_BTP_BYE_FAILED);<br>    }<br>}</p>
+<p>void kill_all(char *msg, int error_code){<br>    printf(“%s\n”, msg);<br>    pcap_breakloop(btp_state.adapter);<br>    system(“pause”);<br>    exit(error_code);<br>}</p>
+<p>void btp_listen(){<br>    pcap_loop(btp_state.adapter, 0, packet_handler, NULL);<br>}</p>
+<p>/* 抓包回调函数 <em>/<br>void packet_handler(u_char <em>param, const struct pcap_pkthdr *header, const u_char *pkt_data)<br>{<br>    time_t local_tv_sec; /</em> 时间戳 */<br>    struct tm *ltime; /</em> 本地时间 <em>/<br>    char timestr[16]; /</em> 格式化后的本地时间 */<br>    ETH_HEADER <em>eth_header; /</em> 以太网帧包头 <em>/<br>    char str_mac[50]; /</em> 源MAC地址 */<br>    BTP_HEADER *btp_header;<br>    char *data;<br>    int i;</p>
+<pre><code>/* 没有使用param */
+(VOID)(param);
+
+/* 格式化当前时间 */
+local_tv_sec = header-&amp;gt;ts.tv_sec;
+ltime = localtime(&amp;amp;local_tv_sec);
+strftime(timestr, sizeof timestr, &quot;%H:%M:%S&quot;, ltime);
+
+/* 解析以太网帧 */
+eth_header = (ETH_HEADER *)pkt_data;
+format_mac(str_mac, eth_header-&amp;gt;src_mac);
+printf(&quot;[ %s.%.6d ] receive package from %s:\n&quot;,
+    timestr, header-&amp;gt;ts.tv_usec, str_mac);
+
+/* 解析数据域 */
+btp_header = (BTP_HEADER *)(pkt_data + sizeof(ETH_HEADER));
+if (btp_header-&amp;gt;protocol == BTP_PROTOCOL)&#123; /* 确认是btp包 */
+    printf(&quot;protocol=\tBTP \nversion=\t%d \ntype=\t%s \npid=\t%d \ndata_length=\t%d \n&quot;,
+        btp_header-&amp;gt;version, rec_type(btp_header-&amp;gt;type), btp_header-&amp;gt;pid, btp_header-&amp;gt;data_length);
+
+    if (btp_header-&amp;gt;version &amp;gt; BTP_VERSION)&#123;
+        kill_all(&quot;[ERROR] version mismatch.&quot;, ERROR_BAD_VERSION);
+    &#125;
+
+    switch (btp_header-&amp;gt;type)&#123;
+    case BTP_HELLO_RESPONSE:
+        if (btp_state.state == 0)&#123;/* 初始，可握手 */
+            if (pthread_create(&amp;amp;btp_state.pids[0], NULL, timer, NULL) == -1)&#123;/* 开启心跳线程 */
+                kill_all(&quot;[ERROR] create thread failed.&quot;, ERROR_CREATE_THREAD);
+            &#125;
+            btp_state.state = 1;/*握手后，可心跳，可数据，可断开*/
+            pthread_cancel(btp_state.pids[2]);/* 中止hello包的计时器 */
+            if (send_btp_package(btp_state.adapter, btp_state.sendbuf, btp_state.index, &amp;amp;btp_state.pid, 
+                                 BTP_HEARTBEAT_REQUEST, NULL, 0, 0) 
+                                 != 0)&#123;
+                kill_all(&quot;[ERROR] send heartbeat failed.&quot;, ERROR_BTP_HEARTBEAT_FAILED);
+            &#125;
+            if (send_btp_package(btp_state.adapter, btp_state.sendbuf, btp_state.index, &amp;amp;btp_state.pid,
+                                 BTP_DATA, &quot;test btp data.&quot;, strlen(&quot;test btp data.&quot;), 0) 
+                                 != 0)&#123;
+                kill_all(&quot;[ERROR] send data failed.&quot;, ERROR_BTP_DATA_FAILED);
+            &#125;
+            if (pthread_create(&amp;amp;btp_state.pids[0], NULL, bye, NULL) == -1)&#123;/* 开启bye线程，等待10秒发包 */
+                kill_all(&quot;[ERROR] create thread failed.&quot;, ERROR_CREATE_THREAD);
+            &#125;
+        &#125;
+        break;
+    case BTP_HEARTBEAT_RESPONSE:
+        if (btp_state.state == 1)&#123;
+            btp_state.timeout_flag = (btp_state.timeout_flag + 1) % 1000;
+            if (send_btp_package(btp_state.adapter, btp_state.sendbuf, btp_state.index, &amp;amp;btp_state.pid,
+                                 BTP_HEARTBEAT_REQUEST, NULL, 0, 0)
+                                 != 0)&#123;
+                kill_all(&quot;[ERROR] btp heartbeat failed.&quot;, ERROR_BTP_HEARTBEAT_FAILED);
+            &#125;
+        &#125;
+        break;
+    case BTP_BYE_RESPONSE:
+        if (btp_state.state == 1)&#123;
+            pthread_cancel(btp_state.pids[2]);/* 中止bye包的计时器 */
+            kill_all(&quot;[INFO] btp finished.&quot;, 0);
+        &#125;
+        break;
+    &#125;
+&#125;</code></pre>
+<p>}</p>
+<p>int send_btp_package(pcap_t <em>adapter, u_char *sendbuf, int index, int *pid, u_char type, char</em> data, int len, int te){<br>    BTP_HEADER package;</p>
+<pre><code>package.protocol = BTP_PROTOCOL;
+package.pid = (*pid)++;
+package.version = BTP_VERSION;
+package.data_length = type == BTP_DATA ? len : 0;
+package.type = type;
+
+memcpy(&amp;amp;sendbuf[index], &amp;amp;package, sizeof(package));
+index += sizeof(package);
+
+if (type == BTP_DATA)&#123;
+    memcpy(&amp;amp;sendbuf[index], data, len);
+    index += len;
+&#125;
+
+if (pcap_sendpacket(adapter, /* 网卡句柄 */
+    sendbuf, /* 要发送的帧 */
+    index /* 帧的大小 */
+    ) != 0) &#123;
+    fprintf(stderr, &quot;[ERROR] Error sending the packet: %s\n&quot;, pcap_geterr(adapter));
+    return ERROR_SENDING_FAILURE;
+&#125;
+printf(&quot;send a %s btp packet success.\n&quot;, rec_type(type));
+
+/* 启动一个计时器，期待回复 */
+if (te)&#123;
+    if (pthread_create(&amp;amp;btp_state.pids[2], NULL, timer, NULL) == -1)&#123;
+        kill_all(&quot;[ERROR] create thread failed.&quot;, ERROR_CREATE_THREAD);
+    &#125;
+&#125;
+return 0;</code></pre>
+<p>}</p>
+<p>char* rec_type(u_char type){<br>    switch (type){<br>    case BTP_HELLO_REQUEST:<br>        return “BTP_HELLO_REQUEST”;<br>    case BTP_HELLO_RESPONSE:<br>        return “BTP_HELLO_RESPONSE”;<br>    case BTP_HEARTBEAT_REQUEST:<br>        return “BTP_HEARTBEAT_REQUEST”;<br>    case BTP_HEARTBEAT_RESPONSE:<br>        return “BTP_HEARTBEAT_RESPONSE”;<br>    case BTP_DATA:<br>        return “BTP_DATA”;<br>    case BTP_BYE_REQUEST:<br>        return “BTP_BYE_REQUEST”;<br>    case BTP_BYE_RESPONSE:<br>        return “BTP_BYE_RESPONSE”;<br>    default:<br>        return “BAD_TYPE”;<br>    }<br>}</p>
+<p>void format_mac(char* lpHWAddrStr, const unsigned char *HWAddr)<br>{<br>    int i;<br>    short temp;<br>    char szStr[3];</p>
+<pre><code>strcpy(lpHWAddrStr, &quot;&quot;);
+for (i = 0; i &amp;lt; 6; ++i)
+&#123;
+    temp = (short)(*(HWAddr + i));
+    _itoa(temp, szStr, 16);
+    if (strlen(szStr) == 1)
+        strcat(lpHWAddrStr, &quot;0&quot;);
+    strcat(lpHWAddrStr, szStr);
+    if (i &amp;lt; 5)
+        strcat(lpHWAddrStr, &quot;:&quot;);
+&#125;</code></pre>
+<p>}</code></pre><p>这里���实现上，没有单独地开一个发送线程，只简单地开了一个等待10秒后发送BTP断开包的线程。</p><p>注意发送者的监听需要调换源MAC和目的MAC，因为是虚拟机PB端发过来的。</p><p>每次发送期待回复的包后，都会开一个定时器，来判断是否超时。</p><p>（5）整体测试</p><p>正常实验结果的sender / PA 端：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/cadd6953fe1047e72eba145ce425153d.png" style="max-width:100%;"></p><p>上来就发了一个hello包，收到回复后开始不断发送和接受心跳包，显示timer start和timer ok，然后10秒后发送了一个bye包：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/57af8750848e4412eac9c5ea4c455767.png" style="max-width:100%;"></p><p>完成了整个过程。我们再试试中途关闭PB端的程序：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4b74da359d8839dd96da76d8133ed33e.png" style="max-width:100%;"></p><p>可以看到心跳包超时了。我们再试试一开始就不开PB端的程序：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7da83ccae84d79d28feb9728a50838ac.png" style="max-width:100%;"></p><p>可以看到PA发送的hello包没有人回复，造成计时器超时了。</p><h1>三、总结</h1><p>整个实验过程非常好玩，只不过时间仓促没有测试完所有的分支，��果你也有兴趣，可以<a href="https://pan.baidu.com/s/1vdS72ruXo3YAGfyo5XeE0g" target="_blank">在这里</a>（密码：fqqy）下载代码工程文件，原理上或者程序中有什么错误，欢迎邮件或评论指正。</p><h1>参考资料</h1><p>1、<a href="https://blog.csdn.net/k459905889/article/details/48676159" target="_blank">《VS2015中配置Pthread》</a></p><p>2、<a href="https://blog.csdn.net/joysonqin/article/details/70237422" target="_blank">《Linux中pthread线程使用详解》</a></p><p>3、<a href="https://blog.csdn.net/ada_1215/article/details/17527627" target="_blank">《终止正在运行的子线程（一、几种方式的介绍）》</a></p><p>4、<a href="https://blog.csdn.net/huangshanchun/article/details/47420961" target="_blank">《linux下pthread_cancel无法取消线程的原因》</a></p><p>5、<a href="https://blog.csdn.net/u011694809/article/details/49045665" target="_blank">《基于VS2013配置pthread》</a></p><p>6、<a href="https://blog.csdn.net/yangpan011/article/details/78615779" target="_blank">《VS2013中引用dll目录的配置方法》</a></p><p>7、<a href="https://download.csdn.net/download/eugenelyq/3604896" target="_blank">《pthread-win32静态库的编译和使用方法》</a></p><p>8、<a href="https://blog.csdn.net/listener51/article/details/78396879" target="_blank">《使用pthread-win32工程编译静态库》</a></p><style></p>
+<!--
+ /* Font Definitions */
+ @font-face
+    {font-family:宋体;
+    panose-1:2 1 6 0 3 1 1 1 1 1;
+    mso-font-alt:SimSun;
+    mso-font-charset:134;
+    mso-generic-font-family:auto;
+    mso-font-pitch:variable;
+    mso-font-signature:3 680460288 22 0 262145 0;}
+@font-face
+    {font-family:"Cambria Math";
+    panose-1:2 4 5 3 5 4 6 3 2 4;
+    mso-font-charset:1;
+    mso-generic-font-family:roman;
+    mso-font-format:other;
+    mso-font-pitch:variable;
+    mso-font-signature:0 0 0 0 0 0;}
+@font-face
+    {font-family:Calibri;
+    panose-1:2 15 5 2 2 2 4 3 2 4;
+    mso-font-charset:0;
+    mso-generic-font-family:swiss;
+    mso-font-pitch:variable;
+    mso-font-signature:-536870145 1073786111 1 0 415 0;}
+@font-face
+    {font-family:"\@宋体";
+    panose-1:2 1 6 0 3 1 1 1 1 1;
+    mso-font-charset:134;
+    mso-generic-font-family:auto;
+    mso-font-pitch:variable;
+    mso-font-signature:3 680460288 22 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+    {mso-style-unhide:no;
+    mso-style-qformat:yes;
+    mso-style-parent:"";
+    margin:0cm;
+    margin-bottom:.0001pt;
+    text-align:justify;
+    text-justify:inter-ideograph;
+    mso-pagination:none;
+    font-size:10.5pt;
+    mso-bidi-font-size:11.0pt;
+    font-family:"Calibri","sans-serif";
+    mso-ascii-font-family:Calibri;
+    mso-ascii-theme-font:minor-latin;
+    mso-fareast-font-family:宋体;
+    mso-fareast-theme-font:minor-fareast;
+    mso-hansi-font-family:Calibri;
+    mso-hansi-theme-font:minor-latin;
+    mso-bidi-font-family:"Times New Roman";
+    mso-bidi-theme-font:minor-bidi;
+    mso-font-kerning:1.0pt;}
+.MsoChpDefault
+    {mso-style-type:export-only;
+    mso-default-props:yes;
+    font-family:"Calibri","sans-serif";
+    mso-bidi-font-family:"Times New Roman";
+    mso-bidi-theme-font:minor-bidi;}
+ /* Page Definitions */
+ @page
+    {mso-page-border-surround-header:no;
+    mso-page-border-surround-footer:no;}
+@page WordSection1
+    {size:612.0pt 792.0pt;
+    margin:72.0pt 90.0pt 72.0pt 90.0pt;
+    mso-header-margin:36.0pt;
+    mso-footer-margin:36.0pt;
+    mso-paper-source:0;}
+div.WordSection1
+    {page:WordSection1;}
+-->
+<p></style><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E7%94%A8winpcap%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%EF%BC%88%E4%BA%8C%EF%BC%89/">http://tanqingbo.cn/2019/10/06/%E7%94%A8winpcap%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E7%9A%84%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE%EF%BC%88%E4%BA%8C%EF%BC%89/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/用QQ机器人筛选想买的淘宝群商品/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">用QQ机器人筛选想买的淘宝群商品 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/用winpcap测试自己的通信协议（一）/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">用winpcap测试自己的通信协议（一） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、通信协议的详细方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、winpcap的发送者和接收者的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、实现思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、实现过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、通信协议的详细方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、winpcap的发送者和接收者的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、实现思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、实现过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、通信协议的详细方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、winpcap的发送者和接收者的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、实现思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、实现过程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">参考资料</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

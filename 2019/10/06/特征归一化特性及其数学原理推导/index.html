@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="特征归一化特性及其数学原理推导">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%89%B9%E6%80%A7%E5%8F%8A%E5%85%B6%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      特征归一化特性及其数学原理推导
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/216.html">http://www.bewindoweb.com/216.html</a><div class="card-article-text"><h1>前言</h1><p>买了本《百面机器学习》看着玩，虽然已经毕业了，机器学习还是放不下吧，希望以后新的机会出现能够及时抓住。书中第一章「特征工程」的“01 特征归一化”（第002-003页）提到：</p><blockquote>对数值类型的特征做归一化可以将所有的特征都统一到一个大致相同的数值区间内。最常用的方法主要有以下两种。<br>（1）线性函数归一化（Min-Max Scaling）。它对原始数据进行线性变换，使结果映射到[0, 1]的范围，实现对原始数据的等比缩放。归一化公式如下<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3f971a2d96f9d22369ae82209684f725.png" style="max-width:100%;">其中，X为原始数据，Xmax、Xmin分别为数据最大值和最小值。<br>（2）零均值归一化（Z-Score Normalization）。它会将原始数据映射到<span style="font-weight: bold;">均值为0、标准差为1的分布</span>上。具体来说，假设原始特征的<span style="font-weight: bold;">均值为μ、标准差为σ</span>，那么归一化公式定义为：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9b46d6a7c39be20c47c169100be5d9bb.png" style="max-width:100%;"></blockquote><p>我平时使用的全是线性函数归一化……因为比较简单也好理解。零均值归一化看到过，但是不知道该用在哪里，接下来仔细地分析一下相关的内容，以及感兴趣的数学知识。</p><h1>一、为什么需要对数值类型的特征做归一化？</h1><p>这是《百面》提出的问题。官方解答是通过一个形象的随机梯度下降例子：</p><blockquote>假设有两种数值型特征，x1的取值范围为<span style="font-weight: bold;">[0, 10]</span>，x2的取值范围为<span style="font-weight: bold;">[0, 3]</span>，于是可以构造一个目标函数符合图1.1(a)中的等值图。在学习速率相同的情况下，<span style="font-weight: bold;">x1的更新速度会大于x2</span>，需要较多的迭代才能找到最优解。如果将x1和x2归一化到相同的数值区间后，优化目标的等值图会变成图1.1(b)中的圆形，<span style="font-weight: bold;">x1和x2的更新速度变得更为一致</span>，容易更快地通过梯度下降找到最优解。<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fa8932b18056001344271cbae6d451ac.png" style="max-width:100%;"></blockquote><p>用人话来讲就是，归一化使得特征的变化更容易用统一标准去衡量了。</p><p>这个例子其实来源于<a href="https://class.coursera.org/ml-003/lecture/21" target="_blank">斯坦福机器学习公开课的一节</a>，课题是我们想要去预测房价，假设存在这样一个函数：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c2c17a5b978225b0b6a1b4e4525f6db4.png" style="max-width:100%;"></p><p></p><p><span style="font-weight: bold; color: rgb(194, 79, 74);">注意这里的x1是真实的变量，而《百面》中提到的x1��这里的参数θ1（估计是为了避嫌更换了名称），把θ称作参数更符合思维习惯。</span></p><p>这个函数里的y是预��房价，x1是房间大小（1~100平方米），x2是房间数量（1~4间）。我们都知道房间越多、房间越大，房子越值钱，但不知道具体“50平方米2间房”和“60平方米1间房”哪个更值钱。所以现在有一批[房间大小, 房间数量, 房价]的训练数据，我们用这批数据去求得使得大部分数据都符合这个公式的参数θ1、θ2，不就得到房价预测模型了吗？以后输入房间大小、房间数量，代入公式，就得到了预测房价。那么“大部分都符合”这个标准用数学量化出来就是“损失函数最小”。命题转变为了<span style="font-weight: bold;">求解使得损失函数最小的参数θ1、θ2</span>。</p><p>损失函数很容易定义为预测房价和真实房价差值的平方（为了取正数）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d39db475d98661a46369d9e8ba530f55.png" style="max-width:100%;"></p><p>损失函数值越小，说明预测房价和真实房价的差距越小，预测越精准。</p><p>可以想象的是，当没有归一化的时候，x1=50，x2=2，y(real)=100，我们可以取1*50+25*2 - 100，也可以取0.2*50+45*2 -100，他们的值都是0，然而θ1的取值范围波动会小一些，θ2的取值范围波动巨大，如果画出等值线，就会是θ1进行缓慢地变化θ2剧烈变化的椭圆；当归一化之后，x1=0.5，x2=0.5，y(real)=1，那么取值1*0.5+1*0.5-1，或者0*0.5+2*0.5-1，会发现参数变化更加均匀一些了，等值线（等高线）也就越趋近于圆。</p><p>所以，用原始的量纲不同、取值范围差异较大的两个特征，去进行梯度下降寻找最优解，未归一化的话这个圆会变得很尖，归一化了圆就会更圆，但程序不知道啊，它会通过梯度下降去迭代，未归一化的数据更容易产生“之”字型走法来迭代寻找最优解，归一化的数据更容易走直线快速找到最优解。</p><p>但这只是讲了<span style="font-weight: bold;">归一化的好处——提升模型收敛速度</span>，并没有讲不归一化会发生什么。<span style="font-weight: bold;">不归一化的最大坏处在于“数值小的特征变化失去意义”</span>，举个例子（我以前就干过这样的事……）：</p><p>我们已知平面上有很多点(x, y)，现在取一个点(x0, y0)=(0,0)，找出和它最近的2个点。x的取值范围是-1~1，y的取值范围是-1000~1000</p><pre><code class="prettyprint lang-txt linenums">(0.1,100)
+(0.2,300)
+(0.2,100)
+(0.3,300)</code></pre><p>我们会发现，当计算距离的时候，y的取值很大程度地影响了距离的值，y稍微一变化，距离就变化很大。x重要吗？根本不重要！完全和已知在纵轴上，y0=0，寻找最近的2个点的命题几乎一样：</p><pre><code>y1=100
+y2=300
+y3=100
+y4=300<br></code></pre><p>最近的仍然是y1、y3，哪怕你有一个(x5,y5)=(1,300)，x变化再剧烈，最近邻也轮不到你。效果就是，x这个特征似乎消失了。</p><p>所以，<span style="font-weight: bold;">归一化在维数非常多的时候，可以防止某一维或某几维对数据影响过大</span>。</p><h1>二、归一化和标准化的取舍</h1><p>虽然可以统称为归一化，但是我更愿意称<span style="font-weight: bold;">线性函数归一化（Min-Max Scaling）</span>为<span style="font-weight: bold;">极大极小归一化（Min-Max Normalization）</span>，称<span style="font-weight: bold;">零均值归一化（Z-Score Normalization）</span>为<span style="font-weight: bold;">零均值标准化（Z-Score Standardization）</span>。</p><p>因为极大极小归一化的方法是，根据极值，将所有内部值压缩到[0,1]区间；而零均值标准化做的是，根据所有数值，将分布转为标准正态分布，均值为0，方差为1，取值[-1,1]。在实际使用过程中深有体会，当用极大极小归一化时，如果不是已经知道极值（比如0~255），一旦有新的数据（比如Haar特征）加入，根据固定的极值（当前数据最大最小值）去压缩，就可能产生超过1或者小于0的特征值，但是在处理上会方便许多；采用零均值标准化的话，由于可能取到负值，而且新进来的数据依然可能越界，其实都不好使……</p><p>那么，应该如何取舍归一化和标准化呢？</p><p>（1）如果对输出结果有要求，或者数据比较稳定，用归一化。</p><p>（2）如果存在一些异常值和噪音，数据符合正态分布，用标准化。</p><p>（3）如果涉及距离度量计算相似性（比如KNN、Kmeans聚类）、或者PCA，用标准化。</p><p>前面两个都好理解，数据稳定，用极值方便；有异常或噪音，用标准化保证整体数值分布。我们来仔细分析一下第三点，首先推导零均值标准化原理。</p><h2>正态分布的期望从定义开始推导</h2><p>正态分布也叫高斯分布，期望有很多种推导方式，比如<a href="https://blog.csdn.net/su_jz/article/details/52579723" target="_blank">极坐标</a>这种很秀的推导方法，我们只记最简单的<span style="font-weight: bold;">Γ函数</span>推导就好了。</p><p>（1）推导E(x)到合适的地方</p><p>已知一般正态分布：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b8bf3802b3022c3640da519dc6dbc99a.png" style="max-width:100%;"></p><p>其概率密度函数为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/56215eda77890a3975cdc1f2eee98bbb.png" style="max-width:100%;"></p><p>根据期望的定义有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7b60cb86c4712d1d2996e24a6a727144.png" style="max-width:100%;"></p><p>换元积分，令：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9acd479e096bfd7adf791b7e42fb4fa0.png" style="max-width:100%;"></p><p>则E(x)可以改写为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b918959814607c5be2f4fc1ed8712594.png" style="max-width:100%;"></p><p>左式为奇函数在对称区间的积分，积分为0，而右边是偶函数在对称区间的积分，积分为2倍半区间积分，于是：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/479bd736b39001cb9aa373d537275a66.png" style="max-width:100%;"></p><p>（2）推导Γ函数的特性</p><p>注意到含参变量的以无穷乘积函数定义的反常积分<span style="font-weight: bold;">Γ函数</span>定义为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/65b08b47480aad1d47447b1e40b74895.png" style="max-width:100%;"></p><p>用<a href="https://baike.baidu.com/item/分部积分法" target="_blank">分部积分法</a>（其公式不再继续往下证明）有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/362d85cccf5977fb6c755d85f50cbd33.png" style="max-width:100%;"></p><p>��么，令：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c1d62e46ec18fc2846ddab30d91b85e9.png" style="max-width:100%;"></p><p>得到Γ函数的递推公式及其推论：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dca4e4e6d71f71eb1ea9399be7a11d08.png" style="max-width:100%;"></p><p>（3）利用Γ函数的特性</p><p>所以，对E(X)再次换元：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6b851adeb6aa2ec25be9c3ea8ec63268.png" style="max-width:100%;"></p><p>有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/18847cdb0739af9e254ba4cf70fde06e.png" style="max-width:100%;"></p><h2>正态分布的方差从定义开始推导</h2><p>（1）推导D(x)到合适的地方</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/89fc2c37108116203cd4944695d1325f.png" style="max-width:100%;"></p><p>同样地，进行换元，令：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/92eb7b8d081e3bb724f6b6591cdba7a9.png" style="max-width:100%;"></p><p>利用分部积分法，有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/8cdfb9038e07fb3bf1687dfd873cfcea.png" style="max-width:100%;"></p><p>注意这里分部积分法的使用，是拆开了前面的平方，组合后面的。而且没有用网上所谓的“注意到”：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6462314addb084d20cc2e3afe106122b.png" style="max-width:100%;"></p><p>虽然和分部积分法原理一样，但是除非非常熟练，看到这个积分就能想到这个导数，否则以我的视角根本不可能去“注意到”。还是分部积分法靠谱一些。</p><p>（2）利用Γ函数特性</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e3e9de86b89c42a30079cb7af94c5bd8.png" style="max-width:100%;"></p><p><a href="https://blog.csdn.net/duan_zhihua/article/details/78715603" target="_blank">第二种推导方案</a>是利用：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d81bf79ce4bb2434135c70698e5739e8.png"></p><p>来进行推导。</p><p><a href="http://www.cnblogs.com/yuanyifei1/p/8946471.html" target="_blank">第三种推导方案</a>是，不使用奇函数特性，使用洛必达法则推导；不使用Γ函数特性，使用<a href="https://zhidao.baidu.com/question/624679748076324644.html?qbl=relate_question_0&amp;word=t%5E2e%5E%28-t%5E2/2%29" target="_blank">双重积分+极坐标</a>推导。</p><p><a href="https://blog.csdn.net/su_jz/article/details/52579723" target="_blank">第四种推导方案</a>是，不使用分部积分法，使用一种新奇的换元方法+Γ函数特性：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c28a05d3fc292438971f4e162686d12a.png" style="max-width:100%;"></p><p>这里不再赘述。</p><h2>为什么零均值标准化能使得均值为0方差为1<br></h2><p>即需要证明，若X~N(μ,σ)，则Z=(X-μ/σ)~N(0,1)</p><p>我们知道，分布函数F(x)、概率密度f(x)存在这样的关系：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1db22a4430fa2cbf95f37fc44bd27aaa.png" style="max-width:100%;"></p><p>那么：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9800186bdf276ad59847c658f149aede.png" style="max-width:100%;"></p><p>所以，Z=(X-μ/σ)~N(0,1)</p><h2>为什么零均值标准化适合于距离度量、PCA</h2><p>PCA原理不再介绍，我们知道PCA的核心就是方差与协方差。原始特征样本协方差为（N-1是无偏估计，撇表示区分不是指导数）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d054226136e15208eab6f59667544c48.png" style="max-width:100%;"></p><p>那么，使用零均值标准化：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4129d51b9a8cb0e0e6aa34c86378138c.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/70c26a648309bd4bafb4619c83331170.png" style="max-width:100%;"></p><p></p><p>而使��极大极小归一化：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7bee4232a6c1d49799495a16434151a2.png" style="max-width:100%;"></p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0d6ed434e62583611d4163757fc0394b.png" style="max-width:100%;"></p><p>极大极小归一���使得协方差产生了倍数值缩放，无法消除量纲的影响；而零均值标准化对方差进行了归一化，使得量纲不会对协方差的计算产生任何影响。</p><p>所以，如果需要每个特征值都对整体归一化产生一定影响的话（和分布相关的话），选择零均值归一化。</p><h1>三、特征归一化的使用范围</h1><p>《百面》上说：</p><blockquote>在实际应用中，通过梯度下降法求解的模型通常是需要归一化的，包括线性回归、逻辑回锅、支持向量机、神经网络等模型。但对于决策树模型则并不适用，以C4.5决策树为例，决策树在进行节点分裂时主要依据数据集D关于特征x的信息增益比，而信息增益比跟特征是否进行归一化是无关的，因为归一化并不会改变样本在特征x上的信息增益。</blockquote><p>但其实，看一下C4.5的信息增益比公式，样本集合D，类别数N，某类样本子集Ci，Di中属于第n类的子集D(in)，特征取值数K，||表示取元素个数，某特征X，其信息增益比为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0a879969b47d3aa4e51b3a2195082b0a.png" style="max-width:100%;"></p><p>信息增益比相当于帮决策树进行了归一化。而且其实，决策树使用了归一化，也不会有太大的问题。</p><h1>总结</h1><p>除了极大极小归一���、零均值归一化，还有一些非线性的归一化，比如log10、log2、tan等。归一化的好处真的非常之大，是机器学习入门必备的概念。</p><p>这里通过一些数学推导把以前原理模糊的概念都理解透彻了，由于涉及到较多的数学，如有错误还望指正。</p><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%89%B9%E6%80%A7%E5%8F%8A%E5%85%B6%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC/">http://tanqingbo.cn/2019/10/06/%E7%89%B9%E5%BE%81%E5%BD%92%E4%B8%80%E5%8C%96%E7%89%B9%E6%80%A7%E5%8F%8A%E5%85%B6%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E6%8E%A8%E5%AF%BC/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/素数的世界/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">素数的世界 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/网易区块链试水：星球基地/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">网易区块链试水：星球基地 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、为什么需要对数值类型的特征做归一化？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、归一化和标准化的取舍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">正态分布的期望从定义开始推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">正态分布的方差从定义开始推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么零均值标准化能使得均值为0方差为1
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么零均值标准化适合于距离度量、PCA</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、特征归一化的使用范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、为什么需要对数值类型的特征做归一化？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、归一化和标准化的取舍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">正态分布的期望从定义开始推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">正态分布的方差从定义开始推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么零均值标准化能使得均值为0方差为1
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么零均值标准化适合于距离度量、PCA</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、特征归一化的使用范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、为什么需要对数值类型的特征做归一化？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、归一化和标准化的取舍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">正态分布的期望从定义开始推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">正态分布的方差从定义开始推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么零均值标准化能使得均值为0方差为1
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">为什么零均值标准化适合于距离度量、PCA</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、特征归一化的使用范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

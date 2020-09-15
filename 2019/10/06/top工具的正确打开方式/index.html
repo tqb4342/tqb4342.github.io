@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="top工具的正确打开方式">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/top%E5%B7%A5%E5%85%B7%E7%9A%84%E6%AD%A3%E7%A1%AE%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      top工具的正确打开方式
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/264.html">http://www.bewindoweb.com/264.html</a><div class="card-article-text"><h1>一、top经典界面参数含义</h1><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4ad92b668f626f1c8efcd590e43511a7.png" style="max-width:100%;"></p><h2>1、系统状态</h2><pre><code class="prettyprint lang-bsh linenums">top - 21:36:59 up 13 days, 45 min,  1 user,  load average: 0.35, 0.12, 0.04</code></pre><ul><li>现在的系统时间：21:36:59</li><li>系统已经启动了：13天45分钟</li><li>用户数量：1个</li><li>系统平均负载1分钟、5分钟、15分钟：0.35、0.12、0.04</li></ul><p>系统平均负载指的是，在特定时间间隔内运行队列中的平均进程数。一个进程通常会在没有等待I/O操作、没有主动进入等待状态、没有被中止的情况下处于运行态。</p><p>Top的这个系统平均负载是每隔5秒检查一次活跃进程数计算得到的，如果这个数值除以逻辑CPU的数量：</p><ul><li>&lt;0.70：正常</li><li>0.70~1.00：有一些负荷了，需要检查</li><li>1.00~5.00：刚好1个CPU处理1个进程，但占用了全部的CPU资源，应该马上检查进程是否有问题</li><li>&gt;5.00：系统超负荷运转</li></ul><h2>2、进程总体状态</h2><pre><code class="prettyprint lang-c linenums">Tasks:  85 total,   1 running,  84 sleeping,   0 stopped,   0 zombie</code></pre><p>一共有85个进程，1个处于运行态，84个处于睡眠态，0个处于僵尸态</p><h2>3、CPU状态</h2><pre><code class="prettyprint lang-c linenums">%Cpu(s):  0.2 us,  0.1 sy,  0.4 ni, 99.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</code></pre><ul><li>us（user）：运行未调整优先级的用户进程的CPU时间所占的百分比</li><li>sy（system）：运行内核进程的CPU时间所占的百分比</li><li>ni（niced）：运行已调整优先级的用户进程的CPU时间所占的百分比</li><li>id：（idle）CPU空闲时间所占的百分比</li><li>wa（IO wait）：执行过程中用于等待IO完成的CPU时间所占的百分比</li><li>hi（Hardware IRQ）：处理硬件中断的CPU时间所占的百分比</li><li>si（Software Interrupts）：处理软件中断的CPU时间所占的百分比</li><li>st（steal）：虚拟CPU等待实际CPU时间所占的百分比</li></ul><p>我们知道程序在进行系统调用（比如read等函数）、发生异常（比如缺页异常）、外围设备中断等操作陷入内核代码后，进程会从用户态进入系统态。</p><p>当us值过高，表示运行的应用消耗掉了大部分CPU，在这种情况下就要去找程序中消耗CPU线程所执行的代码，对java程序而言，可以去查看JVM是否频繁GC和因为什么频繁GC</p><p>当sy值过高，表用运行的应用过于频繁地进行线程上下文切换，线程不断地处于阻塞（锁等待、IO等待）和执行的状态变化过程中，对java程序而言，需要查看是否启动的线程太多，是否有并发锁竞争的问题。</p><p>通常，除了百分比的值，us比sy应该小于3:1~4:1才比较合理。</p><p>ni值可以用于观察调整过优先级的进程所占用CPU百分比。比如原本两个优先级为0的进程A和B，分别分配1时间片，提高B的优先级到-19后，A仍然1时间片，B分配1.5时间片，那么B多占了(1.5-1)/1.5+1=20%的CPU时间，这就是ni值。ni值越高说明调整后的进程抢占了其他进程越多的CPU资源。如果不是自己调的，一定要注意检查是否被入侵了，比如被挂了挖矿进程。</p><p>id值表明CPU空闲时间，我的服务器99.2%，说明没跑啥大程序，大部分CPU都浪费了……</p><p>st是被偷走的CPU时间，通常为0，这里的虚拟CPU指的不是逻辑CPU，而是整台服务器是运行在物理机上的虚拟机，那么st就是当CPU被分配给相同物理机的另一台虚拟机的时候，本虚拟机的虚拟CPU等待的时间。这个值越高，说明其他虚拟服务器占用的CPU越多，供应商过量地出售了虚拟云服务器，需要联系云服务器供应商扩容。</p><h2>4、内存状态</h2><pre><code class="prettyprint lang-c linenums">KiB Mem:   1024052 total,   945656 used,    78396 free,   187356 buffers
+KiB Swap:        0 total,        0 used,        0 free.   359120 cached Mem</code></pre><p>第一行是物理内存，全部有1G内存（1024052字节），使用中的内存有0.9G左右，空闲内存0.1G左右，有0.17G（187356字节）的缓冲</p><p>第二行是虚拟交换内存，全部有0字节，使用中的有0字节，可用的有0字节（没有设置虚拟交换内存），有0.34G（359120字节）的缓存</p><p>缓冲（buffer）主要用于块设备的读写，缓存（cache）主要存储频繁访问的数据</p><p>空闲内存指的是完全没有被利用的内存，所以剩余的内存可用量并不是空闲内存，而是空闲内存+缓冲+缓存，比如这里就是0.1G+0.17G+0.34G=0.61G，还有一半内存可用呢。</p><p>要注意虚拟内存的used数值是否频繁变化，如果频繁变化，说明在不断地进行内存和虚拟内存的数据交换，这是内存不够用了的表现。</p><h2>5、进程详细状态</h2><pre><code class="prettyprint lang-c linenums">PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND                                                                            
+1 root      20   0   28900   5248   3148 S  0.0  0.5   0:12.74 systemd</code></pre><ul><li>PID（Process Id）：进程ID</li><li>USER（User Name）：进程所有者的用户名</li><li>PR（Priority）：进程的动态优先级，“rt”代表实时态，取值0~39</li><li>NI（Nice Value）：进程的静态优先级，取值-20~19</li><li>VIRT（Virtual Image）：进程所用虚拟内存总量，单位KB</li><li>RES（Resident Size）：驻留内存大小，单位KB</li><li>SHR（shared Memory）：共享内存大小，单位KB</li><li>S（Process State）：进程状态</li><li>%CPU（CPU Usage）：上次更新到现在的CPU时间占用百分比</li><li>%MEM（Memory Usage RES）：进程使用的物理内存百分比（RES）</li><li>TIME+（CPU Time，hundredths）：启动后到现在使用的全部CPU时间，精确到1/100秒</li><li>COMMAND（Command Name/Line）：运行进程使用的命令</li></ul><p>Linux一共有0~139共140个实际进程优先级，数字越小优先级越高，0~99是实时进程优先级，100~139是非实时进程优先级，系统会优先运行实时进程，只有实时进程让出CPU后才会运行非实时进程。所有新的非实时进程初始Nice值都是0，初始的实际优先级是（140 - 40/2）=120，所以可以通过-20~19的Nice值的调整来将实际优先级在100~139范围内调整。而实时进程的优先级都是根据指定策略动态变化的，实际优先级是看不见的，所以显示为“rt”，而普通非实时进程实际优先级可以通过PR+100=120+NI算出。</p><p>例如：</p><ul><li>PR=20，NI必定为0，实际优先级100+20或120+0为120；</li><li>PR=0，NI必定为-20，实际优先级100+0或120-20为100；</li><li>PR=rt，实际优先级必定在0~99之间，是实时进程。</li></ul><p>所以PR主要用来判断是否是实时进程，NI主要用来判断非实时进程设置的优先级是多少。</p><ul><li>VIRT是进程需要的虚拟内存大小，包括库、代码、数据等，如果进程申请了200M内存，只用了10M，但这个值也会是200M，VIRT=SWAP+RES；</li><li>RES是进程当前使用的内存大小，如果加载了库，只会统计加载的库文件所占内存大小，如果进程申请了200M内存，只用了10M，那么这个值就是10M，RES=CODE+DATA；</li><li>SHR是共享内存大小，如果只用了库的几个函数，也会包含整个共享库的大小。</li></ul><p>S是进程的状态，包括：</p><ul><li>R（Running） - 运行态</li><li>S （Sleep）- 休眠态</li><li>D（UnInterruptable） - 不可中断的休眠态</li><li>T（Stopped or Traced） - 跟踪态或停止态</li><li>Z（Zombie） - 僵尸态</li><li>X（Exit）- 退出态</li></ul><p>有关进程的状态后面可以再开一篇文章讲解，大部分进程都处于运行态和休眠态，这两个状态肯定是很好理解的，运行态可以去抢CPU，休眠态可能在等待某事件发生（比如信号量）。</p><p>%CPU是CPU占用率，如果CPU是多核，并且进程开了多个线程抢CPU，那么可能CPU的占用率会超过100%，最大为核心数*100%，例如4核最大占用率为400%</p><p>Time+的读法是按位的，单位分别是：1分钟、10秒、1秒、1/10秒、1/100秒，比如0:12.74就是0*1分钟+1*10秒+2*1秒+7*1/10秒+4*1/100秒。</p><h1>二、top的调用方法</h1><h2>1、top参数运行</h2><p>（1）top -c</p><p>COMMAND一列将会显示详细的启动命令，而不是只有命令名称：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/972375d6ba20a989af7ea06ba17dbb12.png" style="max-width:100%;"></p><p>（2）top -b</p><p>以批处理的方式运行。也就是刷新界面不是原地刷新，而是作为历史记录上移，这样可以将历史top信息保存起来便于查看变化过程。</p><p>（3）top -S</p><p>累积模式，会将已完成或消失的子进程的CPU Time也累积起来。</p><p>（4）top -n [次数]</p><p>在刷新打印n次之后退出top。配合top -c可以查看指定几次的变化，比如：</p><pre><code class="prettyprint lang-bsh linenums">top -n 2 -b &gt; top.log</code></pre><p>（5）top -d [刷新间隔时间]<br></p><p>指定刷新间隔时间，默认是3秒</p><p>（6）top -p [PID]</p><p>只显示指定进程的信息，另外我尝试了一下用逗号分隔多个pid，发现真的可以展示多个：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c9314fa7eb4627b1b6ac122f22b31c75.png" style="max-width:100%;"></p><p>这样只想看指定的多个进程就很方便了。</p><p>（7）top -s</p><p>安全模式，将不能使用交互式命令。</p><p>（8）top -i</p><p>不显示任何闲置（idle）或僵尸（zombie）进程。比如用了这个参数，就只有真的在跑的进程显示了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b466187d7aec676e1e4b4b4571a584e7.png" style="max-width:100%;"></p><p>对比一下普通的top，有大量的非活跃进程：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ae83444283281af2fdba1cafe27101ec.png" style="max-width:100%;"></p><p>（9）top -u或-U [用户名或UID]</p><p>可以只查看某个用户的进程。</p><h2>2、top交互式命令</h2><p>交互式指的是，进入top界面后，再按键。</p><p>按h就可以看到了详细交互命令帮助了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a9c17b51ea50059469b7ecfaf7cbc5d8.png" style="max-width:100%;"></p><p>这里介绍几个常用的：</p><p>（1）E、e切换显示单位</p><p>E控制的是上面的内存信息单位，从KB到EB：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c86e0269138d7030f9afd46cbddc6846.gif" style="max-width:100%;"></p><p>e控制的是下面的进程数据单位，从KB到PB：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/76f7a3541c8790cd697f0d29444f462e.gif" style="max-width:100%;"></p><p>（2）l、t、m</p><p>l：显示或隐藏第1行信息 top</p><p>t：显示或隐藏第2~3行信息 Tasks、%CPU(s)</p><p>m：显示或以藏第4行信息 Mem、Swap</p><p>（3）1</p><p>显示CPU详细信息，每核显示一行</p><p>（4）d/s</p><p>修改刷新频率</p><p>（5）n</p><p>指定显示行数，0表示无限制</p><p>（6）q</p><p>退出top</p><p>（7）M</p><p>根据驻留内存大小（RES）排序，这样能看到哪个进程占用内存大</p><p>（8）P</p><p>根据CPU使用百分比大小排序，能检查占用CPU多的进程</p><p>（9）T</p><p>根据时间/累积时间进行排序</p><p>（10）x</p><p>加亮排序列，可以看到当前是按照哪一列在排序</p><p>打开后可以配合shift+&lt;或shift+&gt;调整排序列</p><p>（11）y</p><p>加亮运行态（R）进程</p><p>（12）c</p><p>COMMAND列会显示详细的启动命令</p><p>（13）k</p><p>kill一个进程</p><p>（14）r</p><p>renice，调整一个进程的静态优先级</p><p>（15）W</p><p>将当前弄好的配置写入~/.toprc配置文件中，这样下次启动就不会变啦。</p><p>（16）最重要的F</p><p>可以选择排序列，可以选择当前显示的列有哪些：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e97c1adefaa80b74c4f98c64f80ee1a6.png" style="max-width:100%;"></p><p>更多的命令已经放到<a href="http://wiki.bewindoweb.com/?file=005-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/001-Linux/00003-%E7%B3%BB%E7%BB%9F%E5%8F%82%E6%95%B0%E7%9B%91%E6%8E%A7%E5%91%BD%E4%BB%A4" target="_blank">wiki</a>上供查阅。</p><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/top%E5%B7%A5%E5%85%B7%E7%9A%84%E6%AD%A3%E7%A1%AE%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F/">http://tanqingbo.cn/2019/10/06/top%E5%B7%A5%E5%85%B7%E7%9A%84%E6%AD%A3%E7%A1%AE%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/php匹配HTML标签/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">php匹配HTML标签 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/ubuntu下安装ITK/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">ubuntu下安装ITK </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、top经典界面参数含义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、系统状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、进程总体状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、CPU状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、内存状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、进程详细状态</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、top的调用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、top参数运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、top交互式命令</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、top经典界面参数含义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、系统状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、进程总体状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、CPU状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、内存状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、进程详细状态</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、top的调用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、top参数运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、top交互式命令</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、top经典界面参数含义</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、系统状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、进程总体状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、CPU状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、内存状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、进程详细状态</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、top的调用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、top参数运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、top交互式命令</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

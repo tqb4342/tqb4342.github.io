@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="搭建自己的git服务器管理网站代码">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84git%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86%E7%BD%91%E7%AB%99%E4%BB%A3%E7%A0%81/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      搭建自己的git服务器管理网站代码
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/210.html">http://www.bewindoweb.com/210.html</a><div class="card-article-text"><h1>前言</h1><p>网站有太多的功能想加了，然而并不希望在线调试代码，所以想到了用git。当然不只是git而已，还需要能够<span style="font-weight: bold;">预览修改后的效果</span>。所以最开始准备在本地windows 8搭建一个NMP环境，其实搭建过程还好，然而在windows下安装nginx时出了问题，我使用了一个nginx插件subs_filter，在linux下可以很方便地重新编译把插件装上，但是在windows下就直接给的编译好的代码，感觉又得搭一个windows编译环境，好心累……所以放弃这个方案。</p><p>第二个方案是本地采用vmware虚拟机，然后通过桥接接到主机，每次打开vmware作为本地环境来预览效果。我的计划总是那么美，实现起来总是那么困难，光是<a href="http://wiki.bewindoweb.com/?file=013-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C/00001-%E5%9C%A8VMWare14.1.2%E4%B8%8A%E5%AE%89%E8%A3%85debian%208.2" target="_blank">安装debian 8.2</a>就装了好久，大概做了这些：</p><p><span style="line-height: 1.5;">（1）vmware 10不支持debian 8以上，需要重装vmware 14</span></p><p>（2）安装debian的过程中总是出错，我以为是安装包有问题，换了好几个，每次都得下载一晚上</p><p>（3）终于找对了方法，原来是没有安装grub引导。但是在更新APT的时候，总是连接不上服务器，又搞了好久。</p><p>（4）终于差不多搞好了，一开机，中文显示方块……又用英文重装，然后再查各种办法解决中文方块的问题（至今未解决，如果你有好的办法还请评论或者邮件教教我）。</p><p>于是放弃debian 8.2，转为安装ubuntu，然而，我之前写的<a href="https://github.com/BEWINDOWEB/automatically-install-LNMP-environment-in-debian-8-on-the-tencent-cloud" target="_blank">debian下一键搭建LNMP环境脚本</a>在ubuntu上是因为一些差异用不了的……意味着我要重新一步一步地搭LNMP……</p><p>这就是我这么多天没更新文章的原因(╯°Д°)╯︵ ┻━┻</p><p>我投翔，<span style="line-height: normal;">我投翔还不行吗！！！</span></p><p><span style="line-height: normal;">第三个方案，用之前买的其他的服务器作为“本地环境”，虽然有外网暴露降低网站权重或者出现内部错误代码给攻击机会的危险，但是只要全站反爬+神奇端口+最重要的<span style="font-weight: bold;">跪求各位小伙伴不要攻击我这个菜鸡做的根本没有几个人访问的全是bug的十八线小网站</span>，就好了吧……</span></p><h1><span style="line-height: normal;">一、准备环境</span></h1><p>拓扑是这样的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/f8d656d89b2584c714d044d622661100.png" style="max-width:100%;"></p><p>网站服务器WS，就是你看到的本站的服务器啦。WS上我们主要需要做的是git服务器配置；</p><p>开发服务器DS，就是找的其他的服务器。DS上主要做的是配置git本地环境；</p><p>本地机PC，就是写代码的电脑了。</p><p>也就是说，预想的正确操作是：<span style="font-weight: bold;">PC用PhpStorm开发代码���用自带的ssh提交功能提交到开发服务器上，DS提供web预览，及时地预览效果，当效果稳定后，使用git提交到网���服务器，就完成了功能迭代</span>。同时git还能够做版本控制，想想都有点小激动呢~有关如何搭建LNMP环境、如何配置PhpStorm的ssh，百度一下会出来很多资料，也可以评论和邮件我，这里不多介绍。</p><p>相关的版本一览：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>机器</th><th>软件</th><th>版本</th></tr><tr><td>WS/DS</td><td>操作系统</td><td>Debian 8.2&nbsp;</td></tr><tr><td>WS/DS</td><td>git</td><td>&nbsp;2.1.4</td></tr></tbody></table><h1>二、git服务器的搭建</h1><h2>1、WS：添加apt的163源</h2><p>这里的源是163提供的给Debian 8（Jessie）的源，你可以自己去寻找适合自己版本的<a href="http://mirrors.163.com/.help/" target="_blank">163源</a>、<a href="https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/" target="_blank">清华大学镜像站源</a>等等。</p><pre><code class="prettyprint lang-bsh linenums">vi /etc/apt/sources.list</code></pre><p>加入：</p><pre><code class="prettyprint lang-html linenums">deb http://mirrors.163.com/debian/ jessie main non-free contrib
+deb http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+deb http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie-updates main non-free contrib
+deb-src http://mirrors.163.com/debian/ jessie-backports main non-free contrib
+deb http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib
+deb-src http://mirrors.163.com/debian-security/ jessie/updates main non-free contrib</code></pre><h2>2、WS：root用户下安装git和sudo</h2><pre><code class="prettyprint lang-bsh linenums">apt-get install git
+apt-get install sudo</code></pre><h2>3、WS：root用户下添加用于git的用户</h2><pre><code class="prettyprint lang-bsh linenums">adduser bwb</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fa368cfc852775d15feeb737f4c57d7a.png" style="max-width:100%;"></p><p>密码一定要输哦，这个密码是登录这个账户的密码。</p><h2>4、WS：root用户下给bwb用户sudo权限</h2><pre><code class="prettyprint lang-bsh linenums">vi /etc/sudoers</code></pre><p>添加：<br></p><pre><code class="prettyprint lang-txt linenums">bwb     ALL=(ALL:ALL) ALL</code></pre><p>并使用<code>wq!</code>进行强制保存。</p><h2>5、DS：创建ssh的密钥</h2><pre><code class="prettyprint lang-bsh linenums">cd ~/.ssh
+ssh-keygen -t rsa</code></pre><p>会提示输入密码，这个密码是这个密钥的密码，推荐输入哦（虽然不输入也能成功）。如果没有.ssh目录的话，可以手动创建一个。</p><h2>6、DS→WS：拷贝id_rsa.pub</h2><p>可以使用类似<code>xftp4</code>这类ftp工具，把生成的<code>id_rsa.pub</code>从DS拷贝到WS上。如果使用xftp4的话，注意通过菜单栏的<code>工具</code>→<code>选项</code>，勾选“显示隐藏的文件”来看到.ssh这个隐藏目录。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7ff39d86e7dc78004722dfe5441ad00e.png" style="max-width:100%;"></p><h2>7、WS：配置好ssh</h2><p>从root用户进入（或者直接从bwb用户进入）：</p><pre><code class="prettyprint lang-bsh linenums">su bwb
+sudo mkdir ~/.ssh
+sudo cd ~/.ssh
+sudo cat id_rsa.pub &gt;&gt; authorized_keys
+sudo service ssh restart</code></pre><p>（1）如果没有.ssh才创建.ssh</p><p>（2）这里的<code>id_rsa.pub</code>注意填为你拷贝的文件路径。</p><p>（3）配置好后，你可以在<span style="font-weight: bold;">DS</span>上通过：</p><pre><code class="prettyprint lang-bsh linenums">touch test.txt
+scp -r test.txt bwb@xxx.xxx.xxx.xxx:/home/bwb</code></pre><p>来观察<code>test.txt</code>有没有拷贝到<span style="font-weight: bold;">WS</span>上的<code>/home/bwb</code>目录下。这里的xxx.xxx.xxx.xxx是WS的IP，当然你也可以填网址域名。</p><h2>8、WS：bwb用户下配置git服务器</h2><p>我们全程假设web工程的目录为<span style="color: rgb(194, 79, 74); font-weight: bold;">/home/testweb</span>。</p><p>（1）进入目录</p><pre><code class="prettyprint lang-bsh linenums">cd /home/testweb</code></pre><p>（2）初始化空仓库</p><pre><code class="prettyprint lang-bsh linenums">git init</code></pre><p>会提示：</p><p>初始化空的 Git 版本库于 /home/testweb/.git/</p><p>（3）修改config</p><pre><code class="prettyprint lang-bsh linenums">vi .git/config</code></pre><p>加入：</p><pre><code class="prettyprint lang-txt linenums">[receive]
+      denyCurrentBranch = ignore</code></pre><p>（4）修改hook</p><p>新建一个hook</p><pre><code class="prettyprint lang-bsh linenums">vi .git/hooks/post-receive</code></pre><p>加入：</p><pre><code class="prettyprint lang-bsh linenums">#!/bin/sh
+GIT_WORK_TREE=/home/testweb  git checkout -f</code></pre><p>（5）加入README.md<br></p><pre><code class="prettyprint lang-bsh linenums">touch README.md</code></pre><p>（6）加入工程下的所有的文件到git</p><pre><code class="prettyprint lang-bsh linenums">git add .</code></pre><p>注意后面的点哦。</p><p>（7）提交到本地仓库</p><pre><code class="prettyprint lang-bsh linenums">git commit -m "Initial commit"</code></pre><h2><span style="line-height: 1.5;">9、DS：配置本地git</span><br></h2><p>（1）安装环境</p><p>和前面<span style="font-weight: bold;">配置源</span>、<span style="font-weight: bold;">安装git</span>的操作一致，只需要这两步就可以了。</p><p>（2）克隆项目：</p><pre><code class="prettyprint lang-bsh linenums">git clone bwb@xxx.xxx.xxx.xxx:/home/testweb</code></pre><p>会提示输入密码，这是之前设置的id_rsa的密码。</p><p>（3）[ 可选 ] 创建robot.txt禁止爬取所有文件：</p><pre><code class="prettyprint lang-bsh linenums">vi robot.txt</code></pre><p>加入：</p><pre><code class="prettyprint lang-txt linenums">User-agent: *
+Disallow: /</code></pre><p>（4）[ 可选 ] 创建不想被上传的文件的规则：</p><pre><code class="prettyprint lang-bsh linenums">vi .gitignore</code></pre><p>加入：</p><pre><code class="prettyprint lang-txt linenums">#self
+/.gitignore
+
+</li>
+</ul>
+<p>#robot<br>robot.txt</code></pre><p>（5）测试是否成功</p><pre><code class="prettyprint lang-bsh linenums">echo "123" &gt;&gt; README.md<br>git add .<br>git status<br>git commit -m "test"<br>git push</code></pre><p>git status是在提交前查看一下要提交的有哪些东西，可以不用这条命令。</p><h2>10、限制bwb账户的权限</h2><p>如果前面的成功了，基本就搭建完了。这里只是为了更安全限制bwb的权限，只能git，不能登录，且不能用sudo提权了：</p><p>（1）修改shell权限</p><pre><code class="prettyprint lang-bsh linenums">vi /etc/passwd</code></pre><p>把：<br></p><pre><code class="prettyprint lang-txt linenums">bwb:x:1000:1000:,,,:/home/bwb:/bin/bash</code></pre><p>改为：</p><pre><code class="prettyprint lang-txt linenums">bwb:x:1000:1000:,,,:/home/bwb:/usr/bin/git-shell</code></pre><p>（2）修改sudo权限</p><pre><code class="prettyprint lang-bsh linenums">vi /etc/sudoers</code></pre><p>把之前添加的：</p><pre><code class="prettyprint lang-txt linenums">bwb     ALL=(ALL:ALL) ALL</code></pre><p>用#注释掉：</p><pre><code class="prettyprint lang-txt linenums">#bwb     ALL=(ALL:ALL) ALL</code></pre><p>注意使用<code>wq!</code>强制保存，恭喜你，搭建完成了~</p><h1>附录：相关问题解决参考</h1><h2>1、为什么WS在config里面加denyCurrentBranch = ignore？</h2><p>因为如果不加的话，DS进行push就会报错，大意是它不是个裸仓库：</p><pre><code class="prettyprint lang-txt linenums">remote: error: refusing to update checked out branch: refs/heads/master<br>remote: error: By default, updating the current branch in a non-bare repository<br>remote: error: is denied, because it will make the index and work tree inconsistent<br>remote: error: with what you pushed, and will require 'git reset --hard' to match<br>remote: error: the work tree to HEAD.<br>remote: error:<br>remote: error: You can set 'receive.denyCurrentBranch' configuration variable to<br>remote: error: 'ignore' or 'warn' in the remote repository to allow pushing into<br>remote: error: its current branch; however, this is not recommended unless you<br>remote: error: arranged to update its work tree to match what you pushed in some<br>remote: error: other way.<br>remote: error:<br>remote: error: To squelch this message and still keep the default behaviour, set<br>remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.</code></pre><h2>2、为什么WS要加那个hook？</h2><p>因为如果不加hook的话，DS进行push，WS是看不到结果的，因为没有更新worktree。你用在WS上使用git status就能看出区别了，它一直停留在master分支上。解决方法是手动更新：</p><pre><code class="prettyprint lang-bsh linenums">git reset --hard</code></pre><p>但是这样太麻烦了，所以加hook，加了的话，就会自动更新，hook的意思就是“<span style="line-height: normal;">if做了什么操作，then就去做什么操作</span>”，它帮你完成了。</p><h2>3、为什么不使用git init –bare？</h2><p>这是一个我研究了好久并且实践过的问题，答案是，–bare不适合web代码管理。</p><p>（1）外观</p><p>首先来看一下 <code>git init --bare</code>（以下简称bare）和<code>git init</code>（以下简称init）的外观区别：</p><p>init会创建一个.git的隐藏文件夹，内容有branches、config、description、HEAD、hooks、info、objects、refs；</p><p>bare不会创建.git文件夹，而是直接在当前文件夹下创建同样的这些内容。</p><p>（2）功能</p><p>init可以在git服务器上执行git操作；</p><p>bare不能在git服务器上执行git操作，会报错：This operation must be run in a work tree</p><p>（3）本质</p><p>init的本质是会创建工作目录，而bare的本质是只记录历史信息，不维护工作目录。</p><p>因此，init适合于web项目的维护，可以在WS上实时地看到更新后的完整的web项目文件。而bare适合于多人的项目维护，不需要在远端仓库看到更新后的工作目录，只需要记录每个人操作了些什么东西即可。如果用bare维护web项目，DS进行push后，WS是没有任何反应的（当然会更新objects文件，只是其他文件没有反应），并且不能在WS上执行任何git操作。所以应该使用init。</p><h2>4、我更新了.gitignore，该怎么让它重新生效？</h2><pre><code class="prettyprint lang-bsh linenums">git add . //重新提交 .ignore文件<br>git rm -r --cached . //清空缓存<br>git add . //重新提交 所有文件<br>git commit -m "update .gitignore"<br>git push</code></pre><p>注意命令中的点。</p><h2>5、我错误地创建了新用户，该怎么撤销？</h2><pre><code class="prettyprint lang-bsh linenums">userdel -r bwb</code></pre><p>bwb为你不想创建的用户。</p><h2>6、git clone的时候提示失败：Host key verification failed</h2><p>提示：</p><pre><code class="prettyprint lang-txt linenums">Are you sure you want to continue connecting (yes/no)?<br>Host key verification failed.<br>fatal: Could not read from remote repository.</code></pre><p>这是因为你输入的是回车而不是“yes”，输入yes即可。</p><h2>7、Please tell me who you are？</h2><p>跟着提示设置一下config即可：</p><pre><code class="prettyprint lang-bsh linenums">git config --global user.email "<a href="mailto:&#121;&#111;&#117;&#64;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#x6d;">&#121;&#111;&#117;&#64;&#x65;&#x78;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#x6d;</a>"<br>git config --global user.name "Your Name"</code></pre><p>它的实质是去修改<code>.git/config</code>文件。</p><h2>8、ssh连接提示Permission denied (publickey)？</h2><p>首先检查你是否有那个文件的权限（比如它是root用户才能访问的文件夹），如果没有请赋予权限：</p><pre><code class="prettyprint lang-bsh linenums">chown -R bwb:bwb home/testweb</code></pre><p>然后检查是否把<span style="font-weight: bold;">DS的id_rsa.pub</span>的内容成功添加进<span style="font-weight: bold;">WS的authorized_keys</span>了。</p><p>最后非常可能的就是你配错了用户。比如你把DS的id_rsa.pub配到WS的<span style="font-weight: bold;">root用户</span>的authorized_keys里去了，结果后面访问的ssh又是<span style="font-weight: bold;">bwb用户</span>，当然被拒绝了。</p><p>如果还不行，debian操作系统可以查看<code>/var/log/auth.log</code>，其他操作系统可以查看<code>/var/log/secure</code>，然后：</p><pre><code class="prettyprint lang-bsh linenums">tail -n100 /var/log/auth.log|grep sshd</code></pre><p>来观察到底有没有进行过连接、到底是哪个地方出了问题。</p><h2>9、.gitignore的常见语法</h2><pre><code class="prettyprint lang-txt linenums">#忽略文件<br>test.txt</p>
+<p>#忽略根目录下的文件<br>/test.txt</p>
+<p>#忽略指定目录下的文件<br>/src/test.txt</p>
+<p>#忽略目录<br>/test</p>
+<p>#忽略文件夹，但不忽略其中的某些文件<br>/test<br>!/test/test.txt</code></pre><h2>10、robot.txt常见语法</h2><p><a href="http://tool.chinaz.com/robots/" target="_blank">robot.txt在线生成</a><br></p><p><a href="https://www.jianshu.com/robots.txt" target="_blank">简书的robot.txt</a><br></p><p><a href="http://www.iqiyi.com/robots.txt" target="_blank">爱奇艺的robot.txt</a><br></p><p>最简单的配置：</p><pre><code class="prettyprint lang-bsh linenums">User-agent: * 这里的<em>代表的所有的搜索引擎种类，</em>是一个通配符<br>Disallow: / 这里定义是禁止爬寻站点所有的内容</code></pre><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84git%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86%E7%BD%91%E7%AB%99%E4%BB%A3%E7%A0%81/">http://tanqingbo.cn/2019/10/06/%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84git%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AE%A1%E7%90%86%E7%BD%91%E7%AB%99%E4%BB%A3%E7%A0%81/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/《Java程序设计》复习笔记（正在写）/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">《Java程序设计》复习笔记（正在写） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/MqttWk源码分析（三）：BrokerHandler及协议处理分析/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">MqttWk源码分析（三）：BrokerHandler及协议处理分析 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、准备环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、git服务器的搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、WS：添加apt的163源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、WS：root用户下安装git和sudo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、WS：root用户下添加用于git的用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、WS：root用户下给bwb用户sudo权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、DS：创建ssh的密钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、DS→WS：拷贝id_rsa.pub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、WS：配置好ssh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、WS：bwb用户下配置git服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、DS：配置本地git
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、限制bwb账户的权限</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">附录：相关问题解决参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、为什么WS在config里面加denyCurrentBranch &#x3D; ignore？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、为什么WS要加那个hook？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、为什么不使用git init –bare？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、我更新了.gitignore，该怎么让它重新生效？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、我错误地创建了新用户，该怎么撤销？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、git clone的时候提示失败：Host key verification failed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、Please tell me who you are？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、ssh连接提示Permission denied (publickey)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、.gitignore的常见语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、robot.txt常见语法</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、准备环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、git服务器的搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、WS：添加apt的163源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、WS：root用户下安装git和sudo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、WS：root用户下添加用于git的用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、WS：root用户下给bwb用户sudo权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、DS：创建ssh的密钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、DS→WS：拷贝id_rsa.pub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、WS：配置好ssh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、WS：bwb用户下配置git服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、DS：配置本地git
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、限制bwb账户的权限</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">附录：相关问题解决参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、为什么WS在config里面加denyCurrentBranch &#x3D; ignore？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、为什么WS要加那个hook？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、为什么不使用git init –bare？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、我更新了.gitignore，该怎么让它重新生效？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、我错误地创建了新用户，该怎么撤销？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、git clone的时候提示失败：Host key verification failed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、Please tell me who you are？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、ssh连接提示Permission denied (publickey)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、.gitignore的常见语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、robot.txt常见语法</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、准备环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、git服务器的搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、WS：添加apt的163源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、WS：root用户下安装git和sudo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、WS：root用户下添加用于git的用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、WS：root用户下给bwb用户sudo权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、DS：创建ssh的密钥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、DS→WS：拷贝id_rsa.pub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、WS：配置好ssh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、WS：bwb用户下配置git服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、DS：配置本地git
+</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、限制bwb账户的权限</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">附录：相关问题解决参考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、为什么WS在config里面加denyCurrentBranch &#x3D; ignore？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、为什么WS要加那个hook？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、为什么不使用git init –bare？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、我更新了.gitignore，该怎么让它重新生效？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、我错误地创建了新用户，该怎么撤销？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、git clone的时候提示失败：Host key verification failed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、Please tell me who you are？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、ssh连接提示Permission denied (publickey)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、.gitignore的常见语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、robot.txt常见语法</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

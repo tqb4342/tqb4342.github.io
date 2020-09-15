@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="整理了一些刷题的网站和值得关注的企业算法大赛">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/04/17/%E5%92%8C%E7%AB%9E%E8%B5%9B%E6%9C%89%E5%85%B3%E7%9A%84%E8%B5%84%E6%BA%90%E6%88%96%E9%93%BE%E6%8E%A5/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-04-17">
+  <meta property="og:article:modified_time" content="2019-04-19">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      整理了一些刷题的网站和值得关注的企业算法大赛
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-04-17T06:14:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-04-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术博客/" class="post-meta-link">技术博客</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>980 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="刷题的网站"><a href="#刷题的网站" class="headerlink" title="刷题的网站"></a>刷题的网站</h2><h3 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h3><ul>
+<li>算法刷题网站首推LeetCode，业界一直有句话说把LeetCode上的题都刷烂熟了就可以进谷歌了。不过上面的题都是英语描述，需要一定的英语基础，还需要一定的算法基础，地址如下：</li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/">https://leetcode.com/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-68c5c4288d582d43eed9b40aebda09f7_hd.png" class="lozad post-image"src="https://pic2.zhimg.com/80/v2-68c5c4288d582d43eed9b40aebda09f7_hd.png"></p>
+<ul>
+<li><p>此外我这里还有一本LeetCode题解的书，也一起分享给大家。</p>
+</li>
+<li><p><strong>leetcode题解大全</strong></p>
+<ul>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1c1Jaht2">http://pan.baidu.com/s/1c1Jaht2</a>    </li>
+<li>提取码：fa1w</li>
+</ul>
+</li>
+</ul>
+<h3 id="牛客网"><a href="#牛客网" class="headerlink" title="牛客网"></a>牛客网</h3><ul>
+<li><p>“牛客网”是一个专注于程序员的学习和成长的专业平台，集笔面试系统、课程教育、社群交流、招聘内推于一体。计算专业的同学找工作的时候几乎都会用到牛客网。很多同学会在上面分享找工作的面经，不少公司的笔试题也是在牛客网上答的，当然它本身上面也有很多题库，适合初学者在上面练手。不仅如此，保研的同学还能在上面找到一些名校往年的复试的算法机试题。也是很强大了。地址如下：</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/">https://www.nowcoder.com/</a></p>
+</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-7b1b2c5b04955c65125dab8dda0f0bc5_hd.png" class="lozad post-image"src="https://pic2.zhimg.com/80/v2-7b1b2c5b04955c65125dab8dda0f0bc5_hd.png"></p>
+<ul>
+<li>我之前在牛客网上刷完了PAT乙级(Basic Level)真题，PAT又叫计算机程序设计能力考试（Programming Ability Test，简称PAT）是由浙江大学计算机科学与技术学院组织的统一考试，旨在培养和展现学生分析问题、解决问题和计算机程序设计的能力，科学评价计算机程序设计人才，并为企业选拔人才提供参考标准。我可以把我刷完的源码给大家参考一下：</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tqb4342/PAT_Basic_Level">https://github.com/tqb4342/PAT_Basic_Level</a></li>
+</ul>
+<h3 id="赛码网"><a href="#赛码网" class="headerlink" title="赛码网"></a>赛码网</h3><ul>
+<li>性质和牛客网差不多，但个人感觉做的没有牛客网好。</li>
+<li>地址： <a target="_blank" rel="noopener" href="http://www.acmcoder.com/index">http://www.acmcoder.com/index</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-ac0901ac2bedc26bb2525b0cfcbba514_hd.png" class="lozad post-image"src="https://pic2.zhimg.com/80/v2-ac0901ac2bedc26bb2525b0cfcbba514_hd.png"></p>
+<h3 id="北京大学的OJ"><a href="#北京大学的OJ" class="headerlink" title="北京大学的OJ"></a>北京大学的OJ</h3><ul>
+<li>地址：<a target="_blank" rel="noopener" href="http://poj.org/problemlist?volume=1">http://poj.org/problemlist?volume=1</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-e127d7b5378b0c7e1eceb8c60ae17639_hd.png" class="lozad post-image"src="https://pic3.zhimg.com/80/v2-e127d7b5378b0c7e1eceb8c60ae17639_hd.png"></p>
+<h3 id="杭电OJ"><a href="#杭电OJ" class="headerlink" title="杭电OJ"></a>杭电OJ</h3><ul>
+<li>地址：<a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/">http://acm.hdu.edu.cn/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-d43c866656cf03b328466ba2e8a6734c_hd.png" class="lozad post-image"src="https://pic2.zhimg.com/80/v2-d43c866656cf03b328466ba2e8a6734c_hd.png"></p>
+<h2 id="值得关注企业比赛"><a href="#值得关注企业比赛" class="headerlink" title="值得关注企业比赛"></a>值得关注企业比赛</h2><ul>
+<li>只是整理出来了一部分，欢迎大家补充~<h3 id="腾讯广告算法大赛"><a href="#腾讯广告算法大赛" class="headerlink" title="腾讯广告算法大赛"></a>腾讯广告算法大赛</h3></li>
+<li><strong>报名日期2019年5月9号截止，想报名的同学现在可以报名，冠军20000美元奖金哦~</strong></li>
+<li>地址：<a target="_blank" rel="noopener" href="https://algo.qq.com/">https://algo.qq.com/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-f361ac425e486df7bcc1ae15324986e0_hd.png" class="lozad post-image"src="https://pic1.zhimg.com/80/v2-f361ac425e486df7bcc1ae15324986e0_hd.png"></p>
+<h3 id="华为软件精英挑战赛"><a href="#华为软件精英挑战赛" class="headerlink" title="华为软件精英挑战赛"></a>华为软件精英挑战赛</h3><ul>
+<li>这个比赛今年已经开始了，目前已经进行到决赛阶段，感兴趣的同学明年可以关注一下。</li>
+<li>地址：<a target="_blank" rel="noopener" href="https://codecraft.huawei.com/">https://codecraft.huawei.com/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-11bca2f784a9079186622c4f585b4e34_hd.png" class="lozad post-image"src="https://pic2.zhimg.com/80/v2-11bca2f784a9079186622c4f585b4e34_hd.png"></p>
+<h3 id="搜狐图文匹配大赛"><a href="#搜狐图文匹配大赛" class="headerlink" title="搜狐图文匹配大赛"></a>搜狐图文匹配大赛</h3><ul>
+<li>官网介绍说提供业务场景、真实数据、专家指导，选拔和培养有志于自然语言处理领域的算法研究、应用探索的青年才俊，共同探索更多可能、开启无限未来。目前比赛刚刚开始，想要参赛的同学还来得及。</li>
+<li>地址：<a target="_blank" rel="noopener" href="https://biendata.com/competition/sohu2019/">https://biendata.com/competition/sohu2019/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-5f8da7fc247d7207c8f59418e19d46ed_hd.png" class="lozad post-image"src="https://pic2.zhimg.com/80/v2-5f8da7fc247d7207c8f59418e19d46ed_hd.png"></p>
+<h3 id="阿里云安全算法挑战赛"><a href="#阿里云安全算法挑战赛" class="headerlink" title="阿里云安全算法挑战赛"></a>阿里云安全算法挑战赛</h3><ul>
+<li>由天池平台与阿里云安全联合举办的最具“正义感”和“实战感”的大赛-『阿里云安全算法挑战赛』，作为国内首个以“安全”为主题的算法赛事，旨在挖掘安全算法的未来之星，并通过数据实战的形式，展现大数据对于安全监测和防御的重要性。</li>
+<li>比赛时间是2019年8月份才开始，大家可以关注一下。</li>
+<li>地址：<a target="_blank" rel="noopener" href="https://m.aliyun.com/markets/aliyun/security">https://m.aliyun.com/markets/aliyun/security</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-ac97c26735b57f9cfdd35f080453ed06_hd.png" class="lozad post-image"src="https://pic3.zhimg.com/80/v2-ac97c26735b57f9cfdd35f080453ed06_hd.png"></p>
+<h3 id="人工智能竞赛平台Biendata-com"><a href="#人工智能竞赛平台Biendata-com" class="headerlink" title="人工智能竞赛平台Biendata.com"></a>人工智能竞赛平台Biendata.com</h3><ul>
+<li>Biendata.com是一个人工智能竞赛学习平台。用户可通过该平台报名并参加人工智能领域各类赛事，用户还可在线注册进行课程学习，并针对课程中遇到的问题进行反馈于总结。你感兴趣的的比赛在这上面都能找到。</li>
+<li>地址：<a target="_blank" rel="noopener" href="https://www.biendata.com/">https://www.biendata.com/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-c7a1ccd355171ea000948897e6a080d8_hd.png" class="lozad post-image"src="https://pic4.zhimg.com/80/v2-c7a1ccd355171ea000948897e6a080d8_hd.png"></p>
+<h3 id="Kaggle"><a href="#Kaggle" class="headerlink" title="Kaggle"></a>Kaggle</h3><ul>
+<li>Kaggle主要是为开发商和数据科学家提供举办机器学习竞赛、托管数据库、编写和分享代码的平台。</li>
+<li>地址：<a target="_blank" rel="noopener" href="https://www.kaggle.com/">https://www.kaggle.com/</a></li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-c93bd1042b0f5daec92f425a441e96d1_hd.png" class="lozad post-image"src="https://pic1.zhimg.com/80/v2-c93bd1042b0f5daec92f425a441e96d1_hd.png"></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/04/17/%E5%92%8C%E7%AB%9E%E8%B5%9B%E6%9C%89%E5%85%B3%E7%9A%84%E8%B5%84%E6%BA%90%E6%88%96%E9%93%BE%E6%8E%A5/">http://tanqingbo.cn/2019/04/17/%E5%92%8C%E7%AB%9E%E8%B5%9B%E6%9C%89%E5%85%B3%E7%9A%84%E8%B5%84%E6%BA%90%E6%88%96%E9%93%BE%E6%8E%A5/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/04/24/推荐一款程序员神器/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">推荐一款程序员神器 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/04/11/深度学习在医学图像分析领域的研究/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">深度学习在医学图像分析领域的研究 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E9%A2%98%E7%9A%84%E7%BD%91%E7%AB%99"><span class="toc-text">刷题的网站</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode"><span class="toc-text">LeetCode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-text">牛客网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%9B%E7%A0%81%E7%BD%91"><span class="toc-text">赛码网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E7%9A%84OJ"><span class="toc-text">北京大学的OJ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%AD%E7%94%B5OJ"><span class="toc-text">杭电OJ</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E4%BC%81%E4%B8%9A%E6%AF%94%E8%B5%9B"><span class="toc-text">值得关注企业比赛</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%85%BE%E8%AE%AF%E5%B9%BF%E5%91%8A%E7%AE%97%E6%B3%95%E5%A4%A7%E8%B5%9B"><span class="toc-text">腾讯广告算法大赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8E%E4%B8%BA%E8%BD%AF%E4%BB%B6%E7%B2%BE%E8%8B%B1%E6%8C%91%E6%88%98%E8%B5%9B"><span class="toc-text">华为软件精英挑战赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%8B%90%E5%9B%BE%E6%96%87%E5%8C%B9%E9%85%8D%E5%A4%A7%E8%B5%9B"><span class="toc-text">搜狐图文匹配大赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E5%85%A8%E7%AE%97%E6%B3%95%E6%8C%91%E6%88%98%E8%B5%9B"><span class="toc-text">阿里云安全算法挑战赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AB%9E%E8%B5%9B%E5%B9%B3%E5%8F%B0Biendata-com"><span class="toc-text">人工智能竞赛平台Biendata.com</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kaggle"><span class="toc-text">Kaggle</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E9%A2%98%E7%9A%84%E7%BD%91%E7%AB%99"><span class="toc-text">刷题的网站</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode"><span class="toc-text">LeetCode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-text">牛客网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%9B%E7%A0%81%E7%BD%91"><span class="toc-text">赛码网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E7%9A%84OJ"><span class="toc-text">北京大学的OJ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%AD%E7%94%B5OJ"><span class="toc-text">杭电OJ</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E4%BC%81%E4%B8%9A%E6%AF%94%E8%B5%9B"><span class="toc-text">值得关注企业比赛</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%85%BE%E8%AE%AF%E5%B9%BF%E5%91%8A%E7%AE%97%E6%B3%95%E5%A4%A7%E8%B5%9B"><span class="toc-text">腾讯广告算法大赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8E%E4%B8%BA%E8%BD%AF%E4%BB%B6%E7%B2%BE%E8%8B%B1%E6%8C%91%E6%88%98%E8%B5%9B"><span class="toc-text">华为软件精英挑战赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%8B%90%E5%9B%BE%E6%96%87%E5%8C%B9%E9%85%8D%E5%A4%A7%E8%B5%9B"><span class="toc-text">搜狐图文匹配大赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E5%85%A8%E7%AE%97%E6%B3%95%E6%8C%91%E6%88%98%E8%B5%9B"><span class="toc-text">阿里云安全算法挑战赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AB%9E%E8%B5%9B%E5%B9%B3%E5%8F%B0Biendata-com"><span class="toc-text">人工智能竞赛平台Biendata.com</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kaggle"><span class="toc-text">Kaggle</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B7%E9%A2%98%E7%9A%84%E7%BD%91%E7%AB%99"><span class="toc-text">刷题的网站</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LeetCode"><span class="toc-text">LeetCode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-text">牛客网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%9B%E7%A0%81%E7%BD%91"><span class="toc-text">赛码网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E7%9A%84OJ"><span class="toc-text">北京大学的OJ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%AD%E7%94%B5OJ"><span class="toc-text">杭电OJ</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E4%BC%81%E4%B8%9A%E6%AF%94%E8%B5%9B"><span class="toc-text">值得关注企业比赛</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%85%BE%E8%AE%AF%E5%B9%BF%E5%91%8A%E7%AE%97%E6%B3%95%E5%A4%A7%E8%B5%9B"><span class="toc-text">腾讯广告算法大赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8E%E4%B8%BA%E8%BD%AF%E4%BB%B6%E7%B2%BE%E8%8B%B1%E6%8C%91%E6%88%98%E8%B5%9B"><span class="toc-text">华为软件精英挑战赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%8B%90%E5%9B%BE%E6%96%87%E5%8C%B9%E9%85%8D%E5%A4%A7%E8%B5%9B"><span class="toc-text">搜狐图文匹配大赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E5%85%A8%E7%AE%97%E6%B3%95%E6%8C%91%E6%88%98%E8%B5%9B"><span class="toc-text">阿里云安全算法挑战赛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E7%AB%9E%E8%B5%9B%E5%B9%B3%E5%8F%B0Biendata-com"><span class="toc-text">人工智能竞赛平台Biendata.com</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kaggle"><span class="toc-text">Kaggle</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

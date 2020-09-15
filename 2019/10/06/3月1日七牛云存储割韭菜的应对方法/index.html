@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="3月1日七牛云存储割韭菜的应对方法">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/3%E6%9C%881%E6%97%A5%E4%B8%83%E7%89%9B%E4%BA%91%E5%AD%98%E5%82%A8%E5%89%B2%E9%9F%AD%E8%8F%9C%E7%9A%84%E5%BA%94%E5%AF%B9%E6%96%B9%E6%B3%95/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      3月1日七牛云存储割韭菜的应对方法
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.9k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/246.html">http://www.bewindoweb.com/246.html</a><div class="card-article-text"><h1>��言</h1><p>早上起来看邮件，看到一封被七牛云割韭菜的公告：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c25ff82293a87564211398c2c5841118.png" style="max-width:100%;"></p><p>内心冰冰凉，不过大家都要吃饭的嘛总不能一直免费下去。所以来研究一下对于我们这种穷人应该如何应对。</p><h1>一、七牛CDN加速流程</h1><h2>主要流程分析</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3a4765f526cc63fe49ee159b7c96d6e9.png" style="max-width:100%;"></p><p></p><p></p><p>1、用户通过浏览器访问我的网站（腾讯云服务器），网站下发HTML给浏览器，HTML里包含了图片URL，域名为cdn.bewindoweb.com，于是浏览器继续去这个域名获取图片。</p><p>2、这个CDN域名是我在腾讯云域名解析构建的子域名，因此会去解析，我添加了一条CNAME，将cdn.bewindoweb.com指向了cdn.bewindoweb.com.qiniu.com，会继续解析这个七牛融合CDN的域名。</p><p>3、七牛融合CDN看看有没有缓存（自定义缓存30天），如果有，则直接下发，流程结束。</p><p>4、如果没有缓存，根据3种回源策略：</p><p>1）通过七牛云对象存储回源，会去对象存储那里下载图片文件，如果对象存储里也没有，则利用镜像同步服务去指定的位置下载图片文件，我指定的位置是我的服务器，所以会从服务器下载到对象存储，再从对象存储下载到融合CDN，对象存储也会保留一份缓存（自定义30天）。</p><p>2）通过域名回源，会去解析域名，然后访问对应服务器拿到图片文件，缓存在融合CDN后下发。</p><p>3）通过IP地址回源，直接访问对应服务器拿到图片文件，缓存在融合CDN后下发。</p><h2>加速原理分析</h2><p>1、CDN服务器的缓存</p><p>融合CDN是由很多台全国各地的服务器组成的，因此如果CDN服务器里有，直接就下发给用户了，不用从我的网站服务器拿。比如新疆的网友可能就在位于新疆的CDN服务器拿到图片，本地的延迟很低，而不用来我的广东服务器拿图片，延迟很高。如果有多个用户同时拿图片，不但距离远导致网络传输慢，我的1M带宽小水管也会挤爆，每个人以10KB/s的速度下载图片，那场景可以想象……而CDN会提供很大的下行带宽，不需要担心服务器成为瓶颈。</p><p>2、对象存储的缓存</p><p>如果设置成对象存储，当CDN缓存失效，可以直接从对象存储里拿图片，而不需要从我的服务器拿。对象存储是七牛云自己的，肯定也是分布式大带宽的，所以很快就能拿到失效的图片。由于我设置的都是1个月缓存时间，所以基本没有用，只有当CDN服务器的缓存失效时间比对象存储更小，CDN才会比对象存储更快失效去拿数据。为什么大部分默认的CDN都设置的4小时而不是1个月呢？因为大部分CDN都是整站缓存，所以当网站有更新之后，如果不设置更新，用户访问到的仍然是旧网站。我这里设置1个月是因为我只缓存图片（用的PHP伪静态缓存HTML没有用），图片名称都是md5随机Hash的值，一旦图片改变，命名也会改变，不用担心更新后没有及时显示。如果要不改变名称更新图片，可以去七牛云后台手动刷新图片在CDN上的缓存。</p><p>3、通过域名/IP回源</p><p>如果不用对象存储，直接采用域名/IP，则会直接从服务器拿图片缓存到CDN，可能会出现如果CDN缓存同一时间大量失效，大量请求打到服务器造成服务器短时间无法访问的问题。我设置成1个月，每天更新的频率不高的话，压力也还好（而且网站也没什么人访问QwQ）。</p><h1>二、应对措施</h1><p>分析完了原理，再看看七牛云的公告：对象存储CDN回源流出流量以0.15/GB价格进行收费。</p><p>对象存储CDN回源流出流量指的就是采用“通过对象存储回源”的方案，���CDN缓存失效时，对象存储下发给CDN的流量。看看官网的服务收费：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>服务&nbsp;</th><th>名目&nbsp;</th><th>收费情况&nbsp;</th></tr><tr><td>&nbsp;融合CDN</td><td>&nbsp;HTTP下载流量&nbsp;</td><td>&nbsp;国内0~10GB免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;存储空间</td><td>&nbsp;0~10GB免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;写请求</td><td>&nbsp;0~10万次免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;读请求</td><td>&nbsp;0~100万次免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;CDN 回源流出流量</td><td>&nbsp;0.15元/GB</td></tr></tbody></table><p>没错，就是最后一项收费。那么我们将CDN回源策略改为直接从服务器域名回源就可以了。</p><p>1、登录七牛云，选择融合CDN→域名管理，选择之前配置的cdn，点击配置</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5f98e08b12c983f3dc4f15ef49432f43.png" style="max-width:100%;"></p><p>2、在回源配置里，点击修改配置</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9f6613f4739f214001ab05c17c321021.png" style="max-width:100%;"></p><p>3、将回源方式从七牛云存储改为源站域名，填写域名</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7fa8f93e26c67bc6034022b56dd5b065.png" style="max-width:100%;"></p><p>4、它需要测试一下域名是否可用，随便填写一个合法的图片文件通过测试，就能够确定啦（否则确定按钮是不可用的）。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c8bed100786f1e5b2054d5d62d5b73ef.png" style="max-width:100%;"></p><h1>三、一些注意事项</h1><p>1、修改完后会有短时间图片访问失败的问题</p><p>在确认的期间，访问网站图片可能会报404找不到、409有冲突等等，如果直接访问图片URL还会提示{"error":"no such domain"}，或者DNS解析错误：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fca7e1430ada6dd49b25c2f366ca08c1.png" style="max-width:100%;"></p><p>都是正常的，等待就好了。</p><p>2、此方法仅限于只用了七牛CDN的用户</p><p>因为很多像WordPress之类的博客，会提供插件上传图片直接放到七牛云存储。那些同学可能需要下载所有文件，然后修改所有文件中的链接，停用七牛云存储才行。我当时总是觉得把文件直接放到其他的服务器不放心，还是放到我自己的服务器只加个CDN外壳同步就好，我可真是个小机灵鬼~</p><p>3、不要妄想更换CDN</p><p>如果实在不行，不要更换CDN，0.15已经是行业低价了（其他的基本都是0.25、0.35），如果网站访问量不高，还是可以考虑支持七牛云存储这波操作的。</p><p>我今天尝试更换了几次CDN，发现以前和百度合作的免费的<a href="https://www.yunaq.com/jsl/" target="_blank">加速乐</a>，它的图片加载速度感人，一查对应的CDN服务器，只有两台……</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dc51fe4e6b40b722972a604b9670c244.png" style="max-width:100%;"></p><p>而看看七牛云的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b42730f2bf931c8821fc84ddbc5db8ea.png" style="max-width:100%;"></p><p>七牛云真的很良心。我还试用了<a href="http://wangzhan.360.com/" target="_blank">360网站卫士</a>，效果也很差（而且还会担心各家都屏蔽360）。360网站卫士免费是为了360搜索引擎等其他的服务能够得到更多的数据，毕竟用360就要做好给360提供数据的心理准备。<a href="https://su.baidu.com/" target="_blank">百度云加速</a>的性能还不知道，审核都要2个工作日，所以今天周六是不行了，以后再看吧。其他野鸡的免费CDN就最好不要尝试了，因为工信部要求CDN注册需要提供手持身份证照片，所以把自己的信息传到野鸡服务器上去还是不太好……</p><p>我已经做好了下一波七牛云融合CDN割韭菜的准备了……那就是……放弃挣扎！</p><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/3%E6%9C%881%E6%97%A5%E4%B8%83%E7%89%9B%E4%BA%91%E5%AD%98%E5%82%A8%E5%89%B2%E9%9F%AD%E8%8F%9C%E7%9A%84%E5%BA%94%E5%AF%B9%E6%96%B9%E6%B3%95/">http://tanqingbo.cn/2019/10/06/3%E6%9C%881%E6%97%A5%E4%B8%83%E7%89%9B%E4%BA%91%E5%AD%98%E5%82%A8%E5%89%B2%E9%9F%AD%E8%8F%9C%E7%9A%84%E5%BA%94%E5%AF%B9%E6%96%B9%E6%B3%95/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/360区块链试水：区块猫/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">360区块链试水：区块猫 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/AWS IoT Hello World：设备点对点通信/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">AWS IoT Hello World：设备点对点通信 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、七牛CDN加速流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">主要流程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">加速原理分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、应对措施</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、一些注意事项</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、七牛CDN加速流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">主要流程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">加速原理分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、应对措施</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、一些注意事项</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、七牛CDN加速流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">主要流程分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">加速原理分析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、应对措施</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、一些注意事项</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

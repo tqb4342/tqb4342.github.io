@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="Github协议详解">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/Github%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Github协议详解
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/224.html">http://www.bewindoweb.com/224.html</a><div class="card-article-text"><h1>��言</h1><p>github上项目可以选择的协议有很多，相信大家都选择或者看见过None、GNU GPLv3、MIT License、Apache License 2.0，平时懒得选就点个MIT开源共享，但github提供了更多的协议可供选择，那么接下来仔细地分析每个协议的作用吧。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fab558dfd1b0916193cb3c462be938c8.png" style="max-width:100%;"></p><h1>一、协议分析</h1><h2>1、None / No License</h2><p><a href="https://choosealicense.com/no-permission/" target="_blank">None</a>并不是所谓的“不注明就放弃所有权利”哦，而是“保留所有权利”。也就是作者完全保留这个源码的所有权，不允许他人进行复制、分发、使用和修改。但是如果你把它上传到了github，那么默认允许他人查看（view）源码、分叉（fork）到自己的仓库，只是不能使用、修改而已。</p><h2>2、GNU GPLv3</h2><p><a href="https://choosealicense.com/licenses/gpl-3.0/" target="_blank">GNU GPLv3</a>（General Public License v3.0），开源正是由于GPL而变得越来越强大，GPLv3在2007年发布，它允许个人使用、商业使用、专利授权，允许复制、分发、修改，并且作者不承担用户使用的一切后果。但是它有很多限制：</p><p>（1）必须开源</p><p>一旦使用了这个协议，如果他人想要进行分发、修改，那么他们修改后的源代码也必须开源。这是开源的核心保障，如果没有这条规定，就没有人愿意持续公开自己的源码了。</p><p>（2）保留协议和版权</p><p>保留对协议和版权的叙述。</p><p>（3）不允许更换协议</p><p>如果有人修改了一些源码，觉得自己改得还挺多的，想要换一个MIT或者什么协议，这是不允许的。一旦最原始的源码使用了GPL，其衍生的所有代码都必须使用GPL。这也是开源保障之一。</p><p>（4）声明变更</p><p>对于代码的变更需要有文档进行说明改了哪些地方。</p><h2>3、MIT License</h2><p><a href="https://choosealicense.com/licenses/mit/" target="_blank">MIT</a>是一个简单协议，只有三段话，允许任何人进行个人使用、商业使用、复制、分发、修改，唯一的限制就是，必须得加上源码作者的版权信息（CopyRight）。<br></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/086b4f0220ca83a16e1beefcb958950c.png" style="max-width:100%;"></p><p>适合不想用来赚钱，又想保留一点点自己的权利，提高自己声望的那些项目。</p><h2>4、Apache License 2.0</h2><p><a href="https://choosealicense.com/licenses/apache-2.0/" target="_blank">Apache License 2.0</a>协议经常被使用在大型开源软件项目上，它允许许任何人进行个人使用、商业使用、复制、分发、修改，作者免责，需要保留作者版权信息，声明更改的地方。</p><p>特点在于对于贡献者（Contributors）可以提供快速的专利授予。</p><h2>5、BSD 2-Clause "Simplified" License</h2><p><a href="https://choosealicense.com/licenses/bsd-2-clause/" target="_blank">BSD 2-Clause</a>协议是BSD协议分支，和MIT协议类似，允许许任何人进行个人使用、商业使用、复制、分发、修改，除了加上作者的版权信息，还必须保留免责声明，免去作者的一些责任（比如使用后果）。</p><h2>6、BSD 3-Clause “New” or “Revised” License</h2><p><a href="https://choosealicense.com/licenses/bsd-3-clause/" target="_blank">BSD 3-Clause</a>在BSD 2-Clause上增加了一个条款：<br></p><blockquote>未经特别事先书面许可，著作权人的姓名和其贡献者的姓名不得用于认可或推销源自该软件的产品。</blockquote><p>肯定是有人把这种开源软件拿去商业使用，宣传说是谁谁谁编写的，造成了不良的影响23333</p><h2>7、Eclipse Public License 2.0</h2><p><a href="https://choosealicense.com/licenses/epl-2.0/" target="_blank">Eclipse Public License 2.0</a>是一种商业友好型协议���允许个人使用、商业使用、专利授权、复制、分发和修改，作者免责，需要保留版权信息、必须开源、不允许更换协议。<br></p><p>特点在于可以对软件进行商业使用，对专利授权免去版税。</p><h2>8、GNU AGPLv3</h2><p><a href="https://choosealicense.com/licenses/agpl-3.0/" target="_blank">GNU AGPL v3</a>（GNU Affero General Public License v3.0）允许个人使用、商业使用、专利授权、复制、分发和修改，作者免责，贡献者可以快速专利授予，需要保留版权信息、必须开源、不允许更换协议、声明变更。和GPL类似，不同点在于，如果你修改了源码并在放到网上提供服务，那么你必须公开这个修改版本的完整的源代码。</p><h2>9、GNU GPLv2</h2><p><a href="https://choosealicense.com/licenses/gpl-2.0/" target="_blank">GNU GPLv2</a>&nbsp;相比于 GNU GPLv3，不能进行专利授予。</p><h2>10、GNU LGPLv2.1</h2><p><a href="https://choosealicense.com/licenses/lgpl-2.1/" target="_blank">GNU LGPLv2.1</a>（GNU Lesser General Public License v2.1），主要被用于软件库（Library），和GNU GPLv3基本权利义务类似，不允许专利授予，并且虽然要求其衍生作品必须使用此协议，但只是链接到它（link to it）的代码则不受影响。</p><h2>11、GNU LGPLv3</h2><p><a href="https://choosealicense.com/licenses/lgpl-3.0/" target="_blank">GNU LGPLv3</a>和GNU GPLv3基本权利义务类似，对大型项目做出了一些限制。<br></p><h2>12、Mozilla Public License 2.0</h2><p><a href="https://choosealicense.com/licenses/mpl-2.0/" target="_blank">Mozilla Public License 2.0</a>&nbsp;是BSD系协议和GPL系协议的折中，允许个人使用、商业使用、专利授权、复制、分发和修改，作者免责，需要保留版权信息、必须开源，不允许更换协议（但允许更换成某些GNU协议），不允许使用商标。<br></p><h2>13、The Unlicense</h2><p><a href="https://choosealicense.com/licenses/unlicense/" target="_blank">Unlicense</a>是一个完全免费无约束的协议，也就是你放弃你的所有权利，将劳动成功无私奉献出来。允许任何人为了任何目的使用任何手段进行任何操作，不用保留任何信息，当然，作者免责。<br></p><h1>二、特性总结</h1><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>许可协议&nbsp;</th><th>许可</th><th>限制条件&nbsp;</th><th>其他&nbsp;</th></tr><tr><td>&nbsp;None</td><td>不允许任何操作</td><td>&nbsp;-</td><td>&nbsp;-</td></tr><tr><td>&nbsp;GNU GPLv3</td><td><p>个人使用</p><p>商业使用</p><p>专利授权</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>声明变更<br>不允许更换协议</td><td>作者免责</td></tr><tr><td>&nbsp;MIT License</td><td>个人使用<br>商业使用<br>复制分发<br>修改</td><td>保留版权信息</td><td>作者免责</td></tr><tr><td>&nbsp;Apache License 2.0</td><td><p>个人使用</p><p>商业使用</p><p>专利授权</p><p>复制分发</p><p>修改</p></td><td>保留版权信息<br>声明变更<br>不允许使用商标&nbsp;&nbsp;<br></td><td>作者免责<br></td></tr><tr><td>&nbsp;BSD 2-Clause</td><td>个人使用<br>商业使用<br>复制分发<br>修改</td><td>保留版权信息</td><td>作者免责</td></tr><tr><td>&nbsp;BSD 3-Clause</td><td>个人使用<br>商业使用<br>复制分发<br>修改</td><td>保留版权信息<br>作者信息不允许用于推销</td><td>作者免责</td></tr><tr><td>&nbsp;Eclipse Public License 2.0</td><td>个人使用<p>商业使用</p><p>专利授权</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>不允许更换协议</td><td>作者免责</td></tr><tr><td>&nbsp;GNU AGPLv3</td><td>个人使用<p>商业使用</p><p>专利授权</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>声明变更<br>不允许更换协议<br>网络服务需公开完整源码</td><td>作者免责</td></tr><tr><td>&nbsp;GNU GPLv2</td><td>个人使用<p>商业使用</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>声明变更<br>不允许更换协议</td><td>作者免责</td></tr><tr><td>&nbsp;GNU LGPLv2.1</td><td>个人使用<p>商业使用</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>声明变更<br>不允许更换协议（衍生库）</td><td>作者免责</td></tr><tr><td>&nbsp;GNU LGPLv3</td><td>个人使用<p>商业使用</p><p>专利授权</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>声明变更<br>不允许更换协议（衍生库）&nbsp;&nbsp;</td><td>作者免责</td></tr><tr><td>&nbsp;Mozilla Public License 2.0</td><td>个人使用<p>商业使用</p><p>专利授权</p><p>复制分发</p><p>修改</p></td><td>必须开源<br>保留版权信息<br>声明变更<br>不允许更换协议（文件）</td><td>作者免责</td></tr><tr><td>&nbsp;The Unlicense</td><td>个人使用<p>商业使用</p><p>复制分发</p><p>修改</p></td><td>&nbsp;-</td><td>作者免责</td></tr></tbody></table><p><br></p><h1>三、推荐的使用姿势</h1><p>1、普通开发者</p><p>如果你是信仰开源大法的普通开发者，使用<span style="font-weight: bold;">MIT协议</span>即可，它会保留你的版权信息，又允许他人进行修改。</p><p>2、用到了GNU的开发者</p><p>如果你用到了GNU的库，由于“传染性”，不允许更换协议，必须选择<span style="font-weight: bold;">GNU相关的协议</span>。</p><p>3、开源库开发者</p><p>推荐使用<span style="font-weight: bold;">GNU LGPL相关协议</span>。</p><p>4、无私奉献的雷锋</p><p>感谢你为世界作出的贡献，必选<span style="font-weight: bold;">The Unlicense</span>。</p><p>5、不知道该选什么</p><p>选择默认的<span style="font-weight: bold;">None</span>即可，保留你的全部权利，后续再去决定要不要更换协议。</p><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/Github%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/">http://tanqingbo.cn/2019/10/06/Github%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/GitHub私有仓库免费：支持3人协作/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">GitHub私有仓库免费：支持3人协作 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/Hello Docker/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Hello Docker </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、协议分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、None &#x2F; No License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、GNU GPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、MIT License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、Apache License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、BSD 2-Clause &quot;Simplified&quot; License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、BSD 3-Clause “New” or “Revised” License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、Eclipse Public License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、GNU AGPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、GNU GPLv2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、GNU LGPLv2.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">11、GNU LGPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">12、Mozilla Public License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">13、The Unlicense</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、特性总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、推荐的使用姿势</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、协议分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、None &#x2F; No License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、GNU GPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、MIT License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、Apache License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、BSD 2-Clause &quot;Simplified&quot; License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、BSD 3-Clause “New” or “Revised” License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、Eclipse Public License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、GNU AGPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、GNU GPLv2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、GNU LGPLv2.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">11、GNU LGPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">12、Mozilla Public License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">13、The Unlicense</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、特性总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、推荐的使用姿势</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">一、协议分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">1、None &#x2F; No License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">2、GNU GPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">3、MIT License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">4、Apache License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">5、BSD 2-Clause &quot;Simplified&quot; License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">6、BSD 3-Clause “New” or “Revised” License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">7、Eclipse Public License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">8、GNU AGPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">9、GNU GPLv2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">10、GNU LGPLv2.1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">11、GNU LGPLv3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">12、Mozilla Public License 2.0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">13、The Unlicense</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">二、特性总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">三、推荐的使用姿势</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

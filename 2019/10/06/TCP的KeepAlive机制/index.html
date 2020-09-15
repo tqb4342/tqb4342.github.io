@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="TCP的KeepAlive机制">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/TCP%E7%9A%84KeepAlive%E6%9C%BA%E5%88%B6/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      TCP的KeepAlive机制
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.2k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/262.html">http://www.bewindoweb.com/262.html</a><div class="card-article-text"><h1>前言</h1><p>了解TCP的KeepAlive机制有利于服务器调参。</p><h1>TCP的KeepAlive</h1><p>没错，和想象的一样，通过“心跳包”来检查链路是否连通，但在标准的TCP规范中，并没有保活的强制性要求。</p><h2>传输层KeepAilve缺点</h2><p>在传输层做保活有很多缺点：</p><p>（1）如果中间链路出现短暂的差错（比如某个路由器重启），可能会使得一个非常好的链路被释放掉</p><p>（2）心跳包耗费了不必要的带宽，增加了流量费用</p><p>（3）在一些复杂的网络环境下（比如某些网络不响应不带数据的报文），TCP保活机制可能会失效。</p><h2>TCP的KeepAlive机制描述</h2><p>但事实上，许多实现都提供了KeepAlive的功能（默认关闭）。&nbsp;&nbsp;<br></p><p>如果一个给定的连接在7200秒（2小时）内没有任何动作，那么服务器就向客户端发送一个探查报文段，此时客户机可能处于如下状态：</p><p>（1）客户端正常运行，并可达。客户端响应一个报文，服务端收到报文后知道客户端是正常工作的，则将保活定时器复位，2小时后再次触发。此时间段内如果有任何应用报文通信，都会不断重置定时器的下次探测时间。</p><p>（2）客户端崩溃，已经关闭或者正在重启中。此时服务器收不到任何响应，75秒后，服务端将再次发送探查报文，一共会尝试10次探测报文的发送（包括第一次），每次间隔75秒，直到客户端回复响应或者达到10次。如果客户端都没有恢复，则服务端认为客户端已经关闭并终止连接。</p><p>（3）客户端崩溃并重启完成。此时服务器会受到客户端的响应，但这个响应是一个复位，使得服务端终止这个连接。</p><p>（4）客户端正常运行，但不可达。对服务器来说，处理方式和（2）一致。</p><h2>传输层KeepAlive优点</h2><p>（1）在应用层做KeepAlive是最好的事情，但会增加应用开发的设计心跳包复杂度。如果配置传输层就能够检测是否断开连接，应用层似乎就不用写心跳代码了。</p><p>（2）传输层的报文更小</p><h2>Connection reset by peer</h2><p>当出现情况（3）的时候，任意一端宕机恢复，由于不知道之前的连接信息，所以当之前的连接发过来一条保活探测，就会回送一个复位响应。这个响应将使得对端产生报错，例如：</p><pre><code class="prettyprint lang-c linenums">read error: Connection reset by peer</code></pre><p>在使用jmeter进行服务器压力测试中，也会经常看到connection reset by peer，但这个复位报文通常不是保活探测造成的，而是在TCP三次握手后，服务器Accept达到了最大值，直接拒绝连接产生的RST报文。</p><h2>keepalive参数的修改带来变化</h2><ul><li>tcp_keepalive_time 保活探测时间：默认2小时。越长，则探测到链路断开的敏感度越低；越短，可能在保活上耗费大量带宽。<br></li><li>tcp_keepalive_intvl 重发探测报文间隔时间：默认75秒。越长，非法关闭的链路占用资源时间越长；越短，等不到客户端恢复，重试失去意义。<br></li><li>tcp_keepalive_probes 重发探测报文次数：默认9次。越多，非法关闭的链路占用资源时间越长；越少，可能只是网络波动就毁掉了一条很好的链路。<br></li><li>为什么协议制定者把探测时间设定为默认2小时，就是为了弱化TCP保活的作用，强迫开发者尽可能在应用层做保活。<br></li></ul><h1>Linux的TCPkeepalive参数配置</h1><p>查看Linux的TCP配置默认值：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fe562067b4e23a5eff42bdb09142bf39.png" style="max-width:100%;"></p><p>7200秒探测一次、未响应重试9次（一共10次）、重试时间间隔75秒。</p><p>修改配置：</p><pre><code class="prettyprint lang-bsh linenums"># 查询保活探测时间
+cat /proc/sys/net/ipv4/tcp_keepalive_time
+# 修改
+sysctl net.ipv4.tcp_keepalive_time=3600
+
+</li>
+</ul>
+<h1 id="查询重试间隔时间"><a href="#查询重试间隔时间" class="headerlink" title="查询重试间隔时间"></a>查询重试间隔时间</h1><p>cat /proc/sys/net/ipv4/tcp_keepalive_intvl</p>
+<h1 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h1><p>sysctl net.ipv4.tcp_keepalive_intvl=5</p>
+<h1 id="查询重试次数"><a href="#查询重试次数" class="headerlink" title="查询重试次数"></a>查询重试次数</h1><p>cat /proc/sys/net/ipv4/tcp_keepalive_probes</p>
+<h1 id="修改-1"><a href="#修改-1" class="headerlink" title="修改"></a>修改</h1><p>sysctl net.ipv4.tcp_keepalive_probes=3</code></pre><p>或者修改/etc/sysctl.conf：</p><pre><code class="prettyprint lang-bsh linenums">net.ipv4.tcp_keepalive_time=7200<br>net.ipv4.tcp_keepalive_intvl=75<br>net.ipv4.tcp_keepalive_probes=9</code></pre><p>然后立即生效：</p><pre><code class="prettyprint lang-bsh linenums"># 立即生效<br>sysctl -p</p>
+<h1 id="查看当前配置"><a href="#查看当前配置" class="headerlink" title="查看当前配置"></a>查看当前配置</h1><p>sysctl -a | grep keepalive</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4bf4ab059b1b8fea8b3b4ee4abfe35e4.png" style="max-width:100%;"></p><h1>Netty设置TCPkeepalive</h1><p>网络通信必学的Netty，提供了.option的方式配置tcp参数：</p><pre><code class="prettyprint lang-bsh linenums">ServerBootstrap sb = new ServerBootstrap();<br>sb.group(bossGroup, workerGroup)<br>     .channel(socketChannelClazz)<br>     .childHandler(new ChannelInitializer&lt;SocketChannel&gt;() &#123;<br>                    ………………<br>      &#125;)<br>     .childOption(ChannelOption.SO_KEEPALIVE, true);<br>ChannelFuture f = sb.bind(host, port);<br>f.sync().addListener(FIRE_EXCEPTION_ON_FAILURE);</code></pre><p>同时，可以利用Netty的Handler来做应用层的心跳包：</p><pre><code class="prettyprint lang-java linenums">// 60秒没有read、write就触发idle事件<br>channel.pipeline().addFirst("idleStateHandler", new IdleStateHandler(60, 0, 0));<br>// 再用一个Handler去检查idle事件，清理资源，断开连接<br> @Override<br>    public void userEventTriggered(ChannelHandlerContext ctx, Object evt)&#123;<br>        if(evt instanceof IdleStateEvent)&#123;<br>           .................<br>        &#125;<br>    &#125;</code></pre><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/TCP%E7%9A%84KeepAlive%E6%9C%BA%E5%88%B6/">http://tanqingbo.cn/2019/10/06/TCP%E7%9A%84KeepAlive%E6%9C%BA%E5%88%B6/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/OTG外接移动硬盘会巨量耗电/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">OTG外接移动硬盘会巨量耗电 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/百度IoT：MQTT Broker架构设计/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">百度IoT：MQTT Broker架构设计 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">TCP的KeepAlive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">传输层KeepAilve缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">TCP的KeepAlive机制描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">传输层KeepAlive优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Connection reset by peer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">keepalive参数的修改带来变化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Linux的TCPkeepalive参数配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%87%8D%E8%AF%95%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4"><span class="toc-text">查询重试间隔时间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-text">修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%87%8D%E8%AF%95%E6%AC%A1%E6%95%B0"><span class="toc-text">查询重试次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-1"><span class="toc-text">修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE"><span class="toc-text">查看当前配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Netty设置TCPkeepalive</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">TCP的KeepAlive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">传输层KeepAilve缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">TCP的KeepAlive机制描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">传输层KeepAlive优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Connection reset by peer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">keepalive参数的修改带来变化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Linux的TCPkeepalive参数配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%87%8D%E8%AF%95%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4"><span class="toc-text">查询重试间隔时间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-text">修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%87%8D%E8%AF%95%E6%AC%A1%E6%95%B0"><span class="toc-text">查询重试次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-1"><span class="toc-text">修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE"><span class="toc-text">查看当前配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Netty设置TCPkeepalive</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">TCP的KeepAlive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">传输层KeepAilve缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">TCP的KeepAlive机制描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">传输层KeepAlive优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Connection reset by peer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">keepalive参数的修改带来变化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Linux的TCPkeepalive参数配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%87%8D%E8%AF%95%E9%97%B4%E9%9A%94%E6%97%B6%E9%97%B4"><span class="toc-text">查询重试间隔时间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-text">修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E9%87%8D%E8%AF%95%E6%AC%A1%E6%95%B0"><span class="toc-text">查询重试次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-1"><span class="toc-text">修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE"><span class="toc-text">查看当前配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">Netty设置TCPkeepalive</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

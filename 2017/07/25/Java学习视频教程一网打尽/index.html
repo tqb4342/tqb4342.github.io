@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="Java学习视频教程一网打尽">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2017/07/25/Java%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B%E4%B8%80%E7%BD%91%E6%89%93%E5%B0%BD/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2017-07-25">
+  <meta property="og:article:modified_time" content="2018-05-31">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Java学习视频教程一网打尽
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2017-07-25T06:14:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2017-07-25</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/资源分享/" class="post-meta-link">资源分享</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>881 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><center>前言<center></h2><p>对于自学Java的初学者来说，一定会非常希望有个大神带你一步一步由浅入深系统的学习Java知识，绕过所有的坑，那么跟着视频教程学肯定是最好的途径了。<br>本文汇总java开发中使用的优质视频教程，希望对你在学习Java的道路上有所帮助。</p>
+<h2 id="Java基础视频教程"><a href="#Java基础视频教程" class="headerlink" title="Java基础视频教程"></a><center>Java基础视频教程<center></h2><ul>
+<li>本套视频可谓目前同类视频中代码量最大、案例最多、实战性最强的Java基础视频。本教程注重技术原理剖析，同时全程贯穿代码实战，用实践驱动理论，所有知识点的讲解都围绕实际案例展开，并配有相应的代码练习。<h3 id="获取地址"><a href="#获取地址" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1dFCK7uD">http://pan.baidu.com/s/1dFCK7uD</a> </li>
+<li>密码：nsjx</li>
+</ul>
+<h2 id="jQuery视频教程"><a href="#jQuery视频教程" class="headerlink" title="jQuery视频教程"></a><center>jQuery视频教程<center></h2><ul>
+<li>jQuery是一个快速、简洁的JavaScript框架，是继Prototype之后又一个优秀的JavaScript代码库（或JavaScript框架）。jQuery设计的宗旨是“write Less，Do More”，即倡导写更少的代码，做更多的事情。它封装JavaScript常用的功能代码，提供一种简便的JavaScript设计模式，优化HTML文档操作、事件处理、动画设计和Ajax交互。<h3 id="获取地址-1"><a href="#获取地址-1" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1b6mYn0">http://pan.baidu.com/s/1b6mYn0</a>    </li>
+<li>密码：hazq</li>
+</ul>
+<h2 id="bootstrap视频教程"><a href="#bootstrap视频教程" class="headerlink" title="bootstrap视频教程"></a><center>bootstrap视频教程<center></h2><ul>
+<li>Bootstrap是目前很受欢迎的前端框架。Bootstrap 是基于 HTML、CSS、JavaScript 的，它简洁灵活，使得 Web 开发更加快捷。<h3 id="获取地址-2"><a href="#获取地址-2" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1bwFYYAt3IO25U3UFV5t_0A">https://pan.baidu.com/s/1bwFYYAt3IO25U3UFV5t_0A</a> </li>
+<li>密码：igcz</li>
+</ul>
+<h2 id="Struts2视频教程"><a href="#Struts2视频教程" class="headerlink" title="Struts2视频教程"></a><center>Struts2视频教程<center></h2><ul>
+<li>Struts2是一个基于MVC设计模式的Web应用框架，它本质上相当于一个servlet，在MVC设计模式中，Struts2作为控制器(Controller)来建立模型与视图的数据交互。<h3 id="获取地址-3"><a href="#获取地址-3" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1o8Txkts">http://pan.baidu.com/s/1o8Txkts</a> </li>
+<li>密码：ju0x</li>
+</ul>
+<h2 id="hibernate视频教程"><a href="#hibernate视频教程" class="headerlink" title="hibernate视频教程"></a><center>hibernate视频教程<center></h2><ul>
+<li>Hibernate是一个开放源代码的对象关系映射框架，它对JDBC进行了非常轻量级的对象封装，它将POJO与数据库表建立映射关系，是一个全自动的orm框架，hibernate可以自动生成SQL语句，自动执行，使得Java程序员可以随心所欲的使用对象编程思维来操纵数据库。本教程主要包括：Hibernate框架概述&amp;安装、 hibernatetools 插件、hibernate.cfg.xml 、hibernate 映射文件、详解 hibernate 映射文件等。<h3 id="获取地址-4"><a href="#获取地址-4" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1miPx7F6">http://pan.baidu.com/s/1miPx7F6</a> </li>
+<li>密码：8dgv</li>
+</ul>
+<h2 id="mybatis视频教程"><a href="#mybatis视频教程" class="headerlink" title="mybatis视频教程"></a><center>mybatis视频教程<center></h2><ul>
+<li>mybatis同hibernate一样，也是持久层框架，hibernate可以自动生成SQL语句，从操作上来说，hibernate使用起来更顺手，但是效率相对来说比mybatis要低。<h3 id="获取地址-5"><a href="#获取地址-5" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1pL5E8EB">http://pan.baidu.com/s/1pL5E8EB</a> </li>
+<li>密码：aeyb</li>
+</ul>
+<h2 id="spring视频教程"><a href="#spring视频教程" class="headerlink" title="spring视频教程"></a><center>spring视频教程<center></h2><ul>
+<li>Spring 是一个开源框架，是为了解决企业应用程序开发复杂性而创建的。框架的主要优势之一就是其分层架构，分层架构允许您选择使用哪一个组件，同时为 J2EE 应用程序开发提供集成的框架。<h3 id="获取地址-6"><a href="#获取地址-6" class="headerlink" title="获取地址"></a>获取地址</h3></li>
+<li>链接：<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1b7QJbo">http://pan.baidu.com/s/1b7QJbo</a> </li>
+<li>密码：ubm1</li>
+</ul>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><ul>
+<li><strong>后续还会陆续更新学习Java基础和各大框架的笔记，欢迎大家在讨论区留言。</strong></li>
+<li><strong>此外，本文还将继续汇总各种视频教程，大家期待后续更新，如果小伙伴们有什么好的资源，欢迎给我推荐，大家互惠互利。资源可以发我邮箱：<a href="mailto:&#x31;&#x37;&#66;&#57;&#x30;&#51;&#48;&#50;&#x37;&#x40;&#115;&#x74;&#117;&#x2e;&#x68;&#x69;&#116;&#x2e;&#x65;&#x64;&#117;&#x2e;&#99;&#x6e;">&#x31;&#x37;&#66;&#57;&#x30;&#51;&#48;&#50;&#x37;&#x40;&#115;&#x74;&#117;&#x2e;&#x68;&#x69;&#116;&#x2e;&#x65;&#x64;&#117;&#x2e;&#99;&#x6e;</a></strong></li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2017/07/25/Java%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B%E4%B8%80%E7%BD%91%E6%89%93%E5%B0%BD/">http://tanqingbo.cn/2017/07/25/Java%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B%E4%B8%80%E7%BD%91%E6%89%93%E5%B0%BD/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2017/07/25/C语言与Java开发工具汇总/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">C/C++、Java和Python开发工具一网打尽 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2017/07/25/Java必看图书籍一网打尽/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Java必看图书籍一网打 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E5%9F%BA%E7%A1%80%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">Java基础视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">jQuery视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-1"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bootstrap%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">bootstrap视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-2"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Struts2%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">Struts2视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-3"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hibernate%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">hibernate视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-4"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mybatis%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">mybatis视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-5"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">spring视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-6"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E5%9F%BA%E7%A1%80%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">Java基础视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">jQuery视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-1"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bootstrap%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">bootstrap视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-2"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Struts2%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">Struts2视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-3"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hibernate%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">hibernate视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-4"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mybatis%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">mybatis视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-5"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">spring视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-6"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E5%9F%BA%E7%A1%80%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">Java基础视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jQuery%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">jQuery视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-1"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bootstrap%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">bootstrap视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-2"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Struts2%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">Struts2视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-3"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hibernate%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">hibernate视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-4"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mybatis%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">mybatis视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-5"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B"><span class="toc-text">spring视频教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%9C%B0%E5%9D%80-6"><span class="toc-text">获取地址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

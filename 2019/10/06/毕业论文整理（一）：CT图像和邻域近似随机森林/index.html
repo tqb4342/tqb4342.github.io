@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="毕业论文整理（一）：CT图像和邻域近似随机森林">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ACT%E5%9B%BE%E5%83%8F%E5%92%8C%E9%82%BB%E5%9F%9F%E8%BF%91%E4%BC%BC%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      毕业论文整理（一）：CT图像和邻域近似随机森林
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/226.html">http://www.bewindoweb.com/226.html</a><div class="card-article-text"><h1>前言</h1><p>开始整理研究生毕业论文，再过不久就会忘掉我读过研究生了，但是数理统计考100也是不容易的，还是希望记录一下…</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/74bea29c0dc3fa4df56c5670c0eb0e3f.png" style="max-width:100%;"></p><p>现在的小学弟们早就开始各种开源平台用得贼溜了，他们都从开始就做卷积神经网络和深度学习；我一直做的是传统的树模型，虽然不如其他算法模型那么有用，但是研究得多了也会有一些心得，下面开始叙述。</p><h1>课题要求</h1><p>使用树模型分割彩色图像中的目标。</p><p>主要改进了邻域近似随机森林（Neighbourhood Approximation using Randomized Forests，NAFs），还使用了依赖树（Approximating Discrete Probability Distributions with Dependence Trees，CLT）。</p><h1>邻域近似随机森林NAFs</h1><p>NAFs的原论文是用于医学图像分割的，它是一个框架不是一个模型，主要作用是对任意距离定义的近似最近邻检索（approximate nearest neighbour retrieval for arbitrary distances），解决的问题类似于：给定一组带Ground Truth的灰度人体侧面CT图片去训练NAFs，然后对于一幅新的CT图片（out of samples），给出CT图像中各个内脏边缘的3D分割结果。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3f3216a06425e3ce78d46a65841a6922.png" style="max-width:100%;"></p><h2>医学图像简介</h2><p>我们平时拍的CT（计算机断层扫描技术，Computed Tomography）图片原始数据并不是平面的2D图像数据，而是3D的。它是利用精准的X射线和探测器对人体的某一部位做逐层的断面扫描，采集人体截面结构的信息，再通过重建（Reconstruction）来获得数值，最后通过一定显示手段去可视化。你可以想象成CT图像会一片一片地采集2D图像，再组装成3D的。每一片图像都会有一个“厚度”，由于是物理设备，是以毫米（mm）为单位的。在这个厚度的某个像素（实际是一个小方块）里面，很可能包含不止一种组织，那么它的取值通常是这些组织取值的平均数。还有一个概念是“层距”，相邻两片的距离如果太大，就可能不是连续的影像。又因为设备的不同，每个CT图像的层厚和层距取值可能会不同，那么如果要进行机器学习，我们需要对这些图像进行配准（Register），就是把所有的CT图像数据都转换到同一个世界坐标系XYZ下，如果多了就删去，如果少了就插入，如果坐标系不一样就旋转等等，有相应的算法可以处理。最后我们规定图像像素的大小应该是几mm厚，把CT扫描的“强度值”作为“像素值”来使用，就得到了灰度图像。灰度图像的数值通常是在-2048到2048之间的，如果要可视化，需要转为0~256，因为1000和1001的灰度你是看不出来区别的。</p><p>CT图像通常以DICOM（Digital Imaging and Communications in Medicine）格式存储，分辨率为4096级���我录制了一个gif来直观地感受一下（MITK workbench打开DICOM文件）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/373d5ef2fc566abde1dd29d994913dd6.gif" style="max-width:100%;"></p><h2>Patches简介</h2><p>看到这里显然有一个疑问，树模型不是一直都用来分类的吗，怎么可以用来分割呢？答案是作者通过巧妙的方式把分类转换为了分割。我们称2D图像中的像素点叫做Pixel，那么3D图像中的像素体就叫做Voxel（体像素），由一堆Voxel组成的小立方体就是Patches（块像素）。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/989b0c1b12c0c4c2997e4dba614a9e84.png" style="max-width:100%;"></p><p>那么将40张CT图像分割成30000重叠的块像素，每个块像素提取1400个特征，训练NAFs进行分类，类别是块像素中占比多的那个内脏：</p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fd396eb3d4d9bbe693ea3140a30bf8b5.png" style="max-width:100%;"><p>对于一幅新输入的待分割CT图像，我们也切分成重叠的块像素，提取同样的特征，遍历NAFs，每棵树都会找到很多30000训练patches中的“最近邻”patches，并且根据概率有一个相似度。我们只选择相似度最高的前20个最近邻patches。</p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/02582bb3c5ae535aa22c301969fac2ba.png" style="max-width:100%;"></p><p>对这20个最近邻Patches，创建一个搜索窗，用归一化积相关算法(NCC)进行相似度匹配，得分最高的Patches就会被选为候选Patches（candidate patches）。这样每一个voxel都会被若干候选Patches覆盖，他们的投票值最高的标签就作为这个Voxel的标签，这样一来就用Patches的分类完成了Voxel分割：</p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2262a31a822c2d748fcd96b582fa6877.png" style="max-width:100%;"></p><h2>NAFs原理</h2><p>整个分割过程大致有了了解，关键点有两个：如何构建随机森林去近似邻域？如何处理特征？</p><p>我们定义整个图像集为<span style="font-weight: bold;">I</span>，每张图像I∈<span style="font-weight: bold;">I</span>，一个图像子集为{Ip}p∈[1,<span style="font-weight: bold;">P</span>]，两幅图像之间的距离定义为ρ(·, ·)，具体数值为ρ(I, J)，J为新输入的图像。NAF就是寻找k个和J最相似的I∈<span style="font-weight: bold;">I</span>，也就是使得ρ(I, J)最小的k个I，定义这个最近邻图像集合为<b>N</b>_kρ(J)。可以想象直接搜索这个
+
+</li>
+</ul>
+<p><b>N</b>_kρ(J)&nbsp;是��分费时间的，而且如果采用“年龄”来定义距离，新图像是没有“年龄”这种属性的，所以距离根本不可测。NAF就是通过构建随机森林来近似这种邻域关系，相当于把这种距离保存在了树的结构里，只需要遍历森林测试特征就可以了，完全不需要去计算距离。</p><p><b>NAFs树的测试过程</b></p><p>NAF的树是二叉决策树，给定一幅图像J，它会依次遍历每棵树，从根节点s0开始一直找到叶节点，叶节点里保存着训练图像ID，如果新图像和那些叶节点都走了相似的路径，那说明它们本身也是相似的，这就是最近邻图像集合。我们把单棵树产生的最近邻图像集合定义为<b>N</b>_T(ρ)(J)，也就是新图像J按照ρ定义遍历第T棵树产生的Neighbours。论文的示意图很容易看懂，就是简单的决策树测试而已：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7f26c8db528037e5849a9802971c3c8c.png" style="max-width:100%;"></p><p><b>NAFs树的训练过程——特征降维</b></p><p>定义图像I的特征向量为<span style="font-weight: bold;">f</span>(I)∈<span style="font-weight: bold;">R</span>^Q，因为是图像，所以f非常可能是一个高维的特征向量，例如Q=10000。那么必须得降维，否则就当场去世了。随机森林的随机是一个又鲁棒又能降维的东西，我们先随机挑选特征<span style="font-weight: bold;">f</span>_T(I)∈<span style="font-weight: bold;">R</span>^q，q&lt;Q，<span style="font-weight: bold;">f</span>_T(I)∈<span style="font-weight: bold;">f</span>(I)，这样既降低了维度，又使得每棵树更加独立。然后在每棵树训练期间节点分叉的时候，我们总是再次从f_T(I)中随机挑选M个特征进行遍历来做出二分抉择，M&lt;=q，<span style="font-weight: bold;">f</span>_MT(I) ∈<span style="font-weight: bold;">f</span>_T(I)。两次降维已经够了。我们定义节点的图像集合为<span style="font-weight: bold;">I</span>_S，分叉后左节点图像集合为<span style="font-weight: bold;">I</span>_SL，右节点图像集合为<span style="font-weight: bold;">I</span>_SR，那么对于图像In∈I_S来说，分叉条件为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/8ec58ab599e3e77aaa05ff8284a37ab3.png" style="max-width:100%;"></p><p>f_mT(In)指的是In这个图像的第m个特征值。我们的目标就是优化参数m和τ，使得划分得最开，很明显要使用熵了。但这里的距离ρ不是传统的距离，可能是语义距离，所以这里的熵需要进行特殊定义。我们首先定义集合<span style="font-weight: bold;">A</span>的空间紧凑性为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/19cbfedf6aa122c62949f73275ea33ca.png" style="max-width:100%;"></p><p>很容易理解，两两距离求和再平均，如果这个值越小，说明两两之间距离越小，那么就越紧凑（图像越相似），所以定义熵为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/546171758e844f391fc25405bd054249.png" style="max-width:100%;"></p><p>根节点的紧凑性减去分叉后的紧凑性的加权，反映了按照当前m和τ划分子树根节点的紧凑程度，熵越大，划分也就越好，所以整个问题变成了求最优化解：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c7509b153c0b204938e9dd8838d3a697.png" style="max-width:100%;"></p><p>其中Δ是树的停止条件之一，也就是叶节点必须要有的最小图片数目。求解的过程就是对于每个m取值，我们遍历所有的τ划分点取值，求得使得熵G取到最大值的m和τ，虽然前面两次降维，但这个遍历过程仍然是一个很费时的操作。</p><p>训练树的停止条件：树的深度、最小样本数Δ、G&lt;0。前两个就是决策树的基本停止条件，G&lt;0意味着划分下去反而变得不紧凑了（图片之间相似程度更低了），所以还不如不要分直��停止生长。</p><p><span style="font-weight: bold;">NAFs的测试过程</span></p><p>对于给定的图像J，测试每棵树，找到叶节点最近邻图像集合<b>N</b>_T(ρ)(J)，我们给这些图像计数，那么得分最高的前k个显然是整个森林都认为很相似的最近邻图像了。定义1A(x)为sign函数，若x∈A则1A(x)=1，否则1A(x)=0，那么测试的计数得分用数学公式表示为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/012b9dbdbb0983ee9526b6e3bc75d510.png" style="max-width:100%;"></p><p></p><p>也就是新图像J在距离ρ的定义下，森林F中各棵树T判断是否和训练图像In相似的求和值。</p><h2>NAFs参数调整</h2><p>NAF有很多参数：</p><p>（1）叶节点最小图像数目Δ</p><p>Δ越大，划分越粗糙，降低KNN精确度；Δ越小，越容易过拟合。</p><p>（2）最大树深</p><p>树深越小，划分越粗糙，降低KNN精确度；树深越大，对内存和算法性能要求就越高。</p><p>（3）树的数目</p><p>刚开始增加明显提升精确度；当树的数目达到一定程度后，精确度就不会有明显提升了。</p><p>（4）特征空间大小Q和降维q、M</p><p>q/Q越大，那么树的独立性越小，都训练出一样的树那还要森林有什么用呢。q/Q通常根据具体的Q值来确定，例如Q=10000，则q/Q取0.1，q=1000；Q=3000，则q/Q取1/3，q=1000。</p><p>M同理，可以根据机器性能和期望的邻域近似准确度去调整。</p><h2>NAFs优势和劣势</h2><p>从前面可以看出，整个分割过程其实就是一个寻找KNN的过程，不过NAFs的好处在于，它不需要进行配准（因为使用块像素的相似来进行分割的，而不是建立严格的数学模型），并且它可以用于“语义距离”。举个例子，我们要对脑部CT图像进行分类，判断这个人是多少岁，通常定义的距离都是这两幅图像的相似程度，比如欧式距离，而NAFs可以将“年龄”这个语义属性作为两幅图像的距离，也就是年龄差作为图像距离。这个和图像的像素值一点关系也没有，只和图像属性有关系。同时，因为构建了随机森林来保存这种块像素之间的近似相似性，所以搜索的速度非常快，不需要每个块像素去单独比对，只需要遍历NAFs即可。使用随机特征和树模型，能够很好地避免过拟合。</p><p>然而，如果Patches很多，那么整个训练过程会异常缓慢，并且需要巨量的内存和硬盘；并且这种方法只能适用于图像非常近似的分割（比如CT图像几乎变化不大），不能用于图像变化剧烈的，那种剧烈的还是老老实实使用神经网络吧。使用树模型，要调整的参数非常多。</p><p><br></p>                </div></p>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ACT%E5%9B%BE%E5%83%8F%E5%92%8C%E9%82%BB%E5%9F%9F%E8%BF%91%E4%BC%BC%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">http://tanqingbo.cn/2019/10/06/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9ACT%E5%9B%BE%E5%83%8F%E5%92%8C%E9%82%BB%E5%9F%9F%E8%BF%91%E4%BC%BC%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/布隆过滤器/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">布隆过滤器 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/毕业论文整理（二）：用依赖树近似离散概率分布/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">毕业论文整理（二）：用依赖树近似离散概率分布 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">课题要求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">邻域近似随机森林NAFs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">医学图像简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Patches简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs参数调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs优势和劣势</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">课题要求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">邻域近似随机森林NAFs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">医学图像简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Patches简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs参数调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs优势和劣势</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">课题要求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">邻域近似随机森林NAFs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">医学图像简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">Patches简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs参数调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">NAFs优势和劣势</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

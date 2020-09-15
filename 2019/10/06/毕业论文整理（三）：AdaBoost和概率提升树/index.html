@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Tan Qing Bo's Blog</title>
+  
+  
+  <meta property="og:title" content="毕业论文整理（三）：AdaBoost和概率提升树">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/2019/10/06/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AAdaBoost%E5%92%8C%E6%A6%82%E7%8E%87%E6%8F%90%E5%8D%87%E6%A0%91/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.jpg">
+  
+  
+  <meta property="og:img" content="学习总结  思考感悟  知识管理">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2019-10-06">
+  <meta property="og:article:modified_time" content="2019-10-07">
+  <meta property="og:article:author" content="Tan Qing Bo">
+  
+  
+  
+  
+  
+  
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+  
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/tags" class="navbar-menu-item">
+    
+    标签
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      毕业论文整理（三）：AdaBoost和概率提升树
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2019-10-06T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2019-10-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/转载/" class="post-meta-link">转载</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.5k 字</span>
+    
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <ul>
+<li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/233.html">http://www.bewindoweb.com/233.html</a><div class="card-article-text"><h1>��率提升树</h1><h2>前言</h2><p>这是本科毕设用到的树，概率提升树（Probabilistic Boosting-Tree, PBT）是Tu在2005年<a href="http://xueshu.baidu.com/usercenter/paper/show?paperid=40ef9a4c4764adcec6c74cfb5180d640&amp;site=xueshu_se" target="_blank">《Probabilistic Boosting-Tree: Learning Discriminative Models for Classification, Recognition, and Clustering》</a>中提到的分层分类框架。</p><h2>AdaBoost</h2><p>PBT的实质是对Adaboost的改进，首先回顾一下Adaboost：&nbsp; Adaboost是针对二分类问题设计的，核心点是关注那些被错误分类的训练样本，通过多轮弱分类器的训练逐渐提高被错分样本的权重，对每个弱分类器根据分类精度给一个权重，然后将所有弱分类器用加权的方式制作一个强分类器来达到分类的目的。算法如下：</p><blockquote>【输入】n个训练样本特征向量及其类别(x1,y1),...,(xn,yn)，其中xi∈R^m，yi∈{-1,+1}<br>1) 初始化训练样本分布：D1(i) = 1/n&nbsp;<span style="color: rgb(194, 79, 74);">&nbsp;// 初始的权重是平均的</span><br>2)&nbsp;FOR&nbsp;t = 1..T&nbsp;DO&nbsp;<span style="color: rgb(194, 79, 74);">&nbsp;// 训练T轮，T个弱分类器</span><br>3)&nbsp; &nbsp; &nbsp; &nbsp; 使用分布Dt训练弱分类器ht：R^m → Y&nbsp;&nbsp;<span style="color: rgb(194, 79, 74);">// 就是训练一个假设：看到这个特征向量→应该判别为什么类别</span><br>4)&nbsp; &nbsp; &nbsp; &nbsp; 获得这个假设的加权分类误差：<span style="color: rgb(194, 79, 74);">&nbsp;// 也就是把分类错了的权重累加起来。</span><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/56fb4b51404eb6cf62bfc4ac7e4ed569.png">5)&nbsp; &nbsp; &nbsp; &nbsp; 计算这个假设（弱分类器）的权重：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/66b706abeaf7057dd3f556de10916c02.png">6)&nbsp; &nbsp; &nbsp; &nbsp; 更新训练样本分布：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ea11f9f7c747f4425171e87f0ea9c6eb.png">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 其中，<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e930ab21d0a3ce665e86c8bf93d383d0.png">7)&nbsp;END FOR<br>【输出】最终的假设（强分类器）：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b044141c5cb5b5fcbef75dcefff01fc7.png" style="max-width:100%;"></blockquote><p><br></p><p>有关误差上下界的数学推导和为什么选取α为这个式子，可以参看<a href="http://xueshu.baidu.com/usercenter/paper/show?paperid=9e036228debcac9ea3f61fc9af59dc1f&amp;site=xueshu_se" target="_blank">《Boosting Methods for Automatic Segmentation of Focal Liver Lesions》</a>。我们从结果来分析算法中各个参数的性质和作用：</p><p>1) 我们知道弱分类器错误率（加权分类误差）θ≤0.5（不可能大于0.5比随机猜测更差，否则取反就能得到&lt; 0.5的分类器了）</p><p>2) αt≥0（因为(1-θ)/θ ≥ 1），且其随着错误率的减小而增大，说明错误率越小的弱分类器被看得越重要。</p><p>3) 对于一个被错误分类的样本，必有真实类别≠弱分类器判别的假设类别，也就是yi≠ht(<span style="font-weight: bold;">xi</span>)，那么e^-(αt × yiht(<span style="font-weight: bold;">xi</span>))必然大于1，反之分对的样本e^-(αt × yiht(xi))必然小于1，当对下一轮的样本分布权重进行归一化之后，被错分的样本权重必然提高，被正确分类的样本权重降低。</p><p>4) 如此一来，一旦被错分的样本再次被错分，会造成θ错误率的巨额提升，弱分类器肯定会尽力去避免这样的高错误率，也就是被错分的样本被弱分类器更多地当作考虑因素考虑进去了。</p><p>举个实际的应用例子，我们想用决策桩（就是阈值判别器）去划分平面上红色、蓝色小球，初始状态是这样的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0c6a439619a49067adc157e54f18d004.png" style="max-width:100%;"></p><p>然后第一个桩分类器竖着划分，错分了两个：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2c0724771dd79c364c62c25d1d575e95.png" style="max-width:100%;"></p><p>于是在重新计算分布后，它们的权重变大了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/baf7af391df92ee0e6dcd36f684a4d62.png" style="max-width:100%;"></p><p>第二个分类器更多的考虑了被错分的样本，然而第一次被分对的样本又被分错了两个：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/08277b5ed8d5c9e2e6ba05d1a97a89a9.png" style="max-width:100%;"></p><p>于是再次进行权重调整：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fabd2deb0a28fbeef6339bb2a622f16f.png" style="max-width:100%;"></p><p>第三次继续划分：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/103bc63d330997c55cb2a4be87a94536.png" style="max-width:100%;"></p><p>第三次权重调整+第四次继续划分：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/16df9eed6412e5e9fd06cdacb94bbc9b.png" style="max-width:100%;"></p><p>最后得到强分类器的决策平面：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9002e741cc0a58f33a89e406cf913174.png" style="max-width:100%;"></p><p>当然这是理想情况，实际中不应该划分到这么细，否则会对训练样本产生过拟合。</p><h2>概率提升树PBT</h2><p>通常来说，我们希望建立的模型都是生成式模型（generative model），也就是输入考虑的多种因素，输出一个完整的模型，我们可以提取里面任意的信息。举个例子，我想判断一个动物是不是“斑马”，那么我希望建立一个模型，包含“体型”、“花纹”、“生活习性”、“饮食习惯”、“眼睛大小/颜色/花纹”等等，然后输入这些数值，就能够知道它是不是斑马了。从数学上来说，就是求取整体联合分布P(<span style="font-weight: bold;">X</span>)，代入数值，得到结果，也就是我们希望知道p(<span style="font-weight: bold;">x</span>|y)。常见的生成式模型有隐马尔科夫模型HMM、朴素贝叶斯模型、高斯混合模型GMM、LDA。</p><p>实际中，考虑完所有的东西是不现实的（因此通常都是估计），并且会带来庞大计算量，更多的算法采用了判别式模型（discriminative model），输入特征，输出yes或者no或者其他类别，也就是对后验概率p(y|<span style="font-weight: bold;">x</span>)建模。常见的判别式模型有线性回归、支持向量机SVM、神经网络。</p><p>Adaboost和PBT都是判别式模型。然而Tu发现，Adaboost具有一些缺点：</p><p>1) 需要大量的弱分类器，这带来了庞大计算量</p><p>2) 没有提取特征向量中的语义信息</p><p>3) 更新权重的过程可能导致被分对的样本再次被分错</p><p>4) 只适用于二值分类，多类别分类会非常艰难</p><p>作者还顺便踩了一脚Grossmann提出的AdaTree，说PBT是对后验概率建模，AdaTree只是在剪枝；PBT每个节点都是强分类器，AdaTree知识把弱分类器放在树结构上而已……下面只讨论PBT的二值分类，多值分类可以转换为二值分类处理。</p><h2>PBT的二值分类过程</h2><p>我们知道，Adaboost错误率上限是（这里更换了字母，含义和前面一致）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1327f743faf0fa55ab721395d62864c4.png" style="max-width:100%;"></p><p>ϵt很快地接近了0.5，然而收敛得非常慢，还造成了反复波动。所以PBT采用分治策略，划分样本空间，当错误率达到一定程度就提前结束Adaboost的训练。</p><p>Friedman等人在论文<a href="http://xueshu.baidu.com/usercenter/paper/show?paperid=cc44ccadefd4d6ab6157708a74c6b825&amp;site=xueshu_se" target="_blank">《Additive Logistic Regression:A Statistical View of Boosting》</a>已经证明过，Adaboost在用这样的逻辑��归式去求取后验概率p(y|x)：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/49864dbfdd60c20f7a9a00a71ebcf9dc.png" style="max-width:100%;"></p><p></p><p></p><p>其中y∈{-1,+1}。于是可以得到估计的后验概率：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/968d7752dfe515700e6f8c64abed9caa.png" style="max-width:100%;"></p><p></p><p></p><p>然后根据这个估计的后验概率，创造一个极小的控制变量ε，PBT可以对样本空间进行划分：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5fe614bb57082d4daae17be351eebc40.png" style="max-width:100%;"></p><p>1) 样本算得q(+1|<span style="font-weight: bold;">x</span>)&gt; 0.5+ε，则划分到正样本空间；</p><p>2) 样本算得q(-1|<span style="font-weight: bold;">x</span>) = 1-q(+1|<span style="font-weight: bold;">x</span>) &gt; 0.5+ε，则划分到负样本空间；</p><p>3) 样本算得q(±1|<span style="font-weight: bold;">x</span>)∈[0.5-ε, 0.5+ε]，则是疑例，同时分配到两个空间。</p><p></p><p></p><p>随着树的生长，样本空间就越来越纯净，所构建的Adaboost强分类器也就越来越好，并且越来越快，无需从头对整个样本空间进行划分。ε 的作用原文说是为了防止过拟合，通常来说取0.1是合适的。</p><p>另外，还限制了每个Adaboost节点的错误上限，当超过上限直接停止生成新的弱分类器，通常来说取0.45是合适的。整个PBT的图像类似于：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2c4ab90943b92a5192a518a136aff1ba.png" style="max-width:100%;"></p><p></p><p>我们来描述一下PBT的训练算法：</p><blockquote>【输入���训练集 S={(<b>x1</b>,y1,w1),…,(<b>xn</b>,yn,wn)} ，其中 ，其中<b>x</b>为特征向量， y∈{-1,+1 }，且 Σwi=1。<br>1) 计算并存储经验分布 qc(y)=Σ(yi=i)wi<br>2) 用 Adaboost 在节点 在节点c处根据当前样本训练强分类器 Hc，当错误率大于θ=0.45 的时候提前退出<br>3)&nbsp;<b>IF</b>&nbsp;达到最大树深 L&nbsp;<b>THEN<br></b>4)&nbsp; &nbsp; &nbsp; &nbsp;return<br>5)&nbsp;<b>ELSE<br></b>6)&nbsp; &nbsp; &nbsp; &nbsp;新建空集Sleft和Sright&nbsp;<br>7)&nbsp; &nbsp; &nbsp; &nbsp;<b>FOR</b>&nbsp;all xi∈Sc&nbsp;<b>DO<br></b>8)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;用gc(x)计算 q(±1|xi)<br>9)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>IF</b>&nbsp;q(+1|xi) &gt; 0.5+ε&nbsp;<b>THEN<br></b>10)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;将样本(xi,yi,1)加入右子树<br>11)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>ELIF</b>&nbsp;q(-1|xi) &gt; 0.5+ε&nbsp;<b>THEN<br></b>12)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;将样本(xi,yi,1)加入左子树<br>13)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>ELSE<br></b>14)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;将样本(xi,yi,q(+1|xi))加入左子树<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 将样本(xi,yi,q(-1|xi))加入左子树<br>15)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>ENDIF<br></b>16)&nbsp; &nbsp; &nbsp;&nbsp;<b>ENDFOR<br></b>17)&nbsp; &nbsp; &nbsp; 将左子树权值归一化，继续训练左子树<br>18)&nbsp; &nbsp; &nbsp; 将右子树权值归一化，继续训练右子树<br>19)&nbsp;<b>ENDIF<br></b>【输出】训练好的PBT</blockquote><p>测试算法：</p><blockquote>【输入】特征<span style="font-weight: bold;">x</span>，训练好的PBT<br>1) 用节点c的强分类器Hc，计算 q( ±1|<span style="font-weight: bold;">x</span>)<br>2) <span style="font-weight: bold;">IF</span> c是叶子节点<br>3)&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">IF</span> y == 1<br>4)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return q(+1|<span style="font-weight: bold;">x</span>)<br>5)&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">ELSE<br></span>6)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return q(-1|<span style="font-weight: bold;">x</span>)<br>7)&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">ENDIF<br></span>8) <span style="font-weight: bold;">ENDIF<br></span>9) <span style="font-weight: bold;">IF</span> q(+1|<span style="font-weight: bold;">x</span>)&gt;0.5+ε THEN<br>10)&nbsp; &nbsp; &nbsp; return q(-1|<span style="font-weight: bold;">x</span>)q^_cleft(y) + q(+1|<span style="font-weight: bold;">x</span>)p_cright(y|<span style="font-weight: bold;">x</span>)<br>11) <span style="font-weight: bold;">ELIF</span> q(-1|<span style="font-weight: bold;">x</span>)&gt;0.5+ε THEN<br>12)&nbsp; &nbsp; &nbsp; &nbsp;return q(-1|<span style="font-weight: bold;">x</span>)p_cleft(y|<span style="font-weight: bold;">x</span>)+q(+1|<span style="font-weight: bold;">x</span>)q^_cright(y)<br>13) <span style="font-weight: bold;">ELSE</span>&nbsp;<br>14)&nbsp; &nbsp; &nbsp; &nbsp;return q(-1|<span style="font-weight: bold;">x</span>)p_cleft(y|x)+q(+1|<span style="font-weight: bold;">x</span>)p_cright(y|x)<br>15) <span style="font-weight: bold;">ENDIF<br></span>【输出】近似的后验概率pc(y|<span style="font-weight: bold;">x</span>)<br>其中，p是Adaboost给出的概率，q是PBT训练过程中计算的概率，q^是训练时得到的先验估计（因为数据没有被分配到那个分支去）。</blockquote><p>这样一棵完整的PBT流程就走完了，我们分析一下它的参数：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>参数名称&nbsp;</th><th>参数符号&nbsp;</th><th>参数推荐值&nbsp;</th><th>参数说明&nbsp;</th></tr><tr><td>&nbsp;调整值</td><td>ε&nbsp;</td><td>&nbsp;0.1</td><td>&nbsp;越小样本空间划分越开，越过拟合</td></tr><tr><td>&nbsp;Adaboost错误率上限</td><td>θ&nbsp;</td><td>&nbsp;0.45</td><td>&nbsp;越小Ada停止越快，精度越低</td></tr><tr><td>&nbsp;PBT的最大树深</td><td>L</td><td>&nbsp;-</td><td>&nbsp;越小PBT停止越快，精度越低</td></tr><tr><td>&nbsp;Adaboost最大训练轮数</td><td>T&nbsp;</td><td>&nbsp;-</td><td>&nbsp;越小弱分类器越少，精度越低</td></tr></tbody></table><p>最后再欣赏一下PBT的结构：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5392882b3c900f47f99624059eefa935.png" style="max-width:100%;"></p><p><br></p>                </div>
+</li>
+</ul>
+
+  </div>
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/2019/10/06/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AAdaBoost%E5%92%8C%E6%A6%82%E7%8E%87%E6%8F%90%E5%8D%87%E6%A0%91/">http://tanqingbo.cn/2019/10/06/%E6%AF%95%E4%B8%9A%E8%AE%BA%E6%96%87%E6%95%B4%E7%90%86%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9AAdaBoost%E5%92%8C%E6%A6%82%E7%8E%87%E6%8F%90%E5%8D%87%E6%A0%91/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2019/10/06/百度IoT：MQTT Broker架构设计/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">百度IoT：MQTT Broker架构设计 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2019/10/06/毕业设计整理（六）：LBP纹理特征/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">毕业设计整理（六）：LBP纹理特征 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��率提升树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">AdaBoost</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">概率提升树PBT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">PBT的二值分类过程</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">Tan Qing Bo</p>
+<p class="author-description">designed by Tan Qing Bo</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>314</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>32</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��率提升树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">AdaBoost</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">概率提升树PBT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">PBT的二值分类过程</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/资源分享">
+        <div class="categories-list-item">
+          资源分享
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/转载">
+        <div class="categories-list-item">
+          转载
+          <span class="categories-list-item-badge">117</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术博客">
+        <div class="categories-list-item">
+          技术博客
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理">
+        <div class="categories-list-item">
+          图像处理
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/漂来漂去">
+        <div class="categories-list-item">
+          漂来漂去
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/大话设计模式">
+        <div class="categories-list-item">
+          大话设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/东搞西搞">
+        <div class="categories-list-item">
+          东搞西搞
+          <span class="categories-list-item-badge">10</span>
+        </div>
+      </a>
+    
+      <a href="/categories/网络原理">
+        <div class="categories-list-item">
+          网络原理
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C语言">
+        <div class="categories-list-item">
+          C语言
+          <span class="categories-list-item-badge">4</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/操作系统">
+        <div class="categories-list-item">
+          操作系统
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\hibernate" title="hibernate"><div class="tags-list-item">hibernate</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\项目" title="项目"><div class="tags-list-item">项目</div></a>
+    
+    <a href="\tags\网络" title="网络"><div class="tags-list-item">网络</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\博客" title="博客"><div class="tags-list-item">博客</div></a>
+    
+    <a href="\tags\技术" title="技术"><div class="tags-list-item">技术</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">��率提升树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">AdaBoost</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">概率提升树PBT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">PBT的二值分类过程</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-15</div>
+        <a href="/2020/09/15/Convolutional networks for kidney segmentation in contrast-enhanced CT scans/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-14</div>
+        <a href="/2020/09/14/推荐两本经典算法书/"><div class="recent-posts-item-content">推荐两本经典的算法书，入门以及找工作必备！</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-09-06</div>
+        <a href="/2020/09/06/批量规范化：加速深度网络培训减少内部协变量偏移/"><div class="recent-posts-item-content">批量规范化：加速深度网络培训减少内部协变量偏移</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2019-12-24</div>
+        <a href="/2019/12/24/24岁这一年/"><div class="recent-posts-item-content">24岁这一年！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
