@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="特征归一化特性及其数学原理推导">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -243,8 +243,29 @@ y3=100
 y4=300<br></code></pre><p>最近的仍然是y1、y3，哪怕你有一个(x5,y5)=(1,300)，x变化再剧烈，最近邻也轮不到你。效果就是，x这个特征似乎消失了。</p><p>所以，<span style="font-weight: bold;">归一化在维数非常多的时候，可以防止某一维或某几维对数据影响过大</span>。</p><h1>二、归一化和标准化的取舍</h1><p>虽然可以统称为归一化，但是我更愿意称<span style="font-weight: bold;">线性函数归一化（Min-Max Scaling）</span>为<span style="font-weight: bold;">极大极小归一化（Min-Max Normalization）</span>，称<span style="font-weight: bold;">零均值归一化（Z-Score Normalization）</span>为<span style="font-weight: bold;">零均值标准化（Z-Score Standardization）</span>。</p><p>因为极大极小归一化的方法是，根据极值，将所有内部值压缩到[0,1]区间；而零均值标准化做的是，根据所有数值，将分布转为标准正态分布，均值为0，方差为1，取值[-1,1]。在实际使用过程中深有体会，当用极大极小归一化时，如果不是已经知道极值（比如0~255），一旦有新的数据（比如Haar特征）加入，根据固定的极值（当前数据最大最小值）去压缩，就可能产生超过1或者小于0的特征值，但是在处理上会方便许多；采用零均值标准化的话，由于可能取到负值，而且新进来的数据依然可能越界，其实都不好使……</p><p>那么，应该如何取舍归一化和标准化呢？</p><p>（1）如果对输出结果有要求，或者数据比较稳定，用归一化。</p><p>（2）如果存在一些异常值和噪音，数据符合正态分布，用标准化。</p><p>（3）如果涉及距离度量计算相似性（比如KNN、Kmeans聚类）、或者PCA，用标准化。</p><p>前面两个都好理解，数据稳定，用极值方便；有异常或噪音，用标准化保证整体数值分布。我们来仔细分析一下第三点，首先推导零均值标准化原理。</p><h2>正态分布的期望从定义开始推导</h2><p>正态分布也叫高斯分布，期望有很多种推导方式，比如<a href="https://blog.csdn.net/su_jz/article/details/52579723" target="_blank">极坐标</a>这种很秀的推导方法，我们只记最简单的<span style="font-weight: bold;">Γ函数</span>推导就好了。</p><p>（1）推导E(x)到合适的地方</p><p>已知一般正态分布：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b8bf3802b3022c3640da519dc6dbc99a.png" style="max-width:100%;"></p><p>其概率密度函数为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/56215eda77890a3975cdc1f2eee98bbb.png" style="max-width:100%;"></p><p>根据期望的定义有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7b60cb86c4712d1d2996e24a6a727144.png" style="max-width:100%;"></p><p>换元积分，令：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9acd479e096bfd7adf791b7e42fb4fa0.png" style="max-width:100%;"></p><p>则E(x)可以改写为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b918959814607c5be2f4fc1ed8712594.png" style="max-width:100%;"></p><p>左式为奇函数在对称区间的积分，积分为0，而右边是偶函数在对称区间的积分，积分为2倍半区间积分，于是：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/479bd736b39001cb9aa373d537275a66.png" style="max-width:100%;"></p><p>（2）推导Γ函数的特性</p><p>注意到含参变量的以无穷乘积函数定义的反常积分<span style="font-weight: bold;">Γ函数</span>定义为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/65b08b47480aad1d47447b1e40b74895.png" style="max-width:100%;"></p><p>用<a href="https://baike.baidu.com/item/分部积分法" target="_blank">分部积分法</a>（其公式不再继续往下证明）有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/362d85cccf5977fb6c755d85f50cbd33.png" style="max-width:100%;"></p><p>��么，令：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c1d62e46ec18fc2846ddab30d91b85e9.png" style="max-width:100%;"></p><p>得到Γ函数的递推公式及其推论：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dca4e4e6d71f71eb1ea9399be7a11d08.png" style="max-width:100%;"></p><p>（3）利用Γ函数的特性</p><p>所以，对E(X)再次换元：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6b851adeb6aa2ec25be9c3ea8ec63268.png" style="max-width:100%;"></p><p>有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/18847cdb0739af9e254ba4cf70fde06e.png" style="max-width:100%;"></p><h2>正态分布的方差从定义开始推导</h2><p>（1）推导D(x)到合适的地方</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/89fc2c37108116203cd4944695d1325f.png" style="max-width:100%;"></p><p>同样地，进行换元，令：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/92eb7b8d081e3bb724f6b6591cdba7a9.png" style="max-width:100%;"></p><p>利用分部积分法，有：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/8cdfb9038e07fb3bf1687dfd873cfcea.png" style="max-width:100%;"></p><p>注意这里分部积分法的使用，是拆开了前面的平方，组合后面的。而且没有用网上所谓的“注意到”：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6462314addb084d20cc2e3afe106122b.png" style="max-width:100%;"></p><p>虽然和分部积分法原理一样，但是除非非常熟练，看到这个积分就能想到这个导数，否则以我的视角根本不可能去“注意到”。还是分部积分法靠谱一些。</p><p>（2）利用Γ函数特性</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e3e9de86b89c42a30079cb7af94c5bd8.png" style="max-width:100%;"></p><p><a href="https://blog.csdn.net/duan_zhihua/article/details/78715603" target="_blank">第二种推导方案</a>是利用：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d81bf79ce4bb2434135c70698e5739e8.png"></p><p>来进行推导。</p><p><a href="http://www.cnblogs.com/yuanyifei1/p/8946471.html" target="_blank">第三种推导方案</a>是，不使用奇函数特性，使用洛必达法则推导；不使用Γ函数特性，使用<a href="https://zhidao.baidu.com/question/624679748076324644.html?qbl=relate_question_0&amp;word=t%5E2e%5E%28-t%5E2/2%29" target="_blank">双重积分+极坐标</a>推导。</p><p><a href="https://blog.csdn.net/su_jz/article/details/52579723" target="_blank">第四种推导方案</a>是，不使用分部积分法，使用一种新奇的换元方法+Γ函数特性：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c28a05d3fc292438971f4e162686d12a.png" style="max-width:100%;"></p><p>这里不再赘述。</p><h2>为什么零均值标准化能使得均值为0方差为1<br></h2><p>即需要证明，若X~N(μ,σ)，则Z=(X-μ/σ)~N(0,1)</p><p>我们知道，分布函数F(x)、概率密度f(x)存在这样的关系：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1db22a4430fa2cbf95f37fc44bd27aaa.png" style="max-width:100%;"></p><p>那么：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9800186bdf276ad59847c658f149aede.png" style="max-width:100%;"></p><p>所以，Z=(X-μ/σ)~N(0,1)</p><h2>为什么零均值标准化适合于距离度量、PCA</h2><p>PCA原理不再介绍，我们知道PCA的核心就是方差与协方差。原始特征样本协方差为（N-1是无偏估计，撇表示区分不是指导数）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d054226136e15208eab6f59667544c48.png" style="max-width:100%;"></p><p>那么，使用零均值标准化：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4129d51b9a8cb0e0e6aa34c86378138c.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/70c26a648309bd4bafb4619c83331170.png" style="max-width:100%;"></p><p></p><p>而使��极大极小归一化：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7bee4232a6c1d49799495a16434151a2.png" style="max-width:100%;"></p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0d6ed434e62583611d4163757fc0394b.png" style="max-width:100%;"></p><p>极大极小归一���使得协方差产生了倍数值缩放，无法消除量纲的影响；而零均值标准化对方差进行了归一化，使得量纲不会对协方差的计算产生任何影响。</p><p>所以，如果需要每个特征值都对整体归一化产生一定影响的话（和分布相关的话），选择零均值归一化。</p><h1>三、特征归一化的使用范围</h1><p>《百面》上说：</p><blockquote>在实际应用中，通过梯度下降法求解的模型通常是需要归一化的，包括线性回归、逻辑回锅、支持向量机、神经网络等模型。但对于决策树模型则并不适用，以C4.5决策树为例，决策树在进行节点分裂时主要依据数据集D关于特征x的信息增益比，而信息增益比跟特征是否进行归一化是无关的，因为归一化并不会改变样本在特征x上的信息增益。</blockquote><p>但其实，看一下C4.5的信息增益比公式，样本集合D，类别数N，某类样本子集Ci，Di中属于第n类的子集D(in)，特征取值数K，||表示取元素个数，某特征X，其信息增益比为：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0a879969b47d3aa4e51b3a2195082b0a.png" style="max-width:100%;"></p><p>信息增益比相当于帮决策树进行了归一化。而且其实，决策树使用了归一化，也不会有太大的问题。</p><h1>总结</h1><p>除了极大极小归一���、零均值归一化，还有一些非线性的归一化，比如log10、log2、tan等。归一化的好处真的非常之大，是机器学习入门必备的概念。</p><p>这里通过一些数学推导把以前原理模糊的概念都理解透彻了，由于涉及到较多的数学，如有错误还望指正。</p><p><br></p>                </div>
 </li>
 </ul>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -295,7 +316,7 @@ y4=300<br></code></pre><p>最近的仍然是y1、y3，哪怕你有一个(x5,y5)=
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -479,6 +500,48 @@ y4=300<br></code></pre><p>最近的仍然是y1、y3，哪怕你有一个(x5,y5)=
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -516,6 +579,8 @@ y4=300<br></code></pre><p>最近的仍然是y1、y3，哪怕你有一个(x5,y5)=
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -536,7 +601,7 @@ y4=300<br></code></pre><p>最近的仍然是y1、y3，哪怕你有一个(x5,y5)=
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

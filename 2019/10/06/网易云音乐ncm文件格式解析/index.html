@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="网易云音乐ncm文件格式解析">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -240,8 +240,29 @@ var _hmt = _hmt || [];
 </ul>
 <p>fffn）&nbsp;<br></td><td>大佬原生程序</td></tr><tr><td>&nbsp;未知</td><td><a href="https://pan.baidu.com/s/1e-CH-OImgizifrwNZLHTAw" target="_blank">点此下载</a>（提取码：</p>
 <p>xmd9）<br></td><td>只需要把ncm拖进main.exe就可以了</td></tr></tbody></table><p>写到这里，默默大喊一句，开源大法好！</p><h1>NCM文件格式和解密代码分析</h1><p>由于第一个搜索到的项目是<a href="https://github.com/lianglixin/ncmdump" target="_blank">lianglixin / ncmdump</a>，所以我们以lianglinxin作者的python代码为基础来进行分析，参考nondanee作者的代码注释来理清思路。测试的ncm文件是<a href="https://pan.baidu.com/s/1ii_1IqIYFzgu2i43S7KCDA" target="_blank">郭顶 - 水星记.ncm</a>（提取码：5ua0），字节查看器为UltraEdit。</p><p>整个文件��一个函数dump(file_path)，下面进行分段分析。</p><pre><code class="prettyprint lang-py linenums">core_key = binascii.a2b_hex("687A4852416D736F356B496E62617857")<br>meta_key = binascii.a2b_hex("2331346C6A6B5F215C5D2630553C2728")<br>unpad = lambda s : s[0:-(s[-1] if type(s[-1]) == int else ord(s[-1]))]<br>f = open(file_path,'rb')<br>header = f.read(8)<br>assert binascii.b2a_hex(header) == b'4354454e4644414d'</code></pre><p>定义了core_key和meta_key，<code>binascii.a2b_hex</code>的意思就是把这个字符串按照十六进制反解析为二进制字节序列（bytes类型），可以用ascii字符来表示，b2a则进行相反操作。如果对ascii码不熟悉可以<a href="http://ascii.911cha.com/" target="_blank">查表</a>，比如0x68=h，0x7A=z，所以：</p><p>core_key = b’hzHRAmso5kInbaxW’</p><p>meta_key = b”#14ljk_!\]&amp;0U&lt;’(“</p><p>然后定义了一个lamda表达式（内嵌函数）unpad。</p><p>打开了ncm文件并读取了8个字节，确认这8个字节是否是字节序列b’4354454e4644414d’，用UltraEdit查看ncm文件，发现这些字节是’CTENFDAM’，0x43=C，说明这些就是ncm独有的文件标记，就是通俗所谓的magic。<br></p><pre><code class="prettyprint lang-py linenums">f.seek(2, 1)</code></pre><p>然后从当前位置跳过了2个字节，这两个字节是0x01 0x70，而且打开几个ncm文件都是一样的值，<span style="font-weight: bold;">为什么它不能直接读10个字节的magic呢？</span>可能代表不同的含义吧，暂时不管。</p><pre><code class="prettyprint lang-py linenums">key_length = f.read(4)<br>key_length = struct.unpack('&lt;I', bytes(key_length))[0]<br>key_data = f.read(key_length)<br>key_data_array = bytearray(key_data)<br>for i in range (0,len(key_data_array)): key_data_array[i] ^= 0x64<br>key_data = bytes(key_data_array)<br>cryptor = AES.new(core_key, AES.MODE_ECB)<br>key_data = unpad(cryptor.decrypt(key_data))[17:]<br>key_length = len(key_data)</code></pre><p>获取了4字节的key长度，并且按照小端（&lt;）的方式（高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中，也就是反序）转为整型（I）。这4个字节是：0x80 0x00 0x00 0x00，所以反序再转换就是0x00000080 = 128。读取128个字节的key数据，并转为字符数组，每个字节和0x64进行异或，<span style="font-weight: bold;">还不清楚这个异或是为了什么目的</span>。</p><p>然后用之前的core_key创建了AES_ECB（Electronic Codebook Book，电码本模式）的解密器。ECB模式是将整个明文分成若干段相同的小段，然后对每一小段进行加密，如果不足则会进行补足。</p><p>cryptor.decrypt(key_data)解析出来的是：</p><blockquote>b’neteasecloudmusic10073261712832E7fT49x7dof9OKCgg9cdvhEuezy3iZCL1nFvBFd1T4uSktAJKmwZXsijPbijliionVUXXg9plTbXEclAE9Lb\r\r\r\r\r\r\r\r\r\r\r\r\r’&nbsp;&nbsp;<br></blockquote><p>而应用unpad的lamda表达式之后，末尾的\r就去掉了，并且去掉了开头的标记符号，NCM的大名Netease Cloud Music：</p><blockquote>key_data = b’10073261712832E7fT49x7dof9OKCgg9cdvhEuezy3iZCL1nFvBFd1T4uSktAJKmwZXsijPbijliionVUXXg9plTbXEclAE9Lb’&nbsp;&nbsp;&nbsp;<br></blockquote><p>在最后更新了一下key的长度，更新为了128-13-17=98。</p><pre><code class="prettyprint lang-py linenums">key_data = bytearray(key_data)<br>key_box = bytearray(range(256))<br>c = 0<br>last_byte = 0<br>key_offset = 0<br>for i in range(256):<br>    swap = key_box[i]<br>    c = (swap + last_byte + key_data[key_offset]) &amp; 0xff<br>    key_offset += 1<br>    if key_offset &gt;= key_length: key_offset = 0<br>    key_box[i] = key_box[c]<br>    key_box[c] = swap<br>    last_byte = c</code></pre><p>上面这部分是标准RC4-KSA算法（Key-scheduling algorithm）去计算S-box。</p><pre><code class="prettyprint lang-py linenums">meta_length = f.read(4)<br>meta_length = struct.unpack('&lt;I', bytes(meta_length))[0]<br>meta_data = f.read(meta_length)<br>meta_data_array = bytearray(meta_data)<br>for i in range(0,len(meta_data_array)): meta_data_array[i] ^= 0x63<br>meta_data = bytes(meta_data_array)<br>meta_data = base64.b64decode(meta_data[22:])<br>cryptor = AES.new(meta_key, AES.MODE_ECB)<br>meta_data = unpad(cryptor.decrypt(meta_data)).decode('utf-8')[6:]<br>meta_data = json.loads(meta_data)</code></pre><p>这部分和前面的key很相似，读取4字节长度，然后把数据进行异或，注意这里异或的是0x63，这个值怎么来的也不清楚。接着发现meta_data的值是这样的：</p><blockquote><p>b”163 key(Don’t modify):L64FU3W4YxX3ZFTmbZ+8/fOGFX4ZDFzRxiE6WTSCw8Wbw8yYSVQFmAmCHw9A96ZnO0UOuMsVWYFWvoqD0/YcH3r7VAGU8B3l+FBJm4JL6is23S2yXChnSbfLIksnEUcTC7JtrA1JAoR0GVnz+OT3hGTJRsjGIVQXg2yide/YKBACffE+oYBApqZ5Isq0n7h/MlBnjn6ihuSlIl5V2rXEjSISQr031eSBdEVJ/JcwttzLafIPBh2FQfaVd/U0inWY5jxCXZCw/jxcIdGmGH/0Oft3UlNPt2kDBrsivoVuD03tMWL6A5Flg/jCbofSOblHFC79oU3WF9doUjD24BXuu6K7wyoWkgyG7SJu8tk72hkGw3rLK1nbTHsSEIPjocC6Ba9mzF48SB087MFTSn+9PXPZIboMXFXGI3TpMj4rR6cD+6CEWS7EoZrUC1cipi/A0jT/rFtAirM4hmkbrvslJumMHDJz1q9o6t3XRWydyoIaC3ktXuesyV8sbuoQ+Y/EMWNZRN3KhGR/jnnQPBtseQ==”</p></blockquote><p>前面有22位的“163 key(Don’t modify):”，去掉之后用base64解码，并同样地通过AES_ECB和meta_key进行解密：</p><blockquote><p>b’music:{“musicId”:441491828,”musicName”:”\xe6\xb0\xb4\xe6\x98\x9f\xe8\xae\xb0”,”artist”:[[“\xe9\x83\xad\xe9\xa1\xb6”,2843]],”albumId”:35005583,”album”:”\xe9\xa3\x9e\xe8\xa1\x8c\xe5\x99\xa8\xe7\x9a\x84\xe6\x89\xa7\xe8\xa1\x8c\xe5\x91\xa8\xe6\x9c\x9f”,”albumPicDocId”:2946691248081599,”albumPic”:”<a target="_blank" rel="noopener" href="https://p4.music.126.net/wSMfGvFzOAYRU_yVIfquAA==/2946691248081599.jpg&quot;,&quot;bitrate&quot;:320000,&quot;mp3DocId&quot;:&quot;668809cf9ba99c3b7cc51ae17a66027f&quot;,&quot;duration&quot;:325266,&quot;mvId&quot;:5404031,&quot;alias&quot;:[],&quot;transNames&quot;:[],&quot;format&quot;:&quot;mp3&quot;%7D/r/r/r/r/r/r/r/r/r/r/r/r/r&#39;">https://p4.music.126.net/wSMfGvFzOAYRU_yVIfquAA==/2946691248081599.jpg&quot;,&quot;bitrate&quot;:320000,&quot;mp3DocId&quot;:&quot;668809cf9ba99c3b7cc51ae17a66027f&quot;,&quot;duration&quot;:325266,&quot;mvId&quot;:5404031,&quot;alias&quot;:[],&quot;transNames&quot;:[],&quot;format&quot;:&quot;mp3&quot;}\r\r\r\r\r\r\r\r\r\r\r\r\r&#39;</a></p></blockquote><p>于是这个作者去掉了前面的“music:”，然后转为了json字典：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fedd9da8584c1430eaa23b6e1abc6c2e.png" style="max-width:100%;"></p><pre><code class="prettyprint lang-py linenums">crc32 = f.read(4)<br>crc32 = struct.unpack('&lt;I', bytes(crc32))[0]<br>f.seek(5, 1)</code></pre><p>这是CRC32校验码，以及5个不知道为什么跳过的字符。</p><pre><code class="prettyprint lang-py linenums">image_size = f.read(4)<br>image_size = struct.unpack('&lt;I', bytes(image_size))[0]<br>image_data = f.read(image_size)</code></pre><p>这是封面的图像数据。</p><pre><code class="prettyprint lang-py linenums">file_name = meta_data['musicName'] + '.' + meta_data['format']<br>    m = open(os.path.join(os.path.split(file_path)[0],file_name),'wb')<br>    chunk = bytearray()<br>    while True:<br>        chunk = bytearray(f.read(0x8000))<br>        chunk_length = len(chunk)<br>        if not chunk:<br>            break<br>        for i in range(1,chunk_length+1):<br>            j = i &amp; 0xff;<br>            chunk[i-1] ^= key_box[(key_box[j] + key_box[(key_box[j] + j) &amp; 0xff]) &amp; 0xff]<br>        m.write(chunk)<br>    m.close()<br>    f.close()</code></pre><p>这部分是用<b>修改后</b>的RC4-PRGA算法（Pseudo-random generation algorithm）进行还原并输出成文件，这是MP3的原本数据。</p><p>原本故事到这里就结束了，然而发现输出的文件和另一个用GUI程序输出的文件不一样呢：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e01c339bd1627f6374177d8d9941450f.png" style="max-width:100%;"></p><p>竟然木有封面……用MP3tag比较一下，其他信息都全，就是图片没有啊：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a2630113b3b3d9f143d19a6cc7ce39b7.png" style="max-width:100%;"></p><p>于是用eyed3库添加image_data进去，查了半天源码，终于找到合适的方法：</p><pre><code class="prettyprint lang-py linenums">audiofile = eyed3.load(u"E:\CloudMusic\3.mp3")<br>audiofile.tag.images.set(0x06, image_data, 'image/jpeg')<br>audiofile.tag.save()</code></pre><p>这样就有封面啦。<a href="https://github.com/nondanee/ncmdump" target="_blank">nondanee/ncmdump</a>作者也发现了这个问题，并且也是手动添加的image_data的tag数据：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ecc0939d74b4ced007e9050ba6151c0c.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e2168a3fde644ce514aaaf12cc5ba2e8.png" style="max-width:100%;"></p><p>不过python还是很慢的，以后还是用C++那个程序比较好。</p><h1>附录</h1><p>1、安装pycrypto报错unable to find vcvarsall.bat</p><p>pycrypto对于python3.5要求VS2015的库，我只安装了VS2013，所以需要<a href="https://blogs.msdn.microsoft.com/pythonengineering/2016/04/11/unable-to-find-vcvarsall-bat/#comments" target="_blank">下载新版的库</a>，大概3G，强制占用C盘嘤嘤嘤……</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/bf4dcb045344cc27bde7d31ccfb7a5dc.png" style="max-width:100%;"></p><p>2、eyed3路径不支持中文名</p><p>这是bug……而且<a href="http://blog.51cto.com/colinzhouyj/2311292?source=dra" target="_blank">trick方法</a>是修改magic.py文件（是库文件），我试过确实可以，但是这个方法并不好，在230行左右：</p><pre><code class="prettyprint lang-py linenums">if is_unicode:<br>    return filename.encode('utf-8'）<br>else:<br>    return filename</code></pre><p>改为：</p><pre><code class="prettyprint lang-py linenums">if is_unicode:<br>        import locale<br>        lan, encoding = locale.getdefaultlocale()<br>        return filename.encode(encoding)<br>else:<br>        return filename</code></pre><p>很明显可以参考<a href="https://github.com/nondanee/ncmdump" target="_blank">nondanee/ncmdump</a>作者采用mutagen库，放弃eyed3。</p><p>3、<a href="http://ascii.911cha.com/" target="_blank">ASCII 十进制、十六进制、字符对照表</a></p><p>4、<a href="https://blog.csdn.net/weiwangchao_/article/details/80395941" target="_blank">unpack()参数含义</a></p><p>5、<a href="https://www.cnblogs.com/starwolf/p/3365834.html" target="_blank">AES五种加密模式</a></p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -291,7 +312,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -474,6 +495,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -510,6 +573,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -530,7 +595,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

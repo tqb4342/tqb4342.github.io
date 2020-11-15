@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="3月1日七牛云存储割韭菜的应对方法">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -237,8 +237,29 @@ var _hmt = _hmt || [];
 <li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/246.html">http://www.bewindoweb.com/246.html</a><div class="card-article-text"><h1>��言</h1><p>早上起来看邮件，看到一封被七牛云割韭菜的公告：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c25ff82293a87564211398c2c5841118.png" style="max-width:100%;"></p><p>内心冰冰凉，不过大家都要吃饭的嘛总不能一直免费下去。所以来研究一下对于我们这种穷人应该如何应对。</p><h1>一、七牛CDN加速流程</h1><h2>主要流程分析</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3a4765f526cc63fe49ee159b7c96d6e9.png" style="max-width:100%;"></p><p></p><p></p><p>1、用户通过浏览器访问我的网站（腾讯云服务器），网站下发HTML给浏览器，HTML里包含了图片URL，域名为cdn.bewindoweb.com，于是浏览器继续去这个域名获取图片。</p><p>2、这个CDN域名是我在腾讯云域名解析构建的子域名，因此会去解析，我添加了一条CNAME，将cdn.bewindoweb.com指向了cdn.bewindoweb.com.qiniu.com，会继续解析这个七牛融合CDN的域名。</p><p>3、七牛融合CDN看看有没有缓存（自定义缓存30天），如果有，则直接下发，流程结束。</p><p>4、如果没有缓存，根据3种回源策略：</p><p>1）通过七牛云对象存储回源，会去对象存储那里下载图片文件，如果对象存储里也没有，则利用镜像同步服务去指定的位置下载图片文件，我指定的位置是我的服务器，所以会从服务器下载到对象存储，再从对象存储下载到融合CDN，对象存储也会保留一份缓存（自定义30天）。</p><p>2）通过域名回源，会去解析域名，然后访问对应服务器拿到图片文件，缓存在融合CDN后下发。</p><p>3）通过IP地址回源，直接访问对应服务器拿到图片文件，缓存在融合CDN后下发。</p><h2>加速原理分析</h2><p>1、CDN服务器的缓存</p><p>融合CDN是由很多台全国各地的服务器组成的，因此如果CDN服务器里有，直接就下发给用户了，不用从我的网站服务器拿。比如新疆的网友可能就在位于新疆的CDN服务器拿到图片，本地的延迟很低，而不用来我的广东服务器拿图片，延迟很高。如果有多个用户同时拿图片，不但距离远导致网络传输慢，我的1M带宽小水管也会挤爆，每个人以10KB/s的速度下载图片，那场景可以想象……而CDN会提供很大的下行带宽，不需要担心服务器成为瓶颈。</p><p>2、对象存储的缓存</p><p>如果设置成对象存储，当CDN缓存失效，可以直接从对象存储里拿图片，而不需要从我的服务器拿。对象存储是七牛云自己的，肯定也是分布式大带宽的，所以很快就能拿到失效的图片。由于我设置的都是1个月缓存时间，所以基本没有用，只有当CDN服务器的缓存失效时间比对象存储更小，CDN才会比对象存储更快失效去拿数据。为什么大部分默认的CDN都设置的4小时而不是1个月呢？因为大部分CDN都是整站缓存，所以当网站有更新之后，如果不设置更新，用户访问到的仍然是旧网站。我这里设置1个月是因为我只缓存图片（用的PHP伪静态缓存HTML没有用），图片名称都是md5随机Hash的值，一旦图片改变，命名也会改变，不用担心更新后没有及时显示。如果要不改变名称更新图片，可以去七牛云后台手动刷新图片在CDN上的缓存。</p><p>3、通过域名/IP回源</p><p>如果不用对象存储，直接采用域名/IP，则会直接从服务器拿图片缓存到CDN，可能会出现如果CDN缓存同一时间大量失效，大量请求打到服务器造成服务器短时间无法访问的问题。我设置成1个月，每天更新的频率不高的话，压力也还好（而且网站也没什么人访问QwQ）。</p><h1>二、应对措施</h1><p>分析完了原理，再看看七牛云的公告：对象存储CDN回源流出流量以0.15/GB价格进行收费。</p><p>对象存储CDN回源流出流量指的就是采用“通过对象存储回源”的方案，���CDN缓存失效时，对象存储下发给CDN的流量。看看官网的服务收费：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>服务&nbsp;</th><th>名目&nbsp;</th><th>收费情况&nbsp;</th></tr><tr><td>&nbsp;融合CDN</td><td>&nbsp;HTTP下载流量&nbsp;</td><td>&nbsp;国内0~10GB免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;存储空间</td><td>&nbsp;0~10GB免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;写请求</td><td>&nbsp;0~10万次免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;读请求</td><td>&nbsp;0~100万次免费</td></tr><tr><td>&nbsp;对象存储（标准存储）</td><td>&nbsp;CDN 回源流出流量</td><td>&nbsp;0.15元/GB</td></tr></tbody></table><p>没错，就是最后一项收费。那么我们将CDN回源策略改为直接从服务器域名回源就可以了。</p><p>1、登录七牛云，选择融合CDN→域名管理，选择之前配置的cdn，点击配置</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5f98e08b12c983f3dc4f15ef49432f43.png" style="max-width:100%;"></p><p>2、在回源配置里，点击修改配置</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9f6613f4739f214001ab05c17c321021.png" style="max-width:100%;"></p><p>3、将回源方式从七牛云存储改为源站域名，填写域名</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7fa8f93e26c67bc6034022b56dd5b065.png" style="max-width:100%;"></p><p>4、它需要测试一下域名是否可用，随便填写一个合法的图片文件通过测试，就能够确定啦（否则确定按钮是不可用的）。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c8bed100786f1e5b2054d5d62d5b73ef.png" style="max-width:100%;"></p><h1>三、一些注意事项</h1><p>1、修改完后会有短时间图片访问失败的问题</p><p>在确认的期间，访问网站图片可能会报404找不到、409有冲突等等，如果直接访问图片URL还会提示{"error":"no such domain"}，或者DNS解析错误：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fca7e1430ada6dd49b25c2f366ca08c1.png" style="max-width:100%;"></p><p>都是正常的，等待就好了。</p><p>2、此方法仅限于只用了七牛CDN的用户</p><p>因为很多像WordPress之类的博客，会提供插件上传图片直接放到七牛云存储。那些同学可能需要下载所有文件，然后修改所有文件中的链接，停用七牛云存储才行。我当时总是觉得把文件直接放到其他的服务器不放心，还是放到我自己的服务器只加个CDN外壳同步就好，我可真是个小机灵鬼~</p><p>3、不要妄想更换CDN</p><p>如果实在不行，不要更换CDN，0.15已经是行业低价了（其他的基本都是0.25、0.35），如果网站访问量不高，还是可以考虑支持七牛云存储这波操作的。</p><p>我今天尝试更换了几次CDN，发现以前和百度合作的免费的<a href="https://www.yunaq.com/jsl/" target="_blank">加速乐</a>，它的图片加载速度感人，一查对应的CDN服务器，只有两台……</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dc51fe4e6b40b722972a604b9670c244.png" style="max-width:100%;"></p><p>而看看七牛云的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b42730f2bf931c8821fc84ddbc5db8ea.png" style="max-width:100%;"></p><p>七牛云真的很良心。我还试用了<a href="http://wangzhan.360.com/" target="_blank">360网站卫士</a>，效果也很差（而且还会担心各家都屏蔽360）。360网站卫士免费是为了360搜索引擎等其他的服务能够得到更多的数据，毕竟用360就要做好给360提供数据的心理准备。<a href="https://su.baidu.com/" target="_blank">百度云加速</a>的性能还不知道，审核都要2个工作日，所以今天周六是不行了，以后再看吧。其他野鸡的免费CDN就最好不要尝试了，因为工信部要求CDN注册需要提供手持身份证照片，所以把自己的信息传到野鸡服务器上去还是不太好……</p><p>我已经做好了下一波七牛云融合CDN割韭菜的准备了……那就是……放弃挣扎！</p><p><br></p>                </div>
 </li>
 </ul>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -288,7 +309,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -471,6 +492,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -507,6 +570,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -527,7 +592,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

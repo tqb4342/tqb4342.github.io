@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="用pythonGUI上传文件到AWS S3">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -290,8 +290,29 @@ def __call__(self, bytes_amount):
 save_button.place(x=140, y=225)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件config.ini类似这样：&lt;/p&gt;&lt;pre&gt;&lt;code class=&quot;prettyprint lang-txt linenums&quot;&gt;[aws_account]</code></pre>
 <p>aws_kid = A****<br>aws_sak = o******</p>
 <p>[bucket_info]<br>region_name = <strong>**</strong><br>bucket = <strong><strong>*<br>key = *</strong></strong></code></pre><p><span style="font-size: 16px; font-weight: bold;">5、文件选择框</span><br></p><p>文件选择框调用一个函数即可，底层库帮我们做复杂的GUI操作。</p><pre><code class="prettyprint lang-py linenums">def filefound():<br>    filepath= askopenfilename()<br>    if (filepath != ""):<br>        (filename_prefix, filename) = os.path.split(filepath)<br>        text_filepath.delete(0.0, END)<br>        text_filepath.insert(END, filepath)<br>        text_filename.delete(0.0, END)<br>        text_filename.insert(INSERT, filename)</code></pre><h2>6、打包成EXE</h2><p>利用pyinstaller命令：</p><pre><code class="prettyprint lang-py linenums">pyinstaller -w main.py</code></pre><p>-w：启动时不显示命令行窗口</p><p>-F：打包成一个独立的EXE文件。不推荐这样做，因为这样会在启动的时候慢慢释放那些依赖库，导致启动缓慢，启动一次要10秒不能忍受</p><p>-D（默认）：打包成一个文件夹，含有依赖库，启动快。</p><p>还有其他参数，例如设置图标等，可以查<a href="http://www.pyinstaller.org/" target="_blank">pyinstaller的API</a>。</p><p>打包下来有50M左右，还是很大，只是一个小程序。</p><h1>四、总结</h1><p>这个脚本的适用性不广，但是熟悉了很多python的库，而且也方便我平时使用。如果习惯命令行的，可以直接写个windows批处理程序；还可以扩展诸如选择文件夹上传、多文件上传、日志查看等，这里我不需要所以不继续做了。</p><p>完整代码和可执行文件：<a href="https://github.com/BEWINDOWEB/AwsS3WindowsUploader" target="_blank">AwsS3WindowsUploder</a></p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -341,7 +362,7 @@ save_button.place(x=140, y=225)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件con
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -524,6 +545,48 @@ save_button.place(x=140, y=225)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件con
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -560,6 +623,8 @@ save_button.place(x=140, y=225)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件con
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -580,7 +645,7 @@ save_button.place(x=140, y=225)&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件con
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

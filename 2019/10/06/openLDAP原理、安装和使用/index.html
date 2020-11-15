@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="openLDAP原理、安装和使用">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -268,8 +268,29 @@ dc:bewindoweb
 <h1 id="D：指定服务器Dn"><a href="#D：指定服务器Dn" class="headerlink" title="-D：指定服务器Dn"></a>-D：指定服务器Dn</h1><h1 id="w：绑定dn的密码"><a href="#w：绑定dn的密码" class="headerlink" title="-w：绑定dn的密码"></a>-w：绑定dn的密码</h1><h1 id="f：使用LDIF文件进行条目添加"><a href="#f：使用LDIF文件进行条目添加" class="headerlink" title="-f：使用LDIF文件进行条目添加"></a>-f：使用LDIF文件进行条目添加</h1><p>ldapadd -x -D “cn=Manager,dc=bewindoweb,dc=com” -W -f bwb.ldif</code></pre><p>会提示输入密码，输入之前配置的密码即可。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/509dd568ed1aa09da574ba4afb171049.png" style="max-width:100%;"></p><p>验证一下是否加入成功：</p><pre><code class="prettyprint lang-bsh linenums">ldapsearch -x -b 'dc=bewindoweb,dc=com'</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1a2d9e150bf5108e888a17f896d02c1a.png" style="max-width:100%;"></p><p></p><h2>5、使用phpLDAPadmin进行可视化</h2><p></p><pre><code class="prettyprint lang-bsh linenums">apt-get install phpldapadmin</code></pre><p>注意会安装php5和apache2，如果你已经有网站项目在上面比如php7，那么就要考虑一下怎么处理了。</p><p>修改配置文件：</p><pre><code class="prettyprint lang-bsh linenums">vi /etc/phpldapadmin/config.php</p>
 <p>//$servers-&gt;setValue(‘server’,’base’,array(‘dc=example,dc=com’));<br>$servers-&gt;setValue(‘server’,’base’,array(‘dc=bewindoweb,dc=com’));</p>
 <p>//$servers-&gt;setValue(‘login’,’bind_id’,’cn=admin,dc=example,dc=com’);<br>$servers-&gt;setValue(‘login’,’bind_id’,’cn=Manager,dc=bewindoweb,dc=com’);</code></pre><p>访问界面：<a target="_blank" rel="noopener" href="http://xxx.xxx.xxx.xxx/phpldapadmin/">http://xxx.xxx.xxx.xxx/phpldapadmin/</a><br></p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e3300f3c49a61793a8981cee9cb36c31.png" style="max-width:100%;"></p><p>如果发现访问不了，除了检查phpLDAPadmin，也别忘了检查服务器是否开了端口（默认ldap都在389端口）：</p><p>查看端口：</p><pre><code class="prettyprint lang-bsh linenums">lsof -i:389</code></pre><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/410cdfc271d260d894c7eae9aaa43abe.png" style="max-width:100%;"></p><p><a href="http://tool.chinaz.com/port/" target="_blank">在线端口扫描</a></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/33a5d6553518c17c9fde5ffb8c551e77.png" style="max-width:100%;"></p><h2><span style="font-size: 16px; font-weight: bold;">6、使用Apache Direcotry Studio进行可视化</span></h2><p>安装在windows上后，点击菜单：</p><pre><code class="prettyprint lang-bsh linenums">Window → Open Perspective →  Ldap<br>Window → Show View → Connection</code></pre><p>右键新建一个连接：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/abc1f2e6cd1a74874422b81385d3d9e3.png" style="max-width:100%;"></p><p>由于不支持直接输入ip，修改本地的hosts文件<code>C:\Windows\System32\Drivers\etc\hosts</code>：（为了不影响bewindoweb.com的正常访问，这里写成了testbewindoweb.com）</p><pre><code class="prettyprint lang-bsh linenums">106.12.129.65 testbewindoweb.com</code></pre><p>然后填入服务器信息，点击Check Network Parameter可以测试TCP连接是否成功：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/289a25a051e9ec9874ba8f966e52618b.png" style="max-width:100%;"></p><p>填入管理员帐号，测试是否可以验证成功：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/39b090e6e9817f879f80f2a9df7f381e.png" style="max-width:100%;"></p><p>然后就可以愉快地使用了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c38785cc5e7e1a53336bf15b36739238.png" style="max-width:100%;"></p><h1>总结</h1><p>目前Confluence、Grafana、禅道、YAPI等等非常多的软件都已集成LDAP，掌握LDAP的原理、安装和使用有利于以后的更加透彻理解。</p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -320,7 +341,7 @@ dc:bewindoweb
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -504,6 +525,48 @@ dc:bewindoweb
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -541,6 +604,8 @@ dc:bewindoweb
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -561,7 +626,7 @@ dc:bewindoweb
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

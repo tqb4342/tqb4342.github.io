@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="5分钟学会利用python库爬取双色球历史数据">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -427,8 +427,29 @@ params:
 </li>
 </ul>
 <p>def parseZhcwssq(html,datapath,htmlurl,method,headers,params):<br>    print(“start grabbing…”)<br>    parser = ParserZhcwssq()<br>    wmode = ‘w’<br>    while(1):<br>        parser.feed(html)<br>        print(parser.result)<br>        with open(BASEPATH + datapath, wmode) as f:<br>            for line in parser.result:<br>                f.write(“,”.join(line))<br>                f.write(“\n”)<br>        if int(parser.url_nextpage[1]) != int(parser.url_nextpage[3]) - 1:<br>            print(“grabbing nextpage…”)<br>            wmode = ‘a’<br>            params[‘currentPageNum’] = parser.url_nextpage[2].strip()<br>            html = getHtml(htmlurl, method, headers,params)<br>            parser.reset_attr()<br>        else:<br>            print(“finished.”)<br>            break</code></pre><p>爬取结果：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/843c2a5f4c83eb4c77522756045df871.jpeg" style="max-width:100%;"></p><h1>总结</h1><p>1、这次爬取的结果已经上传到github上的<a href="https://github.com/BEWINDOWEB/lotterydata" target="_blank">lotterydata</a>上面了，可以下载来直接使用。</p><p>2、完整的爬取代码上传到了github上的<a href="https://github.com/BEWINDOWEB/lotteryhistorygrabber" target="_blank">lotteryhistorygrabber</a>，可以下载来学习和实践。</p><p>3、数据格式：</p><p><span style="font-weight: bold;">lot_500_ssq.txt：</span></p><p>期号，红球1，红球2，红球3，红球4，红球5，红球6，蓝球，快乐星期天，奖金奖池（元），</p><p>一等奖注数，一等奖奖金（元），二等奖注数，二等奖奖金（元），总投注额（元），开奖日期</p><p><span style="font-weight: bold;">lot_zhcw_ssq.txt：</span></p><p>序号，开奖日期，期号，红球1，红球2，红球3，红球4，红球5，红球6，蓝球，销售额，</p><p>一等奖注数，一等奖奖金（元），二等奖注数，二等奖奖金（元），三等奖注数，三等奖奖金（元），奖池（元）</p><p>4、这次的爬取总的来说还是十分简单，没有涉及到任何异步加载延迟、复杂的iframe结构、登录cookie/session、js双重加密、服务器反爬虫封IP等等问题，但是可以当做一次基本练习，爬下来的数据也是很有价值的。更加复杂爬虫的推荐使用scrapy+splash等专业爬虫平台来构建项目。talk is cheep，立刻动手，开始编写属于你的爬虫吧~</p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -478,7 +499,7 @@ params:
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -661,6 +682,48 @@ params:
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -697,6 +760,8 @@ params:
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -717,7 +782,7 @@ params:
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

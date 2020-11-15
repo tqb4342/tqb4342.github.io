@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="证书授权机构CA和数字证书">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -237,8 +237,29 @@ var _hmt = _hmt || [];
 <li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/274.html">http://www.bewindoweb.com/274.html</a><div class="card-article-text"><h1>��、引言</h1><h2>1.1 问题的引入</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/f564051b22296dc15ed1b85701bf5e9f.jpeg" style="max-width:100%;"></p><p>客户端A、B、C都想要下载服务器S的某个文件，但文件传输过程中会经过许多不可靠的节点，应该如何保证A、B、C的请求不被篡改，且保证A、B、C收到的是没有被篡改的文件呢？</p><h2>1.2 第一次解决——加密</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/bce5e0d70d6ca9ddf4f52c39125ee88d.jpeg" style="max-width:100%;"></p><p>服务器S做了一对密钥，私钥自己保留，并把公钥发送给客户端A、客户端B、客户端C保存。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/f9c2bf4e8253f8ca3715afe33c069754.jpeg" style="max-width:100%;"></p><p>这样，客户端A可以用公钥对请求进行加密，密文为““&amp;A2*XVqzp346(??=””；服务器S收到后用私钥解密，明文为“客户端A想要下载资源文件”；中间节点没有私钥，无法解密这个请求，也就无法篡改了。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/eea2f4d3743b0ca175b29a64106ee29f.jpeg" style="max-width:100%;"></p><p>此时，服务器S需要把资源文件传给客户端A，需要保证安全性，于是服务器S决定使用“数字签名（Digital Signature）”：将资源文件用Hash函数生成“摘要（Digest）”，然后用私钥对这个摘要加密，生成数字签名。中间节点一旦修改任意的数据，摘要就会发生变化，而新的摘要需要用私钥加密，中间节点无法生成新的摘要，也就无法篡改了。</p><p>例如服务器S生成摘要“MD5-1234567”，加密后为数字签名“Xzpqp190&amp;)DVsz”；将资源文件和数字签名一起发给客户端，客户端收到后用资源文件生成摘要“MD5-1234567”，用公钥解密数字签名，得到服务器S发送的摘要“MD5-1234567”，如果两个摘要一样，则文件确实是服务器S发出的。</p><h2>1.3 加密存在的问题</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5b5b3a7150f04013aa0708578a9a3039.jpeg" style="max-width:100%;"></p><p>不可靠节点U通过某种方式去掉了服务器S的真公钥，并自己生成了一对假公钥，把假公钥发送给客户端A。当服务器S传递文件的时候，不可靠节点U解开资源文件，并加入木马病毒，重新用自己的私钥签名，发送给客户端A。客户端A用U的假公钥解开验证，一切正常，误以为是服务器S传递过来的真文件。</p><h2>1.4 第二次解决——证书授权中心</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b4eecfea19ff1692e20c05219c3e77c4.jpeg" style="max-width:100%;"></p><p>服务器S去一个权威机构“证书授权中心（Certificate Authority）”，将服务器的信息、服务器S的公钥一起用CA私钥加密，生成“数字证书（Digital Certificate）”。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0fa89e9be70959b77a474ca0c8e9bcae.jpeg" style="max-width:100%;"></p><p>服务器S把通过认证的证书发给客户端，客户端用CA公钥解密和验证后得到服务器S公钥，保证服务器S公钥不会被篡改。</p><h1>二、数字签名 Digital Signature</h1><p>数字签名（Digital Signature），就是只有信息的发送者才能产生的别人无法伪造的一段数字串。常见的数字签名手段就是Hash算法，如MD5、SHA256，原理也很简单，将数据通过哈希函数映射到一段字符串上，一旦改动了数据，字符串也会变化，不产生变化的概率极低，也就是所谓的“不可抵赖性”。</p><p>MD5在我中学时期很火，各大下载站为了保证自己的下载内容没有被注入木马，通常都会在网站上挂着MD5校验值。现在木马已经很少了，而且SHA256更安全用得更多一些。</p><h1>三、证书授权中心 CA</h1><p>证书授权中心（Certificate Authority，CA），���为一个受信任的第三方，承担公钥合法性校验的责任。</p><h2><span style="font-weight: bold;">3.1 证书链&nbsp;Certificate Chain</span></h2><p>CA如果直接颁发数字证书，一旦CA的私钥泄漏，所有的证书都将无效。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c5dcf4e5ab345507152a9ce97ebc6a52.jpeg" style="max-width:100%;"></p><p>因此CA设立了三级证书，分别是根证书（Root Certificates）、中间证书（Intermediates Certificates）、终端用户证书（End-user Certificates）。</p><ul><li>根证书的私钥通常存放在断网的环境里，隔离保护；根证书通常除了提供官方下载渠道下载，还会和其他厂商合作，比如Windows操作系统，Chrome浏览器，让其内置这张证书。</li><li>中间证书可能会有多级，比如二级中间证书、三级中间证书等。终端用户证书只能由这些二级CA、三级CA颁发，这样一旦某个中间CA的私钥泄漏，根CA重新颁发一张证书即可。中间CA的私钥一旦泄漏，也意味着各大浏览器都会标记这家CA颁发出的终端用户证书不安全，这家公司将会倒闭。</li><li>终端用户证书则是我们平时使用到的服务器证书。</li></ul><p>剩下的问题就是这么多级证书如何做校验？</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/34c812ad6669b0f403e64b1853e35bb9.jpeg" style="max-width:100%;"></p><p>根证书-中间证书-终端用户证书形成了证书链（Certificate Chain），当校验的时候，根据颁发机构ID一级一级往上提取证书，然后一级一级根据公钥校验证书合法性。</p><p>我们可以看看比较出名的公司使用的什么证书（通过点击浏览器小绿锁就可以看到了）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2b2a1d84cdce6997798cc7bdcd75b10e.png" style="max-width:100%;"></p><p>百度用的Globalsign根CA。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/7798c28a2080719cfa5fc0db20cd363e.png" style="max-width:100%;"></p><p>中国建设银行用的DigiCert。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c9aab295ebb7934a69f054c3ac67ade5.png" style="max-width:100%;"></p><p>github用的DigiCert。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/87ee87a768eb7a042403beae6e6296ab.png" style="max-width:100%;"></p><p>google用的GlobalSign。</p><h2><span style="font-weight: bold;">3.2 自建CA问题</span></h2><p>如果只是自己使用，当然可以自己搭建CA给自己签发证书，但浏览器一般都会提示“不安全”，因为这个证书不是权威机构颁发的。</p><h1>四、证书类型</h1><p>证书一共有三种类型：域名型证书DV（Domain Validation SSL Certificate）、企业组织型证书OV（Organization Validation SSL Certificate）、增强型证书EV（Extended Validation SSL Certificate）。</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;对比项&nbsp;</th><th>&nbsp;DV&nbsp;</th><th>&nbsp;OV&nbsp;</th><th>&nbsp;EV&nbsp;</th></tr><tr><td>&nbsp;审核内容</td><td>&nbsp;域名</td><td>&nbsp;域名、组织信息</td><td>&nbsp;域名、组织信息、第三方数据库&nbsp;</td></tr><tr><td>&nbsp;签发周期</td><td>&nbsp;几分钟~几小时</td><td>&nbsp;2~5天&nbsp;</td><td>&nbsp;5~7天</td></tr><tr><td>&nbsp;赔付保障</td><td>&nbsp;少</td><td>&nbsp;一般</td><td>&nbsp;多</td></tr><tr><td>&nbsp;浏览器表现</td><td>&nbsp;绿锁</td><td>&nbsp;绿锁&nbsp;</td><td>&nbsp;绿锁+组织信息&nbsp;</td></tr><tr><td>&nbsp;证书详情</td><td>&nbsp;显示域名&nbsp;</td><td>&nbsp;显示组织名&nbsp;</td><td>&nbsp;显示组织名</td></tr><tr><td>&nbsp;用途</td><td>&nbsp;个人站点</td><td>&nbsp;一般企业网站</td><td>&nbsp;金融等要求较高的企业网站</td></tr><tr><td>&nbsp;收费</td><td>&nbsp;千元级</td><td>&nbsp;万元级</td><td>&nbsp;万元级</td></tr></tbody></table><p>例如，随便找的一个个人博客的DV��书：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/87f9925b4ada5a3e507e05dbc64c6014.jpeg" style="max-width:100%;"></p><p>百度的OV证书：<br><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4b776b9d52925932fb02682e0d591582.jpeg" style="max-width:100%;">随便找的一个EV证书网站，会在浏览器显示公司信息：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ac36f9694229b65508422002b3f1ee2a.jpeg" style="max-width:100%;"></p><h1>参考资料</h1><p>1、<a href="https://blog.csdn.net/hcm_0079/article/details/84980928" target="_blank">《【web安全】X.509数字证书的结构与解析》</a></p><p>2、<a href="https://www.jianshu.com/p/46e48bc517d0" target="_blank">《证书链-Digital Certificates》</a></p><p>3、<a href="https://support.dnsimple.com/articles/what-is-ssl-certificate-chain/" target="_blank">《What is the SSL Certificate Chain?》</a></p><p>4、<a href="https://blog.csdn.net/qq_34930488/article/details/81316703" target="_blank">《域名型(DV),企业型(OV),增强型(EV)三种SSL证书之间的区别》</a></p><p>5、<a href="https://www.cnblogs.com/sslwork/p/6193256.html" target="_blank">《DV型和OV型证书的区别》</a></p><p><br></p>                </div>
 </li>
 </ul>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -288,7 +309,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -471,6 +492,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -507,6 +570,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -527,7 +592,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

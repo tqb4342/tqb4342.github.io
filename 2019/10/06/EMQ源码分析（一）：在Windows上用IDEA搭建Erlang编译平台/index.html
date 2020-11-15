@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="EMQ源码分析（一）：在Windows上用IDEA搭建Erlang编译平台">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -243,8 +243,29 @@ var _hmt = _hmt || [];
 <p>&#123;erl_opts,<br>  [<br>    debug_info,<br>    &#123;src_dirs,<br>      [<br>        “src”<br>      ]&#125;<br>  ]<br>&#125;.</p>
 <p>&#123;pre_hooks,[]&#125;.</p>
 <p>&#123;cover_enabled, true&#125;.<br>&#123;sub_dirs,[<br>  “src”<br>]&#125;.</code></pre><p>2）建立hello.app.src（OTP application resource file）</p><p>注意这里直接写带“.”的名字会报错，需要先写hello，再重命名为hello.app.src。</p><p>如果写的是hello.erl，mod则写hello：</p><pre><code class="prettyprint lang-txt linenums">&#123;application, hello, [<br>  &#123;description, ""&#125;,<br>  &#123;vsn, "1"&#125;,<br>  &#123;registered, []&#125;,<br>  &#123;applications, [<br>    kernel,<br>    stdlib<br>  ]&#125;,<br>  &#123;mod, &#123;hello, []&#125;&#125;,<br>  &#123;env, []&#125;<br>]&#125;.</code></pre><p><br></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4610e861c191f51835383f7c4067b71d.png" style="max-width:100%;"></p><p><br></p><p>3）配置erlang rebar编译</p><p>命令写compile，跳过依赖编译。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/615b0dd5848a8d7d24ada30ce975bc9d.png" style="max-width:100%;"></p><p>4）执行rebar编译：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b0db49fa42784676ea6b2f78b0f720ed.png" style="max-width:100%;"></p><p>如果直接执行，会报错，原因是之前设置的rebar3路径被清空了，重新配置一次，这次不用Download了，直接选择。</p><p>设置→其他设置→Erlang扩展工具→Path：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4a6e72164d5284e0f19d4e502797b886.png" style="max-width:100%;"></p><p>&nbsp;再编译就能通过了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/8fccc03dd18e0b30d4ed156ba9360082.png" style="max-width:100%;"></p><p>5）执行编译后的程序</p><p>找到编译后hello.app、hello.beam的路径：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c9a2966151ac524c927c868461a7b84c.png" style="max-width:100%;"></p><p>重新配置一个erlang application，将working directory配置成相应路径：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a33483c7d078037a4f9fc4a55c748400.png" style="max-width:100%;"></p><p>执行hello2，会产生和之前一样的结果：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b6556d627649b1c90b05c493a0193140.png" style="max-width:100%;"></p><h1>二、导入EMQ项目</h1><p>我下载的最后一个EMQ2.3.11版本代码，直接导入是不会高亮的，我们先用IDEA建立一个空的Erlang工程，然后将EMQ代码复制到该工程下，重新打开工程，就会语法高亮了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1b80c1c5a87fb2d4c2114a3d5cf38d91.png" style="max-width:100%;"></p><p>可以用Ctrl+点击来跳转函数来源代码，和IntelliJ全家桶逻辑一致。</p><p>注意去标记对应的目录：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c60cbfcfbef82fa8994cad4d30ee6892.png" style="max-width:100%;"></p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -294,7 +315,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -477,6 +498,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -513,6 +576,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -533,7 +598,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

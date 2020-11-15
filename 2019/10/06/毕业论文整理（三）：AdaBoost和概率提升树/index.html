@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="毕业论文整理（三）：AdaBoost和概率提升树">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -237,8 +237,29 @@ var _hmt = _hmt || [];
 <li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/233.html">http://www.bewindoweb.com/233.html</a><div class="card-article-text"><h1>��率提升树</h1><h2>前言</h2><p>这是本科毕设用到的树，概率提升树（Probabilistic Boosting-Tree, PBT）是Tu在2005年<a href="http://xueshu.baidu.com/usercenter/paper/show?paperid=40ef9a4c4764adcec6c74cfb5180d640&amp;site=xueshu_se" target="_blank">《Probabilistic Boosting-Tree: Learning Discriminative Models for Classification, Recognition, and Clustering》</a>中提到的分层分类框架。</p><h2>AdaBoost</h2><p>PBT的实质是对Adaboost的改进，首先回顾一下Adaboost：&nbsp; Adaboost是针对二分类问题设计的，核心点是关注那些被错误分类的训练样本，通过多轮弱分类器的训练逐渐提高被错分样本的权重，对每个弱分类器根据分类精度给一个权重，然后将所有弱分类器用加权的方式制作一个强分类器来达到分类的目的。算法如下：</p><blockquote>【输入】n个训练样本特征向量及其类别(x1,y1),...,(xn,yn)，其中xi∈R^m，yi∈{-1,+1}<br>1) 初始化训练样本分布：D1(i) = 1/n&nbsp;<span style="color: rgb(194, 79, 74);">&nbsp;// 初始的权重是平均的</span><br>2)&nbsp;FOR&nbsp;t = 1..T&nbsp;DO&nbsp;<span style="color: rgb(194, 79, 74);">&nbsp;// 训练T轮，T个弱分类器</span><br>3)&nbsp; &nbsp; &nbsp; &nbsp; 使用分布Dt训练弱分类器ht：R^m → Y&nbsp;&nbsp;<span style="color: rgb(194, 79, 74);">// 就是训练一个假设：看到这个特征向量→应该判别为什么类别</span><br>4)&nbsp; &nbsp; &nbsp; &nbsp; 获得这个假设的加权分类误差：<span style="color: rgb(194, 79, 74);">&nbsp;// 也就是把分类错了的权重累加起来。</span><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/56fb4b51404eb6cf62bfc4ac7e4ed569.png">5)&nbsp; &nbsp; &nbsp; &nbsp; 计算这个假设（弱分类器）的权重：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/66b706abeaf7057dd3f556de10916c02.png">6)&nbsp; &nbsp; &nbsp; &nbsp; 更新训练样本分布：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ea11f9f7c747f4425171e87f0ea9c6eb.png">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 其中，<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e930ab21d0a3ce665e86c8bf93d383d0.png">7)&nbsp;END FOR<br>【输出】最终的假设（强分类器）：<img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b044141c5cb5b5fcbef75dcefff01fc7.png" style="max-width:100%;"></blockquote><p><br></p><p>有关误差上下界的数学推导和为什么选取α为这个式子，可以参看<a href="http://xueshu.baidu.com/usercenter/paper/show?paperid=9e036228debcac9ea3f61fc9af59dc1f&amp;site=xueshu_se" target="_blank">《Boosting Methods for Automatic Segmentation of Focal Liver Lesions》</a>。我们从结果来分析算法中各个参数的性质和作用：</p><p>1) 我们知道弱分类器错误率（加权分类误差）θ≤0.5（不可能大于0.5比随机猜测更差，否则取反就能得到&lt; 0.5的分类器了）</p><p>2) αt≥0（因为(1-θ)/θ ≥ 1），且其随着错误率的减小而增大，说明错误率越小的弱分类器被看得越重要。</p><p>3) 对于一个被错误分类的样本，必有真实类别≠弱分类器判别的假设类别，也就是yi≠ht(<span style="font-weight: bold;">xi</span>)，那么e^-(αt × yiht(<span style="font-weight: bold;">xi</span>))必然大于1，反之分对的样本e^-(αt × yiht(xi))必然小于1，当对下一轮的样本分布权重进行归一化之后，被错分的样本权重必然提高，被正确分类的样本权重降低。</p><p>4) 如此一来，一旦被错分的样本再次被错分，会造成θ错误率的巨额提升，弱分类器肯定会尽力去避免这样的高错误率，也就是被错分的样本被弱分类器更多地当作考虑因素考虑进去了。</p><p>举个实际的应用例子，我们想用决策桩（就是阈值判别器）去划分平面上红色、蓝色小球，初始状态是这样的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0c6a439619a49067adc157e54f18d004.png" style="max-width:100%;"></p><p>然后第一个桩分类器竖着划分，错分了两个：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2c0724771dd79c364c62c25d1d575e95.png" style="max-width:100%;"></p><p>于是在重新计算分布后，它们的权重变大了：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/baf7af391df92ee0e6dcd36f684a4d62.png" style="max-width:100%;"></p><p>第二个分类器更多的考虑了被错分的样本，然而第一次被分对的样本又被分错了两个：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/08277b5ed8d5c9e2e6ba05d1a97a89a9.png" style="max-width:100%;"></p><p>于是再次进行权重调整：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fabd2deb0a28fbeef6339bb2a622f16f.png" style="max-width:100%;"></p><p>第三次继续划分：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/103bc63d330997c55cb2a4be87a94536.png" style="max-width:100%;"></p><p>第三次权重调整+第四次继续划分：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/16df9eed6412e5e9fd06cdacb94bbc9b.png" style="max-width:100%;"></p><p>最后得到强分类器的决策平面：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9002e741cc0a58f33a89e406cf913174.png" style="max-width:100%;"></p><p>当然这是理想情况，实际中不应该划分到这么细，否则会对训练样本产生过拟合。</p><h2>概率提升树PBT</h2><p>通常来说，我们希望建立的模型都是生成式模型（generative model），也就是输入考虑的多种因素，输出一个完整的模型，我们可以提取里面任意的信息。举个例子，我想判断一个动物是不是“斑马”，那么我希望建立一个模型，包含“体型”、“花纹”、“生活习性”、“饮食习惯”、“眼睛大小/颜色/花纹”等等，然后输入这些数值，就能够知道它是不是斑马了。从数学上来说，就是求取整体联合分布P(<span style="font-weight: bold;">X</span>)，代入数值，得到结果，也就是我们希望知道p(<span style="font-weight: bold;">x</span>|y)。常见的生成式模型有隐马尔科夫模型HMM、朴素贝叶斯模型、高斯混合模型GMM、LDA。</p><p>实际中，考虑完所有的东西是不现实的（因此通常都是估计），并且会带来庞大计算量，更多的算法采用了判别式模型（discriminative model），输入特征，输出yes或者no或者其他类别，也就是对后验概率p(y|<span style="font-weight: bold;">x</span>)建模。常见的判别式模型有线性回归、支持向量机SVM、神经网络。</p><p>Adaboost和PBT都是判别式模型。然而Tu发现，Adaboost具有一些缺点：</p><p>1) 需要大量的弱分类器，这带来了庞大计算量</p><p>2) 没有提取特征向量中的语义信息</p><p>3) 更新权重的过程可能导致被分对的样本再次被分错</p><p>4) 只适用于二值分类，多类别分类会非常艰难</p><p>作者还顺便踩了一脚Grossmann提出的AdaTree，说PBT是对后验概率建模，AdaTree只是在剪枝；PBT每个节点都是强分类器，AdaTree知识把弱分类器放在树结构上而已……下面只讨论PBT的二值分类，多值分类可以转换为二值分类处理。</p><h2>PBT的二值分类过程</h2><p>我们知道，Adaboost错误率上限是（这里更换了字母，含义和前面一致）：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1327f743faf0fa55ab721395d62864c4.png" style="max-width:100%;"></p><p>ϵt很快地接近了0.5，然而收敛得非常慢，还造成了反复波动。所以PBT采用分治策略，划分样本空间，当错误率达到一定程度就提前结束Adaboost的训练。</p><p>Friedman等人在论文<a href="http://xueshu.baidu.com/usercenter/paper/show?paperid=cc44ccadefd4d6ab6157708a74c6b825&amp;site=xueshu_se" target="_blank">《Additive Logistic Regression:A Statistical View of Boosting》</a>已经证明过，Adaboost在用这样的逻辑��归式去求取后验概率p(y|x)：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/49864dbfdd60c20f7a9a00a71ebcf9dc.png" style="max-width:100%;"></p><p></p><p></p><p>其中y∈{-1,+1}。于是可以得到估计的后验概率：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/968d7752dfe515700e6f8c64abed9caa.png" style="max-width:100%;"></p><p></p><p></p><p>然后根据这个估计的后验概率，创造一个极小的控制变量ε，PBT可以对样本空间进行划分：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5fe614bb57082d4daae17be351eebc40.png" style="max-width:100%;"></p><p>1) 样本算得q(+1|<span style="font-weight: bold;">x</span>)&gt; 0.5+ε，则划分到正样本空间；</p><p>2) 样本算得q(-1|<span style="font-weight: bold;">x</span>) = 1-q(+1|<span style="font-weight: bold;">x</span>) &gt; 0.5+ε，则划分到负样本空间；</p><p>3) 样本算得q(±1|<span style="font-weight: bold;">x</span>)∈[0.5-ε, 0.5+ε]，则是疑例，同时分配到两个空间。</p><p></p><p></p><p>随着树的生长，样本空间就越来越纯净，所构建的Adaboost强分类器也就越来越好，并且越来越快，无需从头对整个样本空间进行划分。ε 的作用原文说是为了防止过拟合，通常来说取0.1是合适的。</p><p>另外，还限制了每个Adaboost节点的错误上限，当超过上限直接停止生成新的弱分类器，通常来说取0.45是合适的。整个PBT的图像类似于：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2c4ab90943b92a5192a518a136aff1ba.png" style="max-width:100%;"></p><p></p><p>我们来描述一下PBT的训练算法：</p><blockquote>【输入���训练集 S={(<b>x1</b>,y1,w1),…,(<b>xn</b>,yn,wn)} ，其中 ，其中<b>x</b>为特征向量， y∈{-1,+1 }，且 Σwi=1。<br>1) 计算并存储经验分布 qc(y)=Σ(yi=i)wi<br>2) 用 Adaboost 在节点 在节点c处根据当前样本训练强分类器 Hc，当错误率大于θ=0.45 的时候提前退出<br>3)&nbsp;<b>IF</b>&nbsp;达到最大树深 L&nbsp;<b>THEN<br></b>4)&nbsp; &nbsp; &nbsp; &nbsp;return<br>5)&nbsp;<b>ELSE<br></b>6)&nbsp; &nbsp; &nbsp; &nbsp;新建空集Sleft和Sright&nbsp;<br>7)&nbsp; &nbsp; &nbsp; &nbsp;<b>FOR</b>&nbsp;all xi∈Sc&nbsp;<b>DO<br></b>8)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;用gc(x)计算 q(±1|xi)<br>9)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>IF</b>&nbsp;q(+1|xi) &gt; 0.5+ε&nbsp;<b>THEN<br></b>10)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;将样本(xi,yi,1)加入右子树<br>11)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>ELIF</b>&nbsp;q(-1|xi) &gt; 0.5+ε&nbsp;<b>THEN<br></b>12)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;将样本(xi,yi,1)加入左子树<br>13)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>ELSE<br></b>14)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;将样本(xi,yi,q(+1|xi))加入左子树<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 将样本(xi,yi,q(-1|xi))加入左子树<br>15)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<b>ENDIF<br></b>16)&nbsp; &nbsp; &nbsp;&nbsp;<b>ENDFOR<br></b>17)&nbsp; &nbsp; &nbsp; 将左子树权值归一化，继续训练左子树<br>18)&nbsp; &nbsp; &nbsp; 将右子树权值归一化，继续训练右子树<br>19)&nbsp;<b>ENDIF<br></b>【输出】训练好的PBT</blockquote><p>测试算法：</p><blockquote>【输入】特征<span style="font-weight: bold;">x</span>，训练好的PBT<br>1) 用节点c的强分类器Hc，计算 q( ±1|<span style="font-weight: bold;">x</span>)<br>2) <span style="font-weight: bold;">IF</span> c是叶子节点<br>3)&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">IF</span> y == 1<br>4)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return q(+1|<span style="font-weight: bold;">x</span>)<br>5)&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">ELSE<br></span>6)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return q(-1|<span style="font-weight: bold;">x</span>)<br>7)&nbsp; &nbsp; &nbsp; &nbsp;<span style="font-weight: bold;">ENDIF<br></span>8) <span style="font-weight: bold;">ENDIF<br></span>9) <span style="font-weight: bold;">IF</span> q(+1|<span style="font-weight: bold;">x</span>)&gt;0.5+ε THEN<br>10)&nbsp; &nbsp; &nbsp; return q(-1|<span style="font-weight: bold;">x</span>)q^_cleft(y) + q(+1|<span style="font-weight: bold;">x</span>)p_cright(y|<span style="font-weight: bold;">x</span>)<br>11) <span style="font-weight: bold;">ELIF</span> q(-1|<span style="font-weight: bold;">x</span>)&gt;0.5+ε THEN<br>12)&nbsp; &nbsp; &nbsp; &nbsp;return q(-1|<span style="font-weight: bold;">x</span>)p_cleft(y|<span style="font-weight: bold;">x</span>)+q(+1|<span style="font-weight: bold;">x</span>)q^_cright(y)<br>13) <span style="font-weight: bold;">ELSE</span>&nbsp;<br>14)&nbsp; &nbsp; &nbsp; &nbsp;return q(-1|<span style="font-weight: bold;">x</span>)p_cleft(y|x)+q(+1|<span style="font-weight: bold;">x</span>)p_cright(y|x)<br>15) <span style="font-weight: bold;">ENDIF<br></span>【输出】近似的后验概率pc(y|<span style="font-weight: bold;">x</span>)<br>其中，p是Adaboost给出的概率，q是PBT训练过程中计算的概率，q^是训练时得到的先验估计（因为数据没有被分配到那个分支去）。</blockquote><p>这样一棵完整的PBT流程就走完了，我们分析一下它的参数：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>参数名称&nbsp;</th><th>参数符号&nbsp;</th><th>参数推荐值&nbsp;</th><th>参数说明&nbsp;</th></tr><tr><td>&nbsp;调整值</td><td>ε&nbsp;</td><td>&nbsp;0.1</td><td>&nbsp;越小样本空间划分越开，越过拟合</td></tr><tr><td>&nbsp;Adaboost错误率上限</td><td>θ&nbsp;</td><td>&nbsp;0.45</td><td>&nbsp;越小Ada停止越快，精度越低</td></tr><tr><td>&nbsp;PBT的最大树深</td><td>L</td><td>&nbsp;-</td><td>&nbsp;越小PBT停止越快，精度越低</td></tr><tr><td>&nbsp;Adaboost最大训练轮数</td><td>T&nbsp;</td><td>&nbsp;-</td><td>&nbsp;越小弱分类器越少，精度越低</td></tr></tbody></table><p>最后再欣赏一下PBT的结构：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5392882b3c900f47f99624059eefa935.png" style="max-width:100%;"></p><p><br></p>                </div>
 </li>
 </ul>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -288,7 +309,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -471,6 +492,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -507,6 +570,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -527,7 +592,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

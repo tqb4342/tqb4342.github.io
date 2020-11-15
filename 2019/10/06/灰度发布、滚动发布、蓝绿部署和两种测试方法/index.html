@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="灰度发布、滚动发布、蓝绿部署和两种测试方法">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -237,8 +237,29 @@ var _hmt = _hmt || [];
 <li><a target="_blank" rel="noopener" href="http://www.bewindoweb.com/231.html">http://www.bewindoweb.com/231.html</a><div class="card-article-text"><h1>��言</h1><p>在软件上线之前，不可避免地要对软件的正确性、可靠性进行测试，又最好不要停机维护、不要影响用户体验，并且在新版本出现问题的时候能够及时回退。所以，需要有一套完整的部署方案，灰度发布、滚动发布、蓝绿部署都是常见的手段，而A/B测试则是对用户体验进行调查的测试手段，这里一并学习。</p><h1>一、灰度发布</h1><h2>定义</h2><p>灰度发布又叫做金丝雀发布，以前矿工下矿洞前，会放一只金丝雀去试探是否有瓦斯（金丝雀对瓦斯很敏感），映射到这里就是先发布一小部分来试探整体是否能够正常运行，如果能正常运行则进行完全部署的发布方式，目前仍然是不少成长型技术组织的主流发布方式。</p><h2>操作描述</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/02a83eaffbc05fd47bfe3767a5cf56f2.png" style="max-width:100%;"></p><p></p><p>（1）当前版本为V1，替换服务器集群中的一小部分（比如1台）为新版本V2。</p><p>（2）如果正常运行，则把剩余V1版本全部升级为V2；如果运行失败，所有服务器回退到V1。</p><h2>特点分析</h2><p>（1）流量趋势图</p><p>绿色为旧流量，黄色为新流量。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/0d092c9b651210d2ed29e580f0368495.jpeg" style="max-width:100%;"></p><p>（2）优点</p><p>用户体验影响小，发布过程中出现问题只影响一部分用户。</p><p>（3）缺点</p><p>自动化程度不够，发布期间可能会引发服务中断。</p><h1>二、滚动发布</h1><h2>定义</h2><p>滚动发布（Rolling Update Deployment）是在灰度发布上的改进，先发布一小部分，然后逐步增加新版本的数量，直到服务器都升级为新版本。自动化程度较高，用户体验平滑，是目前成熟型技术组织所采用的主流发布方式。</p><h2>操作描述</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dee25f62fda6d4e4fc96ef5036a029e0.png" style="max-width:100%;"></p><p></p><p>（1）先发布小比例新版本，类似金丝雀。</p><p>（2）如果验证成功，按照一定比例替换新版本，直到所有版本都升级为新版本，例如1台，10%，50%，100%。</p><p>（3）一旦失败，将所有新版本应用替换回旧版本应用。</p><h2>特点分析</h2><p>（1）流量趋势图</p><p>绿色为旧流量，黄色为新流量。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/55728bc26f50af840076c632ed852611.jpeg" style="max-width:100%;"></p><p>（2）优点</p><p>用户体验影响小，体验平滑。</p><p>（3）缺点</p><p>发布和回退时间缓慢。</p><p>发布工具复杂，NLB需要平滑的流量摘除和拉入能力。</p><h1>三、蓝绿部署</h1><h2>定义</h2><p><a href="https://martinfowler.com/bliki/BlueGreenDeployment.html" target="_blank">蓝绿部署（Blue Green Deployment）</a>是一种可以保证系统在<span style="font-weight: bold;">不间断提供服务</span>的情况下上线的部署方式，它以<span style="font-weight: bold;">可预测的方式发布</span>应用，<span style="font-weight: bold;">减少发布过程中服务停止的时间</span>。</p><h2>操作描述</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/37f272728dfca53f4c7da30ed765f89e.png" style="max-width:100%;"></p><p>（1）准备两个相同的应用运行环境，命名为蓝色环境、绿色环境，刚开始，蓝色环境和绿色环境都运行着相同的应用版本V1，只有蓝色环境对外提供服务。</p><p>（2）我们开发了一个新版本V2，那么放到绿色环境上进行反复的测试、修改、验证，确定达到上线标准后，利用负载均衡器/反向代理/路由等手段将对外服务切换为绿色环境。</p><p>（3）一段时间后，如果发生故障，那么迅速切换回蓝色环境V1；如果运行没有异常，那么蓝色环境更新版本到V2，版本再次一致。</p><p>（4）当需要开发下一个版本V3，重复前面的步骤，蓝色绿色相互切换相互备份。</p><h2>特点分析</h2><p>（1）流量趋势图</p><p>绿色为旧流量，黄色为新流量。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/2d26398372c28f3c382001facd83d944.jpeg" style="max-width:100%;"></p><p>（2）特点</p><p>蓝色绿色环境相同，但硬件可以不同，例如蓝色和绿色环境分别是两台独立的机器。</p><p>蓝色绿色环境都会在上线版本、旧版本（用于回滚）和新版本（用于上线前测试）之间循环。</p><p>如何保证数据库的事务在切换、回退过程中不受影响是很重要的事情，一般来说可以在切换过程中设置为“只读”，或者设计回馈机制，将事务同时反馈到两个环境。</p><p>（3）优点</p><p>不停机更新。</p><p>遇到问题能及时回退到正确版本。</p><p>（4）缺点</p><p>需要的硬件成本和软件服务倍增了。</p><p>数据库同步非常困难。</p><p>如果需要同时处理“微服务架构应用”和“传统架构应用”，当协调不好的时候还是可能出现服务停止的。</p><p>在非隔离基础架构（VM、Docker）上执行蓝绿部署，蓝绿色环境都有被摧毁的可能。</p><h1>四、双服务器发布</h1><p>蓝绿发布就是双服务器发布中的蛮力发布法（强行切换），而利用相同的双服务器发布模式可以进行灰度、滚动发布。</p><h1>五、测试方法</h1><p>前面的所有都是发布方法，旨在发现bug、隐患。</p><p>测试方法则是效果测试，关注的是旧版本和新版本的效果好坏，比如流量转化率、用户体验等等。</p><h2>A/B测试</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/06c54c4eee18d15c59052b4be4d591f4.png" style="max-width:100%;"></p><p>A/B测试指的是同时上线V1和V2版本，根据一定条件将流量分别导入V1和V2版本，收集感兴趣的数据，来对比产品功能的效果。</p><h2>影子测试</h2><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/6949faf17064b139c4acac5132c93fea.png" style="max-width:100%;"></p><p>影子测试主要用于语言切换，比如从JAVA项目迁移到.NET项目，准备两个完全相同的环境，将流量同时导入两个环境，比对输出的响应，来判断是否逻辑等价。</p><p>这种测试可能需要几周，也可能长达半年。</p><h1>总结</h1><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>部署方式&nbsp;</th><th>零停机&nbsp;</th><th>生产流量测试&nbsp;</th><th>机器成本&nbsp;</th><th>回退速度&nbsp;</th><th>对用户的影响&nbsp;</th><th>复杂度&nbsp;</th></tr><tr><td>&nbsp;灰度发布</td><td>&nbsp;？</td><td>&nbsp;√</td><td>&nbsp;低</td><td>&nbsp;慢</td><td>&nbsp;一般</td><td>&nbsp;低</td></tr><tr><td>&nbsp;滚动发布</td><td>&nbsp;√</td><td>&nbsp;√</td><td>&nbsp;低</td><td>&nbsp;慢</td><td>&nbsp;低</td><td>&nbsp;低</td></tr><tr><td>&nbsp;双服务器组——蓝绿</td><td>&nbsp;√</td><td>&nbsp;×</td><td>&nbsp;高</td><td>&nbsp;快</td><td>&nbsp;一般</td><td>&nbsp;一般</td></tr><tr><td>&nbsp;双服务器组——灰度</td><td>&nbsp;√</td><td>&nbsp;√</td><td>&nbsp;高</td><td>&nbsp;快</td><td>&nbsp;小</td><td>&nbsp;一般</td></tr><tr><td>&nbsp;双服务器组——滚动</td><td>&nbsp;√</td><td>&nbsp;√</td><td>&nbsp;高</td><td>&nbsp;快</td><td>&nbsp;小</td><td>&nbsp;一般</td></tr></tbody></table><h1><span style="font-size: 20px; font-weight: bold;">参考资料</span></h1><p>1、<a href="http://dockone.io/article/2118" target="_blank">《蓝绿部署、A/B测试以及灰度发布》</a></p><p>2、<a href="http://www.cnblogs.com/lijiaocn/p/9986880.html" target="_blank">《蓝绿部署、金丝雀发布（灰度发布）、A/B测试的准确定义》</a></p><p>3、<a href="https://www.jianshu.com/p/022685baba7d" target="_blank">《微服务部署：蓝绿部署、滚动部署、灰度发布、金丝雀发布》</a></p><p>4、<a href="https://www.cnblogs.com/apanly/p/8784096.html" target="_blank">《金丝雀发布、滚动发布、蓝绿发布到底有什么差别？关键点是什么？》</a></p><p><br></p><p><br></p>                </div>
 </li>
 </ul>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -288,7 +309,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -471,6 +492,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -507,6 +570,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -527,7 +592,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

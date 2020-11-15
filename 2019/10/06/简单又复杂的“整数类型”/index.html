@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="简单又复杂的“整数类型”">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -243,8 +243,29 @@ __int64 b = 1231321313131313131;
 <p>printf(“ type=long long\n d=%d\n ld=%ld\n lld=%lld\n I64d=%I64d\n —\n”, a,a,a,a);<br>printf(“ type=__int64\n d=%d\n ld=%ld\n lld=%lld\n I64d=%I64d\n”, b,b,b,b);</code></pre><p>【输出结果】</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/094610967927fd5dcf7cd9aae4eb8503.png" style="max-width:100%;"></p><p>d和ld都溢出了，而lld、I64d可以工作得很好，而且对long long 和__int64没有任何区别</p><h2>整数类型越界会发生什么？</h2><p>这是一直都很好奇的事情，那就来实验一下。</p><p>【操作系统】windows 8 64位</p><p>【IDE】Microsoft Visual Studio 2013 32位</p><p>【编译器】cl.exe win32</p><p>【实验结果】</p><pre><code class="prettyprint lang-c linenums">取值范围<br>unsigned short int 0~65535<br>unsigned int   0～4294967295<br>int -2147483648～2147483647<br>long -2147483648 ~ 2147483647<br>long long -9223372036854775808 ~  9223372036854775807</p>
 <p>超上限（越来越大）会从最小值开始重新增长：<br>unsigned short int 65536=0  |  65537= 1<br>unsigned int   4294967296=0 |  4294967297= 1<br>int 2147483648=-2147483648 | 2147483649 = -2147483647<br>long 2147483648=-2147483648 | 2147483649 = -2147483647<br>long long 9223372036854775808 =  -9223372036854775808 | 9223372036854775809 = -9223372036854775807</p>
 <p>超下限（越来越小）会从最大值开始重新减小：<br>unsigned short int -1=65535  |  -2=65534<br>unsigned int   -1=4294967295 |  -2=4294967294<br>int -2147483649=2147483647 | -2147483650=2147483646<br>long -2147483649=2147483647 | -2147483650=2147483646<br>long long  -9223372036854775809 =  -9223372036854775807 |  9223372036854775810 = -9223372036854775806</code></pre><p>【探究原因】</p><p>想一下刚才的补码，假设32位，int取最大值2147483647，打开你的计算器，选择查看→程序员，输入这个数字，看到它的补码：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/dd9b1b002066df3fe50d11a628f1f1ad.png" style="max-width:100%;"></p><p>[0111 1111 1111 1111&nbsp; &nbsp;1111 1111 1111 1111]补 + [0000 0000 0000 0000&nbsp; &nbsp; 0000 0000 0000 0001]补的结果是[1000 0000 0000 0000&nbsp; &nbsp; 0000 0000 0000 0000]补 = -2147483648。</p><p>这就是为什么越界的2147483648，打印输出-2147483648的原因了。</p><p>【其他】</p><p>注意如果你直接进行赋值：</p><pre><code class="prettyprint lang-c linenums">int a = -2147483648;</code></pre><p>VS是会报错的：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/d496741fbfedb46cd1ce6ce0a565e220.png" style="max-width:100%;"></p><p>long long 也是如此，因此这时候应该用：</p><pre><code class="prettyprint lang-c linenums">int a = INT_MIN;<br>long long b = LLONG_MIN;</code></pre><p>来表示，可以看到它们的宏定义：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/96df9e40b86c3ee93bdde30271335d06.png" style="max-width:100%;"></p><p>说好的可以多表示一个负数呢，怎么不行了呢，具体原因参考wiki《<a href="http://wiki.bewindoweb.com/?file=001-%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%89%8B%E5%86%8C%EF%BC%88%E7%BC%96%E7%A8%8B%E7%B1%BB%EF%BC%89/00040-VS%E7%BC%96%E5%86%99C%E7%A8%8B%E5%BA%8F%E6%8A%A5%E9%94%99error%20C4146%EF%BC%9A%E4%B8%80%E5%85%83%E8%B4%9F%E8%BF%90%E7%AE%97%E7%AC%A6%E5%BA%94%E7%94%A8%E4%BA%8E%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%B1%BB%E5%9E%8B%EF%BC%8C%E7%BB%93%E6%9E%9C%E4%BB%8D%E4%B8%BA%E6%97%A0%E7%AC%A6%E5%8F%B7%E7%B1%BB" target="_blank">VS编写C程序报错error C4146: 一元负运算符应用于无符号类型，结果仍为无符号类</a>》</p><h1>三、JAVA语言中的整数类型的大小和范围</h1><h2>基本信息</h2><p>因为我在尽量主学Java副学Python，所以这里也记录一下java的整数类型。java的整数类型比较神奇，有四种基本整数类型：byte、short、int、long，但由于java的设计初衷是跨平台运行的，Write Once and Run Anywhere，所以这几种类型的字长都是固定的，与任何其他的32位64位都无关，列个表：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>整数类型&nbsp;</th><th>字长大小&nbsp;</th><th>取值范围</th></tr><tr><td>&nbsp;byte</td><td>1字节</td><td>-128<del>127</td></tr><tr><td>&nbsp;short</td><td>2字节</td><td>-32768</del>32767</td></tr><tr><td>&nbsp;int</td><td>4字节</td><td>-2147483648<del>2147483647</td></tr><tr><td>&nbsp;long</td><td>8字节</td><td><p>-9223372036854775808</del>-9223372036854775807</p></td></tr></tbody></table><p>你可以自己测试一下：</p><pre><code class="prettyprint lang-java linenums">System.out.println("Byte: " + Byte.SIZE/8);<br>System.out.println("Short: " + Short.SIZE/8);<br>System.out.println("Integer: " + Integer.SIZE/8);<br>System.out.println("Long: " + Long.SIZE/8);</code></pre><p><span style="font-size: 16px; font-weight: bold;">java中的unsigned类型</span><br></p><p>java是<span style="font-weight: bold;">几乎没有unsigned类型</span>的。为什么说几乎呢，因为在多年的呼吁之后，最新的jdk8支持了unsigned的静态方法调用（也就是说不支持直接写unsigned int这种写法，只能通过Integer.xxxx来调用），参看《<a href="https://blogs.oracle.com/darcy/unsigned-integer-arithmetic-api-now-in-jdk-8" target="_blank">Unsigned Integer Arithmetic API now in JDK 8</a>》。真应了那句老话：<span style="font-weight: bold;">真香！</span>为什么大家那么希望有unsigned类型呢？因为常常需要处理图片，而我们知道通常的图片数据是从0变化到255的，如果有unsigned byte，那不就刚好了嘛<del>由于没有unsigned，目前主流的做法是使用更大的类型比如short或者int。值得注意的是，如果要把表达0</del>255取值的byte转换到short/int，要处理一下符号。因为当从0<del>255的short/int转换为byte时，考虑他们的补码，例如255：</p><p>255 = short [0000 0000 1111 1111]补 → byte [1111 1111]补 = -1</p><p>128 = short [0000 0000 1000 0000]补 → byte[1000 0000]补 = -128</p><p>0 = short [0000 0000 0000 0000]补 → byte[0000 0000]补 = 0</p><p>127 = short[0000 0000 0111 1111]补 → byte[0111 1111]补 = 127</p><p>可以看出，0</del>127(short)被映射到0<del>127（byte），而128</del>255则被映射到（-128<del>-1）了，因此在byte转回short/int时，如果不加处理，得到的值会是-128：</p><p>-128 = byte[1000 0000]补 → short [1111 1111 1000 0000]补 = -128</p><p>处理的方法很简单，加个掩码0xff屏蔽掉高位的符号扩展即可，也就是将byte的值与0xff进行按位与：</p><p>-128 &amp; 0xff = byte[1000 0000]补 &amp; [1111 1111] → short[1111 1111 1000 0000]补 &amp; [0000 0000 1111 1111] = [0000 0000 1000 0000]补 = 128</p><p>得到的值就正常了，用代码实验一下：</p><pre><code class="prettyprint lang-java linenums">short s_init = 128,s_force,s_and;<br>        byte b_force;<br>        b_force = (byte)s_init;<br>        s_force = (short)b_force;<br>        s_and = (short)(b_force &amp; 0xFF);<br>        System.out.println("初始short值= "+s_init+"\n转为byte= "+b_force+"\nbyte转为short= "+s_force+"\nbyte掩码后转为short= "+s_and);</code></pre><p>得到的结果是：</p><pre><code class="prettyprint lang-java linenums">初始short值= 128<br>转为byte= -128<br>byte转为short= -128<br>byte掩码后转为short= 128</code></pre><h2>java中的char</h2><p>char类型长度2个字节，而且取值是无符号的0</del>65535，其他编程语言通常都是1个字节。java的char是Unicode编码，可以存放中文字符。那么为什么不用它来作为unsigned int 用呢？</p><p>【原因1】输出为字符。</p><p>java的char类型是设计为存储unicode字符的，采用UTF-16固定宽度的编码格式。虽然赋值的是数值88，但当调用<code>System.out.println(a);</code>的时候，出现的是字母<code>X</code>。</p><p>【原因2】运算困难。</p><pre><code class="prettyprint lang-java linenums">char a = 88;<br>a = a + 1;</code></pre><p>编译器会报错<code>需要char类型，而给的是int</code>，因为当char类型运算后就是int类型了，不能直接存回char类型，需要进行强制转换：</p><pre><code class="prettyprint lang-java linenums">a = (char)(a + 1);</code></pre><p>既然这么麻烦，为何不直接用int呢？</p><h2>java中整数类型越界会发生什么？</h2><p>和C语言是一样的：当越上界，会从最小值继续累加；当越下界，会从最大值继续减小。原因同样是因为补码溢出位被丢弃，在测试的时候，不能直接赋值越界数值，否则会提示<code>类型不匹配</code>或者<code>整数太大了</code>。使用常量+1再强制转换类型，达到越界目的。</p><pre><code class="prettyprint lang-java linenums">byte a = (byte)(Byte.MAX_VALUE+1);</code></pre><p>输出结果：-128</p></div><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -294,7 +315,7 @@ __int64 b = 1231321313131313131;
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -477,6 +498,48 @@ __int64 b = 1231321313131313131;
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -513,6 +576,8 @@ __int64 b = 1231321313131313131;
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -533,7 +598,7 @@ __int64 b = 1231321313131313131;
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

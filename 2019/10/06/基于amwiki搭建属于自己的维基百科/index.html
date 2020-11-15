@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="基于amwiki搭建属于自己的维基百科">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -265,8 +265,29 @@ padding-top: 5px;
 <p>/<em>markdown语法</em>/<br>.markdown-body h1 &#123;<br>  margin-top: 50px;<br>  font-size: 30px;<br>&#125;<br>.markdown-body h2 &#123;<br>  font-size: 26px;<br>&#125;<br>.markdown-body h3 &#123;<br>  font-size: 22px;<br>&#125;<br>.markdown-body code, .markdown-body tt &#123;<br>padding: 0;<br>font-size:14px;<br>background-color:#f1f8ff;<br>color: #0366d6;<br>height:20px;<br>margin:5px 3px;<br>padding:3px 0px;<br>white-space: normal;<br>line-height:2.0;<br>&#125;<br>.markdown-body img &#123;<br>  text-align:center;<br>  margin: 10px auto;<br>  display:block;<br>&#125;<br>.markdown-body table &#123;<br>  margin-left:auto;<br>  margin-right:auto;<br>  width:auto;<br>  display:table;<br>&#125;</p>
 <p>.markdown-body pre code &#123;<br>    font-size:14px;<br>&#125;</p>
 <p>@media screen and (max-width: 720px)&#123;<br>  .header .logo img&#123;<br>    display:none;<br>  &#125;<br>  .header .logo b &#123;<br>      line-height:49px;<br>      height:49px;<br>  &#125;<br>  .header .logo &#123;<br>    padding-top: 0;<br>  &#125;<br>  .container&#123;<br>    background-color:#f1f5f8;<br>    border: none;<br>    border-radius: none;<br>    box-shadow: none;<br>    box-sizing: border-box;<br>    overflow:hidden;<br>  &#125;<br>  .container .nav&#123;<br>    background: #242424;<br>  &#125;<br>  .menu-filter&#123;<br>    width:100%;<br>  &#125;<br>&#125;</code></pre><p>② 可玩点二：引入一些成熟的CSS。</p><p>作者只允许在config.json中引入一个CSS，其他的CSS会失效，但是我们可以在CSS里面写引入的语句。这使得功能变得强大，比如我想要使用font-awesome4.7.0的图标，<a href="https://pan.baidu.com/s/1odawArgQDSRJQF_T_B4MxA" target="_blank">百度网盘</a>（密码vxl4），那么把font-awesome插件下载到assets目录下：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ff49575ab58a9670833a5b39634c52d7.png" style="max-width:100%;"></p><p>再在bwb.css开头（注意是开头，写在结尾无效）写引入语句：</p><pre><code class="prettyprint lang-css linenums">/<em>引入其他css</em>/<br>@import "font-awesome/css/font-awesome.min.css";</code></pre><p>就能够在markdown里面使用啦<del></p><pre><code class="prettyprint lang-html linenums">&lt;font color="#478cdc"&gt;&lt;i class="fa fa-globe"&gt;&lt;/i&gt;&lt;/font&gt;</code></pre><p>效果：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/66b626db4deb0dd0a157c8b357cf88c1.png" style="max-width:100%;"></p><h2>使用amwiki的姿势</h2><p>（1）剪贴板功能</p><p>QQ截图后，直接使用ctrl+shift+v，或者菜单栏amWiki轻文库→从剪贴板粘贴截图，就能够自动帮你保存图片并写好markdown：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/53205424288e179c5297eb82ab6ec47f.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/e29c5b516741906ff5091d13aba0a03f.png" style="max-width:100%;"></p><p>更好的是，它可以根据文档所在目录自动创建文件夹，让你的图片可以按文章分类。</p><p>（2）善用搜索功能</p><p>虽然amwiki没有标签，但是可以搜索文章内容是非常无敌的。先更新缓存到100%，再搜索：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1271bb36261d3669970d96c965e49fd8.png" style="max-width:100%;"></p><p>（3）手机端观看</p><p>amwiki支持自适应（虽然写得并不太好），手机端也是可以浏览、搜索、查看的哦。</p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/fd6d6a4972e5d22108d1dbc4af752f6e.png" style="max-width:100%;"></p><p>（4）打开实时预览编写Markdown</p><p>在Atom中按Ctrl+shift+m可以打开Markdown实时预览</del></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/4c09754ff423454fd9bdfdf5f9c8b533.png" style="max-width:100%;"></p><h1>amwiki v1.2.1的bug</h1><h2>字符被转码</h2><p>当输入<code>\n</code>的时候会被转义为<code>&amp;#39;</code>。原因是这一段，来源于<code>amWiki\js\amWiki.docs.js</code>：</p><pre><code class="prettyprint lang-js linenums">content = content.replace(/\(.)/g, function (m, s1) &#123;<br>      return '&amp;#' + s1.charCodeAt(0) + ';';<br>&#125;);</code></pre><p>看��下作者的wiki：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/3b232f7f1b99ea7c2edb731982ce1756.png" style="max-width:100%;"></p><p>………………目测是开发中状态，而且和作者交流后，发现作者已经用上了自己开发好了的版本了……没办法，把这段注释掉就好了，不过用不上这个新功能了。记得注释<code>C:\Users\BEWINDOWEB.atom\packages\amWiki\files</code>下<code>amWiki.docs.js</code>中的内容，这样再次用<code>config.json</code>生成的时候就一直会是注释状态，否则只注释项目内的<code>amWiki.docs.js</code>，重新生成的时候会被重写。</p><h2>img.toPng() is not a function</h2><p>Atom 1.28.0版本已经将Electron升级到2.0版本了。而Electron v2.0的NativeImage.toPng函数已经被移除，取而代之的是NativeImage.toPNG。所以修改这个代码即可。解决方法参见<a href="http://wiki.bewindoweb.com/?file=001-%E5%87%BA%E9%94%99%E8%A7%A3%E5%86%B3%E6%89%8B%E5%86%8C%EF%BC%88%E7%BC%96%E7%A8%8B%E7%B1%BB%EF%BC%89/00041-amwiki%E6%8A%A5%E9%94%99%EF%BC%9Aimg.toPng%20is%20not%20a%20function" target="_blank">《amwiki报错：img.toPng is not a function》</a></p><h1>使用github托管wiki</h1><p>如果没有合适的服务器，完全可以用github来托管，和普通的上传项目的方式一致：create项目→ push本地仓库 → push到github。不过建立的项目名称必须为：<span style="font-weight: bold;">username.github.io</span>，比如我的wiki为<a href="https://bewindoweb.github.io" target="_blank">bewindoweb.github.io</a>，他会自动识别的，一打开就是<code>home-首页.md</code>的内容。赶紧尝试动手搭一个吧~</p><p>你还可以通过<code>github项目</code>→<code>Settings</code>→<code>Github Pages</code>→<code>Custom domain</code>自定义其他的域名。当然，你要提前在域名解析上面添加CNAME指向wiki的地址。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/a3901e1e3128ca143aee68e329f28122.png" style="max-width:100%;"></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/9275c3461ebb88a1b55c22d9e6ef6ac4.png" style="max-width:100%;"></p><p>还能够强制启用HTTPS，不过这个证书是github的，在Chrome上会有拦截信息，这样<a href="wiki.bewindoweb.com" target="_blank">wiki.bewindoweb.com</a>也能访问它了。</p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -316,7 +337,7 @@ padding-top: 5px;
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -499,6 +520,48 @@ padding-top: 5px;
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -535,6 +598,8 @@ padding-top: 5px;
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -555,7 +620,7 @@ padding-top: 5px;
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

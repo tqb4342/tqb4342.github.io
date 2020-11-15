@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="MQTT Broker 数据结构：订阅树">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -263,8 +263,29 @@ var _hmt = _hmt || [];
    ELSE<pre><code>   RETURN false</code></pre>
    END<br>END</code></pre><p>很��易看出，两层for循环，时间复杂度O(S✖T)，其中S是订阅信息数量（Subscription，不是订阅者Subscriber数量），T是发布主题的平均长度（划分成token的平均个数）。</p><p>仔细想一想，虽然实现了功能，但是在生产环境上，假设一个Broker连接2W设备，每个设备订阅10个TopicFilter，发布主题的平均长度约为10，执行一次匹配，要执行200W次token比较，要知道这还没有计算每秒钟客户端会发送多少条消息，这个时延都已经完全无法接受。</p><h1>二、订阅树简介</h1><h2>2.1 订阅树的定义</h2><p>订阅树（Topic Tree / Subscription Tree）是解决这个匹配问题的一种方法。TopicTree本质是一棵按token划分的字典树（Trie Tree），每个节点上存储着订阅信息，一棵典型的订阅树如下图所示：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/5b82c47150b8a28d0006a2991faee8ee.png" style="max-width:100%;"></p><p>订阅树有如下性质：</p><p>（1）有一个根节点Root，一个父节点可以有多个子节点</p><p>（2）每条边代表一个Token，从根节点遍历到子节点所经历的路径定义为TopicFilter</p><p>（3）任何节点的内容都可能为空，也可能包含订阅信息</p><p>例如，这棵订阅树有一个根节点Root，每条边上都有一个token。从��节点遍历到最左边的叶子节点经历的路径“abc/+/123”就是一个TopicFilter。叶子节点包含了一条订阅信息{客户端A以QoS0的质量订阅了abc/+/123}。并且中间的节点可能为空，也可能包含订阅信息；叶子节点可能包含订阅信息，也可能为空。</p><h2>2.2 订阅树的匹配过程</h2><p>有了订阅树的数据结构，如何匹配Topic和TopicFilter呢？仍以这棵树为例，我们给节点加上编号：</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/64d58d14c6e8335f24bb7e4293ef1529.png" style="max-width:100%;"></p><p>其中，订阅信息为：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;节点编号&nbsp;</th><th>&nbsp;订阅客户端&nbsp;</th><th>&nbsp;订阅主题&nbsp;</th><th>&nbsp;订阅质量&nbsp;</th></tr><tr><td>&nbsp;N5</td><td>A&nbsp;</td><td>&nbsp;abc/+/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N3</td><td>B&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;1</td></tr><tr><td>&nbsp;N3</td><td>A&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N4</td><td>B&nbsp;</td><td>&nbsp;abc/def</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>B</td><td>&nbsp;abc/def/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>C&nbsp;</td><td>&nbsp;abc/def/123</td><td>&nbsp;1</td></tr><tr><td>&nbsp;N7</td><td>&nbsp;D</td><td>&nbsp;abc/def/456</td><td>&nbsp;0</td></tr></tbody></table><p>整个匹配过程是宽度优先搜索（BFS）或深度优先搜索（DFS）的过程，这里按DFS描述，假设客户端X发布主题为“abc/def/123”，从根节点开始遍历：</p><p>（1）进入Root，查找匹配的边，只有一条边abc，且和第一个token“abc”匹配，进入子节点N1</p><p>（2）查找匹配的边，找到三条边“+”、“#”、“def”</p><p>（3.1.1）进入子节点N2，查找匹配的边，找到匹配边“123”，进入N5</p><p>（3.1.2）进入N5，匹配完成，返回订阅信息｛A，”abc/+/123”，0｝</p><p>（3.2.1）进入子节点N3，匹配完成，返回订阅信息{B，“abc/#”，1}和订阅信息｛A，“abc/#”，0｝</p><p>（3.3.1）进入子节点N4，查找匹配的边，只有一条边“123”，进入N6</p><p>（3.3.2）进入子节点N6，匹配完成，返回订阅信息{B，“abc/def/123”，0}和订阅信息{C，“abc/def/123”，1}</p><p>（4）回退到Root，查找结束</p><p>我们就得到了匹配这个主题的5条订阅信息：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;节点编号&nbsp;</th><th>&nbsp;订阅客户端&nbsp;</th><th>&nbsp;订阅主题&nbsp;</th><th>&nbsp;订阅质量&nbsp;</th></tr><tr><td>&nbsp;N5</td><td>A&nbsp;</td><td>&nbsp;abc/+/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N3</td><td>B&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;1</td></tr><tr><td>&nbsp;N3</td><td>A&nbsp;</td><td>&nbsp;abc/#</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>B</td><td>&nbsp;abc/def/123</td><td>&nbsp;0</td></tr><tr><td>&nbsp;N6</td><td>C&nbsp;</td><td>&nbsp;abc/def/123</td><td>&nbsp;1</td></tr></tbody></table><p>注意，在这里A订阅的两个主题“abc/+/123”、”abc/#”都成功匹配，但下发给客户端A的时候要去重，只能下发1条消息，因为Broker是依赖MQTT-Publish给客户端下发消息的，发布的主题就是客户端X发布的主题“abc/+/123”，区分不出是客户端哪条订阅匹配的，所以发过去由客户端自己本地匹配出2条订阅（客户端本地也有订阅结构）。回头来看，客户端A这种“重复主题过滤器”的设计是不好的，在实际应用上应该极力避免这种设计，一个客户端的各个订阅都最好都是独立接受消息的。</p><p>如果区分出通配符和非通配符，那么查找的时间复杂度就是字典树的查找时间复杂度，为O(T)，其中T是发布主题的平均长度（划分成token的平均个数）。</p><h2>2.3 增加订阅</h2><p>（1）增加订阅时部分节点不存在</p><p>当增加新订阅时，对于划分出来的token，订阅树可能会有一部分节点/边已经存在，有一部分节点/边不存在，那么就需要增加不存在的新节点/边。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b4f838817014f5ff42a222e270573705.png" style="max-width:100%;"></p><p>如图所示，客户端F以QoS0的质量订阅新主题过滤器“abc/ghi/789”，这个时候“abc”是存在的，“ghi”、”789”都是不存在的，那么我们需要增加两个新节点和两条新边，并在最下面的节点放置F的这条订阅信息。</p><p>（2）添加订阅时节点已存在</p><p>如果节点已经存在，只需要增加订阅信息到对应节点中去即可。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/1773c1abbb79edc160e7940dc00785b3.png" style="max-width:100%;"></p><p>如图所示，左侧为客户端F订阅“abc/+”，节点都已存在，将F加入到空节点中；</p><p>右侧为客户端F订阅“abc/+/123”，节点都已存在，A所在节点增加一条订阅信息F。</p><p>插入的时间复杂度同样为O(T)，其中T是发布主题的平均长度（划分成token的平均个数）。</p><h2>2.4 取消订阅</h2><p>（1）取消订阅后没有订阅者</p><p>如果取消订阅后没有订阅者，可以不用管（可能存在内存溢出的风险），也可以通过一些方式删除该节点。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/67e7aaaa761c3ae3972fa5b264d6ff27.png" style="max-width:100%;"></p><p>如图所示，假设客户端A取消了订阅“abc/+/123”，节点没有任何其他订阅信息了，那么该节点（灰色节点）可以被删除掉。</p><p>（2）取消订阅后仍然有订阅者</p><p>如果取消订阅后仍然有订阅者，那么只需要移除该订阅信息即可。</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/b2346418c4442d54f54455e809631315.png" style="max-width:100%;"></p><p>如图所示，假设客户端C取消了订阅“abc/def/123”，客户端B仍然存在订阅“abc/def/123”，那么只需要去掉此节点上C的订阅信息。</p><h1>三、订阅树实现难点和业界解决方案</h1><h2>3.1 订阅树实现难点</h2><p><span style="font-weight: bold;">（1）MQTT客户端可能并发地订阅、取消订阅，如何保证并发安全？</span></p><p>例如：A订阅abc/+的时候，B也订阅、取消订阅abc/+，需要保证并发安全。</p><p><span style="font-weight: bold;">（2）订阅树是内存结构，在分布式环境下如何同步？</span></p><p>例如：如下订阅、发布情况，Broker2怎么知道Broker1上有客户端订阅了这个主题？</p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/c09007f5eb91a54d00c694c031edf4ba.jpeg" style="max-width:100%;"></p><p><span style="font-weight: bold;">（3）MQTT客户端订阅数据量非常大的时候，如何加快查找速度？</span></p><p>例如：10W客户端，每个客户端40个订阅，如果采用锁的机制控制并发，订阅/取消订阅会产生大量冲突造成查询获锁缓慢。</p><h2>3.2 业界订阅树的实现</h2><p>（1）并发安全</p><ul><li>EMQ：底层采用Erlang的Mnesia分布式数据库，利用分布式数据库的事务保证并发 —— Erlang语言开发者很少</li><li>JMQTT：采用锁的机制控制并发 &nbsp;</li><li>Moquette：利用CAS控制并发&nbsp;</li><li>Mosquitto：采用锁的机制控制并发&nbsp;</li><li>MqttWk：无内存订阅树结构，订阅存放在分布式Redis里（通配符直接扫描），由Redis保证并发 —— 通配符扫描效率极低</li><li>知乎网关：采用锁的机制控制并发（单Broker2<del>3万客户端、2</del>3万订阅量）</li></ul><p>（2）分布式同步</p><ul><li>EMQ：底层采用Erlang的Mnesia分布式数据库保证同步 —— Erlang语言开发者很少</li><li>JMQTT 1.x：单机，无同步</li><li>Moquette 0.10：采用Hazelcast，靠订阅数据全量广播来同步 ——量太大且不可靠（同时宕机数据丢失），水平扩展无法扩展消费速率</li><li>Moquette 0.12+：单机，无同步</li><li>Mosquitto：可通过“桥接”搭建伪分布式，靠订阅数据全量广播来同步 ——量太大且不可靠 ，水平扩展无法扩展消费速率</li><li>MqttWk：无内存订阅树结构，订阅存放在分布式Redis里（通配符直接扫描），不需要同步</li><li>百度IoT：由Kafka存储订阅数据，靠读取Kafka同步 —— 比较好的实现机制</li><li>HiveMQ：自制向量时钟组件，可以分析本地订阅树数据之间的差异，通过Jgroups将差异部分协商同步 —— 代码不开源，自己实现困难&nbsp;</li><li>某车联网代码：Broker自己作为MQTT客户端连接到其他Broker上，当真实的客户端在自己节点订阅时，自己再发出一个订阅请求到所有其他Broker节点 —— 类似桥接模式，非标准分布式模式，且订阅数量较少、客户端较少（一台5万连接）</li></ul><p>（3）查找速度</p><ul><li>EMQ：底层采用Erlang的Mnesia分布式数据库保证速度 —— Erlang语言开发者很少</li><li>JMQTT：无优化&nbsp;</li><li>Moquette 0.10：无优化&nbsp;</li><li>Moquette 0.12+：无优化</li><li>Mosquitto：无优化 修改版</li><li>Mosquitto：分离精确订阅和通配符订阅，精确订阅采用Hash表，通配符订阅采用订阅树 —— 比较好的优化方向</li><li>MqttWk：无优化&nbsp;</li><li>知乎网关：根据clientId进行Hash，划分到100+个哈希表空间（没有通配符所以没用订阅树） —— 比较好的优化方向</li></ul><h1>总结</h1><p>MQTT的订阅匹配最好这样处理：</p><ul><li>订阅树 —— 负责通配符的匹配，查找速率O(T)，需要注意控制树的深度宽度、取消订阅的内存回收</li><li>哈希表 —— 负责精确匹配，查找速率O(1)，需要注意并发冲突</li></ul><p>这是带通配符字符串匹配的常见解决方案——精确用表、前缀用树。具体判断用什么数据结构，主要依靠如下三点衡量：</p><ul><li>数据总量有多大 —— 数据量较大，尽量不用树。</li><li>数据是否持续增长 —— 连接量有上限、订阅量有上限，所以订阅数据有上限，如果没有上限的话，重哈希会比较耗时。</li><li>查找是否频繁 —— 物联网消息非常多，非常频繁，因此能用哈希表就用哈希表。</li></ul><p>订阅树的原理很简单，但是上了并发和分布式就会有很多问题，这些解决方案都需要压力测试和生产环境检验。</p><p><br></p>                </div></li>
 </ul>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -314,7 +335,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -497,6 +518,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -533,6 +596,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -553,7 +618,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

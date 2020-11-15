@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="《Java程序设计》复习笔记（正在写）">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -253,8 +253,29 @@ var _hmt = _hmt || [];
 <p>&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 28px;=”” orphans:=”” auto;=”” text-align:=”” left;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=””&gt;&nbsp;√ &nbsp;</spanhelvetica></td><td>&nbsp;</p>
 <p>&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 28px;=”” orphans:=”” auto;=”” text-align:=”” left;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=””&gt;&nbsp;√ &nbsp;</spanhelvetica></td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;private</td><td>&nbsp;</p>
 <p>&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 28px;=”” orphans:=”” auto;=”” text-align:=”” left;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=””&gt;&nbsp;√ &nbsp;</spanhelvetica></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><p>【应用】如何让类不能创建对象而且不能被继承？</p><p>【解答】把构造函数设为private</p><h2>26、接口主要用于 P124</h2><p>（1）通过接口实现不相关类的相同行为，而不需要考虑类联系</p><p>（2）通过接口指明多个类需要实现的方法</p><p>（3）通过接口了解对象的交互界面，而不需要了解对象所对应的类。</p><h2>27、接口和抽象类的区别 P125</h2><p>（1）接口中方法都是抽象的；抽象类中可以包含非抽象方法</p><p>（2）接口中的变量都是常量；抽象类中可以有一般的成员变量；</p><p>（3）接口可以实现多重继承；抽象类是单一继承</p><p>（4）没有联系的类可以执行相同的接口</p><h2>28、接口的典型定义 P126</h2><pre><code class="prettyprint lang-java linenums">[public] interface xxx&#123;<br>        (public final static) int MAX_NUM = 100;<br>        (public abstract) void add(int num);<br>&#125;</code></pre><h2>29、异常处理 P142</h2><p>（1）throw经典语法</p><pre><code class="prettyprint lang-java linenums">throw new IllegalMarkException();</code></pre><p>（2）throws经典语法（作用是抛出但不处理）</p><pre><code class="prettyprint lang-java linenums">void exam(int mark)throws NegativeMarkException,OutofMarkException&#123;<br>         if (mark&lt;0) throw new NegativeMarkException();<br>         if (mark&gt;100) throw new OutofMarkExcetption();<br>&#125;</code></pre><h2>30、线程146</h2><p>（1）两种创建方法</p><p>①生成Thread子类：class xxx extends Thread</p><p>②声明和实现Runnable接口：class xxx implements Runnable</p><p>（2）分别的步骤</p><p>【Thread】</p><p>①生成Thread类的子类：class xxx extends Thread</p><p>②覆盖写public void run(){}方法</p><p>③生成对象，调用start()方法：</p><pre><code class="prettyprint lang-java linenums">FT first = new FT();<br>first.start();</code></pre><p>【Runnable】</p><p>①声明和实现：</p><pre><code class="prettyprint lang-java linenums">class xxx implements Runnable&#123;<br>        ....<br>        public void run ()&#123;<br>            ....<br>        &#125;<br>        ....<br>&#125;</code></pre><p>②生成实例：</p><pre><code class="prettyprint lang-java linenums">xxx n = new xxx();</code></pre><p>③生成Thread对象：</p><pre><code class="prettyprint lang-java linenums">Thread th = new Thread(n);<br>th.start();</code></pre><p>（3）Runnable注意</p><p>要使用Thread.sleep();而不是直接sleep()，因为直接sleep()默认是指this.sleep()，然而并没有继承Thread()所以会出错</p><h2>31.1、多线程调度 P153</h2><p>（1）状态</p><p>①Create新生态：线程对象已分配内存空间，未被调度</p><p>②Ready可执行态：</p><p>&nbsp; Ready就绪状态：等待CPU；</p><p>&nbsp; Execute执行状态：获得CPU正在执行</p><p>③Block阻塞态：线程暂停</p><p>④Dead停止态：执行完毕或者调用了stop();</p><p>（2）调度</p><p>线程优先级1-10，默认5，先来先服务的抢占式调度；</p><p>高优先级一进入，低优先级立即放弃CPU。</p><p>（3）线程状态转换图</p><p>（@todo转换图）</p><h2>31.2、线程同步 P162</h2><p>①同步方法</p><pre><code class="prettyprint lang-java linenums">synchronized void xxx()&#123;<br>    ....<br>&#125;</code></pre><p>②同步代码块（一定要括号对象）</p><pre><code class="prettyprint lang-java linenums">synchronized(this)&#123;<br>  ....<br>&#125;</code></pre><h2>31.3、常见的线程方法辨析</h2><p>参考经典��章<a href="https://www.cnblogs.com/fanqiang/archive/2010/10/27/1862437.html" target="_blank">《java中yield(),sleep()以及wait()的区别》</a></p><p>（1）sleep(int)和yield()区别</p><p>sleep：由Execute→Block 睡眠时线程放弃CPU，但不会释放锁标志，此时任何优先级的任何线程都可以执行。</p><p>yield：由Execute→Ready 把线程重新放在等待队列的末尾，等待下一轮执行（如果没有线程在等待则会立即执行），不会释放锁标志，让同优先级其他线程有机会执行（当然高优先级可以进行CPU抢占）。</p><p>（2）suspend()和resume<span style="line-height: normal;">()</span></p>&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 30px;=”” orphans:=”” auto;=”” text-align:=”” start;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=””&gt;&nbsp;suspend只能被resume唤醒，不会释放锁标志。</spanhelvetica><div>&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 30px;=”” orphans:=”” auto;=”” text-align:=”” start;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=””&gt;已经不建议使用了，因为它可能会造成死锁。<br></spanhelvetica><p>（3）wait<span style="line-height: normal;">(int)</span>和notify()、notifyAll()</p><p>wait会释放锁标志；如果wait不带毫秒时间的参数，那么它只能被notify唤醒。</p><p>必须在synchronized方法或代码块内使用，用于同步，否则会报IllegalMonitorStateException异常。</p><h2>32、文件类 P166</h2><p>（1）File 基本的文件类 P167</p><p>（2）RandomAccessFile 读写文件类 P173</p><p>readLine()：可以识别<code>'\r'</code> <code>'\n'</code><code> '\r\n'</code> <code>EOF</code></p><p>writeBytes()：每个字符占一个字节（8bit）</p><p>writeChars()：每个字符占两个字节（16bit）</p><p>writeUTF()：每个字符占一个字节，开头会输出两个字节表示将要写出的字节总数</p><p>write(byte b[]，int offset，int length)按字节写</p><p>（3）常见的数据类型长度</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>&nbsp;基本类型</th><th>字节长度&nbsp;</th><th>备注&nbsp;</th></tr><tr><td>&nbsp;byte&nbsp;</td><td>&nbsp;1&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;boolean</td><td>&nbsp;1</td><td>&nbsp;</td></tr><tr><td>&nbsp;short</td><td>&nbsp;2</td><td>&nbsp;</td></tr><tr><td>&nbsp;int</td><td>&nbsp;4</td><td>&nbsp;</td></tr><tr><td>&nbsp;long</td><td>&nbsp;8</td><td>&nbsp;</td></tr><tr><td>&nbsp;float</td><td>&nbsp;4</td><td>&nbsp;</td></tr><tr><td>&nbsp;double</td><td>&nbsp;8</td><td>&nbsp;</td></tr><tr><td>&nbsp;char</td><td>&nbsp;2</td><td>&nbsp;Java使用Unicode而不是ASCII</td></tr></tbody></table><h2>33、字节流 P177-186</h2><p>（1）InputStream / OutputStream 顶层抽象类</p><p>（2）FileInputStream / FileOutputStream 按字节读</p><p>①支持追加写文件：FileOutputStream(String name，Boolean append)</p><p>②判断结束的经典代码：</p><pre><code class="prettyprint lang-java linenums">while((c == in.read())&gt;-1)&#123;<br>        if ((char)c == '\n') i++;<br>        System.out.println((char)c);<br>&#125;</code></pre><p>（3）FilterInputStream / FilterOutputStream &nbsp;&nbsp;<span style="line-height: normal;">★</span><span style="line-height: normal;">★</span>&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 30px;=”” orphans:=”” auto;=”” text-align:=”” start;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=”” style=”line-height: normal;”&gt;★&lt;spanhelvetica neue’,=”” helvetica,=”” ‘pingfang=”” sc’,=”” 微软雅黑,=”” tahoma,=”” arial,=”” sans-serif;=”” font-size:=”” 14px;=”” font-style:=”” normal;=”” font-variant:=”” font-weight:=”” letter-spacing:=”” line-height:=”” 30px;=”” orphans:=”” auto;=”” text-align:=”” start;=”” text-indent:=”” 0px;=”” text-transform:=”” none;=”” white-space:=”” widows:=”” word-spacing:=”” -webkit-text-stroke-width:=”” display:=”” inline=”” !important;=”” float:=”” background-color:=”” rgb(255,=”” 255,=”” 255);”=””&gt;★</spanhelvetica></spanhelvetica><br></p><p>包括了两类：BufferedInputStream、DataInputStream</p><p>①</p><p>【缓冲区】</p><p>BufferedInputStream使用了默认2048字节缓冲区</p><p>BufferedOutputStream使用了默认512字节缓冲区</p><p>【经典方法】</p><pre><code class="prettyprint lang-java linenums">inf = new FileInputSystem(new File(args[0]));<br>bis = new BufferedInputStream(inf);</code></pre><p>【判断结束】</p><pre><code class="prettyprint lang-java linenums">bis.read &gt; -1</code></pre><p>②DataInputStream与RandomAccessFile类的读写方法基本一致，适用于网络传输</p><h2>34、字符流 P187</h2><p>（1）Reader / Writer 顶层抽象类</p><p>（2）BufferedReader / BufferedWriter</p><p>【创建】</p><pre><code class="prettyprint lang-java linenums">FileWriter fw = new FileWriter(new File(args[2]));<br>bWrite = new BufferedWriter(fw);</code></pre><p>【读】</p><pre><code class="prettyprint lang-java linenums">buffer = bRead.readLine(); // buffer定义：String buffer<br>while (buffer != null)&#123;<br>         buffer = bRead.readLine();<br>&#125;</code></pre><p>【写】<br></p><pre><code class="prettyprint lang-java linenums">bWrite.write(buffer);<br>bWrite.newLine();</code></pre><p>这里和RandomAccessFile不同的地方在于，<span style="line-height: normal;">BufferedWriter不会主动换行，而是newLine进行换行，这样好处是可以根据机器类型编写不同的换行符号。</span></p><h2><span style="line-height: normal;">35、对象序列化 P195</span></h2><p><span style="line-height: normal;">经典代码：</span></p><pre><code class="prettyprint lang-java linenums">Worm implements Serializable<br>ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream("worm"));<br>out.writeObject("Worm Storage");<br>out.writeObject(w); // w的定义是：Worm w = new Worm(6,'a');<br>out.close();</code></pre><h2>36、网络编程 P203</h2><p>（1）套接字socket = 端口port，编号为0-65535。</p><p><br></p><p><br></p></div>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -304,7 +325,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -487,6 +508,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -523,6 +586,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -543,7 +608,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 

@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
   <link rel="icon" href="/img/logo.jpg">
-  <title>Tan Qing Bo's Blog</title>
+  <title>谭庆波的博客</title>
   
   
   <meta property="og:title" content="百度IoT：MQTT Broker架构设计">
@@ -26,7 +26,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2019-10-06">
   <meta property="og:article:modified_time" content="2019-10-07">
-  <meta property="og:article:author" content="Tan Qing Bo">
+  <meta property="og:article:author" content="谭庆波">
   
   
   
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.jpg">
       
-      <span class="navbar-logo-dsc">Tan Qing Bo's Blog</span>
+      <span class="navbar-logo-dsc">谭庆波的博客</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -170,6 +170,12 @@ var _hmt = _hmt || [];
     
     </a>
     
+    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
     <a href="/about" class="navbar-menu-item">
     
     关于我
@@ -179,12 +185,6 @@ var _hmt = _hmt || [];
     <a href="/categories" class="navbar-menu-item">
     
     分类
-    
-    </a>
-    
-    <a href="http://tanqingbo.cn/categories/%E8%B5%84%E6%BA%90%E5%88%86%E4%BA%AB/" class="navbar-menu-item">
-    
-    资源分享
     
     </a>
     
@@ -239,8 +239,29 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <p>reverse{clientID}_TenantID&nbsp;），后面的ID为单调递增64位长整型ID。例如一个客户端的消息ID可能是：3134_BAIDU_234，代表BAIDU这个租户下的第3134个客户端的第234条消息。</p><p>消息都是批量（batch）写入的，当批量写入Coprocessor后，先获取该Queue的锁，然后分配ID，再将数据写入HBase，最后释放锁。这里的锁粒度是Queue级别（客户端级别），可以保证多个Broker并发写入一个客户端的Queue时不会发生冲突。</p><h2>7.3 读取Queue数据</h2><p>我们会为每个Queue保存该Queue在HBase的最小ID、最大ID，如果该Queue的最小最大ID在内存缓存中过期或丢失（比如很久没有读写队列消息了），就通过HBase的scan操作来重新获取一次最小最大ID，再缓存在Cache里。每一次读��特定长度的数据，保证每次数据的量级不会太大。读取的时候并不需要锁，因为读取只可能是客户端自己在读取，任何时刻读请求只可能来自一台机器的一个客户端。</p><h2>7.4 删除Queue的数据</h2><p>对于已经读取的数据，需要删除掉。由于我们的数据都是有序的，所以删除的时候只需要告诉Coprocessor删除多长的数据，然后根据最小ID、offset可以计算出要删除的RowKey，然后执行batch delete即可。删除同样不需要锁，任何时刻删除请求只可能来自一台机器的一个客户端。</p><h2>7.5 HBase的使用考虑</h2><p>由于HBase不存在官方的异步读写库（async library），目前只有openTSDB提供一个版本，而百度IoT利用coprocessor增加了一个新的endpoint，openTSDB的asnyc library却并不支持coprocessor，所以百度IoT自己扩展了async的库，最终用的自己研发的asnyc library的coprocessor库处理数据。</p><p>同时，MQTT的消息属于快速消费（short lived）的消息，基本上写入后会被立刻读出，所以百度做了2.0版本，做内存压缩（in memory compaction），不需要将数据写入HFile，只需要写WAL日志，这样可以极大的降低HDFS文件系统的IO，解决了HDFS文件系统瓶颈问题，不过这个版本还没有正式发布。</p><p>相关参考资料：</p><p><a href="https://blogs.apache.org/hbase/entry/accordion-hbase-breathes-with-in" target="_blank">《Accordion: HBase Breathes with In-Memory Compaction》</a><br><a href="https://blogs.apache.org/hbase/entry/accordion-developer-view-of-in" target="_blank">《Internal design》</a><br></p><h2>7.6 提供多种Queue的选择</h2><p>基于HBase的这种Queue更适合小型客户端，比如APP、嵌入式IoT设备等等，对于大规模扇入场景，例如有一个后端服务需要统计数据，要求100W设备都往同一个主题发送消息，基于HBase的Queue只能有一个TCP来处理数据，后端服务肯定处理不过来会有大量消息堆积。所以百度还推荐使用Kafka来应对这种情况，将数据发往Kafka主题，然后利用Kafka的负载均衡客户端来并发消费消息。除了HBase、Kafka、内存，百度IoT还提供Redis做Queue。</p><h1>八、多租户架构</h1><p>百度是一个大平台，肯定不止为一家公司服务，所以用多租户架构来提供IoT Broker功能。</p><p></p><p><img class="zoompic" src="http://cdn.bewindoweb.com/uploadpic/ffcc106634bf7a9eab5f35ec16c62aba.jpeg" style="max-width:100%;"></p><p>一个IoT Hub上会有很多租户的MQTT Broker， 每个Broker对应一个tenant，每个Broker都有自己的Authentication Service, Session manager, Queue Service，以及很多其他的公共服务，比如Unique Id Generator，Backend Sorage Service等等。当客户端通过MQTT/TCP建立连接，云端通过username来区分对应哪个tenant，因此要求username必须为{tenent Name}/{client Name}，取出username、password之后，先算出对应client的tenant name，然后拿到该tanent对应的Broker实例，调用该Broker的Auth Service验证客户端身份。</p><h1>九、Baidu IoT Hub vs EMQ官方测试结果</h1><h2>1、测试信息</h2><p>（1）测试机配置：</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>配置参数</th><th>&nbsp;值</th></tr><tr><td>&nbsp;Vender ID</td><td>Genuine Intel&nbsp;</td></tr><tr><td>&nbsp;CPU Family&nbsp;&nbsp;<br></td><td>&nbsp;6</td></tr><tr><td>&nbsp;Model<br></td><td>&nbsp;45</td></tr><tr><td>&nbsp;Model Name<br></td><td>&nbsp;Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz&nbsp;</td></tr><tr><td>&nbsp;核心数<br></td><td>12&nbsp;</td></tr><tr><td>&nbsp;内存大小<br></td><td>132137288KB（约126GB）&nbsp;</td></tr></tbody></table><div>（2）测试场景：一半PUBLISH和一半SUBSCRIBE，每一个pub对应一个sub，也就是说通过唯一主题关联起来，这种场景是对MQTT协议最严格的考验，其他场景相对来说CPU消耗会少一些&nbsp;&nbsp;<br></div><div>（3）消��Payload大小：1024B（1KB）</div><div>（4）Queue类型：内存Queue（因为EMQ只有内存Queue）</div><p>文中并没有提到EMQ的版本。</p><div><h2><br>2、测试结果</h2><p>MPS：message per seconds，每秒消息量。由于Pub和Sub是一一对应的，所以这里指的消息量是PUBLISH的QPS，总体QPS是这个值的2倍。&nbsp;</p><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>产品&nbsp;</th><th>连接数&nbsp;</th><th>预期MPS&nbsp;</th><th>实际MPS&nbsp;</th><th>平均CPU IDEL&nbsp;</th><th>平均时延（ms）&nbsp;</th><th>&nbsp;丢失率&nbsp;</th></tr><tr><td>&nbsp;百度</td><td>&nbsp;50万&nbsp;</td><td>&nbsp;20K</td><td>&nbsp;19.2K</td><td>&nbsp;34%</td><td>&nbsp;383</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;50万</td><td>&nbsp;20K</td><td>&nbsp;19.2K</td><td>&nbsp;26%</td><td>&nbsp;1821</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;50万</td><td>&nbsp;10K</td><td>&nbsp;9.2K</td><td>&nbsp;58%</td><td>&nbsp;289</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;50万</td><td>&nbsp;10K</td><td>&nbsp;9.2K</td><td>&nbsp;44%</td><td>&nbsp;281</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;20万</td><td>&nbsp;50K</td><td>&nbsp;42.5K</td><td>&nbsp;14%</td><td>&nbsp;381</td><td>&nbsp;0.0000314%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;20万</td><td>&nbsp;N/A</td><td>&nbsp;测试未返回</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;20万</td><td>&nbsp;40K</td><td>&nbsp;39.7K</td><td>&nbsp;19%</td><td>&nbsp;409</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;20万</td><td>&nbsp;40K</td><td>&nbsp;38.4K</td><td>&nbsp;10%</td><td>&nbsp;17456</td><td>&nbsp;0.0349%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;20万</td><td>&nbsp;20K</td><td>&nbsp;19.7K</td><td>&nbsp;37%</td><td>&nbsp;152</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;10万</td><td>&nbsp;20K</td><td>&nbsp;19.7K</td><td>&nbsp;33%</td><td>&nbsp;449</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;10万</td><td>&nbsp;50K</td><td>&nbsp;48.9K</td><td>&nbsp;13%</td><td>&nbsp;315</td><td>&nbsp;0.000272%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;10万</td><td>&nbsp;50K</td><td>&nbsp;31.7K</td><td>&nbsp;11%</td><td>&nbsp;8014</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;10万</td><td>&nbsp;40K</td><td>&nbsp;39.7K</td><td>&nbsp;19%</td><td>&nbsp;209</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;10万</td><td>&nbsp;40K</td><td>&nbsp;31.7K</td><td>&nbsp;11%</td><td>&nbsp;8014</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;10万</td><td>&nbsp;30K</td><td>&nbsp;29.9K</td><td>&nbsp;26%</td><td>&nbsp;152</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;EMQ</td><td>&nbsp;10万</td><td>&nbsp;30K</td><td>&nbsp;29.9K</td><td>&nbsp;19%</td><td>&nbsp;2727</td><td>&nbsp;0%</td></tr><tr><td>&nbsp;百度</td><td>&nbsp;10万&nbsp;</td><td>&nbsp;30K</td><td>&nbsp;19.8K</td><td>&nbsp;37%</td><td>&nbsp;113</td><td>&nbsp;0%</td></tr></tbody></table>可用MPS对比（无丢包、时延小于0.5s）</div><div><table border="0" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><th>连接数&nbsp;</th><th>百度可用MPS</th><th>EMQ可用MPS&nbsp;</th></tr><tr><td>&nbsp;10万</td><td>&nbsp;40K（19%IDLE）</td><td>&nbsp;20K（24%IDLE）</td></tr><tr><td>&nbsp;20万</td><td>&nbsp;40K（19%IDLE）</td><td>&nbsp;20K（33%IDLE）</td></tr><tr><td>&nbsp;50万</td><td>&nbsp;20K</td><td>&nbsp;10K</td></tr></tbody></table><p><br></p><p><br></p><h2>3、官方测试结论</h2><p>同等连接数下，百度Broker的可用最大吞吐量在EMQ的1~2倍之间。</p><h1>十、总结</h1></div><p>目前很多公司产品经理提的需求动不动就要支持上千万的IoT设备，肯定是要采用类似百度Broker的设计架构。但百度IoT只有这一篇文章，其中的很多细节依然不清楚，并且有自研成分在里面，小公司的普通开发者根本无法参考，所以只是提供了一个思路。MQTT Broker的难点就在于，它有持久Session，前端���连接节点无法做到无状态，会产生两个核心问题：离线消息如何存储和分发、集群如何通信，百度给出的答案是，自研基于HBase的Queue存储离线消息，使用对等节点Akka Cluster做集群通信（然而没有考虑可用区分区的问题，也没有细讲订阅数据同步）。希望以后越来越多的大公司可以开源讲一讲MQTT Broker的思路。</p><p><br></p>                </div></p>
-
+	
   </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
   <div>
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
@@ -291,7 +312,7 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.jpg" class="author-img">
 
-<p class="author-name">Tan Qing Bo</p>
+<p class="author-name">谭庆波</p>
 <p class="author-description">designed by Tan Qing Bo</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
@@ -475,6 +496,48 @@ var _hmt = _hmt || [];
           </aside>
           <aside class="right-column">
             <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
   
   
   <article class="card card-content toc-card">
@@ -512,6 +575,8 @@ var _hmt = _hmt || [];
   </div>
 </div>
   </article>
+
+  
   
   
 </div>
@@ -532,7 +597,7 @@ var _hmt = _hmt || [];
           2020
         </span>
         &nbsp;
-        <a href="/" class="footer-link">Tan Qing Bo's Blog </a>
+        <a href="/" class="footer-link">谭庆波的博客 </a>
       </div>
     </div>
 
