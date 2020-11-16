@@ -957,7 +957,7 @@ pre[class*='highlight'] {
   display: inline-block;
   color: var(--text-color);
   cursor: pointer;
-  padding: 0.7rem 0.6rem;
+  padding: 0.7rem 1.8rem;
 }
 .navbar .navbar-menu a:hover {
   color: var(--link-hover-color);
