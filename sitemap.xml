@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tanqingbo.cn/Java-interview03/</loc>
+    
+    <lastmod>2020-11-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tanqingbo.cn/Java-interview02/</loc>
+    
+    <lastmod>2020-11-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tanqingbo.cn/Java-interview01/</loc>
+    
+    <lastmod>2020-11-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tanqingbo.cn/SEO02/</loc>
     
     <lastmod>2020-11-17</lastmod>
@@ -116,14 +137,14 @@
   </url>
   
   <url>
-    <loc>http://tanqingbo.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
+    <loc>http://tanqingbo.cn/tags/%E9%9D%A2%E8%AF%95/</loc>
     <lastmod>2020-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://tanqingbo.cn/tags/%E9%9D%A2%E8%AF%95/</loc>
+    <loc>http://tanqingbo.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2020-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -161,6 +182,13 @@
   
   <url>
     <loc>http://tanqingbo.cn/categories/%E7%BC%96%E7%A8%8B%E8%B5%84%E6%96%99/</loc>
+    <lastmod>2020-11-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanqingbo.cn/categories/Java/</loc>
     <lastmod>2020-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

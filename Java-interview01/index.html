@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>IT码农</title>
+  
+  
+  <meta property="og:title" content="Java面试题--基础知识汇总(一)">
+  
+  
+  <meta property="og:url" content="http://tanqingbo.cn/Java-interview01/index.html">
+  
+  
+  <meta property="og:img" content="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png">
+  
+  
+  <meta property="og:img" content="一个专注于码农成长的网站">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-11-17">
+  <meta property="og:article:modified_time" content="2020-11-17">
+  <meta property="og:article:author" content="谭庆波">
+  
+  
+  <meta property="og:article:tag" content="Java">
+  
+  <meta property="og:article:tag" content="面试">
+  
+  
+  
+  
+  
+  
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT码农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="http://tanqingbo.cn/categories/%E7%BC%96%E7%A8%8B%E8%B5%84%E6%96%99/" class="navbar-menu-item">
+    
+    资源分享
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于我
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png" data-src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Java面试题--基础知识汇总(一)
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-11-17T05:43:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-11-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.1k 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Java/" class="post-meta-link">Java</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/面试/" class="post-meta-link">面试</a>
+      
+    </div>
+  </div>
+  
+  </header>
+  <div id="section" class="post-content">
+    <h4 id="1、面向对象"><a href="#1、面向对象" class="headerlink" title="1、面向对象"></a>1、面向对象</h4><p><strong>面向对象思想：</strong>面向对象是相对于面向过程而言的，面向过程强调的是功能，面向对象强调的是将功能封装进对象，<br>强调具备功能的对象；</p>
+<ul>
+<li><strong>思想特点</strong><ol>
+<li>是符合人们思考习惯的一种思想；</li>
+<li>将复杂的事情简单化了；</li>
+<li>将程序员从执行者变成了指挥者</li>
+</ol>
+</li>
+<li><strong>特征：</strong></li>
+</ul>
+<ol>
+<li><strong>封装：</strong>隐藏对象的属性和实现细节，仅对外提供公共访问方式</li>
+<li><strong>继承:</strong> 多个类中存在相同属性和行为时，将这些内容抽取到单独一个类中，那么多个类无需再定义<pre><code> 这些属性和行为，只要继承那个类即可。</code></pre>
+</li>
+<li><strong>多态:</strong> 一个对象在程序不同运行时刻代表的多种状态，父类或者接口的引用指向子类对象<h4 id="2、类和对象："><a href="#2、类和对象：" class="headerlink" title="2、类和对象："></a>2、类和对象：</h4></li>
+</ol>
+<p><strong>类：</strong>对现实世界中某类事物的描述,是抽象的，概念上的定义。</p>
+<p><strong>对象：</strong>事物具体存在的个体。</p>
+<h4 id="3、成员变量和局部变量的区别-重点"><a href="#3、成员变量和局部变量的区别-重点" class="headerlink" title="3、成员变量和局部变量的区别(重点)"></a>3、成员变量和局部变量的区别(重点)</h4><ol>
+<li><p>作用域 </p>
+<ol>
+<li>成员变量：针对整个类有效。</li>
+<li>局部变量：只在某个范围内有效。(一般指的就是方法,语句体内)</li>
+</ol>
+</li>
+<li><p>存储位置</p>
+<ol>
+<li>成员变量：随着对象的创建而存在，随着对象的消失而消失，存储在堆内存中。</li>
+<li>局部变量：在方法被调用，或者语句被执行的时候存在，存储在栈内存中。<br> 当方法调用完，或者语句结束后，就自动释放。</li>
+</ol>
+</li>
+<li><p>初始值</p>
+<ol>
+<li>成员变量：有默认初始值。</li>
+<li>局部变量：没有默认初始值，使用前必须赋值。</li>
+</ol>
+</li>
+</ol>
+<h4 id="4、匿名对象"><a href="#4、匿名对象" class="headerlink" title="4、匿名对象"></a>4、匿名对象</h4><p>匿名对象就是没有名字的对象。是对象的一种简写形式。<br><strong>应用场景</strong></p>
+<ol>
+<li>只调用一次类中的方法。</li>
+<li>可以作为实际参数在方法传递中使用</li>
+</ol>
+<h4 id="5、封装："><a href="#5、封装：" class="headerlink" title="5、封装："></a>5、封装：</h4><p>指隐藏对象的属性和实现细节，仅对外提供公共访问方式；比如电脑机箱、笔记本等</p>
+<p><strong>好处：</strong></p>
+<ol>
+<li>将变化隔离；</li>
+<li>方便使用；</li>
+<li>提高复用性；</li>
+<li>提高安全性</li>
+</ol>
+<p><strong>关键字private：</strong>封装在代码中的体现</p>
+<ol>
+<li>私有的意思，权限修饰符</li>
+<li>用来修饰成员变量和成员函数</li>
+<li>用private修饰的成员只在本类中有效</li>
+<li>私有是封装的一种体现</li>
+</ol>
+<h4 id="6、构造方法："><a href="#6、构造方法：" class="headerlink" title="6、构造方法："></a>6、构造方法：</h4><ol>
+<li><strong>特点：</strong><br>方法名与类名相同<br>没有返回类型<br>没有返回值</li>
+<li><strong>作用：</strong>构造函数是用于创建对象，并对其进行初始化赋值，对象一建立就自动调用相对应的构造函数，</li>
+<li><strong>构造方法的注意事项:</strong></li>
+<li>如果一个自定义类没有构造方法，系统会默认给出一个无参构造方法。</li>
+<li>如果一个自定义类提供了构造方法，那么，系统将不再给出无参构造方法。<br> 这个时候，你可以不使用无参构造方法。<br> 如果你想使用，那么，就必须手动给出无参构造方法。</li>
+</ol>
+<p><strong>建议：</strong>一般情况下，我们的自定义类都要手动给出无参构造方法。 </p>
+<ol start="4">
+<li><strong>构造方法和成员方法的区别</strong><ol>
+<li>格式区别<br>构造方法和类名相同，并且没有返回类型，也没有返回值。<br>普通成员方法可以任意起名，必须有返回类型，可以没有返回值。</li>
+<li>作用区别<br>构造方法用于创建对象，并进行初始化值。<br>普通成员方法是用于完成特定功能的。</li>
+<li>调用区别<br>构造方法是在创建对象时被调用的，一个对象建立，只调用一次相应构造函数,<br>普通成员方法是由创建好的对象调用，可以调用多次</li>
+</ol>
+</li>
+</ol>
+<h4 id="7、构造代码块："><a href="#7、构造代码块：" class="headerlink" title="7、构造代码块："></a>7、构造代码块：</h4><p><strong>作用：</strong>给对象进行初始化，对象一建立就执行，而且优先于构造函数执行</p>
+<p><strong>构造代码块和构造函数的区别：</strong></p>
+<ol>
+<li>构造代码块是给所有不同对象的共性进行统一初始化</li>
+<li>构造函数是给对应的对象进行初始化</li>
+</ol>
+<h4 id="8、this关键字"><a href="#8、this关键字" class="headerlink" title="8、this关键字"></a>8、this关键字</h4><ul>
+<li>this关键字代表本类对象的一个引用，谁调用this所在的方法，this就代表谁  </li>
+<li>this的使用场景</li>
+</ul>
+<ol>
+<li>用于区分同名成员变量和局部变量；</li>
+<li>在定义函数时，该函数内部要用到调用该函数的对象时，因为此时对象还没建立，故this代表此对象</li>
+<li>构造函数间调用<br>这个时候，this(参数)必须作为第一条语句存在。<h4 id="9、Person-p-new-Person-在内存中做了哪些事情。"><a href="#9、Person-p-new-Person-在内存中做了哪些事情。" class="headerlink" title="9、Person p = new Person();在内存中做了哪些事情。"></a>9、Person p = new Person();在内存中做了哪些事情。</h4></li>
+<li>将Person.class文件加载进内存中。</li>
+<li>如果p定义在主方法中，那么，就会在栈空间开辟一个变量空间p。</li>
+<li>在堆内存给对象分配空间。</li>
+<li>对对象中的成员进行默认初始化。</li>
+<li>对对象中的成员进行显示初始化。</li>
+<li>调用构造代码块对对象进行初始化。(如果没有就不执行)</li>
+<li>调用构造方法对对象进行初始化。对象初始化完毕。</li>
+<li>将对象的内存地址赋值给p变量，让p变量指向该对象。<h4 id="10、static关键字："><a href="#10、static关键字：" class="headerlink" title="10、static关键字："></a>10、static关键字：</h4>静态的意思，用来修饰成员变量和成员函数</li>
+</ol>
+<p><strong>静态的特点:</strong></p>
+<ul>
+<li>随着类的加载而加载、优先于对象存在、对所有对象共享、可以被类名直接调用</li>
+</ul>
+<p><strong>静态的注意事项</strong></p>
+<ul>
+<li><p>为什么静态方法只能访问静态成员：<br>因为静态的内容是随着类的加载而加载，它是先进内存的。</p>
+</li>
+<li><p>静态方法中不能使用this,super关键字</p>
+</li>
+<li><p>主方法是静态的</p>
+<pre class="highlight"><span class="line">public static void main(String[] args)</span><br><span class="line">public:公共的意思，是最大权限修饰符。</span><br><span class="line">static:由于jvm调用main方法的时候，没有创建对象。</span><br><span class="line">只能通过类名调用。所以，main必须用static修饰。</span><br><span class="line">void:由于main方法是被jvm调用，不需要返回值。用void修饰。</span><br><span class="line">main:main是主要的意思，所以jvm采用了这个名字。是程序的入口。</span><br><span class="line">String[]:字符串数组</span><br><span class="line">args:数组名</span><br><span class="line">在运行的时候，通过java命令给args数组赋值。</span><br><span class="line">格式：java MainTest hello world itcast</span><br></pre>
+
+
+
+</li>
+</ul>
+<h4 id="11、静态变量和成员变量的区别"><a href="#11、静态变量和成员变量的区别" class="headerlink" title="11、静态变量和成员变量的区别"></a>11、静态变量和成员变量的区别</h4><p><strong>调用方式</strong></p>
+<ol>
+<li>静态变量也称为类变量，可以直接通过类名调用。也可以通过对象名调用。<br>这个变量属于类。</li>
+<li>成员变量也称为实例变量，只能通过对象名调用。这个变量属于对象。</li>
+</ol>
+<p><strong>存储位置</strong></p>
+<ol>
+<li>静态变量存储在方法区中的静态区。</li>
+<li>成员变量存储在堆内存。</li>
+</ol>
+<p><strong>生命周期</strong></p>
+<ol>
+<li>静态变量随着类的加载而存在，随着类的消失而消失。生命周期长。</li>
+<li>成员变量随着对象的创建而存在，随着对象的消失而消失。</li>
+</ol>
+<p><strong>与对象的相关性</strong></p>
+<ol>
+<li>静态变量是所有对象共享的数据。</li>
+<li>成员变量是每个对象所特有的数据。</li>
+</ol>
+<p><strong>静态的优点和弊端</strong></p>
+<ol>
+<li>优点：<br>对对象的共享数据进行单独空间的存储，节省内存，没有必要每个对象都存储一份<br>可直接被类名调用</li>
+<li>弊端：<br>生命周期过长，随着类的消失而消失<br>访问出现权限，即静态虽好但只能访问静态</li>
+</ol>
+<p><strong>什么使用使用静态呢？</strong></p>
+<ol>
+<li>当所有对象共享某个数据的时候，就把这个成员变量定义为静态修饰的。</li>
+<li>当某个方法没有访问该类中的非静态成员，就可以把这个方法定义为静态修饰。</li>
+<li>静态的生命周期比较长，所以一般不推荐使用。</li>
+</ol>
+<p><strong>静态代码块</strong></p>
+<ol>
+<li>它只执行一次，它比main还先执行。</li>
+<li>执行顺序<br>静态代码块–构造代码块–构造方法</li>
+</ol>
+<h4 id="12、制作API-次重点"><a href="#12、制作API-次重点" class="headerlink" title="12、制作API(次重点)"></a>12、制作API(次重点)</h4><p>API(全拼):Application Program Interface 应用程序编程接口。</p>
+<ol>
+<li><p>类中的内容需要用文档注释。</p>
+</li>
+<li><p>使用JDK\bin目录下的javadoc工具。</p>
+<pre class="highlight"><span class="line">格式:javadoc -d 目录 -author -version ArrayTool.java</span><br></pre>
+
+
+
+</li>
+</ol>
+	
+  </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+  
+  
+  
+  <div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/Java-interview01/">http://tanqingbo.cn/Java-interview01/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/Java-interview03/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Java面试题--重点总结(三) </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/computer-book/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">计算机专业几本必看的书！ </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">1、面向对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1%EF%BC%9A"><span class="toc-text">2、类和对象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB-%E9%87%8D%E7%82%B9"><span class="toc-text">3、成员变量和局部变量的区别(重点)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1"><span class="toc-text">4、匿名对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E5%B0%81%E8%A3%85%EF%BC%9A"><span class="toc-text">5、封装：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">6、构造方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E6%9E%84%E9%80%A0%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%9A"><span class="toc-text">7、构造代码块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81this%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">8、this关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9%E3%80%81Person-p-new-Person-%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B%E6%83%85%E3%80%82"><span class="toc-text">9、Person p &#x3D; new Person();在内存中做了哪些事情。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10%E3%80%81static%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9A"><span class="toc-text">10、static关键字：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11%E3%80%81%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%92%8C%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">11、静态变量和成员变量的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12%E3%80%81%E5%88%B6%E4%BD%9CAPI-%E6%AC%A1%E9%87%8D%E7%82%B9"><span class="toc-text">12、制作API(次重点)</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">谭庆波</p>
+<p class="author-description">一个专注于码农成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>14</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>4</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>8</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">1、面向对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1%EF%BC%9A"><span class="toc-text">2、类和对象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB-%E9%87%8D%E7%82%B9"><span class="toc-text">3、成员变量和局部变量的区别(重点)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1"><span class="toc-text">4、匿名对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E5%B0%81%E8%A3%85%EF%BC%9A"><span class="toc-text">5、封装：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">6、构造方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E6%9E%84%E9%80%A0%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%9A"><span class="toc-text">7、构造代码块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81this%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">8、this关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9%E3%80%81Person-p-new-Person-%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B%E6%83%85%E3%80%82"><span class="toc-text">9、Person p &#x3D; new Person();在内存中做了哪些事情。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10%E3%80%81static%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9A"><span class="toc-text">10、static关键字：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11%E3%80%81%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%92%8C%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">11、静态变量和成员变量的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12%E3%80%81%E5%88%B6%E4%BD%9CAPI-%E6%AC%A1%E9%87%8D%E7%82%B9"><span class="toc-text">12、制作API(次重点)</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);">扫码加入星球你将收获：</span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">1、面向对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1%EF%BC%9A"><span class="toc-text">2、类和对象：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB-%E9%87%8D%E7%82%B9"><span class="toc-text">3、成员变量和局部变量的区别(重点)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E5%8C%BF%E5%90%8D%E5%AF%B9%E8%B1%A1"><span class="toc-text">4、匿名对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E5%B0%81%E8%A3%85%EF%BC%9A"><span class="toc-text">5、封装：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="toc-text">6、构造方法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E6%9E%84%E9%80%A0%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%9A"><span class="toc-text">7、构造代码块：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81this%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">8、this关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9%E3%80%81Person-p-new-Person-%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B%E6%83%85%E3%80%82"><span class="toc-text">9、Person p &#x3D; new Person();在内存中做了哪些事情。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10%E3%80%81static%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9A"><span class="toc-text">10、static关键字：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11%E3%80%81%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%92%8C%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">11、静态变量和成员变量的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12%E3%80%81%E5%88%B6%E4%BD%9CAPI-%E6%AC%A1%E9%87%8D%E7%82%B9"><span class="toc-text">12、制作API(次重点)</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-17</div>
+        <a href="/SEO02/"><div class="recent-posts-item-content">提高网站搜索排名_网站博客优化_SEO学习教程（二）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-17</div>
+        <a href="/Java-interview02/"><div class="recent-posts-item-content">Java面试题--设计模式与继承多态(二)</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-17</div>
+        <a href="/Java-interview03/"><div class="recent-posts-item-content">Java面试题--重点总结(三)</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-17</div>
+        <a href="/Java-interview01/"><div class="recent-posts-item-content">Java面试题--基础知识汇总(一)</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT码农 </a>
+      </div>
+    </div>
+
+    
+    <div class="footer-dsc">
+      
+      Powered by
+      <a href="https://hexo.io/" class="footer-link" target="_blank" rel="nofollow noopener noreferrer">&nbsp;Hexo </a>
+      
+      
+      <span>&nbsp;|&nbsp;</span>
+      
+      
+      Theme -
+      <a href="https://github.com/theme-kaze" class="footer-link" target="_blank"
+        rel="nofollow noopener noreferrer">&nbsp;Kaze</a>
+      
+    </div>
+    
+    
+    
+    
+      <div class="footer-dsc">
+        
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+        
+        <span>&nbsp;|&nbsp;</span>
+        
+        
+        本站总访客数<span id="busuanzi_value_site_uv"></span>次
+        
+      </div>
+      
+    
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  <script>loadScript("/js/lib/busuanzi.min.js")</script>
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
