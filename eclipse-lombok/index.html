@@ -11,18 +11,28 @@
   <title>IT码农 - 一个专注于程序员成长的网站</title>
   
   
-  <meta property="og:title" content="IT码农 - 一个专注于程序员成长的网站">
+  <meta property="og:title" content="eclipse使用lombok">
   
   
-  <meta property="og:url" content="http://tanqingbo.cn/index.html">
+  <meta property="og:url" content="http://tanqingbo.cn/eclipse-lombok/index.html">
   
   
-  <meta property="og:img" content="/img/logo.jpg">
+  <meta property="og:img" content="https://pic4.zhimg.com/80/v2-c8756c66b85d48d8603969015f80d66c_720w.png">
   
   
   <meta property="og:description" content="IT码农（tanqingbo.cn）致力于为广大程序员们提供计算机专业相关的经验教程、学习资料和书籍，包括Java、C/C++、Python、Linux、机器学习等学习干货、IT程序员常用软降工具分享、计算机专业经典电子书PDF，帮助IT码农程序员更快入门和提高。">
   
   <meta property="og:keywords" content="程序员，程序猿，Java软件，Java面试，python机器学习、Linux">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-11-20">
+  <meta property="og:article:modified_time" content="2020-11-19">
+  <meta property="og:article:author" content="谭庆波">
+  
+  
+  <meta property="og:article:tag" content="lombok">
+  
+  
   
   
   
@@ -204,418 +214,145 @@ var _hmt = _hmt || [];
       <div class="container">
         <div class="columns">
           <main class="main-column">
-<div class="card">
-  
-  <a href="/eclipse-lombok/" class="image-wrapper">
-    <img src="https://pic4.zhimg.com/80/v2-c8756c66b85d48d8603969015f80d66c_720w.png" data-src="https://pic4.zhimg.com/80/v2-c8756c66b85d48d8603969015f80d66c_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/eclipse-lombok/">
-      <h1 class="post-title">
-        eclipse使用lombok
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
+<div class="image-wrapper">
+  <img src="https://pic4.zhimg.com/80/v2-c8756c66b85d48d8603969015f80d66c_720w.png" data-src="https://pic4.zhimg.com/80/v2-c8756c66b85d48d8603969015f80d66c_720w.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
       eclipse使用lombok
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-11-20T02:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-11-20</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>283 字</span>
+    
+  </div>
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/lombok/" class="post-meta-link">lombok</a>
       
     </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-20T02:49:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-20</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/eclipse-lombok/">继续阅读 </a>
-    </div>
-  </article>
+  </div>
+  
+  <meta property="keywords" content="Java，lombok，eclipse">
+  </header>
   
 
   
+  <div id="section" class="post-content">
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="http://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+  
+    <h2 id="eclipse使用lombok"><a href="#eclipse使用lombok" class="headerlink" title="eclipse使用lombok"></a>eclipse使用lombok</h2><h3 id="安装lombok"><a href="#安装lombok" class="headerlink" title="安装lombok"></a>安装lombok</h3><ol>
+<li>下载lombok <a target="_blank" rel="noopener" href="http://projectlombok.org/download.html">http://projectlombok.org/download.html</a>,下载下来的是一个lombok.jar包。放到eclipse的文件夹下。</li>
+</ol>
+<ul>
+<li><p>双击lombok.jar进行安装。</p>
+</li>
+<li><p>如果程序还在报错，那么点击在eclipse的Project选项的clean.</p>
+<h3 id="lombok使用"><a href="#lombok使用" class="headerlink" title="lombok使用"></a>lombok使用</h3></li>
+<li><p>Lombok的特色是根据annotation创建一些代码，以减少重复代码的数量，它提供了以下几个annotation：</p>
+<pre><code>     @Getter和@Setter：为属性创建getter和setter
+     @EqualsAndHashCode：实现equals()方法和hashCode()方法
+     @ToString：实现toString()方法
+     @Data：上述3个annotation的和，会创建getter setter equals hashCode和toString （最实用）
+     @Cleanup：关闭流
+     @Synchronized：对象同步
+     @SneakyThrows：抛出异常
+     @Log4j: log4j日志声明</code></pre>
+</li>
+</ul>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><pre><code>        import lombok.Data;
+        import lombok.ToString;
+
+        @ToString(exclude=&quot;color&quot;) 
+        public @Data class Person &#123; 
+            private String name; 
+            private int size; 
+            private String color; 
+            private String style; 
+            private boolean flag;
+
+            public static void main(String[] args) &#123;
+                Person p = new Person();
+                p.setName(&quot;aa&quot;);
+                System.out.println(p.getName());
+            &#125;
+
+        &#125;</code></pre>
+<ul>
+<li><p>@Data是实现所有的成员的Get和Set方法</p>
+</li>
+<li><p>@ToString(exclude=”color”) 是ToString时候排除color成员变量</p>
+</li>
+<li><p>注意调用flag成员变量时候，是isFlag方法</p>
+</li>
+<li><p>注解加载类上，对所有的属性都有效，加在单一属性上只对该属性有效。</p>
+</li>
+</ul>
+	
+  </div>
+  
+  
+  <br><br>
+  <div style="height:60px;border:none;border-top:1px solid #000;"></div>  
+  <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
 </div>
-
-<div class="card">
   
-  <a href="/Java-multithreaded-learning/" class="image-wrapper">
-    <img src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png" data-src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
   
-  <article class="card card-content">
-    <a href="/Java-multithreaded-learning/">
-      <h1 class="post-title">
-        如何学习Java多线程（超详细总结）
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      上一篇分享了《JavaWeb中文编码问题》,本篇文章中详细总结了Java多线程的一些问题。
-
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-19T13:09:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-19</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/Java-multithreaded-learning/">继续阅读 </a>
-    </div>
-  </article>
   
-
+  <div>
   
-</div>
-
-<div class="card">
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/about">谭庆波</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="http://tanqingbo.cn/eclipse-lombok/">http://tanqingbo.cn/eclipse-lombok/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
   
-  <a href="/JavaWeb-Chinese-Garbled/" class="image-wrapper">
-    <img src="https://pic1.zhimg.com/80/v2-eb70a82c4efba3ebdfd97dfac0eccd96_720w.png" data-src="https://pic1.zhimg.com/80/v2-eb70a82c4efba3ebdfd97dfac0eccd96_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/JavaWeb-Chinese-Garbled/">
-      <h1 class="post-title">
-        JavaWeb中文编码问题
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      上一篇分享了《Java内存模型及GC原理(Java内存分配、GC基本原理)》,本篇文章中我们来聊一下JavaWeb中一些中文编码问题。...
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-19T09:13:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-19</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/JavaWeb-Chinese-Garbled/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/Java-GC/" class="image-wrapper">
-    <img src="https://pic1.zhimg.com/80/v2-03854234367d1618688500bb14df4bdd_720w.png" data-src="https://pic1.zhimg.com/80/v2-03854234367d1618688500bb14df4bdd_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/Java-GC/">
-      <h1 class="post-title">
-        Java内存模型及GC原理(Java内存分配、GC基本原理)
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      之前分享过一些经典的Java面试题，分别是《Java面试题–基础知识汇总》、《
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-19T06:49:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-19</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/Java-GC/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/Java-interview03/" class="image-wrapper">
-    <img src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png" data-src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/Java-interview03/">
-      <h1 class="post-title">
-        Java面试题--重点总结(三)
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      前面已经分享了两章Java面试基础知识，分别是《Java面试题–基础知识汇总》和《
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-17T15:43:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-17</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/Java-interview03/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/SEO02/" class="image-wrapper">
-    <img src="https://pic2.zhimg.com/80/v2-8efb1485f52b13b6c51bb64717991304_720w.png" data-src="https://pic2.zhimg.com/80/v2-8efb1485f52b13b6c51bb64717991304_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/SEO02/">
-      <h1 class="post-title">
-        提高网站搜索排名_网站博客优化_SEO学习教程（二）
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      1、符合SEO的网站
-结构清晰、导...
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-17T08:49:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-17</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/SEO教程/" class="post-meta-link">SEO教程</a>
-        
-        
-      </div>
-      <a href="/SEO02/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/Java-interview02/" class="image-wrapper">
-    <img src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png" data-src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/Java-interview02/">
-      <h1 class="post-title">
-        Java面试题--设计模式与继承多态(二)
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      前面已经分享了一篇Java面试基础知识，《Java面试题–基础知识汇总》，这篇文章接着来分享Java面试的基础知识点。
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-17T07:43:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-17</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/Java-interview02/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/Java-interview01/" class="image-wrapper">
-    <img src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png" data-src="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/Java-interview01/">
-      <h1 class="post-title">
-        Java面试题--基础知识汇总(一)
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      下面进入今天文章的主题。
-1、面向对象面向对...
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-17T05:43:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-17</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/Java/" class="post-meta-link">Java</a>
-        
-        
-      </div>
-      <a href="/Java-interview01/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/computer-book/" class="image-wrapper">
-    <img src="https://pic3.zhimg.com/80/v2-4775e0137edb4af474975f9ff7d8b4fc_720w.png" data-src="https://pic3.zhimg.com/80/v2-4775e0137edb4af474975f9ff7d8b4fc_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/computer-book/">
-      <h1 class="post-title">
-        计算机专业几本必看的书！
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      当今社会，要说哪个专业或者领域最火爆最受欢迎，计算机专业当之无愧可以进入Top3。日常生活中的各行各业都离不开计算机的支持，无处不在。而且，计算机行业给的薪资也是非常非常非常可观令人心动！(本人就是因为计算机赚的多才选的计算机专...
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-16T08:49:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-16</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/编程资料/" class="post-meta-link">编程资料</a>
-        
-        
-      </div>
-      <a href="/computer-book/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-<div class="card">
-  
-  <a href="/SEO01/" class="image-wrapper">
-    <img src="https://pic2.zhimg.com/80/v2-8efb1485f52b13b6c51bb64717991304_720w.png" data-src="https://pic2.zhimg.com/80/v2-8efb1485f52b13b6c51bb64717991304_720w.png"
-      srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
-      class="image lozad">
-  </a>
-  
-  <article class="card card-content">
-    <a href="/SEO01/">
-      <h1 class="post-title">
-        提高网站搜索排名_网站博客优化_SEO学习教程（一）
-      </h1>
-    </a>
-    <div class="card-excerpt">
-      
-      1、行业分析
-聚焦，给用户提供什么，为什么要选择你。要么Java...
-      
-    </div>
-    <div class="card-post-footer">
-      <div class="post-meta">
-        <time datetime="2020-11-15T08:49:18.000Z" style="display: flex; align-items: center;">
-          <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
-          <span>2020-11-15</span>
-        </time>
-        
-        <span class="dot"></span>
-        
-        <a href="categories/SEO教程/" class="post-meta-link">SEO教程</a>
-        
-        
-      </div>
-      <a href="/SEO01/">继续阅读 </a>
-    </div>
-  </article>
-  
-
-  
-</div>
-
-
+  </div>
+</article>
 <div class="nav">
   
   
   <div class="nav-item-next">
-    <a href="/page/2/" class="nav-link">
+    <a href="/Java-multithreaded-learning/" class="nav-link">
       <div>
-        <div class="nav-label">下一页</div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">如何学习Java多线程（超详细总结） </div>
         
       </div>
       <i class="iconfont icon-right nav-next-icon"></i>
@@ -623,7 +360,11 @@ var _hmt = _hmt || [];
   </div>
   
 </div>
-</main>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#eclipse%E4%BD%BF%E7%94%A8lombok"><span class="toc-text">eclipse使用lombok</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85lombok"><span class="toc-text">安装lombok</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lombok%E4%BD%BF%E7%94%A8"><span class="toc-text">lombok使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li></ol></li></ol>
+</div></main>
           <aside class="left-column">
             
             <div class="card card-author">
@@ -651,6 +392,13 @@ var _hmt = _hmt || [];
             
             <div class="sticky-tablet">
   
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#eclipse%E4%BD%BF%E7%94%A8lombok"><span class="toc-text">eclipse使用lombok</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85lombok"><span class="toc-text">安装lombok</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lombok%E4%BD%BF%E7%94%A8"><span class="toc-text">lombok使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li></ol></li></ol>
+    </div>
+  </article>
   
   
   <article class="card card-content categories-widget">
@@ -724,97 +472,6 @@ var _hmt = _hmt || [];
   </article>
   
   
-  <article class="card card-content widescreen-archive archive-widget">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2020" class="archive-card-list-item">
-          2020
-          <span class="archive-card-list-item-badge">18</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
-  
 </div>
           </aside>
           <aside class="right-column">
@@ -863,6 +520,11 @@ var _hmt = _hmt || [];
 
   
   
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#eclipse%E4%BD%BF%E7%94%A8lombok"><span class="toc-text">eclipse使用lombok</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85lombok"><span class="toc-text">安装lombok</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lombok%E4%BD%BF%E7%94%A8"><span class="toc-text">lombok使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li></ol></li></ol>
+  </article>
+  
   
   <article class="card card-content">
     <div class="recent-posts-card">
@@ -895,97 +557,6 @@ var _hmt = _hmt || [];
 
   
   
-  
-  <article class="card card-content">
-    <div class="archive-card">
-  <div class="archive-card-header"><i class="iconfont icon-wodebaobiao" style="padding-right: 2px;"></i>归档</div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a href="/archives/2020" class="archive-card-list-item">
-          2020
-          <span class="archive-card-list-item-badge">18</span>
-      </a>
-    
-  </div>
-</div>
-  </article>
   
 </div>
           </aside>

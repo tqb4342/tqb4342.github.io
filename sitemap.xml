@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tanqingbo.cn/eclipse-lombok/</loc>
+    
+    <lastmod>2020-11-19</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tanqingbo.cn/Java-multithreaded-learning/</loc>
     
     <lastmod>2020-11-19</lastmod>
@@ -215,6 +222,13 @@
   
   <url>
     <loc>http://tanqingbo.cn/tags/java/</loc>
+    <lastmod>2020-11-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://tanqingbo.cn/tags/lombok/</loc>
     <lastmod>2020-11-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
