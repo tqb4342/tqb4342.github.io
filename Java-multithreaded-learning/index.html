@@ -280,36 +280,11 @@ var _hmt = _hmt || [];
 <li>多线程是指在同一程序中有多个顺序流在执行。</li>
 </ol>
 <ul>
-<li><p>在java中要想实现多线程，有两种手段，一种是继续Thread类，另外一种是实现Runable接口。</p>
-<h3 id="扩展java-lang-Thread类"><a href="#扩展java-lang-Thread类" class="headerlink" title="扩展java.lang.Thread类"></a>扩展java.lang.Thread类</h3><p>  class Thread1 extends Thread{</p>
-<pre><code>                  private String name;
-                  public Thread1(String name) &#123;
-                     this.name=name;
-                  &#125;
-                  public void run() &#123;
-                      for (int i = 0; i &lt; 5; i++) &#123;
-                          System.out.println(name + &quot;运行  :  &quot; + i);
-                          try &#123;
-                              sleep((int) Math.random() * 10);
-                          &#125; catch (InterruptedException e) &#123;
-                              e.printStackTrace();
-                          &#125;
-                      &#125;
+<li>在java中要想实现多线程，有两种手段，一种是继续Thread类，另外一种是实现Runable接口。</li>
+</ul>
+<h3 id="扩展java-lang-Thread类"><a href="#扩展java-lang-Thread类" class="headerlink" title="扩展java.lang.Thread类"></a>扩展java.lang.Thread类</h3><pre class="highlight"><span class="line">class Thread1 extends Thread&#123;</span><br><span class="line">					private String name;</span><br><span class="line">				    public Thread1(String name) &#123;</span><br><span class="line">				       this.name&#x3D;name;</span><br><span class="line">				    &#125;</span><br><span class="line">					public void run() &#123;</span><br><span class="line">				        for (int i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">				            System.out.println(name + &quot;运行  :  &quot; + i);</span><br><span class="line">				            try &#123;</span><br><span class="line">				                sleep((int) Math.random() * 10);</span><br><span class="line">				            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">				                e.printStackTrace();</span><br><span class="line">				            &#125;</span><br><span class="line">				        &#125;</span><br><span class="line">				       </span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				public class Main &#123;</span><br><span class="line">				</span><br><span class="line">					public static void main(String[] args) &#123;</span><br><span class="line">						Thread1 mTh1&#x3D;new Thread1(&quot;A&quot;);</span><br><span class="line">						Thread1 mTh2&#x3D;new Thread1(&quot;B&quot;);</span><br><span class="line">						mTh1.start();</span><br><span class="line">						mTh2.start();</span><br><span class="line">				</span><br><span class="line">					&#125;</span><br><span class="line">				</span><br><span class="line">				&#125;</span><br></pre>
 
-                  &#125;
-              &#125;
-              public class Main &#123;
-
-                  public static void main(String[] args) &#123;
-                      Thread1 mTh1=new Thread1(&quot;A&quot;);
-                      Thread1 mTh2=new Thread1(&quot;B&quot;);
-                      mTh1.start();
-                      mTh2.start();
-
-                  &#125;
-
-              &#125;</code></pre>
-</li>
+<ul>
 <li><p>start()方法的调用后并不是立即执行多线程代码，而是使得该线程变为可运行态（Runnable），什么时候运行是由操作系统决定的。</p>
 </li>
 <li><p>从程序运行的结果可以发现，多线程程序是乱序执行。因此，只有乱序执行的代码才有必要设计为多线程。<br>Thread.sleep()方法调用目的是不让当前线程独自霸占该进程所获取的CPU资源，以留出一定时间给其他线程执行的机会。</p>
@@ -344,7 +319,7 @@ var _hmt = _hmt || [];
             new Thread(new Thread2(&quot;D&quot;)).start();
         &#125;
 
-    &#125;</code></pre>
+&#125;</code></pre>
 <ul>
 <li><p><font color=red>注：Thread类实际上也是实现了Runnable接口的类。</font></p>
 </li>
@@ -375,9 +350,8 @@ var _hmt = _hmt || [];
               new Thread(my, &quot;C&quot;).start();//同一个mt，但是在Thread中就不可以，如果用同一个实例化对象mt，就会出现异常   
               new Thread(my, &quot;D&quot;).start();
               new Thread(my, &quot;E&quot;).start();
-      &#125;
-
-  &#125;</code></pre>
+      &#125;</code></pre>
+<p>  }</p>
 </li>
 <li><p><font color=red>注：这里要注意每个线程都是用同一个实例化对象，如果不是同一个，效果就和上面的Thread一样了！</font></p>
 </li>
@@ -431,50 +405,28 @@ var _hmt = _hmt || [];
 </ul>
 <ul>
 <li><p>在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到join()方法了。</p>
- <pre class="highlight"><span class="line">class Thread1 extends Thread&#123;</span><br><span class="line">		private String name;</span><br><span class="line">	    public Thread1(String name) &#123;</span><br><span class="line">	    	super(name);</span><br><span class="line">	       this.name&#x3D;name;</span><br><span class="line">	    &#125;</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			System.out.println(Thread.currentThread().getName() + &quot; 线程运行开始!&quot;);</span><br><span class="line">	        for (int i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">	            System.out.println(&quot;子线程&quot;+name + &quot;运行 : &quot; + i);</span><br><span class="line">	            try &#123;</span><br><span class="line">	                sleep((int) Math.random() * 10);</span><br><span class="line">	            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">	                e.printStackTrace();</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	        System.out.println(Thread.currentThread().getName() + &quot; 线程运行结束!&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br></pre>
+ <pre class="highlight"><span class="line">  class Thread1 extends Thread&#123;</span><br><span class="line">  		private String name;</span><br><span class="line">  	    public Thread1(String name) &#123;</span><br><span class="line">  	    	super(name);</span><br><span class="line">  	       this.name&#x3D;name;</span><br><span class="line">  	    &#125;</span><br><span class="line">  		public void run() &#123;</span><br><span class="line">  			System.out.println(Thread.currentThread().getName() + &quot; 线程运行开始!&quot;);</span><br><span class="line">  	        for (int i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">  	            System.out.println(&quot;子线程&quot;+name + &quot;运行 : &quot; + i);</span><br><span class="line">  	            try &#123;</span><br><span class="line">  	                sleep((int) Math.random() * 10);</span><br><span class="line">  	            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">  	                e.printStackTrace();</span><br><span class="line">  	            &#125;</span><br><span class="line">  	        &#125;</span><br><span class="line">  	        System.out.println(Thread.currentThread().getName() + &quot; 线程运行结束!&quot;);</span><br><span class="line">  		&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">  	public class Main &#123;</span><br><span class="line">  </span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  		System.out.println(Thread.currentThread().getName()+&quot;主线程运行开始!&quot;);</span><br><span class="line">  		Thread1 mTh1&#x3D;new Thread1(&quot;A&quot;);</span><br><span class="line">  		Thread1 mTh2&#x3D;new Thread1(&quot;B&quot;);</span><br><span class="line">  		mTh1.start();</span><br><span class="line">  		mTh2.start();</span><br><span class="line">  		System.out.println(Thread.currentThread().getName()+ &quot;主线程运行结束!&quot;);</span><br><span class="line">  </span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br></pre>
+
 
 
 </li>
 </ul>
-<pre><code>   public class Main &#123;
-
-       public static void main(String[] args) &#123;
-           System.out.println(Thread.currentThread().getName()+&quot;主线程运行开始!&quot;);
-           Thread1 mTh1=new Thread1(&quot;A&quot;);
-           Thread1 mTh2=new Thread1(&quot;B&quot;);
-           mTh1.start();
-           mTh2.start();
-           System.out.println(Thread.currentThread().getName()+ &quot;主线程运行结束!&quot;);
-
-       &#125;
-
-   &#125;</code></pre>
 <ul>
 <li><p>运行结果：</p>
-<p> main主线程运行开始!</p>
-<pre><code> main主线程运行结束!
- A 线程运行开始!
- B 线程运行开始!
- 子线程A运行 : 0
- 子线程B运行 : 0
- 子线程A运行 : 1
- 子线程A运行 : 2
- 子线程A运行 : 3
- 子线程A运行 : 4
- 子线程B运行 : 1
- 子线程B运行 : 2
- 子线程B运行 : 3
- 子线程B运行 : 4
- B 线程运行结束!
- A 线程运行结束!</code></pre>
+ <pre class="highlight"><span class="line">main主线程运行开始!</span><br><span class="line">	main主线程运行结束!</span><br><span class="line">	A 线程运行开始!</span><br><span class="line">	B 线程运行开始!</span><br><span class="line">	子线程A运行 : 0</span><br><span class="line">	子线程B运行 : 0</span><br><span class="line">	子线程A运行 : 1</span><br><span class="line">	子线程A运行 : 2</span><br><span class="line">	子线程A运行 : 3</span><br><span class="line">	子线程A运行 : 4</span><br><span class="line">	子线程B运行 : 1</span><br><span class="line">	子线程B运行 : 2</span><br><span class="line">	子线程B运行 : 3</span><br><span class="line">	子线程B运行 : 4</span><br><span class="line">	B 线程运行结束!</span><br><span class="line">	A 线程运行结束!</span><br></pre>
+
+
+
 </li>
+</ul>
+<ul>
 <li><p><font color=#8B1A1A>发现主线程比子线程早结束。</font></p>
 </li>
 <li><p>加join：</p>
 </li>
 </ul>
-<pre><code>    public class Main &#123;
-        public static void main(String[] args) &#123;
+<pre><code>public class Main &#123;
+    public static void main(String[] args) &#123;
             System.out.println(Thread.currentThread().getName()+&quot;主线程运行开始!&quot;);
             Thread1 mTh1=new Thread1(&quot;A&quot;);
             Thread1 mTh2=new Thread1(&quot;B&quot;);
@@ -491,33 +443,23 @@ var _hmt = _hmt || [];
                 e.printStackTrace();
             &#125;
             System.out.println(Thread.currentThread().getName()+ &quot;主线程运行结束!&quot;);
-        &#125;
-    &#125;</code></pre>
+    &#125;
+&#125;</code></pre>
 <ul>
 <li><p>运行结果：</p>
-<pre><code>  main主线程运行开始!
-  A 线程运行开始!
-  B 线程运行开始!
-  子线程B运行 : 0
-  子线程A运行 : 0
-  子线程B运行 : 1
-  子线程B运行 : 2
-  子线程B运行 : 3
-  子线程B运行 : 4
-  B 线程运行结束!
-  子线程A运行 : 1
-  子线程A运行 : 2
-  子线程A运行 : 3
-  子线程A运行 : 4
-  A 线程运行结束!
-  main主线程运行结束!</code></pre>
+ <pre class="highlight"><span class="line">main主线程运行开始!</span><br><span class="line">	A 线程运行开始!</span><br><span class="line">	B 线程运行开始!</span><br><span class="line">	子线程B运行 : 0</span><br><span class="line">	子线程A运行 : 0</span><br><span class="line">	子线程B运行 : 1</span><br><span class="line">	子线程B运行 : 2</span><br><span class="line">	子线程B运行 : 3</span><br><span class="line">	子线程B运行 : 4</span><br><span class="line">	B 线程运行结束!</span><br><span class="line">	子线程A运行 : 1</span><br><span class="line">	子线程A运行 : 2</span><br><span class="line">	子线程A运行 : 3</span><br><span class="line">	子线程A运行 : 4</span><br><span class="line">	A 线程运行结束!</span><br><span class="line">	main主线程运行结束!</span><br></pre>
+
+
+
 </li>
+</ul>
+<ul>
 <li><p><font color=#8B1A1A>主线程一定会等子线程都结束了再结束。</font></p>
 <h4 id="yield-暂停当前正在执行的线程对象，并执行其他线程。"><a href="#yield-暂停当前正在执行的线程对象，并执行其他线程。" class="headerlink" title="yield():暂停当前正在执行的线程对象，并执行其他线程。"></a>yield():暂停当前正在执行的线程对象，并执行其他线程。</h4></li>
 <li><p>yield()应该做的是让当前运行线程回到可运行状态，以允许具有相同优先级的其他线程获得运行机会。因此，使用yield()的目的是让相同优先级的线程之间能适当的轮转执行。但是，实际中无法保证yield()达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。</p>
- <pre class="highlight"><span class="line">class ThreadYield extends Thread&#123;</span><br><span class="line">	    public ThreadYield(String name) &#123;</span><br><span class="line">	        super(name);</span><br><span class="line">	    &#125;</span><br></pre>
+ <pre class="highlight"><span class="line">class ThreadYield extends Thread&#123;</span><br><span class="line">	    public ThreadYield(String name) &#123;</span><br><span class="line">	        super(name);</span><br><span class="line">	    &#125;</span><br><span class="line">	    @Override</span><br><span class="line">	    public void run() &#123;</span><br><span class="line">	        for (int i &#x3D; 1; i &lt;&#x3D; 50; i++) &#123;</span><br><span class="line">	            System.out.println(&quot;&quot; + this.getName() + &quot;-----&quot; + i);</span><br><span class="line">	            &#x2F;&#x2F; 当i为30时，该线程就会把CPU时间让掉，让其他或者自己的线程执行（也就是谁先抢到谁执行）</span><br><span class="line">	            if (i &#x3D;&#x3D;30) &#123;</span><br><span class="line">	                this.yield();</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public class Main &#123;</span><br><span class="line">		public static void main(String[] args) &#123;</span><br><span class="line">			ThreadYield yt1 &#x3D; new ThreadYield(&quot;张三&quot;);</span><br><span class="line">	    	ThreadYield yt2 &#x3D; new ThreadYield(&quot;李四&quot;);</span><br><span class="line">	        yt1.start();</span><br><span class="line">	        yt2.start();</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre>
 
-<p> ​<br> ​        @Override<br> ​        public void run() {<br> ​            for (int i = 1; i &lt;= 50; i++) {<br> ​                System.out.println(“” + this.getName() + “—–” + i);<br> ​                // 当i为30时，该线程就会把CPU时间让掉，让其他或者自己的线程执行（也就是谁先抢到谁执行）<br> ​                if (i ==30) {<br> ​                    this.yield();<br> ​                }<br> ​            }<br> ​    }<br> ​    }<br> ​    public class Main {<br> ​        public static void main(String[] args) {<br> ​            ThreadYield yt1 = new ThreadYield(“张三”);<br> ​            ThreadYield yt2 = new ThreadYield(“李四”);<br> ​            yt1.start();<br> ​            yt2.start();<br> ​        }<br> ​    }</p>
+<p> ​<br> ​        </p>
 </li>
 <li><p>运行结果：</p>
 <blockquote>
