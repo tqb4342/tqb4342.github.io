@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tanqingbo.cn/JavaWeb-Chinese-Garbled/</loc>
+    
+    <lastmod>2020-11-19</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tanqingbo.cn/Java-GC/</loc>
     
     <lastmod>2020-11-19</lastmod>
