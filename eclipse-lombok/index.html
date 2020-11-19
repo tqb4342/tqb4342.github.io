@@ -283,24 +283,24 @@ var _hmt = _hmt || [];
      @Log4j: log4j日志声明</code></pre>
 </li>
 </ul>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><pre><code>        import lombok.Data;
-        import lombok.ToString;
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><pre><code>import lombok.Data;
+import lombok.ToString;
 
-        @ToString(exclude=&quot;color&quot;) 
-        public @Data class Person &#123; 
-            private String name; 
-            private int size; 
-            private String color; 
-            private String style; 
-            private boolean flag;
+@ToString(exclude=&quot;color&quot;) 
+public @Data class Person &#123; 
+          private String name; 
+          private int size; 
+          private String color; 
+          private String style; 
+          private boolean flag;
 
-            public static void main(String[] args) &#123;
-                Person p = new Person();
-                p.setName(&quot;aa&quot;);
-                System.out.println(p.getName());
-            &#125;
+          public static void main(String[] args) &#123;
+               Person p = new Person();
+            p.setName(&quot;aa&quot;);
+            System.out.println(p.getName());
+        &#125;
 
-        &#125;</code></pre>
+&#125;</code></pre>
 <ul>
 <li><p>@Data是实现所有的成员的Get和Set方法</p>
 </li>

@@ -281,8 +281,8 @@ var _hmt = _hmt || [];
 </ol>
 <ul>
 <li><p>在java中要想实现多线程，有两种手段，一种是继续Thread类，另外一种是实现Runable接口。</p>
-<h3 id="扩展java-lang-Thread类"><a href="#扩展java-lang-Thread类" class="headerlink" title="扩展java.lang.Thread类"></a>扩展java.lang.Thread类</h3><pre><code>              class Thread1 extends Thread&#123;
-                  private String name;
+<h3 id="扩展java-lang-Thread类"><a href="#扩展java-lang-Thread类" class="headerlink" title="扩展java.lang.Thread类"></a>扩展java.lang.Thread类</h3><p>  class Thread1 extends Thread{</p>
+<pre><code>                  private String name;
                   public Thread1(String name) &#123;
                      this.name=name;
                   &#125;
@@ -320,7 +320,7 @@ var _hmt = _hmt || [];
 <pre><code>  <pre class="highlight"><span class="line">Thread1 mTh1&#x3D;new Thread1(&quot;A&quot;);</span><br><span class="line">	Thread1 mTh2&#x3D;mTh1;</span><br><span class="line">	mTh1.start();</span><br><span class="line">	mTh2.start();</span><br></pre></code></pre>
 </li>
 </ul>
-<h3 id="实现java-lang-Runnable接口"><a href="#实现java-lang-Runnable接口" class="headerlink" title="实现java.lang.Runnable接口"></a>实现java.lang.Runnable接口</h3><pre><code>    class Thread2 implements Runnable&#123;
+<h3 id="实现java-lang-Runnable接口"><a href="#实现java-lang-Runnable接口" class="headerlink" title="实现java.lang.Runnable接口"></a>实现java.lang.Runnable接口</h3><pre><code>class Thread2 implements Runnable&#123;
         private String name;
 
         public Thread2(String name) &#123;
@@ -351,8 +351,8 @@ var _hmt = _hmt || [];
 <li><p>在启动的多线程的时候，需要先通过Thread类的构造方法Thread(Runnable target) 构造出对象，然后调用Thread对象的start()方法来运行多线程代码。</p>
 </li>
 <li><p>实际上所有的多线程代码都是通过运行Thread的start()方法来运行的。因此，不管是扩展Thread类还是实现Runnable接口来实现多线程，最终还是通过Thread的对象的API来控制线程的，熟悉Thread类的API是进行多线程编程的基础。</p>
-<h3 id="Thread和Runnable的区别"><a href="#Thread和Runnable的区别" class="headerlink" title="Thread和Runnable的区别"></a>Thread和Runnable的区别</h3><pre><code>  class Thread2 implements Runnable&#123;
-      private int count=15;
+<h3 id="Thread和Runnable的区别"><a href="#Thread和Runnable的区别" class="headerlink" title="Thread和Runnable的区别"></a>Thread和Runnable的区别</h3><p>  class Thread2 implements Runnable{</p>
+<pre><code>      private int count=15;
       @Override
       public void run() &#123;
             for (int i = 0; i &lt; 5; i++) &#123;
@@ -517,26 +517,7 @@ var _hmt = _hmt || [];
 <li><p>yield()应该做的是让当前运行线程回到可运行状态，以允许具有相同优先级的其他线程获得运行机会。因此，使用yield()的目的是让相同优先级的线程之间能适当的轮转执行。但是，实际中无法保证yield()达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。</p>
  <pre class="highlight"><span class="line">class ThreadYield extends Thread&#123;</span><br><span class="line">	    public ThreadYield(String name) &#123;</span><br><span class="line">	        super(name);</span><br><span class="line">	    &#125;</span><br></pre>
 
-<p> ​     </p>
-<pre><code>     @Override
-     public void run() &#123;
-         for (int i = 1; i &lt;= 50; i++) &#123;
-             System.out.println(&quot;&quot; + this.getName() + &quot;-----&quot; + i);
-             // 当i为30时，该线程就会把CPU时间让掉，让其他或者自己的线程执行（也就是谁先抢到谁执行）
-             if (i ==30) &#123;
-                 this.yield();
-             &#125;
-         &#125;
- &#125;
- &#125;
- public class Main &#123;
-     public static void main(String[] args) &#123;
-         ThreadYield yt1 = new ThreadYield(&quot;张三&quot;);
-         ThreadYield yt2 = new ThreadYield(&quot;李四&quot;);
-         yt1.start();
-         yt2.start();
-     &#125;
- &#125;</code></pre>
+<p> ​<br> ​        @Override<br> ​        public void run() {<br> ​            for (int i = 1; i &lt;= 50; i++) {<br> ​                System.out.println(“” + this.getName() + “—–” + i);<br> ​                // 当i为30时，该线程就会把CPU时间让掉，让其他或者自己的线程执行（也就是谁先抢到谁执行）<br> ​                if (i ==30) {<br> ​                    this.yield();<br> ​                }<br> ​            }<br> ​    }<br> ​    }<br> ​    public class Main {<br> ​        public static void main(String[] args) {<br> ​            ThreadYield yt1 = new ThreadYield(“张三”);<br> ​            ThreadYield yt2 = new ThreadYield(“李四”);<br> ​            yt1.start();<br> ​            yt2.start();<br> ​        }<br> ​    }</p>
 </li>
 <li><p>运行结果：</p>
 <blockquote>
@@ -707,6 +688,7 @@ public void methodBBB()
 
 </li>
 </ul>
+<p>​    </p>
 	
   </div>
   
