@@ -132,6 +132,9 @@ var _hmt = _hmt || [];
   
   
   
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
   
   
 <link rel="stylesheet" href="/css/main.css">
@@ -241,7 +244,19 @@ var _hmt = _hmt || [];
     <span class="dot"></span>
     <span>624 字</span>
     
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="如何学习设计模式？" class="leancloud_visitors" data-flag-title="如何学习设计模式？">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count"></i>
+		</span>
+	</div>
+	
   </div>
+  
+  
   
   <div class="post-meta post-show-meta" style="margin-top: -10px;">
     <div style="display: flex; align-items: center;">
@@ -252,6 +267,11 @@ var _hmt = _hmt || [];
       
     </div>
   </div>
+  
+  
+
+
+		
   
   <meta property="keywords" content="设计模式,Head First,电子书,pdf">
   </header>
@@ -339,6 +359,40 @@ var _hmt = _hmt || [];
   
 </div>
 
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 
@@ -421,33 +475,33 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
     
-    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
     <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
     
   </div>
 </div>
@@ -573,6 +627,7 @@ var _hmt = _hmt || [];
 	
     
 	
+	<!--
 	<div class="footer-dsc">
 	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 	</script>
@@ -582,14 +637,8 @@ var _hmt = _hmt || [];
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 	</span>
-
-	&nbsp;&nbsp
-	<span id="busuanzi_container_site_uv">
-		本站总访客数<span id="busuanzi_value_site_uv"></span>次
-	</span>
-
 	</div>
-	
+	-->
 	
 	
 	

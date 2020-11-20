@@ -30,9 +30,9 @@
   <meta property="og:article:author" content="谭庆波">
   
   
-  <meta property="og:article:tag" content="Java">
-  
   <meta property="og:article:tag" content="JVM">
+  
+  <meta property="og:article:tag" content="Java">
   
   <meta property="og:article:tag" content="JMM">
   
@@ -134,6 +134,9 @@ var _hmt = _hmt || [];
   
   <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
   
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
   
   
   
@@ -245,19 +248,31 @@ var _hmt = _hmt || [];
     <span class="dot"></span>
     <span>2.2k 字</span>
     
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="8张图 带你理解Java内存区域" class="leancloud_visitors" data-flag-title="8张图 带你理解Java内存区域">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count"></i>
+		</span>
+	</div>
+	
   </div>
+  
+  
   
   <div class="post-meta post-show-meta" style="margin-top: -10px;">
     <div style="display: flex; align-items: center;">
       <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
       
       
-        <a href="/tags/Java/" class="post-meta-link">Java</a>
+        <a href="/tags/JVM/" class="post-meta-link">JVM</a>
       
       
       <span class="dot"></span>
       
-        <a href="/tags/JVM/" class="post-meta-link">JVM</a>
+        <a href="/tags/Java/" class="post-meta-link">Java</a>
       
       
       <span class="dot"></span>
@@ -266,6 +281,11 @@ var _hmt = _hmt || [];
       
     </div>
   </div>
+  
+  
+
+
+		
   
   <meta property="keywords" content="Java内存模型JMM,Java内存区域JVM,JDK,Java虚拟机栈,Java堆">
   </header>
@@ -411,6 +431,40 @@ var _hmt = _hmt || [];
   
 </div>
 
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F"><span class="toc-text">1、Java内存区域</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-8-%E4%B9%8B%E5%89%8D%EF%BC%9A"><span class="toc-text">1.8 之前：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JDK1-8%EF%BC%88%E5%90%AB%EF%BC%89%E4%B9%8B%E5%90%8E%EF%BC%9A"><span class="toc-text">JDK1.8（含）之后：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="toc-text">2、程序计数器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="toc-text">3、Java虚拟机栈</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E8%A1%A8"><span class="toc-text">1）局部变量表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88"><span class="toc-text">2）操作数栈</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%EF%BC%89-%E5%8A%A8%E6%80%81%E8%BF%9E%E6%8E%A5"><span class="toc-text">3） 动态连接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%EF%BC%89%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%9C%B0%E5%9D%80%EF%BC%88%E6%96%B9%E6%B3%95%E5%87%BA%E5%8F%A3%EF%BC%89"><span class="toc-text">4）方法返回地址（方法出口）</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="toc-text">4、本地方法栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81Java%E5%A0%86"><span class="toc-text">5、Java堆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="toc-text">6、方法区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81%E5%85%83%E7%A9%BA%E9%97%B4"><span class="toc-text">7、元空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">8、总结：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol>
@@ -493,33 +547,33 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
     
-    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
     <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
     
   </div>
 </div>
@@ -645,6 +699,7 @@ var _hmt = _hmt || [];
 	
     
 	
+	<!--
 	<div class="footer-dsc">
 	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 	</script>
@@ -654,14 +709,8 @@ var _hmt = _hmt || [];
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 	</span>
-
-	&nbsp;&nbsp
-	<span id="busuanzi_container_site_uv">
-		本站总访客数<span id="busuanzi_value_site_uv"></span>次
-	</span>
-
 	</div>
-	
+	-->
 	
 	
 	

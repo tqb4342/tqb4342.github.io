@@ -134,6 +134,9 @@ var _hmt = _hmt || [];
   
   
   
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
   
   
 <link rel="stylesheet" href="/css/main.css">
@@ -243,7 +246,19 @@ var _hmt = _hmt || [];
     <span class="dot"></span>
     <span>1.9k 字</span>
     
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="Java八大基本数据类型详解" class="leancloud_visitors" data-flag-title="Java八大基本数据类型详解">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count"></i>
+		</span>
+	</div>
+	
   </div>
+  
+  
   
   <div class="post-meta post-show-meta" style="margin-top: -10px;">
     <div style="display: flex; align-items: center;">
@@ -259,6 +274,11 @@ var _hmt = _hmt || [];
       
     </div>
   </div>
+  
+  
+
+
+		
   
   <meta property="keywords" content="Java,数据类型,基本数据类型,Integer">
   </header>
@@ -448,6 +468,40 @@ var _hmt = _hmt || [];
   
 </div>
 
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%8B%E7%BB%8D"><span class="toc-text">1、介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%8B%86%E7%AE%B1%E5%92%8C%E8%A3%85%E7%AE%B1%E9%97%AE%E9%A2%98"><span class="toc-text">2、拆箱和装箱问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8B%86%E7%AE%B1%E5%92%8C%E8%A3%85%E7%AE%B1"><span class="toc-text">拆箱和装箱</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E9%97%AE%E9%A2%98"><span class="toc-text">范围问题</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81int-%E5%92%8C-Integer"><span class="toc-text">3、int 和 Integer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E9%BB%98%E8%AE%A4%E5%80%BC%E9%97%AE%E9%A2%98"><span class="toc-text">4、默认值问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81Integer-parseInt-%E5%92%8CInteger-valueOf-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">5、Integer.parseInt()和Integer.valueOf()的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">6、精度丢失问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B4%E6%95%B0%E6%8B%BC%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="toc-text">7、字符串与整数拼接问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8%E3%80%81%E7%95%99%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98%E7%9E%85%E7%9E%85"><span class="toc-text">8、留几个问题瞅瞅</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%EF%BC%89-%E8%AE%BE%E6%9C%89%E4%B8%8B%E9%9D%A2%E4%B8%A4%E4%B8%AA%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5%EF%BC%9A"><span class="toc-text">1） 设有下面两个赋值语句：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%EF%BC%89%E8%A1%A8%E8%BE%BE%E5%BC%8F-short-10-10-2-2%E8%BF%90%E7%AE%97%E5%90%8E%E7%BB%93%E6%9E%9C%E6%98%AF%E4%BB%80%E4%B9%88%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="toc-text">2）表达式(short)10&#x2F;10.2*2运算后结果是什么类型？</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol>
@@ -530,33 +584,33 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
     
-    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
     <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
     
   </div>
 </div>
@@ -682,6 +736,7 @@ var _hmt = _hmt || [];
 	
     
 	
+	<!--
 	<div class="footer-dsc">
 	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 	</script>
@@ -691,14 +746,8 @@ var _hmt = _hmt || [];
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 	</span>
-
-	&nbsp;&nbsp
-	<span id="busuanzi_container_site_uv">
-		本站总访客数<span id="busuanzi_value_site_uv"></span>次
-	</span>
-
 	</div>
-	
+	-->
 	
 	
 	

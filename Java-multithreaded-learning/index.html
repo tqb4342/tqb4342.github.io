@@ -134,6 +134,9 @@ var _hmt = _hmt || [];
   
   
   
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
   
   
 <link rel="stylesheet" href="/css/main.css">
@@ -243,7 +246,19 @@ var _hmt = _hmt || [];
     <span class="dot"></span>
     <span>5.7k 字</span>
     
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="如何学习Java多线程（超详细总结）" class="leancloud_visitors" data-flag-title="如何学习Java多线程（超详细总结）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count"></i>
+		</span>
+	</div>
+	
   </div>
+  
+  
   
   <div class="post-meta post-show-meta" style="margin-top: -10px;">
     <div style="display: flex; align-items: center;">
@@ -259,6 +274,11 @@ var _hmt = _hmt || [];
       
     </div>
   </div>
+  
+  
+
+
+		
   
   <meta property="keywords" content="Java多线程,线程调度,Java多线程学习">
   </header>
@@ -693,6 +713,40 @@ public void methodBBB()
   
 </div>
 
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
 <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-text">进程和线程的区别：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95java-lang-Thread%E7%B1%BB"><span class="toc-text">扩展java.lang.Thread类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0java-lang-Runnable%E6%8E%A5%E5%8F%A3"><span class="toc-text">实现java.lang.Runnable接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread%E5%92%8CRunnable%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">Thread和Runnable的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="toc-text">线程状态转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6"><span class="toc-text">线程调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-text">常用函数说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#join"><span class="toc-text">join:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#yield-%E6%9A%82%E5%81%9C%E5%BD%93%E5%89%8D%E6%AD%A3%E5%9C%A8%E6%89%A7%E8%A1%8C%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%B9%B6%E6%89%A7%E8%A1%8C%E5%85%B6%E4%BB%96%E7%BA%BF%E7%A8%8B%E3%80%82"><span class="toc-text">yield():暂停当前正在执行的线程对象，并执行其他线程。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sleep-%E5%92%8Cyield-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">sleep()和yield()的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#setPriority-%E6%9B%B4%E6%94%B9%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%E3%80%82"><span class="toc-text">setPriority(): 更改线程的优先级。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#interrupt"><span class="toc-text">interrupt():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wait"><span class="toc-text">wait()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wait%E5%92%8Csleep%E5%8C%BA%E5%88%AB"><span class="toc-text">wait和sleep区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%BA%BF%E7%A8%8B%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A"><span class="toc-text">常见线程名词解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="toc-text">线程同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92"><span class="toc-text">线程数据传递</span></a></li></ol>
@@ -775,33 +829,33 @@ public void methodBBB()
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
     
-    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
     <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
     
   </div>
 </div>
@@ -927,6 +981,7 @@ public void methodBBB()
 	
     
 	
+	<!--
 	<div class="footer-dsc">
 	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
 	</script>
@@ -936,14 +991,8 @@ public void methodBBB()
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
 	</span>
-
-	&nbsp;&nbsp
-	<span id="busuanzi_container_site_uv">
-		本站总访客数<span id="busuanzi_value_site_uv"></span>次
-	</span>
-
 	</div>
-	
+	-->
 	
 	
 	
