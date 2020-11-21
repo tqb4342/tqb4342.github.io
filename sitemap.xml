@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/august-eye-296311-9f3cdc6718fd.json</loc>
+    
+    <lastmod>2020-11-21</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/%E5%8E%86%E5%B9%B4%E5%BE%AE%E8%BD%AF%E9%9D%A2%E8%AF%95%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84leetcode%E7%AE%97%E6%B3%95%E9%A2%98/</loc>
     
     <lastmod>2020-11-20</lastmod>
@@ -179,6 +186,13 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2020-11-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/tags/JVM/</loc>
     <lastmod>2020-11-21</lastmod>
     <changefreq>daily</changefreq>
@@ -194,13 +208,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</loc>
-    <lastmod>2020-11-21</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-11-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
