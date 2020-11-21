@@ -14,7 +14,7 @@
   <meta property="og:title" content="JavaWeb中文编码问题">
   
   
-  <meta property="og:url" content="https://tanqingbo.cn/JavaWeb-Chinese-Garbled/index.html">
+  <meta property="og:url" content="https://tanqingbo.cn/javaweb-chinese-garbled/index.html">
   
   
   <meta property="og:img" content="https://pic1.zhimg.com/80/v2-eb70a82c4efba3ebdfd97dfac0eccd96_720w.png">
@@ -165,7 +165,9 @@ var _hmt = _hmt || [];
   
   
   
-<meta name="generator" content="Hexo 5.1.1"></head>
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -257,7 +259,7 @@ var _hmt = _hmt || [];
 	  <!-- id 将作为查询条件 -->
     <div style="display: flex; align-items: center;">
       <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
-		<span id="/JavaWeb-Chinese-Garbled/" class="leancloud_visitors" data-flag-title="JavaWeb中文编码问题">
+		<span id="/javaweb-chinese-garbled/" class="leancloud_visitors" data-flag-title="JavaWeb中文编码问题">
 			<em class="post-meta-item-text">阅读量 </em>
 			<i class="leancloud-visitors-count">loading</i>
 		</span>
@@ -335,7 +337,7 @@ var _hmt = _hmt || [];
 </ul>
 <h4 id="内存操作中的乱码"><a href="#内存操作中的乱码" class="headerlink" title="内存操作中的乱码"></a>内存操作中的乱码</h4><ul>
 <li><p>内存中进行字符到字节的转换也很常见。</p>
-  <pre class="highlight"><span class="line">String s &#x3D; &quot;这是一段中文字符&quot;;</span><br><span class="line">		byte[] b &#x3D; s.getBytes(&quot;utf-8&quot;);</span><br><span class="line">		String n &#x3D; new String(b,&quot;utf-8&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Charset charset &#x3D; Charset.forName(&quot;utf-8&quot;);</span><br><span class="line">		ByteBuffer byteBuffer &#x3D; charset.encode(string);</span><br><span class="line">		CharBuffer charBuffer &#x3D; charset.decode(byteBuffer);</span><br></pre>
+  <pre class="highlight"><span class="line">String s = "这是一段中文字符";</span><br><span class="line">		byte[] b = s.getBytes("utf-8");</span><br><span class="line">		String n = new String(b,"utf-8");</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Charset charset = Charset.forName("utf-8");</span><br><span class="line">		ByteBuffer byteBuffer = charset.encode(string);</span><br><span class="line">		CharBuffer charBuffer = charset.decode(byteBuffer);</span><br></pre>
 
 
 
@@ -400,7 +402,7 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 <li><p>访问数据库都是通过客户端JDBC驱动来完成的，用JDBC来存取数据要和数据的内置编码保持一致，可以通过设置JDBC URL来指定，如：MySQL：</p>
-<pre><code>      jdbcUrl=&quot;jdbc:mysql://localhost:3306/boke?characterEncoding=utf-8&quot;</code></pre>
+<pre><code>      jdbcUrl="jdbc:mysql://localhost:3306/boke?characterEncoding=utf-8"</code></pre>
 <h3 id="JS中的编码问题"><a href="#JS中的编码问题" class="headerlink" title="JS中的编码问题"></a>JS中的编码问题</h3></li>
 <li><p><strong>外部引入JS文件</strong></p>
 <ul>
@@ -437,13 +439,13 @@ var _hmt = _hmt || [];
 <li><p>其他需要编码的地方</p>
 <ul>
 <li><p>XML文件可以通过设置投来制定编码格式：</p>
-<pre><code>  &lt;?xml version&quot;1.0&quot; encoding=&quot;UTF-8&quot;&gt;</code></pre>
+<pre><code>  &lt;?xml version"1.0" encoding="UTF-8"&gt;</code></pre>
 </li>
 <li><p>Velocity(基于Java的模板引擎)设置编码格式：</p>
 <pre><code>  services.VelocityService.input.encoding=uft-8</code></pre>
 </li>
 <li><p>Jsp设置编码格式：</p>
-<pre><code>  &lt;%@page contentType=&quot;text/html; charset=utf-8&quot;&gt;</code></pre>
+<pre><code>  &lt;%@page contentType="text/html; charset=utf-8"&gt;</code></pre>
 <h3 id="常见问题分析"><a href="#常见问题分析" class="headerlink" title="常见问题分析"></a>常见问题分析</h3></li>
 </ul>
 </li>
@@ -461,7 +463,7 @@ var _hmt = _hmt || [];
 <pre><code>  String value = request.getParameter(name);</code></pre>
 </li>
 <li><p>会出现乱码，但是用如下方式：</p>
-<pre><code>  String value = new String(request.getParameter(name).getBytes(&quot;ISO-8859-1&quot;),&quot;GBK&quot;);</code></pre>
+<pre><code>  String value = new String(request.getParameter(name).getBytes("ISO-8859-1"),"GBK");</code></pre>
 </li>
 <li><p>解析时取得的value会是正确的汉字字符。</p>
 </li>
@@ -496,8 +498,8 @@ var _hmt = _hmt || [];
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
     <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">谭庆波</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/JavaWeb-Chinese-Garbled/">https://tanqingbo.cn/JavaWeb-Chinese-Garbled/</a></p>
-    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/javaweb-chinese-garbled/">https://tanqingbo.cn/javaweb-chinese-garbled/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
   </div>
@@ -505,7 +507,7 @@ var _hmt = _hmt || [];
 <div class="nav">
   
   <div class="nav-item-prev">
-    <a href="/Java-multithreaded-learning/" class="nav-link">
+    <a href="/java-multithreaded-learning/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
         <div class="nav-label">上一篇</div>
@@ -518,7 +520,7 @@ var _hmt = _hmt || [];
   
   
   <div class="nav-item-next">
-    <a href="/Java-GC/" class="nav-link">
+    <a href="/java-gc/" class="nav-link">
       <div>
         <div class="nav-label">下一篇</div>
         
@@ -647,33 +649,33 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
-    
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
     <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
     
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
-    
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
   </div>
 </div>
@@ -741,17 +743,17 @@ var _hmt = _hmt || [];
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Java-memory-area/"><div class="recent-posts-item-content">8张图 带你理解Java内存区域</div></a>
+        <a href="/java-memory-area/"><div class="recent-posts-item-content">8张图 带你理解Java内存区域</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Java-eight-data-types/"><div class="recent-posts-item-content">Java八大基本数据类型详解</div></a>
+        <a href="/java-eight-data-types/"><div class="recent-posts-item-content">Java八大基本数据类型详解</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Computer-Classic-Books/"><div class="recent-posts-item-content">计算机经典书籍</div></a>
+        <a href="/computer-classic-books/"><div class="recent-posts-item-content">计算机经典书籍</div></a>
       </div>
     
       <div class="recent-posts-item">

@@ -14,7 +14,7 @@
   <meta property="og:title" content="如何学习Java多线程（超详细总结）">
   
   
-  <meta property="og:url" content="https://tanqingbo.cn/Java-multithreaded-learning/index.html">
+  <meta property="og:url" content="https://tanqingbo.cn/java-multithreaded-learning/index.html">
   
   
   <meta property="og:img" content="https://pic4.zhimg.com/80/v2-894ff1e5383fb602eed15dbed0964b1c_720w.png">
@@ -169,7 +169,9 @@ var _hmt = _hmt || [];
   
   
   
-<meta name="generator" content="Hexo 5.1.1"></head>
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -255,13 +257,13 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>5.7k 字</span>
+    <span>5.5k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
     <div style="display: flex; align-items: center;">
       <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
-		<span id="/Java-multithreaded-learning/" class="leancloud_visitors" data-flag-title="如何学习Java多线程（超详细总结）">
+		<span id="/java-multithreaded-learning/" class="leancloud_visitors" data-flag-title="如何学习Java多线程（超详细总结）">
 			<em class="post-meta-item-text">阅读量 </em>
 			<i class="leancloud-visitors-count">loading</i>
 		</span>
@@ -314,7 +316,7 @@ var _hmt = _hmt || [];
 <ul>
 <li>在java中要想实现多线程，有两种手段，一种是继续Thread类，另外一种是实现Runable接口。</li>
 </ul>
-<h3 id="扩展java-lang-Thread类"><a href="#扩展java-lang-Thread类" class="headerlink" title="扩展java.lang.Thread类"></a>扩展java.lang.Thread类</h3><pre class="highlight"><span class="line">class Thread1 extends Thread&#123;</span><br><span class="line">					private String name;</span><br><span class="line">				    public Thread1(String name) &#123;</span><br><span class="line">				       this.name&#x3D;name;</span><br><span class="line">				    &#125;</span><br><span class="line">					public void run() &#123;</span><br><span class="line">				        for (int i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">				            System.out.println(name + &quot;运行  :  &quot; + i);</span><br><span class="line">				            try &#123;</span><br><span class="line">				                sleep((int) Math.random() * 10);</span><br><span class="line">				            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">				                e.printStackTrace();</span><br><span class="line">				            &#125;</span><br><span class="line">				        &#125;</span><br><span class="line">				       </span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				public class Main &#123;</span><br><span class="line">				</span><br><span class="line">					public static void main(String[] args) &#123;</span><br><span class="line">						Thread1 mTh1&#x3D;new Thread1(&quot;A&quot;);</span><br><span class="line">						Thread1 mTh2&#x3D;new Thread1(&quot;B&quot;);</span><br><span class="line">						mTh1.start();</span><br><span class="line">						mTh2.start();</span><br><span class="line">				</span><br><span class="line">					&#125;</span><br><span class="line">				</span><br><span class="line">				&#125;</span><br></pre>
+<h3 id="扩展java-lang-Thread类"><a href="#扩展java-lang-Thread类" class="headerlink" title="扩展java.lang.Thread类"></a>扩展java.lang.Thread类</h3><pre class="highlight"><span class="line">class Thread1 extends Thread{</span><br><span class="line">					private String name;</span><br><span class="line">				    public Thread1(String name) {</span><br><span class="line">				       this.name=name;</span><br><span class="line">				    }</span><br><span class="line">					public void run() {</span><br><span class="line">				        for (int i = 0; i &lt; 5; i++) {</span><br><span class="line">				            System.out.println(name + "运行  :  " + i);</span><br><span class="line">				            try {</span><br><span class="line">				                sleep((int) Math.random() * 10);</span><br><span class="line">				            } catch (InterruptedException e) {</span><br><span class="line">				                e.printStackTrace();</span><br><span class="line">				            }</span><br><span class="line">				        }</span><br><span class="line">				       </span><br><span class="line">					}</span><br><span class="line">				}</span><br><span class="line">				public class Main {</span><br><span class="line">				</span><br><span class="line">					public static void main(String[] args) {</span><br><span class="line">						Thread1 mTh1=new Thread1("A");</span><br><span class="line">						Thread1 mTh2=new Thread1("B");</span><br><span class="line">						mTh1.start();</span><br><span class="line">						mTh2.start();</span><br><span class="line">				</span><br><span class="line">					}</span><br><span class="line">				</span><br><span class="line">				}</span><br></pre>
 
 <ul>
 <li><p>start()方法的调用后并不是立即执行多线程代码，而是使得该线程变为可运行态（Runnable），什么时候运行是由操作系统决定的。</p>
@@ -324,36 +326,36 @@ var _hmt = _hmt || [];
 <li><p>实际上所有的多线程代码执行顺序都是不确定的，每次执行的结果都是随机的。</p>
 </li>
 <li><p>但是start方法重复调用的话，会出现java.lang.IllegalThreadStateException异常。</p>
-<pre><code>  <pre class="highlight"><span class="line">Thread1 mTh1&#x3D;new Thread1(&quot;A&quot;);</span><br><span class="line">	Thread1 mTh2&#x3D;mTh1;</span><br><span class="line">	mTh1.start();</span><br><span class="line">	mTh2.start();</span><br></pre></code></pre>
+<pre><code>  <pre class="highlight"><span class="line">Thread1 mTh1=new Thread1("A");</span><br><span class="line">	Thread1 mTh2=mTh1;</span><br><span class="line">	mTh1.start();</span><br><span class="line">	mTh2.start();</span><br></pre></code></pre>
 </li>
 </ul>
-<h3 id="实现java-lang-Runnable接口"><a href="#实现java-lang-Runnable接口" class="headerlink" title="实现java.lang.Runnable接口"></a>实现java.lang.Runnable接口</h3><pre><code>class Thread2 implements Runnable&#123;
+<h3 id="实现java-lang-Runnable接口"><a href="#实现java-lang-Runnable接口" class="headerlink" title="实现java.lang.Runnable接口"></a>实现java.lang.Runnable接口</h3><pre><code>class Thread2 implements Runnable{
         private String name;
 
-        public Thread2(String name) &#123;
+        public Thread2(String name) {
             this.name=name;
-        &#125;
+        }
         @Override
-        public void run() &#123;
-              for (int i = 0; i &lt; 5; i++) &#123;
-                    System.out.println(name + &quot;运行  :  &quot; + i);
-                    try &#123;
+        public void run() {
+              for (int i = 0; i &lt; 5; i++) {
+                    System.out.println(name + "运行  :  " + i);
+                    try {
                         Thread.sleep((int) Math.random() * 10);
-                    &#125; catch (InterruptedException e) &#123;
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
-                    &#125;
-                &#125;
-        &#125;
-    &#125;
-    public class Main &#123;
-        public static void main(String[] args) &#123;
-            new Thread(new Thread2(&quot;C&quot;)).start();
-            new Thread(new Thread2(&quot;D&quot;)).start();
-        &#125;
+                    }
+                }
+        }
+    }
+    public class Main {
+        public static void main(String[] args) {
+            new Thread(new Thread2("C")).start();
+            new Thread(new Thread2("D")).start();
+        }
 
-&#125;</code></pre>
+}</code></pre>
 <ul>
-<li><p><font color=red>注：Thread类实际上也是实现了Runnable接口的类。</font></p>
+<li><p><font color="red">注：Thread类实际上也是实现了Runnable接口的类。</font></p>
 </li>
 <li><p>在启动的多线程的时候，需要先通过Thread类的构造方法Thread(Runnable target) 构造出对象，然后调用Thread对象的start()方法来运行多线程代码。</p>
 </li>
@@ -361,31 +363,31 @@ var _hmt = _hmt || [];
 <h3 id="Thread和Runnable的区别"><a href="#Thread和Runnable的区别" class="headerlink" title="Thread和Runnable的区别"></a>Thread和Runnable的区别</h3><p>  class Thread2 implements Runnable{</p>
 <pre><code>      private int count=15;
       @Override
-      public void run() &#123;
-            for (int i = 0; i &lt; 5; i++) &#123;
-                System.out.println(Thread.currentThread().getName() + &quot;运行  count= &quot; + count--);
-                  try &#123;
+      public void run() {
+            for (int i = 0; i &lt; 5; i++) {
+                System.out.println(Thread.currentThread().getName() + "运行  count= " + count--);
+                  try {
                       Thread.sleep((int) Math.random() * 10);
-                  &#125; catch (InterruptedException e) &#123;
+                  } catch (InterruptedException e) {
                       e.printStackTrace();
-                  &#125;
-              &#125;
+                  }
+              }
 
-      &#125;
+      }
 
-  &#125;
-  public class Main &#123;
+  }
+  public class Main {
 
-      public static void main(String[] args) &#123;
+      public static void main(String[] args) {
 
           Thread2 my = new Thread2();
-              new Thread(my, &quot;C&quot;).start();//同一个mt，但是在Thread中就不可以，如果用同一个实例化对象mt，就会出现异常   
-              new Thread(my, &quot;D&quot;).start();
-              new Thread(my, &quot;E&quot;).start();
-      &#125;</code></pre>
+              new Thread(my, "C").start();//同一个mt，但是在Thread中就不可以，如果用同一个实例化对象mt，就会出现异常   
+              new Thread(my, "D").start();
+              new Thread(my, "E").start();
+      }</code></pre>
 <p>  }</p>
 </li>
-<li><p><font color=red>注：这里要注意每个线程都是用同一个实例化对象，如果不是同一个，效果就和上面的Thread一样了！</font></p>
+<li><p><font color="red">注：这里要注意每个线程都是用同一个实例化对象，如果不是同一个，效果就和上面的Thread一样了！</font></p>
 </li>
 <li><p>实现Runnable接口比继承Thread类所具有的优势：</p>
 <ol>
@@ -395,7 +397,7 @@ var _hmt = _hmt || [];
 </ol>
 </li>
 </ul>
-<p><font color=#9370DB>提醒一下大家：main方法其实也是一个线程。在java中所以的线程都是同时启动的，至于什么时候，哪个先执行，完全看谁先得到CPU的资源。在java中，每次程序运行至少启动2个线程。一个是main线程，一个是垃圾收集线程。因为每当使用java命令执行一个类的时候，实际上都会启动一个ＪＶＭ，每一个ｊＶＭ实习在就是在操作系统中启动了一个进程。</font></p>
+<p><font color="#9370DB">提醒一下大家：main方法其实也是一个线程。在java中所以的线程都是同时启动的，至于什么时候，哪个先执行，完全看谁先得到CPU的资源。在java中，每次程序运行至少启动2个线程。一个是main线程，一个是垃圾收集线程。因为每当使用java命令执行一个类的时候，实际上都会启动一个ＪＶＭ，每一个ｊＶＭ实习在就是在操作系统中启动了一个进程。</font></p>
 <h3 id="线程状态转换"><a href="#线程状态转换" class="headerlink" title="线程状态转换"></a>线程状态转换</h3><img src="https://pic2.zhimg.com/80/v2-58e17afdbeb15a7620ba6b6551d33204_720w.png" alt="Java多线程,线程调度，Java多线程学习" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-58e17afdbeb15a7620ba6b6551d33204_720w.png" class="lozad post-image">
 
 <ol>
@@ -429,7 +431,7 @@ var _hmt = _hmt || [];
 <li><p>join():指等待t线程终止。</p>
 <h4 id="join"><a href="#join" class="headerlink" title="join:"></a>join:</h4></li>
 <li><p>这里需要理解的就是该线程是指的主线程等待子线程的终止。也就是在子线程调用了join()方法后面的代码，只有等到子线程结束了才能执行。</p>
-<pre class="highlight"><span class="line">Thread t &#x3D; new AThread(); t.start(); t.join();</span><br></pre>
+<pre class="highlight"><span class="line">Thread t = new AThread(); t.start(); t.join();</span><br></pre>
 
 
 
@@ -437,7 +439,7 @@ var _hmt = _hmt || [];
 </ul>
 <ul>
 <li><p>在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到join()方法了。</p>
- <pre class="highlight"><span class="line">  class Thread1 extends Thread&#123;</span><br><span class="line">  		private String name;</span><br><span class="line">  	    public Thread1(String name) &#123;</span><br><span class="line">  	    	super(name);</span><br><span class="line">  	       this.name&#x3D;name;</span><br><span class="line">  	    &#125;</span><br><span class="line">  		public void run() &#123;</span><br><span class="line">  			System.out.println(Thread.currentThread().getName() + &quot; 线程运行开始!&quot;);</span><br><span class="line">  	        for (int i &#x3D; 0; i &lt; 5; i++) &#123;</span><br><span class="line">  	            System.out.println(&quot;子线程&quot;+name + &quot;运行 : &quot; + i);</span><br><span class="line">  	            try &#123;</span><br><span class="line">  	                sleep((int) Math.random() * 10);</span><br><span class="line">  	            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">  	                e.printStackTrace();</span><br><span class="line">  	            &#125;</span><br><span class="line">  	        &#125;</span><br><span class="line">  	        System.out.println(Thread.currentThread().getName() + &quot; 线程运行结束!&quot;);</span><br><span class="line">  		&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">  	public class Main &#123;</span><br><span class="line">  </span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  		System.out.println(Thread.currentThread().getName()+&quot;主线程运行开始!&quot;);</span><br><span class="line">  		Thread1 mTh1&#x3D;new Thread1(&quot;A&quot;);</span><br><span class="line">  		Thread1 mTh2&#x3D;new Thread1(&quot;B&quot;);</span><br><span class="line">  		mTh1.start();</span><br><span class="line">  		mTh2.start();</span><br><span class="line">  		System.out.println(Thread.currentThread().getName()+ &quot;主线程运行结束!&quot;);</span><br><span class="line">  </span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br></pre>
+ <pre class="highlight"><span class="line">  class Thread1 extends Thread{</span><br><span class="line">  		private String name;</span><br><span class="line">  	    public Thread1(String name) {</span><br><span class="line">  	    	super(name);</span><br><span class="line">  	       this.name=name;</span><br><span class="line">  	    }</span><br><span class="line">  		public void run() {</span><br><span class="line">  			System.out.println(Thread.currentThread().getName() + " 线程运行开始!");</span><br><span class="line">  	        for (int i = 0; i &lt; 5; i++) {</span><br><span class="line">  	            System.out.println("子线程"+name + "运行 : " + i);</span><br><span class="line">  	            try {</span><br><span class="line">  	                sleep((int) Math.random() * 10);</span><br><span class="line">  	            } catch (InterruptedException e) {</span><br><span class="line">  	                e.printStackTrace();</span><br><span class="line">  	            }</span><br><span class="line">  	        }</span><br><span class="line">  	        System.out.println(Thread.currentThread().getName() + " 线程运行结束!");</span><br><span class="line">  		}</span><br><span class="line">  	}</span><br><span class="line">  	public class Main {</span><br><span class="line">  </span><br><span class="line">public static void main(String[] args) {</span><br><span class="line">  		System.out.println(Thread.currentThread().getName()+"主线程运行开始!");</span><br><span class="line">  		Thread1 mTh1=new Thread1("A");</span><br><span class="line">  		Thread1 mTh2=new Thread1("B");</span><br><span class="line">  		mTh1.start();</span><br><span class="line">  		mTh2.start();</span><br><span class="line">  		System.out.println(Thread.currentThread().getName()+ "主线程运行结束!");</span><br><span class="line">  </span><br><span class="line">  	}</span><br><span class="line">  </span><br><span class="line">  }</span><br></pre>
 
 
 
@@ -452,31 +454,31 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <ul>
-<li><p><font color=#8B1A1A>发现主线程比子线程早结束。</font></p>
+<li><p><font color="#8B1A1A">发现主线程比子线程早结束。</font></p>
 </li>
 <li><p>加join：</p>
 </li>
 </ul>
-<pre><code>public class Main &#123;
-    public static void main(String[] args) &#123;
-            System.out.println(Thread.currentThread().getName()+&quot;主线程运行开始!&quot;);
-            Thread1 mTh1=new Thread1(&quot;A&quot;);
-            Thread1 mTh2=new Thread1(&quot;B&quot;);
+<pre><code>public class Main {
+    public static void main(String[] args) {
+            System.out.println(Thread.currentThread().getName()+"主线程运行开始!");
+            Thread1 mTh1=new Thread1("A");
+            Thread1 mTh2=new Thread1("B");
             mTh1.start();
             mTh2.start();
-            try &#123;
+            try {
                 mTh1.join();
-            &#125; catch (InterruptedException e) &#123;
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-            &#125;
-            try &#123;
+            }
+            try {
                 mTh2.join();
-            &#125; catch (InterruptedException e) &#123;
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-            &#125;
-            System.out.println(Thread.currentThread().getName()+ &quot;主线程运行结束!&quot;);
-    &#125;
-&#125;</code></pre>
+            }
+            System.out.println(Thread.currentThread().getName()+ "主线程运行结束!");
+    }
+}</code></pre>
 <ul>
 <li><p>运行结果：</p>
  <pre class="highlight"><span class="line">main主线程运行开始!</span><br><span class="line">	A 线程运行开始!</span><br><span class="line">	B 线程运行开始!</span><br><span class="line">	子线程B运行 : 0</span><br><span class="line">	子线程A运行 : 0</span><br><span class="line">	子线程B运行 : 1</span><br><span class="line">	子线程B运行 : 2</span><br><span class="line">	子线程B运行 : 3</span><br><span class="line">	子线程B运行 : 4</span><br><span class="line">	B 线程运行结束!</span><br><span class="line">	子线程A运行 : 1</span><br><span class="line">	子线程A运行 : 2</span><br><span class="line">	子线程A运行 : 3</span><br><span class="line">	子线程A运行 : 4</span><br><span class="line">	A 线程运行结束!</span><br><span class="line">	main主线程运行结束!</span><br></pre>
@@ -486,10 +488,10 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <ul>
-<li><p><font color=#8B1A1A>主线程一定会等子线程都结束了再结束。</font></p>
+<li><p><font color="#8B1A1A">主线程一定会等子线程都结束了再结束。</font></p>
 <h4 id="yield-暂停当前正在执行的线程对象，并执行其他线程。"><a href="#yield-暂停当前正在执行的线程对象，并执行其他线程。" class="headerlink" title="yield():暂停当前正在执行的线程对象，并执行其他线程。"></a>yield():暂停当前正在执行的线程对象，并执行其他线程。</h4></li>
 <li><p>yield()应该做的是让当前运行线程回到可运行状态，以允许具有相同优先级的其他线程获得运行机会。因此，使用yield()的目的是让相同优先级的线程之间能适当的轮转执行。但是，实际中无法保证yield()达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。</p>
- <pre class="highlight"><span class="line">class ThreadYield extends Thread&#123;</span><br><span class="line">	    public ThreadYield(String name) &#123;</span><br><span class="line">	        super(name);</span><br><span class="line">	    &#125;</span><br><span class="line">	    @Override</span><br><span class="line">	    public void run() &#123;</span><br><span class="line">	        for (int i &#x3D; 1; i &lt;&#x3D; 50; i++) &#123;</span><br><span class="line">	            System.out.println(&quot;&quot; + this.getName() + &quot;-----&quot; + i);</span><br><span class="line">	            &#x2F;&#x2F; 当i为30时，该线程就会把CPU时间让掉，让其他或者自己的线程执行（也就是谁先抢到谁执行）</span><br><span class="line">	            if (i &#x3D;&#x3D;30) &#123;</span><br><span class="line">	                this.yield();</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	public class Main &#123;</span><br><span class="line">		public static void main(String[] args) &#123;</span><br><span class="line">			ThreadYield yt1 &#x3D; new ThreadYield(&quot;张三&quot;);</span><br><span class="line">	    	ThreadYield yt2 &#x3D; new ThreadYield(&quot;李四&quot;);</span><br><span class="line">	        yt1.start();</span><br><span class="line">	        yt2.start();</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre>
+ <pre class="highlight"><span class="line">class ThreadYield extends Thread{</span><br><span class="line">	    public ThreadYield(String name) {</span><br><span class="line">	        super(name);</span><br><span class="line">	    }</span><br><span class="line">	    @Override</span><br><span class="line">	    public void run() {</span><br><span class="line">	        for (int i = 1; i &lt;= 50; i++) {</span><br><span class="line">	            System.out.println("" + this.getName() + "-----" + i);</span><br><span class="line">	            // 当i为30时，该线程就会把CPU时间让掉，让其他或者自己的线程执行（也就是谁先抢到谁执行）</span><br><span class="line">	            if (i ==30) {</span><br><span class="line">	                this.yield();</span><br><span class="line">	            }</span><br><span class="line">	        }</span><br><span class="line">	}</span><br><span class="line">	}</span><br><span class="line">	public class Main {</span><br><span class="line">		public static void main(String[] args) {</span><br><span class="line">			ThreadYield yt1 = new ThreadYield("张三");</span><br><span class="line">	    	ThreadYield yt2 = new ThreadYield("李四");</span><br><span class="line">	        yt1.start();</span><br><span class="line">	        yt2.start();</span><br><span class="line">		}</span><br><span class="line">}</span><br></pre>
 
 <p> ​<br> ​        </p>
 </li>
@@ -506,7 +508,7 @@ var _hmt = _hmt || [];
 </ul>
 <h4 id="setPriority-更改线程的优先级。"><a href="#setPriority-更改线程的优先级。" class="headerlink" title="setPriority(): 更改线程的优先级。"></a>setPriority(): 更改线程的优先级。</h4><ul>
 <li><p>用法：</p>
-<pre><code>  <pre class="highlight"><span class="line">Thread4 t1 &#x3D; new Thread4(&quot;t1&quot;);</span><br><span class="line">	Thread4 t2 &#x3D; new Thread4(&quot;t2&quot;);</span><br><span class="line">	t1.setPriority(Thread.MAX_PRIORITY);</span><br><span class="line">	t2.setPriority(Thread.MIN_PRIORITY);</span><br></pre></code></pre>
+<pre><code>  <pre class="highlight"><span class="line">Thread4 t1 = new Thread4("t1");</span><br><span class="line">	Thread4 t2 = new Thread4("t2");</span><br><span class="line">	t1.setPriority(Thread.MAX_PRIORITY);</span><br><span class="line">	t2.setPriority(Thread.MIN_PRIORITY);</span><br></pre></code></pre>
 </li>
 </ul>
 <h4 id="interrupt"><a href="#interrupt" class="headerlink" title="interrupt():"></a>interrupt():</h4><ul>
@@ -514,50 +516,50 @@ var _hmt = _hmt || [];
 </li>
 <li><p>要想结束进程最好的办法就是用sleep()函数的例子程序里那样，在线程类里面用以个boolean型变量来控制run()方法什么时候结束，run()方法一结束，该线程也就结束了。</p>
 <h4 id="wait"><a href="#wait" class="headerlink" title="wait()"></a>wait()</h4></li>
-<li><p>Obj.wait()，与Obj.notify()必须要与synchronized(Obj)一起使用，也就是wait,与notify是针对已经获取了Obj锁进行操作，从语法角度来说就是Obj.wait(),Obj.notify必须在synchronized(Obj){…}语句块内。从功能上来说wait就是说线程在获取对象锁后，主动释放对象锁，同时本线程休眠。直到有其它线程调用对象的notify()唤醒该线程，才能继续获取对象锁，并继续执行。相应的notify()就是对对象锁的唤醒操作。但有一点需要注意的是notify()调用后，并不是马上就释放对象锁的，而是在相应的synchronized(){}语句块执行结束，自动释放锁后，JVM会在wait()对象锁的线程中随机选取一线程，赋予其对象锁，唤醒线程，继续执行。<font color=#8B4500>这样就提供了在线程间同步、唤醒的操作。Thread.sleep()与Object.wait()二者都可以暂停当前线程，释放CPU控制权，主要的区别在于Object.wait()在释放CPU同时，释放了对象锁的控制。</font></p>
+<li><p>Obj.wait()，与Obj.notify()必须要与synchronized(Obj)一起使用，也就是wait,与notify是针对已经获取了Obj锁进行操作，从语法角度来说就是Obj.wait(),Obj.notify必须在synchronized(Obj){…}语句块内。从功能上来说wait就是说线程在获取对象锁后，主动释放对象锁，同时本线程休眠。直到有其它线程调用对象的notify()唤醒该线程，才能继续获取对象锁，并继续执行。相应的notify()就是对对象锁的唤醒操作。但有一点需要注意的是notify()调用后，并不是马上就释放对象锁的，而是在相应的synchronized(){}语句块执行结束，自动释放锁后，JVM会在wait()对象锁的线程中随机选取一线程，赋予其对象锁，唤醒线程，继续执行。<font color="#8B4500">这样就提供了在线程间同步、唤醒的操作。Thread.sleep()与Object.wait()二者都可以暂停当前线程，释放CPU控制权，主要的区别在于Object.wait()在释放CPU同时，释放了对象锁的控制。</font></p>
 </li>
 <li><p>经典的面试题，题目要求如下：<br>  建立三个线程，A线程打印10次A，B线程打印10次B,C线程打印10次C，要求线程同时运行，交替打印10次ABC。这个问题用Object的wait()，notify()就可以很方便的解决。代码如下：</p>
-<pre><code>  public class MyThreadPrinter2 implements Runnable &#123;     
+<pre><code>  public class MyThreadPrinter2 implements Runnable {     
       private String name;   
       private Object prev;   
       private Object self;   
-      private MyThreadPrinter2(String name, Object prev, Object self) &#123;   
+      private MyThreadPrinter2(String name, Object prev, Object self) {   
           this.name = name;   
           this.prev = prev;   
           this.self = self;   
-      &#125;   
-      public void run() &#123;   
+      }   
+      public void run() {   
           int count = 10;   
-          while (count &gt; 0) &#123;   
-              synchronized (prev) &#123;   
-                  synchronized (self) &#123;   
+          while (count &gt; 0) {   
+              synchronized (prev) {   
+                  synchronized (self) {   
                       System.out.print(name);   
                       count--;  
                       self.notify();   
-                  &#125;   
-                  try &#123;   
+                  }   
+                  try {   
                       prev.wait();   
-                  &#125; catch (InterruptedException e) &#123;   
+                  } catch (InterruptedException e) {   
                       e.printStackTrace();   
-                  &#125;   
-              &#125;   
-          &#125;   
-      &#125;   
-      public static void main(String[] args) throws Exception &#123;   
+                  }   
+              }   
+          }   
+      }   
+      public static void main(String[] args) throws Exception {   
           Object a = new Object();   
           Object b = new Object();   
           Object c = new Object();   
-          MyThreadPrinter2 pa = new MyThreadPrinter2(&quot;A&quot;, c, a);   
-          MyThreadPrinter2 pb = new MyThreadPrinter2(&quot;B&quot;, a, b);   
-          MyThreadPrinter2 pc = new MyThreadPrinter2(&quot;C&quot;, b, c);   
+          MyThreadPrinter2 pa = new MyThreadPrinter2("A", c, a);   
+          MyThreadPrinter2 pb = new MyThreadPrinter2("B", a, b);   
+          MyThreadPrinter2 pc = new MyThreadPrinter2("C", b, c);   
           new Thread(pa).start();
           Thread.sleep(100);  //确保按顺序A、B、C执行
           new Thread(pb).start();
           Thread.sleep(100);  
           new Thread(pc).start();   
           Thread.sleep(100);  
-          &#125;   
-  &#125;</code></pre>
+          }   
+  }</code></pre>
 </li>
 <li><p>输出结果：</p>
 <blockquote>
@@ -574,7 +576,7 @@ var _hmt = _hmt || [];
 <li>不同点：<ol>
 <li>Thread类的方法：sleep(),yield()等 </li>
 <li>Object的方法：wait()和notify()等 </li>
-<li><font color=#912CEE>每个对象都有一个锁来控制同步访问。Synchronized关键字可以和对象的锁交互，来实现线程的同步。</font> <br/><br><font color=#8B5A2B>sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。</font></li>
+<li><font color="#912CEE">每个对象都有一个锁来控制同步访问。Synchronized关键字可以和对象的锁交互，来实现线程的同步。</font> <br><br><font color="#8B5A2B">sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。</font></li>
 <li>wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用 </li>
 <li>sleep必须捕获异常，而wait，notify和notifyAll不需要捕获异常</li>
 </ol>
@@ -609,25 +611,25 @@ var _hmt = _hmt || [];
 <li><p>实现同步是要很大的系统开销作为代价的，甚至可能造成死锁，所以尽量避免无谓的同步控制。</p>
 <pre><code>  Class Foo
 
-&#123;
+{
 
 public synchronized static void methodAAA()   // 同步的static 函数
 
-&#123;
+{
 
 //….
 
-&#125;
+}
 
 public void methodBBB()
 
-&#123;
+{
 
        synchronized(Foo.class)   //  class literal(类名称字面常量)
 
-&#125;
+}
 
-       &#125;</code></pre>
+       }</code></pre>
 </li>
 </ol>
 </li>
@@ -657,7 +659,7 @@ public void methodBBB()
 </ul>
 <ul>
 <li><p>通过回调函数传递数据 </p>
-  <pre class="highlight"><span class="line">class Data </span><br><span class="line">		&#123; </span><br><span class="line">		public int value &#x3D; 0; </span><br><span class="line">		&#125; </span><br><span class="line">		class Work </span><br><span class="line">		&#123; </span><br><span class="line">		public void process(Data data, Integer numbers) </span><br><span class="line">		&#123; </span><br><span class="line">		for (int n : numbers) </span><br><span class="line">		&#123; </span><br><span class="line">		data.value +&#x3D; n; </span><br><span class="line">		&#125; </span><br><span class="line">		&#125; </span><br><span class="line">		&#125; </span><br><span class="line">		public class MyThread3 extends Thread </span><br><span class="line">		&#123; </span><br><span class="line">		private Work work; </span><br><span class="line">		public MyThread3(Work work) </span><br><span class="line">		&#123; </span><br><span class="line">		this.work &#x3D; work; </span><br><span class="line">		&#125; </span><br><span class="line">		public void run() </span><br><span class="line">		&#123; </span><br><span class="line">		java.util.Random random &#x3D; new java.util.Random(); </span><br><span class="line">		Data data &#x3D; new Data(); </span><br><span class="line">		int n1 &#x3D; random.nextInt(1000); </span><br><span class="line">		int n2 &#x3D; random.nextInt(2000); </span><br><span class="line">		int n3 &#x3D; random.nextInt(3000); </span><br><span class="line">		work.process(data, n1, n2, n3); &#x2F;&#x2F; 使用回调函数 </span><br><span class="line">		System.out.println(String.valueOf(n1) + &quot;+&quot; + String.valueOf(n2) + &quot;+&quot; </span><br><span class="line">		+ String.valueOf(n3) + &quot;&#x3D;&quot; + data.value); </span><br><span class="line">		&#125; </span><br><span class="line">		public static void main(String[] args) </span><br><span class="line">		&#123; </span><br><span class="line">		Thread thread &#x3D; new MyThread3(new Work()); </span><br><span class="line">		thread.start(); </span><br><span class="line">		&#125; </span><br><span class="line">		&#125; </span><br></pre>
+  <pre class="highlight"><span class="line">class Data </span><br><span class="line">		{ </span><br><span class="line">		public int value = 0; </span><br><span class="line">		} </span><br><span class="line">		class Work </span><br><span class="line">		{ </span><br><span class="line">		public void process(Data data, Integer numbers) </span><br><span class="line">		{ </span><br><span class="line">		for (int n : numbers) </span><br><span class="line">		{ </span><br><span class="line">		data.value += n; </span><br><span class="line">		} </span><br><span class="line">		} </span><br><span class="line">		} </span><br><span class="line">		public class MyThread3 extends Thread </span><br><span class="line">		{ </span><br><span class="line">		private Work work; </span><br><span class="line">		public MyThread3(Work work) </span><br><span class="line">		{ </span><br><span class="line">		this.work = work; </span><br><span class="line">		} </span><br><span class="line">		public void run() </span><br><span class="line">		{ </span><br><span class="line">		java.util.Random random = new java.util.Random(); </span><br><span class="line">		Data data = new Data(); </span><br><span class="line">		int n1 = random.nextInt(1000); </span><br><span class="line">		int n2 = random.nextInt(2000); </span><br><span class="line">		int n3 = random.nextInt(3000); </span><br><span class="line">		work.process(data, n1, n2, n3); // 使用回调函数 </span><br><span class="line">		System.out.println(String.valueOf(n1) + "+" + String.valueOf(n2) + "+" </span><br><span class="line">		+ String.valueOf(n3) + "=" + data.value); </span><br><span class="line">		} </span><br><span class="line">		public static void main(String[] args) </span><br><span class="line">		{ </span><br><span class="line">		Thread thread = new MyThread3(new Work()); </span><br><span class="line">		thread.start(); </span><br><span class="line">		} </span><br><span class="line">		} </span><br></pre>
 
 
 </li>
@@ -691,8 +693,8 @@ public void methodBBB()
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
     <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">谭庆波</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Java-multithreaded-learning/">https://tanqingbo.cn/Java-multithreaded-learning/</a></p>
-    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/java-multithreaded-learning/">https://tanqingbo.cn/java-multithreaded-learning/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
   </div>
@@ -713,7 +715,7 @@ public void methodBBB()
   
   
   <div class="nav-item-next">
-    <a href="/JavaWeb-Chinese-Garbled/" class="nav-link">
+    <a href="/javaweb-chinese-garbled/" class="nav-link">
       <div>
         <div class="nav-label">下一篇</div>
         
@@ -842,33 +844,33 @@ public void methodBBB()
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
-    
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
     <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
     
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
-    
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
   </div>
 </div>
@@ -936,17 +938,17 @@ public void methodBBB()
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Java-memory-area/"><div class="recent-posts-item-content">8张图 带你理解Java内存区域</div></a>
+        <a href="/java-memory-area/"><div class="recent-posts-item-content">8张图 带你理解Java内存区域</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Java-eight-data-types/"><div class="recent-posts-item-content">Java八大基本数据类型详解</div></a>
+        <a href="/java-eight-data-types/"><div class="recent-posts-item-content">Java八大基本数据类型详解</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Computer-Classic-Books/"><div class="recent-posts-item-content">计算机经典书籍</div></a>
+        <a href="/computer-classic-books/"><div class="recent-posts-item-content">计算机经典书籍</div></a>
       </div>
     
       <div class="recent-posts-item">

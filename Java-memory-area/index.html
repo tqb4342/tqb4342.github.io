@@ -14,7 +14,7 @@
   <meta property="og:title" content="8张图 带你理解Java内存区域">
   
   
-  <meta property="og:url" content="https://tanqingbo.cn/Java-memory-area/index.html">
+  <meta property="og:url" content="https://tanqingbo.cn/java-memory-area/index.html">
   
   
   <meta property="og:img" content="https://pic2.zhimg.com/80/v2-2d6e60eec0543a12819f1e6eedd5087e_720w.png">
@@ -171,7 +171,9 @@ var _hmt = _hmt || [];
   
   
   
-<meta name="generator" content="Hexo 5.1.1"></head>
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 <body>
@@ -263,7 +265,7 @@ var _hmt = _hmt || [];
 	  <!-- id 将作为查询条件 -->
     <div style="display: flex; align-items: center;">
       <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
-		<span id="/Java-memory-area/" class="leancloud_visitors" data-flag-title="8张图 带你理解Java内存区域">
+		<span id="/java-memory-area/" class="leancloud_visitors" data-flag-title="8张图 带你理解Java内存区域">
 			<em class="post-meta-item-text">阅读量 </em>
 			<i class="leancloud-visitors-count">loading</i>
 		</span>
@@ -326,7 +328,7 @@ var _hmt = _hmt || [];
 </ol>
 <p>根据上面的各种原因，PermGen 最终被移除，<strong>方法区移至 Metaspace，字符串常量移至 Java Heap</strong>。</p>
 <blockquote>
-<p>引用自<a target="_blank" rel="noopener" href="https://www.sczyh30.com/posts/Java/jvm-metaspace/">https://www.sczyh30.com/posts/Java/jvm-metaspace/</a></p>
+<p>引用自<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.sczyh30.com/posts/Java/jvm-metaspace/">https://www.sczyh30.com/posts/Java/jvm-metaspace/</a></p>
 </blockquote>
 <p>下面逐一介绍一下jvm管辖的这几种内存区域。</p>
 <h2 id="2、程序计数器"><a href="#2、程序计数器" class="headerlink" title="2、程序计数器"></a>2、程序计数器</h2><p>程序计数器（Program Counter Register）是一块较小的内存空间，由于JVM可以并发执行线程，因此会存在线程之间的切换，而这个时候就程序计数器会记录下当前程序执行到的位置，以便在其他线程执行完毕后，恢复现场继续执行。</p>
@@ -352,7 +354,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>常量池可以便于指令的识别</p>
 </blockquote>
-<pre class="highlight"><span class="line">public void methodA()&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">public void methodB()&#123;</span><br><span class="line">    methodA();&#x2F;&#x2F;methodB()调用methodA(),先找到调用methodA()的版本符号，再变为直接引用</span><br><span class="line">&#125;</span><br></pre>
+<pre class="highlight"><span class="line">public void methodA(){</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line">public void methodB(){</span><br><span class="line">    methodA();//methodB()调用methodA(),先找到调用methodA()的版本符号，再变为直接引用</span><br><span class="line">}</span><br></pre>
 
 <p>方法调用并不等同于方法执行，方法调用阶段唯一的任务就是确定被调用方法的版本(即调用哪一个方法)，这也是Java强大的扩展能力，在运行期间才能确定目标方法的<strong>直接引用</strong>。</p>
 <p>所有方法调用中的目标方法在Class文件里面都是一个常量池中的符号引用，在类加载的解析阶段，会将其中的一部分符号引用转化为直接引用。</p>
@@ -372,7 +374,7 @@ var _hmt = _hmt || [];
 <p>方法区用于存储已经被虚拟机加载的类信息（即加载类时需要加载的信息，包括版本、field、方法、接口等信息）、final常量、静态变量、编译器即时编译的代码等。</p>
 <p>方法区逻辑上属于堆的一部分，但是为了与堆进行区分，通常又叫“非堆”。</p>
 <p>方法区比较重要的一部分是<strong>运行时常量池</strong>（Runtime Constant Pool），为什么叫运行时常量池呢？是因为运行期间可能会把新的常量放入池中，比如说常见的String的intern()方法。</p>
-<pre class="highlight"><span class="line">String a &#x3D; &quot;I am HaC&quot;;</span><br><span class="line">Integer b &#x3D; 100;</span><br></pre>
+<pre class="highlight"><span class="line">String a = "I am HaC";</span><br><span class="line">Integer b = 100;</span><br></pre>
 
 <p>在编译阶段就把所有的字符串文字放到一个常量池中，复用同一个（比如说上述的“I am HaC”），节省空间。</p>
 <p><strong>关于方法区和元空间的关系：</strong></p>
@@ -421,8 +423,8 @@ var _hmt = _hmt || [];
   
   <div class="post-note note-warning copyright" style="margin-top: 42px">
     <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">谭庆波</a></p>
-    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Java-memory-area/">https://tanqingbo.cn/Java-memory-area/</a></p>
-    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/java-memory-area/">https://tanqingbo.cn/java-memory-area/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
   </div>
   
   </div>
@@ -431,7 +433,7 @@ var _hmt = _hmt || [];
   
   
   <div class="nav-item-next">
-    <a href="/Java-eight-data-types/" class="nav-link">
+    <a href="/java-eight-data-types/" class="nav-link">
       <div>
         <div class="nav-label">下一篇</div>
         
@@ -560,33 +562,33 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
-    
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
     
     <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
     
-    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
-    
-    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
-    
-    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
-    
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    
+    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
     
     <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
     <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
     
-    <a href="\tags\线程" title="线程"><div class="tags-list-item">线程</div></a>
+    <a href="\tags\多线程" title="多线程"><div class="tags-list-item">多线程</div></a>
     
-    <a href="\tags\java" title="java"><div class="tags-list-item">java</div></a>
+    <a href="\tags\lombok" title="lombok"><div class="tags-list-item">lombok</div></a>
+    
+    <a href="\tags\JMM" title="JMM"><div class="tags-list-item">JMM</div></a>
+    
+    <a href="\tags\数据类型" title="数据类型"><div class="tags-list-item">数据类型</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
   </div>
 </div>
@@ -654,17 +656,17 @@ var _hmt = _hmt || [];
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Java-memory-area/"><div class="recent-posts-item-content">8张图 带你理解Java内存区域</div></a>
+        <a href="/java-memory-area/"><div class="recent-posts-item-content">8张图 带你理解Java内存区域</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Java-eight-data-types/"><div class="recent-posts-item-content">Java八大基本数据类型详解</div></a>
+        <a href="/java-eight-data-types/"><div class="recent-posts-item-content">Java八大基本数据类型详解</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-11-20</div>
-        <a href="/Computer-Classic-Books/"><div class="recent-posts-item-content">计算机经典书籍</div></a>
+        <a href="/computer-classic-books/"><div class="recent-posts-item-content">计算机经典书籍</div></a>
       </div>
     
       <div class="recent-posts-item">
