@@ -12,5 +12,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: http://tanqingbo.cn/sitemap.xml
-Sitemap: http://tanqingbo.cn/baidusitemap.xml
+Sitemap: https://tanqingbo.cn/sitemap.xml
+Sitemap: https://tanqingbo.cn/baidusitemap.xml
