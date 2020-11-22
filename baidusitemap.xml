@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tanqingbo.cn/Web%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81/</loc>
-    <lastmod>2020-11-22</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/javaweb-server-error-codes/</loc>
-    <lastmod>2020-11-22</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/java-Set-Map/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Map-uses-multiple-maps/</loc>
     <lastmod>2020-11-22</lastmod>
   </url>
   <url>
@@ -17,7 +13,7 @@
     <lastmod>2020-11-22</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/Map-uses-multiple-maps/</loc>
+    <loc>https://tanqingbo.cn/javaweb-server-error-codes/</loc>
     <lastmod>2020-11-22</lastmod>
   </url>
   <url>
