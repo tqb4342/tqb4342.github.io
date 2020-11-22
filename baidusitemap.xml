@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Web%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/javaweb-server-error-codes/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/java-Set-Map/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Java-Servlet/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Map-uses-multiple-maps/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/7-terminal-tools/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Java-multithreaded-learning/</loc>
+    <lastmod>2020-11-22</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/%E5%8E%86%E5%B9%B4%E5%BE%AE%E8%BD%AF%E9%9D%A2%E8%AF%95%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84leetcode%E7%AE%97%E6%B3%95%E9%A2%98/</loc>
     <lastmod>2020-11-20</lastmod>
   </url>
@@ -39,10 +67,6 @@
   <url>
     <loc>https://tanqingbo.cn/Batch-Normalization/</loc>
     <lastmod>2020-11-20</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Java-multithreaded-learning/</loc>
-    <lastmod>2020-11-19</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/eclipse-lombok/</loc>
