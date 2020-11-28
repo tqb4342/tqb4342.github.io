@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://tanqingbo.cn/Decorative-pattern/</loc>
+    <loc>https://tanqingbo.cn/Spring-basics/</loc>
+    
+    <lastmod>2020-11-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/kmp-algorithms/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
@@ -16,13 +23,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/Prototype-mode/</loc>
-    
-    <lastmod>2020-11-28</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/Appearance-mode/</loc>
     
     <lastmod>2020-11-28</lastmod>
@@ -30,7 +30,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/kmp-algorithms/</loc>
+    <loc>https://tanqingbo.cn/Decorative-pattern/</loc>
+    
+    <lastmod>2020-11-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/Prototype-mode/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
@@ -52,13 +59,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/Spring-integrates-hibernate&&Struts/</loc>
-    
-    <lastmod>2020-11-28</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Spring-basics/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
@@ -692,14 +692,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2020-11-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/C-C/</loc>
+    <loc>https://tanqingbo.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-11-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
