@@ -1,3 +1,5 @@
+https://tanqingbo.cn/Java-learning-route-map/
+https://tanqingbo.cn/Git-Learning/
 https://tanqingbo.cn/kmp-algorithms/
 https://tanqingbo.cn/Eight-sorting-algorithms/
 https://tanqingbo.cn/Binary-tree-traversal/
@@ -6,5 +8,3 @@ https://tanqingbo.cn/Agency-model/
 https://tanqingbo.cn/Appearance-mode/
 https://tanqingbo.cn/Decorative-pattern/
 https://tanqingbo.cn/Prototype-mode/
-https://tanqingbo.cn/Spring-integrates-hibernate&&Struts/
-https://tanqingbo.cn/CSBook003/

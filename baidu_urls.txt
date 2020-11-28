@@ -1,3 +1,5 @@
+https://tanqingbo.cn/Java-learning-route-map/
+https://tanqingbo.cn/Git-Learning/
 https://tanqingbo.cn/Decorative-pattern/
 https://tanqingbo.cn/Agency-model/
 https://tanqingbo.cn/Prototype-mode/
@@ -16,5 +18,3 @@ https://tanqingbo.cn/CSBook007/
 https://tanqingbo.cn/CSBook006/
 https://tanqingbo.cn/CSBook005/
 https://tanqingbo.cn/CSBook004/
-https://tanqingbo.cn/CSBook003/
-https://tanqingbo.cn/CSBook002/
