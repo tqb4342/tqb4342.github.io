@@ -1,3 +1,12 @@
+https://tanqingbo.cn/Decorative-pattern/
+https://tanqingbo.cn/Agency-model/
+https://tanqingbo.cn/Prototype-mode/
+https://tanqingbo.cn/Appearance-mode/
+https://tanqingbo.cn/kmp-algorithms/
+https://tanqingbo.cn/Binary-tree-traversal/
+https://tanqingbo.cn/Eight-sorting-algorithms/
+https://tanqingbo.cn/Spring-integrates-hibernate&&Struts/
+https://tanqingbo.cn/Spring-basics/
 https://tanqingbo.cn/CSBook012/
 https://tanqingbo.cn/CSBook011/
 https://tanqingbo.cn/CSBook010/
@@ -9,12 +18,3 @@ https://tanqingbo.cn/CSBook005/
 https://tanqingbo.cn/CSBook004/
 https://tanqingbo.cn/CSBook003/
 https://tanqingbo.cn/CSBook002/
-https://tanqingbo.cn/CSBook001/
-https://tanqingbo.cn/javaweb-server-error-codes/
-https://tanqingbo.cn/java-Set-Map/
-https://tanqingbo.cn/Java-Servlet/
-https://tanqingbo.cn/Map-uses-multiple-maps/
-https://tanqingbo.cn/7-terminal-tools/
-https://tanqingbo.cn/Java-memory-area/
-https://tanqingbo.cn/Java-eight-data-types/
-https://tanqingbo.cn/Computer-Classic-Books/
