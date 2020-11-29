@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/C++-string-function/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Dll/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/C&Java-DevelopTools/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Java-development-tools/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Java-array-and-collection-sorting/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Appearance-mode/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Decorative-pattern/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Factory-and-strategy-mode/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Agency-model/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Prototype-mode/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/itext-makes-pdf-form/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Merge-sort-algorithm/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Eight-sorting-algorithms/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/CSBook001/</loc>
     <lastmod>2020-11-29</lastmod>
   </url>
@@ -17,31 +73,11 @@
     <lastmod>2020-11-28</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/Eight-sorting-algorithms/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/Binary-tree-traversal/</loc>
     <lastmod>2020-11-28</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/Spring-basics/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Agency-model/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Appearance-mode/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Decorative-pattern/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Prototype-mode/</loc>
     <lastmod>2020-11-28</lastmod>
   </url>
   <url>

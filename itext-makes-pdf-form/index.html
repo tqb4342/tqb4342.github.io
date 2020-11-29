@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>itext制作pdf表格&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="itext制作pdf表格">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/itext-makes-pdf-form/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171659.png">
+  
+  
+  <meta name="description" content="iText 是一个非常著名的能够快速产生 PDF 文件的 Java 类库。支持文本，表格，图形的操作，可以方便的跟 Servlet 进行结合。">
+  
+  <meta name="keywords" content="Java,itext">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-11-29">
+  <meta property="og:article:modified_time" content="2020-11-29">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="itext">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archives" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171659.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171659.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      itext制作pdf表格
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-11-29T08:50:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-11-29</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/itext-makes-pdf-form/" class="leancloud_visitors" data-flag-title="itext制作pdf表格">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/itext/" class="post-meta-link">itext</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="iText 是一个非常著名的能够快速产生 PDF 文件的 Java 类库。支持文本，表格，图形的操作，可以方便的跟 Servlet 进行结合。">
+  
+  <meta name="keywords" content="Java,itext">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="itext制作pdf表格"><a href="#itext制作pdf表格" class="headerlink" title="itext制作pdf表格"></a>itext制作pdf表格</h2><h3 id="添加单元格"><a href="#添加单元格" class="headerlink" title="添加单元格"></a>添加单元格</h3><ul>
+<li>把下面这几项顺次的加入到表格中，当一行充满时候自动换行到下一行  <pre class="highlight"><span class="line">PdfPTable table = new PdfPTable(3);  </span><br><span class="line">          table.addCell("1.1");  </span><br><span class="line">          table.addCell("1.2");  </span><br><span class="line">          table.addCell("1.3");  </span><br><span class="line">          table.addCell("2.1");  </span><br><span class="line">          table.addCell("2.2");  </span><br><span class="line">          table.addCell("2.3");</span><br></pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li>以上程序运行结果将显示三行二列的表格。</li>
+<li>添加单元格的内容还可以是以下几种形式。</li>
+</ul>
+<pre class="highlight"><span class="line">public void addCell(PdfPCell cell);</span><br><span class="line">          public void addCell(PdfPTable table);</span><br><span class="line">          public void addCell(Phrase phrase);</span><br><span class="line">          public void addCell(String text);</span><br><span class="line">          public void addCell(Paragraph paragraph); </span><br></pre>
+
+
+
+<ul>
+<li>本文用的是最后一种。 </li>
+</ul>
+<h3 id="合并单元格"><a href="#合并单元格" class="headerlink" title="合并单元格"></a>合并单元格</h3><ul>
+<li><p>iText合并单元格的过程如下，首先创建一个cell，设置这个单元格的跨度，</p>
+</li>
+<li><p>如果是横向合并，则通过</p>
+<pre><code>  cell.setColspan(n);  //n代表从当前单元格的位置开始，合并的单元格数</code></pre>
+</li>
+<li><p>如果是纵向合并，</p>
+<pre><code> cell.setRowspan(n);//n代表从当前单元格的位置开始，合并的单元格数</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>代码举例：（一开始是用数组添加单元格的，后来改成直接添加了，更简洁了）</p>
+<p> package com.pdf;</p>
+<pre><code> import java.io.FileOutputStream;
+
+ import com.itextpdf.text.Document;
+ import com.itextpdf.text.Element;
+ import com.itextpdf.text.Font;
+ import com.itextpdf.text.Image;
+ import com.itextpdf.text.Paragraph;
+ import com.itextpdf.text.Phrase;
+ import com.itextpdf.text.pdf.BaseFont;
+ import com.itextpdf.text.pdf.PdfPCell;
+ import com.itextpdf.text.pdf.PdfPTable;
+ import com.itextpdf.text.pdf.PdfWriter;
+
+ public class pdf_Table {
+ public static void main(String[] args) {
+  Document document = new Document();
+  try {
+      BaseFont bfChinese = BaseFont.createFont("C:\\Windows\\Fonts\\simkai.ttf",</code></pre>
+ <pre class="highlight"><span class="line">BaseFont.IDENTITY_H,false); // 中文处理 </span><br><span class="line">   Font titleChinese = new Font(bfChinese, 20, Font.BOLD);</span><br><span class="line">   Font font = new Font(bfChinese, 20, Font.ITALIC);// 模板抬头的字体   </span><br><span class="line">   Font moneyFontChinese = new Font(bfChinese, 11, Font.ITALIC); // 币种和租金金额的小一号字体    </span><br><span class="line">   PdfWriter.getInstance(document,</span><br><span class="line">           new FileOutputStream("text1.pdf"));</span><br><span class="line">   document.open();</span><br><span class="line">   PdfPTable table = new PdfPTable(1);//创建一个有1列的表格 </span><br><span class="line">   table.setTotalWidth(15);//设置表格的各列宽度</span><br><span class="line">   PdfPCell cell1 = new PdfPCell(new Paragraph("招聘人员登记表", titleChinese));</span><br><span class="line">   cell1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">   table.addCell(cell1);</span><br><span class="line">   document.add(table);</span><br><span class="line">   float f[] = {2,3,2,3,2};</span><br><span class="line">   PdfPTable table1 = new PdfPTable(5);</span><br><span class="line">   table1.setTotalWidth(f);</span><br></pre>
+
+<pre><code>   String str1[] = {"姓名","出生年月","婚否","专业","健康状况","政治面貌","家庭住址","简历","家庭情况"};
+   String str2[] = {"性别","学历","名族","毕业学校","户籍所在地","身份证号","姓名","亲属关系","年龄","健康状况"};
+   PdfPCell ce1 = null;
+   PdfPCell ce2 = null;
+   PdfPCell ce3 = null;
+
+   ce1 = new PdfPCell(new Paragraph(str1[0],moneyFontChinese));
+   ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+   table1.addCell(ce1);
+   table1.addCell("");
+   ce2 = new PdfPCell(new Paragraph(str2[0],moneyFontChinese));
+   ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
+   table1.addCell(ce2);
+   table1.addCell("");
+   ce3 = new PdfPCell(new Paragraph("照片",moneyFontChinese));
+   ce3.setHorizontalAlignment(Element.ALIGN_CENTER);//水平居中
+   ce3.setUseAscender(true);//垂直居中
+   ce3.setVerticalAlignment(ce3.ALIGN_MIDDLE);//垂直居中
+   ce3.setRowspan(4); //合并同一行的四个格
+   Image img = Image.getInstance("E:\\我的电脑备份\\照片\\照片素材\\旅行\\长城\\IMG_20140727_095516.jpg");//选择图片
+   //   img.setAlignment(1);
+    //  img.scaleAbsolute(110,150);//控制图片大小
+   ce3.setImage(img);
+   table1.addCell(ce3);
+
+       for(int i=1;i&lt;4;i++){
+       ce1 = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));
+       ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+       table1.addCell(ce1);
+       table1.addCell("");
+       ce2 = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));
+       ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
+       table1.addCell(ce2);
+       table1.addCell("");
+   }
+  for(int i=4;i&lt;6;i++){
+       ce1 = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));
+       ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+       table1.addCell(ce1);
+       table1.addCell("");
+       ce2 = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));
+       ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
+       table1.addCell(ce2);
+       ce3 = new PdfPCell(new Paragraph(""));
+       ce3.setColspan(2); //合并同一行的2个格
+       table1.addCell(ce3);
+  }
+  ce1 = new PdfPCell(new Paragraph(str1[6],moneyFontChinese));
+  ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+  table1.addCell(ce1);
+  ce3 = new PdfPCell(new Paragraph(""));
+  ce3.setColspan(4); //合并同一行的2个格
+  table1.addCell(ce3);</code></pre>
+</li>
+</ul>
+<pre><code>    ce1 = new PdfPCell(new Paragraph(str1[8],moneyFontChinese));
+    ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    ce1.setUseAscender(true);//垂直居中
+    ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中
+    ce1.setRowspan(5); //合并同一行的四个格
+    table1.addCell(ce1);
+
+    for(int i=0;i&lt;4;i++){
+        ce2 = new PdfPCell(new Paragraph(str2[i+6],moneyFontChinese));
+        ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
+        table1.addCell(ce2);
+    }
+    for(int i=0;i&lt;16;i++){
+          table1.addCell(" ");
+    }
+    ce1 = new PdfPCell(new Paragraph(str1[7],moneyFontChinese));
+    ce1.setMinimumHeight(90);
+    ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    ce1.setUseAscender(true);//垂直居中
+    ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中
+    table1.addCell(ce1);
+    ce2 = new PdfPCell(new Paragraph(" "));
+    ce2.setColspan(4);
+    table1.addCell(ce2);
+  String str = "1.多说几句话身份和空间分割法与人文u影的交付该雕。"
+          +"2.活动官方发布没办法长三角和环境事故。"
+                  + "3,白癜风是快捷方便和技术快递费";
+
+    ce1 = new PdfPCell(new Paragraph("注意事项",moneyFontChinese));
+    ce1.setMinimumHeight(90);
+    ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    ce1.setUseAscender(true);//垂直居中
+    ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中
+    table1.addCell(ce1);
+    ce2 = new PdfPCell(new Paragraph(str,moneyFontChinese));
+    ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
+    ce2.setUseAscender(true);//垂直居中
+    ce2.setVerticalAlignment(ce2.ALIGN_MIDDLE);//垂直居中
+    ce2.setColspan(4);
+    table1.addCell(ce2);
+
+   //        Image img = Image.getInstance("E:\\我的电脑备份\\照片\\照片素材\\旅行\\长城\\IMG_20140727_095516.jpg");//选择图片
+   //        img.setAlignment(1);
+   //        img.scaleAbsolute(100,100);//控制图片大小
+   //        img.setAbsolutePosition(0,200);//控制图片位置
+   //        table1.addCell(img);
+
+   //        ce3 = new PdfPCell(new Paragraph(""));
+   //        ce3.setColspan(4); //合并同一行的2个格
+   //        table1.addCell(ce3);
+   //         for(int i=1;i&lt;9;i++){
+   //             if(i&lt;6){
+   //         ce1[i] = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));
+   //         ce1[i].setHorizontalAlignment(Element.ALIGN_CENTER);
+   //         ce2[i] = new PdfPCell(new Paragraph(""));
+   //          ce3[i] = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));
+   //          ce3[i].setHorizontalAlignment(Element.ALIGN_CENTER);
+   //         ce4[i] = new PdfPCell(new Paragraph(""));
+   //          ce5[i] = new PdfPCell(new Paragraph("  "));
+   //             }
+   //             else {
+   //                 ce1[i] = new PdfPCell(new Paragraph(str1[i],font));
+   //                 ce1[i].setHorizontalAlignment(Element.ALIGN_CENTER);
+   //                 ce2[i] = new PdfPCell(new Paragraph(""));
+   //                  ce3[i] = new PdfPCell(new Paragraph(str2[i],font));
+   //                  ce3[i].setHorizontalAlignment(Element.ALIGN_CENTER);
+   //                 ce4[i] = new PdfPCell(new Paragraph(""));
+   //                  ce5[i] = new PdfPCell(new Paragraph(""));
+   //             }
+   //       //  document.add(table1[i]);
+   //         }
+   //         
+   //      //   ce5[0].setRowspan(4);
+   //         ce4[4].setColspan(2);  //合并同一行的两个格
+   //         ce4[5].setColspan(2);
+   //         ce2[6].setColspan(4);  //合并同一行的四个格
+   //         ce2[7].setColspan(4);
+   //         ce2[8].setColspan(4);
+   //         for(int i=0;i&lt;9;i++){
+   //              table1[i].addCell(ce1[i]);
+   //              table1[i].addCell(ce2[i]);
+   //              table1[i].addCell(ce3[i]);
+   //              table1[i].addCell(ce4[i]);
+   //              if(i&gt;0)
+   //              table1[i].addCell(ce5[i]);
+   //             document.add(table1[i]);
+   //         }
+            document.add(table1);
+             document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+   }
+   }</code></pre>
+<ul>
+<li>效果如下：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171427.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171427.jpeg"></p>
+<h4 id="往期精彩文章"><a href="#往期精彩文章" class="headerlink" title="往期精彩文章"></a>往期精彩文章</h4><ul>
+<li><a href="https://tanqingbo.cn/Java-learning-route-map/">Java 学习线路图是怎样的？ |  IT码农 (tanqingbo.cn)</a></li>
+<li><a href="https://tanqingbo.cn/Git-Learning/">版本控制之git的简易教程</a></li>
+<li><a href="https://tanqingbo.cn/Agency-model/">程序员常用设计模式之代理模式</a></li>
+<li><a href="https://tanqingbo.cn/Prototype-mode/">程序员常用设计模式之原型模型</a></li>
+<li><a href="https://tanqingbo.cn/Appearance-mode/">程序员常用设计模式之外观模式</a></li>
+<li><a href="https://tanqingbo.cn/kmp-algorithms/">字符串匹配之kmp算法</a></li>
+<li><a href="https://tanqingbo.cn/Binary-tree-traversal/">数据结构之二叉树的四种遍历方法</a></li>
+<li><a href="https://tanqingbo.cn/Eight-sorting-algorithms/">八大经典排序算法–Java实现</a></li>
+<li><a href="https://tanqingbo.cn/Spring-integrates-hibernate&amp;&amp;Struts/">Spring整合hibernate和Struts</a></li>
+<li><a href="https://tanqingbo.cn/Spring-basics/">Sping入门</a></li>
+</ul>
+		
+  </div>	
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	<!--
+    <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+	
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>	
+	</div>	
+	-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/itext-makes-pdf-form/">https://tanqingbo.cn/itext-makes-pdf-form/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/Merge-sort-algorithm/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">归并排序的原理及时间复杂度 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/Java-learning-route-map/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Java 学习线路图是怎样的？ </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#itext%E5%88%B6%E4%BD%9Cpdf%E8%A1%A8%E6%A0%BC"><span class="toc-text">itext制作pdf表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-text">添加单元格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-text">合并单元格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>58</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>9</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>50</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#itext%E5%88%B6%E4%BD%9Cpdf%E8%A1%A8%E6%A0%BC"><span class="toc-text">itext制作pdf表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-text">添加单元格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-text">合并单元格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">21</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">18</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C&amp;C++">
+        <div class="categories-list-item">
+          C&amp;C++
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Git">
+        <div class="categories-list-item">
+          Git
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\C++" title="C++"><div class="tags-list-item">C++</div></a>
+    
+    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
+    
+    <a href="\tags\Sping" title="Sping"><div class="tags-list-item">Sping</div></a>
+    
+    <a href="\tags\JVM" title="JVM"><div class="tags-list-item">JVM</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\itext" title="itext"><div class="tags-list-item">itext</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+<!--
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+-->
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#itext%E5%88%B6%E4%BD%9Cpdf%E8%A1%A8%E6%A0%BC"><span class="toc-text">itext制作pdf表格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-text">添加单元格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E5%8D%95%E5%85%83%E6%A0%BC"><span class="toc-text">合并单元格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-29</div>
+        <a href="/Dll/"><div class="recent-posts-item-content">C语言中的Dll详解</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-29</div>
+        <a href="/C++-string-function/"><div class="recent-posts-item-content">C++ string函数的用法</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-29</div>
+        <a href="/Encryption-Algorithm/"><div class="recent-posts-item-content">浅谈三种加密算法【DES、IDEA、MD5】</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-11-29</div>
+        <a href="/C&amp;Java-DevelopTools/"><div class="recent-posts-item-content">C/C++、Java和Python开发工具一网打尽</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/links/" target="_blank">友情链接</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
