@@ -1,3 +1,5 @@
+https://tanqingbo.cn/Batch-Normalization/
+https://tanqingbo.cn/kmp-algorithms/
 https://tanqingbo.cn/C&Java-DevelopTools/
 https://tanqingbo.cn/CSBook004/
 https://tanqingbo.cn/C++-string-function/
@@ -6,5 +8,3 @@ https://tanqingbo.cn/Encryption-Algorithm/
 https://tanqingbo.cn/Java-development-tools/
 https://tanqingbo.cn/Java-array-and-collection-sorting/
 https://tanqingbo.cn/Appearance-mode/
-https://tanqingbo.cn/Decorative-pattern/
-https://tanqingbo.cn/Factory-and-strategy-mode/
