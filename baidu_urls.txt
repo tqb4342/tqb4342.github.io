@@ -1,3 +1,7 @@
+https://tanqingbo.cn/linux-java-opencv/
+https://tanqingbo.cn/Ubuntu-install-sougou/
+https://tanqingbo.cn/Linux-ITK/
+https://tanqingbo.cn/Linux-Compile-C/
 https://tanqingbo.cn/Dll/
 https://tanqingbo.cn/C++-string-function/
 https://tanqingbo.cn/Encryption-Algorithm/
@@ -14,7 +18,3 @@ https://tanqingbo.cn/Prototype-mode/
 https://tanqingbo.cn/Appearance-mode/
 https://tanqingbo.cn/Factory-and-strategy-mode/
 https://tanqingbo.cn/kmp-algorithms/
-https://tanqingbo.cn/Binary-tree-traversal/
-https://tanqingbo.cn/Eight-sorting-algorithms/
-https://tanqingbo.cn/Spring-integrates-hibernate&&Struts/
-https://tanqingbo.cn/Spring-basics/
