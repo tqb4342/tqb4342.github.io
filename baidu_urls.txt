@@ -5,7 +5,7 @@ https://tanqingbo.cn/Linux-Compile-C/
 https://tanqingbo.cn/Dll/
 https://tanqingbo.cn/C++-string-function/
 https://tanqingbo.cn/Encryption-Algorithm/
-https://tanqingbo.cn/C&Java-DevelopTools/
+https://tanqingbo.cn/C-Java-DevelopTools/
 https://tanqingbo.cn/Java-development-tools/
 https://tanqingbo.cn/Java-array-and-collection-sorting/
 https://tanqingbo.cn/Merge-sort-algorithm/
