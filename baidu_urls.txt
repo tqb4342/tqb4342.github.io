@@ -1,3 +1,11 @@
+https://tanqingbo.cn/python%E7%88%AC%E8%99%AB%E6%95%99%E7%A8%8B/
+https://tanqingbo.cn/Python-crawler/
+https://tanqingbo.cn/What-is-crawler/
+https://tanqingbo.cn/python-yeild/
+https://tanqingbo.cn/Python-base/
+https://tanqingbo.cn/python-Blog/
+https://tanqingbo.cn/How2learn-Python%EF%BC%9F/
+https://tanqingbo.cn/Mysql-database/
 https://tanqingbo.cn/linux-java-opencv/
 https://tanqingbo.cn/Ubuntu-install-sougou/
 https://tanqingbo.cn/Linux-ITK/
@@ -10,11 +18,3 @@ https://tanqingbo.cn/Java-development-tools/
 https://tanqingbo.cn/Java-array-and-collection-sorting/
 https://tanqingbo.cn/Merge-sort-algorithm/
 https://tanqingbo.cn/itext-makes-pdf-form/
-https://tanqingbo.cn/Java-learning-route-map/
-https://tanqingbo.cn/Git-Learning/
-https://tanqingbo.cn/Decorative-pattern/
-https://tanqingbo.cn/Agency-model/
-https://tanqingbo.cn/Prototype-mode/
-https://tanqingbo.cn/Appearance-mode/
-https://tanqingbo.cn/Factory-and-strategy-mode/
-https://tanqingbo.cn/kmp-algorithms/

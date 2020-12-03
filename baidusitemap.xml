@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/python%E7%88%AC%E8%99%AB%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Python-crawler/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/What-is-crawler/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/python-yeild/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Python-base/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/python-Blog/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/How2learn-Python%EF%BC%9F/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Mysql-database/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
     <lastmod>2020-12-03</lastmod>
   </url>
