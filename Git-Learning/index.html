@@ -26,7 +26,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2020-11-28">
-  <meta property="og:article:modified_time" content="2020-11-28">
+  <meta property="og:article:modified_time" content="2020-12-03">
   <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
   
   
@@ -312,61 +312,38 @@ var _hmt = _hmt || [];
 <h2 id="二、安装git"><a href="#二、安装git" class="headerlink" title="二、安装git"></a>二、安装git</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/downloads">git官方网站</a>下载对应自己电脑的版本，按照指引进行安装。</p>
 <h2 id="三、git使用知识"><a href="#三、git使用知识" class="headerlink" title="三、git使用知识"></a>三、git使用知识</h2><p>首先我们需要在本地创建一个仓库，用于存放历代版本。</p>
 <p>1.命令行中运用cd指令进入项目的目录，输入  </p>
-<pre><code>    $ git init  </code></pre>
+<pre class="highlight"><span class="line">$ git init  </span><br></pre>
+
 <p>这将创建一个名为.git的隐藏子目录。    </p>
 <p>2.git status:查看哪些文件处于什么状态  </p>
-<pre><code>    $ git status
-    On branch master
-    nothing to commit, working directory clean
-   （创建git仓库后目录下没有文件时的情况）  </code></pre>
+<pre class="highlight"><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">nothing to commit, working directory clean</span><br><span class="line">（创建git仓库后目录下没有文件时的情况）  </span><br></pre>
+
 <p>   创建一个文件（test）后再使用git status命令，将会看到一个新的提示  </p>
-<pre><code>    $ git status
-    On branch master
-    Your branch is up-to-date with 'origin/master'.
-    Untracked files:
-    (use "git add &lt;file&gt;..." to include in what will be committed)
+<pre class="highlight"><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with 'origin/master'.</span><br><span class="line">Untracked files:</span><br><span class="line">(use "git add &lt;file&gt;..." to include in what will be committed)</span><br><span class="line"></span><br><span class="line">test</span><br><span class="line"></span><br><span class="line">nothing added to commit but untracked files present (use "git add" to track)</span><br><span class="line"></span><br><span class="line">（新建的“test”文件出现在Untracked files下）</span><br></pre>
 
-        test
-
-    nothing added to commit but untracked files present (use "git add" to track)
-
-    （新建的“test”文件出现在Untracked files下）</code></pre>
 <p>3.git add：跟踪文件<br>运行     </p>
-<pre><code>    $ git add test</code></pre>
-<p>此时再运行git status，会看到test文件已被跟踪，处于暂存状态(staged)，显示Changes to be committed    </p>
-<pre><code>    $ git status
-    On branch master
-    Your branch is up-to-date with 'origin/master'.
-    Changes to be committed:
-    (use "git reset HEAD &lt;file&gt;..." to unstage)
+<pre class="highlight"><span class="line">$ git add test</span><br></pre>
 
-        test</code></pre>
+
+<p>此时再运行git status，会看到test文件已被跟踪，处于暂存状态(staged)，显示Changes to be committed    </p>
+<pre class="highlight"><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with 'origin/master'.</span><br><span class="line">Changes to be committed:</span><br><span class="line">(use "git reset HEAD &lt;file&gt;..." to unstage)</span><br><span class="line"></span><br><span class="line">test</span><br></pre>
+
 <p>4.git commit：提交更新至仓库  </p>
 <p>先用git status命令确定暂存区域准备妥当，<br>再运行$git commit -m ”提交信息”（提交信息指本次提交的说明，类似于注释）    </p>
-<pre><code>$ git commit -m "first"
-[master 5e43df6] first
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 test </code></pre>
+<pre class="highlight"><span class="line">$ git commit -m "first"</span><br><span class="line">[master 5e43df6] first</span><br><span class="line"> 1 file changed, 0 insertions(+), 0 deletions(-)</span><br><span class="line"> create mode 100644 test </span><br></pre>
+
+
 <p>此时会显示提交成功的信息。  </p>
 <p>5.git diff：显示尚未暂存的改动（并不是所有改动）</p>
 <p>6.git rm test：删除暂存区域中的文件test</p>
 <p>7.git log:查看提交历史  </p>
-<pre><code>$ git log
-commit 5e43df6b6d003ea70444ee3125456fd75b066803
-Author: *** &lt;****@gmail.com&gt;
-Date:   Thu Mar 16 19:37:52 2017 +0800
+<pre class="highlight"><span class="line">$ git log</span><br><span class="line">commit 5e43df6b6d003ea70444ee3125456fd75b066803</span><br><span class="line">Author: *** &lt;****@gmail.com&gt;</span><br><span class="line">Date:   Thu Mar 16 19:37:52 2017 +0800</span><br><span class="line"></span><br><span class="line">first</span><br><span class="line"></span><br><span class="line">commit 1c83e2a07f0279ea510e2a323fada53166c3c657</span><br><span class="line">Author: *** &lt;****@gmail.com&gt;</span><br><span class="line">Date:   Thu Mar 16 19:16:26 2017 +0800</span><br><span class="line"></span><br><span class="line">test  </span><br></pre>
 
-first
-
-commit 1c83e2a07f0279ea510e2a323fada53166c3c657
-Author: *** &lt;****@gmail.com&gt;
-Date:   Thu Mar 16 19:16:26 2017 +0800
-
-test  </code></pre>
 <p>8.版本回退  </p>
 <p>  在git log命令中我们可以看到类似<em>5e43……6803</em>的一大串字符，那就是版本号（commit id）我们可以用 git reset命令回退到之前任何一个版本:    </p>
-<pre><code> $ git reset --hard 1c83e2a0
-   HEAD is now at 1c83e2a test</code></pre>
+<pre class="highlight"><span class="line">$ git reset --hard 1c83e2a0</span><br><span class="line">  HEAD is now at 1c83e2a test</span><br></pre>
+
+
 <p>（版本号不必补全，Git会自动去查找）</p>
 <p>以上就是git的本地基本操作，包括创建一个仓库，更改、暂存和提交，查看仓库的提交历史，版本回退。  </p>
 <h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><p>分支是把工作从主线上分离开来，以免影响开发主线。在不同的分支上你可以尝试各种各样的增删改，实现不同的设想。而git的分支模型是它最突出的特点，也是git脱颖而出的原因。</p>
@@ -376,60 +353,53 @@ test  </code></pre>
 <p>新提交一次后，新指针向前移动，master指针不变，这就产生了分支：<br>我们可以将两条分支合并，之后可以删掉新分支。<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212050.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212050.png" class="lozad post-image"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212110.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212110.png" class="lozad post-image">这样就完成了分支的合并。</p>
 <h2 id="二、分支使用"><a href="#二、分支使用" class="headerlink" title="二、分支使用"></a>二、分支使用</h2><p>1.git branch：查看当前所有分支      </p>
-<pre><code>$ git branch
-* master</code></pre>
+<pre class="highlight"><span class="line">$ git branch</span><br><span class="line"></span><br><span class="line">* master</span><br></pre>
+
+
 <p>（*标示当前分支，默认处于master分支）  </p>
 <p>2.git branch testing : 创建testing分支      </p>
-<pre><code>$ git branch testing</code></pre>
+<pre class="highlight"><span class="line">$ git branch testing</span><br></pre>
+
+
 <p>此时创建了testing分支，运行git branch命令验证       </p>
-<pre><code>$git branch    
-* master
-testing</code></pre>
+<pre class="highlight"><span class="line">$git branch    </span><br><span class="line"></span><br><span class="line">*master</span><br><span class="line">testing</span><br></pre>
+
 <p>3.git checkout testing： 切换到testing分支      </p>
-<pre><code>$ git checkout testing
-Switched to branch 'testing'</code></pre>
+<pre class="highlight"><span class="line">$ git checkout testing</span><br><span class="line">Switched to branch 'testing'</span><br></pre>
+
+
 <p>此时主分支位于testing，运行git branch命令验证   </p>
-<pre><code>$ git branch
-  master
-* testing</code></pre>
-<p>4.git merge testing：将master分支和testing分支合并<br>（假设处于master分支）  </p>
-<pre><code>$ git merge testing
-Already up-to-date.</code></pre>
+<pre class="highlight"><span class="line">$ git branch</span><br><span class="line">  master</span><br><span class="line"></span><br><span class="line">* testing</span><br></pre>
+
+<p>4.git merge testing：将master分支和testing分支合并<br>（假设处于master分支）      </p>
+<pre class="highlight"><span class="line">$ git merge testing</span><br><span class="line">Already up-to-date.</span><br></pre>
+
+
 <p>如果在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改，则会产生冲突从而无法合并，只能手动解决后再合并。    </p>
 <p>5.git branch -d删除分支  </p>
-<pre><code>$ git branch -d testing
-Deleted branch testing (was 1c83e2a).  </code></pre>
-<p>#使用GitHub<br>GitHub 是最大的 Git 版本库托管商，尽管这不是 Git 开源项目的直接部分，但如果想要专业地使用 Git，你将不可避免地与 GitHub 打交道。  </p>
+<pre class="highlight"><span class="line">$ git branch -d testing</span><br><span class="line">Deleted branch testing (was 1c83e2a).  </span><br></pre>
+
+<h1 id="使用GitHub"><a href="#使用GitHub" class="headerlink" title="使用GitHub"></a>使用GitHub</h1><p>GitHub 是最大的 Git 版本库托管商，尽管这不是 Git 开源项目的直接部分，但如果想要专业地使用 Git，你将不可避免地与 GitHub 打交道。  </p>
 <h3 id="创建帐户及配置"><a href="#创建帐户及配置" class="headerlink" title="创建帐户及配置"></a>创建帐户及配置</h3><p>1.访问<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com进行注册/">https://github.com进行注册</a>  </p>
 <p>2.SSH访问：    </p>
-<pre><code>$ cd ~/.ssh
-$ ls
- id_rsa        id_rsa.pub    known_hosts  </code></pre>
+<pre class="highlight"><span class="line">$ cd ~/.ssh</span><br><span class="line">$ ls</span><br><span class="line"> id_rsa		id_rsa.pub	known_hosts  </span><br></pre>
+
 <p> 寻找到id_rsa命名的文件，.pub文件是公钥，另一个是私钥。    </p>
 <p> 如果找不到，可以运行如下命令创建它们    </p>
-<pre><code> $ ssh-keygen  </code></pre>
+<pre class="highlight"><span class="line">$ ssh-keygen  </span><br></pre>
+
 <p> 进入github的帐户设置，点击左侧的SSH and GPG keys，将~/.ssh/id_rsa.pub公钥文件的内容粘贴到文本区，然后点击”Add key”    </p>
 <p> SSH访问配置成功     </p>
 <h3 id="创建、维护和管理你自己的项目。"><a href="#创建、维护和管理你自己的项目。" class="headerlink" title="创建、维护和管理你自己的项目。"></a>创建、维护和管理你自己的项目。</h3><p>1.点击页面右上角的＋号，点击New repository按钮<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212133.png" alt="创建git帐户及配置" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212133.png" class="lozad post-image"><br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212206.png" alt="创建git帐户及配置" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212206.png" class="lozad post-image">  </p>
 <p>Respository name是必填项目，而其余都是选填项，可以默认。<br>点击Create respository按钮  ，即创建了一个新的仓库<br>这时候可以将项目分享给其他人，通过HTTP和SSH的形式。<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212222.png" alt="创建git帐户及配置" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212222.png" class="lozad post-image"></p>
 <p> 2.对仓库进行操作，使本地和github同步  </p>
-<pre><code>     $ git remote add origin     **********（仓库地址）   
-    （添加远程仓库至本地）
+<pre class="highlight"><span class="line"> $ git remote add origin     **********（仓库地址）   </span><br><span class="line">（添加远程仓库至本地）</span><br><span class="line"></span><br><span class="line"> $ git pull --rebase origin master    </span><br><span class="line">（更新远程更新到本地）</span><br><span class="line"></span><br><span class="line"> $ git push -u origin master  </span><br><span class="line">（将本地仓库和远程仓库合并）</span><br></pre>
 
-     $ git pull --rebase origin master    
-    （更新远程更新到本地）
-
-     $ git push -u origin master  
-    （将本地仓库和远程仓库合并）</code></pre>
 <p> 在今后的项目工作中就是用以上命令同步本地和Github，需要记住。  </p>
 <p> 3.克隆仓库<br> 我们可以将远程仓库的内容克隆到本地</p>
-<pre><code> $ git clone git@github.com:Liuwt1997/github-photo.git
-Cloning into 'github-photo'...
-remote: Counting objects: 3, done.
-remote: Compressing objects: 100% (3/3), done.
-remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0
-Receiving objects: 100% (3/3), 196.28 KiB | 67.00 KiB/s, done.
-Checking connectivity... done.</code></pre>
+<pre class="highlight"><span class="line"> $ git clone git@github.com:Liuwt1997/github-photo.git</span><br><span class="line">Cloning into 'github-photo'...</span><br><span class="line">remote: Counting objects: 3, done.</span><br><span class="line">remote: Compressing objects: 100% (3/3), done.</span><br><span class="line">remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0</span><br><span class="line">Receiving objects: 100% (3/3), 196.28 KiB | 67.00 KiB/s, done.</span><br><span class="line">Checking connectivity... done.</span><br></pre>
+
+
 <p>   此时远程仓库的文件全部克隆至本地。</p>
 <p> 4.添加合作者<br>点击边栏的 “Settings” 链接，然后从左侧菜单中选择 “Collaborators” 。 然后，在输入框中填写用户名，点击 “Add collaborator.” 此时可以给予他们提交的权限。  </p>
 <p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212238.png" alt="添加合作者" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201128212238.png" class="lozad post-image">  </p>
@@ -565,7 +535,7 @@ Checking connectivity... done.</code></pre>
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%9C%AC%E5%9C%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">git本地操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">一、工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85git"><span class="toc-text">二、安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E4%BD%BF%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-text">三、git使用知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E6%94%AF%E6%A6%82%E5%BF%B5"><span class="toc-text">一、分支概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8"><span class="toc-text">二、分支使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%90%E6%88%B7%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-text">创建帐户及配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E3%80%81%E7%BB%B4%E6%8A%A4%E5%92%8C%E7%AE%A1%E7%90%86%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82"><span class="toc-text">创建、维护和管理你自己的项目。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%9C%AC%E5%9C%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">git本地操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">一、工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85git"><span class="toc-text">二、安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E4%BD%BF%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-text">三、git使用知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E6%94%AF%E6%A6%82%E5%BF%B5"><span class="toc-text">一、分支概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8"><span class="toc-text">二、分支使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8GitHub"><span class="toc-text">使用GitHub</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%90%E6%88%B7%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-text">创建帐户及配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E3%80%81%E7%BB%B4%E6%8A%A4%E5%92%8C%E7%AE%A1%E7%90%86%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82"><span class="toc-text">创建、维护和管理你自己的项目。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -598,7 +568,7 @@ Checking connectivity... done.</code></pre>
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%9C%AC%E5%9C%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">git本地操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">一、工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85git"><span class="toc-text">二、安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E4%BD%BF%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-text">三、git使用知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E6%94%AF%E6%A6%82%E5%BF%B5"><span class="toc-text">一、分支概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8"><span class="toc-text">二、分支使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%90%E6%88%B7%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-text">创建帐户及配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E3%80%81%E7%BB%B4%E6%8A%A4%E5%92%8C%E7%AE%A1%E7%90%86%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82"><span class="toc-text">创建、维护和管理你自己的项目。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%9C%AC%E5%9C%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">git本地操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">一、工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85git"><span class="toc-text">二、安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E4%BD%BF%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-text">三、git使用知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E6%94%AF%E6%A6%82%E5%BF%B5"><span class="toc-text">一、分支概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8"><span class="toc-text">二、分支使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8GitHub"><span class="toc-text">使用GitHub</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%90%E6%88%B7%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-text">创建帐户及配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E3%80%81%E7%BB%B4%E6%8A%A4%E5%92%8C%E7%AE%A1%E7%90%86%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82"><span class="toc-text">创建、维护和管理你自己的项目。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol></li></ol>
     </div>
   </article>
   
@@ -774,7 +744,7 @@ Checking connectivity... done.</code></pre>
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%9C%AC%E5%9C%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">git本地操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">一、工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85git"><span class="toc-text">二、安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E4%BD%BF%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-text">三、git使用知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E6%94%AF%E6%A6%82%E5%BF%B5"><span class="toc-text">一、分支概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8"><span class="toc-text">二、分支使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%90%E6%88%B7%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-text">创建帐户及配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E3%80%81%E7%BB%B4%E6%8A%A4%E5%92%8C%E7%AE%A1%E7%90%86%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82"><span class="toc-text">创建、维护和管理你自己的项目。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">版本控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#git%E6%9C%AC%E5%9C%B0%E6%93%8D%E4%BD%9C"><span class="toc-text">git本地操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">一、工作流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%89%E8%A3%85git"><span class="toc-text">二、安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81git%E4%BD%BF%E7%94%A8%E7%9F%A5%E8%AF%86"><span class="toc-text">三、git使用知识</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E6%94%AF%E6%A6%82%E5%BF%B5"><span class="toc-text">一、分支概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E4%BD%BF%E7%94%A8"><span class="toc-text">二、分支使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8GitHub"><span class="toc-text">使用GitHub</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%B8%90%E6%88%B7%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="toc-text">创建帐户及配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E3%80%81%E7%BB%B4%E6%8A%A4%E5%92%8C%E7%AE%A1%E7%90%86%E4%BD%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82"><span class="toc-text">创建、维护和管理你自己的项目。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%80%E6%9C%9F%E7%B2%BE%E5%BD%A9%E6%96%87%E7%AB%A0"><span class="toc-text">往期精彩文章</span></a></li></ol></li></ol></li></ol></li></ol>
   </article>
   
   

@@ -1,3 +1,5 @@
+https://tanqingbo.cn/Encryption-Algorithm/
+https://tanqingbo.cn/Git-Learning/
 https://tanqingbo.cn/Linux-ITK/
 https://tanqingbo.cn/linux-java-opencv/
 https://tanqingbo.cn/Linux-Compile-C/
@@ -6,5 +8,3 @@ https://tanqingbo.cn/Batch-Normalization/
 https://tanqingbo.cn/kmp-algorithms/
 https://tanqingbo.cn/C-Java-DevelopTools/
 https://tanqingbo.cn/CSBook004/
-https://tanqingbo.cn/C++-string-function/
-https://tanqingbo.cn/Dll/

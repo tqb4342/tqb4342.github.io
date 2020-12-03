@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Git-Learning/</loc>
+    <lastmod>2020-12-03</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Linux-ITK/</loc>
     <lastmod>2020-11-30</lastmod>
   </url>
@@ -38,10 +46,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Dll/</loc>
-    <lastmod>2020-11-29</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
     <lastmod>2020-11-29</lastmod>
   </url>
   <url>
@@ -90,10 +94,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Java-learning-route-map/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Git-Learning/</loc>
     <lastmod>2020-11-28</lastmod>
   </url>
   <url>
