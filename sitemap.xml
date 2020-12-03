@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/CSBook012/</loc>
+    
+    <lastmod>2020-12-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/CSBook001/</loc>
+    
+    <lastmod>2020-12-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/python%E7%88%AC%E8%99%AB%E6%95%99%E7%A8%8B/</loc>
     
     <lastmod>2020-12-03</lastmod>
@@ -212,13 +226,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/CSBook001/</loc>
-    
-    <lastmod>2020-11-29</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/Java-learning-route-map/</loc>
     
     <lastmod>2020-11-28</lastmod>
@@ -423,13 +430,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/Java-interview02/</loc>
-    
-    <lastmod>2020-11-26</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/CSBook012/</loc>
     
     <lastmod>2020-11-26</lastmod>
     

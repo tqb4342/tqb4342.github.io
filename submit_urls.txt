@@ -1,3 +1,5 @@
+https://tanqingbo.cn/CSBook012/
+https://tanqingbo.cn/CSBook001/
 https://tanqingbo.cn/python%E7%88%AC%E8%99%AB%E6%95%99%E7%A8%8B/
 https://tanqingbo.cn/Python-crawler/
 https://tanqingbo.cn/What-is-crawler/
@@ -6,5 +8,3 @@ https://tanqingbo.cn/Python-base/
 https://tanqingbo.cn/python-Blog/
 https://tanqingbo.cn/How2learn-Python%EF%BC%9F/
 https://tanqingbo.cn/Mysql-database/
-https://tanqingbo.cn/Encryption-Algorithm/
-https://tanqingbo.cn/Git-Learning/
