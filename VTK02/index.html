@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>VTK图像处理（二）--vtkPolyData数据处理&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="VTK图像处理（二）--vtkPolyData数据处理">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/VTK02/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201205162026.png">
+  
+  
+  <meta property="description" content="vtkPolyData数据是一种广泛使用的vtk数据结构，可以用来表示很多常用的数据结构，如点云数据、面片模型等。本文章先分析vtkPolyData数据的基本组成，创建方法和显示管线，结果介绍了一些基本操作，如距离、面积、包围盒、法向量以及符号化等。">
+  
+  <meta property="keywords" content="vtkPolyData,ITK,VTK">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-12-05">
+  <meta property="og:article:modified_time" content="2020-12-05">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="ITK">
+  
+  <meta property="og:article:tag" content="VTK">
+  
+  <meta property="og:article:tag" content="vtkPolyData">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/VTK02/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201205162026.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201205162026.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      VTK图像处理（二）--vtkPolyData数据处理
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-05T08:20:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-05</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/ITK与VTK/" class="post-meta-link">ITK与VTK</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/VTK02/" class="leancloud_visitors" data-flag-title="VTK图像处理（二）--vtkPolyData数据处理">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/ITK/" class="post-meta-link">ITK</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/VTK/" class="post-meta-link">VTK</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/vtkPolyData/" class="post-meta-link">vtkPolyData</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="vtkPolyData数据是一种广泛使用的vtk数据结构，可以用来表示很多常用的数据结构，如点云数据、面片模型等。本文章先分析vtkPolyData数据的基本组成，创建方法和显示管线，结果介绍了一些基本操作，如距离、面积、包围盒、法向量以及符号化等。">
+  
+  <meta name="keywords" content="vtkPolyData,ITK,VTK">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><p><code>vtkPolyData</code>数据是一种广泛使用的vtk数据结构，可以用来表示很多常用的数据结构，如点云数据、面片模型等。本文章先分析vtkPolyData数据的基本组成，创建方法和显示管线，结果介绍了一些基本操作，如距离、面积、包围盒、法向量以及符号化等。这些都是高级图像图像处理，此外还着中分析了图形平滑、封闭性检测、连通性分析、多分辨率处理、表面重建、点云配准、纹理映射等内容。掌握这些内容便可以解决许多实际性的工程问题。</p>
+</li>
+<li><p><strong>详细内容参见《VTK 图形图像开发进阶》第六章。该书得下载地址如下：</strong></p>
+<p>链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pan.baidu.com/s/1hG9js6eZkTqL6Fh-b_C-Dg">https://pan.baidu.com/s/1hG9js6eZkTqL6Fh-b_C-Dg</a><br>提取码：cod8 </p>
+<h2 id="vtkPolyData数据生成与显示"><a href="#vtkPolyData数据生成与显示" class="headerlink" title="vtkPolyData数据生成与显示"></a>vtkPolyData数据生成与显示</h2></li>
+<li><p>vtkPolyData数据由几何结构数据、拓扑结构数据和属性数据组成。几何结构数据主要是组成模型的点集，拓扑结构数据是点按一定关系组成的单元数据，属性数据与几何结构数据和拓扑结构数据想关联，可以标量、向量、张量，可以用来间接表示图像的颜色。</p>
+<ul>
+<li><code>GetNumberOfPoints()</code>和<code>GetNumberOfCells()</code>可以分别获取图形的点数和单元数目；</li>
+<li><code>vtkPolyData</code>数据显示时需要定义<code>vtkPolyDataMapper</code>对象，用来接受<code>vtkPolyData</code>数据以实现图形数据到渲染图元的转换。<h3 id="VTK常见的vtkPolyData数据源类"><a href="#VTK常见的vtkPolyData数据源类" class="headerlink" title="VTK常见的vtkPolyData数据源类"></a>VTK常见的vtkPolyData数据源类</h3><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201205161845.png" alt="VTK常见的vtkPolyData数据源类" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201205161845.png" class="lozad post-image"><h3 id="vtkPolyData数据的创建"><a href="#vtkPolyData数据的创建" class="headerlink" title="vtkPolyData数据的创建"></a>vtkPolyData数据的创建</h3></li>
+</ul>
+</li>
+<li><p>需要先定义一个点集和一个单元集合，单元的类型可以是点、三角形、矩形、多边形等基本图形。只有定义了单元数据才能显示该图形数据。</p>
+</li>
+<li><p>具体创建代码见6.1.2节。</p>
+<h3 id="vtkPolyData属性数据"><a href="#vtkPolyData属性数据" class="headerlink" title="vtkPolyData属性数据"></a>vtkPolyData属性数据</h3></li>
+<li><p>图形的颜色与<code>vtkPolyData</code>属性数据息息相关，可为点数据和单元数据分别指定属性数据。</p>
+</li>
+<li><p>点和单元属性数据分别存储咋<code>vtkPointData</code>和<code>vtkCellData</code>中，可以通过调用<code>GetCellData()</code>函数获取一个<code>vtkCellData</code>类型单元数据指针，在通过<code>SetScalars()</code>函数设置颜色数据。</p>
+</li>
+<li><p>由于可以同时设置点和单元设置属性，那么怎么用点和单元来控制颜色呢？这就需要使用<code>vtkPolyDataMapper</code>类的方法。</p>
+<ul>
+<li>**SetScalarModeToDefault()**，默认设置，该设置下首先使用点的标量数据控制颜色，若点标量数据不可用时，则使用单元数据。</li>
+<li><strong>SetScalarModeToUsePointData()</strong>,使用点的标量数据控制颜色，若点标量数据不可用也不会使用其他数据。</li>
+<li><strong>SetScalarModeToUseCellData()</strong>,使用单元的标量数据控制颜色，若单元标量数据不可用也不会使用其他数据。</li>
+<li>**SetScalarModeToUsePointFieldData()/SetScalarModeToUseCellFieldData()**，点数据和标量数据都不会用来着色，而是使用属性数据中场数据数组。可以通过名字来指定进行颜色渲染的数据。</li>
+</ul>
+</li>
+<li><p>在某些情况下，需要对点属性数据和单元属性数据进行转换，这需要用到两个类<code>vtkCellDataToPointData</code>和<code>vtkPointDataToCellData</code>。<strong>转换原理是</strong>：当由带属性向单元属性转换时，每个单元属性数据为组成该单元的点对应的属性的平均值；当单元属性数据向点属性数据转换时，点属性为使用该点的单元的属性平均值。</p>
+</li>
+</ul>
+<h2 id="基本图形操作"><a href="#基本图形操作" class="headerlink" title="基本图形操作"></a>基本图形操作</h2><ul>
+<li><p>VTK提供了多种基本图形操作：</p>
+<ul>
+<li><strong>vtkLine</strong>提供了点与线、线与线间的距离计算；</li>
+<li><strong>vtkTriangle</strong>提供了面积、外接圆、法向量的计算，点与三角形位置关系的判断；</li>
+<li><strong>vtkPolygen</strong>提供了法向量、重心、面积的计算、点与多边形位置的判断、点与多边形、多边形与多边形相交判断；</li>
+<li><strong>vtkTetra</strong>实现了四面体体积计算、重心计算；</li>
+<li><strong>vtkMassProperties</strong>实现三角网格的表面积和体积计算，但要求网格必须时封闭的三角网格；</li>
+<li><strong>vtkTriangleFilter</strong>可以实现多边形网格向三角网格转换。</li>
+</ul>
+</li>
+<li><p><strong>测地距离：</strong>三维模型上两个点的测地距离是指沿着模型表面两者之间的最短距离，通常采用<code>Dijkstra</code>算法近似求解，VTK中的<strong>vtkDijkstraGraphGeodesicPath</strong>类可实现测地距离求解。通过**GetGeodesicLenght()**函数可以获取当前计算的两点测地距离的数值。</p>
+</li>
+<li><p><strong>包围盒</strong>是指能够包围模型的最小立方体，常用于模型的碰撞检测中。<strong>vtkOutlineFilter</strong>提供一个方便的方法来生成包围盒。</p>
+</li>
+</ul>
+<h3 id="法向量计算"><a href="#法向量计算" class="headerlink" title="法向量计算"></a>法向量计算</h3><ul>
+<li>三维平面的法向量是指垂直该平面的向量。某点的法向量为垂直该点切平面的法向量。</li>
+<li>在计算网格法向量时，单元法向量可以通过组成每个单元的任意两条边的叉乘向量归并化来表示；二点的法向量则是由使用该点的单元单元法向量的平均值表示。</li>
+<li><strong>VTK中计算法向量的类为vtkPolyDataNormals</strong>,可以通过<code>SetComputeCellNormals()</code>和<code>SetComputePointNormals()</code>来设置需要计算的法向量类型，默认计算点法向量。</li>
+<li>计算单元法向量时，要保持单元法向量一致才能得到合理的法向量。<code>SetConsistency()</code>可以自动调整单元点的顺序；<code>SetAutoOrientNormals()</code>可以自动调整法向量方向。</li>
+<li>类<code>vtkPolyDataNormals</code>自动开启对锐边缘处理，如果检测到锐边缘，会将其分裂，使图形更加平滑，可通过<code>SetSplitting()</code>函数关闭该功能。<h3 id="符号化Glyphing"><a href="#符号化Glyphing" class="headerlink" title="符号化Glyphing"></a>符号化Glyphing</h3></li>
+<li>通过符号化（Glyphing）技术将法向量图形化显示。VTK中使用<code>vtkGlyph3D</code>类实现该功能，并支持图形缩放、着色、设置空间姿态等，需要接受两个输入：几何数据点集合、<code>Glyph</code>图形数据（vtkPolyData数据）。几何数据点集合来自求完法向量的图像，<code>Glyph</code>图形数据用于在点集合处显示法向量。<h3 id="曲率计算"><a href="#曲率计算" class="headerlink" title="曲率计算"></a>曲率计算</h3></li>
+<li>曲率时曲面弯曲程度的一种度量，是几何体的一种重要局部特征。计算曲面M点曲率，考虑经过M的法线的一个平面与曲面相交，可得到一条二维曲线，经过M的法线的平面可以有很多，与曲面相交时可得到多条曲线，取曲率最大和最小的曲线，若其对应曲率为k1和k2，称为主曲率，而该点的<strong>高斯曲率</strong>为k1*k2,<strong>平均曲率</strong>为：(k1+k2)/2。</li>
+<li>VTK中<code>vtkCurvatures</code>类实现了4种网格模型曲率计算方法：<ul>
+<li>SetCurvatureTypeToMaximum()：计算最大主曲率；</li>
+<li>SetCurvatureTypeToMinimum()：计算最小主曲率；</li>
+<li>SetCurvatureTypeToGaussian()：计算高斯曲率；</li>
+<li>SetCurvatureTypeToMean()：计算平均曲率。</li>
+</ul>
+</li>
+</ul>
+<h2 id="网格平滑"><a href="#网格平滑" class="headerlink" title="网格平滑"></a>网格平滑</h2><ul>
+<li>拉普拉斯平滑是一种网格平滑算法，将每个点用其邻域点的中心来代替，通过不断迭代，得到较为光滑的网格。</li>
+<li><strong>vtkSmoothPolyDataFilter类</strong>，实现了拉普拉斯平滑算法，用<code>SetNumberOfIterations()</code>控制平滑次数，次数越大，平滑越厉害。<ul>
+<li><code>BoundarySmoothing</code>控制是否对边界点平滑；</li>
+<li><code>FeatureEdgeSmoothing</code>控制是否对特征边上的点平滑，通过调用SetFeatureAngle()函数设置特征角阈值。</li>
+</ul>
+</li>
+<li><code>vtkSmoothPolyDataFilter</code>类通过拉普拉斯不断迭代，模型会不断向网格中心收缩。</li>
+<li><strong>vtkWindowedSincPolyDataFilter类</strong>，使用窗口函数Sinc实现网格平滑，能够最下程度避免收缩，使用方法与<code>vtkSmoothPolyDataFilter</code>类相同。</li>
+</ul>
+<h2 id="封闭性检测与填补漏洞"><a href="#封闭性检测与填补漏洞" class="headerlink" title="封闭性检测与填补漏洞"></a>封闭性检测与填补漏洞</h2><ul>
+<li><p>如果一条边只被一个多边形包含，那这条边就是边界边，<strong>是否存在边界边是检测网格模型是否封闭的重要特征。</strong></p>
+</li>
+<li><p><code>vtkFeatureEdges</code>类能够提取多边形网格模型中4种类型的边：</p>
+<ul>
+<li>边界边；</li>
+<li>非流形边；</li>
+<li>特征边；</li>
+<li>流形边；</li>
+</ul>
+</li>
+<li><p><strong>可以通过判断边界边的数目来网格是否封闭。</strong></p>
+</li>
+<li><p><strong>检测出网格是否封闭之后可以通过类<code>vtkFillHoleFilter</code>将漏洞填补起来。</strong></p>
+</li>
+</ul>
+<h2 id="连通区域分析"><a href="#连通区域分析" class="headerlink" title="连通区域分析"></a>连通区域分析</h2><ul>
+<li><code>vtkAppendPolyData</code>类可以实现<code>vtkPolyData</code>的合并，<strong>使用该类可以方便地构造含有多个连通区域的数据。</strong></li>
+<li><strong>vtkPolyDataConnectivityFilter类用于实现连通区域分析</strong>：<ul>
+<li>SetExtractionModeToLargestRegion()：用于提取具有最多点的连通区域；</li>
+<li><strong>SetExtractionModeToAllRegion()</strong>:用于连通区域标记，配合函数ColorRegionsOn()一起使用；</li>
+<li><strong>SetExtractionModeToSpecifiedRegion()</strong>:用于提取一个或多个连通区域，需要通过AddSpecifiedRegion()来添加需要提取的边界号；</li>
+</ul>
+</li>
+</ul>
+<h2 id="多分辨率处理"><a href="#多分辨率处理" class="headerlink" title="多分辨率处理"></a>多分辨率处理</h2><h3 id="网格抽取"><a href="#网格抽取" class="headerlink" title="网格抽取"></a>网格抽取</h3><ul>
+<li><strong>抽取的作用</strong>是减少模型数据中的点数据和单元数据，便于后续处理和交互渲染。</li>
+<li>VTK中有3种网格抽取类：<ul>
+<li><strong>vtkDecimatePro：</strong>用一种塌陷的方法删除点和单元，处理速度快、可以方便的控制网格抽取幅度，得到不同级别的模型数据；</li>
+<li><strong>vtkQuadricDecimation</strong>:最终简化率并非严格等于程序中设置的简化率；</li>
+<li><strong>vtkQuadricClustering</strong>:3种模型中抽取速度最快的一种，能够处理大数据模型；</li>
+</ul>
+</li>
+</ul>
+<h3 id="网格细化"><a href="#网格细化" class="headerlink" title="网格细化"></a>网格细化</h3><ul>
+<li><p><strong>网格细化</strong>是利用一定的细化规则，在给定的初始网格中插入新的点，从而不断细化处新的网格单元，在极限细化情况下，该网格能够收敛于一个光滑的平面。</p>
+</li>
+<li><p>VTK中有3种网格细化类,如下，它们都继承自类<code>vtkInterpolatingSubdivisionFilter</code>,它内部提供了<code>SetnumberOfSubdivisions()</code>函数来设置细化次数，其中每次细化后模型的三角面片的个数将是细化前的4倍。</p>
+<ul>
+<li><strong>vtkLinearSubdivisionFilter</strong>：实现了一种线性细分算法；</li>
+<li><strong>vtkLoopSubdivisionFilter</strong>：实现了Loop细分算法，能够生成光滑连续曲面；</li>
+<li><strong>vtkButterSubdivisionFilter</strong>：实现了蝶形细分算法；</li>
+</ul>
+</li>
+<li><p><code>vtkLoopSubdivisionFilter</code>与<code>vtkButterSubdivisionFilter</code>结果优于<code>vtkLinearSubdivisionFilter</code>。</p>
+</li>
+</ul>
+<h2 id="表面重建"><a href="#表面重建" class="headerlink" title="表面重建"></a>表面重建</h2><ul>
+<li>利用表面重建技术将点云数据重建为面模型。<h3 id="三角剖分"><a href="#三角剖分" class="headerlink" title="三角剖分"></a>三角剖分</h3></li>
+<li>三角剖分将一些散乱的点云数据剖分为一系列三角网格，<strong>最常用的三角剖分技术是Delaunay三角剖分，主要用于二维三角剖分，三维数据通常使用点云重建。</strong></li>
+<li><code>vtkDelaunay2D</code>类实现了2维三角剖分。</li>
+<li><code>vtkDelaunay3D</code>类实现了3维三角剖分。得到的结果并非三角网格，而是四面体网格，因此，其输出数据类型为vtkUnstructuredGrid.</li>
+</ul>
+<h3 id="等值面提取"><a href="#等值面提取" class="headerlink" title="等值面提取"></a>等值面提取</h3><ul>
+<li><p>类似与面绘制，通过等值面提取提取技术，仅提取感兴趣的一个或者几个组织轮廓，并生成网格模型以供后续处理和显示。</p>
+</li>
+<li><p>等值面提取算法多基于<code>Marching Cubes</code>算法实现：</p>
+<ul>
+<li><strong>vtkImageMarchingCubes</strong>主要处理三维图像数据；</li>
+<li><strong>vtkMarchingCubes</strong>主要针对规则体数据生成等值面；</li>
+<li><strong>vtkMarchingSquares</strong>针对二维规则网格数据生成等值线。</li>
+</ul>
+</li>
+<li><p>通常需要搭配图形平滑、抽取等操作来对等值面数据进行后处理。</p>
+</li>
+</ul>
+<h3 id="点云重建"><a href="#点云重建" class="headerlink" title="点云重建"></a>点云重建</h3><ul>
+<li><strong>vtkSurfaceReconstructionFilter</strong>实现了一种隐式曲面重建方法，该方法需要对点云数据进行网格划分，然后估算每个点的切平面方向，并以每个点与最近的切平面距离来近似表面距离。用<code>vtkContourFilter</code>来提取面距离来近似表面距离。</li>
+</ul>
+<h2 id="点云配准"><a href="#点云配准" class="headerlink" title="点云配准"></a>点云配准</h2><ul>
+<li><p><strong>点云配准</strong>即是对一组原点云数据应用一个空间变换，使得变换后的数据与目标点云数据能够一一映射，使两组数据之间的平均距离误差最小。</p>
+</li>
+<li><p><strong>vtkLandmarkTransform类实现了标记点配准算法</strong>，使得两个点集在配准后平均距离误差最小。通过<code>SetSourceLandmarks()</code>和<code>SetTargetLandmarks()</code>函数分别设置源标记点集和目标标记点集。</p>
+<ul>
+<li><code>SetModeToRigidBody()</code>：函数用于设置其配准变换的类型为刚体变换；</li>
+<li><code>SetModeToAffine()</code>：设置其配准变换的类型为放射变换；</li>
+<li><code>SetModeToSimilarity()</code>：设置相似变换，即平移、旋转和放缩变换。</li>
+</ul>
+</li>
+<li><p><code>vtkVertexGlyphFilter</code>类显示点集；</p>
+</li>
+<li><p><code>vtkTransformPolyDataFilter</code>用来对面源标记点进行变换来显示配准后的点集。</p>
+</li>
+<li><p><strong>点云数据配准最经典的方法是迭代最近点算法（ICP）</strong>：每次迭代中对于源数据点P找到目标点集Q中的最近点，然后基于最小二乘原理求解当前的变换T。通过不断迭代直至收敛，即完成了点集的配准。</p>
+<ul>
+<li><code>vtkIterativeClosesPointTransform</code>类中内部定义了一个<code>vtkLandmarkTransform</code>指针，用于就算ICP迭代中最佳匹配点集，可以通过<code>GetLandmarkTransform()</code>函数获取，并通过<code>vtkLandmarkTransform</code>指针设置相应的变换类型。<code>SetMaximumNumberOfIterations()</code>函数用于设置ICP算法迭代次数，<code>StartByMatchingCentroidsOn()</code>函数则用于设置配准之前先计算两个点集重心，并平移源点集使得两者重心重合。配置完毕可以通过<code>GetMatrix()</code>函数来获取相应的变换矩阵。</li>
+</ul>
+</li>
+</ul>
+<h2 id="纹理映射"><a href="#纹理映射" class="headerlink" title="纹理映射"></a>纹理映射</h2><ul>
+<li>纹理映射是将纹理空间中的纹理像素映射到屏幕空间中的过程。主要是建立纹理空间与模型空间、模型空间与屏幕空间之间的映射关系。</li>
+<li>VTK中定义了许多个类实现纹理空间到模型空间的映射：<ul>
+<li><strong>vtkTextureMapToPlane</strong>：通过一个平面建立纹理空间到模型空间的映射关系；</li>
+<li><strong>vtkTextureMapToCylinder</strong>：通过圆柱面建立映射关系；</li>
+<li><strong>vtkTextureMapToSphere</strong>：通过球面建立映射关系；</li>
+<li><strong>vtkTexture</strong>：实现加载纹理；</li>
+<li><strong>vtkTransformTextureCoords</strong>：实现纹理坐标的平移和缩放；</li>
+</ul>
+</li>
+</ul>
+<h4 id="推荐阅读："><a href="#推荐阅读：" class="headerlink" title="推荐阅读："></a>推荐阅读：</h4><ul>
+<li><a href="https://tanqingbo.cn/VTK01/">VTK图像处理（一）–基本函数介绍以及对应功能</a></li>
+<li><a href="https://tanqingbo.cn/VTK02/">VTK图像处理（二）–vtkPolyData数据处理</a></li>
+<li><a href="https://tanqingbo.cn/VTK03/">VTK图像处理（三） | 体绘制 </a></li>
+</ul>
+		
+  </div>	
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	<!--
+    <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+	
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>	
+	</div>	
+	-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/VTK02/">https://tanqingbo.cn/VTK02/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/VTK03/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">VTK图像处理（三） | 体绘制 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/VTK01/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">VTK图像处理（一）--基本函数介绍以及对应功能 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vtkPolyData%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E4%B8%8E%E6%98%BE%E7%A4%BA"><span class="toc-text">vtkPolyData数据生成与显示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VTK%E5%B8%B8%E8%A7%81%E7%9A%84vtkPolyData%E6%95%B0%E6%8D%AE%E6%BA%90%E7%B1%BB"><span class="toc-text">VTK常见的vtkPolyData数据源类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vtkPolyData%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">vtkPolyData数据的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vtkPolyData%E5%B1%9E%E6%80%A7%E6%95%B0%E6%8D%AE"><span class="toc-text">vtkPolyData属性数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E6%93%8D%E4%BD%9C"><span class="toc-text">基本图形操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%90%91%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="toc-text">法向量计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96Glyphing"><span class="toc-text">符号化Glyphing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B2%E7%8E%87%E8%AE%A1%E7%AE%97"><span class="toc-text">曲率计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E5%B9%B3%E6%BB%91"><span class="toc-text">网格平滑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%81%E9%97%AD%E6%80%A7%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%A1%AB%E8%A1%A5%E6%BC%8F%E6%B4%9E"><span class="toc-text">封闭性检测与填补漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E9%80%9A%E5%8C%BA%E5%9F%9F%E5%88%86%E6%9E%90"><span class="toc-text">连通区域分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%88%86%E8%BE%A8%E7%8E%87%E5%A4%84%E7%90%86"><span class="toc-text">多分辨率处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%8A%BD%E5%8F%96"><span class="toc-text">网格抽取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E7%BB%86%E5%8C%96"><span class="toc-text">网格细化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E9%9D%A2%E9%87%8D%E5%BB%BA"><span class="toc-text">表面重建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E5%89%96%E5%88%86"><span class="toc-text">三角剖分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%80%BC%E9%9D%A2%E6%8F%90%E5%8F%96"><span class="toc-text">等值面提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E4%BA%91%E9%87%8D%E5%BB%BA"><span class="toc-text">点云重建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86"><span class="toc-text">点云配准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84"><span class="toc-text">纹理映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%EF%BC%9A"><span class="toc-text">推荐阅读：</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>79</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>69</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vtkPolyData%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E4%B8%8E%E6%98%BE%E7%A4%BA"><span class="toc-text">vtkPolyData数据生成与显示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VTK%E5%B8%B8%E8%A7%81%E7%9A%84vtkPolyData%E6%95%B0%E6%8D%AE%E6%BA%90%E7%B1%BB"><span class="toc-text">VTK常见的vtkPolyData数据源类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vtkPolyData%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">vtkPolyData数据的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vtkPolyData%E5%B1%9E%E6%80%A7%E6%95%B0%E6%8D%AE"><span class="toc-text">vtkPolyData属性数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E6%93%8D%E4%BD%9C"><span class="toc-text">基本图形操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%90%91%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="toc-text">法向量计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96Glyphing"><span class="toc-text">符号化Glyphing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B2%E7%8E%87%E8%AE%A1%E7%AE%97"><span class="toc-text">曲率计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E5%B9%B3%E6%BB%91"><span class="toc-text">网格平滑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%81%E9%97%AD%E6%80%A7%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%A1%AB%E8%A1%A5%E6%BC%8F%E6%B4%9E"><span class="toc-text">封闭性检测与填补漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E9%80%9A%E5%8C%BA%E5%9F%9F%E5%88%86%E6%9E%90"><span class="toc-text">连通区域分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%88%86%E8%BE%A8%E7%8E%87%E5%A4%84%E7%90%86"><span class="toc-text">多分辨率处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%8A%BD%E5%8F%96"><span class="toc-text">网格抽取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E7%BB%86%E5%8C%96"><span class="toc-text">网格细化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E9%9D%A2%E9%87%8D%E5%BB%BA"><span class="toc-text">表面重建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E5%89%96%E5%88%86"><span class="toc-text">三角剖分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%80%BC%E9%9D%A2%E6%8F%90%E5%8F%96"><span class="toc-text">等值面提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E4%BA%91%E9%87%8D%E5%BB%BA"><span class="toc-text">点云重建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86"><span class="toc-text">点云配准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84"><span class="toc-text">纹理映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%EF%BC%9A"><span class="toc-text">推荐阅读：</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Git">
+        <div class="categories-list-item">
+          Git
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">18</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据库">
+        <div class="categories-list-item">
+          数据库
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\爬虫" title="爬虫"><div class="tags-list-item">爬虫</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+<!--
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+-->
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vtkPolyData%E6%95%B0%E6%8D%AE%E7%94%9F%E6%88%90%E4%B8%8E%E6%98%BE%E7%A4%BA"><span class="toc-text">vtkPolyData数据生成与显示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VTK%E5%B8%B8%E8%A7%81%E7%9A%84vtkPolyData%E6%95%B0%E6%8D%AE%E6%BA%90%E7%B1%BB"><span class="toc-text">VTK常见的vtkPolyData数据源类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vtkPolyData%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">vtkPolyData数据的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vtkPolyData%E5%B1%9E%E6%80%A7%E6%95%B0%E6%8D%AE"><span class="toc-text">vtkPolyData属性数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E6%93%8D%E4%BD%9C"><span class="toc-text">基本图形操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%90%91%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="toc-text">法向量计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96Glyphing"><span class="toc-text">符号化Glyphing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B2%E7%8E%87%E8%AE%A1%E7%AE%97"><span class="toc-text">曲率计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E5%B9%B3%E6%BB%91"><span class="toc-text">网格平滑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%81%E9%97%AD%E6%80%A7%E6%A3%80%E6%B5%8B%E4%B8%8E%E5%A1%AB%E8%A1%A5%E6%BC%8F%E6%B4%9E"><span class="toc-text">封闭性检测与填补漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E9%80%9A%E5%8C%BA%E5%9F%9F%E5%88%86%E6%9E%90"><span class="toc-text">连通区域分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%88%86%E8%BE%A8%E7%8E%87%E5%A4%84%E7%90%86"><span class="toc-text">多分辨率处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E6%8A%BD%E5%8F%96"><span class="toc-text">网格抽取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E6%A0%BC%E7%BB%86%E5%8C%96"><span class="toc-text">网格细化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A8%E9%9D%A2%E9%87%8D%E5%BB%BA"><span class="toc-text">表面重建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E5%89%96%E5%88%86"><span class="toc-text">三角剖分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%89%E5%80%BC%E9%9D%A2%E6%8F%90%E5%8F%96"><span class="toc-text">等值面提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%B9%E4%BA%91%E9%87%8D%E5%BB%BA"><span class="toc-text">点云重建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%B9%E4%BA%91%E9%85%8D%E5%87%86"><span class="toc-text">点云配准</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84"><span class="toc-text">纹理映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%EF%BC%9A"><span class="toc-text">推荐阅读：</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-05</div>
+        <a href="/VTK03/"><div class="recent-posts-item-content">VTK图像处理（三） | 体绘制</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-05</div>
+        <a href="/VTK02/"><div class="recent-posts-item-content">VTK图像处理（二）--vtkPolyData数据处理</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-05</div>
+        <a href="/VTK01/"><div class="recent-posts-item-content">VTK图像处理（一）--基本函数介绍以及对应功能</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-05</div>
+        <a href="/VTKRead-write/"><div class="recent-posts-item-content">VTK数据读写</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/links/" target="_blank">友情链接</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
