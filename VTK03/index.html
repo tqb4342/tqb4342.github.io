@@ -401,9 +401,9 @@ var _hmt = _hmt || [];
 </li>
 <li><p><code>vtkVolumeMapper</code>中定义了<strong>Cropping</strong>方法的接口函数：</p>
 <ul>
-<li>**SetCropping(1)**：打开Cropping方法；</li>
-<li>**SetCroppingRegionPlanes()**：设置三个坐标轴6个裁剪面的位置；</li>
-<li>**SetCroppingRegionFlags()**：设置显示区域标记。</li>
+<li>SetCropping()：打开Cropping方法；</li>
+<li>SetCroppingRegionPlanes()：设置三个坐标轴6个裁剪面的位置；</li>
+<li>SetCroppingRegionFlags()：设置显示区域标记。</li>
 <li>还提供了几个常用的显示区域设置函数，<strong>见《VTK图形图像开发进阶》7.2.5节</strong>。</li>
 </ul>
 </li>
@@ -418,7 +418,7 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="不透明传输函数"><a href="#不透明传输函数" class="headerlink" title="不透明传输函数"></a>不透明传输函数</h3><ul>
 <li><p>不透明传输函数是一个分段线性标量映射函数，利用该函数可将光线投射过程中的采样点灰度值映射为不同的不透明度值，以决定最终的颜色值。</p>
-<pre><code>          SetScalarOpacity(vtkPiecewiseFunction*);</code></pre>
+<pre><code>          <pre class="highlight"><span class="line">SetScalarOpacity(vtkPiecewiseFunction*);</span><br></pre></code></pre>
 </li>
 <li><p>vtkPiecewiseFunction类定义线性分段函数：</p>
 <ul>
@@ -432,25 +432,22 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="梯度不透明函数"><a href="#梯度不透明函数" class="headerlink" title="梯度不透明函数"></a>梯度不透明函数</h3><ul>
 <li><p>该函数将梯度模值映射为一个不透明度乘子，从而增强过度区域显示效果，同样是使用<code>vtkPiecewiseFunction</code>类实现。</p>
-<pre><code>      SetGradientOpacity(vtkPiecewiseFunction*);</code></pre>
+<pre><code>      <pre class="highlight"><span class="line">SetGradientOpacity(vtkPiecewiseFunction*);</span><br></pre></code></pre>
 </li>
 <li><p>函数设置类似于不透明传输函数的设置，不过意义不同，详情参见<strong>见《VTK图形图像开发进阶》7.3.2节</strong></p>
 </li>
 </ul>
 <h3 id="颜色传输函数"><a href="#颜色传输函数" class="headerlink" title="颜色传输函数"></a>颜色传输函数</h3><ul>
-<li><p>颜色传输函数与不透明传输函数类似，不同之处是颜色传输函数是将一个标量值映射为一个颜色值，VTK中用<code>vtkColorTransferFunction</code>类实现，其函数为：</p>
-<pre><code>      AddRGBPoint(double x,double r,double g,double b);
-      AddHSVPoint(double x,double h,double s,double v);</code></pre>
+<li><p>颜色传输函数与不透明传输函数类似，不同之处是颜色传输函数是将一个标量值映射为一个颜色值，VTK中用<code>vtkColorTransferFunction</code>类实现，其函数为：        </p>
+<pre><code>      <pre class="highlight"><span class="line">AddRGBPoint(double x,double r,double g,double b);</span><br><span class="line">AddHSVPoint(double x,double h,double s,double v);</span><br></pre></code></pre>
 </li>
 <li><p>其中x代表灰度值，r,g,b和h,s,v代表颜色分量。<code>vtkVolumeProperty</code>中设置颜色传输函数的函数原型如下：</p>
-<pre><code>      SetColor(vtkColorTransferFunction*);</code></pre>
+<pre><code>      <pre class="highlight"><span class="line">SetColor(vtkColorTransferFunction*);</span><br></pre></code></pre>
 </li>
 </ul>
 <h3 id="光照与阴影"><a href="#光照与阴影" class="headerlink" title="光照与阴影"></a>光照与阴影</h3><ul>
 <li><p>通过<code>vtkVolumeProperty</code>可以设置体绘制的阴影效果，阴影效果主要受环境光系数、散射光系数、反射光系数和高光强度4个参数影响。</p>
-<pre><code>      SetDiffuse()  //设置散射光系数
-      SetAmbient()  //设置环境光系数
-      SetSpecular() //设置反射光系数</code></pre>
+  <pre class="highlight"><span class="line">SetDiffuse()  //设置散射光系数</span><br><span class="line">SetAmbient()  //设置环境光系数</span><br><span class="line">SetSpecular() //设置反射光系数</span><br></pre>
 </li>
 <li><p>一般情况下，着三个系数之和为1.</p>
 </li>
@@ -473,7 +470,7 @@ var _hmt = _hmt || [];
 </li>
 <li>对比4种类的渲染效果，其中<code>ZSweep</code>方法渲染速度最慢，而投影四面体方法较其他两种方法快，但<code>ZSweep</code>方法渲染结果最精确。</li>
 </ul>
-<p><strong>详细内容参见《VTK 图形图像开发进阶》。该书得下载地址如下：</strong></p>
+<p><strong>更多内容参见《VTK 图形图像开发进阶》。该书得下载地址如下：</strong></p>
 <p>链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pan.baidu.com/s/1hG9js6eZkTqL6Fh-b_C-Dg">https://pan.baidu.com/s/1hG9js6eZkTqL6Fh-b_C-Dg</a><br>提取码：cod8 </p>
 <h4 id="推荐阅读："><a href="#推荐阅读：" class="headerlink" title="推荐阅读："></a>推荐阅读：</h4><ul>
 <li><a href="https://tanqingbo.cn/VTK01/">VTK图像处理（一）–基本函数介绍以及对应功能</a></li>
@@ -520,11 +517,11 @@ var _hmt = _hmt || [];
   
   
   <div class="nav-item-next">
-    <a href="/VTK02/" class="nav-link">
+    <a href="/VTK01/" class="nav-link">
       <div>
         <div class="nav-label">下一篇</div>
         
-        <div class="nav-title">VTK图像处理（二）--vtkPolyData数据处理 </div>
+        <div class="nav-title">VTK图像处理（一）--基本函数介绍以及对应功能 </div>
         
       </div>
       <i class="iconfont icon-right nav-next-icon"></i>
@@ -581,7 +578,7 @@ var _hmt = _hmt || [];
 <p class="author-description">一个专注于程序员成长的网站</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>79</span>
+    <span>78</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -589,7 +586,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>69</span>
+    <span>68</span>
     <span>标签</span>
   </a>
 </div>
@@ -661,17 +658,24 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">6</span>
+        </div>
+      </a>
+    
       <a href="/categories/Java">
         <div class="categories-list-item">
           Java
           <span class="categories-list-item-badge">18</span>
-        </div>
-      </a>
-    
-      <a href="/categories/SEO教程">
-        <div class="categories-list-item">
-          SEO教程
-          <span class="categories-list-item-badge">2</span>
         </div>
       </a>
     
@@ -682,13 +686,6 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/Python">
-        <div class="categories-list-item">
-          Python
-          <span class="categories-list-item-badge">7</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据库">
         <div class="categories-list-item">
           数据库
@@ -696,10 +693,10 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/ITK与VTK">
+      <a href="/categories/SEO教程">
         <div class="categories-list-item">
-          ITK与VTK
-          <span class="categories-list-item-badge">7</span>
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
         </div>
       </a>
     
@@ -712,37 +709,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
-    
-    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
-    
-    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
-    
-    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
-    
     <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
-    
-    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
-    
-    <a href="\tags\爬虫" title="爬虫"><div class="tags-list-item">爬虫</div></a>
-    
-    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
-    
-    <a href="\tags\排序" title="排序"><div class="tags-list-item">排序</div></a>
-    
-    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
     
     <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
     
     <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    
+    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    
+    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    
+    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
     
   </div>
 </div>
@@ -815,17 +812,17 @@ var _hmt = _hmt || [];
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-12-05</div>
-        <a href="/VTK02/"><div class="recent-posts-item-content">VTK图像处理（二）--vtkPolyData数据处理</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2020-12-05</div>
         <a href="/VTK01/"><div class="recent-posts-item-content">VTK图像处理（一）--基本函数介绍以及对应功能</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2020-12-05</div>
         <a href="/VTKRead-write/"><div class="recent-posts-item-content">VTK数据读写</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-05</div>
+        <a href="/window-run-VTK/"><div class="recent-posts-item-content">window下运行VTK程序</div></a>
       </div>
     
   </div>
