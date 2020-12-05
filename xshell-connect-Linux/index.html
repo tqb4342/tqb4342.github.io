@@ -328,11 +328,9 @@ var _hmt = _hmt || [];
 <li><p>安装完xshell后要先在连接的Ubuntu主机下开启SSH服务，因为xshell是用ssh服务连接Ubuntu的，当然也可以配置免密码登陆Ubuntu，但那个稍微要复杂一点，我们只介绍用账号密码登陆。</p>
 </li>
 <li><p>一般需要先安装<code>openssh-server</code>，才能开启<code>ssh</code>服务，在Ubuntu机器上运行：</p>
-<pre><code>  <pre class="highlight"><span class="line">sudo apt-get install openssh-server</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">sudo apt-get install openssh-server</span><br></pre></li>
 <li><p>然后开启ssh服务：</p>
- <pre class="highlight"><span class="line">ps -e | grep ssh</span><br></pre>
-</li>
+ <pre class="highlight"><span class="line">ps -e | grep ssh</span><br></pre></li>
 <li><p>一般建议服务器24小时开机，这样就不用每次都要启动<code>ssh</code>了.</p>
 </li>
 </ul>
@@ -354,16 +352,14 @@ var _hmt = _hmt || [];
 <li><p>文件传输得方法有很多，我之前用过<code>filezilla</code>传文件，后来我发现一种更简单的传文件方法。可以用上传下载工具包rz及sz上传和下载文件。</p>
 </li>
 <li><p>先安装工具包，在xshell命令框种输入：</p>
-<pre><code>  <pre class="highlight"><span class="line">sudo apt-get install lrzsz</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">sudo apt-get install lrzsz</span><br></pre></li>
 <li><p>安装完之后，从Windows上传文件，命令为<code>rz</code>,如图：</p>
 </li>
 </ul>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/rfiTf5X.png" class="lozad post-image"src="https://i.imgur.com/rfiTf5X.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/aptlMpc.png" class="lozad post-image"src="https://i.imgur.com/aptlMpc.png"></p>
 <ul>
 <li><p>从服务器上下载文件到Windows的命令为<code>sz</code>，后面要跟下载文件的文件名：</p>
-<pre><code>  <pre class="highlight"><span class="line">sz 2017-谭庆波.doc</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">sz 2017-谭庆波.doc</span><br></pre></li>
 <li><p>这条命令执行的时候会让你选择文件保存的路径，然后点击<code>确定</code>按钮就可以了。<br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/QQ7KKg2.png" class="lozad post-image"src="https://i.imgur.com/QQ7KKg2.png"></p>
 </li>
 <li><p>因为是局域网，用这种方法传大文件应该也没有什么压力。</p>
@@ -373,16 +369,14 @@ var _hmt = _hmt || [];
 <li><p>在连接之前还是要保证Linux服务器上装有<code>openssh-server</code>啦，怎么安装参见上面~</p>
 </li>
 <li><p>在Linux服务器上修改<code>ssh</code>的配置文件，这个文件 <code>/etc/ssh/sshd_config</code>，在里面将<code>PermitRootLogin</code>的值改成<code>yes</code>,然后在重启一下<code>ssh</code>服务。</p>
-<pre><code>  <pre class="highlight"><span class="line">PermitRootLogin yes</span><br><span class="line">	service sshd restart</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">PermitRootLogin yes</span><br><span class="line">	service sshd restart</span><br></pre></li>
 <li><p>之后就可以在你的Ubuntu机器上远程登陆这台服务器了。方式如下：</p>
-<pre><code><pre class="highlight"><span class="line">ssh rootusername@IP</span><br></pre></code></pre>
+<pre class="highlight"><span class="line">ssh rootusername@IP</span><br></pre>
 </li>
 <li><p><code>rootusername</code>是你服务器的用户名，IP是你服务器的IP地址，之后在输入密码，就可以登陆上去了。</p>
 <h3 id="Ubuntu文件传输"><a href="#Ubuntu文件传输" class="headerlink" title="Ubuntu文件传输"></a>Ubuntu文件传输</h3></li>
 <li><p><strong>上传文件：</strong></p>
-<pre><code>  <pre class="highlight"><span class="line">scp 文件名 rootusername@IP：/tmp</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">scp 文件名 rootusername@IP：/tmp</span><br></pre></li>
 <li><p>由于文件系统的权限问题，只能将本系统的文件上传到服务器的<code>/tmp</code>文件夹下，然后再从<code>tmp</code>文件夹中拷到需要的目录中去。</p>
 </li>
 <li><p><strong>下载文件：</strong></p>
@@ -391,8 +385,7 @@ var _hmt = _hmt || [];
 <pre class="highlight"><span class="line">scp rootusername@IP:/home/a.tar.tz </span><br></pre>
 </li>
 <li><p>拷贝远程机器的整个目录下的文件：</p>
-<pre><code>     scp -r rootusername@IP：/home/* ./</code></pre>
-</li>
+  <pre class="highlight"><span class="line">scp -r rootusername@IP：/home/* ./</span><br></pre></li>
 <li><p>注意，文件传输命令都是在本地机终端上运行。</p>
 </li>
 </ul>

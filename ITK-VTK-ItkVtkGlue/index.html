@@ -322,38 +322,20 @@ var _hmt = _hmt || [];
 <li><p>首先需要下载ItkVtkGlue的源码包，下载地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/InsightSoftwareConsortium/ITKWikiExamples/raw/master/ItkVtkGlue.tar.gz"> download ItkVtkGlue</a></p>
 </li>
 <li><p>将ItkVtkGlue的源码包解压到ITK目录下，并在ITK目录下新建ItkVtkGlue-bin目录用来存放ItkVtkGlue的源码包的编译文件。</p>
-<pre><code>      ~/ITK/itkvtkglue-bin$ ccmake ../ItkVtkGlue
-      ~/ITK/itkvtkglue-bin$ make</code></pre>
-</li>
+  <pre class="highlight"><span class="line">~/ITK/itkvtkglue-bin$ ccmake ../ItkVtkGlue</span><br><span class="line">		~/ITK/itkvtkglue-bin$ make</span><br></pre></li>
 <li><p>配置与编译ItkVtkGlue的源码的方式和配置编译ITK程序的方式一样。</p>
 <h3 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h3></li>
 <li><p>每一个ITK或者VTK程序都需要一个CMakeLists.txt文件，并放在同一个目录下，该文件包含了cmake的版本信息、程序执行的环境信息以及整个工程的信息，所以在执行ITK和VTK程序是必须要有CMakeLists.txt文件。</p>
 </li>
 <li><p>ITK与VTK混合编程时，CMakeLists.txt文件的信息如下：</p>
-<pre><code>  cmake_minimum_required(VERSION 2.8)
-  project(SubtractImageFilter)
+</li>
+</ul>
+<pre class="highlight"><span class="line">cmake_minimum_required(VERSION 2.8)</span><br><span class="line">project(SubtractImageFilter)</span><br><span class="line"></span><br><span class="line">find_package(ITK REQUIRED)</span><br><span class="line">include(${ITK_USE_FILE})</span><br><span class="line">if (ITKVtkGlue_LOADED)</span><br><span class="line">  find_package(VTK REQUIRED)</span><br><span class="line">  include(${VTK_USE_FILE})</span><br><span class="line">else()</span><br><span class="line">  find_package(ItkVtkGlue REQUIRED)</span><br><span class="line">  include(${ItkVtkGlue_USE_FILE})</span><br><span class="line">  set(Glue ItkVtkGlue)</span><br><span class="line">endif()</span><br><span class="line"></span><br><span class="line">add_executable(SubtractImageFilter MACOSX_BUNDLE SubtractImageFilter.cxx)</span><br><span class="line">target_link_libraries(SubtractImageFilter</span><br><span class="line">  ${Glue}  ${VTK_LIBRARIES} ${ITK_LIBRARIES})</span><br></pre>
 
-  find_package(ITK REQUIRED)
-  include(${ITK_USE_FILE})
-  if (ITKVtkGlue_LOADED)
-    find_package(VTK REQUIRED)
-    include(${VTK_USE_FILE})
-  else()
-    find_package(ItkVtkGlue REQUIRED)
-    include(${ItkVtkGlue_USE_FILE})
-    set(Glue ItkVtkGlue)
-  endif()
-
-  add_executable(SubtractImageFilter MACOSX_BUNDLE SubtractImageFilter.cxx)
-  target_link_libraries(SubtractImageFilter
-    ${Glue}  ${VTK_LIBRARIES} ${ITK_LIBRARIES})</code></pre>
-</li>
-<li><p>在ccmake配置的时候会提示输入ItkVtkGlue的目录，类似输入ITK编译后的目录一样，在提示itkvtkglue目录路径的地方输入itkvtkglue-bin文件所在的目录就好了，然后程序就能正常编译了。</p>
-<h3 id="找不到“itkImageToVTKImageFilter-h”的问题"><a href="#找不到“itkImageToVTKImageFilter-h”的问题" class="headerlink" title="找不到“itkImageToVTKImageFilter.h”的问题"></a>找不到“itkImageToVTKImageFilter.h”的问题</h3></li>
-<li><p>在程序的头文件中如果引入’itkImageToVTKImageFilter.h’头文件，会提示找不到该文件，这时需要下载一个工具包：InsightApplications.zip，下载地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.itk.org/ITK/resources/software.html">download InsightApplications</a>。</p>
-</li>
-<li><p>解压InsightApplications.zip文件，将itkImageToVTKImageFilter.h，itkImageToVTKImageFilter.txx从\InsightApplications\Auxiliary\vtk文件夹找出添加到正在执行的工程文件，然后再编译就不会有错了。</p>
-</li>
+<ul>
+<li>在ccmake配置的时候会提示输入ItkVtkGlue的目录，类似输入ITK编译后的目录一样，在提示itkvtkglue目录路径的地方输入itkvtkglue-bin文件所在的目录就好了，然后程序就能正常编译了。<h3 id="找不到“itkImageToVTKImageFilter-h”的问题"><a href="#找不到“itkImageToVTKImageFilter-h”的问题" class="headerlink" title="找不到“itkImageToVTKImageFilter.h”的问题"></a>找不到“itkImageToVTKImageFilter.h”的问题</h3></li>
+<li>在程序的头文件中如果引入’itkImageToVTKImageFilter.h’头文件，会提示找不到该文件，这时需要下载一个工具包：InsightApplications.zip，下载地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.itk.org/ITK/resources/software.html">download InsightApplications</a>。</li>
+<li>解压InsightApplications.zip文件，将itkImageToVTKImageFilter.h，itkImageToVTKImageFilter.txx从\InsightApplications\Auxiliary\vtk文件夹找出添加到正在执行的工程文件，然后再编译就不会有错了。</li>
 </ul>
 		
   </div>	

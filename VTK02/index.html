@@ -338,10 +338,10 @@ var _hmt = _hmt || [];
 </li>
 <li><p>由于可以同时设置点和单元设置属性，那么怎么用点和单元来控制颜色呢？这就需要使用<code>vtkPolyDataMapper</code>类的方法。</p>
 <ul>
-<li>**SetScalarModeToDefault()**，默认设置，该设置下首先使用点的标量数据控制颜色，若点标量数据不可用时，则使用单元数据。</li>
+<li>SetScalarModeToDefault()，默认设置，该设置下首先使用点的标量数据控制颜色，若点标量数据不可用时，则使用单元数据。</li>
 <li><strong>SetScalarModeToUsePointData()</strong>,使用点的标量数据控制颜色，若点标量数据不可用也不会使用其他数据。</li>
 <li><strong>SetScalarModeToUseCellData()</strong>,使用单元的标量数据控制颜色，若单元标量数据不可用也不会使用其他数据。</li>
-<li>**SetScalarModeToUsePointFieldData()/SetScalarModeToUseCellFieldData()**，点数据和标量数据都不会用来着色，而是使用属性数据中场数据数组。可以通过名字来指定进行颜色渲染的数据。</li>
+<li>SetScalarModeToUsePointFieldData()/SetScalarModeToUseCellFieldData()，点数据和标量数据都不会用来着色，而是使用属性数据中场数据数组。可以通过名字来指定进行颜色渲染的数据。</li>
 </ul>
 </li>
 <li><p>在某些情况下，需要对点属性数据和单元属性数据进行转换，这需要用到两个类<code>vtkCellDataToPointData</code>和<code>vtkPointDataToCellData</code>。<strong>转换原理是</strong>：当由带属性向单元属性转换时，每个单元属性数据为组成该单元的点对应的属性的平均值；当单元属性数据向点属性数据转换时，点属性为使用该点的单元的属性平均值。</p>
@@ -358,7 +358,7 @@ var _hmt = _hmt || [];
 <li><strong>vtkTriangleFilter</strong>可以实现多边形网格向三角网格转换。</li>
 </ul>
 </li>
-<li><p><strong>测地距离：</strong>三维模型上两个点的测地距离是指沿着模型表面两者之间的最短距离，通常采用<code>Dijkstra</code>算法近似求解，VTK中的<strong>vtkDijkstraGraphGeodesicPath</strong>类可实现测地距离求解。通过**GetGeodesicLenght()**函数可以获取当前计算的两点测地距离的数值。</p>
+<li><p><strong>测地距离：</strong>三维模型上两个点的测地距离是指沿着模型表面两者之间的最短距离，通常采用<code>Dijkstra</code>算法近似求解，VTK中的<strong>vtkDijkstraGraphGeodesicPath</strong>类可实现测地距离求解。通过GetGeodesicLenght()函数可以获取当前计算的两点测地距离的数值。</p>
 </li>
 <li><p><strong>包围盒</strong>是指能够包围模型的最小立方体，常用于模型的碰撞检测中。<strong>vtkOutlineFilter</strong>提供一个方便的方法来生成包围盒。</p>
 </li>

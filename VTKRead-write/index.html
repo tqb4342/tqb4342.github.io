@@ -259,7 +259,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>391 字</span>
+    <span>427 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -324,8 +324,7 @@ var _hmt = _hmt || [];
 <li><p><strong><em>.mha与</em>.mhd：</strong>这两个格式差不多，只不过MHA格式图像把图像信息头与实际的像素值等信息写入了同一个文件，而MHD的图像信息头与实际像素值分别存在两个文件（即*.mhd和*.raw/*.zraw,zraw表示有压缩）</p>
 </li>
 <li><p>*<strong>.mhd图像格式信息：</strong></p>
-<pre><code>      <pre class="highlight"><span class="line">ObjectType = Image</span><br><span class="line">		NDims = 3                            //表示该图像的维数；</span><br><span class="line">		BinaryData = True</span><br><span class="line">		BinaryDataByteOrderMSB = False</span><br><span class="line">		CompressedData = True</span><br><span class="line">		CompressedDataSize = 1961160</span><br><span class="line">		TransformMatrix = 1 0 0 0 1 0 0 0 1</span><br><span class="line">		Offset = 0 0 0</span><br><span class="line">		CenterOfRotation = 0 0 0</span><br><span class="line">		AnatomicalOrientation = RAI</span><br><span class="line">		ElementSpacing = 1 1 1               //像素间的间隔</span><br><span class="line">		DimSize = 256 256 41                 //图像各维的大小；</span><br><span class="line">		ElementType = MET_UCHAR              //存储图像像素值所用的类型</span><br><span class="line">		ElementDataFile = img-41.zraw        //存储像素数据的文件位置</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">ObjectType = Image</span><br><span class="line">		NDims = 3                            //表示该图像的维数；</span><br><span class="line">		BinaryData = True</span><br><span class="line">		BinaryDataByteOrderMSB = False</span><br><span class="line">		CompressedData = True</span><br><span class="line">		CompressedDataSize = 1961160</span><br><span class="line">		TransformMatrix = 1 0 0 0 1 0 0 0 1</span><br><span class="line">		Offset = 0 0 0</span><br><span class="line">		CenterOfRotation = 0 0 0</span><br><span class="line">		AnatomicalOrientation = RAI</span><br><span class="line">		ElementSpacing = 1 1 1               //像素间的间隔</span><br><span class="line">		DimSize = 256 256 41                 //图像各维的大小；</span><br><span class="line">		ElementType = MET_UCHAR              //存储图像像素值所用的类型</span><br><span class="line">		ElementDataFile = img-41.zraw        //存储像素数据的文件位置</span><br></pre></li>
 <li><p><strong>读取单个图像：</strong>如果无法确定所读取的图像时什么格式，可以用类vtkImageReader2Factory来读取导入的文件。</p>
 <ul>
 <li>有图像显示的例子。</li>
@@ -335,7 +334,11 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h4 id="vtkPolyData类型"><a href="#vtkPolyData类型" class="headerlink" title="vtkPolyData类型"></a>vtkPolyData类型</h4><ul>
-<li><strong>详见第6章。</strong></li>
+<li><p><strong>详见《VTK图形图像开发进阶》第6章。</strong></p>
+</li>
+<li><p><strong>《VTK图形图像开发进阶》下载地址：</strong></p>
+<p>链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pan.baidu.com/s/1hG9js6eZkTqL6Fh-b_C-Dg">https://pan.baidu.com/s/1hG9js6eZkTqL6Fh-b_C-Dg</a><br>提取码：cod8 </p>
+</li>
 </ul>
 		
   </div>	

@@ -418,7 +418,7 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="不透明传输函数"><a href="#不透明传输函数" class="headerlink" title="不透明传输函数"></a>不透明传输函数</h3><ul>
 <li><p>不透明传输函数是一个分段线性标量映射函数，利用该函数可将光线投射过程中的采样点灰度值映射为不同的不透明度值，以决定最终的颜色值。</p>
-<pre><code>          <pre class="highlight"><span class="line">SetScalarOpacity(vtkPiecewiseFunction*);</span><br></pre></code></pre>
+  <pre class="highlight"><span class="line">SetScalarOpacity(vtkPiecewiseFunction*);</span><br></pre>
 </li>
 <li><p>vtkPiecewiseFunction类定义线性分段函数：</p>
 <ul>
@@ -431,24 +431,21 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h3 id="梯度不透明函数"><a href="#梯度不透明函数" class="headerlink" title="梯度不透明函数"></a>梯度不透明函数</h3><ul>
-<li><p>该函数将梯度模值映射为一个不透明度乘子，从而增强过度区域显示效果，同样是使用<code>vtkPiecewiseFunction</code>类实现。</p>
-<pre><code>      <pre class="highlight"><span class="line">SetGradientOpacity(vtkPiecewiseFunction*);</span><br></pre></code></pre>
-</li>
-<li><p>函数设置类似于不透明传输函数的设置，不过意义不同，详情参见<strong>见《VTK图形图像开发进阶》7.3.2节</strong></p>
-</li>
+<li>该函数将梯度模值映射为一个不透明度乘子，从而增强过度区域显示效果，同样是使用<code>vtkPiecewiseFunction</code>类实现。</li>
+</ul>
+<pre class="highlight"><span class="line">SetGradientOpacity(vtkPiecewiseFunction*);</span><br></pre>
+
+<ul>
+<li>函数设置类似于不透明传输函数的设置，不过意义不同，详情参见<strong>见《VTK图形图像开发进阶》7.3.2节</strong></li>
 </ul>
 <h3 id="颜色传输函数"><a href="#颜色传输函数" class="headerlink" title="颜色传输函数"></a>颜色传输函数</h3><ul>
 <li><p>颜色传输函数与不透明传输函数类似，不同之处是颜色传输函数是将一个标量值映射为一个颜色值，VTK中用<code>vtkColorTransferFunction</code>类实现，其函数为：        </p>
-<pre><code>      <pre class="highlight"><span class="line">AddRGBPoint(double x,double r,double g,double b);</span><br><span class="line">AddHSVPoint(double x,double h,double s,double v);</span><br></pre></code></pre>
-</li>
+  <pre class="highlight"><span class="line">AddRGBPoint(double x,double r,double g,double b);</span><br><span class="line">AddHSVPoint(double x,double h,double s,double v);</span><br></pre></li>
 <li><p>其中x代表灰度值，r,g,b和h,s,v代表颜色分量。<code>vtkVolumeProperty</code>中设置颜色传输函数的函数原型如下：</p>
-<pre><code>      <pre class="highlight"><span class="line">SetColor(vtkColorTransferFunction*);</span><br></pre></code></pre>
-</li>
-</ul>
-<h3 id="光照与阴影"><a href="#光照与阴影" class="headerlink" title="光照与阴影"></a>光照与阴影</h3><ul>
+  <pre class="highlight"><span class="line">SetColor(vtkColorTransferFunction*);</span><br></pre>
+<h3 id="光照与阴影"><a href="#光照与阴影" class="headerlink" title="光照与阴影"></a>光照与阴影</h3></li>
 <li><p>通过<code>vtkVolumeProperty</code>可以设置体绘制的阴影效果，阴影效果主要受环境光系数、散射光系数、反射光系数和高光强度4个参数影响。</p>
-  <pre class="highlight"><span class="line">SetDiffuse()  //设置散射光系数</span><br><span class="line">SetAmbient()  //设置环境光系数</span><br><span class="line">SetSpecular() //设置反射光系数</span><br></pre>
-</li>
+  <pre class="highlight"><span class="line">SetDiffuse()  //设置散射光系数</span><br><span class="line">SetAmbient()  //设置环境光系数</span><br><span class="line">SetSpecular() //设置反射光系数</span><br></pre></li>
 <li><p>一般情况下，着三个系数之和为1.</p>
 </li>
 <li><p>高光强度系数用于控制体绘制外观平滑程度，使用<code>SetSpecularPower()</code>函数设置。</p>

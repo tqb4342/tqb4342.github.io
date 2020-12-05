@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tanqingbo.cn/VTK02/</loc>
-    <lastmod>2020-12-05</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/VTK03/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/VTK01/</loc>
-    <lastmod>2020-12-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/VTKRead-write/</loc>
-    <lastmod>2020-12-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/window-run-VTK/</loc>
+    <loc>https://tanqingbo.cn/xshell-connect-Linux/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
@@ -25,15 +13,27 @@
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
+    <loc>https://tanqingbo.cn/VTKRead-write/</loc>
+    <lastmod>2020-12-05</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/ITK-VS-install/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/Linux-ITK/</loc>
+    <loc>https://tanqingbo.cn/VTK01/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/xshell-connect-Linux/</loc>
+    <loc>https://tanqingbo.cn/VTK02/</loc>
+    <lastmod>2020-12-05</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/window-run-VTK/</loc>
+    <lastmod>2020-12-05</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Linux-ITK/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
