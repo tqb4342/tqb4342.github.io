@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/Batch-Normalization/</loc>
+    
+    <lastmod>2020-12-07</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/SPHARMPDM-MEPP/</loc>
     
     <lastmod>2020-12-07</lastmod>
@@ -206,13 +213,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/Ubuntu-install-sougou/</loc>
-    
-    <lastmod>2020-11-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Batch-Normalization/</loc>
     
     <lastmod>2020-11-30</lastmod>
     
@@ -1183,13 +1183,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2020-12-07</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2020-12-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
