@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>Matlab实现Graph cut算法&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="Matlab实现Graph cut算法">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Matlab-Graph-cut/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207141118.png">
+  
+  
+  <meta property="description" content="最大流最小割最开始从图论的概念中引来，讲述一个带有起点与终点并且具有边权值的网络图中，如何进行边的切割，把这个网络图分成独立的两个部分（或者多个部分），使得这个切割中被切割的边的权值之和最小。">
+  
+  <meta property="keywords" content="Matlab,Graph,cut">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-12-07">
+  <meta property="og:article:modified_time" content="2020-12-07">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="Matlab">
+  
+  <meta property="og:article:tag" content="Graph">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Matlab-Graph-cut/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207141118.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207141118.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Matlab实现Graph cut算法
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-07T06:08:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-07</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Matlab-Graph-cut/" class="leancloud_visitors" data-flag-title="Matlab实现Graph cut算法">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Matlab/" class="post-meta-link">Matlab</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Graph/" class="post-meta-link">Graph</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="最大流最小割最开始从图论的概念中引来，讲述一个带有起点与终点并且具有边权值的网络图中，如何进行边的切割，把这个网络图分成独立的两个部分（或者多个部分），使得这个切割中被切割的边的权值之和最小。">
+  
+  <meta name="keywords" content="Matlab,Graph,cut">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="Matlab实现Graph-cut"><a href="#Matlab实现Graph-cut" class="headerlink" title="Matlab实现Graph cut"></a>Matlab实现Graph cut</h2><h3 id="最大流最小割"><a href="#最大流最小割" class="headerlink" title="最大流最小割"></a>最大流最小割</h3><ul>
+<li><p>最大流最小割最开始从图论的概念中引来，讲述一个带有起点与终点并且具有边权值的网络图中，如何进行边的切割，把这个网络图分成独立的两个部分（或者多个部分），使得这个切割中被切割的边的权值之和最小。比如现在有一个网络图如下：<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140329.jpeg" alt="Graph cut" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140329.jpeg" class="lozad post-image"></p>
+</li>
+<li><p>那么要把这个图分割成两部分，如上虚线就是一种切割方式，消耗的权值3+4=7，当然，切割的方式有很多种，不同的切割对应不同的切割边权值，而<strong>最大流最小割</strong>就是找到一种切割方式使得切割的边的权值之和最小。</p>
+<h3 id="最大流最小割应用到图像分割"><a href="#最大流最小割应用到图像分割" class="headerlink" title="最大流最小割应用到图像分割"></a>最大流最小割应用到图像分割</h3></li>
+<li><p>图像简单来说就是矩阵，对于灰度图像，那么就是一般的二维矩阵，矩阵中值得大小就是改点的灰度值，那么图像分割问题就是寻找到图像的边界，而边界肯定在两个像素值差别很大的邻域间，如果把两个邻域间的像素值的差定义为该领域的边权值，那么分割问题就转化为如何切割这些边的问题了，这样的模型就和上述的最大流最小割对应上了。有点、有边、有边权值，那么就可以运用上述理论分割图像了。</p>
+<h3 id="图割理论"><a href="#图割理论" class="headerlink" title="图割理论"></a>图割理论</h3></li>
+<li><p>理论化介绍都是直观上的对图像的操作，而实际变成现实的时候是要事先转化到一维或者直接调用相应的函数才能对二维图像进行操作。先介绍一维图割操作，在介绍二维如何转为一维。</p>
+</li>
+<li><p>源点s与汇点t</p>
+<ul>
+<li>如下图所示的由五个点site组成的一维情况，假设最终我们要分成两类，那么就把这两类认为是源点s与汇点t好了，那么一次类推，如果要分成多个类的话，就可以加相应的节点s或者t表示他们的类就可以了。<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140337.png" alt="Graph cut" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140337.png" class="lozad post-image"></li>
+</ul>
+</li>
+<li><p>点与点之间的权值Smoothcost</p>
+<ul>
+<li><p>从下图上也可以看出在这个一维点与点之间相连接的权值就是Smoothcost项，图中为了简化只是画出了相邻的两个点之间有一条线连接，也就是他们之间存在着权值（这里图为一个无向图，也就是权值是没有方向之分的），正常情况下，可能每两个点之间都可能存在着联系，比如如果点1与点3之间，你也可以看成他们是连接的，只不过他们之间的权值为0而已。这也是matlab里面表示这一项点与点权值的时候用一个n*n维矩阵的原因（n为点数），像这里，如果权值的大小如上图所示定义的话，那么这个图的Smoothcost项的权值矩阵可以表示:</p>
+ <pre class="highlight"><span class="line">   0 5 0 0 0</span><br><span class="line">5 0 4 0 0</span><br><span class="line">0 4 0 3 0</span><br><span class="line">0 0 3 0 2</span><br><span class="line">0 0 0 2 0</span><br></pre>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>点与源汇点（类点）之间的权值Datacost</p>
+<ul>
+<li><p>除了上述的Smoothcost项之外，图割理论中还有一种项就是Datacost，表示的是各个点到源汇点（类点）之间的权值大小，这一项的权值同样对于分割至关重要。比如我们知道点1与点2属于s，其他点属于t的话，那么最终优化的结果就是1-s,2-s之间的权值可能很大，3-s,4-s,5-s之间的权值都很小，这对分割最后的形式很重要。Datacost也可以用矩阵表示，用c表示类的话（这里只有s与t那么c为2），n表示点的个数的话，那么Datacost可以表示为一个c*n的矩阵了：</p>
+ <pre class="highlight"><span class="line">   1 2 3 4 5</span><br><span class="line">5 4 3 2 1</span><br></pre>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="最大流最小割的实现过程"><a href="#最大流最小割的实现过程" class="headerlink" title="最大流最小割的实现过程"></a>最大流最小割的实现过程</h3><ul>
+<li><p>关于具体怎么解最大流最小割的方法有很多种，假设在上述Smoothcost和Datacost都定死的情况下，具体有以下几种方法实现：</p>
+<ul>
+<li>Ford-Fulkerson方法（增大路径最大流算法）</li>
+<li>Edmonds-Karp（EK）算法实现</li>
+<li>Dinic算法</li>
+<li>SAP算法(最短路径增广算法)</li>
+<li>Preflow push method(预流-推进最大流方法）</li>
+</ul>
+</li>
+<li><p>详细参考如右：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://dsqiu.iteye.com/blog/1689507"></a></p>
+</li>
+<li><p>里面有详细的c语言代码，可供详细研究实现这个的过程。</p>
+<h3 id="graph-cut之图割工具箱GCO3-0"><a href="#graph-cut之图割工具箱GCO3-0" class="headerlink" title="graph cut之图割工具箱GCO3.0"></a>graph cut之图割工具箱GCO3.0</h3></li>
+<li><p>有了前面的介绍，我们大致了解了分割的过程，下面下载GCO3.0的源码，下载地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://vision.csd.uwo.ca/code/">http://vision.csd.uwo.ca/code/</a>,在这里找到对应的内容即可。</p>
+</li>
+<li><p>解压源码包之后里面会有一些c编写的代码以及另一个matlab版文件夹，如图：<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140436.png" alt="Graph cut" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140436.png" class="lozad post-image"></p>
+</li>
+<li><p>matlab文件夹中有很多.m文件和一个C文件<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140458.png" alt="Graph cut" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140458.png" class="lozad post-image"></p>
+</li>
+<li><p>注意在使用这些代码时，matlab文件夹和外面的c编写的代码文件相对位置不要发生改变，因为在程序的执行过程中.m文件会调用.cpp文件。</p>
+</li>
+<li><p>我们主要用到的是matlab文件中提供的函数对图像进行分割，在正式分割之前我们需要先自己编写几个辅助函数：</p>
+<ul>
+<li><p><strong>Datacost1函数：</strong>用来计算点与类的权值datacost，代码如下:            </p>
+  <pre class="highlight"><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">datacost</span> = <span class="title">Datacost1</span><span class="params">(img,ctrs)</span></span></span><br><span class="line">[m,n] = <span class="built_in">size</span>(img);</span><br><span class="line">num_lables = <span class="built_in">size</span>(ctrs,<span class="number">1</span>);</span><br><span class="line">totalsizes = m*n;</span><br><span class="line">datacost = <span class="built_in">zeros</span>(totalsizes,num_lables);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:totalsizes</span><br><span class="line">    Ip = double(img(<span class="built_in">i</span>));</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:num_lables</span><br><span class="line">         datacost(<span class="built_in">i</span>,<span class="built_in">j</span>) = (Ip - ctrs(<span class="built_in">j</span>)).^<span class="number">2</span>;  <span class="comment">%计算datacost项</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>neighbours1函数：</strong>计算点与点之间的权值neighbours，代码如下：</p>
+  <pre class="highlight"><span class="line">          <span class="comment">%%-------------------</span></span><br><span class="line">	<span class="comment">%  每个点的灰度作为特征</span></span><br><span class="line">	<span class="comment">%%-------------------</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Neighbours</span> = <span class="title">neighbours1</span><span class="params">(img)</span></span></span><br><span class="line">	[m,n] = <span class="built_in">size</span>(img);</span><br><span class="line">	totalsizes = m*n;</span><br><span class="line">	var_img = var(img(:)); <span class="comment">%图像方差</span></span><br><span class="line">	<span class="comment">%% 选择neigh=4四连通计算权值，neigh=8八连通计算权值</span></span><br><span class="line">	neigh = <span class="number">4</span>;</span><br><span class="line">	<span class="comment">%%</span></span><br><span class="line">	<span class="keyword">if</span> neigh == <span class="number">4</span></span><br><span class="line">	    <span class="comment">%构建索引向量--生成距离的稀疏矩阵</span></span><br><span class="line">	    i1 = (<span class="number">1</span>:totalsizes-m)';</span><br><span class="line">	    j1 = i1+m;</span><br><span class="line">	    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n</span><br><span class="line">	        i2_tem(:,<span class="built_in">i</span>) = (<span class="built_in">i</span><span class="number">-1</span>)*m + (<span class="number">1</span>:m<span class="number">-1</span>)';</span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    i2 = i2_tem(:);</span><br><span class="line">	    j2 = i2+<span class="number">1</span>;</span><br><span class="line">	    <span class="comment">%对应边的值</span></span><br><span class="line">	    ans1 = <span class="built_in">exp</span>(-(img(i1(:))-img(j1(:))).^<span class="number">2</span>/(<span class="number">2</span>*var_img));</span><br><span class="line">	    ans2 = <span class="built_in">exp</span>(-(img(i2(:))-img(j2(:))).^<span class="number">2</span>/(<span class="number">2</span>*var_img));</span><br><span class="line">	    <span class="comment">%组合相应的向量：x位置，y位置，权值（注意必须都是列向量）</span></span><br><span class="line">	    all = [[i1;i2],[j1;j2],[ans1;ans2]];</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	    <span class="comment">%构建索引向量--生成距离的稀疏矩阵</span></span><br><span class="line">	    i1 = (<span class="number">1</span>:totalsizes-m)';  <span class="comment">%正右权值</span></span><br><span class="line">	    j1 = i1+m;</span><br><span class="line">	    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n  <span class="comment">%正下权值</span></span><br><span class="line">	        i2_tem(:,<span class="built_in">i</span>) = (<span class="built_in">i</span><span class="number">-1</span>)*m + (<span class="number">1</span>:m<span class="number">-1</span>)';</span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    i2 = i2_tem(:);</span><br><span class="line">	    j2 = i2+<span class="number">1</span>;</span><br><span class="line">	    <span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n<span class="number">-1</span>  <span class="comment">%斜下权值</span></span><br><span class="line">	        i3_tem(:,<span class="built_in">i</span>) = (<span class="built_in">i</span><span class="number">-1</span>)*m + (<span class="number">1</span>:m<span class="number">-1</span>)';</span><br><span class="line">	    <span class="keyword">end</span></span><br><span class="line">	    i3 = i3_tem(:);</span><br><span class="line">	    j3 = i3+n+<span class="number">1</span>;</span><br><span class="line">	    i4 = i3+<span class="number">1</span>; <span class="comment">%斜上权值</span></span><br><span class="line">	    j4 = i3+m;</span><br><span class="line">	    <span class="comment">%对应边的值</span></span><br><span class="line">	    ans1 = <span class="built_in">exp</span>(-(img(i1(:))-img(j1(:))).^<span class="number">2</span>/(<span class="number">2</span>*var_img));</span><br><span class="line">	    ans2 = <span class="built_in">exp</span>(-(img(i2(:))-img(j2(:))).^<span class="number">2</span>/(<span class="number">2</span>*var_img));</span><br><span class="line">	    ans3 = <span class="built_in">exp</span>(-(img(i3(:))-img(j3(:))).^<span class="number">2</span>/(<span class="number">2</span>*var_img));</span><br><span class="line">	    ans4 = <span class="built_in">exp</span>(-(img(i4(:))-img(j4(:))).^<span class="number">2</span>/(<span class="number">2</span>*var_img));    </span><br><span class="line">	    <span class="comment">%组合相应的向量：x位置，y位置，权值（注意必须都是列向量）</span></span><br><span class="line">	    all = [[i1;i2;i3;i4],[j1;j2;j3;j4],[ans1;ans2;ans3;ans4]];</span><br><span class="line">	<span class="keyword">end</span> </span><br><span class="line">	<span class="comment">%matlab函数生成稀疏矩阵（这么做的速度最快） %----------------</span></span><br><span class="line">neighb = spconvert(all);</span><br><span class="line">	neighb(totalsizes,totalsizes) = <span class="number">0</span>; </span><br><span class="line">	Neighbours = neighb;</span><br><span class="line">	<span class="keyword">end</span></span><br></pre>
+
+<p>  ​    </p>
+</li>
+<li><p>有了上述的工具函数之后，我们就可以编程调用这些函数实现图像分割了，    下面给出综合起来的主程序：</p>
+   <pre class="highlight"><span class="line">        clc;</span><br><span class="line">clear;</span><br><span class="line">img = imread(<span class="string">'b_04_95.jpg'</span>);</span><br><span class="line">img = double(img);</span><br><span class="line"><span class="comment">% 定义分类数Numlables</span></span><br><span class="line">Numlables = <span class="number">2</span>;</span><br><span class="line"><span class="comment">% 定义Potts模型参数K</span></span><br><span class="line">Potts_K = <span class="number">1500</span>;</span><br><span class="line">[m,n] = <span class="built_in">size</span>(img);</span><br><span class="line">totalsizes  =n*m;</span><br><span class="line"><span class="comment">%k-means预分类找到中心与分类</span></span><br><span class="line"><span class="comment">%init_lable预分类，列向量； ctrs-类中心灰度值值</span></span><br><span class="line">[init_lable,ctrs] = kmeans(img(:),Numlables);  <span class="comment">%img通过索引转化为列向量可用</span></span><br><span class="line">ctrs_new = <span class="built_in">zeros</span>(Numlables,<span class="number">1</span>);</span><br><span class="line"><span class="comment">% 生成目标体</span></span><br><span class="line">h = GCO_Create(totalsizes,Numlables);</span><br><span class="line"><span class="comment">%设置初始标签</span></span><br><span class="line">GCO_SetLabeling(h,init_lable);</span><br><span class="line"><span class="comment">%设置datacost项</span></span><br><span class="line">datacost = Datacost1(img,ctrs);</span><br><span class="line">datacost = datacost';</span><br><span class="line">GCO_SetDataCost(h,datacost);</span><br><span class="line"><span class="comment">%设置smoothcost</span></span><br><span class="line"><span class="comment">%不设置的时候默认使用potts模型</span></span><br><span class="line">SmoothCost = <span class="built_in">eye</span>(Numlables);</span><br><span class="line">SmoothCost = <span class="number">1</span> - SmoothCost;</span><br><span class="line">GCO_SetSmoothCost(h,SmoothCost);</span><br><span class="line"><span class="comment">%设置neighbors项</span></span><br><span class="line">Neighbours = Potts_K*neighbours1(img);</span><br><span class="line">GCO_SetNeighbors(h,Neighbours);</span><br><span class="line"><span class="comment">%显示输出结果</span></span><br><span class="line">GCO_SetVerbosity(h,<span class="number">2</span>);</span><br><span class="line"><span class="comment">%类标签运算顺序</span></span><br><span class="line">GCO_SetLabelOrder(h,randperm(Numlables));</span><br><span class="line"><span class="comment">%膨胀算法</span></span><br><span class="line">GCO_Expansion(h);</span><br><span class="line"><span class="comment">%获得该标签lables</span></span><br><span class="line">Labeling = GCO_GetLabeling(h);  <span class="comment">%列向量</span></span><br><span class="line"><span class="comment">% 释放内存</span></span><br><span class="line">GCO_Delete(h);</span><br><span class="line"><span class="comment">%显示graph cut分类</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:<span class="built_in">length</span>(Labeling)</span><br><span class="line">img1(<span class="built_in">i</span>) = ctrs(Labeling(<span class="built_in">i</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">img1 = <span class="built_in">reshape</span>(img1,m,n);</span><br><span class="line"><span class="comment">%绘制分割图</span></span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line"><span class="comment">%原图像</span></span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);imshow(img,[]);</span><br><span class="line">title(<span class="string">'原始图像'</span>);</span><br><span class="line"><span class="comment">%显示graph cut分类</span></span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>);imshow(img1,[]);</span><br><span class="line">title([<span class="string">'Potts模型参数:'</span>,num2str(Potts_K)]); </span><br></pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>因为涉及到matlab和C语言的混合编程，因此在执行上述代码之前需要先安装好C语言编译器，通常安装了VS软件就没什么问题了，然后在执行时可能会出现一个如下的错误：</p>
+  <pre class="highlight"><span class="line">Error using mex (line 206) </span><br><span class="line">		Unable to complete successfully.</span><br></pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li>此时我们安装mex编译器，在matlab的命令行输入：</li>
+</ul>
+<pre class="highlight"><span class="line">mex -setup</span><br></pre>
+
+
+
+<ul>
+<li><p>根据提示选择<code>y</code>    和需要的编译器就可以了，程序再执行就会出现结果了。如题所示：</p>
+</li>
+<li><p>另外可以通过调节<code>Potts_K</code>参数的值，以实现不同的效果。<br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140639.png" alt="Graph cut" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201207140639.png" class="lozad post-image">    </p>
+</li>
+<li><p>参考博客：</p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://blog.csdn.net/on2way/article/details/43276155">matlab实现Max-flow/min-cut的方法</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://blog.csdn.net/on2way/article/details/46742765"> 图像分割之图割工具箱GCO3.0的使用（二）</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://blog.csdn.net/on2way/article/details/46754041">GCO3.0的图割分割算法应用(三)</a>        </li>
+</ul>
+</li>
+</ul>
+		
+  </div>	
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	<!--
+    <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+	
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>	
+	</div>	
+	-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Matlab-Graph-cut/">https://tanqingbo.cn/Matlab-Graph-cut/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/Image-Processing-Journal/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">图像处理类的期刊整理 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/VTK03/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">VTK图像处理（三） | 体绘制 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matlab%E5%AE%9E%E7%8E%B0Graph-cut"><span class="toc-text">Matlab实现Graph cut</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2"><span class="toc-text">最大流最小割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E5%BA%94%E7%94%A8%E5%88%B0%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="toc-text">最大流最小割应用到图像分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%89%B2%E7%90%86%E8%AE%BA"><span class="toc-text">图割理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-text">最大流最小割的实现过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#graph-cut%E4%B9%8B%E5%9B%BE%E5%89%B2%E5%B7%A5%E5%85%B7%E7%AE%B1GCO3-0"><span class="toc-text">graph cut之图割工具箱GCO3.0</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>84</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>14</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>80</span>
+    <span>标签</span>
+  </a>
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matlab%E5%AE%9E%E7%8E%B0Graph-cut"><span class="toc-text">Matlab实现Graph cut</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2"><span class="toc-text">最大流最小割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E5%BA%94%E7%94%A8%E5%88%B0%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="toc-text">最大流最小割应用到图像分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%89%B2%E7%90%86%E8%AE%BA"><span class="toc-text">图割理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-text">最大流最小割的实现过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#graph-cut%E4%B9%8B%E5%9B%BE%E5%89%B2%E5%B7%A5%E5%85%B7%E7%AE%B1GCO3-0"><span class="toc-text">graph cut之图割工具箱GCO3.0</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/机器学习">
+        <div class="categories-list-item">
+          机器学习
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Git">
+        <div class="categories-list-item">
+          Git
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">18</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据库">
+        <div class="categories-list-item">
+          数据库
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
+    
+    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    
+    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    
+    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    
+    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+<!--
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+-->
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Matlab%E5%AE%9E%E7%8E%B0Graph-cut"><span class="toc-text">Matlab实现Graph cut</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2"><span class="toc-text">最大流最小割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E5%BA%94%E7%94%A8%E5%88%B0%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2"><span class="toc-text">最大流最小割应用到图像分割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%89%B2%E7%90%86%E8%AE%BA"><span class="toc-text">图割理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E6%9C%80%E5%B0%8F%E5%89%B2%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="toc-text">最大流最小割的实现过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#graph-cut%E4%B9%8B%E5%9B%BE%E5%89%B2%E5%B7%A5%E5%85%B7%E7%AE%B1GCO3-0"><span class="toc-text">graph cut之图割工具箱GCO3.0</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-07</div>
+        <a href="/Maximum-Likelihood-to-EM-algorithm/"><div class="recent-posts-item-content">从最大似然、贝叶斯估计到EM算法浅解</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-07</div>
+        <a href="/Parzen-and-KNE/"><div class="recent-posts-item-content">非参数估计法之Parzen窗估计和k最近邻估计</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-07</div>
+        <a href="/SPHARMPDM-MEPP/"><div class="recent-posts-item-content">SPHARM-PDM与MEPP</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-07</div>
+        <a href="/Image-Processing-Journal/"><div class="recent-posts-item-content">图像处理类的期刊整理</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/links/" target="_blank">友情链接</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

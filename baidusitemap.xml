@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/SPHARMPDM-MEPP/</loc>
+    <lastmod>2020-12-07</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Maximum-Likelihood-to-EM-algorithm/</loc>
+    <lastmod>2020-12-07</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Parzen-and-KNE/</loc>
+    <lastmod>2020-12-07</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Matlab-Graph-cut/</loc>
+    <lastmod>2020-12-07</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Image-Processing-Journal/</loc>
+    <lastmod>2020-12-07</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/VTKRead-write/</loc>
+    <lastmod>2020-12-06</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/VTK03/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
@@ -10,10 +34,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/ITK-VTK-ItkVtkGlue/</loc>
-    <lastmod>2020-12-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/VTKRead-write/</loc>
     <lastmod>2020-12-05</lastmod>
   </url>
   <url>
