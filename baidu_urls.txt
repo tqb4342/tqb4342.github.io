@@ -1,3 +1,4 @@
+https://tanqingbo.cn/Chrome-crx/
 https://tanqingbo.cn/Maximum-Likelihood-to-EM-algorithm/
 https://tanqingbo.cn/Parzen-and-KNE/
 https://tanqingbo.cn/SPHARMPDM-MEPP/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/Python-crawler/
 https://tanqingbo.cn/What-is-crawler/
 https://tanqingbo.cn/python-yeild/
 https://tanqingbo.cn/Python-base/
-https://tanqingbo.cn/python-Blog/
