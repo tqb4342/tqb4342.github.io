@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/CS-network/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/OS-run-environment/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/computer-network02/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/computer-network01/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/OS-processes-threads/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Git-Learning/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Mysql-database/</loc>
+    <lastmod>2020-12-08</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Chrome-crx/</loc>
     <lastmod>2020-12-08</lastmod>
   </url>
@@ -105,15 +133,7 @@
     <lastmod>2020-12-03</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/Mysql-database/</loc>
-    <lastmod>2020-12-03</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
-    <lastmod>2020-12-03</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Git-Learning/</loc>
     <lastmod>2020-12-03</lastmod>
   </url>
   <url>

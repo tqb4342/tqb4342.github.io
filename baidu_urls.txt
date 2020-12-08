@@ -1,3 +1,8 @@
+https://tanqingbo.cn/computer-network02/
+https://tanqingbo.cn/OS-run-environment/
+https://tanqingbo.cn/computer-network01/
+https://tanqingbo.cn/OS-processes-threads/
+https://tanqingbo.cn/CS-network/
 https://tanqingbo.cn/Chrome-crx/
 https://tanqingbo.cn/Maximum-Likelihood-to-EM-algorithm/
 https://tanqingbo.cn/Parzen-and-KNE/
@@ -13,8 +18,3 @@ https://tanqingbo.cn/ITK-VTK-ItkVtkGlue/
 https://tanqingbo.cn/ITK-VS-install/
 https://tanqingbo.cn/xshell-connect-Linux/
 https://tanqingbo.cn/IT-interview-basic/
-https://tanqingbo.cn/python%E7%88%AC%E8%99%AB%E6%95%99%E7%A8%8B/
-https://tanqingbo.cn/Python-crawler/
-https://tanqingbo.cn/What-is-crawler/
-https://tanqingbo.cn/python-yeild/
-https://tanqingbo.cn/Python-base/

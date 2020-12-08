@@ -1,10 +1,10 @@
+https://tanqingbo.cn/CS-network/
+https://tanqingbo.cn/OS-run-environment/
+https://tanqingbo.cn/computer-network02/
+https://tanqingbo.cn/computer-network01/
+https://tanqingbo.cn/OS-processes-threads/
+https://tanqingbo.cn/Git-Learning/
+https://tanqingbo.cn/Mysql-database/
 https://tanqingbo.cn/Chrome-crx/
 https://tanqingbo.cn/Batch-Normalization/
 https://tanqingbo.cn/SPHARMPDM-MEPP/
-https://tanqingbo.cn/Maximum-Likelihood-to-EM-algorithm/
-https://tanqingbo.cn/Parzen-and-KNE/
-https://tanqingbo.cn/Matlab-Graph-cut/
-https://tanqingbo.cn/Image-Processing-Journal/
-https://tanqingbo.cn/VTKRead-write/
-https://tanqingbo.cn/VTK03/
-https://tanqingbo.cn/xshell-connect-Linux/

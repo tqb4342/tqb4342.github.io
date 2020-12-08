@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/CS-network/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/OS-run-environment/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/computer-network02/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/computer-network01/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/OS-processes-threads/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/Git-Learning/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/Mysql-database/</loc>
+    
+    <lastmod>2020-12-08</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/Chrome-crx/</loc>
     
     <lastmod>2020-12-08</lastmod>
@@ -184,21 +233,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/Mysql-database/</loc>
-    
-    <lastmod>2020-12-03</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
-    
-    <lastmod>2020-12-03</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Git-Learning/</loc>
     
     <lastmod>2020-12-03</lastmod>
     
@@ -1186,6 +1221,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2020-12-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
@@ -1224,13 +1266,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/Git/</loc>
-    <lastmod>2020-12-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/categories/Python/</loc>
     <lastmod>2020-12-08</lastmod>
     <changefreq>daily</changefreq>
@@ -1259,13 +1294,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2020-12-08</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/categories/SEO%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2020-12-08</lastmod>
     <changefreq>daily</changefreq>
@@ -1274,6 +1302,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2020-12-08</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</loc>
     <lastmod>2020-12-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
