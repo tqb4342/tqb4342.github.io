@@ -1,7 +1,7 @@
-https://tanqingbo.cn/CS-Classic-Books/
 https://tanqingbo.cn/Deep-learning-and-medical-image-analysis/
 https://tanqingbo.cn/2018ECCV-Paper-DL/
 https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/
+https://tanqingbo.cn/CS-Classic-Books/
 https://tanqingbo.cn/ML-EBook-paper/
 https://tanqingbo.cn/10-website/
 https://tanqingbo.cn/computer-network02/
