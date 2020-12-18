@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Binary-tree-traversal/</loc>
+    <lastmod>2020-12-18</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E5%AD%97%E5%85%B8/</loc>
     <lastmod>2020-12-17</lastmod>
   </url>
@@ -270,10 +274,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Java-learning-route-map/</loc>
-    <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Binary-tree-traversal/</loc>
     <lastmod>2020-11-28</lastmod>
   </url>
   <url>

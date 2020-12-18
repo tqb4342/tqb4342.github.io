@@ -26,7 +26,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2020-11-28">
-  <meta property="og:article:modified_time" content="2020-11-28">
+  <meta property="og:article:modified_time" content="2020-12-18">
   <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
   
   
@@ -322,17 +322,11 @@ var _hmt = _hmt || [];
 </ul>
 <ul>
 <li><p>树的结构的代码实现：</p>
-<pre><code>      public static void main(String[] args) {
-             TreeNode e = new TreeNode(1);
-             TreeNode g = new TreeNode(2);
-             TreeNode h = new TreeNode(3);
-             TreeNode i = new TreeNode(4);
-             TreeNode d = new TreeNode(5,null,g);
-             TreeNode f = new TreeNode(6,h,i); 
-             TreeNode b = new TreeNode(7,d,e);
-             TreeNode c = new TreeNode(8,f,null);
-             TreeNode root = new TreeNode(9,b,c);
-      }</code></pre>
+  <pre class="highlight"><span class="line">public static void main(String[] args) {</span><br><span class="line">	   TreeNode e = new TreeNode(1);</span><br><span class="line">	   TreeNode g = new TreeNode(2);</span><br><span class="line">	   TreeNode h = new TreeNode(3);</span><br><span class="line">	   TreeNode i = new TreeNode(4);</span><br><span class="line">	   TreeNode d = new TreeNode(5,null,g);</span><br><span class="line">	   TreeNode f = new TreeNode(6,h,i); </span><br><span class="line">	   TreeNode b = new TreeNode(7,d,e);</span><br><span class="line">	   TreeNode c = new TreeNode(8,f,null);</span><br><span class="line">	   TreeNode root = new TreeNode(9,b,c);</span><br><span class="line">}</span><br></pre>
+
+
+
+
 </li>
 </ul>
 <h3 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h3><ul>
@@ -341,24 +335,34 @@ var _hmt = _hmt || [];
 <li><p>对于一颗二叉查找树，所有的信息都是有序排列的，中序遍历可以是信息有序输出，且运行时间为O（n）。</p>
 </li>
 <li><p>递归实现中序遍历：</p>
-<pre><code>   <pre class="highlight"><span class="line">public static void printTree(TreeNode t){</span><br><span class="line">			if(t!=null){</span><br><span class="line">				printTree(t.left);</span><br><span class="line">				System.out.print(t.val+" ");</span><br><span class="line">				printTree(t.right);</span><br><span class="line">			}</span><br><span class="line">		}</span><br></pre></code></pre>
+  <pre class="highlight"><span class="line">public static void printTree(TreeNode t){</span><br><span class="line">			if(t!=null){</span><br><span class="line">				printTree(t.left);</span><br><span class="line">				System.out.print(t.val+" ");</span><br><span class="line">				printTree(t.right);</span><br><span class="line">			}</span><br><span class="line">		}</span><br></pre>
+
+
+
 </li>
 </ul>
 <ul>
 <li><p>输出结果：</p>
-<pre><code>      5 2 7 1 9 3 6 4 8 </code></pre>
+  <pre class="highlight"><span class="line">5 2 7 1 9 3 6 4 8 </span><br></pre>
+
 </li>
 </ul>
 <h3 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h3><ul>
 <li><p>先处理左右子树，然后再处理当前节点，运行时间为O（n）。</p>
 </li>
 <li><p>递归实现后序遍历：</p>
-<pre><code>     <pre class="highlight"><span class="line">public static void printTree(TreeNode t){</span><br><span class="line">				if(t!=null){</span><br><span class="line">					printTree(t.left);</span><br><span class="line">					printTree(t.right);</span><br><span class="line">					System.out.print(t.val+" ");</span><br><span class="line">				}</span><br><span class="line">			}</span><br></pre></code></pre>
+ <pre class="highlight"><span class="line">public static void printTree(TreeNode t){</span><br><span class="line">	if(t!=null){</span><br><span class="line">		printTree(t.left);</span><br><span class="line">		printTree(t.right);</span><br><span class="line">		System.out.print(t.val+" ");</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre>
+
+
+
 </li>
 </ul>
 <ul>
 <li><p>输出结果：</p>
-<pre><code>      2 5 1 7 3 4 6 8 9 </code></pre>
+  <pre class="highlight"><span class="line">2 5 1 7 3 4 6 8 9 </span><br></pre>
+
+
+
 </li>
 </ul>
 <h3 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h3><ul>
@@ -373,10 +377,14 @@ var _hmt = _hmt || [];
 </ul>
 <ul>
 <li><p>输出结果：</p>
-<pre><code>      9 7 5 2 1 8 6 3 4 </code></pre>
+  <pre class="highlight"><span class="line">9 7 5 2 1 8 6 3 4 </span><br></pre>
+
+
+
 </li>
-<li><p><font color="red"><strong>有没有觉得树的先序，中序，后序遍历都非常简单，递归三行代码就搞定了。好吧，下边厉害的要来了</strong></font></p>
-</li>
+</ul>
+<ul>
+<li><font color="red"><strong>有没有觉得树的先序，中序，后序遍历都非常简单，递归三行代码就搞定了。好吧，下边厉害的要来了</strong></font></li>
 </ul>
 <h3 id="层序遍历"><a href="#层序遍历" class="headerlink" title="层序遍历"></a>层序遍历</h3><ul>
 <li><p>层序遍历:所有深度为D的节点要在深度为D+1的节点之前进行处理，层序遍历与其他类型的遍历不同的地方在于它不是递归地执行的，它用到队列，而不使用递归所默示的栈。</p>
@@ -388,8 +396,7 @@ var _hmt = _hmt || [];
 </ol>
 </li>
 <li><p>层序遍历代码：</p>
-<pre><code>  <pre class="highlight"><span class="line">package Tree;</span><br><span class="line">	import java.util.ArrayList;</span><br><span class="line">	import java.util.LinkedList;</span><br><span class="line">	import java.util.List;</span><br><span class="line">	import java.util.Queue;</span><br><span class="line">	/*</span><br><span class="line">	 * 层序遍历</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	public class TreePrinter1 {</span><br><span class="line">		 public static int[][] printTree(TreeNode root) {</span><br><span class="line">			 List&lt; List&lt;Integer&gt; &gt; list = new ArrayList&lt; List&lt;Integer&gt; &gt;();</span><br><span class="line">			 list.add(new ArrayList&lt;Integer&gt;());</span><br><span class="line">			 Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">		        queue.add(root);</span><br><span class="line">		        TreeNode lastNode = root;	// 当前行最右节点</span><br><span class="line">		        TreeNode nlastNode = root;	// 下一行最右节点</span><br><span class="line">		        TreeNode tmpNode = null; </span><br><span class="line">		        int hight = 0;				// 树的高度</span><br><span class="line">		        while(!queue.isEmpty()){</span><br><span class="line">		        	tmpNode = queue.poll();</span><br><span class="line">		        	if(tmpNode!=null){</span><br><span class="line">		        		list.get(hight).add(tmpNode.val);</span><br><span class="line">		        	}</span><br><span class="line">		        	if(tmpNode.left!=null){</span><br><span class="line">		        		queue.add(tmpNode.left);</span><br><span class="line">		        		nlastNode = tmpNode.left;</span><br><span class="line">		        	}</span><br><span class="line">		        	if(tmpNode.right!=null){</span><br><span class="line">		        		queue.add(tmpNode.right);</span><br><span class="line">		        		nlastNode = tmpNode.right;</span><br><span class="line">		        	}</span><br><span class="line">		        	if(tmpNode == lastNode){</span><br><span class="line">		        		lastNode = nlastNode;</span><br><span class="line">		        		hight++;</span><br><span class="line">		        		list.add(new ArrayList&lt;Integer&gt;());</span><br><span class="line">		        	}</span><br><span class="line">		        }</span><br><span class="line">		        int[][] data = new int[list.size()][];</span><br><span class="line">		        for(int i=0;i&lt;list.size();i++){</span><br><span class="line">		        	for(int j=0;j&lt;list.get(i).size();j++){</span><br><span class="line">		        		data[i][j] = list.get(i).get(j);</span><br><span class="line">		        	}</span><br><span class="line">		        }</span><br></pre></code></pre>
-  <pre class="highlight"><span class="line">        </span><br><span class="line">		return data;</span><br><span class="line">	 }</span><br><span class="line">	 public static void main(String[] args) {</span><br><span class="line">		   TreeNode e = new TreeNode(1);</span><br><span class="line">		   TreeNode g = new TreeNode(2);</span><br><span class="line">		   TreeNode h = new TreeNode(3);</span><br><span class="line">		   TreeNode i = new TreeNode(4);</span><br><span class="line">		   TreeNode d = new TreeNode(5,null,g);</span><br><span class="line">		   TreeNode f = new TreeNode(6,h,i);</span><br><span class="line">		   TreeNode b = new TreeNode(7,d,e);</span><br><span class="line">		   TreeNode c = new TreeNode(8,f,null);</span><br><span class="line">		   TreeNode root = new TreeNode(9,b,c);</span><br><span class="line">		   int[][] data  =TreePrinter.printTree(root);</span><br><span class="line">		   for(int s=0;s&lt;data.length;s++){</span><br><span class="line">			   for(int j=0;j&lt;data[s].length;j++){</span><br><span class="line">				   System.out.print(data[s][j]+" ");</span><br><span class="line">			   }</span><br><span class="line">			   System.out.println();</span><br><span class="line">		   }</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre>
+  <pre class="highlight"><span class="line">package Tree;</span><br><span class="line">	import java.util.ArrayList;</span><br><span class="line">	import java.util.LinkedList;</span><br><span class="line">	import java.util.List;</span><br><span class="line">	import java.util.Queue;</span><br><span class="line">	/*</span><br><span class="line">	 * 层序遍历</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	public class TreePrinter1 {</span><br><span class="line">		 public static int[][] printTree(TreeNode root) {</span><br><span class="line">			 List&lt; List&lt;Integer&gt; &gt; list = new ArrayList&lt; List&lt;Integer&gt; &gt;();</span><br><span class="line">			 list.add(new ArrayList&lt;Integer&gt;());</span><br><span class="line">			 Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">		        queue.add(root);</span><br><span class="line">		        TreeNode lastNode = root;	// 当前行最右节点</span><br><span class="line">		        TreeNode nlastNode = root;	// 下一行最右节点</span><br><span class="line">		        TreeNode tmpNode = null; </span><br><span class="line">		        int hight = 0;				// 树的高度</span><br><span class="line">		        while(!queue.isEmpty()){</span><br><span class="line">		        	tmpNode = queue.poll();</span><br><span class="line">		        	if(tmpNode!=null){</span><br><span class="line">		        		list.get(hight).add(tmpNode.val);</span><br><span class="line">		        	}</span><br><span class="line">		        	if(tmpNode.left!=null){</span><br><span class="line">		        		queue.add(tmpNode.left);</span><br><span class="line">		        		nlastNode = tmpNode.left;</span><br><span class="line">		        	}</span><br><span class="line">		        	if(tmpNode.right!=null){</span><br><span class="line">		        		queue.add(tmpNode.right);</span><br><span class="line">		        		nlastNode = tmpNode.right;</span><br><span class="line">		        	}</span><br><span class="line">		        	if(tmpNode == lastNode){</span><br><span class="line">		        		lastNode = nlastNode;</span><br><span class="line">		        		hight++;</span><br><span class="line">		        		list.add(new ArrayList&lt;Integer&gt;());</span><br><span class="line">		        	}</span><br><span class="line">		        }</span><br><span class="line">		        int[][] data = new int[list.size()][];</span><br><span class="line">		        for(int i=0;i&lt;list.size();i++){</span><br><span class="line">		        	for(int j=0;j&lt;list.get(i).size();j++){</span><br><span class="line">		        		data[i][j] = list.get(i).get(j);</span><br><span class="line">		        	}</span><br><span class="line">		        }		        </span><br><span class="line">			return data;</span><br><span class="line">		 }</span><br><span class="line">		 public static void main(String[] args) {</span><br><span class="line">			   TreeNode e = new TreeNode(1);</span><br><span class="line">			   TreeNode g = new TreeNode(2);</span><br><span class="line">			   TreeNode h = new TreeNode(3);</span><br><span class="line">			   TreeNode i = new TreeNode(4);</span><br><span class="line">			   TreeNode d = new TreeNode(5,null,g);</span><br><span class="line">			   TreeNode f = new TreeNode(6,h,i);</span><br><span class="line">			   TreeNode b = new TreeNode(7,d,e);</span><br><span class="line">			   TreeNode c = new TreeNode(8,f,null);</span><br><span class="line">			   TreeNode root = new TreeNode(9,b,c);</span><br><span class="line">			   int[][] data  =TreePrinter.printTree(root);</span><br><span class="line">			   for(int s=0;s&lt;data.length;s++){</span><br><span class="line">				   for(int j=0;j&lt;data[s].length;j++){</span><br><span class="line">					   System.out.print(data[s][j]+" ");</span><br><span class="line">				   }</span><br><span class="line">				   System.out.println();</span><br><span class="line">			   }</span><br><span class="line">		}</span><br><span class="line">	}</span><br></pre>
 
 
 
@@ -397,13 +404,12 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <ul>
-<li><p>输出结果：</p>
-<pre><code>  9 
-  7 8 
-  5 1 6 
-  2 3 4 </code></pre>
-</li>
+<li>输出结果：</li>
 </ul>
+<pre class="highlight"><span class="line">9 </span><br><span class="line">7 8 </span><br><span class="line">5 1 6 </span><br><span class="line">2 3 4 </span><br></pre>
+
+
+
 <h4 id="往期精彩文章"><a href="#往期精彩文章" class="headerlink" title="往期精彩文章"></a>往期精彩文章</h4><ul>
 <li><a href="https://tanqingbo.cn/Eight-sorting-algorithms/">八大经典排序算法–Java实现</a></li>
 <li><a href="https://tanqingbo.cn/Spring-integrates-hibernate&amp;&amp;Struts/">Spring整合hibernate和Struts</a></li>
@@ -680,37 +686,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
     
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
-    
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
-    
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\爬虫" title="爬虫"><div class="tags-list-item">爬虫</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
     
   </div>
 </div>
