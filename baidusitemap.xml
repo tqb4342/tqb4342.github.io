@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/keras-beginner-guide/</loc>
+    <lastmod>2020-12-23</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/about-keras-model/</loc>
+    <lastmod>2020-12-23</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Functional-model/</loc>
+    <lastmod>2020-12-23</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Sequential-model/</loc>
+    <lastmod>2020-12-23</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Medical-image-analysis-deep-learning/</loc>
+    <lastmod>2020-12-23</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Medical-Data-for-Machine-Learning/</loc>
+    <lastmod>2020-12-23</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Panoramic-image-stitching-based-on-SIFT-features/</loc>
+    <lastmod>2020-12-22</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/chrome-crx-intruduce/</loc>
     <lastmod>2020-12-21</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/GPU-medical-image-processing/</loc>
-    <lastmod>2020-12-21</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Panoramic-image-stitching-based-on-SIFT-features/</loc>
     <lastmod>2020-12-21</lastmod>
   </url>
   <url>

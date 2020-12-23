@@ -1,10 +1,10 @@
+https://tanqingbo.cn/keras-beginner-guide/
+https://tanqingbo.cn/about-keras-model/
+https://tanqingbo.cn/Functional-model/
+https://tanqingbo.cn/Sequential-model/
+https://tanqingbo.cn/Medical-image-analysis-deep-learning/
+https://tanqingbo.cn/Medical-Data-for-Machine-Learning/
+https://tanqingbo.cn/Panoramic-image-stitching-based-on-SIFT-features/
 https://tanqingbo.cn/chrome-crx-intruduce/
 https://tanqingbo.cn/GPU-medical-image-processing/
-https://tanqingbo.cn/Panoramic-image-stitching-based-on-SIFT-features/
 https://tanqingbo.cn/Mean%20filter%20and%20median%20filter%20denoising/
-https://tanqingbo.cn/Image-processing-plus-noise/
-https://tanqingbo.cn/%E5%88%86%E5%89%B2%E7%B2%BE%E5%BA%A6%E8%AF%B4%E6%98%8E/
-https://tanqingbo.cn/Binary-tree-traversal/
-https://tanqingbo.cn/%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E5%AD%97%E5%85%B8/
-https://tanqingbo.cn/%E5%9B%BE%E8%B0%B1%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%88%86%E5%89%B2/
-https://tanqingbo.cn/%E5%88%86%E5%89%B2ROI%E7%AF%87/
