@@ -324,23 +324,30 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<pre><code>+ `model.get_layer()`：依据层名或下标获得层对象。
-+ `model.get_weights()`：返回模型权重张量的列表，类型为`numpy array`。
-+ `model.set_weights()`：从numpy array里将权重载入给模型，要求数组具有与`model.get_weights()`相同的形状。</code></pre>
 <ul>
+<li><p><code>model.get_layer()</code>：依据层名或下标获得层对象。</p>
+</li>
+<li><p><code>model.get_weights()</code>：返回模型权重张量的列表，类型为<code>numpy array</code>。</p>
+</li>
+<li><p><code>model.set_weights()</code>：从numpy array里将权重载入给模型，要求数组具有与<code>model.get_weights()</code>相同的形状。</p>
+</li>
 <li><p><code>model.to_json</code>：返回代表模型的JSON字符串，仅包含网络结构，不包含权值。可以从JSON字符串中重构原模型：</p>
   <pre class="highlight"><span class="line">from models import model_from_json</span><br><span class="line">json_string = model.to_json()</span><br><span class="line">model = model_from_json(json_string)</span><br></pre>
 
 
 </li>
 </ul>
-<pre><code>+ `model.to_yaml`：与`model.to_json`类似，同样可以从产生的YAML字符串中重构模型。
+<ul>
+<li><p><code>model.to_yaml</code>：与<code>model.to_json</code>类似，同样可以从产生的YAML字符串中重构模型。</p>
+  <pre class="highlight"><span class="line">from models import model_from_yaml</span><br><span class="line">yaml_string = model.to_yaml()</span><br><span class="line">model = model_from_yaml(yaml_string)</span><br></pre>
 
-<pre class="highlight"><span class="line">from models import model_from_yaml</span><br><span class="line">yaml_string = model.to_yaml()</span><br><span class="line">model = model_from_yaml(yaml_string)</span><br></pre>
 
-
-+ `model.save_weights(filepath)`：将模型权重保存到指定路径，文件类型是HDF5（后缀是.h5）
-+ `model.load_weights(filepath, by_name=False)`：从HDF5文件中加载权重到当前模型中, 默认情况下模型的结构将保持不变。如果想将权重载入不同的模型（有些层相同）中，则设置`by_name=True`，只有名字匹配的层才会载入权重。</code></pre>
+</li>
+</ul>
+<ul>
+<li><code>model.save_weights(filepath)</code>：将模型权重保存到指定路径，文件类型是HDF5（后缀是.h5）</li>
+<li><code>model.load_weights(filepath, by_name=False)</code>：从HDF5文件中加载权重到当前模型中, 默认情况下模型的结构将保持不变。如果想将权重载入不同的模型（有些层相同）中，则设置<code>by_name=True</code>，只有名字匹配的层才会载入权重。</li>
+</ul>
 		
   </div>	
 <div>
@@ -607,37 +614,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
     
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
-    
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
-    
-    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
-    
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
-    
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\爬虫" title="爬虫"><div class="tags-list-item">爬虫</div></a>
     
   </div>
 </div>
