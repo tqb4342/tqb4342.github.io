@@ -26,7 +26,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2020-11-29">
-  <meta property="og:article:modified_time" content="2020-11-29">
+  <meta property="og:article:modified_time" content="2020-12-23">
   <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
   
   
@@ -324,186 +324,14 @@ var _hmt = _hmt || [];
 <li><p>iText合并单元格的过程如下，首先创建一个cell，设置这个单元格的跨度，</p>
 </li>
 <li><p>如果是横向合并，则通过</p>
-<pre><code>  cell.setColspan(n);  //n代表从当前单元格的位置开始，合并的单元格数</code></pre>
-</li>
+<pre class="highlight"><span class="line">cell.setColspan(n);  //n代表从当前单元格的位置开始，合并的单元格数</span><br></pre></li>
 <li><p>如果是纵向合并，</p>
-<pre><code> cell.setRowspan(n);//n代表从当前单元格的位置开始，合并的单元格数</code></pre>
+<pre class="highlight"><span class="line">cell.setRowspan(n);//n代表从当前单元格的位置开始，合并的单元格数</span><br></pre>
 </li>
-</ul>
-<ul>
 <li><p>代码举例：（一开始是用数组添加单元格的，后来改成直接添加了，更简洁了）</p>
-<p> package com.pdf;</p>
-<pre><code> import java.io.FileOutputStream;
-
- import com.itextpdf.text.Document;
- import com.itextpdf.text.Element;
- import com.itextpdf.text.Font;
- import com.itextpdf.text.Image;
- import com.itextpdf.text.Paragraph;
- import com.itextpdf.text.Phrase;
- import com.itextpdf.text.pdf.BaseFont;
- import com.itextpdf.text.pdf.PdfPCell;
- import com.itextpdf.text.pdf.PdfPTable;
- import com.itextpdf.text.pdf.PdfWriter;
-
- public class pdf_Table {
- public static void main(String[] args) {
-  Document document = new Document();
-  try {
-      BaseFont bfChinese = BaseFont.createFont("C:\\Windows\\Fonts\\simkai.ttf",</code></pre>
- <pre class="highlight"><span class="line">BaseFont.IDENTITY_H,false); // 中文处理 </span><br><span class="line">   Font titleChinese = new Font(bfChinese, 20, Font.BOLD);</span><br><span class="line">   Font font = new Font(bfChinese, 20, Font.ITALIC);// 模板抬头的字体   </span><br><span class="line">   Font moneyFontChinese = new Font(bfChinese, 11, Font.ITALIC); // 币种和租金金额的小一号字体    </span><br><span class="line">   PdfWriter.getInstance(document,</span><br><span class="line">           new FileOutputStream("text1.pdf"));</span><br><span class="line">   document.open();</span><br><span class="line">   PdfPTable table = new PdfPTable(1);//创建一个有1列的表格 </span><br><span class="line">   table.setTotalWidth(15);//设置表格的各列宽度</span><br><span class="line">   PdfPCell cell1 = new PdfPCell(new Paragraph("招聘人员登记表", titleChinese));</span><br><span class="line">   cell1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">   table.addCell(cell1);</span><br><span class="line">   document.add(table);</span><br><span class="line">   float f[] = {2,3,2,3,2};</span><br><span class="line">   PdfPTable table1 = new PdfPTable(5);</span><br><span class="line">   table1.setTotalWidth(f);</span><br></pre>
-
-<pre><code>   String str1[] = {"姓名","出生年月","婚否","专业","健康状况","政治面貌","家庭住址","简历","家庭情况"};
-   String str2[] = {"性别","学历","名族","毕业学校","户籍所在地","身份证号","姓名","亲属关系","年龄","健康状况"};
-   PdfPCell ce1 = null;
-   PdfPCell ce2 = null;
-   PdfPCell ce3 = null;
-
-   ce1 = new PdfPCell(new Paragraph(str1[0],moneyFontChinese));
-   ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-   table1.addCell(ce1);
-   table1.addCell("");
-   ce2 = new PdfPCell(new Paragraph(str2[0],moneyFontChinese));
-   ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
-   table1.addCell(ce2);
-   table1.addCell("");
-   ce3 = new PdfPCell(new Paragraph("照片",moneyFontChinese));
-   ce3.setHorizontalAlignment(Element.ALIGN_CENTER);//水平居中
-   ce3.setUseAscender(true);//垂直居中
-   ce3.setVerticalAlignment(ce3.ALIGN_MIDDLE);//垂直居中
-   ce3.setRowspan(4); //合并同一行的四个格
-   Image img = Image.getInstance("E:\\我的电脑备份\\照片\\照片素材\\旅行\\长城\\IMG_20140727_095516.jpg");//选择图片
-   //   img.setAlignment(1);
-    //  img.scaleAbsolute(110,150);//控制图片大小
-   ce3.setImage(img);
-   table1.addCell(ce3);
-
-       for(int i=1;i&lt;4;i++){
-       ce1 = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));
-       ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-       table1.addCell(ce1);
-       table1.addCell("");
-       ce2 = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));
-       ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
-       table1.addCell(ce2);
-       table1.addCell("");
-   }
-  for(int i=4;i&lt;6;i++){
-       ce1 = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));
-       ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-       table1.addCell(ce1);
-       table1.addCell("");
-       ce2 = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));
-       ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
-       table1.addCell(ce2);
-       ce3 = new PdfPCell(new Paragraph(""));
-       ce3.setColspan(2); //合并同一行的2个格
-       table1.addCell(ce3);
-  }
-  ce1 = new PdfPCell(new Paragraph(str1[6],moneyFontChinese));
-  ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-  table1.addCell(ce1);
-  ce3 = new PdfPCell(new Paragraph(""));
-  ce3.setColspan(4); //合并同一行的2个格
-  table1.addCell(ce3);</code></pre>
+<pre class="highlight"><span class="line">package com.pdf;</span><br><span class="line">	</span><br><span class="line">	import java.io.FileOutputStream;</span><br><span class="line">	</span><br><span class="line">	import com.itextpdf.text.Document;</span><br><span class="line">	import com.itextpdf.text.Element;</span><br><span class="line">	import com.itextpdf.text.Font;</span><br><span class="line">	import com.itextpdf.text.Image;</span><br><span class="line">	import com.itextpdf.text.Paragraph;</span><br><span class="line">	import com.itextpdf.text.Phrase;</span><br><span class="line">	import com.itextpdf.text.pdf.BaseFont;</span><br><span class="line">	import com.itextpdf.text.pdf.PdfPCell;</span><br><span class="line">	import com.itextpdf.text.pdf.PdfPTable;</span><br><span class="line">	import com.itextpdf.text.pdf.PdfWriter;</span><br><span class="line">	</span><br><span class="line">	public class pdf_Table {</span><br><span class="line">	public static void main(String[] args) {</span><br><span class="line">	 Document document = new Document();</span><br><span class="line">	 try {</span><br><span class="line">	 	BaseFont bfChinese = BaseFont.createFont("C:\\Windows\\Fonts\\simkai.ttf",</span><br><span class="line"></span><br><span class="line">			BaseFont.IDENTITY_H,false); // 中文处理 </span><br><span class="line">      Font titleChinese = new Font(bfChinese, 20, Font.BOLD);</span><br><span class="line">      Font font = new Font(bfChinese, 20, Font.ITALIC);// 模板抬头的字体   </span><br><span class="line">      Font moneyFontChinese = new Font(bfChinese, 11, Font.ITALIC); // 币种和租金金额的小一号字体    </span><br><span class="line">      PdfWriter.getInstance(document,</span><br><span class="line">              new FileOutputStream("text1.pdf"));</span><br><span class="line">      document.open();</span><br><span class="line">      PdfPTable table = new PdfPTable(1);//创建一个有1列的表格 </span><br><span class="line">      table.setTotalWidth(15);//设置表格的各列宽度</span><br><span class="line">      PdfPCell cell1 = new PdfPCell(new Paragraph("招聘人员登记表", titleChinese));</span><br><span class="line">      cell1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">      table.addCell(cell1);</span><br><span class="line">      document.add(table);</span><br><span class="line">      float f[] = {2,3,2,3,2};</span><br><span class="line">      PdfPTable table1 = new PdfPTable(5);</span><br><span class="line">      table1.setTotalWidth(f);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      String str1[] = {"姓名","出生年月","婚否","专业","健康状况","政治面貌","家庭住址","简历","家庭情况"};</span><br><span class="line">      String str2[] = {"性别","学历","名族","毕业学校","户籍所在地","身份证号","姓名","亲属关系","年龄","健康状况"};</span><br><span class="line">      PdfPCell ce1 = null;</span><br><span class="line">      PdfPCell ce2 = null;</span><br><span class="line">      PdfPCell ce3 = null;</span><br><span class="line">    </span><br><span class="line">      ce1 = new PdfPCell(new Paragraph(str1[0],moneyFontChinese));</span><br><span class="line">      ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">      table1.addCell(ce1);</span><br><span class="line">      table1.addCell("");</span><br><span class="line">      ce2 = new PdfPCell(new Paragraph(str2[0],moneyFontChinese));</span><br><span class="line">      ce2.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">      table1.addCell(ce2);</span><br><span class="line">      table1.addCell("");</span><br><span class="line">      ce3 = new PdfPCell(new Paragraph("照片",moneyFontChinese));</span><br><span class="line">      ce3.setHorizontalAlignment(Element.ALIGN_CENTER);//水平居中</span><br><span class="line">      ce3.setUseAscender(true);//垂直居中</span><br><span class="line">      ce3.setVerticalAlignment(ce3.ALIGN_MIDDLE);//垂直居中</span><br><span class="line">      ce3.setRowspan(4); //合并同一行的四个格</span><br><span class="line">      Image img = Image.getInstance("E:\\我的电脑备份\\照片\\照片素材\\旅行\\长城\\IMG_20140727_095516.jpg");//选择图片</span><br><span class="line">      //   img.setAlignment(1);</span><br><span class="line">       //  img.scaleAbsolute(110,150);//控制图片大小</span><br><span class="line">      ce3.setImage(img);</span><br><span class="line">      table1.addCell(ce3);</span><br><span class="line"></span><br><span class="line">    	  for(int i=1;i&lt;4;i++){</span><br><span class="line">     	 ce1 = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));</span><br><span class="line">          ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">          table1.addCell(ce1);</span><br><span class="line">          table1.addCell("");</span><br><span class="line">          ce2 = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));</span><br><span class="line">          ce2.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">          table1.addCell(ce2);</span><br><span class="line">          table1.addCell("");</span><br><span class="line">      }</span><br><span class="line">     for(int i=4;i&lt;6;i++){</span><br><span class="line">     	 ce1 = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));</span><br><span class="line">          ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">          table1.addCell(ce1);</span><br><span class="line">          table1.addCell("");</span><br><span class="line">          ce2 = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));</span><br><span class="line">          ce2.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">          table1.addCell(ce2);</span><br><span class="line">          ce3 = new PdfPCell(new Paragraph(""));</span><br><span class="line">          ce3.setColspan(2); //合并同一行的2个格</span><br><span class="line">          table1.addCell(ce3);</span><br><span class="line">     }</span><br><span class="line">     ce1 = new PdfPCell(new Paragraph(str1[6],moneyFontChinese));</span><br><span class="line">     ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">     table1.addCell(ce1);</span><br><span class="line">     ce3 = new PdfPCell(new Paragraph(""));</span><br><span class="line">     ce3.setColspan(4); //合并同一行的2个格</span><br><span class="line">     table1.addCell(ce3);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     ce1 = new PdfPCell(new Paragraph(str1[8],moneyFontChinese));</span><br><span class="line">     ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">     ce1.setUseAscender(true);//垂直居中</span><br><span class="line">     ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中</span><br><span class="line">     ce1.setRowspan(5); //合并同一行的四个格</span><br><span class="line">     table1.addCell(ce1);</span><br><span class="line">     </span><br><span class="line">     for(int i=0;i&lt;4;i++){</span><br><span class="line">     	ce2 = new PdfPCell(new Paragraph(str2[i+6],moneyFontChinese));</span><br><span class="line">         ce2.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">         table1.addCell(ce2);</span><br><span class="line">     }</span><br><span class="line">     for(int i=0;i&lt;16;i++){</span><br><span class="line">     	  table1.addCell(" ");</span><br><span class="line">     }</span><br><span class="line">     ce1 = new PdfPCell(new Paragraph(str1[7],moneyFontChinese));</span><br><span class="line">     ce1.setMinimumHeight(90);</span><br><span class="line">     ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">     ce1.setUseAscender(true);//垂直居中</span><br><span class="line">     ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中</span><br><span class="line">     table1.addCell(ce1);</span><br><span class="line">     ce2 = new PdfPCell(new Paragraph(" "));</span><br><span class="line">     ce2.setColspan(4);</span><br><span class="line">     table1.addCell(ce2);</span><br><span class="line">   String str = "1.多说几句话身份和空间分割法与人文u影的交付该雕。"</span><br><span class="line">   		+"2.活动官方发布没办法长三角和环境事故。"</span><br><span class="line">   				+ "3,白癜风是快捷方便和技术快递费";</span><br><span class="line"></span><br><span class="line">     ce1 = new PdfPCell(new Paragraph("注意事项",moneyFontChinese));</span><br><span class="line">     ce1.setMinimumHeight(90);</span><br><span class="line">     ce1.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">     ce1.setUseAscender(true);//垂直居中</span><br><span class="line">     ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中</span><br><span class="line">     table1.addCell(ce1);</span><br><span class="line">     ce2 = new PdfPCell(new Paragraph(str,moneyFontChinese));</span><br><span class="line">     ce2.setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">     ce2.setUseAscender(true);//垂直居中</span><br><span class="line">     ce2.setVerticalAlignment(ce2.ALIGN_MIDDLE);//垂直居中</span><br><span class="line">     ce2.setColspan(4);</span><br><span class="line">     table1.addCell(ce2);</span><br><span class="line">     </span><br><span class="line">    //        Image img = Image.getInstance("E:\\我的电脑备份\\照片\\照片素材\\旅行\\长城\\IMG_20140727_095516.jpg");//选择图片</span><br><span class="line">    //        img.setAlignment(1);</span><br><span class="line">    //        img.scaleAbsolute(100,100);//控制图片大小</span><br><span class="line">    //        img.setAbsolutePosition(0,200);//控制图片位置</span><br><span class="line">    //        table1.addCell(img);</span><br><span class="line">            </span><br><span class="line">    //        ce3 = new PdfPCell(new Paragraph(""));</span><br><span class="line">    //        ce3.setColspan(4); //合并同一行的2个格</span><br><span class="line">    //        table1.addCell(ce3);</span><br><span class="line">    //         for(int i=1;i&lt;9;i++){</span><br><span class="line">    //        	 if(i&lt;6){</span><br><span class="line">    //         ce1[i] = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));</span><br><span class="line">    //         ce1[i].setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">    //         ce2[i] = new PdfPCell(new Paragraph(""));</span><br><span class="line">    //          ce3[i] = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));</span><br><span class="line">    //          ce3[i].setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">    //         ce4[i] = new PdfPCell(new Paragraph(""));</span><br><span class="line">    //          ce5[i] = new PdfPCell(new Paragraph("  "));</span><br><span class="line">    //        	 }</span><br><span class="line">    //        	 else {</span><br><span class="line">    //        		 ce1[i] = new PdfPCell(new Paragraph(str1[i],font));</span><br><span class="line">    //                 ce1[i].setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">    //                 ce2[i] = new PdfPCell(new Paragraph(""));</span><br><span class="line">    //                  ce3[i] = new PdfPCell(new Paragraph(str2[i],font));</span><br><span class="line">    //                  ce3[i].setHorizontalAlignment(Element.ALIGN_CENTER);</span><br><span class="line">    //                 ce4[i] = new PdfPCell(new Paragraph(""));</span><br><span class="line">    //                  ce5[i] = new PdfPCell(new Paragraph(""));</span><br><span class="line">    //        	 }</span><br><span class="line">    //       //  document.add(table1[i]);</span><br><span class="line">    //         }</span><br><span class="line">    //         </span><br><span class="line">    //      //   ce5[0].setRowspan(4);</span><br><span class="line">    //         ce4[4].setColspan(2);  //合并同一行的两个格</span><br><span class="line">    //         ce4[5].setColspan(2);</span><br><span class="line">    //         ce2[6].setColspan(4);  //合并同一行的四个格</span><br><span class="line">    //         ce2[7].setColspan(4);</span><br><span class="line">    //         ce2[8].setColspan(4);</span><br><span class="line">    //         for(int i=0;i&lt;9;i++){</span><br><span class="line">    //        	  table1[i].addCell(ce1[i]);</span><br><span class="line">    //              table1[i].addCell(ce2[i]);</span><br><span class="line">    //              table1[i].addCell(ce3[i]);</span><br><span class="line">    //              table1[i].addCell(ce4[i]);</span><br><span class="line">    //              if(i&gt;0)</span><br><span class="line">    //              table1[i].addCell(ce5[i]);</span><br><span class="line">    //        	 document.add(table1[i]);</span><br><span class="line">    //         }</span><br><span class="line">             document.add(table1);</span><br><span class="line">    		  document.close();</span><br><span class="line">         } catch (Exception e) {</span><br><span class="line">             e.printStackTrace();</span><br><span class="line">         } </span><br><span class="line">    }</span><br><span class="line">    }</span><br></pre></li>
+<li><p>效果如下：</p>
 </li>
-</ul>
-<pre><code>    ce1 = new PdfPCell(new Paragraph(str1[8],moneyFontChinese));
-    ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-    ce1.setUseAscender(true);//垂直居中
-    ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中
-    ce1.setRowspan(5); //合并同一行的四个格
-    table1.addCell(ce1);
-
-    for(int i=0;i&lt;4;i++){
-        ce2 = new PdfPCell(new Paragraph(str2[i+6],moneyFontChinese));
-        ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table1.addCell(ce2);
-    }
-    for(int i=0;i&lt;16;i++){
-          table1.addCell(" ");
-    }
-    ce1 = new PdfPCell(new Paragraph(str1[7],moneyFontChinese));
-    ce1.setMinimumHeight(90);
-    ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-    ce1.setUseAscender(true);//垂直居中
-    ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中
-    table1.addCell(ce1);
-    ce2 = new PdfPCell(new Paragraph(" "));
-    ce2.setColspan(4);
-    table1.addCell(ce2);
-  String str = "1.多说几句话身份和空间分割法与人文u影的交付该雕。"
-          +"2.活动官方发布没办法长三角和环境事故。"
-                  + "3,白癜风是快捷方便和技术快递费";
-
-    ce1 = new PdfPCell(new Paragraph("注意事项",moneyFontChinese));
-    ce1.setMinimumHeight(90);
-    ce1.setHorizontalAlignment(Element.ALIGN_CENTER);
-    ce1.setUseAscender(true);//垂直居中
-    ce1.setVerticalAlignment(ce1.ALIGN_MIDDLE);//垂直居中
-    table1.addCell(ce1);
-    ce2 = new PdfPCell(new Paragraph(str,moneyFontChinese));
-    ce2.setHorizontalAlignment(Element.ALIGN_CENTER);
-    ce2.setUseAscender(true);//垂直居中
-    ce2.setVerticalAlignment(ce2.ALIGN_MIDDLE);//垂直居中
-    ce2.setColspan(4);
-    table1.addCell(ce2);
-
-   //        Image img = Image.getInstance("E:\\我的电脑备份\\照片\\照片素材\\旅行\\长城\\IMG_20140727_095516.jpg");//选择图片
-   //        img.setAlignment(1);
-   //        img.scaleAbsolute(100,100);//控制图片大小
-   //        img.setAbsolutePosition(0,200);//控制图片位置
-   //        table1.addCell(img);
-
-   //        ce3 = new PdfPCell(new Paragraph(""));
-   //        ce3.setColspan(4); //合并同一行的2个格
-   //        table1.addCell(ce3);
-   //         for(int i=1;i&lt;9;i++){
-   //             if(i&lt;6){
-   //         ce1[i] = new PdfPCell(new Paragraph(str1[i],moneyFontChinese));
-   //         ce1[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-   //         ce2[i] = new PdfPCell(new Paragraph(""));
-   //          ce3[i] = new PdfPCell(new Paragraph(str2[i],moneyFontChinese));
-   //          ce3[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-   //         ce4[i] = new PdfPCell(new Paragraph(""));
-   //          ce5[i] = new PdfPCell(new Paragraph("  "));
-   //             }
-   //             else {
-   //                 ce1[i] = new PdfPCell(new Paragraph(str1[i],font));
-   //                 ce1[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-   //                 ce2[i] = new PdfPCell(new Paragraph(""));
-   //                  ce3[i] = new PdfPCell(new Paragraph(str2[i],font));
-   //                  ce3[i].setHorizontalAlignment(Element.ALIGN_CENTER);
-   //                 ce4[i] = new PdfPCell(new Paragraph(""));
-   //                  ce5[i] = new PdfPCell(new Paragraph(""));
-   //             }
-   //       //  document.add(table1[i]);
-   //         }
-   //         
-   //      //   ce5[0].setRowspan(4);
-   //         ce4[4].setColspan(2);  //合并同一行的两个格
-   //         ce4[5].setColspan(2);
-   //         ce2[6].setColspan(4);  //合并同一行的四个格
-   //         ce2[7].setColspan(4);
-   //         ce2[8].setColspan(4);
-   //         for(int i=0;i&lt;9;i++){
-   //              table1[i].addCell(ce1[i]);
-   //              table1[i].addCell(ce2[i]);
-   //              table1[i].addCell(ce3[i]);
-   //              table1[i].addCell(ce4[i]);
-   //              if(i&gt;0)
-   //              table1[i].addCell(ce5[i]);
-   //             document.add(table1[i]);
-   //         }
-            document.add(table1);
-             document.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } 
-   }
-   }</code></pre>
-<ul>
-<li>效果如下：</li>
 </ul>
 <p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171427.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201129171427.jpeg"></p>
 <h4 id="往期精彩文章"><a href="#往期精彩文章" class="headerlink" title="往期精彩文章"></a>往期精彩文章</h4><ul>
