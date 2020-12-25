@@ -1,10 +1,10 @@
+https://tanqingbo.cn/How-does-the-program-run/
+https://tanqingbo.cn/DNN/
+https://tanqingbo.cn/Discriminative-and-Generative-model/
+https://tanqingbo.cn/Gradient-descent-optimization/
+https://tanqingbo.cn/Bias-and-Variance/
+https://tanqingbo.cn/Linear-regression-of-machine-learning/
 https://tanqingbo.cn/itext-makes-pdf-form/
 https://tanqingbo.cn/about-keras-model/
 https://tanqingbo.cn/keras-beginner-guide/
 https://tanqingbo.cn/Functional-model/
-https://tanqingbo.cn/Sequential-model/
-https://tanqingbo.cn/Medical-image-analysis-deep-learning/
-https://tanqingbo.cn/Medical-Data-for-Machine-Learning/
-https://tanqingbo.cn/Panoramic-image-stitching-based-on-SIFT-features/
-https://tanqingbo.cn/chrome-crx-intruduce/
-https://tanqingbo.cn/GPU-medical-image-processing/
