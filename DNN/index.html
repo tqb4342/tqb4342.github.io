@@ -302,14 +302,14 @@ var _hmt = _hmt || [];
 		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
 		</ul>
 	-->
-    <h1 id="深度神经网络-DNN"><a href="#深度神经网络-DNN" class="headerlink" title="深度神经网络(DNN)"></a>深度神经网络(DNN)</h1><ul>
+    <ul>
 <li>当我们训练网络的时候，通常会出现如下两种情况：<ol>
 <li><strong>第一种情况：</strong>训练数据表现不好，这种时候通常可以使用新的激活函数，或者调整学习率。</li>
 <li><strong>第二种情况：</strong>训练数据表现的很好，但是测试数据的表现很差，这个时候可以提前终止、数据正则化和Dropout的方法来改善情况。</li>
 </ol>
 </li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/wLGhv8P.png" class="lozad post-image"src="https://i.imgur.com/wLGhv8P.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161046.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161046.png"></p>
 <ul>
 <li>不一定网络越深，performance越好。</li>
 <li>接下来我们先讨论针对以上两种情况，具体如何改善：<ul>
@@ -322,34 +322,34 @@ var _hmt = _hmt || [];
 <li>网络在做梯度下降时，如果我们用sigmoid作为激活函数，在接近输出的地方梯度很大，学习速度快，通过反向传播，在接近出入层的地方，梯度会变得很缓，学习效率很慢。这就是梯度消失的问题。</li>
 <li>因为sigmoid在接近0和1的地方会突然变得很缓慢。如图：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/q2ayj85.png" class="lozad post-image"src="https://i.imgur.com/q2ayj85.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161116.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161116.png"></p>
 <ul>
 <li>为了解决这个问题，我们引入其它激活函数。</li>
 </ul>
 <h3 id="整流线性单元（ReLU）"><a href="#整流线性单元（ReLU）" class="headerlink" title="整流线性单元（ReLU）"></a>整流线性单元（ReLU）</h3><ul>
 <li>很自然的，我们会想到能不能引入一个变换均匀的激活函数，这样就能减缓梯度消失的问题了。于是我们引入了ReLU,它的函数图像如下：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/x8rRcmZ.png" class="lozad post-image"src="https://i.imgur.com/x8rRcmZ.png"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-d4a97f6625b697fe93a4f1b5de7b672c_720w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-d4a97f6625b697fe93a4f1b5de7b672c_720w.jpg" class="lozad post-image"></p>
 <ul>
 <li>小于0的部分函数值为0，大于0的部分函数为<code>a=z</code>。</li>
 <li>ReLU的变种，有人觉得z值小于0的部分函数值为0，这个还是不好，没有梯度了。于是引入ReLU的变种。令z&lt;0的部分函数值为<code>a = αz</code>,其中α 也可以根据gradient descent学习出来，这样激活函数就变得更加合理了，可以在一定程度上减少训练时间。函数图像如下：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/T9CJIgZ.png" class="lozad post-image"src="https://i.imgur.com/T9CJIgZ.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161158.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161158.png"></p>
 <h3 id="Maxout"><a href="#Maxout" class="headerlink" title="Maxout"></a>Maxout</h3><ul>
 <li>顾名思义，输出最大值，使用这种激活函数时，需要两个及以上结点组成一组，从下图中我们可以看出Maxout是如何工作的。</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/PugJlvI.png" class="lozad post-image"src="https://i.imgur.com/PugJlvI.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161223.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161223.jpeg" class="lozad post-image"></p>
 <ul>
 <li>Maxout是可学习的激活函数，它可以是任何分段线性凸函数。有几段取决于每一组中元素的个数。</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/jzP6tCO.png" class="lozad post-image"src="https://i.imgur.com/jzP6tCO.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161229.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161229.png" class="lozad post-image"></p>
 <h2 id="第一种情况之学习率"><a href="#第一种情况之学习率" class="headerlink" title="第一种情况之学习率"></a>第一种情况之学习率</h2><ul>
 <li>前面在讲<a href="https://tanqingbo.cn/Gradient-descent-optimization">梯度下降</a>的时候讲到了<code>Adagrad</code>的方法，就是将每个参数的学习率除以其先前导数的均方根当作步长，在深度神经网络中，要介绍一种与<code>Adagrad</code>类似的学习率调整方法：<code>RMSProp</code>。</li>
 </ul>
 <h3 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h3><ul>
 <li>使用<code>RMSProp</code>方法的权值更新公式如下：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/We5pOBI.png" class="lozad post-image"src="https://i.imgur.com/We5pOBI.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161239.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161239.png" class="lozad post-image"></p>
 <ul>
 <li>可以通过调整<code>α</code>使得下一次的权值调整是受当前梯度倒数gt的影响都一些还是受前面的调整多一些。如果<code>α</code>接近0，则受当前梯度倒数gt影响多一些。</li>
 <li>而且<code>α</code>的值还可以通过<code>gradient descen</code>的方法学习出来。</li>
@@ -359,18 +359,18 @@ var _hmt = _hmt || [];
 <li>现实生活中，当一个球从高处滚落下来，在遇到平坦处和低谷处时，由于惯性的原因有可能还会继续滚动，直到到达全局最低点的位置。因此在机器学习中，通过学习率更新权值时，能不能也引入一个<code>惯性</code>，使迭代到达局部最优时，还有有一个动量继续向前，直到到达全局最优呢？</li>
 <li>基于这个想法，接下来开始<code>Momentum</code>方法：使移动的方向不仅基于当前求导的方向，还要参考上一次移动的方向。<strong>参数的更新过程如下</strong>：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/WbmAuOZ.png" class="lozad post-image"src="https://i.imgur.com/WbmAuOZ.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161248.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161248.png" class="lozad post-image"></p>
 <ul>
 <li><strong>加入了动量之后权值更行的过程中运动轨迹如下，</strong>在遇到平坦处和低谷时，由于受到上一次方向的影响，还会继续向前。</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/4gZ7QvF.png" class="lozad post-image"src="https://i.imgur.com/4gZ7QvF.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161253.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161253.png" class="lozad post-image"></p>
 <ul>
 <li><strong>Adam：</strong><code>RMSProp + Momentum</code>称为<strong>Adam</strong>。</li>
 </ul>
 <h2 id="第二种情况"><a href="#第二种情况" class="headerlink" title="第二种情况"></a>第二种情况</h2><h3 id="Early-Stopping"><a href="#Early-Stopping" class="headerlink" title="Early Stopping"></a>Early Stopping</h3><ul>
 <li>网络在训练的过程中，可能训练的时间越长，对<code>Training set</code>的<code>performance</code>就越好，但是用训练时间很长得到的参数作用于<code>Testing set</code>时，有可能并不会得到预期中的好结果，反而提前结束训练得到的参数作用于<code>Testing set</code>能得到相对满意的结果。</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/JFCOpx8.png" class="lozad post-image"src="https://i.imgur.com/JFCOpx8.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161259.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161259.png" class="lozad post-image"></p>
 <ul>
 <li>所以我们在训练时，有时需要提前结束，至于到底什么时候结束，我们也不清楚，这个时候，验证集的作用就体现出来了。</li>
 <li>在<code>Training set</code>分出一部分数据用来做<code>Validation set</code>，当获得的参数在<code>Validation set</code>取得好结果的时候，就停止训练，再将参数作用于<code>Testing set</code>。</li>
@@ -378,14 +378,14 @@ var _hmt = _hmt || [];
 <h3 id="正则化-Regularization"><a href="#正则化-Regularization" class="headerlink" title="正则化(Regularization)"></a>正则化(Regularization)</h3><ul>
 <li>权值更新公式如下：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/KpKXdg4.png" class="lozad post-image"src="https://i.imgur.com/KpKXdg4.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161311.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161311.png" class="lozad post-image"></p>
 <ul>
 <li>其中sgn(x)时符号函数，x为正数时值为1，x值为负数时，值为-1，x为0时，值为0.</li>
 </ul>
 <h3 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h3><ul>
 <li>在每次训练之前，都摘掉p%和神经元，如下图所示：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/1PlUDfj.png" class="lozad post-image"src="https://i.imgur.com/1PlUDfj.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161318.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225161318.png" class="lozad post-image"></p>
 <ul>
 <li>这样训练没循环一次我们都是使用新的网络结构在训练。如果训练时神经元的摘除率为p%，则最后所哦于权值都乘以1-p%。</li>
 <li>假设<code>dropout rate</code>为50%，如果通过训练得到的权值为<code>w=1</code>，则最后令<code>w=0.5</code>作用于<code>Testing set</code>。</li>
@@ -479,7 +479,7 @@ var _hmt = _hmt || [];
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-DNN"><span class="toc-text">深度神经网络(DNN)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">第一种情况之激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B5%81%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83%EF%BC%88ReLU%EF%BC%89"><span class="toc-text">整流线性单元（ReLU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maxout"><span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-text">第一种情况之学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F-Momentum"><span class="toc-text">动量(Momentum)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Early-Stopping"><span class="toc-text">Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="toc-text">正则化(Regularization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">第一种情况之激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B5%81%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83%EF%BC%88ReLU%EF%BC%89"><span class="toc-text">整流线性单元（ReLU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maxout"><span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-text">第一种情况之学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F-Momentum"><span class="toc-text">动量(Momentum)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Early-Stopping"><span class="toc-text">Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="toc-text">正则化(Regularization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -534,7 +534,7 @@ var _hmt = _hmt || [];
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-DNN"><span class="toc-text">深度神经网络(DNN)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">第一种情况之激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B5%81%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83%EF%BC%88ReLU%EF%BC%89"><span class="toc-text">整流线性单元（ReLU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maxout"><span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-text">第一种情况之学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F-Momentum"><span class="toc-text">动量(Momentum)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Early-Stopping"><span class="toc-text">Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="toc-text">正则化(Regularization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">第一种情况之激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B5%81%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83%EF%BC%88ReLU%EF%BC%89"><span class="toc-text">整流线性单元（ReLU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maxout"><span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-text">第一种情况之学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F-Momentum"><span class="toc-text">动量(Momentum)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Early-Stopping"><span class="toc-text">Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="toc-text">正则化(Regularization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li></ol>
     </div>
   </article>
   
@@ -644,37 +644,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
-    
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\爬虫" title="爬虫"><div class="tags-list-item">爬虫</div></a>
     
   </div>
 </div>
@@ -731,7 +731,7 @@ var _hmt = _hmt || [];
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-DNN"><span class="toc-text">深度神经网络(DNN)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">第一种情况之激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B5%81%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83%EF%BC%88ReLU%EF%BC%89"><span class="toc-text">整流线性单元（ReLU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maxout"><span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-text">第一种情况之学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F-Momentum"><span class="toc-text">动量(Momentum)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Early-Stopping"><span class="toc-text">Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="toc-text">正则化(Regularization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-text">第一种情况之激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-text">梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E6%B5%81%E7%BA%BF%E6%80%A7%E5%8D%95%E5%85%83%EF%BC%88ReLU%EF%BC%89"><span class="toc-text">整流线性单元（ReLU）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Maxout"><span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5%E4%B9%8B%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="toc-text">第一种情况之学习率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RMSProp"><span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%87%8F-Momentum"><span class="toc-text">动量(Momentum)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">第二种情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Early-Stopping"><span class="toc-text">Early Stopping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96-Regularization"><span class="toc-text">正则化(Regularization)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol></li></ol>
   </article>
   
   

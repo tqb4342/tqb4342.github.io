@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://tanqingbo.cn/How-does-the-program-run/</loc>
+    <loc>https://tanqingbo.cn/Linear-regression-of-machine-learning/</loc>
     
     <lastmod>2020-12-25</lastmod>
     
@@ -10,6 +10,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/DNN/</loc>
+    
+    <lastmod>2020-12-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/How-does-the-program-run/</loc>
     
     <lastmod>2020-12-25</lastmod>
     
@@ -31,13 +38,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/Bias-and-Variance/</loc>
-    
-    <lastmod>2020-12-25</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Linear-regression-of-machine-learning/</loc>
     
     <lastmod>2020-12-25</lastmod>
     

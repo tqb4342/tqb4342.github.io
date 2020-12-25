@@ -1,9 +1,9 @@
-https://tanqingbo.cn/How-does-the-program-run/
+https://tanqingbo.cn/Linear-regression-of-machine-learning/
 https://tanqingbo.cn/DNN/
+https://tanqingbo.cn/How-does-the-program-run/
 https://tanqingbo.cn/Discriminative-and-Generative-model/
 https://tanqingbo.cn/Gradient-descent-optimization/
 https://tanqingbo.cn/Bias-and-Variance/
-https://tanqingbo.cn/Linear-regression-of-machine-learning/
 https://tanqingbo.cn/itext-makes-pdf-form/
 https://tanqingbo.cn/about-keras-model/
 https://tanqingbo.cn/keras-beginner-guide/

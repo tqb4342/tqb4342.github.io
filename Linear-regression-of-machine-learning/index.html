@@ -320,49 +320,49 @@ var _hmt = _hmt || [];
 <li>根据当前pokemon的cp值以及其他属性，预测它进化之后的cp值。<h3 id="Step1：create-Model（创建模型）"><a href="#Step1：create-Model（创建模型）" class="headerlink" title="Step1：create Model（创建模型）"></a>Step1：create Model（创建模型）</h3></li>
 <li>建立回归方程，假设方程为线性的：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/PuiOyEK.png" class="lozad post-image"src="https://i.imgur.com/PuiOyEK.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162046.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162046.jpeg" class="lozad post-image"></p>
 <ul>
 <li>其中xi为pokemon的特征（feature），wi:权重(weight);b:偏差(bias)；y为预测的升级之后pokemon的Cp值。</li>
 <li>假设现在只考虑pokemon当前cp值这一个feature，于是方程可以变成：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/Bt4N3HK.png" class="lozad post-image"src="https://i.imgur.com/Bt4N3HK.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162054.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162054.jpeg" class="lozad post-image"></p>
 <ul>
 <li>现在问题变成如何找到偏差b与权值w使得预测出来的y接近真实值y，首先想到的是穷举负无穷到正无穷之间的数，从而找到最优的b和w.这显然不可能。于是，我们想能不能从已有的真实数据集上学习出我们想要的偏差b与权值w？<h3 id="step2-loss-function（损失函数）"><a href="#step2-loss-function（损失函数）" class="headerlink" title="step2:loss function（损失函数）"></a>step2:loss function（损失函数）</h3></li>
 <li>假设我们已经知道了，10组pokemon的cp值以及升级后的cp值，根据回归方程，我们定义损失函数L。</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/zBHaFys.png" class="lozad post-image"src="https://i.imgur.com/zBHaFys.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162102.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162102.jpeg" class="lozad post-image"></p>
 <ul>
 <li>损失函数L的结果等于真实值减去方程预测出来的值，上图红线部分为预测值，显然L是w和b的函数，现在我们的目标变成寻找使损失函数L最小的w和b。<h3 id="Step-3-Gradient-Descent（梯度下降）"><a href="#Step-3-Gradient-Descent（梯度下降）" class="headerlink" title="Step 3: Gradient Descent（梯度下降）"></a>Step 3: Gradient Descent（梯度下降）</h3></li>
 <li>这回我们当然不能再用穷举法求w和b了。我们可以用一个稍微高级一点的方法了，叫做梯度下降法，我们先以单个变量讲解度下降法，先只考虑W。</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/ErXwfVt.png" class="lozad post-image"src="https://i.imgur.com/ErXwfVt.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162111.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162111.jpeg" class="lozad post-image"></p>
 <ul>
 <li>图为损失函数L的曲线，只需要找到使L最小的W值，在图中可以很容易的看出，L的最小值在谷底取得，但是我们不知道此时W取何值，所以需要先随机初始化w，再沿着曲线下降的方向慢慢调整w,直到L取到最小值，此时的w就为我们求的w.</li>
 <li>曲线下降，我们很容易想到该点的斜率，即斜率小于0，则曲线下降，可以加大w，斜率大于0，则曲线上升，减少w。</li>
 <li>斜率就是在该点求导咯，于是w可以按如下公式调整：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/rfl2WQm.png" class="lozad post-image"src="https://i.imgur.com/rfl2WQm.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162118.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162118.jpeg" class="lozad post-image"></p>
 <ul>
 <li>这样我们就能相对快一点找到使L最小的W了。</li>
 <li>刚刚只是考虑W一个参数，考虑w和b两个参数的话，就让L同时对w和l求偏导，再按偏导符号调整就可以了。如图：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/3kdhTJs.png" class="lozad post-image"src="https://i.imgur.com/3kdhTJs.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162126.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162126.jpeg" class="lozad post-image"></p>
 <ul>
 <li>如下公式即位损失函数L的梯度：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/ZcWDXOF.png" class="lozad post-image"src="https://i.imgur.com/ZcWDXOF.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162133.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162133.png" class="lozad post-image"></p>
 <h3 id="over-fitting（过拟合）"><a href="#over-fitting（过拟合）" class="headerlink" title="over fitting（过拟合）"></a>over fitting（过拟合）</h3><ul>
 <li>当我们令回归方程为一次时，即方程形式如下：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/Bt4N3HK.png" class="lozad post-image"src="https://i.imgur.com/Bt4N3HK.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162139.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162139.jpeg" class="lozad post-image"></p>
 <ul>
 <li>用梯度下降的方法求出b和w,再去预测pokemon的测试数据时，平均误差为35.当我们将回归方程设为2次时：</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/YwXZJ3h.png" class="lozad post-image"src="https://i.imgur.com/YwXZJ3h.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162145.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162145.jpeg" class="lozad post-image"></p>
 <ul>
 <li>用梯度下降法求出W和b,再去预测pokemon的测试数据时，平均误差为18.于是猜想是不是回归方程的次数越高，对测试数据的预测就越准确呢？</li>
 </ul>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/n67wT90.png" class="lozad post-image"src="https://i.imgur.com/n67wT90.png"><br><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.imgur.com/z1aqG6f.png" class="lozad post-image"src="https://i.imgur.com/z1aqG6f.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162152.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162152.jpeg" class="lozad post-image"><br><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162159.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225162159.jpeg" class="lozad post-image"></p>
 <ul>
 <li>上图分别是当回归方程是2、3、4、5次时，回归方程预测的曲线图，最后一张是对training data 和 testing data的误差，由图可知，虽然回归方程越复杂，对训练数据效果越好，但是对测试数据可能会更差，这就是over fiting。</li>
 </ul>
@@ -632,37 +632,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
-    
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
+    
+    <a href="\tags\数据结构" title="数据结构"><div class="tags-list-item">数据结构</div></a>
+    
+    <a href="\tags\爬虫" title="爬虫"><div class="tags-list-item">爬虫</div></a>
     
   </div>
 </div>
