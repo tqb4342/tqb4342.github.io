@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Neighbor-Embedding/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Word-Embedding/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Unsupervised-Learning-Linear-Dimension-Reduction/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Semi-supervised-learning/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Deep-Learning/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/CSBook008/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/CSBook005/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/CSBook001/</loc>
+    <lastmod>2020-12-29</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Linear-regression-of-machine-learning/</loc>
     <lastmod>2020-12-25</lastmod>
   </url>
@@ -231,10 +263,6 @@
   <url>
     <loc>https://tanqingbo.cn/Linux-ITK/</loc>
     <lastmod>2020-12-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/CSBook001/</loc>
-    <lastmod>2020-12-04</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/CSBook012/</loc>
@@ -473,19 +501,11 @@
     <lastmod>2020-11-26</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/CSBook008/</loc>
-    <lastmod>2020-11-26</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/CSBook007/</loc>
     <lastmod>2020-11-26</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/CSBook006/</loc>
-    <lastmod>2020-11-26</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/CSBook005/</loc>
     <lastmod>2020-11-26</lastmod>
   </url>
   <url>
