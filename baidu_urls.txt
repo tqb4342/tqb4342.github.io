@@ -1,3 +1,8 @@
+https://tanqingbo.cn/javaweb-source-code/
+https://tanqingbo.cn/Structure-learning/
+https://tanqingbo.cn/SVM/
+https://tanqingbo.cn/Transfer-Learning/
+https://tanqingbo.cn/Generative-Model-of-Unsupervised-Learning/
 https://tanqingbo.cn/Neighbor-Embedding/
 https://tanqingbo.cn/Word-Embedding/
 https://tanqingbo.cn/Unsupervised-Learning-Linear-Dimension-Reduction/
@@ -13,8 +18,3 @@ https://tanqingbo.cn/keras-beginner-guide/
 https://tanqingbo.cn/about-keras-model/
 https://tanqingbo.cn/Functional-model/
 https://tanqingbo.cn/Sequential-model/
-https://tanqingbo.cn/Medical-image-analysis-deep-learning/
-https://tanqingbo.cn/Medical-Data-for-Machine-Learning/
-https://tanqingbo.cn/Panoramic-image-stitching-based-on-SIFT-features/
-https://tanqingbo.cn/chrome-crx-intruduce/
-https://tanqingbo.cn/GPU-medical-image-processing/

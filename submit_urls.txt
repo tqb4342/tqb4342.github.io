@@ -1,10 +1,10 @@
+https://tanqingbo.cn/Generative-Model-of-Unsupervised-Learning/
+https://tanqingbo.cn/Transfer-Learning/
+https://tanqingbo.cn/javaweb-source-code/
+https://tanqingbo.cn/Structure-learning/
+https://tanqingbo.cn/SVM/
 https://tanqingbo.cn/Neighbor-Embedding/
 https://tanqingbo.cn/Word-Embedding/
 https://tanqingbo.cn/Unsupervised-Learning-Linear-Dimension-Reduction/
 https://tanqingbo.cn/Semi-supervised-learning/
 https://tanqingbo.cn/Deep-Learning/
-https://tanqingbo.cn/CSBook008/
-https://tanqingbo.cn/CSBook005/
-https://tanqingbo.cn/CSBook001/
-https://tanqingbo.cn/Linear-regression-of-machine-learning/
-https://tanqingbo.cn/DNN/

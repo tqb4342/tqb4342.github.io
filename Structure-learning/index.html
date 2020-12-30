@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>机器学习之结构学习详解&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="机器学习之结构学习详解">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Structure-learning/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230124422.png">
+  
+  
+  <meta property="description" content="所谓结构学习就是输入或输出是有结构的数据，比如说语句、列表、树和边界框（`bounding box`）.而通常的网络学习之中，输入和输出都是向量。而在结构学习中，我们需要学习的是一个函数F，它的输入是一种形式，输出是另外一种形式，比如输入的是你语音，输出对应的文本、输入中文，输出英文，输入图像，输出`bounding box`，等等。">
+  
+  <meta property="keywords" content="机器学习,医学图像,深度学习,结构学习">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-12-30">
+  <meta property="og:article:modified_time" content="2020-12-30">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  <meta property="og:article:tag" content="深度学习">
+  
+  <meta property="og:article:tag" content="结构学习">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Structure-learning/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230124422.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230124422.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      机器学习之结构学习详解
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-30T04:43:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-30</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Structure-learning/" class="leancloud_visitors" data-flag-title="机器学习之结构学习详解">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/深度学习/" class="post-meta-link">深度学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/结构学习/" class="post-meta-link">结构学习</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="所谓结构学习就是输入或输出是有结构的数据，比如说语句、列表、树和边界框（`bounding box`）.而通常的网络学习之中，输入和输出都是向量。而在结构学习中，我们需要学习的是一个函数F，它的输入是一种形式，输出是另外一种形式，比如输入的是你语音，输出对应的文本、输入中文，输出英文，输入图像，输出`bounding box`，等等。">
+  
+  <meta name="keywords" content="机器学习,医学图像,深度学习,结构学习">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="1、什么是结构学习"><a href="#1、什么是结构学习" class="headerlink" title="1、什么是结构学习"></a>1、什么是结构学习</h2><ul>
+<li>所谓结构学习就是输入或输出是有结构的数据，比如说语句、列表、树和边界框（<code>bounding box</code>）.而通常的网络学习之中，输入和输出都是向量。而在结构学习中，我们需要学习的是一个函数F，它的输入是一种形式，输出是另外一种形式，比如输入的是你语音，输出对应的文本、输入中文，输出英文，输入图像，输出<code>bounding box</code>，等等。<h2 id="2、结构学习统一框架"><a href="#2、结构学习统一框架" class="headerlink" title="2、结构学习统一框架"></a>2、结构学习统一框架</h2></li>
+<li>结构学习具有一个统一的框架，可以表示为下图中的形式：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130153.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130153.png"></p>
+<ul>
+<li>在训练的过程中，我们希望找到一个这样的函数f，用它来评价我们的输入与我们的输出目前有多匹配，在测试的过程中，给定了一个x，我们穷举所有的y，<strong>使得F(x,y)最大的y即位测试结果。</strong><h3 id="2-1-目标检测"><a href="#2-1-目标检测" class="headerlink" title="2.1 目标检测"></a>2.1 目标检测</h3></li>
+<li>目标检测所要达到的目的是。输入一张图片，我们使用一个边界框在图像中标注出确定目标的位置。具体的训练的框架如下所示：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130206.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130206.jpeg"></p>
+<ul>
+<li><strong>在这里训练的过程就是在估计边界框与目标之间的匹配程度。</strong></li>
+</ul>
+<h3 id="2-2-生成摘要"><a href="#2-2-生成摘要" class="headerlink" title="2.2  生成摘要"></a>2.2  生成摘要</h3><ul>
+<li>摘要生成的结构学习与上面的目标检测十分相似，首先训练一个函数 F使得摘要和文本的匹配程度最好，之后在测试阶段，穷举所有的摘要，从中选择得分最高的那一个。 </li>
+</ul>
+<h2 id="3、-从统计的角度看待统一框架"><a href="#3、-从统计的角度看待统一框架" class="headerlink" title="3、 从统计的角度看待统一框架"></a>3、 从统计的角度看待统一框架</h2><ul>
+<li>结构学习的统一框架与概率模型之间有着如下的对应关系：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130216.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130216.jpeg"></p>
+<ul>
+<li>其中学习到的函数 F因为是在评估 x,y 之间的匹配程度的，所以可以认为是 x,y 同时出现的概率；而给定x 找最匹配的结果实际上可以认为是再找给定 x 的一个最大后验概率，所以这个过程实际上课贝叶斯分类的过程是十分相像的。</li>
+<li>但是使用概率的方法有有点也有缺点。<strong>优点</strong>在于概率模型是可解释的，有意义的；<strong>缺点</strong>在于并不是多有的东西都可以用概率进行描述，其次对于一个连续函数对所有的可能的结果进行求和是没有办法实现的。</li>
+</ul>
+<h2 id="4、-结构学习与DNN之间的关系"><a href="#4、-结构学习与DNN之间的关系" class="headerlink" title="4、 结构学习与DNN之间的关系"></a>4、 结构学习与DNN之间的关系</h2><ul>
+<li>DNN实际上可以看作是结构学习的一个特例，两者之间的关系如下图所示：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130225.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130225.jpeg"></p>
+<ul>
+<li>在上面的神经网络中，我们将 x 输入神经网络中，将输出与 y 做交叉熵，那F就是两者交叉熵的相反数，然后在测试的时候，穷举所有的标签，带入F中找使他最大的y。</li>
+</ul>
+<h2 id="5、结构学习统一框架要解决的三个问题"><a href="#5、结构学习统一框架要解决的三个问题" class="headerlink" title="5、结构学习统一框架要解决的三个问题"></a>5、结构学习统一框架要解决的三个问题</h2><ul>
+<li>问题1 ：估计输入间的相似程度应该用什么方法，也就是说 F(x,y)应该长成什么样子 ；</li>
+<li>问题2：如何解决那个穷举所有找出最大的问题； </li>
+<li>问题3：给定了训练数据，怎么样找打合适的 F(x,y)。</li>
+<li>如下图所示：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130302.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130302.jpeg"></p>
+<h3 id="5-1-问题1：F-x-y-的具体形式"><a href="#5-1-问题1：F-x-y-的具体形式" class="headerlink" title="5.1 问题1：F(x,y) 的具体形式"></a>5.1 问题1：F(x,y) 的具体形式</h3><ul>
+<li>F(x,y) 的具体形式如下图所示 </li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130314.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130314.jpeg"></p>
+<ul>
+<li>其中 ϕ(x,y)表示通过输入的数据和输出的共同构成的特征，而 w是对应的权重，这里通过权重与特征的线性组合，然后将这些线性组合以向量的点积的形式表示出来，就得到了 F(x,y) 。</li>
+<li>其中 ϕ(x,y)可以是自己定义的特征，也可以是通过深度学习得到的特征。</li>
+</ul>
+<h3 id="问题2：如何解决那个穷举所有找出最大的问题"><a href="#问题2：如何解决那个穷举所有找出最大的问题" class="headerlink" title="问题2：如何解决那个穷举所有找出最大的问题"></a>问题2：如何解决那个穷举所有找出最大的问题</h3><ul>
+<li>这里假设已经得到如下的一个标签：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130330.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130330.png"></p>
+<ul>
+<li>在这里我们假设是可以通过穷举或者某一种方式得到 y 。</li>
+</ul>
+<h3 id="问题3：如何训练得到一个-F-x-y"><a href="#问题3：如何训练得到一个-F-x-y" class="headerlink" title="问题3：如何训练得到一个 F(x,y)"></a>问题3：如何训练得到一个 F(x,y)</h3><ul>
+<li>因为在问题1中我们已经知道了这个 F(x,y) 是关于 w的函数，通过训练我们应该使我们的模型满足下面的条件：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130338.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130338.png"></p>
+<ul>
+<li>也就是说正确的标签所得到的函数值要大于所有非正确的标签的函数值。</li>
+<li>F(x,y) 的训练过程实际上十分简单，如下图所示：</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130346.jpeg" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201230130346.jpeg"></p>
+<ul>
+<li>输入是训练数据，输出模型的权重，在这里首先将 w初始化为0，一直重复以下操作直到 w不能被更新。</li>
+<li>对于某一组数据 (xr,y^r)，找到使 w⋅ϕ(xr,y)最大的 y˜r，如果得到的 y˜r≠y^r，就执行如上的更新。</li>
+<li>其实这个更新的原则也很好理解，就是让w离正确的值越来越近。</li>
+</ul>
+		
+  </div>	
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	<!--
+    <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+	
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>	
+	</div>	
+	-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Structure-learning/">https://tanqingbo.cn/Structure-learning/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/javaweb-source-code/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">分享两个可供练手的Javaweb网站源码 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/SVM/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">支持向量机：SVM </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0"><span class="toc-text">1、什么是结构学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-text">2、结构学习统一框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="toc-text">2.1 目标检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%9F%E6%88%90%E6%91%98%E8%A6%81"><span class="toc-text">2.2  生成摘要</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81-%E4%BB%8E%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-text">3、 从统计的角度看待统一框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81-%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E4%B8%8EDNN%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">4、 结构学习与DNN之间的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">5、结构学习统一框架要解决的三个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%97%AE%E9%A2%981%EF%BC%9AF-x-y-%E7%9A%84%E5%85%B7%E4%BD%93%E5%BD%A2%E5%BC%8F"><span class="toc-text">5.1 问题1：F(x,y) 的具体形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E9%82%A3%E4%B8%AA%E7%A9%B7%E4%B8%BE%E6%89%80%E6%9C%89%E6%89%BE%E5%87%BA%E6%9C%80%E5%A4%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">问题2：如何解决那个穷举所有找出最大的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A%E5%A6%82%E4%BD%95%E8%AE%AD%E7%BB%83%E5%BE%97%E5%88%B0%E4%B8%80%E4%B8%AA-F-x-y"><span class="toc-text">问题3：如何训练得到一个 F(x,y)</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>133</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>91</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201215143241.png">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0"><span class="toc-text">1、什么是结构学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-text">2、结构学习统一框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="toc-text">2.1 目标检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%9F%E6%88%90%E6%91%98%E8%A6%81"><span class="toc-text">2.2  生成摘要</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81-%E4%BB%8E%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-text">3、 从统计的角度看待统一框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81-%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E4%B8%8EDNN%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">4、 结构学习与DNN之间的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">5、结构学习统一框架要解决的三个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%97%AE%E9%A2%981%EF%BC%9AF-x-y-%E7%9A%84%E5%85%B7%E4%BD%93%E5%BD%A2%E5%BC%8F"><span class="toc-text">5.1 问题1：F(x,y) 的具体形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E9%82%A3%E4%B8%AA%E7%A9%B7%E4%B8%BE%E6%89%80%E6%9C%89%E6%89%BE%E5%87%BA%E6%9C%80%E5%A4%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">问题2：如何解决那个穷举所有找出最大的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A%E5%A6%82%E4%BD%95%E8%AE%AD%E7%BB%83%E5%BE%97%E5%88%B0%E4%B8%80%E4%B8%AA-F-x-y"><span class="toc-text">问题3：如何训练得到一个 F(x,y)</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">6</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">24</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">43</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
+    
+    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    
+    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    
+    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    
+    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+<!--
+<article class="card card-content toc-card">
+<div class="xingqiu-img"><img src="https://pic2.zhimg.com/80/v2-441b28a9a0e7b22d12baaef93db56e4b_720w.png"></div>
+<div style="clear: both;"></div>
+
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+</article>
+-->
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0"><span class="toc-text">1、什么是结构学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-text">2、结构学习统一框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="toc-text">2.1 目标检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%9F%E6%88%90%E6%91%98%E8%A6%81"><span class="toc-text">2.2  生成摘要</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81-%E4%BB%8E%E7%BB%9F%E8%AE%A1%E7%9A%84%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6"><span class="toc-text">3、 从统计的角度看待统一框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81-%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E4%B8%8EDNN%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">4、 结构学习与DNN之间的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E7%BB%93%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%BB%9F%E4%B8%80%E6%A1%86%E6%9E%B6%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">5、结构学习统一框架要解决的三个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%97%AE%E9%A2%981%EF%BC%9AF-x-y-%E7%9A%84%E5%85%B7%E4%BD%93%E5%BD%A2%E5%BC%8F"><span class="toc-text">5.1 问题1：F(x,y) 的具体形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%982%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E9%82%A3%E4%B8%AA%E7%A9%B7%E4%B8%BE%E6%89%80%E6%9C%89%E6%89%BE%E5%87%BA%E6%9C%80%E5%A4%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">问题2：如何解决那个穷举所有找出最大的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%983%EF%BC%9A%E5%A6%82%E4%BD%95%E8%AE%AD%E7%BB%83%E5%BE%97%E5%88%B0%E4%B8%80%E4%B8%AA-F-x-y"><span class="toc-text">问题3：如何训练得到一个 F(x,y)</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-30</div>
+        <a href="/javaweb-source-code/"><div class="recent-posts-item-content">分享两个可供练手的Javaweb网站源码</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-30</div>
+        <a href="/Structure-learning/"><div class="recent-posts-item-content">机器学习之结构学习详解</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-30</div>
+        <a href="/SVM/"><div class="recent-posts-item-content">支持向量机：SVM</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2020-12-30</div>
+        <a href="/Transfer-Learning/"><div class="recent-posts-item-content">迁移学习（Transfer Learning）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2020
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/links/" target="_blank">友情链接</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
