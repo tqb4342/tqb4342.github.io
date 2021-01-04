@@ -1,3 +1,4 @@
+https://tanqingbo.cn/Algorithm-brush-notes/
 https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/
 https://tanqingbo.cn/javaweb-source-code/
 https://tanqingbo.cn/Structure-learning/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/Linear-regression-of-machine-learning/
 https://tanqingbo.cn/How-does-the-program-run/
 https://tanqingbo.cn/keras-beginner-guide/
 https://tanqingbo.cn/about-keras-model/
-https://tanqingbo.cn/Functional-model/
