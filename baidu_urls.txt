@@ -1,3 +1,4 @@
+https://tanqingbo.cn/msb-source/
 https://tanqingbo.cn/Kaggle5-step-guide/
 https://tanqingbo.cn/Nice-to-meet-you/
 https://tanqingbo.cn/Computer-for-another-major/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/Unsupervised-Learning-Linear-Dimension-Reduction/
 https://tanqingbo.cn/Semi-supervised-learning/
 https://tanqingbo.cn/Deep-Learning/
 https://tanqingbo.cn/DNN/
-https://tanqingbo.cn/Discriminative-and-Generative-model/
