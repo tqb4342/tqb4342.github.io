@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/pandas-data-preprocessing/</loc>
+    
+    <lastmod>2021-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/YuanShikai-and-his-Beiyang/</loc>
+    
+    <lastmod>2021-01-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/We-are-all-good-kids/</loc>
+    
+    <lastmod>2021-01-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/msb-source/</loc>
     
     <lastmod>2021-01-05</lastmod>
@@ -1685,6 +1706,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E4%BA%92%E8%81%94%E7%BD%91/</loc>
+    <lastmod>2021-01-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/pandas/</loc>
     <lastmod>2021-01-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

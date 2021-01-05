@@ -1,4 +1,6 @@
+https://tanqingbo.cn/pandas-data-preprocessing/
 https://tanqingbo.cn/msb-source/
+https://tanqingbo.cn/YuanShikai-and-his-Beiyang/
 https://tanqingbo.cn/Kaggle5-step-guide/
 https://tanqingbo.cn/Nice-to-meet-you/
 https://tanqingbo.cn/Computer-for-another-major/
@@ -16,5 +18,3 @@ https://tanqingbo.cn/Neighbor-Embedding/
 https://tanqingbo.cn/Word-Embedding/
 https://tanqingbo.cn/Unsupervised-Learning-Linear-Dimension-Reduction/
 https://tanqingbo.cn/Semi-supervised-learning/
-https://tanqingbo.cn/Deep-Learning/
-https://tanqingbo.cn/DNN/
