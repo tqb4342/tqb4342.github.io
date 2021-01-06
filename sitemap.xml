@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/Data-enhancement-elastic-deformation/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/Resume%20revision%20suggestions/</loc>
+    
+    <lastmod>2021-01-06</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/Algorithm-brush-notes/</loc>
     
     <lastmod>2021-01-06</lastmod>
@@ -1713,6 +1741,48 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/pandas/</loc>
+    <lastmod>2021-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98/</loc>
+    <lastmod>2021-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2021-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E7%AE%80%E5%8E%86/</loc>
+    <lastmod>2021-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E6%B1%82%E8%81%8C/</loc>
+    <lastmod>2021-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/Unet/</loc>
+    <lastmod>2021-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E5%85%A8%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2021-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

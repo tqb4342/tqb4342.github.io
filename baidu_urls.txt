@@ -1,4 +1,8 @@
 https://tanqingbo.cn/Algorithm-brush-notes/
+https://tanqingbo.cn/Data-enhancement-elastic-deformation/
+https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/
+https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
+https://tanqingbo.cn/Resume%20revision%20suggestions/
 https://tanqingbo.cn/pandas-data-preprocessing/
 https://tanqingbo.cn/msb-source/
 https://tanqingbo.cn/YuanShikai-and-his-Beiyang/
@@ -14,7 +18,3 @@ https://tanqingbo.cn/Structure-learning/
 https://tanqingbo.cn/SVM/
 https://tanqingbo.cn/Transfer-Learning/
 https://tanqingbo.cn/Generative-Model-of-Unsupervised-Learning/
-https://tanqingbo.cn/Neighbor-Embedding/
-https://tanqingbo.cn/Word-Embedding/
-https://tanqingbo.cn/Unsupervised-Learning-Linear-Dimension-Reduction/
-https://tanqingbo.cn/Semi-supervised-learning/
