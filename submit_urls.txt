@@ -1,3 +1,4 @@
+https://tanqingbo.cn/Algorithm-brush-notes/
 https://tanqingbo.cn/pandas-data-preprocessing/
 https://tanqingbo.cn/YuanShikai-and-his-Beiyang/
 https://tanqingbo.cn/We-are-all-good-kids/
@@ -7,4 +8,3 @@ https://tanqingbo.cn/Nice-to-meet-you/
 https://tanqingbo.cn/Computer-for-another-major/
 https://tanqingbo.cn/Programmer-treasure-chest/
 https://tanqingbo.cn/Neighborhood-approximate-random-forest/
-https://tanqingbo.cn/coder-source/
