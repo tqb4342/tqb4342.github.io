@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>论文笔记：3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="论文笔记：3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108145122.png">
+  
+  
+  <meta property="description" content="本文提出3D DSN对3d的肝脏数据进行分割，采用完全卷积架构，有效的执行端到端学习和推理，此外条件随机场（CRF）来获得更加精细的分割。">
+  
+  <meta property="keywords" content="机器学习,深度学习,全卷积网络,DSN,肝脏分割">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-01-08">
+  <meta property="og:article:modified_time" content="2021-01-08">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  <meta property="og:article:tag" content="深度学习">
+  
+  <meta property="og:article:tag" content="DSN">
+  
+  <meta property="og:article:tag" content="肝脏分割">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108145122.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108145122.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      论文笔记：3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-01-08T06:50:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-01-08</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/" class="leancloud_visitors" data-flag-title="论文笔记：3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/深度学习/" class="post-meta-link">深度学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DSN/" class="post-meta-link">DSN</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/肝脏分割/" class="post-meta-link">肝脏分割</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="本文提出3D DSN对3d的肝脏数据进行分割，采用完全卷积架构，有效的执行端到端学习和推理，此外条件随机场（CRF）来获得更加精细的分割。">
+  
+  <meta name="keywords" content="机器学习,深度学习,全卷积网络,DSN,肝脏分割">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>本文提出<code>3D DSN</code>对3d的肝脏数据进行分割，采用完全卷积架构，有效的执行端到端学习和推理，此外条件随机场（CRF）来获得更加精细的分割。</li>
+<li>通常统计变形模型最流行和成功的分割方法，该方法利用形状先验信息、强度分布以及边界区域信息来描述肝脏的特征和划定界限。但是这些方法过度的依赖人工，或者没有利用3D空间信息，因此如何利用体积上下文信息，提取强大的高级特征来自动分割肝脏一直都为解决。</li>
+<li>为了充分利用空间信息，提出了<code>3D CNN</code>，尽管<code>3D CNN</code>没有端到端训练，而且数据有限且存在风险，但依然大量的激励研究者去深入研究3D CNN在医学图像领域的应用。</li>
+<li>本文采用3D DSN分割，并用条件随机场（CRF）执行轮廓修正，得到最终的结构。</li>
+</ul>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><ul>
+<li><code>3D DSN</code>的架构如图1所示。 主流网络由11层组成，即6个卷积层，2个<code>max pooling</code>层，2个反卷积层和1个<code>softmax</code>层。 通过第三层和第六层涉及深层监督机制，如灰色虚线框所示。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144620.jpeg" alt="3D DSN" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144620.jpeg" class="lozad post-image"></p>
+<ul>
+<li>为了对体积数据中的空间信息进行充分编码，我们DSN中的所有层都以3D格式构建，如图1所示。3D卷积层和3D<code>max pooling</code>层交替堆叠来连续提取中间特征。</li>
+<li>每个卷积层中使用的内核的数量和大小如图1所示。我们设计相对较大的内核大小，以形成适合肝脏识别的接收领域。所有<code>max pooling</code>层都使用2 * 2 * 2的内核。经过几个阶段的下采样后，特征体积的尺寸逐渐减小，并且比<code>gt_mask</code>的尺寸小得多。在这方面，我们开发3D反卷积层以将这些粗糙<code>feature map</code>桥接到密集概率预测（即变为原来的尺寸大小）。反卷积的时候卷积核大小是3<em>3</em>3（正向卷积核大小见上图），方向的是尺寸双倍放大。此外反向卷积核在训练的过程中学习得来。</li>
+</ul>
+<h3 id="深层监督的学习过程"><a href="#深层监督的学习过程" class="headerlink" title="深层监督的学习过程"></a>深层监督的学习过程</h3><ul>
+<li>3D网络的学习过程可以认为是提速二分类误差最小化问题，在优化的过程中一个挑战就是：梯度消失，<strong>这使得早期层中的损失反向传播无效。这种问题在3D情况下可能更严重，并且不可避免地会降低收敛速度并降低模型的辨别能力。为了应对这一挑战，我们利用注入一些隐藏层的额外监督来抵消梯度消失的不利影响。</strong></li>
+<li>具体而言，我们使用一些额外的反卷积层来扩展一些低级和中级特征向量。然后使用softmax层来获得用于计算分类误差的<code>dense</code>预测(监督层的预测)。<strong>利用从这些分支预测和最后输出层得到的梯度，可以有效地减轻梯度消失的影响。</strong></li>
+<li>令wl为l层的权重，W = (w1;w2; …;wL)为主流网络的权重，p (ti | xi;W)表示体素xi属于ti类的概率(<code>softmax function</code>输出)，则最后一个输出层的负对数似然损失如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144704.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144704.png" class="lozad post-image"></p>
+<ul>
+<li>其中X表示训练集，从第d层引入深度监督，用Wd =<br>(w1;w2; …;wd)表示主流网络第d层的权重。使用w^d表示将第d层特征桥接到<code>dense</code>预测(监督层的预测)的权重，深度监督的辅助损失如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144712.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144712.png" class="lozad post-image"></p>
+<ul>
+<li>最后，我们采用标准反向传播，通过最小化以下总体目标函数来学习权重W和所有w^d：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144720.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144720.png" class="lozad post-image"></p>
+<ul>
+<li>其中ηd是ζd的平衡权重，在学习的过程中衰减。D是具有深层监督的所有隐藏层的索引集。 上面公式中第一项对应于最后一层的输出预测， 第二项来自深层监督，<strong>提高了网络的识别能力，加快了收敛速度</strong>，第三项是权重衰减正则化，λ是权衡超参数。在每次训练迭代中，网络的输入是一个大的体积数据（见图1），并且同时进行来自不同损耗分量的误差反向传播。</li>
+</ul>
+<h3 id="使用条件随机场-CRF-进行轮廓修正"><a href="#使用条件随机场-CRF-进行轮廓修正" class="headerlink" title="使用条件随机场(CRF)进行轮廓修正"></a>使用条件随机场(CRF)进行轮廓修正</h3><ul>
+<li>尽管3D DSN可以生成高质量的概率图，但是如果仅使用阈值概率，则模糊区域的轮廓有时可能是不精确的。 因此，我们进一步采用图形模型来细化分割结果。 考虑到网络已经充分考虑了3D空间信息，我们在横向平面上利用了完全连接的CRF模型，该模型具有高分辨率。 该模型解决了如下能量函数：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144727.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144727.png" class="lozad post-image"></p>
+<ul>
+<li>第一项是指体素xi被分配标签yi的概率对数， 具体而言，p^（yi|xi）被初始化为来自3D DSN的最后层和分支概率预测的加权平均值，计算公式如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144732.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144732.png" class="lozad post-image"></p>
+<ul>
+<li>E(y)中的第二项是<code>pairwise potential</code>,其中<code>f(yi; yj)=1 if yi != yj and 0 otherwise</code>;∮(xi; xj)通过采用灰度值I和双边位置s来结合局部外观和平滑度，如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144819.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108144819.png" class="lozad post-image"></p>
+<ul>
+<li>使用训练集上的网格搜索来优化一元势中的恒定权重τd和成对势中的参数μ1; μ2; θα; θβ; θγ。<br>。</li>
+</ul>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><ul>
+<li>使用MICCAI-SLiver07 [6]数据集（20组训练和10组测试）。</li>
+<li>实施细节。我们的3D DSN是通过Theano库实现的。我们从头开始训练网络，权重是从高斯分布（μ= 0;σ= 0:01）初始化的。学习率初始化为0.1，每50个<code>epochs</code>除以10。深度监督平衡权重初始化为0.3和0.4，每十个<code>epochs</code>衰减5％。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>论文：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://arxiv.org/abs/1607.00582">3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes</a></li>
+</ul>
+		
+  </div>	
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	<!--
+    <div style="margin-left: 125px;">
+    <div style="float: left; width: 200px; height: 200px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+	
+    <div style="float: left; margin-left: 35px;">
+        <div style="font-size: 28px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 1.2em;">
+            →「技术干货」每日推送<br><br>
+            →「免费资料」随时领取<br><br>
+            →「签到活动」每周福利<br><br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>	
+	</div>	
+	-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/">https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/Transfer-to-computer-major/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">你确定真的要转学计算机吗？ </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/Deeply-Supervised-Nets/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">论文解读:深度监督网络 Deeply-Supervised Nets </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%B1%82%E7%9B%91%E7%9D%A3%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="toc-text">深层监督的学习过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA-CRF-%E8%BF%9B%E8%A1%8C%E8%BD%AE%E5%BB%93%E4%BF%AE%E6%AD%A3"><span class="toc-text">使用条件随机场(CRF)进行轮廓修正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>154</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>13</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>108</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201215143241.png">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%B1%82%E7%9B%91%E7%9D%A3%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="toc-text">深层监督的学习过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA-CRF-%E8%BF%9B%E8%A1%8C%E8%BD%AE%E5%BB%93%E4%BF%AE%E6%AD%A3"><span class="toc-text">使用条件随机场(CRF)进行轮廓修正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">27</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">53</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
+    
+    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    
+    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    
+    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    
+    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic4.zhimg.com/80/v2-6f4153925b20af12b17837b531302695_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="https://tanqingbo.cn/msb-source/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210104122757.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-text">方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%B1%82%E7%9B%91%E7%9D%A3%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%BF%87%E7%A8%8B"><span class="toc-text">深层监督的学习过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA-CRF-%E8%BF%9B%E8%A1%8C%E8%BD%AE%E5%BB%93%E4%BF%AE%E6%AD%A3"><span class="toc-text">使用条件随机场(CRF)进行轮廓修正</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-text">实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-01-04</div>
+        <a href="/Algorithm-brush-notes/"><div class="recent-posts-item-content">无意中发现一位大佬的算法刷题pdf笔记</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-01-08</div>
+        <a href="/Transfer-to-computer-major/"><div class="recent-posts-item-content">你确定真的要转学计算机吗？</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-01-08</div>
+        <a href="/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/"><div class="recent-posts-item-content">论文笔记：3D Deeply Supervised Network for Automatic Liver Segmentation from CT Volumes</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2021-01-08</div>
+        <a href="/Deeply-Supervised-Nets/"><div class="recent-posts-item-content">论文解读:深度监督网络 Deeply-Supervised Nets</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2021
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/links/" target="_blank">友情链接</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

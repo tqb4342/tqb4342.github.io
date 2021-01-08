@@ -1,4 +1,9 @@
 https://tanqingbo.cn/Algorithm-brush-notes/
+https://tanqingbo.cn/Transfer-to-computer-major/
+https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/
+https://tanqingbo.cn/Deeply-Supervised-Nets/
+https://tanqingbo.cn/Medical-scan-image-processing/
+https://tanqingbo.cn/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/
 https://tanqingbo.cn/Data-enhancement-elastic-deformation/
 https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/
 https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
@@ -13,8 +18,3 @@ https://tanqingbo.cn/Programmer-treasure-chest/
 https://tanqingbo.cn/Neighborhood-approximate-random-forest/
 https://tanqingbo.cn/coder-source/
 https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/
-https://tanqingbo.cn/javaweb-source-code/
-https://tanqingbo.cn/Structure-learning/
-https://tanqingbo.cn/SVM/
-https://tanqingbo.cn/Transfer-Learning/
-https://tanqingbo.cn/Generative-Model-of-Unsupervised-Learning/
