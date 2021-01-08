@@ -6,5 +6,5 @@ https://tanqingbo.cn/3D-Convolutional-Neural-Networks-for-Human-Action-Recogniti
 https://tanqingbo.cn/Data-enhancement-elastic-deformation/
 https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/
 https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
-https://tanqingbo.cn/Resume%20revision%20suggestions/
+https://tanqingbo.cn/Resume-revision-suggestions/
 https://tanqingbo.cn/Algorithm-brush-notes/
