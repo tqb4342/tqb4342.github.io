@@ -1,3 +1,4 @@
+https://tanqingbo.cn/Algorithm-brush-notes/
 https://tanqingbo.cn/Medical-scan-image-processing/
 https://tanqingbo.cn/Transfer-to-computer-major/
 https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/
@@ -7,4 +8,3 @@ https://tanqingbo.cn/Data-enhancement-elastic-deformation/
 https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/
 https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
 https://tanqingbo.cn/Resume-revision-suggestions/
-https://tanqingbo.cn/Algorithm-brush-notes/
