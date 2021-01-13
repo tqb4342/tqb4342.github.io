@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/3D-Unet-Experiment-notes/</loc>
+    <lastmod>2021-01-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/keras+TensorBoard/</loc>
+    <lastmod>2021-01-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Conditional-confrontation-network/</loc>
+    <lastmod>2021-01-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/DSN-segmentation-liver-experiment-summary/</loc>
+    <lastmod>2021-01-13</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Algorithm-brush-notes/</loc>
     <lastmod>2021-01-12</lastmod>
   </url>
