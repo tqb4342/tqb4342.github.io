@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/msb-source/</loc>
+    <lastmod>2021-01-14</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/3D-Unet-Experiment-notes/</loc>
     <lastmod>2021-01-13</lastmod>
   </url>
@@ -66,10 +70,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/We-are-all-good-kids/</loc>
-    <lastmod>2021-01-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/msb-source/</loc>
     <lastmod>2021-01-05</lastmod>
   </url>
   <url>

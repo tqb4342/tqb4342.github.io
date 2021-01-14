@@ -1,3 +1,4 @@
+https://tanqingbo.cn/msb-source/
 https://tanqingbo.cn/3D-Unet-Experiment-notes/
 https://tanqingbo.cn/keras+TensorBoard/
 https://tanqingbo.cn/Conditional-confrontation-network/
@@ -7,4 +8,3 @@ https://tanqingbo.cn/Medical-scan-image-processing/
 https://tanqingbo.cn/Transfer-to-computer-major/
 https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/
 https://tanqingbo.cn/Deeply-Supervised-Nets/
-https://tanqingbo.cn/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/
