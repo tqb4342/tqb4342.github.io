@@ -1,4 +1,5 @@
 https://tanqingbo.cn/Algorithm-brush-notes/
+https://tanqingbo.cn/online-BUG%EF%BC%81/
 https://tanqingbo.cn/3D-Unet-Experiment-notes/
 https://tanqingbo.cn/Conditional-confrontation-network/
 https://tanqingbo.cn/DSN-segmentation-liver-experiment-summary/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/msb-source/
 https://tanqingbo.cn/YuanShikai-and-his-Beiyang/
 https://tanqingbo.cn/Kaggle5-step-guide/
 https://tanqingbo.cn/Nice-to-meet-you/
-https://tanqingbo.cn/Computer-for-another-major/

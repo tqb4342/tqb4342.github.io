@@ -1,3 +1,4 @@
+https://tanqingbo.cn/online-BUG%EF%BC%81/
 https://tanqingbo.cn/msb-source/
 https://tanqingbo.cn/3D-Unet-Experiment-notes/
 https://tanqingbo.cn/keras+TensorBoard/
@@ -7,4 +8,3 @@ https://tanqingbo.cn/Algorithm-brush-notes/
 https://tanqingbo.cn/Medical-scan-image-processing/
 https://tanqingbo.cn/Transfer-to-computer-major/
 https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/
-https://tanqingbo.cn/Deeply-Supervised-Nets/
