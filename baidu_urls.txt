@@ -1,4 +1,7 @@
-https://tanqingbo.cn/Algorithm-brush-notes/
+https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/
+https://tanqingbo.cn/Knowledge-points-of-Java-garbage-collection/
+https://tanqingbo.cn/TCPIP-detailed/
+https://tanqingbo.cn/Java-memory-model/
 https://tanqingbo.cn/online-BUG%EF%BC%81/
 https://tanqingbo.cn/3D-Unet-Experiment-notes/
 https://tanqingbo.cn/Conditional-confrontation-network/
@@ -15,6 +18,3 @@ https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
 https://tanqingbo.cn/Resume-revision-suggestions/
 https://tanqingbo.cn/pandas-data-preprocessing/
 https://tanqingbo.cn/msb-source/
-https://tanqingbo.cn/YuanShikai-and-his-Beiyang/
-https://tanqingbo.cn/Kaggle5-step-guide/
-https://tanqingbo.cn/Nice-to-meet-you/

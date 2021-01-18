@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Java-GC/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Java-memory-model/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/TCPIP-detailed/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Knowledge-points-of-Java-garbage-collection/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Algorithm-brush-notes/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/</loc>
+    <lastmod>2021-01-18</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/CSBook001/</loc>
     <lastmod>2021-01-17</lastmod>
   </url>
@@ -27,10 +51,6 @@
   <url>
     <loc>https://tanqingbo.cn/DSN-segmentation-liver-experiment-summary/</loc>
     <lastmod>2021-01-13</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Algorithm-brush-notes/</loc>
-    <lastmod>2021-01-12</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/Medical-scan-image-processing/</loc>
@@ -103,10 +123,6 @@
   <url>
     <loc>https://tanqingbo.cn/coder-source/</loc>
     <lastmod>2021-01-04</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/</loc>
-    <lastmod>2020-12-31</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/Generative-Model-of-Unsupervised-Learning/</loc>
@@ -590,10 +606,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/JavaWeb-Chinese-Garbled/</loc>
-    <lastmod>2020-11-26</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Java-GC/</loc>
     <lastmod>2020-11-26</lastmod>
   </url>
   <url>
