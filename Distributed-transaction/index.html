@@ -315,7 +315,7 @@ var _hmt = _hmt || [];
 <p><strong>D持久性</strong>：一旦事务提交，数据库中数据的状态就应该是永久性的。</p>
 <h3 id="XA"><a href="#XA" class="headerlink" title="XA"></a>XA</h3><p>XA（eXtended Architecture）是指由X/Open 组织提出的分布式事务处理的规范，他是一个规范或者说是协议，定义了事务管理器TM(Transaction Manager)，资源管理器RM(Resource Manager)，和应用程序。</p>
 <p>事务管理器TM就是事务的协调者，资源管理器RM可以认为就是一个数据库。</p>
-<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120163918.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120163918.webp" class="lozad post-image"></p>
 <h3 id="2PC"><a href="#2PC" class="headerlink" title="2PC"></a>2PC</h3><p>XA定义了规范，那么2PC和3PC就是他的具体实现方式。</p>
 <p>2PC叫做二阶段提交，分为投票阶段和执行阶段两个阶段。</p>
 <p><strong>投票阶段</strong></p>
@@ -340,11 +340,11 @@ var _hmt = _hmt || [];
 <p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162918.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162918.webp" class="lozad post-image"></p>
 <p><strong>PreCommit</strong></p>
 <p>这个阶段就等同于2PC的投票阶段了，发送preCommit命令，然后去执行SQL事务，成功就返回YES，反之返回NO。</p>
-<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120164023.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120164023.webp" class="lozad post-image"></p>
 <p>但是，这个地方的区别在于参与者有了<strong>超时机制</strong>，如果参与者超时未收到doCommit命令的话，将会默认去提交事务。</p>
 <p><strong>DoCommit</strong></p>
 <p>DoCommit阶段对应到2PC的执行阶段，如果上一个阶段都是收到YES的话，那么就发送doCommit命令去提交事务，反之则会发送abort命令去中断事务的执行。</p>
-<p><img src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120164009.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120164009.webp" class="lozad post-image"></p>
 <p><strong>相比2PC的改进</strong></p>
 <p>对于2PC的同步阻塞的问题，我们可以看到因为3PC加入了参与者的超时机制，所以原来2PC的如果某个参与者故障导致的同步阻塞的问题时间缩短了，这是一个优化，但是并没有完全避免。</p>
 <p>第二个单点故障的问题，同样因为超时机制的引入，一定程度上也算是优化了。</p>
@@ -389,7 +389,7 @@ var _hmt = _hmt || [];
 <p>实际上最开始的时候他们都是基于阿里内部的TXC（Taobao Transaction Constructor）分布式中间件产品，然后TXC经过改造上了阿里云就叫做GTS。</p>
 <p>之后阿里的中间件团队基于TXC和GTS做出了开源的Seata，其中AT（Automatic Transaction）模式就是GTS原创的方案。</p>
 <p>至于现在的版本，可以大致认为他们就是一样的就行了，到2020年，GTS已经全面兼容了Seata的 GA 版本。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162940.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162940.webp" class="lozad post-image">图片来自阿里云官网GTS</p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162940.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162940.webp" class="lozad post-image"></p>
 <p>整个GTS或者Seata包含以下几个核心组件：</p>
 <ul>
 <li>Transaction Coordinator（TC）：事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚。</li>
@@ -402,7 +402,7 @@ var _hmt = _hmt || [];
 <li>这时候多个微服务的接口发生调用，XID就会传播到各个微服务中，每个微服务执行事务也会向TC注册分支事务。</li>
 <li>之后TM就可以管理针对每个XID的事务全局提交和回滚，RM完成分支的提交或者回滚。</li>
 </ol>
-<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162953.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162953.webp" class="lozad post-image">核</p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162953.webp" alt="图片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210120162953.webp" class="lozad post-image"></p>
 <p><strong>AT模式</strong></p>
 <p>原创的AT模式相比起TCC的方案来说，无需自己实现多个接口，通过代理数据源的形式生成更新前后的UNDO_LOG，依靠UNDO_LOG来实现回滚的操作。</p>
 <p>执行的流程如下：</p>
@@ -703,37 +703,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
-    
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\面试" title="面试"><div class="tags-list-item">面试</div></a>
     
   </div>
 </div>
