@@ -1,4 +1,5 @@
 https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/
+https://tanqingbo.cn/WeChat-80/
 https://tanqingbo.cn/Distributed-transaction/
 https://tanqingbo.cn/Knowledge-points-of-Java-garbage-collection/
 https://tanqingbo.cn/TCPIP-detailed/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/Data-enhancement-elastic-deformation/
 https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/
 https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
 https://tanqingbo.cn/Resume-revision-suggestions/
-https://tanqingbo.cn/pandas-data-preprocessing/
