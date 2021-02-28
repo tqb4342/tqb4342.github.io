@@ -1,3 +1,5 @@
+https://tanqingbo.cn/10-algorithm-book/
+https://tanqingbo.cn/Network-principle/
 https://tanqingbo.cn/Summaryof-HongKongStock-Account-Opening-Links/
 https://tanqingbo.cn/WeChat-red-envelope-cover/
 https://tanqingbo.cn/Baidu-Sao-operation/
@@ -6,5 +8,3 @@ https://tanqingbo.cn/WeChat-80/
 https://tanqingbo.cn/Distributed-transaction/
 https://tanqingbo.cn/Knowledge-points-of-Java-garbage-collection/
 https://tanqingbo.cn/Java-GC/
-https://tanqingbo.cn/Java-memory-model/
-https://tanqingbo.cn/TCPIP-detailed/
