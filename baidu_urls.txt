@@ -1,4 +1,8 @@
-https://tanqingbo.cn/100%E4%B8%87%E7%9A%84%E5%B0%8F%E7%9B%AE%E6%A0%87/
+https://tanqingbo.cn/Understanding-of-paying-for-knowledge/
+https://tanqingbo.cn/The-essence-of-shopping-festival/
+https://tanqingbo.cn/Head-to-head/
+https://tanqingbo.cn/How-to-judge-whether-technologyisreliable/
+https://tanqingbo.cn/The-most-important-investment-in-life/
 https://tanqingbo.cn/10-algorithm-book/
 https://tanqingbo.cn/Network-principle/
 https://tanqingbo.cn/WeChat-red-envelope-cover/
@@ -14,7 +18,3 @@ https://tanqingbo.cn/online-BUG%EF%BC%81/
 https://tanqingbo.cn/3D-Unet-Experiment-notes/
 https://tanqingbo.cn/Conditional-confrontation-network/
 https://tanqingbo.cn/DSN-segmentation-liver-experiment-summary/
-https://tanqingbo.cn/keras+TensorBoard/
-https://tanqingbo.cn/Transfer-to-computer-major/
-https://tanqingbo.cn/3D-Deeply-Supervised-Network-for-Automatic-Liver-Segmentation-from-CT-Volumes/
-https://tanqingbo.cn/Deeply-Supervised-Nets/
