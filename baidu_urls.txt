@@ -1,3 +1,4 @@
+https://tanqingbo.cn/Zero-copy/
 https://tanqingbo.cn/Understanding-of-paying-for-knowledge/
 https://tanqingbo.cn/The-essence-of-shopping-festival/
 https://tanqingbo.cn/Head-to-head/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/Java-memory-model/
 https://tanqingbo.cn/online-BUG%EF%BC%81/
 https://tanqingbo.cn/3D-Unet-Experiment-notes/
 https://tanqingbo.cn/Conditional-confrontation-network/
-https://tanqingbo.cn/DSN-segmentation-liver-experiment-summary/
