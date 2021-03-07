@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/12-technical-tutorial-sites/</loc>
+    <lastmod>2021-03-07</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/10-algorithm-book/</loc>
+    <lastmod>2021-03-07</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Zero-copy/</loc>
     <lastmod>2021-03-06</lastmod>
   </url>
@@ -30,10 +38,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Network-principle/</loc>
-    <lastmod>2021-02-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/10-algorithm-book/</loc>
     <lastmod>2021-02-28</lastmod>
   </url>
   <url>
