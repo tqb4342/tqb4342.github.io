@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/CSBook003/</loc>
+    <lastmod>2021-03-10</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/CSBook001/</loc>
+    <lastmod>2021-03-10</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/E-book-download-commonly-used-by-programmers/</loc>
     <lastmod>2021-03-07</lastmod>
   </url>
@@ -87,10 +95,6 @@
   <url>
     <loc>https://tanqingbo.cn/Algorithm-brush-notes/</loc>
     <lastmod>2021-01-18</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/CSBook001/</loc>
-    <lastmod>2021-01-17</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/online-BUG%EF%BC%81/</loc>
@@ -587,10 +591,6 @@
   <url>
     <loc>https://tanqingbo.cn/Spring-integrates-hibernate-Struts/</loc>
     <lastmod>2020-11-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/CSBook003/</loc>
-    <lastmod>2020-11-27</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/Java-interview01/</loc>
