@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/Divide-and-conquer-algorithm/</loc>
+    
+    <lastmod>2021-04-21</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/Backtracking/</loc>
+    
+    <lastmod>2021-04-21</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/Dynamic-programming-algorithm/</loc>
     
     <lastmod>2021-04-21</lastmod>
@@ -16,21 +30,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/Backtracking/</loc>
-    
-    <lastmod>2021-04-21</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Greedy-Algorithm/</loc>
-    
-    <lastmod>2021-04-21</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Divide-and-conquer-algorithm/</loc>
+    <loc>https://tanqingbo.cn/2021%E6%9C%BA%E6%A2%B0%E9%94%AE%E7%9B%98%E6%8E%A8%E8%8D%90/</loc>
     
     <lastmod>2021-04-21</lastmod>
     
@@ -44,9 +44,9 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/2021%E6%9C%BA%E6%A2%B0%E9%94%AE%E7%9B%98%E6%8E%A8%E8%8D%90/</loc>
+    <loc>https://tanqingbo.cn/Greedy-Algorithm/</loc>
     
-    <lastmod>2021-03-27</lastmod>
+    <lastmod>2021-04-21</lastmod>
     
   </url>
   
