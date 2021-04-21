@@ -1,9 +1,9 @@
+https://tanqingbo.cn/Dynamic-programming-algorithm/
+https://tanqingbo.cn/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E5%93%AA%E4%BA%9B%E7%AE%97%E6%B3%95%EF%BC%9F/
 https://tanqingbo.cn/Divide-and-conquer-algorithm/
 https://tanqingbo.cn/Backtracking/
-https://tanqingbo.cn/Dynamic-programming-algorithm/
 https://tanqingbo.cn/Branch-and-bound/
 https://tanqingbo.cn/2021%E6%9C%BA%E6%A2%B0%E9%94%AE%E7%9B%98%E6%8E%A8%E8%8D%90/
-https://tanqingbo.cn/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E5%93%AA%E4%BA%9B%E7%AE%97%E6%B3%95%EF%BC%9F/
 https://tanqingbo.cn/Greedy-Algorithm/
 https://tanqingbo.cn/2021%E5%B9%B4%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98%E9%80%89%E8%B4%AD%E6%9C%80%E6%96%B0%E6%94%BB%E7%95%A5%EF%BC%88%E5%B0%8F%E7%99%BD%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%89/
 https://tanqingbo.cn/%E8%AF%A5%E5%A6%82%E4%BD%95%E9%80%89%E8%B4%AD%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98%EF%BC%9F/
