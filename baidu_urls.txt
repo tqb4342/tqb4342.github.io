@@ -1,3 +1,4 @@
+https://tanqingbo.cn/B%E7%AB%99%E5%90%91%E5%8C%97%E9%82%AE%E9%81%93%E6%AD%89%EF%BC%81/
 https://tanqingbo.cn/leetcode-Java/
 https://tanqingbo.cn/%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E9%A1%BB%E6%8E%8C%E6%8F%A1%E5%93%AA%E4%BA%9B%E7%AE%97%E6%B3%95%EF%BC%9F/
 https://tanqingbo.cn/Branch-and-bound/
@@ -17,4 +18,3 @@ https://tanqingbo.cn/coder-videos-website/
 https://tanqingbo.cn/E-book-download-commonly-used-by-programmers/
 https://tanqingbo.cn/12-technical-tutorial-sites/
 https://tanqingbo.cn/Zero-copy/
-https://tanqingbo.cn/Understanding-of-paying-for-knowledge/
