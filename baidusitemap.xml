@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/msb-source/</loc>
+    <lastmod>2021-05-26</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/%E5%8D%A7%E6%A7%BD%EF%BC%8C%E6%88%91%E7%9A%84%E5%B0%8F%E7%A0%B4%E7%AB%99%E7%88%86%E4%BA%86%EF%BC%81/</loc>
     <lastmod>2021-05-22</lastmod>
   </url>
@@ -207,10 +211,6 @@
   <url>
     <loc>https://tanqingbo.cn/online-BUG%EF%BC%81/</loc>
     <lastmod>2021-01-17</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/msb-source/</loc>
-    <lastmod>2021-01-14</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/3D-Unet-Experiment-notes/</loc>
