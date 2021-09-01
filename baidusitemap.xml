@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Golang-learning/</loc>
+    <lastmod>2021-09-01</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/10w+YYDS%EF%BC%81/</loc>
     <lastmod>2021-08-30</lastmod>
   </url>
