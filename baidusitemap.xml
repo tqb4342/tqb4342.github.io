@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/%E6%A9%99%E5%BF%83%E4%BC%98%E9%80%89%EF%BC%8C%E5%87%89%E5%87%89%E4%BA%86%EF%BC%81/</loc>
+    <lastmod>2021-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Java-interview03/</loc>
+    <lastmod>2021-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/%E5%AE%A3%E5%B8%83%E4%B8%80%E4%BB%B6%E5%A4%A7%E4%BA%8B%EF%BC%81/</loc>
+    <lastmod>2021-09-02</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/CSBook001/</loc>
     <lastmod>2021-09-01</lastmod>
   </url>
@@ -854,10 +866,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/%E3%80%8AJava%E9%AB%98%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E8%AF%A6%E8%A7%A3%E3%80%8B%EF%BC%8C%E5%8E%BB%E5%A4%A7%E5%8E%82%E5%BF%85%E7%9C%8B%EF%BC%81/</loc>
-    <lastmod>2020-11-26</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Java-interview03/</loc>
     <lastmod>2020-11-26</lastmod>
   </url>
   <url>
