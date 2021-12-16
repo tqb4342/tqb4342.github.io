@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/Merge-sort-algorithm/</loc>
+    <lastmod>2021-12-16</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Eight-sorting-algorithms/</loc>
+    <lastmod>2021-12-16</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/%E9%9D%A0%E8%BF%99%E5%87%A0%E6%9C%AC%E7%AE%97%E6%B3%95%E4%B9%A6%EF%BC%8C%E6%88%90%E5%8A%9F%E6%8B%BF%E4%B8%8B%E5%A4%A7%E5%8E%82offer%EF%BC%81/</loc>
+    <lastmod>2021-12-15</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/the-way-of-pragram/</loc>
-    <lastmod>2021-12-13</lastmod>
+    <lastmod>2021-12-14</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/CSBook001/</loc>
@@ -822,14 +834,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Prototype-mode/</loc>
-    <lastmod>2020-11-29</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Merge-sort-algorithm/</loc>
-    <lastmod>2020-11-29</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Eight-sorting-algorithms/</loc>
     <lastmod>2020-11-29</lastmod>
   </url>
   <url>
