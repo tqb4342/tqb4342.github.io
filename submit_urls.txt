@@ -1,5 +1,6 @@
-https://tanqingbo.cn/Java-multithreaded-learning/
 https://tanqingbo.cn/baidu-search/
+https://tanqingbo.cn/6-website/
+https://tanqingbo.cn/Java-multithreaded-learning/
 https://tanqingbo.cn/2%206%20%E5%B2%81%20%E4%BA%86/
 https://tanqingbo.cn/%E8%A2%AB%E6%8B%89%E9%BB%91%E4%BA%86%E3%80%82%E3%80%82%E3%80%82/
 https://tanqingbo.cn/%E5%8D%A7%E6%A7%BD%EF%BC%8C%E8%BF%98%E6%9C%89985%E5%A4%A7%E5%AD%A6%E5%9C%A8%E5%A4%A7%E4%B8%80%E4%B8%8AC%E8%AF%AD%E8%A8%80%E8%AF%BE%EF%BC%9F%EF%BC%9F/
@@ -7,4 +8,3 @@ https://tanqingbo.cn/%E9%80%89Java%E8%BF%98%E6%98%AFC++%EF%BC%9F/
 https://tanqingbo.cn/%E9%9D%A0%E8%BF%99%E5%87%A0%E6%9C%AC%E7%AE%97%E6%B3%95%E4%B9%A6%EF%BC%8C%E6%88%90%E5%8A%9F%E6%8B%BF%E4%B8%8B%E5%A4%A7%E5%8E%82offer%EF%BC%81/
 https://tanqingbo.cn/Merge-sort-algorithm/
 https://tanqingbo.cn/Eight-sorting-algorithms/
-https://tanqingbo.cn/the-way-of-pragram/
