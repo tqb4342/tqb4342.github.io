@@ -1,3 +1,4 @@
+https://tanqingbo.cn/Eolink/
 https://tanqingbo.cn/Spring-basics/
 https://tanqingbo.cn/javaweb-server-error-codes/
 https://tanqingbo.cn/CSBook011/
@@ -7,4 +8,3 @@ https://tanqingbo.cn/CSBook007/
 https://tanqingbo.cn/CSBook006/
 https://tanqingbo.cn/CSBook002/
 https://tanqingbo.cn/%E6%A2%AD%E5%93%88200%E5%A4%9A%E4%B8%87/
-https://tanqingbo.cn/Suggestions-for-self-study-of-computers/
