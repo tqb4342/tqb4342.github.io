@@ -303,18 +303,18 @@ var _hmt = _hmt || [];
 <h5 id="3、Imagen-Video"><a href="#3、Imagen-Video" class="headerlink" title="3、Imagen Video"></a>3、Imagen Video</h5><p>Imagen Video倾向于打造高质量视频。其工作原理与 DALL-E 2 比较像。首先将文本极性编码表征，之后使用扩散模型将表征映射成为完整图像，同时会通过两个扩散模型来进一步提高分辨率。由于Imagen 使用了T5-XXL模型直接编码文本信息，然后使用条件扩散模型，直接用文本编码生成图像，因此在Imagen 中不需要学习先验模型。同时，Imagen 在语义保真度上做得更好。</p>
 <h5 id="4、Make-A-Video"><a href="#4、Make-A-Video" class="headerlink" title="4、Make-A-Video"></a>4、Make-A-Video</h5><p>Make-A-Video 是 Meta 公司在 2022 年9月发布的，使用者可以用文本的方式生成简洁和高质量的短视频。Meta使用的系统模型可以从文本-图片配对数据中，学习现实世界的样子并从视频片段中推理没有文本情况下的变化。从实现场景来看，Mate也提供了多种使用方式，比如使用文本描述不同类型的场景动作、使用单张或一对图片生成变化视频、在原始视频中加入额外的元素和变化等。</p>
 <h4 id="二、国内AIGC模型"><a href="#二、国内AIGC模型" class="headerlink" title="二、国内AIGC模型"></a>二、国内AIGC模型</h4><h5 id="1、太极"><a href="#1、太极" class="headerlink" title="1、太极"></a>1、太极</h5><p>腾讯基于自身在自然语言处理和图像多模态等方面积累的经验，打造了通用场景模型——太极文生图大模型。太极文生图采用了 Diffusion 路线：使用在表情场景积累的 Imagen 生成技术(RGB空间Diffusion)，生成的图片相关性很好；使用 Stable Diffusion 技术(Latent Diffusion)生成的图片细节相对更为丰富。因此太极文生图是两套模型并行研发的方案，并在原分辨率基础上进一步优化了超分模型，支持1024像素x1024像素的分辨率。下图展示了太极文生图大模型的一些作品。</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/f68ba500e0541ea49f1d04d6b4713bef.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/img_convert/f68ba500e0541ea49f1d04d6b4713bef.png" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-f3443903e50694f0a86e3801b5255a91_720w.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-f3443903e50694f0a86e3801b5255a91_720w.png" class="lozad post-image"></p>
 <p>为保证大模型能够快速高效落地，太极文生图还定制开发了配套的太极-HCF ToolKit，它包含了从模型蒸馏、压缩量化到模型加速的完整能力。在文字生成图像的场景下，使用其中的HCF异构加速组件进行SD、Imagen的模型推理加速，整体性能与业界领先水平相当。后续，太极大模型将持续集成使用HCF ToolKit 相关组件，并在算子定制、图优化、模型压缩等方向持续发力，确保文生图服务的整体性能。</p>
 <h5 id="2、文心一言"><a href="#2、文心一言" class="headerlink" title="2、文心一言"></a>2、文心一言</h5><p>2022年百度世界大会上，百度公司对外发布了 AIGC 应用，百度公司创始人李彦宏将 AIGC 的发展分为助手、协作和原创三个阶段。至此，AIGC 开始在国内各大互联网公司全面推进。同时，百度公司也发布了自研的 ERNIE-ViLG 文生图模型，包括工业设计、游戏制作、服装设计、Logo 设计、盆栽设计、动漫设计、珠宝设计、传统艺术等诸多领域。用户可以输人自然语言让AI生成符合描述的图像。</p>
 <p>还有一个显著的特点在于，ERNIE-ViLG模型能够深刻地理解中文表达，也更了解中国文化，这对国人在使用模型的时候更加便利。据了解，百度公司也主动开放了ERNIE-ViLG模型的API接口，以此降低AIGC的应用门槛，推动相关应用规模化和产业化。</p>
 <h5 id="3、太乙-Stable-Diffusion"><a href="#3、太乙-Stable-Diffusion" class="headerlink" title="3、太乙 Stable Diffusion"></a>3、太乙 Stable Diffusion</h5><p>当前国内的AIGC 应用，主要是基于翻译API上英文的 Stable Diffusion 模型进行开发，但是由于中英文之间存在着文化差异，导致我们在输入文本的时候，会遇到对于中文独特的叙事和表达，英文模型很难正确匹配图像内容的情况。</p>
 <p>为此，粤港澳大湾区数字经济研究院(以下简称“IDEA研究院”)开源了第一个中文版本的Stable Diffusion模型-太乙 Stable Diffusion，该模型基于0.2亿筛选过的中文图文对进行训练，从而实现了具备中文内核的AIGC模型。下面展示了太乙 Stable Diffusion大模型的作品。    </p>
 <p>君不见黄河之水天上来 ，唯美，油画</p>
-<p><img src="https://imagepphcloud.thepaper.cn/pph/image/223/393/126.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://imagepphcloud.thepaper.cn/pph/image/223/393/126.jpg" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-ecffc9b6a8d072fbf552b8537c2c6b6d_720w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-ecffc9b6a8d072fbf552b8537c2c6b6d_720w.jpg" class="lozad post-image"></p>
 <p>滔滔江水，连绵不绝 ，唯美，插画</p>
-<p><img src="https://imagepphcloud.thepaper.cn/pph/image/223/393/130.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://imagepphcloud.thepaper.cn/pph/image/223/393/130.jpg" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-5b8a3c559c5d342dad4b2e54c1647551_720w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-5b8a3c559c5d342dad4b2e54c1647551_720w.jpg" class="lozad post-image"></p>
 <p>飞流直下三千尺 ，唯美，插画</p>
-<p><img src="https://imagepphcloud.thepaper.cn/pph/image/223/393/133.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://imagepphcloud.thepaper.cn/pph/image/223/393/133.jpg" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-4d7a16073e6040704f03e72133a504a6_720w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-4d7a16073e6040704f03e72133a504a6_720w.jpg" class="lozad post-image"></p>
 <p>可以看到它能够很好的理解中文古诗词的意思。当前多数AIGC模型还无法和具有中国特色文化背景的语言相结合，太乙模型将有望加快AIGC 全球市场化过程中中国文化产业的数字化转型发展，促进各个相关行业的升级。</p>
 <h5 id="4、CogView"><a href="#4、CogView" class="headerlink" title="4、CogView"></a>4、CogView</h5><p>智源研究院在 2021年5月推出了中文的文图生成模型CogView，这项工作和OpenAI可以说是在同一时期开展的技术探索。2022年上半年，智源研究院推出了 CogView2.0 和视频生成 CogVideo。在 Stable Diffusion开源之后，智源研究院也基于 Stable Diffusion尝试做了中文版和国画版，生成效果非常不错。</p>
 <h5 id="5、MSRA"><a href="#5、MSRA" class="headerlink" title="5、MSRA"></a>5、MSRA</h5><p>2021 年 11 月微软亚洲研究院与北京大学联合发布了女娲模型，女娲模型用来从输入的文本、图像或者视频生成图像或者视频。同时，女娲模型还具备图像补全等多种功能。</p>
@@ -580,37 +580,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
-    
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
-    
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
     
   </div>
 </div>
