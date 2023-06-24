@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>国内外常用的AIGC模型&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="国内外常用的AIGC模型">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/%E5%9B%BD%E5%86%85%E5%A4%96%E5%B8%B8%E7%94%A8%E7%9A%84AIGC%E6%A8%A1%E5%9E%8B/index.html">
+  
+  
+  <meta property="og:img" content="https://pic1.zhimg.com/80/v2-bb5c1dc09313f264c72490907e8b937e_720w.png">
+  
+  
+  <meta property="description" content="在聊AIGC模型之前，先给大家解释一下什么是AIGC。">
+  
+  <meta property="keywords" content="程序员，程序猿，Java软件，Java面试，python机器学习、Linux">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2023-06-24">
+  <meta property="og:article:modified_time" content="2023-06-24">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/%E5%9B%BD%E5%86%85%E5%A4%96%E5%B8%B8%E7%94%A8%E7%9A%84AIGC%E6%A8%A1%E5%9E%8B/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic1.zhimg.com/80/v2-bb5c1dc09313f264c72490907e8b937e_720w.png" data-src="https://pic1.zhimg.com/80/v2-bb5c1dc09313f264c72490907e8b937e_720w.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      国内外常用的AIGC模型
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-06-24T08:24:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2023-06-24</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/技术以外/" class="post-meta-link">技术以外</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/%E5%9B%BD%E5%86%85%E5%A4%96%E5%B8%B8%E7%94%A8%E7%9A%84AIGC%E6%A8%A1%E5%9E%8B/" class="leancloud_visitors" data-flag-title="国内外常用的AIGC模型">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  
+
+
+		
+  
+  <meta name="description" content="在聊AIGC模型之前，先给大家解释一下什么是AIGC。">
+  
+  <meta name="keywords" content="程序员，程序猿，Java软件，Java面试，python机器学习、Linux">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <p>在聊AIGC模型之前，先给大家解释一下什么是AIGC。</p>
+<p>AIGC全称：AI-Generated Content，中文译为“人工智能生产内容”。狭义上是指通过人工智能技术自动生成内容的生产方式。广义的AIGC可以基于训练数据和生成算法模型，自动生成新的文本、图像、音乐、视频、3D交互内容等各种形式的内容和数据，甚至可能开启科学新发现，创造新的价值和意义。</p>
+<p>其实早在2018年，就有人指出创造性人工智能是未来人工智能的重要研究方向，各个大厂和高校也纷纷有团队在做这方面的工作，直到去年（2022年）ChatGPT的发布，AIGC模型才受到大家广泛的关注，并迅速向大众领域扩散。</p>
+<p>本文将为大家介绍当前国内外一些典型的AIGC模型，希望对大家的工作和学习能有所帮助！</p>
+<h4 id="一、海外AIGC模型"><a href="#一、海外AIGC模型" class="headerlink" title="一、海外AIGC模型"></a>一、海外AIGC模型</h4><h5 id="1、Stable-Diffusion"><a href="#1、Stable-Diffusion" class="headerlink" title="1、Stable Diffusion"></a>1、Stable Diffusion</h5><p>Stable Diffusion由来自慕尼黑大学的Robin Rombach(Stability AI公司)和Patrick Esser(Runway 公司)的团队，在 Björn Ommer 教授的领导下主导开发。 Stable Diffusion 作为文本生成图像模型，由于交互简单、生成速度快，极大地降低了使用门槛。因此 Stable Diffusion 成了当前热门的AIGC 绘画生成应用，其理念是“AI by the people, for the people”(可理解为“AI 取之于民，用之于民”)。 Stable Diffusion 不仅公开了算法和训练数据，也公开了训练好的模型参数，与同类型的模型相比 Stable Diffusion 要小很多。</p>
+<p>Stable Diffusion 主要由三个部分组成，分别是 VAE、U-Net 网络和 CLIP 文本编码器。在具体的实现过程中，首先使用 CLIP 模型将文本转换为表征形式，然后引导扩散模型 U-Net 在低维表征上进行扩散，之后将扩散之后的低维表征送入VAE 中的解码器，从而实现图像生成。</p>
+<p>2022年10月18日，Stability AI公司获得1.01亿美元投资，估值达10亿美元，公司宣布将继续研发拥有生成图片、语言、音频、视频和 3D 的 AIGC 生成模型。</p>
+<h5 id="2、DALL-E-2"><a href="#2、DALL-E-2" class="headerlink" title="2、DALL-E 2"></a>2、DALL-E 2</h5><p>DALL-E 2 来自 OpenAI，命名来源于著名画家 Dali 和机器人总动员 Wall-E，是在DALL-E的基础上的升级版，其分辨率是之前版本的4倍，发布不到3个月注册用户就超过100万。DALL-E 2有着较好的理解力和创造力，参数达到了 3.5亿个。</p>
+<p>DALL-E 2 主要由三个模块组成，分别是 CLIP 模型、先验模型和扩散模型。CLIP模型主要是用来对齐文本和图片特征，其中先验模型主要是将文本表征映射为图片表征，扩散模型则是根据图片表征来生成完整的图像。首先使用 CLIP文本编码器来获得文本编码，之后使用先验模型将文本编码映射为图片编码，最后使用扩散解码器用图片编码生成完整图片。</p>
+<p>当然，DALL-E 2也有不足之处，例如容易将物体和属性混淆，无法精准地通过文本在图像中得以实现等。</p>
+<h5 id="3、Imagen-Video"><a href="#3、Imagen-Video" class="headerlink" title="3、Imagen Video"></a>3、Imagen Video</h5><p>Imagen Video倾向于打造高质量视频。其工作原理与 DALL-E 2 比较像。首先将文本极性编码表征，之后使用扩散模型将表征映射成为完整图像，同时会通过两个扩散模型来进一步提高分辨率。由于Imagen 使用了T5-XXL模型直接编码文本信息，然后使用条件扩散模型，直接用文本编码生成图像，因此在Imagen 中不需要学习先验模型。同时，Imagen 在语义保真度上做得更好。</p>
+<h5 id="4、Make-A-Video"><a href="#4、Make-A-Video" class="headerlink" title="4、Make-A-Video"></a>4、Make-A-Video</h5><p>Make-A-Video 是 Meta 公司在 2022 年9月发布的，使用者可以用文本的方式生成简洁和高质量的短视频。Meta使用的系统模型可以从文本-图片配对数据中，学习现实世界的样子并从视频片段中推理没有文本情况下的变化。从实现场景来看，Mate也提供了多种使用方式，比如使用文本描述不同类型的场景动作、使用单张或一对图片生成变化视频、在原始视频中加入额外的元素和变化等。</p>
+<h4 id="二、国内AIGC模型"><a href="#二、国内AIGC模型" class="headerlink" title="二、国内AIGC模型"></a>二、国内AIGC模型</h4><h5 id="1、太极"><a href="#1、太极" class="headerlink" title="1、太极"></a>1、太极</h5><p>腾讯基于自身在自然语言处理和图像多模态等方面积累的经验，打造了通用场景模型——太极文生图大模型。太极文生图采用了 Diffusion 路线：使用在表情场景积累的 Imagen 生成技术(RGB空间Diffusion)，生成的图片相关性很好；使用 Stable Diffusion 技术(Latent Diffusion)生成的图片细节相对更为丰富。因此太极文生图是两套模型并行研发的方案，并在原分辨率基础上进一步优化了超分模型，支持1024像素x1024像素的分辨率。下图展示了太极文生图大模型的一些作品。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/f68ba500e0541ea49f1d04d6b4713bef.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/img_convert/f68ba500e0541ea49f1d04d6b4713bef.png" class="lozad post-image"></p>
+<p>为保证大模型能够快速高效落地，太极文生图还定制开发了配套的太极-HCF ToolKit，它包含了从模型蒸馏、压缩量化到模型加速的完整能力。在文字生成图像的场景下，使用其中的HCF异构加速组件进行SD、Imagen的模型推理加速，整体性能与业界领先水平相当。后续，太极大模型将持续集成使用HCF ToolKit 相关组件，并在算子定制、图优化、模型压缩等方向持续发力，确保文生图服务的整体性能。</p>
+<h5 id="2、文心一言"><a href="#2、文心一言" class="headerlink" title="2、文心一言"></a>2、文心一言</h5><p>2022年百度世界大会上，百度公司对外发布了 AIGC 应用，百度公司创始人李彦宏将 AIGC 的发展分为助手、协作和原创三个阶段。至此，AIGC 开始在国内各大互联网公司全面推进。同时，百度公司也发布了自研的 ERNIE-ViLG 文生图模型，包括工业设计、游戏制作、服装设计、Logo 设计、盆栽设计、动漫设计、珠宝设计、传统艺术等诸多领域。用户可以输人自然语言让AI生成符合描述的图像。</p>
+<p>还有一个显著的特点在于，ERNIE-ViLG模型能够深刻地理解中文表达，也更了解中国文化，这对国人在使用模型的时候更加便利。据了解，百度公司也主动开放了ERNIE-ViLG模型的API接口，以此降低AIGC的应用门槛，推动相关应用规模化和产业化。</p>
+<h5 id="3、太乙-Stable-Diffusion"><a href="#3、太乙-Stable-Diffusion" class="headerlink" title="3、太乙 Stable Diffusion"></a>3、太乙 Stable Diffusion</h5><p>当前国内的AIGC 应用，主要是基于翻译API上英文的 Stable Diffusion 模型进行开发，但是由于中英文之间存在着文化差异，导致我们在输入文本的时候，会遇到对于中文独特的叙事和表达，英文模型很难正确匹配图像内容的情况。</p>
+<p>为此，粤港澳大湾区数字经济研究院(以下简称“IDEA研究院”)开源了第一个中文版本的Stable Diffusion模型-太乙 Stable Diffusion，该模型基于0.2亿筛选过的中文图文对进行训练，从而实现了具备中文内核的AIGC模型。下面展示了太乙 Stable Diffusion大模型的作品。    </p>
+<p>君不见黄河之水天上来 ，唯美，油画</p>
+<p><img src="https://imagepphcloud.thepaper.cn/pph/image/223/393/126.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://imagepphcloud.thepaper.cn/pph/image/223/393/126.jpg" class="lozad post-image"></p>
+<p>滔滔江水，连绵不绝 ，唯美，插画</p>
+<p><img src="https://imagepphcloud.thepaper.cn/pph/image/223/393/130.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://imagepphcloud.thepaper.cn/pph/image/223/393/130.jpg" class="lozad post-image"></p>
+<p>飞流直下三千尺 ，唯美，插画</p>
+<p><img src="https://imagepphcloud.thepaper.cn/pph/image/223/393/133.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://imagepphcloud.thepaper.cn/pph/image/223/393/133.jpg" class="lozad post-image"></p>
+<p>可以看到它能够很好的理解中文古诗词的意思。当前多数AIGC模型还无法和具有中国特色文化背景的语言相结合，太乙模型将有望加快AIGC 全球市场化过程中中国文化产业的数字化转型发展，促进各个相关行业的升级。</p>
+<h5 id="4、CogView"><a href="#4、CogView" class="headerlink" title="4、CogView"></a>4、CogView</h5><p>智源研究院在 2021年5月推出了中文的文图生成模型CogView，这项工作和OpenAI可以说是在同一时期开展的技术探索。2022年上半年，智源研究院推出了 CogView2.0 和视频生成 CogVideo。在 Stable Diffusion开源之后，智源研究院也基于 Stable Diffusion尝试做了中文版和国画版，生成效果非常不错。</p>
+<h5 id="5、MSRA"><a href="#5、MSRA" class="headerlink" title="5、MSRA"></a>5、MSRA</h5><p>2021 年 11 月微软亚洲研究院与北京大学联合发布了女娲模型，女娲模型用来从输入的文本、图像或者视频生成图像或者视频。同时，女娲模型还具备图像补全等多种功能。</p>
+<h5 id="6、ModelScope"><a href="#6、ModelScope" class="headerlink" title="6、ModelScope"></a>6、ModelScope</h5><p>阿里巴巴达摩院联合CCF开源发展委员会共同推出AI模型社区“魔搭’(ModelScope)，旨在降低AI的应用门槛。达摩院率先向社区贡献了300多个经过验证的 AI模型，超过三分之一的模型是中文模型。这些模型全面开源、开放，并把模型变为直接可用的服务。</p>
+<h5 id="7、DPM-Solver"><a href="#7、DPM-Solver" class="headerlink" title="7、DPM-Solver"></a>7、DPM-Solver</h5><p>随着Stability AI的开源模型 Stable Diffusion 被广泛使用，业内专家也在不断对该模型进行优化。扩散模型在使用的过程中需要进行去噪，整个过程需要串行计算50~100步才可以获得较高质量的图片，这导致生成一张图片的时间会较长，限制了模型的部署和落地。为此清华大学的朱军教授带领团队提出了DPM-Solver。</p>
+<p>该模型是一种针对扩散模型特殊设计的高效求解器，这种算法不需要额外的训练，同时适用于离散时间和连续时间模型，可以在20-25步内实现收敛，并且只用10~15 步就能获得非常高质量的采样。在 Stable Diffusion上，串行计算25 步的DPM-Solver 就可以获得优于50步PNDM的采样质量，因此采样速度直接翻倍。这一基于 DPM-Solver的创新使扩散模型的采样速度不再是瓶颈。</p>
+<p>在人类科技发展史上，每一次巨大变革主要是围绕以下两个方面：一方面是人与世界之间的关系，另一方面是建立人与人之间新的关联。在门户网站时代，我们利用门户网站给用户打开了一扇窗户，大家可以通过门户网站来获得更多的数字信息。假如搜索引擎和门户网站是连接人和世界的管道，那么人们就会通过这个管道来获取世界上的信息和内容。在搜索引擎时代，更多的则是信息从另一端推送给用户。同样是管道的架构，但是不同的管道和不同的技术让信息能够更好地进行结构化处理，并让用户更好地获得所需要的信息。</p>
+<p>AIGC时代会诞生一种新结构，首次把人与世界的连接、人与人之间的连接更好地结合在一起，而且<br>是用一种更加自然的方式。这种方式就是使用自然语言实现人与计算机之间的交互。如果用户想要获得自己喜欢的内容并不断调整，那么推荐引擎将替代搜索引擎成为主流。</p>
+<p>以上就是当前国内外一下常见的AIGC模型，想要更加全面地理解AIGC，就需要大家自己在实际的使用过程中自行挖掘了。</p>
+		
+  </div>	
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 13px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，就读于哈工大，计算机系博士生，曾经的学渣，现在的学霸，拿过各路编程大奖&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 13px;">求学20载，从农村到C9博士，上学期间通过副业收入超&nbsp;100 万，</span><a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzU4NjE1NTI2Mw==&amp;mid=2247494918&amp;idx=1&amp;sn=a62dd202a4655482b23a7ec8614e6531&amp;scene=21#wechat_redirect" rel="external nofollow noreferrer" textvalue="点击蓝字查看我的编程之路。" tab="innerlink" data-linktype="2" wah-hotarea="click" style="outline: 0px;text-decoration: underline;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;"><span style="outline: 0px;font-size: 13px;"><strong style="outline: 0px;"><span style="outline: 0px;">点击蓝字查看我的成长之路</span></strong><span style="outline: 0px;">。</span></span></a></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 13px;letter-spacing: 0.544px;">同时，我也是知乎博主：<a target="_blank" href="https://www.zhihu.com/people/tanqingbo" rel="external nofollow noreferrer" textvalue="谭庆波，" tab="innerlink" data-linktype="2" wah-hotarea="click" style="outline: 0px;text-decoration: underline;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;"><span style="outline: 0px;font-size: 13px;"><strong style="outline: 0px;"><span style="outline: 0px;">谭庆波</span></strong><span style="outline: 0px;">，</span></span></a>日常分享高质量程序员认知，学习资料、技术干货等，欢迎围观。</span></section>
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">最后说一件重要的事，我最近建了一个【晋级的程序员】社群，旨在帮助新手小白快速上手找到编程的乐趣，里面沉淀了大量编程相关经验教程以及学习资料，目前社群人数已经超过1500人，欢迎大家加入：</span></p><section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://pica.zhimg.com/80/v2-2e7536efb6ee004b9d50b3fdc1c67416_720w.png" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://pica.zhimg.com/80/v2-2e7536efb6ee004b9d50b3fdc1c67416_720w.png" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/%E5%9B%BD%E5%86%85%E5%A4%96%E5%B8%B8%E7%94%A8%E7%9A%84AIGC%E6%A8%A1%E5%9E%8B/">https://tanqingbo.cn/%E5%9B%BD%E5%86%85%E5%A4%96%E5%B8%B8%E7%94%A8%E7%9A%84AIGC%E6%A8%A1%E5%9E%8B/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/户口的意义/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B5%B7%E5%A4%96AIGC%E6%A8%A1%E5%9E%8B"><span class="toc-text">一、海外AIGC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81Stable-Diffusion"><span class="toc-text">1、Stable Diffusion</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81DALL-E-2"><span class="toc-text">2、DALL-E 2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81Imagen-Video"><span class="toc-text">3、Imagen Video</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81Make-A-Video"><span class="toc-text">4、Make-A-Video</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BD%E5%86%85AIGC%E6%A8%A1%E5%9E%8B"><span class="toc-text">二、国内AIGC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E5%A4%AA%E6%9E%81"><span class="toc-text">1、太极</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80"><span class="toc-text">2、文心一言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%A4%AA%E4%B9%99-Stable-Diffusion"><span class="toc-text">3、太乙 Stable Diffusion</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81CogView"><span class="toc-text">4、CogView</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81MSRA"><span class="toc-text">5、MSRA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81ModelScope"><span class="toc-text">6、ModelScope</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7%E3%80%81DPM-Solver"><span class="toc-text">7、DPM-Solver</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>269</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>15</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>117</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201215143241.png">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B5%B7%E5%A4%96AIGC%E6%A8%A1%E5%9E%8B"><span class="toc-text">一、海外AIGC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81Stable-Diffusion"><span class="toc-text">1、Stable Diffusion</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81DALL-E-2"><span class="toc-text">2、DALL-E 2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81Imagen-Video"><span class="toc-text">3、Imagen Video</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81Make-A-Video"><span class="toc-text">4、Make-A-Video</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BD%E5%86%85AIGC%E6%A8%A1%E5%9E%8B"><span class="toc-text">二、国内AIGC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E5%A4%AA%E6%9E%81"><span class="toc-text">1、太极</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80"><span class="toc-text">2、文心一言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%A4%AA%E4%B9%99-Stable-Diffusion"><span class="toc-text">3、太乙 Stable Diffusion</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81CogView"><span class="toc-text">4、CogView</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81MSRA"><span class="toc-text">5、MSRA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81ModelScope"><span class="toc-text">6、ModelScope</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7%E3%80%81DPM-Solver"><span class="toc-text">7、DPM-Solver</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">27</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">57</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">69</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">6</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
+    
+    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
+    
+    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    
+    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    
+    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic2.zhimg.com/80/v2-6447f532ad3acf6605960e7ffb945c7a_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="https://tanqingbo.cn/msb-source/" target="_blank"><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20210104122757.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B5%B7%E5%A4%96AIGC%E6%A8%A1%E5%9E%8B"><span class="toc-text">一、海外AIGC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81Stable-Diffusion"><span class="toc-text">1、Stable Diffusion</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81DALL-E-2"><span class="toc-text">2、DALL-E 2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81Imagen-Video"><span class="toc-text">3、Imagen Video</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81Make-A-Video"><span class="toc-text">4、Make-A-Video</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9B%BD%E5%86%85AIGC%E6%A8%A1%E5%9E%8B"><span class="toc-text">二、国内AIGC模型</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81%E5%A4%AA%E6%9E%81"><span class="toc-text">1、太极</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81%E6%96%87%E5%BF%83%E4%B8%80%E8%A8%80"><span class="toc-text">2、文心一言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%A4%AA%E4%B9%99-Stable-Diffusion"><span class="toc-text">3、太乙 Stable Diffusion</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81CogView"><span class="toc-text">4、CogView</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81MSRA"><span class="toc-text">5、MSRA</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81ModelScope"><span class="toc-text">6、ModelScope</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7%E3%80%81DPM-Solver"><span class="toc-text">7、DPM-Solver</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-06-24</div>
+        <a href="/国内外常用的AIGC模型/"><div class="recent-posts-item-content">国内外常用的AIGC模型</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-06-16</div>
+        <a href="/户口的意义/"><div class="recent-posts-item-content"></div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-18</div>
+        <a href="/吃苦的三种境界/"><div class="recent-posts-item-content">吃苦的三种境界</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-04-14</div>
+        <a href="/蔚来ET5试驾体验/"><div class="recent-posts-item-content">蔚来ET5试驾体验</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2023
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/links/" target="_blank">友情链接</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
