@@ -295,11 +295,11 @@ var _hmt = _hmt || [];
 <p>今天接着分享一下在AIGC的应用中典型的深度学习网络。</p>
 <h4 id="1、生成对抗网络"><a href="#1、生成对抗网络" class="headerlink" title="1、生成对抗网络"></a>1、生成对抗网络</h4><p>生成对抗网络网络（Generative Adversarial Network，GAN），是深度学习领域的一个重要里程碑。它可以帮助神经网络用更少的数据进行学习，生成更多的合成图像，之后还可以用来识别和建设更好的神经网络。</p>
 <p>主要思路是由两个神经网络来玩“猫捉老鼠”的游戏。一个是生成器，另一个是判别器。生成器用来创造出看起来像真实图像的假图像，而判别器则用来判断它们是否是真的。如图下图：</p>
-<p><img src="https://img-blog.csdnimg.cn/537a4be885254eb2a880000dfacc7840.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6L-Z5Liq5pi156ew5oiR5oOz5LqG5b6I5LmFaQ==,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/537a4be885254eb2a880000dfacc7840.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA6L-Z5Liq5pi156ew5oiR5oOz5LqG5b6I5LmFaQ==,size_15,color_FFFFFF,t_70,g_se,x_16#pic_center" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-5bc53319b5a5432512be479dbe25e722_720w.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-5bc53319b5a5432512be479dbe25e722_720w.png" class="lozad post-image"></p>
 <p>在相互对抗中，生成器生成的图像逐渐达到以假乱真的地步，从而让判别器难以判断真假，使得生成的数据分布更加接近真实数据分布。</p>
 <p>GAN 有助于创建图像，还可以创建现实世界的软件虚拟场景，例如英伟达就是采用大量的生成对抗网络技术来增强虚拟现实模拟系统的。<br>GAN 的最大优势是其不依赖于先验假设，而是通过迭代的方式逐渐学习到数据的分布。因此，目前 GAN 已经广泛应用在媒体、广告、游戏、娱乐等行业，可以用来创造虚构的任务、画面，模拟人脸老化、图像风格变换以及产生化学分子式等。早期的 GAN 生成图像的效果比较一般，但研究人员加快创新和进一步优化模型，尤其是 StyleGAN 出现让生成的图像足以以假乱真。</p>
 <p>下图中的人脸全部都是由GAN模型自动生成的，值得注意的是，这些人脸并不是从真人的照片中修改而来，而是模型从零开始修改的全新人脸。</p>
-<p><img src="https://img-blog.csdnimg.cn/img_convert/21a96cbb08d85c6b4fa65925fd53c725.png?x-oss-process=image/resize,h_400#pic_center" alt="到底哪些是机器产生的？" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img-blog.csdnimg.cn/img_convert/21a96cbb08d85c6b4fa65925fd53c725.png?x-oss-process=image/resize,h_400#pic_center" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-b7d969d4c0827e8f68708933e2cc20f3_720w.png" alt="到底哪些是机器产生的？" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-b7d969d4c0827e8f68708933e2cc20f3_720w.png" class="lozad post-image"></p>
 <p>但是GAN也有一定的不足，主要集中在稳定性和收敛性方面。例如，GAN的生成器和判别器之间需要很好地同步，但是在实际训练中很容易出现判别器收敛而生成器发散的情况，因此两者的训练需要精心设计才能避免不同步的情况出现。另外，如果GAN模型对于输出结果的控制力不足，就容易产生随机图像，同时图像的分辨率也不高。更为重要的是，让生成的数据分布接近真实数据分布，还会产生新的问题，那就是生成的内容是非常接近现有的内容，但很难实现突破和创新。</p>
 <h4 id="2、Transformer"><a href="#2、Transformer" class="headerlink" title="2、Transformer"></a>2、Transformer</h4><p>Transformer 是继 GAN 之后，深度学习领域的另一个重大研究成果。2017年谷歌和多伦多大学的研究人员共同发表了一篇著名的论文“Attention Is All You Need”，该论文提到了一个自然语言处理的模型Transformer。</p>
 <p>Transformer 是一款基于自然语言的序列传导模型，论文简洁清晰地阐述了这个新的网络结构 Transformer 基于注意力机制，不需要进行递归和卷积，因此模型在质量上更胜一筹，需要的训练时间也减少了很多。</p>
@@ -573,37 +573,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
     <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
-    
-    <a href="\tags\C语言" title="C语言"><div class="tags-list-item">C语言</div></a>
-    
-    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
-    
-    <a href="\tags\string" title="string"><div class="tags-list-item">string</div></a>
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\C" title="C"><div class="tags-list-item">C</div></a>
-    
-    <a href="\tags\Java图书" title="Java图书"><div class="tags-list-item">Java图书</div></a>
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Python图书" title="Python图书"><div class="tags-list-item">Python图书</div></a>
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
     
-    <a href="\tags\C++图书" title="C++图书"><div class="tags-list-item">C++图书</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
     
-    <a href="\tags\C语言图书" title="C语言图书"><div class="tags-list-item">C语言图书</div></a>
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
     
   </div>
 </div>
