@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tanqingbo.cn/software-copyright/</loc>
-    <lastmod>2025-06-12</lastmod>
+    <loc>https://tanqingbo.cn/Open-Internet/</loc>
+    <lastmod>2025-06-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/%E2%80%8CAccessing-the-Open-Internet/</loc>
+    <lastmod>2025-06-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/</loc>
+    <lastmod>2025-06-13</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/Android-open-internet/</loc>
+    <lastmod>2025-06-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/ios-open-internet/</loc>
+    <lastmod>2025-06-13</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/software-copyright/</loc>
     <lastmod>2025-06-12</lastmod>
   </url>
   <url>
@@ -13,20 +29,8 @@
     <lastmod>2025-06-07</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/Open-Internet/</loc>
-    <lastmod>2025-06-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/%E2%80%8CAccessing-the-Open-Internet/</loc>
-    <lastmod>2025-06-05</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/choose2/</loc>
     <lastmod>2025-06-05</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/</loc>
-    <lastmod>2025-06-04</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/CSBook001/</loc>
