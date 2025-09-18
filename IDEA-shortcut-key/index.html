@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>程序员面试必备经典书籍&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="程序员面试必备经典书籍">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/IDEA-shortcut-key/index.html">
+  
+  
+  <meta property="og:img" content="https://picx.zhimg.com/70/v2-95bb173f97c1e072f77349c3733ce431_1440w.avis?source=172ae18b&amp;biz_tag=Post">
+  
+  
+  <meta property="description" content="这篇博客是我自己用于记录整理的IDEA常用快捷键">
+  
+  <meta property="keywords" content="程序员,Idea">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2025-09-18">
+  <meta property="og:article:modified_time" content="2025-09-18">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/IDEA-shortcut-key/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://picx.zhimg.com/70/v2-95bb173f97c1e072f77349c3733ce431_1440w.avis?source=172ae18b&amp;biz_tag=Post" data-src="https://picx.zhimg.com/70/v2-95bb173f97c1e072f77349c3733ce431_1440w.avis?source=172ae18b&amp;biz_tag=Post"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      程序员面试必备经典书籍
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2025-09-18T08:21:05.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2025-09-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/编程经验/" class="post-meta-link">编程经验</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/IDEA-shortcut-key/" class="leancloud_visitors" data-flag-title="程序员面试必备经典书籍">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  
+
+
+		
+  
+  <meta name="description" content="这篇博客是我自己用于记录整理的IDEA常用快捷键">
+  
+  <meta name="keywords" content="程序员,Idea">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="一、注释快捷键"><a href="#一、注释快捷键" class="headerlink" title="一、注释快捷键"></a>一、注释快捷键</h2><h3 id="1-单行注释"><a href="#1-单行注释" class="headerlink" title="1.单行注释"></a>1.单行注释</h3><p>1.1 按两次 /</p>
+<p>如果要对这一行进行单行注释，将光标移动到该行语句的开头处再按两次 / 即可</p>
+<p><img src="https://pic2.zhimg.com/80/v2-422746ce6d07b7e96651386a3eae2ef7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-422746ce6d07b7e96651386a3eae2ef7_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-b41703a40f22f7574388096a34acc970_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-b41703a40f22f7574388096a34acc970_720w.webp" class="lozad post-image"></p>
+<p>取消注释只需要把//删去即可</p>
+<p>1.2 Ctrl + /<br>如果要对这一行进行单行注释，将光标移动到该行（只要光标在这一行就行），再按Ctrl + /</p>
+<p><img src="https://pic3.zhimg.com/80/v2-192be55ffcee67e0edfb53a8e6bb77b8_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-192be55ffcee67e0edfb53a8e6bb77b8_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-ed2cc4e9c96790e8820c4e98085cba38_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-ed2cc4e9c96790e8820c4e98085cba38_720w.webp" class="lozad post-image"></p>
+<p>取消注释还是一样把光标移动到该行，再按Ctrl + /即可</p>
+<h3 id="2-多行注释"><a href="#2-多行注释" class="headerlink" title="2.多行注释"></a>2.多行注释</h3><p>2.1 Ctrl + / 一次注释多行<br>把要注释的多行选中，再按Ctrl + / 也可以对多行进行注释</p>
+<p><img src="https://pic4.zhimg.com/80/v2-5ad7be12e4aa5dd703ee15c5ad69f687_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-5ad7be12e4aa5dd703ee15c5ad69f687_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-82280301fbddfc792579dff22bc38f7d_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-82280301fbddfc792579dff22bc38f7d_720w.webp" class="lozad post-image"></p>
+<p>取消注释还是一样把注释的多行选中，再按Ctrl + /即可</p>
+<p>2.2 / + * +Enter<br>按回车之后两个/*之间的位置就可以写多行注释了</p>
+<p><img src="https://pic1.zhimg.com/80/v2-1b685845b165b5c633d63594ad3ec472_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-1b685845b165b5c633d63594ad3ec472_720w.webp" class="lozad post-image"></p>
+<p>2.3 Ctrl + Shift + /<br>把要注释的多行选中，再按Ctrl + Shift + / 可以对多行进行注释</p>
+<p><img src="https://pica.zhimg.com/80/v2-9f4f24ce272ef294113fd905bfa4c4fe_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-9f4f24ce272ef294113fd905bfa4c4fe_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-cb689fe887db6270ea1b67f2137c2d6d_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-cb689fe887db6270ea1b67f2137c2d6d_720w.webp" class="lozad post-image"></p>
+<p>取消注释还是一样把注释的多行选中，再按Ctrl + Shift + / 即可</p>
+<h3 id="3-文档注释"><a href="#3-文档注释" class="headerlink" title="3.文档注释"></a>3.文档注释</h3><p>3.1 按/ + * + * +Enter对类注释</p>
+<p>在定义的类前按/ + * + * +Enter，回车之后就会生成文档注释的架子，类上的注释不会给任何东西，可以自己加上@author @version等等注释<br>如果想要回车之后自动生成自己想要的注释，可以点击IDEA左上角主菜单–&gt;设置–&gt;编译器–&gt;文件和代码模板，然后修改即可</p>
+<p><img src="https://picx.zhimg.com/80/v2-3df491210535050f2bdcd94220e176cf_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-3df491210535050f2bdcd94220e176cf_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-c370ea29c9330c35e586991684b20017_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-c370ea29c9330c35e586991684b20017_720w.webp" class="lozad post-image"></p>
+<p>3.2 按/ + * + * +Enter对方法注释<br>在定义的方法前按/ + * + * +Enter，回车之后就会生成文档注释的架子，从上往下分别可以填写方法的作用，参数的作用，还有返回值的说明</p>
+<p><img src="https://pic2.zhimg.com/80/v2-327ea6985ac59369bf293451b86fb431_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-327ea6985ac59369bf293451b86fb431_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-462b34689872d012564040f9b5008f17_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-462b34689872d012564040f9b5008f17_720w.webp" class="lozad post-image"></p>
+<h2 id="二、模板-自定义模板"><a href="#二、模板-自定义模板" class="headerlink" title="二、模板/自定义模板"></a>二、模板/自定义模板</h2><h3 id="1-快速生成主函数"><a href="#1-快速生成主函数" class="headerlink" title="1.快速生成主函数"></a>1.快速生成主函数</h3><p>1.1 psvm<br>在一个类中输入psvm，IDEA会自动生成主方法main</p>
+<p><img src="https://pic4.zhimg.com/80/v2-7a9cad3906ca9118c8395e1a3efb99a9_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-7a9cad3906ca9118c8395e1a3efb99a9_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-93797cfa799e69cc6934d1cffc39da33_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-93797cfa799e69cc6934d1cffc39da33_720w.webp" class="lozad post-image"></p>
+<p>1.2 main<br>在一个类中输入main，IDEA会自动生成主方法main</p>
+<p><img src="https://pica.zhimg.com/80/v2-f6803a53321b1699c122510125aa30ea_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-f6803a53321b1699c122510125aa30ea_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-93797cfa799e69cc6934d1cffc39da33_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-93797cfa799e69cc6934d1cffc39da33_720w.webp" class="lozad post-image"></p>
+<h3 id="2-快速生成打印语句"><a href="#2-快速生成打印语句" class="headerlink" title="2.快速生成打印语句"></a>2.快速生成打印语句</h3><p>2.1 sout<br>在任意方法中输入sout，IDEA会自动生成打印语句</p>
+<p><img src="https://pica.zhimg.com/80/v2-f53a977a57ad83ea7b8527e71ea33268_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-f53a977a57ad83ea7b8527e71ea33268_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-9855b9fba2e8b6f7cf3d67d8b65ec96c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-9855b9fba2e8b6f7cf3d67d8b65ec96c_720w.webp" class="lozad post-image"></p>
+<p>要打印的语句.sout，IDEA会自动生成完整的打印语句，并把前面要打印的语句放到打印语句中</p>
+<p><img src="https://pic3.zhimg.com/80/v2-22224d15984f30c9395006621fff458c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-22224d15984f30c9395006621fff458c_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-4eccec14d3e71beadf439f2068597fd9_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-4eccec14d3e71beadf439f2068597fd9_720w.webp" class="lozad post-image"></p>
+<p>2.2 soutm<br>在任意方法中输入soutm，IDEA会自动生成打印当前类和方法名称的语句</p>
+<p><img src="https://pic2.zhimg.com/80/v2-3f6ae7f4c2312efc1e5e9e05eaad61f5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-3f6ae7f4c2312efc1e5e9e05eaad61f5_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-e392267a4f90a4c24af1e2daa7a8f3da_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-e392267a4f90a4c24af1e2daa7a8f3da_720w.webp" class="lozad post-image"></p>
+<p>2.3 soutp<br>在任意方法中输入soutp，IDEA会自动生成打印当前方法形参名称和值的语句</p>
+<p><img src="https://pic3.zhimg.com/80/v2-98a651ba59429ef70be5cc1e96997db4_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-98a651ba59429ef70be5cc1e96997db4_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-faa100d1f923d51f04bed3b8c5cebc44_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-faa100d1f923d51f04bed3b8c5cebc44_720w.webp" class="lozad post-image"></p>
+<p>2.4 soutv<br>在任意方法中输入soutv，IDEA会自动生成打印一个值的语句</p>
+<p><img src="https://pic2.zhimg.com/80/v2-ed6f1faccc914b3cbdc5fc5e28dc2ca7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-ed6f1faccc914b3cbdc5fc5e28dc2ca7_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-cfcc98a7d017b74fd29378129455eaae_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-cfcc98a7d017b74fd29378129455eaae_720w.webp" class="lozad post-image"></p>
+<p>2.5 souf<br>在任意方法中输入souf，IDEA会自动生成打印一个格式化字符的语句</p>
+<p><img src="https://pic3.zhimg.com/80/v2-a54c6097e29b01158690c6c0050a4b16_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-a54c6097e29b01158690c6c0050a4b16_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-788122b43d004505114fbceb504ee9b0_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-788122b43d004505114fbceb504ee9b0_720w.webp" class="lozad post-image"></p>
+<h3 id="3-快速生成普通for循环"><a href="#3-快速生成普通for循环" class="headerlink" title="3.快速生成普通for循环"></a>3.快速生成普通for循环</h3><p>3.1 fori<br>在任意方法中输入fori，IDEA会自动生成一个以i为索引，以i=0为起始条件，没有设置终止条件的普通的递增for循环</p>
+<p><img src="https://pic2.zhimg.com/80/v2-7e09f9935169e8bce66513a2bebdaa97_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-7e09f9935169e8bce66513a2bebdaa97_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-3c5537fa50282ee2595a00f4fc80005d_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-3c5537fa50282ee2595a00f4fc80005d_720w.webp" class="lozad post-image"></p>
+<p>3.2 数字.fori<br>在任意方法中输入数字.fori，IDEA会自动生成一个以i为索引，以i=0为起始条件，以该数字为终止条件的普通的递增for循环</p>
+<p><img src="https://picx.zhimg.com/80/v2-77e62ed8b7d22dc9e1061009807abe0f_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-77e62ed8b7d22dc9e1061009807abe0f_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-32615219f4331efa73a81ee5f213afb5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-32615219f4331efa73a81ee5f213afb5_720w.webp" class="lozad post-image"></p>
+<p>3.3 arr.fori<br>在存在数组arr时，在方法中输入arr.fori，IDEA会自动生成一个以i为索引，以i=0为起始条件，以数组长度为终止条件的普通的递增for循环</p>
+<p><img src="https://pic1.zhimg.com/80/v2-35a67e2700a4e2f068bfac2472f63c7e_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-35a67e2700a4e2f068bfac2472f63c7e_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-ae4e329697a285512debac4d70b0c489_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-ae4e329697a285512debac4d70b0c489_720w.webp" class="lozad post-image"></p>
+<p>3.4 str.length().fori<br>在存在字符串str时，在方法中输入str.length().fori，IDEA会自动生成一个以i为索引，以i=0为起始条件，以字符串长度为终止条件的普通的递增for循环</p>
+<p><img src="https://pic2.zhimg.com/80/v2-c51dfaded3e06c33a69cab1ca64a8d2d_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-c51dfaded3e06c33a69cab1ca64a8d2d_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-3de466a069bbf69cd9f47db84ca5f8ab_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-3de466a069bbf69cd9f47db84ca5f8ab_720w.webp" class="lozad post-image"></p>
+<p>3.5 list.fori</p>
+<p>3.6 数字.forr<br>在任意方法中输入数字.forr，IDEA会自动生成一个以i为索引，以i=数字为起始条件，以i&gt;0为终止条件的普通的递减for循环</p>
+<p><img src="https://picx.zhimg.com/80/v2-37b7e962264f521e69c287a362bfb26d_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-37b7e962264f521e69c287a362bfb26d_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-ce89a382fb3e584721da1a3e7f0d75d8_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-ce89a382fb3e584721da1a3e7f0d75d8_720w.webp" class="lozad post-image"></p>
+<p>3.7 arr.forr<br>在存在数组arr时，在方法中输入arr.forr，IDEA会自动生成一个以i为索引，以i=arr.length-1为起始条件，以i&gt;=0为终止条件的普通的递减for循环</p>
+<p><img src="https://pic1.zhimg.com/80/v2-276948f6010ae1644bc09c35a01e0ffa_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-276948f6010ae1644bc09c35a01e0ffa_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-5322705414856706a84397ef86b0a6ed_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-5322705414856706a84397ef86b0a6ed_720w.webp" class="lozad post-image"></p>
+<p>3.8 str.length().forr<br>在存在字符串str时，在方法中输入str.length().forr，IDEA会自动生成一个可选择的索引，以str.length()为起始条件，以&gt;0为终止条件的普通的递减for循环</p>
+<p><img src="https://pica.zhimg.com/80/v2-8f8cf80d0761e543fbbda850c84cf31c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-8f8cf80d0761e543fbbda850c84cf31c_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-0ca06ee75e92b8402b75645857645b66_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-0ca06ee75e92b8402b75645857645b66_720w.webp" class="lozad post-image"></p>
+<h2 id="3-9-list-forr-三、快速生成标准的JavaBean类"><a href="#3-9-list-forr-三、快速生成标准的JavaBean类" class="headerlink" title="3.9 list.forr  三、快速生成标准的JavaBean类"></a>3.9 list.forr  三、快速生成标准的JavaBean类</h2><h3 id="1-快速生成构造函数（空参构造和有参构造）"><a href="#1-快速生成构造函数（空参构造和有参构造）" class="headerlink" title="1.快速生成构造函数（空参构造和有参构造）"></a>1.快速生成构造函数（空参构造和有参构造）</h3><p>1.1 Fn + Alt + Insert(Alt + Insert)</p>
+<p>先提前看一眼我定义的属性，按下Fn + Alt + Insert会出现能生成的列表，第一个就是构造函数，点击或者回车</p>
+<p><img src="https://pic4.zhimg.com/80/v2-b7be54fa963cc25016ea77af2cf913e3_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-b7be54fa963cc25016ea77af2cf913e3_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-bfd6d7f51d7fe23bc1346399b3e3c75f_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-bfd6d7f51d7fe23bc1346399b3e3c75f_720w.webp" class="lozad post-image"></p>
+<p>回车之后我们会看到如下左图的画面<br>1.如果我们要进行空参构造，最简单的方法是–&gt;点击无选择，还可以是–&gt;按两下Tab再按一下Enter（按第一下Tab是取消默认选择的第一个属性，按第二下Tab是让无选择这个按钮的背景变蓝，再按回车相当于用鼠标点了一下无选择）<br>2.如果我们要进行有全部参数的构造，最简单的方法是–&gt;Ctrl+A全选，还可以是–&gt;按Shift不松再点击最下面的gender（就相当于把所有属性全选），全选之后如下右图，再按确定就会生成<br>温馨提示：按Shift不松再点某个属性实际就是选中第一个属性到某个属性之间的所有属性，自己也可以尝试在很多个属性时不点击最下面的属性是怎样的</p>
+<p><img src="https://pic3.zhimg.com/80/v2-850a91eef10877fb2d5d10acc8fb8412_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-850a91eef10877fb2d5d10acc8fb8412_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-96f3786baf72165b42283b391760dc01_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-96f3786baf72165b42283b391760dc01_720w.webp" class="lozad post-image"></p>
+<p>生成无参构造的画面以及再生成有全部参数的构造画面如下</p>
+<p><img src="https://pic2.zhimg.com/80/v2-e53d7b89ba2f12c258fde3f42a571743_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-e53d7b89ba2f12c258fde3f42a571743_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-a322c9ac3848d88f87ebe79dcd85d3bb_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-a322c9ac3848d88f87ebe79dcd85d3bb_720w.webp" class="lozad post-image"></p>
+<h3 id="2-快速生成Getter和Setter"><a href="#2-快速生成Getter和Setter" class="headerlink" title="2.快速生成Getter和Setter"></a>2.快速生成Getter和Setter</h3><p>2.1 Fn + Alt + Insert(Alt + Insert)<br>基本流程和上面构造函数大致一样，选中Getter和Setter再全选属性即可</p>
+<p><img src="https://pic1.zhimg.com/80/v2-5cd5d5527ffa4082f95792acf3c1a028_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-5cd5d5527ffa4082f95792acf3c1a028_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-6b7c05e50d54bef4b596e982dd4c48bf_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-6b7c05e50d54bef4b596e982dd4c48bf_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-8449376205b0485432658c84553f8d51_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-8449376205b0485432658c84553f8d51_720w.webp" class="lozad post-image"></p>
+<p>后续的生成的其他方法应该流程都大差不差，这里就不过多赘述了</p>
+<h3 id="3-插件PTG-一键生成标准JavaBean"><a href="#3-插件PTG-一键生成标准JavaBean" class="headerlink" title="3.插件PTG 一键生成标准JavaBean"></a>3.插件PTG 一键生成标准JavaBean</h3><p>点击主菜单–&gt;设置–&gt;插件–&gt;搜索PTG–&gt;安装<br>按照了PTG之后，在填完属性之后，空白处右键–&gt;Ptg To JavaBean即可一键生成标准JavaBean</p>
+<p><img src="https://pica.zhimg.com/80/v2-fffc192df2c155bea1a023c78d2f39b8_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-fffc192df2c155bea1a023c78d2f39b8_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-8c3394be744a1ed5a283525217364e6e_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-8c3394be744a1ed5a283525217364e6e_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-3baac591f10028eb0540cc7ba7557bf5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-3baac591f10028eb0540cc7ba7557bf5_720w.webp" class="lozad post-image"></p>
+<h2 id="四、与类名相关的快捷操作"><a href="#四、与类名相关的快捷操作" class="headerlink" title="四、与类名相关的快捷操作"></a>四、与类名相关的快捷操作</h2><h3 id="1-类的复制操作"><a href="#1-类的复制操作" class="headerlink" title="1.类的复制操作"></a>1.类的复制操作</h3><p>1.1 在同一个包中，把类重新复制一遍<br>点击左侧要复制的类名（比如Test1，点击之后会变蓝），按Ctrl + C 再点击包名（点击之后会变蓝），再按Ctrl + V 改名为Test2，这样就相当于把这个类又复制了一遍</p>
+<p><img src="https://pica.zhimg.com/80/v2-869070967df6be83a09784869f3857b0_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-869070967df6be83a09784869f3857b0_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-ab172ae89fa4e2e13e85a07bfbed98c2_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-ab172ae89fa4e2e13e85a07bfbed98c2_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-6cc119364ccaf93c62375f6d6ebb7f89_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-6cc119364ccaf93c62375f6d6ebb7f89_720w.webp" class="lozad post-image"></p>
+<p>当然也可以点击左侧要复制的类名（点击后会变蓝）再右键选择复制，然后点击包名（点击后会变蓝）再右键黏贴是一样的</p>
+<p><img src="https://pic3.zhimg.com/80/v2-98290b814855c23ea6a0d5b7b0265f60_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-98290b814855c23ea6a0d5b7b0265f60_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-ac946bf2a111a9f7c011bed76692ee5c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-ac946bf2a111a9f7c011bed76692ee5c_720w.webp" class="lozad post-image"></p>
+<p>1.2 选择两个类复制到另一个包中<br>按Ctrl + Alt 不松点击两个类（黑马程序员视频是这么教的，实际上我自己用的时候只要按Ctrl 不松就行了）然后按Ctrl + C（或者右键复制），再点击另一个包名按Ctrl + V（或者右键复制）</p>
+<p><img src="https://pic3.zhimg.com/80/v2-80f7f4d3a47867959f152cfff9425340_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-80f7f4d3a47867959f152cfff9425340_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-2e8c4c0da701fc3b3e95199a19c2a3b7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-2e8c4c0da701fc3b3e95199a19c2a3b7_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-efe2c59d06700a3f2c8e8e7501fc6db7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-efe2c59d06700a3f2c8e8e7501fc6db7_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-f7e32a206b18676ca3391f648f78ffaf_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-f7e32a206b18676ca3391f648f78ffaf_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-3df7cacd667815169fbbd9e6fd95ffe2_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-3df7cacd667815169fbbd9e6fd95ffe2_720w.webp" class="lozad post-image"></p>
+<h3 id="2-类的拆分操作"><a href="#2-类的拆分操作" class="headerlink" title="2.类的拆分操作"></a>2.类的拆分操作</h3><p>2.1 拆分并右移<br>如下图，当我们编写JavaBean类和它的测试类时，每次编码都要单独点开切换还不好对应地敲代码</p>
+<p><img src="https://pic4.zhimg.com/80/v2-5447f33cf59553000d46785995b196b9_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-5447f33cf59553000d46785995b196b9_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-bc63f5c9c33ab654c4ca854e7afd9e88_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-bc63f5c9c33ab654c4ca854e7afd9e88_720w.webp" class="lozad post-image"></p>
+<p>为了让两个类同时在页面上，我们可以将类拆分并右移<br>我们可以右键点击编码区上方的类名–&gt;拆分并右移</p>
+<p><img src="https://pic4.zhimg.com/80/v2-3e75dd1258b8dba2d36c61ae33a40449_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-3e75dd1258b8dba2d36c61ae33a40449_720w.webp" class="lozad post-image"></p>
+<p>拆分并右移的效果如下图</p>
+<p><img src="https://pic1.zhimg.com/80/v2-59b42c722c7c78c49c3a16fcd44ac272_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-59b42c722c7c78c49c3a16fcd44ac272_720w.webp" class="lozad post-image"></p>
+<p>想要取消还是右键点击编码区上方的类名–&gt;取消拆分</p>
+<p><img src="https://pic2.zhimg.com/80/v2-7559439f3367e91d06eb76fd397956dd_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-7559439f3367e91d06eb76fd397956dd_720w.webp" class="lozad post-image"></p>
+<h2 id="五、IDEA常用快捷键"><a href="#五、IDEA常用快捷键" class="headerlink" title="五、IDEA常用快捷键"></a>五、IDEA常用快捷键</h2><h3 id="1-Ctrl-…"><a href="#1-Ctrl-…" class="headerlink" title="1.Ctrl + …"></a>1.Ctrl + …</h3><p>1.1 Ctrl + Y<br>把光标移动到要删除行的任意位置，按Ctrl + Y 即可删除当前行</p>
+<p><img src="https://pic3.zhimg.com/80/v2-dc00de80aab709d66e0e2d70b044432a_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-dc00de80aab709d66e0e2d70b044432a_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-c859267470a4af805ddacf6725223818_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-c859267470a4af805ddacf6725223818_720w.webp" class="lozad post-image"></p>
+<p>1.2 Ctrl + D<br>把光标移动到要复制行的任意位置，按Ctrl + D 即可删除当前行</p>
+<p><img src="https://pic3.zhimg.com/80/v2-3d5cf77addf6f18734ea56b654be50be_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-3d5cf77addf6f18734ea56b654be50be_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-d96376c93aeee0c867008c8625810963_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-d96376c93aeee0c867008c8625810963_720w.webp" class="lozad post-image"></p>
+<p>1.3 Ctrl + W<br>选中文本，连续按可以扩大选中范围（以单词为单位）<br>下图分别是没按之前与每次多按Ctrl + W一次之后的效果</p>
+<p><img src="https://pica.zhimg.com/80/v2-1b47927440ccfa087c707b035476116e_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-1b47927440ccfa087c707b035476116e_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-7b548594bcbe368aac4c3b9e6956ffad_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-7b548594bcbe368aac4c3b9e6956ffad_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-c1ff488997b50e0e5e73d80a940d1d22_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-c1ff488997b50e0e5e73d80a940d1d22_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-94e7314c48e21b3ea59b1030529c3279_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-94e7314c48e21b3ea59b1030529c3279_720w.webp" class="lozad post-image"></p>
+<p>1.4 Ctrl + P<br>在完成JavaBean类之后，如果在测试类中调用JavaBean类中的方法但是忘记了参数，可以按Ctrl + P 把方法所对应的参数进行展示，展示时的第一行时无参的情况，第二行时有参的情况，跟着展示敲即可<br>上面的图是JavaBean类中的有参构造方法，下面的图是测试类中调用有参构造方法</p>
+<p><img src="https://pic4.zhimg.com/80/v2-4a7440f687da3cfdaf613b9955e7a5fb_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-4a7440f687da3cfdaf613b9955e7a5fb_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-2f0b9dbfbdaa3627d2c52ed6cd0a7130_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-2f0b9dbfbdaa3627d2c52ed6cd0a7130_720w.webp" class="lozad post-image"></p>
+<p>1.5 Ctrl + B<br>如果想要在代码中查看某个类、方法或者接口的具体逻辑时，把光标定位在对应的类名、方法名或接口名上，按下Ctrl + B就能跳转到其定义的源码处<br>当然源码还是比较复杂的，所以这个快捷键用的不多，也许以后有一定的能力之后或者实在需要了解底层原理时才会用到</p>
+<p><img src="https://pic4.zhimg.com/80/v2-95b1a900e9555b7371107dff27979ea5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-95b1a900e9555b7371107dff27979ea5_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-b684912a6546d4d48ff2bf16129fb59a_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-b684912a6546d4d48ff2bf16129fb59a_720w.webp" class="lozad post-image"></p>
+<p>1.6 Ctrl(不松) + 点击要查询的类、方法或者接口<br>Ctrl(不松) + 点击要查询的类、方法或者接口和Ctrl + B 一样都是用于查看源码，按住Ctrl不松移动鼠标光标指向要查询的类、方法或者接口（会变蓝）再点击一下即可<br>因为这样要按住Ctrl不松，好像我就不好用快捷键截图了，我就潦草的把手机拍电脑的图片放上来了</p>
+<p><img src="https://pica.zhimg.com/80/v2-8a4f74435037093678ae6e22bec0b284_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-8a4f74435037093678ae6e22bec0b284_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-f7908bbfe21f8114e3220a074a53efd0_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-f7908bbfe21f8114e3220a074a53efd0_720w.webp" class="lozad post-image"></p>
+<p>1.7 Ctrl + N<br>Ctrl + N 快捷键的作用是按类名搜索并打开类。按下后会弹出搜索框，可以在其中输入类名的关键字，IDEA会默认在项目文件中快速搜索所有类，并显示匹配的结果，方便我们快速定位和打开所需的类</p>
+<p><img src="https://pica.zhimg.com/80/v2-c70aa0f7197cbffd3a02109a04443168_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-c70aa0f7197cbffd3a02109a04443168_720w.webp" class="lozad post-image"></p>
+<p>因为右上角默认在项目文件中搜索，如果想要搜索类的源码，我们可以把右上角的项目文件改为所有位置</p>
+<p><img src="https://pic2.zhimg.com/80/v2-5a54448f7d1f9acab1180cd2f49fec0b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-5a54448f7d1f9acab1180cd2f49fec0b_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-6f922f7cb35781c621d4564e6aaf9df7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-6f922f7cb35781c621d4564e6aaf9df7_720w.webp" class="lozad post-image"></p>
+<p>1.8 Ctrl + Fn + F12（Ctrl + F12）<br>黑马程序员视频里教的是Ctrl + F12 ，但是我这么按只会出现计算器。按 Ctrl + Fn + F12（Ctrl + F12）可以在源码中搜索想要查看的类、方法或者接口<br>假设我们先打开了java.lang的源码并在开头处，我们想要搜索查看toString的源码，按 Ctrl + Fn + F12（Ctrl + F12）然后可以下划在图中找到toString再点击（也可以直接键盘输入toString，图片中没有看到搜索框，但是一打字就出来了）</p>
+<p><img src="https://pic2.zhimg.com/80/v2-a4509031acf598f31c344fab3a9b73e5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-a4509031acf598f31c344fab3a9b73e5_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-d0598bc32691d70b171e8b0c25f9b709_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-d0598bc32691d70b171e8b0c25f9b709_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-b0cc1efeba8143560119a6ba5823e73b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-b0cc1efeba8143560119a6ba5823e73b_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-956fd5cbbf5fefb2df8a9763f2b3d02a_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-956fd5cbbf5fefb2df8a9763f2b3d02a_720w.webp" class="lozad post-image"></p>
+<p>1.9 Ctrl + X<br>选中想要剪切的部分再按Ctrl + X ，再将光标移动到想要复制剪切内容的位置，再按Ctrl + V 即可完成剪切复制的操作</p>
+<p><img src="https://pic4.zhimg.com/80/v2-e882ecdc249b8e8551f8a5e0cdbd28b5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-e882ecdc249b8e8551f8a5e0cdbd28b5_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-1709a1e1989d8e0dcd04270ada533492_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-1709a1e1989d8e0dcd04270ada533492_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-804498ed79f05036aa22b778d74d70d0_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-804498ed79f05036aa22b778d74d70d0_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-dc40c8e5cb9063bdf30b9a9ace3c11d0_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-dc40c8e5cb9063bdf30b9a9ace3c11d0_720w.webp" class="lozad post-image"></p>
+<p>1.10 Ctrl + Z<br>Ctrl + Z 是回退一步，如果在实际编码中不小心删去了部分内容，按Ctrl + Z 即可回退，当然可以按多次回退多次<br>一步把选择的打印语句全部删除</p>
+<p><img src="https://picx.zhimg.com/80/v2-bf785d2861dd545e9f5f7e85e75a083b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-bf785d2861dd545e9f5f7e85e75a083b_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-132d30dbb70c5806993fe0fda216cfa5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-132d30dbb70c5806993fe0fda216cfa5_720w.webp" class="lozad post-image"></p>
+<p>按Ctrl + Z 可以回退一步</p>
+<p><img src="https://pic4.zhimg.com/80/v2-71b98d6b726229968cc2b40de65b251b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-71b98d6b726229968cc2b40de65b251b_720w.webp" class="lozad post-image"></p>
+<p>1.11 Ctrl + F<br>如果想要在控制台搜索想要的内容，先点击一下控制台，再按 Ctrl + F 就会出现搜索框，在搜索想要的内容即可<br>下图演示的是搜索全部时区名称中的Shanghai</p>
+<p><img src="https://pic3.zhimg.com/80/v2-c44240623a7dad3dc3a15f0431775032_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-c44240623a7dad3dc3a15f0431775032_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-3d9c4b511e029cd068b45e5860eda282_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-3d9c4b511e029cd068b45e5860eda282_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-64c75163b4a43f5c070ae29196084f94_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-64c75163b4a43f5c070ae29196084f94_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-cf556c3a130d535fb327b82320d7ff6c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-cf556c3a130d535fb327b82320d7ff6c_720w.webp" class="lozad post-image"></p>
+<p>1.12 Ctrl + O<br>功能：快速生成重写方法：当你在一个类中按下此快捷键时，IDEA 会弹出当前类可以重写的父类或接口的方法列表，选择后会自动生成对应的重写方法代码。<br>适用场景：继承父类时，快速重写 toString()、equals()、hashCode() 等方法。实现接口时，快速生成接口方法的实现。<br>类似快捷键：Ctrl + I：实现接口方法（Implement Methods）。Alt + Insert：生成代码（Getter/Setter、构造函数等）<br>下图中TokenInterceptor类实现了HandlerInterception接口，在类中按Ctrl + O即可选择重写接口中的方法</p>
+<p><img src="https://pic2.zhimg.com/80/v2-976f75d182d451dafe860c25fc51490b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-976f75d182d451dafe860c25fc51490b_720w.webp" class="lozad post-image"></p>
+<h3 id="2-Alt-…"><a href="#2-Alt-…" class="headerlink" title="2.Alt + …"></a>2.Alt + …</h3><p>2.1 Alt + Enter(回车)<br>点击一下循环里面的变量或者把光标移动到变量上，再按Alt + Enter(回车) 可以选择把定义该变量的一行语句拆分为声明和赋值语句，一般此时我们可以把声明语句放到循环外部，只保留赋值语句在循环内部</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a9e1c9fa64cb999ccde173e1145c282f_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-a9e1c9fa64cb999ccde173e1145c282f_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-65096e7a3367aea878f19622ceb3ec09_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-65096e7a3367aea878f19622ceb3ec09_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-b0a9e6eaf49fddd17e35c60899847023_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-b0a9e6eaf49fddd17e35c60899847023_720w.webp" class="lozad post-image"></p>
+<p>当敲出一个还未导入的方法名时（整个方法名会显示为红色），用鼠标点击一下红色的方法名或者把光标移动到红色的方法名上（等待一下会跳出两个小窗口），按Alt + Enter(回车)，再选择在’…’类中创建方法’…’即可自动生成一个方法</p>
+<p><img src="https://picx.zhimg.com/80/v2-692ae425cbe8069a8864709cbe2d30f7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-692ae425cbe8069a8864709cbe2d30f7_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-1623481b9fdfe8702a0113fff311625e_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-1623481b9fdfe8702a0113fff311625e_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-9337a567c0d7672a657582815c984573_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-9337a567c0d7672a657582815c984573_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-da7952b64add5192764f735a51b87dc2_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-da7952b64add5192764f735a51b87dc2_720w.webp" class="lozad post-image"></p>
+<p>2.2 Alt(不松) + 鼠标左键竖着选择变量进行批量修改<br>竖着选择变量进行批量修改有两种方式：1.按住鼠标滚轮不松，再往下一拖，就可以竖着选择 2.如果没有鼠标滚轮，按住Alt不松再按鼠标左键拖动也可以竖着选择</p>
+<p><img src="https://pic1.zhimg.com/80/v2-ad701682f27eaf324420f6aa19ec6156_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-ad701682f27eaf324420f6aa19ec6156_720w.webp" class="lozad post-image"></p>
+<p>2.3 Alt + Insert<br>当光标位于类、接口或枚举的定义体内时，按下Alt + Insert会弹出代码生成菜单，可生成的内容如下：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-9de317294b651e8dcb40f66adb2d7229_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-9de317294b651e8dcb40f66adb2d7229_720w.webp" class="lozad post-image"></p>
+<p>3.Shift + …<br>3.1 Shift + F6 +Fn（Shift + F6）<br>黑马程序员视频中教的是按Shift + F6进行变量的批次修改，但是我自己的电脑Shift + F6只能调节屏幕亮度，我的是Shift + F6 +Fn。先选中要进行批量修改的变量，再按Shift + F6 +Fn（Shift + F6）<br>下图假设我定义了一个getMax方法，现在复制黏贴过来并改为getMin方法，就可以使用到批量修改变量的快捷键</p>
+<p><img src="https://pic4.zhimg.com/80/v2-b529cbb68887f3850a2df5e2e37e3e71_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-b529cbb68887f3850a2df5e2e37e3e71_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-bd02a5fc7ae0f38bdc04c537583077f7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-bd02a5fc7ae0f38bdc04c537583077f7_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-d79b922acd450704adab22ee84b05667_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-d79b922acd450704adab22ee84b05667_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-143f966660d7ed4439ade9c522746b66_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-143f966660d7ed4439ade9c522746b66_720w.webp" class="lozad post-image"></p>
+<p>然后把方法名getMax改为getMin，把if判断逻辑的&lt;改为&gt;就可以了</p>
+<p><img src="https://pic2.zhimg.com/80/v2-f9c073474e81d7dad53bcf69e105f5f9_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-f9c073474e81d7dad53bcf69e105f5f9_720w.webp" class="lozad post-image"></p>
+<h3 id="4-Ctrl-Alt-…"><a href="#4-Ctrl-Alt-…" class="headerlink" title="4.Ctrl + Alt + …"></a>4.Ctrl + Alt + …</h3><p>4.1 Ctrl + Alt + M<br>选中main方法中的一段代码，按Ctrl + Alt + M ，IDEA会将选中的代码提取为一个独立的方法，这样可以使代码结构更加清晰，提高代码的复用性和可读性</p>
+<p><img src="https://pic4.zhimg.com/80/v2-ee13fd6e96511e3840a03e9dee3d89a5_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-ee13fd6e96511e3840a03e9dee3d89a5_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-26b2b406faeff313d347415b2241e313_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-26b2b406faeff313d347415b2241e313_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-2f6cf76e85b02e8adda169c727bcf473_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-2f6cf76e85b02e8adda169c727bcf473_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-8435de63a041ad0bcc55f140fc8a362f_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-8435de63a041ad0bcc55f140fc8a362f_720w.webp" class="lozad post-image"></p>
+<p>4.2 Ctrl + Alt + L<br>当编写的代码格式混乱，例如缩进不一致、换行不规范等，按Ctrl + Alt + L 可以格式化代码，使代码更加清晰、易读<br>下图中第一个是没有格式化前的，第二个是格式化后的</p>
+<p><img src="https://pic3.zhimg.com/80/v2-0907b194bc1cea02059431b32e2f4c34_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-0907b194bc1cea02059431b32e2f4c34_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-d1bf73c85ed9819835849ec1332f58fd_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-d1bf73c85ed9819835849ec1332f58fd_720w.webp" class="lozad post-image"></p>
+<p>4.3 Ctrl + Alt + V / .var<br>当选中一段表达式或代码，按Ctrl + Alt + V ，IDEA会自动将选中的内容提取为一个局部变量，并为其生成合适的变量名<br>简单来说，就是如果有sc.nextInt();那么按Ctrl + Alt + V 就会自动生成左边</p>
+<p><img src="https://pic3.zhimg.com/80/v2-979fc3b9d351f83d190ad87eebd815a8_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-979fc3b9d351f83d190ad87eebd815a8_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-5d8b2535d1740fed5be1bd36d66451f6_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-5d8b2535d1740fed5be1bd36d66451f6_720w.webp" class="lozad post-image"></p>
+<p>另一种方式是在所需内容的后面加上.var就会自动在左边生成合适的变量名</p>
+<p><img src="https://pica.zhimg.com/80/v2-97465ad086da233404e9e2ce7ba5752c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-97465ad086da233404e9e2ce7ba5752c_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-c6d2f3552f2f10a7d0342c20ec77a595_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-c6d2f3552f2f10a7d0342c20ec77a595_720w.webp" class="lozad post-image"></p>
+<p>4.4 Ctrl + Alt + T<br>当选中一段表达式或代码，按Ctrl + Alt + T ，IDEA会让你选择包围方式，可以选择if，for，while等方式包围选中的表达式或代码</p>
+<p><img src="https://pica.zhimg.com/80/v2-ad0f12a30bd8ce36d4b4c9a57df3658c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-ad0f12a30bd8ce36d4b4c9a57df3658c_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/80/v2-df9cc2bd232c8469dcfb05ea893f9327_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/80/v2-df9cc2bd232c8469dcfb05ea893f9327_720w.webp" class="lozad post-image"></p>
+<p><img src="https://picx.zhimg.com/80/v2-c81dc9bcc52f395edb37de67f9f89a3b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-c81dc9bcc52f395edb37de67f9f89a3b_720w.webp" class="lozad post-image"></p>
+<h3 id="5-Ctrl-Shift-…"><a href="#5-Ctrl-Shift-…" class="headerlink" title="5.Ctrl + Shift + …"></a>5.Ctrl + Shift + …</h3><p>5.1 Ctrl + Shift + 上键/下键(↑/↓)<br>一开始没发现，后面实操发现移动效果和Alt + Shift +上键/下键(↑/↓)不太一样，下面直接结合deepseek的总结进行区分<br>功能：将当前光标所在的语法元素（如方法、类成员、函数等）或选择的代码块在作用域内向上或向下移动（重构代码结构)<br>特点：按照语法结构(如方法、类成员、函数等)在作用域内向上或向下移动(重构代码结构)<br>适用于调整类成员(方法、字段)或函数内部的语句块顺序<br>如果光标在方法名上，会移动整个方法；如果在语句上，可能移动整个语句块<br>如下图，光标移动到postHandle方法时，再按Ctrl + Shift + 下键即可将postHandle和afterCompletion方法调换位置</p>
+<p><img src="https://pic1.zhimg.com/80/v2-099897ea27edb1f9eb433f0a79d7cda0_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-099897ea27edb1f9eb433f0a79d7cda0_720w.webp" class="lozad post-image"></p>
+<p>或者是选中postHandle整个方法的代码块也可以</p>
+<p><img src="https://pic1.zhimg.com/80/v2-60b87b696c85d85ef589d8ddaf5ba162_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-60b87b696c85d85ef589d8ddaf5ba162_720w.webp" class="lozad post-image"></p>
+<p>移动完后效果如下</p>
+<p><img src="https://pica.zhimg.com/80/v2-3e898c1df80ba6576f9a8106f898235a_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-3e898c1df80ba6576f9a8106f898235a_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pica.zhimg.com/80/v2-b4e53f3d7c719f517b01a08f895980da_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-b4e53f3d7c719f517b01a08f895980da_720w.webp" class="lozad post-image"></p>
+<p>5.2 Ctrl + Shift +U<br>这个快捷键的功能是：快速切换选中文本的大小写(全小写转换为全大写/全大写转换为全小写)<br>一般在定义常量类的时候常用</p>
+<p><img src="https://pica.zhimg.com/80/v2-dc8c9e0d23a4e31a079a1f4bcae3095e_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-dc8c9e0d23a4e31a079a1f4bcae3095e_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-c96b9cc765bec51130e1acb5ccd9e88c_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-c96b9cc765bec51130e1acb5ccd9e88c_720w.webp" class="lozad post-image"></p>
+<h3 id="6-Alt-Shift-…"><a href="#6-Alt-Shift-…" class="headerlink" title="6. Alt + Shift + …"></a>6. Alt + Shift + …</h3><p>6.1 Alt + Shift +上键/下键(↑/↓)<br>功能：将当前光标所在的整行或选中的代码块向上或向下移动（与其他行交换位置）<br>特点：直接调整代码的物理顺序<br>适用于快速调整代码行的位置(如交换相邻行的顺序)<br>如果选中多行，会整体移动选中的代码块<br>下图是该快捷键的适用场景</p>
+<p><img src="https://picx.zhimg.com/80/v2-0171d2f147d1ec33575c36bbf3cf4d2d_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-0171d2f147d1ec33575c36bbf3cf4d2d_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-5151cecddc53a36d1f9bba61f854352b_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-5151cecddc53a36d1f9bba61f854352b_720w.webp" class="lozad post-image"></p>
+<p>下图是该快捷键不太适用的场景(可以结合Ctrl + Shift + 上键/下键来进行区分)<br>这是没调整之前的样子</p>
+<p><img src="https://pic2.zhimg.com/80/v2-eead2bb209ecb3a0d2cc0949d7578dbd_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/80/v2-eead2bb209ecb3a0d2cc0949d7578dbd_720w.webp" class="lozad post-image"></p>
+<p>这是按了两次Alt + Shift +上键的效果(一开始两个方法之间间隔一行)，不难发现该快捷键是直接调整代码的物理顺序，所以会出现下图这样的情况(如果想要调换两个方法的位置应该使用Ctrl + Shift + 上键/下键)</p>
+<p><img src="https://picx.zhimg.com/80/v2-e3a9cbaa9713284e893b01c47a2677e7_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-e3a9cbaa9713284e893b01c47a2677e7_720w.webp" class="lozad post-image"></p>
+<h2 id="六、IDEA常用操作小技巧"><a href="#六、IDEA常用操作小技巧" class="headerlink" title="六、IDEA常用操作小技巧"></a>六、IDEA常用操作小技巧</h2><h3 id="1-利用小箭头收起括号中内容"><a href="#1-利用小箭头收起括号中内容" class="headerlink" title="1.利用小箭头收起括号中内容"></a>1.利用小箭头收起括号中内容</h3><p>不管是方法，while循环，for循环等等，如果括号内的代码很多或者已经完成括号内全部代码，我们可以把鼠标移动到左边框（代码行号与代码框之间）的位置，会自动显现出向下的小箭头，点一下就可以把相应括号内的代码收起来<br>这样编写代码的时候会更加清晰，更方便编写</p>
+<p><img src="https://picx.zhimg.com/80/v2-2627e029bf698a1baf15d62481b6a6d9_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-2627e029bf698a1baf15d62481b6a6d9_720w.webp" class="lozad post-image"></p>
+<p><img src="https://pic3.zhimg.com/80/v2-a9e978b3c0e8f9b82713284e0b5cc0a4_720w.webp" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/80/v2-a9e978b3c0e8f9b82713284e0b5cc0a4_720w.webp" class="lozad post-image"></p>
+<h3 id="2-重写方法名-Enter-回车"><a href="#2-重写方法名-Enter-回车" class="headerlink" title="2.重写方法名+Enter(回车)"></a>2.重写方法名+Enter(回车)</h3><p>重写方法的时候，只需要打出要重写方法的名称，然后IDEA会自动跳出重写该方法的选项，就不需要@Override再慢慢地敲了</p>
+<h4 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h4><p><strong><a href="https://tanqingbo.cn/Win-OpenInternet/">Windows 翻墙教程：从零开始科学上网（最稳定的科学上网方案）</a></strong></p>
+<p><strong><a href="https://tanqingbo.cn/ios-open-internet/">苹果/IOS系统手机实现科学上网教程-翻墙VPN软件工具</a></strong></p>
+<p><strong><a href="https://tanqingbo.cn/Android-open-internet/">安卓/Android系统手机实现科学上网教程-翻墙VPN软件工具</a></strong></p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/IDEA-shortcut-key/">https://tanqingbo.cn/IDEA-shortcut-key/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/how-to-signup-chatgpt/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">注册ChatGPT详细指南 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B3%A8%E9%87%8A%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">一、注释快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">1.单行注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">2.多行注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E6%A1%A3%E6%B3%A8%E9%87%8A"><span class="toc-text">3.文档注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A8%A1%E6%9D%BF-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF"><span class="toc-text">二、模板&#x2F;自定义模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="toc-text">1.快速生成主函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%89%93%E5%8D%B0%E8%AF%AD%E5%8F%A5"><span class="toc-text">2.快速生成打印语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%99%AE%E9%80%9Afor%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.快速生成普通for循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-9-list-forr-%E4%B8%89%E3%80%81%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%A0%87%E5%87%86%E7%9A%84JavaBean%E7%B1%BB"><span class="toc-text">3.9 list.forr  三、快速生成标准的JavaBean类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%88%E7%A9%BA%E5%8F%82%E6%9E%84%E9%80%A0%E5%92%8C%E6%9C%89%E5%8F%82%E6%9E%84%E9%80%A0%EF%BC%89"><span class="toc-text">1.快速生成构造函数（空参构造和有参构造）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90Getter%E5%92%8CSetter"><span class="toc-text">2.快速生成Getter和Setter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8F%92%E4%BB%B6PTG-%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E6%A0%87%E5%87%86JavaBean"><span class="toc-text">3.插件PTG 一键生成标准JavaBean</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8E%E7%B1%BB%E5%90%8D%E7%9B%B8%E5%85%B3%E7%9A%84%E5%BF%AB%E6%8D%B7%E6%93%8D%E4%BD%9C"><span class="toc-text">四、与类名相关的快捷操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E7%9A%84%E5%A4%8D%E5%88%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">1.类的复制操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E7%9A%84%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C"><span class="toc-text">2.类的拆分操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81IDEA%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">五、IDEA常用快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Ctrl-%E2%80%A6"><span class="toc-text">1.Ctrl + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Alt-%E2%80%A6"><span class="toc-text">2.Alt + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Ctrl-Alt-%E2%80%A6"><span class="toc-text">4.Ctrl + Alt + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Ctrl-Shift-%E2%80%A6"><span class="toc-text">5.Ctrl + Shift + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Alt-Shift-%E2%80%A6"><span class="toc-text">6. Alt + Shift + …</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81IDEA%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">六、IDEA常用操作小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%A9%E7%94%A8%E5%B0%8F%E7%AE%AD%E5%A4%B4%E6%94%B6%E8%B5%B7%E6%8B%AC%E5%8F%B7%E4%B8%AD%E5%86%85%E5%AE%B9"><span class="toc-text">1.利用小箭头收起括号中内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%87%8D%E5%86%99%E6%96%B9%E6%B3%95%E5%90%8D-Enter-%E5%9B%9E%E8%BD%A6"><span class="toc-text">2.重写方法名+Enter(回车)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-text">推荐阅读</span></a></li></ol></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>300</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B3%A8%E9%87%8A%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">一、注释快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">1.单行注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">2.多行注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E6%A1%A3%E6%B3%A8%E9%87%8A"><span class="toc-text">3.文档注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A8%A1%E6%9D%BF-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF"><span class="toc-text">二、模板&#x2F;自定义模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="toc-text">1.快速生成主函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%89%93%E5%8D%B0%E8%AF%AD%E5%8F%A5"><span class="toc-text">2.快速生成打印语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%99%AE%E9%80%9Afor%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.快速生成普通for循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-9-list-forr-%E4%B8%89%E3%80%81%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%A0%87%E5%87%86%E7%9A%84JavaBean%E7%B1%BB"><span class="toc-text">3.9 list.forr  三、快速生成标准的JavaBean类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%88%E7%A9%BA%E5%8F%82%E6%9E%84%E9%80%A0%E5%92%8C%E6%9C%89%E5%8F%82%E6%9E%84%E9%80%A0%EF%BC%89"><span class="toc-text">1.快速生成构造函数（空参构造和有参构造）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90Getter%E5%92%8CSetter"><span class="toc-text">2.快速生成Getter和Setter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8F%92%E4%BB%B6PTG-%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E6%A0%87%E5%87%86JavaBean"><span class="toc-text">3.插件PTG 一键生成标准JavaBean</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8E%E7%B1%BB%E5%90%8D%E7%9B%B8%E5%85%B3%E7%9A%84%E5%BF%AB%E6%8D%B7%E6%93%8D%E4%BD%9C"><span class="toc-text">四、与类名相关的快捷操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E7%9A%84%E5%A4%8D%E5%88%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">1.类的复制操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E7%9A%84%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C"><span class="toc-text">2.类的拆分操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81IDEA%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">五、IDEA常用快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Ctrl-%E2%80%A6"><span class="toc-text">1.Ctrl + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Alt-%E2%80%A6"><span class="toc-text">2.Alt + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Ctrl-Alt-%E2%80%A6"><span class="toc-text">4.Ctrl + Alt + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Ctrl-Shift-%E2%80%A6"><span class="toc-text">5.Ctrl + Shift + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Alt-Shift-%E2%80%A6"><span class="toc-text">6. Alt + Shift + …</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81IDEA%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">六、IDEA常用操作小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%A9%E7%94%A8%E5%B0%8F%E7%AE%AD%E5%A4%B4%E6%94%B6%E8%B5%B7%E6%8B%AC%E5%8F%B7%E4%B8%AD%E5%86%85%E5%AE%B9"><span class="toc-text">1.利用小箭头收起括号中内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%87%8D%E5%86%99%E6%96%B9%E6%B3%95%E5%90%8D-Enter-%E5%9B%9E%E8%BD%A6"><span class="toc-text">2.重写方法名+Enter(回车)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-text">推荐阅读</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">79</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">60</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术之外">
+        <div class="categories-list-item">
+          技术之外
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\内推" title="内推"><div class="tags-list-item">内推</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\C✙✙" title="C✙✙"><div class="tags-list-item">C✙✙</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="https://pic2.zhimg.com/80/v2-6447f532ad3acf6605960e7ffb945c7a_720w.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="https://pic1.zhimg.com/80/v2-d1259f2509acb46306326e24c477cf03_720w.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B3%A8%E9%87%8A%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">一、注释快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">1.单行注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">2.多行注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E6%A1%A3%E6%B3%A8%E9%87%8A"><span class="toc-text">3.文档注释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A8%A1%E6%9D%BF-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E6%9D%BF"><span class="toc-text">二、模板&#x2F;自定义模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="toc-text">1.快速生成主函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%89%93%E5%8D%B0%E8%AF%AD%E5%8F%A5"><span class="toc-text">2.快速生成打印语句</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%99%AE%E9%80%9Afor%E5%BE%AA%E7%8E%AF"><span class="toc-text">3.快速生成普通for循环</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-9-list-forr-%E4%B8%89%E3%80%81%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%A0%87%E5%87%86%E7%9A%84JavaBean%E7%B1%BB"><span class="toc-text">3.9 list.forr  三、快速生成标准的JavaBean类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%88%E7%A9%BA%E5%8F%82%E6%9E%84%E9%80%A0%E5%92%8C%E6%9C%89%E5%8F%82%E6%9E%84%E9%80%A0%EF%BC%89"><span class="toc-text">1.快速生成构造函数（空参构造和有参构造）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90Getter%E5%92%8CSetter"><span class="toc-text">2.快速生成Getter和Setter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8F%92%E4%BB%B6PTG-%E4%B8%80%E9%94%AE%E7%94%9F%E6%88%90%E6%A0%87%E5%87%86JavaBean"><span class="toc-text">3.插件PTG 一键生成标准JavaBean</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8E%E7%B1%BB%E5%90%8D%E7%9B%B8%E5%85%B3%E7%9A%84%E5%BF%AB%E6%8D%B7%E6%93%8D%E4%BD%9C"><span class="toc-text">四、与类名相关的快捷操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E7%9A%84%E5%A4%8D%E5%88%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">1.类的复制操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E7%9A%84%E6%8B%86%E5%88%86%E6%93%8D%E4%BD%9C"><span class="toc-text">2.类的拆分操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81IDEA%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-text">五、IDEA常用快捷键</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Ctrl-%E2%80%A6"><span class="toc-text">1.Ctrl + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Alt-%E2%80%A6"><span class="toc-text">2.Alt + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Ctrl-Alt-%E2%80%A6"><span class="toc-text">4.Ctrl + Alt + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Ctrl-Shift-%E2%80%A6"><span class="toc-text">5.Ctrl + Shift + …</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Alt-Shift-%E2%80%A6"><span class="toc-text">6. Alt + Shift + …</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81IDEA%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="toc-text">六、IDEA常用操作小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%A9%E7%94%A8%E5%B0%8F%E7%AE%AD%E5%A4%B4%E6%94%B6%E8%B5%B7%E6%8B%AC%E5%8F%B7%E4%B8%AD%E5%86%85%E5%AE%B9"><span class="toc-text">1.利用小箭头收起括号中内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%87%8D%E5%86%99%E6%96%B9%E6%B3%95%E5%90%8D-Enter-%E5%9B%9E%E8%BD%A6"><span class="toc-text">2.重写方法名+Enter(回车)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-text">推荐阅读</span></a></li></ol></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-09-18</div>
+        <a href="/IDEA-shortcut-key/"><div class="recent-posts-item-content">程序员面试必备经典书籍</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-09-17</div>
+        <a href="/how-to-signup-chatgpt/"><div class="recent-posts-item-content">注册ChatGPT详细指南</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-08-22</div>
+        <a href="/great-firewall/"><div class="recent-posts-item-content">2025最新中国科学上网终极指南：VPN推荐、翻墙教程、科学上网工具评测</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
