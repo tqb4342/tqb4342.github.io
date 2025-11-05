@@ -397,7 +397,7 @@ var _hmt = _hmt || [];
 <p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://mysticalyu.gitee.io/pic/img/20200409141450-lee-gh-2.jpg">https://mysticalyu.gitee.io/pic/img/20200409141450-lee-gh-2.jpg</a></p>
 <h2 id="gitee图床访问异常"><a href="#gitee图床访问异常" class="headerlink" title="gitee图床访问异常"></a>gitee图床访问异常</h2><p>如果你是要用gitee作为自己博客的图床的话，当我们获得上述图片链接之后可能还是不能在我们的博客中正常显示，那是因为gitee上了防盗链，不允许自己和外部未授权站点请求图片资源，这个过程是使用请求头里面的referer字段实现的，它会判断用户ip来源，然后禁止掉非法访问。</p>
 <p>我们只需要在HTML的head部分加上这样一行代码就可以解决了：</p>
- <meta name="referrer" content="no-referrer">
+<pre class="highlight"><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"referrer"</span> <span class="attr">content</span>=<span class="string">"no-referrer"</span> /&gt;</span></span><br></pre>
 
 <p>如果你是Hexo主题博客的话，可以在主题目录下的：<code>layout/_partial/head.ejs</code>中添加<code>meta</code>标签</p>
 <p><img src="https://gitee.com/tan-qingbo/blog-image/raw/master/img/image-20251105101722042.png" alt="image-20251105101722042" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://gitee.com/tan-qingbo/blog-image/raw/master/img/image-20251105101722042.png" class="lozad post-image"></p>
