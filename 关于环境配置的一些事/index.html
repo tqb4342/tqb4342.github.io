@@ -1,1 +1,890 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>图谱分割关于环境配置的一些事&nbsp; | &nbsp;IT码农</title><meta property="title" content="图谱分割关于环境配置的一些事"><meta property="url" content="https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/index.html"><meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217160754.png"><meta property="description" content="机器学习,医学图像,图谱分割"><meta property="keywords" content="机器学习,医学图像,图谱分割"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2020-12-17"><meta property="og:article:modified_time" content="2020-12-17"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="图谱分割"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217160754.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217160754.png" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">图谱分割关于环境配置的一些事</h1></header><div class="post-meta post-show-meta"><time datetime="2020-12-17T08:01:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2020-12-17</span> </time><span class="dot"></span> <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a> <span class="dot"></span> <span>809 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/" class="leancloud_visitors" data-flag-title="图谱分割关于环境配置的一些事"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/图谱分割/" class="post-meta-link">图谱分割</a></div></div><meta name="description" content="机器学习,医学图像,图谱分割"><meta name="keywords" content="机器学习,医学图像,图谱分割"><div id="section" class="post-content"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近干的活有很多涉及环境配置的工作，有很多细节需要注意，稍有疏漏就有可能让你捣鼓一天，因此把这些环境配置的细节和步骤整理下来以便往后查看。</p><p>主要分为两个部分，分块程序环境配置和图谱程序环境配置，具体如下：</p><h3 id="分块程序环境配置"><a href="#分块程序环境配置" class="headerlink" title="分块程序环境配置"></a>分块程序环境配置</h3><ul><li><p>首先接受介绍一款<code>Linux</code>系统下软件包下载神器：新立得（<code>Synaptic</code>），它是<code>Linux</code>操作系统的包管理工具apt的图形化前端。它可以以图形界面代替<code>apt-get install</code>命令来对软件包进行下载，因此我们在配置环境之前先安装新立得（<code>Synaptic</code>），指令如下：</p><pre class="highlight"><span class="line">sudo apt-get install synaptic</span><br></pre></li></ul><ul><li>分块代码主要需要配置<code>MEPP</code>和<code>SPHARM-PDM-master</code>这两部分代码的运行环境，我之前用Ubuntu 16.04版本的系统试验的时候，多次失败，后来改为14.04后一次成功，所以在陪环境的时候不要用高版本的Ubuntu系统。默认已经装好了<code>g++</code>，以及<code>make</code>，如不知道怎么装，移步<a href="https://tanqingbo.cn/Linux-ITK/">Linux 下配置ITK</a><h4 id="MEPP"><a href="#MEPP" class="headerlink" title="MEPP"></a>MEPP</h4></li></ul><ol><li>建一个<code>build</code>文件夹存放<code>make</code>编译后的文件，在<code>ccmake</code>配置过程中，依次需要安装<code>CGAL</code>，用新立得（<code>Synaptic</code>）搜索<code>CGAL</code>，安装<code>libcgal-dev</code>.</li></ol><ul><li><p>安装软件包<code>qt4</code>，用<code>Synaptic</code>搜索<code>qt4</code>，一直往下翻，安装<code>libavahi-qt4-dev</code>这个软件包。</p></li><li><p>安装<code>QGLViewer</code>，用<code>Synaptic</code>搜索<code>QGLViewer</code>，安装<code>libqglviewer-dev</code>这个软件包。</p></li><li><p>下载<code>xerces</code>源码包，源码包下载链接<a target="_blank" rel="noopener external nofollow noreferrer" href="http://xerces.apache.org/xerces-c/download.cgi">http://xerces.apache.org/xerces-c/download.cgi</a>,先将<code>xerces</code>源码包解压到<code>/usr/include</code>文件加下（需要root权限），进入<code>xerces</code>文件家中执行如下语句(<code>#</code>号代表在root权限下)：</p><pre class="highlight"><span class="line"># chmod +x configure</span><br><span class="line"></span><br><span class="line"># ./configure --prefix=/usr </span><br><span class="line"></span><br><span class="line"># make</span><br><span class="line"></span><br><span class="line"># make install</span><br></pre></li></ul><ul><li>之后在<code>ccmake</code>这一块应该就不会有什么关卡了，接下来就是<code>make</code>编译，大概需要等10多分钟，结束之后会出现一个<code>mepp</code>文件，要是能正常执行就说明大功告成了。<h4 id="SPHARM-PDM-master"><a href="#SPHARM-PDM-master" class="headerlink" title="SPHARM-PDM-master"></a>SPHARM-PDM-master</h4></li></ul><ol><li>这个<code>ccmake</code>配置这一块很简单，也要建一个<code>build</code>文件夹存放<code>make</code>编译后的文件，然后安装一个<code>git-svn</code>和<code>libsvn-dev</code>,用<code>Synaptic</code>搜索<code>SVN</code>，安装<code>git-svn</code>和<code>libsvn-dev</code>软件包就可以了。</li><li>之后用<code>make</code>编译，编译过程需要联网，时间会很长，大概要1-2个小时，中途没有报错，顺利完成就没有问题了。</li></ol><h3 id="图谱程序环境配置"><a href="#图谱程序环境配置" class="headerlink" title="图谱程序环境配置"></a>图谱程序环境配置</h3><ul><li>要运行图谱的程序，需要先安装ITK，这是大前提，具体步骤在这：<a href="https://tanqingbo.cn/Linux-ITK/">Linux 下配置ITK</a>。</li><li>接着需要安装<code>eigen</code>源码包，同上一样，用<code>Synaptic</code>搜索<code>eigen</code>，然后下载安装，文件保存在<code>/usr/inlcude/</code>目录下，进入到<code>eigen</code>文件中，把其中的<code>Eigen</code>文件夹拷贝到上一级目录中，这样才能起效。</li><li>下载<code>elastix</code>，同样是在<code>Synaptic</code>中搜索，完事之后会在<code>/usr/bin/</code>文件夹中出现<code>elastix</code>和<code>transfoxmix</code>两个文件，然后拷贝到需要的地方去就行了。</li><li>训练和分割是需要下载<code>libblas-dev</code>和<code>liblapack-dev</code>这两个源码包，方法如上，搜索<code>libblas</code>和<code>liblapack</code>。</li><li>计算精度的代码需要下载<code>libann-dev</code>源码包，用<code>Synaptic</code>搜索<code>libann</code>。</li></ul></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/">https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/分块程序执行/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">分块程序执行</div></div></a></div><div class="nav-item-next"><a href="/分割ROI篇/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">分割ROI篇</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">分块程序环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MEPP"><span class="toc-number">2.1.</span> <span class="toc-text">MEPP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPHARM-PDM-master"><span class="toc-number">2.2.</span> <span class="toc-text">SPHARM-PDM-master</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">图谱程序环境配置</span></a></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">分块程序环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MEPP"><span class="toc-number">2.1.</span> <span class="toc-text">MEPP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPHARM-PDM-master"><span class="toc-number">2.2.</span> <span class="toc-text">SPHARM-PDM-master</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">图谱程序环境配置</span></a></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">分块程序环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MEPP"><span class="toc-number">2.1.</span> <span class="toc-text">MEPP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPHARM-PDM-master"><span class="toc-number">2.2.</span> <span class="toc-text">SPHARM-PDM-master</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">图谱程序环境配置</span></a></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>图谱分割关于环境配置的一些事&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="图谱分割关于环境配置的一些事">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217160754.png">
+  
+  
+  <meta property="description" content="机器学习,医学图像,图谱分割">
+  
+  <meta property="keywords" content="机器学习,医学图像,图谱分割">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-12-17">
+  <meta property="og:article:modified_time" content="2020-12-17">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="图谱分割">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217160754.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217160754.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      图谱分割关于环境配置的一些事
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-17T08:01:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>809 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/" class="leancloud_visitors" data-flag-title="图谱分割关于环境配置的一些事">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/图谱分割/" class="post-meta-link">图谱分割</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="机器学习,医学图像,图谱分割">
+  
+  <meta name="keywords" content="机器学习,医学图像,图谱分割">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近干的活有很多涉及环境配置的工作，有很多细节需要注意，稍有疏漏就有可能让你捣鼓一天，因此把这些环境配置的细节和步骤整理下来以便往后查看。</p>
+<p>主要分为两个部分，分块程序环境配置和图谱程序环境配置，具体如下：</p>
+<h3 id="分块程序环境配置"><a href="#分块程序环境配置" class="headerlink" title="分块程序环境配置"></a>分块程序环境配置</h3><ul>
+<li><p>首先接受介绍一款<code>Linux</code>系统下软件包下载神器：新立得（<code>Synaptic</code>），它是<code>Linux</code>操作系统的包管理工具apt的图形化前端。它可以以图形界面代替<code>apt-get install</code>命令来对软件包进行下载，因此我们在配置环境之前先安装新立得（<code>Synaptic</code>），指令如下：</p>
+<pre class="highlight"><span class="line">sudo apt-get install synaptic</span><br></pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li>分块代码主要需要配置<code>MEPP</code>和<code>SPHARM-PDM-master</code>这两部分代码的运行环境，我之前用Ubuntu 16.04版本的系统试验的时候，多次失败，后来改为14.04后一次成功，所以在陪环境的时候不要用高版本的Ubuntu系统。默认已经装好了<code>g++</code>，以及<code>make</code>，如不知道怎么装，移步<a href="https://tanqingbo.cn/Linux-ITK/">Linux 下配置ITK</a><h4 id="MEPP"><a href="#MEPP" class="headerlink" title="MEPP"></a>MEPP</h4></li>
+</ul>
+<ol>
+<li>建一个<code>build</code>文件夹存放<code>make</code>编译后的文件，在<code>ccmake</code>配置过程中，依次需要安装<code>CGAL</code>，用新立得（<code>Synaptic</code>）搜索<code>CGAL</code>，安装<code>libcgal-dev</code>.</li>
+</ol>
+<ul>
+<li><p>安装软件包<code>qt4</code>，用<code>Synaptic</code>搜索<code>qt4</code>，一直往下翻，安装<code>libavahi-qt4-dev</code>这个软件包。</p>
+</li>
+<li><p>安装<code>QGLViewer</code>，用<code>Synaptic</code>搜索<code>QGLViewer</code>，安装<code>libqglviewer-dev</code>这个软件包。</p>
+</li>
+<li><p>下载<code>xerces</code>源码包，源码包下载链接<a target="_blank" rel="noopener external nofollow noreferrer" href="http://xerces.apache.org/xerces-c/download.cgi">http://xerces.apache.org/xerces-c/download.cgi</a>,先将<code>xerces</code>源码包解压到<code>/usr/include</code>文件加下（需要root权限），进入<code>xerces</code>文件家中执行如下语句(<code>#</code>号代表在root权限下)：</p>
+  <pre class="highlight"><span class="line"># chmod +x configure</span><br><span class="line"></span><br><span class="line"># ./configure --prefix=/usr </span><br><span class="line"></span><br><span class="line"># make</span><br><span class="line"></span><br><span class="line"># make install</span><br></pre>
+
+
+
+</li>
+</ul>
+<ul>
+<li>之后在<code>ccmake</code>这一块应该就不会有什么关卡了，接下来就是<code>make</code>编译，大概需要等10多分钟，结束之后会出现一个<code>mepp</code>文件，要是能正常执行就说明大功告成了。<h4 id="SPHARM-PDM-master"><a href="#SPHARM-PDM-master" class="headerlink" title="SPHARM-PDM-master"></a>SPHARM-PDM-master</h4></li>
+</ul>
+<ol>
+<li>这个<code>ccmake</code>配置这一块很简单，也要建一个<code>build</code>文件夹存放<code>make</code>编译后的文件，然后安装一个<code>git-svn</code>和<code>libsvn-dev</code>,用<code>Synaptic</code>搜索<code>SVN</code>，安装<code>git-svn</code>和<code>libsvn-dev</code>软件包就可以了。</li>
+<li>之后用<code>make</code>编译，编译过程需要联网，时间会很长，大概要1-2个小时，中途没有报错，顺利完成就没有问题了。</li>
+</ol>
+<h3 id="图谱程序环境配置"><a href="#图谱程序环境配置" class="headerlink" title="图谱程序环境配置"></a>图谱程序环境配置</h3><ul>
+<li>要运行图谱的程序，需要先安装ITK，这是大前提，具体步骤在这：<a href="https://tanqingbo.cn/Linux-ITK/">Linux 下配置ITK</a>。</li>
+<li>接着需要安装<code>eigen</code>源码包，同上一样，用<code>Synaptic</code>搜索<code>eigen</code>，然后下载安装，文件保存在<code>/usr/inlcude/</code>目录下，进入到<code>eigen</code>文件中，把其中的<code>Eigen</code>文件夹拷贝到上一级目录中，这样才能起效。</li>
+<li>下载<code>elastix</code>，同样是在<code>Synaptic</code>中搜索，完事之后会在<code>/usr/bin/</code>文件夹中出现<code>elastix</code>和<code>transfoxmix</code>两个文件，然后拷贝到需要的地方去就行了。</li>
+<li>训练和分割是需要下载<code>libblas-dev</code>和<code>liblapack-dev</code>这两个源码包，方法如上，搜索<code>libblas</code>和<code>liblapack</code>。</li>
+<li>计算精度的代码需要下载<code>libann-dev</code>源码包，用<code>Synaptic</code>搜索<code>libann</code>。</li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/">https://tanqingbo.cn/%E5%85%B3%E4%BA%8E%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/分块程序执行/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">分块程序执行 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/分割ROI篇/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">分割ROI篇 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">分块程序环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MEPP"><span class="toc-number">2.1.</span> <span class="toc-text">MEPP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPHARM-PDM-master"><span class="toc-number">2.2.</span> <span class="toc-text">SPHARM-PDM-master</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">图谱程序环境配置</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">分块程序环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MEPP"><span class="toc-number">2.1.</span> <span class="toc-text">MEPP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPHARM-PDM-master"><span class="toc-number">2.2.</span> <span class="toc-text">SPHARM-PDM-master</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">图谱程序环境配置</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%9D%97%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">分块程序环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MEPP"><span class="toc-number">2.1.</span> <span class="toc-text">MEPP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SPHARM-PDM-master"><span class="toc-number">2.2.</span> <span class="toc-text">SPHARM-PDM-master</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%B0%B1%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">图谱程序环境配置</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

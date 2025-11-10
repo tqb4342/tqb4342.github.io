@@ -1,1 +1,969 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)&nbsp; | &nbsp;IT码农</title><meta property="title" content="论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)"><meta property="url" content="https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/index.html"><meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png"><meta property="description" content="本文中提出了一种网络结构的训练策略，它依赖于充分利用数据增强技术来更高效的使用带有标签的数据。**在U-Net结构中，包括一个捕获上下文信息的收缩路径和一个允许精确定位的对称拓展路径。**这种方法可以使用非常少的数据完成端到端的训练，并获得最好的效果。"><meta property="keywords" content="机器学习,深度学习,全卷积网络,语义分割,Unet"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2021-01-06"><meta property="og:article:modified_time" content="2021-01-06"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="机器学习"><meta property="og:article:tag" content="深度学习"><meta property="og:article:tag" content="Unet"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)</h1></header><div class="post-meta post-show-meta"><time datetime="2021-01-06T07:53:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2021-01-06</span> </time><span class="dot"></span> <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a> <span class="dot"></span> <span>3.6k 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/" class="leancloud_visitors" data-flag-title="论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/机器学习/" class="post-meta-link">机器学习</a> <span class="dot"></span> <a href="/tags/深度学习/" class="post-meta-link">深度学习</a> <span class="dot"></span> <a href="/tags/Unet/" class="post-meta-link">Unet</a></div></div><meta name="description" content="本文中提出了一种网络结构的训练策略，它依赖于充分利用数据增强技术来更高效的使用带有标签的数据。**在U-Net结构中，包括一个捕获上下文信息的收缩路径和一个允许精确定位的对称拓展路径。**这种方法可以使用非常少的数据完成端到端的训练，并获得最好的效果。"><meta name="keywords" content="机器学习,深度学习,全卷积网络,语义分割,Unet"><div id="section" class="post-content"><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><ul><li>本文中提出了一种网络结构的训练策略，它依赖于充分利用数据增强技术来更高效的使用带有标签的数据。<strong>在U-Net结构中，包括一个捕获上下文信息的收缩路径和一个允许精确定位的对称拓展路径。</strong>这种方法可以使用非常少的数据完成端到端的训练，并获得最好的效果。</li></ul><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul><li><p>卷积网络的典型用途是分类任务，<strong>其中图像的输出是单个类别标签。</strong> 然而，在许多视觉任务中，<strong>尤其是在生物医学图像处理中，期望的输出应该包括定位，即，应该将类标签分配给每个像素。（也就是分割）</strong></p></li><li><p>Ciresan等人用滑动窗口取像素像素周围的局部区域俩训练网络，训练数据远远大于训练图像的数量。</p></li><li><p>本文提出一种新的完全卷积网络，即U-Net网，主要思想是在收缩网络的后面补充一个与前面类似的网络，其中池化运算符由上采样运算符替换。因此，这些层增加了输出的分辨率。为了定位，从收缩路径的高分辨率特征与上采样输出相结合。然后，连续卷积层可以学习基于该信息组装更精确的输出。</p></li><li><p>作者提出U-Net的本意是将其用于医学图像分割，在以往的CNN中，想将其用于医学图像存在两个困难：</p><ol><li>通常CNN都是应用于分类，生物医学图像更关注的是分割以及定位的任务；</li><li>CNN需要获取大量的训练数据，而医学图像很难获得那么大规模的数据。</li></ol></li><li><p>以往解决上面两点困难的方法是使用滑窗的方法，为每一个待分类的像素点取周围的一部分邻域输入。这样的方法有两点好处，首先它完成了定位的工作，其次因为每次取一个像素点周围的邻域，所以大大增加了训练数据的数量。但是这样的方法也有两个缺点，首先通过滑窗所取的块之间具有较大的重叠，所以会导致速度变慢；其次是网络需要在局部准确性和获取上下文之间进行取舍。因为更大的块需要更多的池化层进而降低了定位的准确率，而小的块使网络只看到很小的一部分上下文。</p></li></ul><h2 id="U-Net"><a href="#U-Net" class="headerlink" title="U-Net"></a>U-Net</h2><ul><li>在本文中，作者修改并扩展了FCN网络结构，使它在使用少量的数据进行训练的情况下获得精确的分割结果，具体结构示意图如下所示：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" class="lozad post-image"></p><ul><li>在上图中，每一个蓝色块表示一个多通道特征图，<strong>特征图的通道数标记在顶部，X-Y尺寸设置在块的左下边缘。不同颜色的箭头代表不同的操作。图的左半部分是收缩路径，右半部分是扩展路径。</strong></li><li>其中需要注意的是，每经过一次上采样都会将通道数减半，再与收缩路径对应的特征图进行拼接。在拼接之前进行 <code>crop</code> 是必要的(例如在上图中，64<em>64大与56</em>56，为了使这两个特征图能够顺利拼接，取64<em>64中间部分54</em>54的大小，然后拼接)，因为两者的尺寸并不相同（主要是因为 valid conv 造成的）。最后一层使用<code>1 X 1</code>大小的卷积核，将通道数降低至特定的数量（如像素点的类别数量）。</li><li>网络对于输入的大小也是有要求的。为了使得输出的分割图无缝拼接，重要的是选择输入块的大小，以便所有的<code>2 X 2</code>的池化层都可以应用于偶数的 x 层和 y 层。一个比较好的方法是从最下的分辨率从反向推到，比如说在网络结构中，最小的是<code>32 X 32</code>，沿着收缩路径的反向进行推导可知，输入图像的尺寸应该为<code>572×572</code>。</li></ul><h3 id="FCN与U-net的区别"><a href="#FCN与U-net的区别" class="headerlink" title="FCN与U-net的区别"></a>FCN与U-net的区别</h3><ul><li>FCN的主要思想是使用连续的层补充通常的收缩网络，在判别输出的位置添加上采样层，这些层增加了输出层的分别率，为了定位。来自于收缩路径的高分别率与上采样输出相结合，基于这个信息，一个连续的卷积层可以学习组装更精确的输出。（关于FCN详细内容可以参考我的上一篇文章：<a href="http://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/">论文笔记：用于语义分割的全卷积网络 （fully convolutional networks for semantic segmentation）</a>）</li><li>而U-net与FCN的不同在于，U-net的上采样依然有大量的通道，这使得网络将上下文信息向更高层分辨率传播，作为结果，扩展路径与收缩路径对称，形成一个U型的形状（如上图所示）。 网络没有全连接层并且只是用每一个卷积层的有效部分。</li></ul><h3 id="Overlap-tile"><a href="#Overlap-tile" class="headerlink" title="Overlap-tile"></a>Overlap-tile</h3><ul><li>作者在文中介绍了一种<code>Overlap-tile</code>策略，使得任意大小的输入图像都可以获得一个无缝分割，因为输出的分割图它包含的像素点，它们的周围像素点（上下文）都出现在了输入图像中，因此使用<code>Overlap-tile</code>策略对数据进行预处理是有必要的。</li><li><code>Overlap-tile</code>策略的过程具体如下所示：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154956.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154956.jpeg" class="lozad post-image"></p><ul><li><p>上图是针对任意大小的输入图像的无缝分割的 <code>Overlap-tile</code> 策略。如果我们要预测黄色框内区域（即对黄色的内的细胞进行分割，获取它们的边缘），需要将蓝色框内部分作为输入，如果换色区域在输入图像的边缘的话，那么缺失的数据使用镜像进行补充。如上图左边图像所示，输入图像周围一圈都进行了镜像补充。</p></li><li><p>因为进行的是<code>valid卷积</code>，即上下文只取有效部分，可以理解为padding为0，卷积之后的图像尺寸会改变，所以需要取比黄色框大的图像来保证上下文的信息是有意义的，缺失的部分用镜像的方法补充是填充上下文信息最好的方法了。<strong>这种方法通常需要将图像进行分块的时候才使用。</strong></p></li><li><p><strong>那么为什么要对图像分块，不输入整张图像呢？</strong>因为内存限制，有的机器内存比较小，需要分块输入。但比之前的滑窗取块要好很多，一方面不用取那么多块，另一方面块之间也没有那么大的区域重叠。通过Overlap-tile 策略可以将图像分块输入，否则的话就只能对图像进行 resize 了，但是这样会降低输入图像的分辨率。</p></li><li><p>此外，<strong>如果数据不够的话可以应用弹性形变，对数据进行增强，增加数据量，</strong>这允许网络可以学习到这种形变的不变形，并且并不要求带有原始预料库进行到这样的变化（指弹性形变）。</p></li></ul><h3 id="细胞分割"><a href="#细胞分割" class="headerlink" title="细胞分割"></a>细胞分割</h3><ul><li>进行细胞的分割，另一种挑战是同一类物体的分类，如下图所示：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155008.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155008.jpeg" class="lozad post-image"></p><ul><li>上图是用DIC（二次干涉对比）显微技术记录的玻璃上的 HeLa 细胞。其中图 (a) 是原始图像；图 (b) 是基于 gt 的分割覆盖。其中不同的颜色表示不同的 HeLa 细胞示例。图 (c) 是生成的分割掩膜，其中白色部分是前景，黑色部分是后景；图 (d) 是像素级损失权重图，使得网络强制学习边缘像素。</li><li> 为了解决这个问题，作者使用加权损失，对于位与细胞接触部分的像素加大权重，如图 (d) 中的红色的部分。</li></ul><h2 id="Training（训练）"><a href="#Training（训练）" class="headerlink" title="Training（训练）"></a>Training（训练）</h2><ul><li>作者使用caffe框架，并采用带动量的SGD方法，其中动量的值设为 <code>momentum=0.99</code>。动量设这么大的原因是这样可以使用大量先前看到的训练样本确定当前最优步骤的更新(因为动量的原理就是用先前很多步的状态确定下一步的方向)。相比于大的<code>batchsize</code>，作者喜欢大的<code>input tiles</code>（指的是over-tile）中的那种图像块，因此我们可以将一个batch缩小为一个单张图片的输入。</li><li>能量函数通过结合交叉熵损失函数的最后特征图上的像素级 soft-max 值来计算，<strong>通常多分类问题用soft-max函数作为输出，二分类问题用sigmoid函数作为输出，</strong>其中 soft-max 的计算方法如下：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155017.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155017.png" class="lozad post-image"></p><ul><li>其中 αk(x)代表在位置 x 处的像素在特征图中的第 k 层的激活值，其中 x∈Ω，，Ω⊂Z^2 ，即 x 属于空间 Ω，而空间 Ω是整数集合Z^2的子集。K 是像素点的类别总数，p_k(x)是近似最大函数。这里面的定义和我们平时使用的 sift-max 是一样的。损失函数是交叉熵损失函数，或者也可以成为 log-likelihood，具体如下所示</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155025.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155025.png" class="lozad post-image"></p><ul><li><p>其中需要注意的是这里使用的是加权的损失函数，对于每一个像素点有着自己的权重，这点可以在上面的细胞图中看到。</p></li><li><p>我们通过预先计算权重图来获得每一个像素在损失函数中的权值，这种方法补偿了训练数据每类像素的不同频率，并且使网络更注重学习相互接触的细胞的边缘。</p></li><li><p>分割边界使用形态学运算，特征图的计算方法如下：</p></li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155031.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155031.png" class="lozad post-image"></p><ul><li>其中的 w_c是用于平衡类别频率的权重图，d_1是该像素点到最近的细胞边界的距离；d_2是该像素点到第二近的细胞边界的距离。在我们的实验中，将 w0设置为10，将σs设置为大约 5 个像素。</li><li>权值的初始化对于模型的正确训练起着很大的作用，一个好的初始化应该保证网络中的每一个特征图有近似的单位方差。在这里使用服从标准差为√2/N 的高斯分布来进行初始化（实际上就是 He normal），其中的 N 代表着一个神经元的传入节点的数目，比如说某一个卷积层，他的卷积核的大小为 3×3，通道数是 64，那么 N=9×64=576。<h3 id="Data-Augmentation（数据增强-扩充）"><a href="#Data-Augmentation（数据增强-扩充）" class="headerlink" title="Data Augmentation（数据增强/扩充）"></a>Data Augmentation（数据增强/扩充）</h3></li><li>当只有少量训练样本的时候，对于让网络学习到所需的不变形和鲁棒性来说，数据增强是必要的。</li><li>显微镜图像一般需要旋转平移不变性，弹性形变和灰度值变化鲁棒性。训练样本的随机性变形似乎是训练之后少量标注图像的分割网络的关键。</li><li>此外在本文中，早收缩路径的最后加入了Drop-out，隐式的加强了数据增强。</li></ul><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>本文提出了很多数据预处理的技巧，有较强的实用性。</li></ul><h3 id="本文的创新点"><a href="#本文的创新点" class="headerlink" title="本文的创新点"></a>本文的创新点</h3><ol><li>提出了U-net这种网络结构。它同时具备捕捉上下文信息的收缩路径和允许精确定位的对称扩展路径，并且与FCN相比，U-net的上采样过程依然有大量的通道，这使得网络将上下文信息向更高层分辨率传播。</li><li><code>Overlap-tile</code> 策略，这种方法用于补全输入图像的上下信息，可以解决由于现存不足造成的图像输入的问题。</li><li>使用随机弹性变形进行数据增强。</li><li>使用加权损失。预先计算权重图，一方面补偿了训练数据每类像素的不同频率，另一方面是网络更注重学习相互接触的细胞间边缘。</li></ol><p>但是上面的这些创新点并不适合所有任务，比如说对刚体进行分割，那么久很难通过弹性变形对数据进行增强。</p><h3 id="本文学到的一些实用的技巧"><a href="#本文学到的一些实用的技巧" class="headerlink" title="本文学到的一些实用的技巧"></a>本文学到的一些实用的技巧</h3><ol><li>因为使用了 valid conv ，所以采用 Overlap - tile 策略补充图像，其中空白的部分用镜像的方法进行补充；</li><li>因为有池化层，因此要保证输入的图像在经过每一次池化的时候都要是边长偶数。这点与一般的卷积神经网络不同，因为一般的网络会使用 padding ，这样会保证卷积前后的大小不变，但是 valid conv 会使卷积后的尺寸变小，所以要特别注意输入图像的尺寸。一个比较好的方法是从最小分辨率出发沿收缩路径的反方向进行计算，得到输入图像的尺寸。</li><li>预先计算权重图，以此计算后面的加权损失函数；</li><li>加权损失的权重中有一部分是经验值，因此对于不同的任务可以进行调整（只是理论上可以进行调整，并没有试验过）；</li><li>使用标准差为√2/N的高斯分布来进行权值初始化，其中需要注意的是，对于不同的卷积层，N 的大小也是不同的。</li><li>在收缩路径的最后部加入了 dropout ，隐式地加强了数据增强。</li></ol><h2 id="一些疑惑"><a href="#一些疑惑" class="headerlink" title="一些疑惑"></a>一些疑惑</h2><ul><li>为什么加入 dropout 后可以对数据进行增强？</li><li>反卷积（上采样）的具体过程是怎么样的？</li><li>弹性形变数据增强具体是如何对数据增强的？</li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li>论文原文：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pdfs.semanticscholar.org/0704/5f87709d0b7b998794e9fa912c0aba912281.pdf">U-Net: Convolutional Networks for Biomedical Image Segmentation</a></li><li>CSDN-独孤呆博：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/dugudaibo/article/details/82934731">论文精读及分析：U-Net: Convolutional Networks for Biomedical Image Segmentation</a></li></ul></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/">https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/Data-enhancement-elastic-deformation/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">论文笔记：图像数据增强之弹性形变（Elastic Distortions）</div></div></a></div><div class="nav-item-next"><a href="/fully-convolutional-networks-for-semantic-segmentation/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">论文笔记：用于语义分割的全卷积网络 （fully convolutional networks for semantic segmentation）</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-number">3.</span> <span class="toc-text">U-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8EU-net%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">FCN与U-net的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlap-tile"><span class="toc-number">3.2.</span> <span class="toc-text">Overlap-tile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%83%9E%E5%88%86%E5%89%B2"><span class="toc-number">3.3.</span> <span class="toc-text">细胞分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Training%EF%BC%88%E8%AE%AD%E7%BB%83%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Training（训练）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Augmentation%EF%BC%88%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E6%89%A9%E5%85%85%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">Data Augmentation（数据增强&#x2F;扩充）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E7%9A%84%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">本文的创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">5.2.</span> <span class="toc-text">本文学到的一些实用的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%96%91%E6%83%91"><span class="toc-number">6.</span> <span class="toc-text">一些疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-number">3.</span> <span class="toc-text">U-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8EU-net%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">FCN与U-net的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlap-tile"><span class="toc-number">3.2.</span> <span class="toc-text">Overlap-tile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%83%9E%E5%88%86%E5%89%B2"><span class="toc-number">3.3.</span> <span class="toc-text">细胞分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Training%EF%BC%88%E8%AE%AD%E7%BB%83%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Training（训练）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Augmentation%EF%BC%88%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E6%89%A9%E5%85%85%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">Data Augmentation（数据增强&#x2F;扩充）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E7%9A%84%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">本文的创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">5.2.</span> <span class="toc-text">本文学到的一些实用的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%96%91%E6%83%91"><span class="toc-number">6.</span> <span class="toc-text">一些疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-number">3.</span> <span class="toc-text">U-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8EU-net%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">FCN与U-net的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlap-tile"><span class="toc-number">3.2.</span> <span class="toc-text">Overlap-tile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%83%9E%E5%88%86%E5%89%B2"><span class="toc-number">3.3.</span> <span class="toc-text">细胞分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Training%EF%BC%88%E8%AE%AD%E7%BB%83%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Training（训练）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Augmentation%EF%BC%88%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E6%89%A9%E5%85%85%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">Data Augmentation（数据增强&#x2F;扩充）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E7%9A%84%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">本文的创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">5.2.</span> <span class="toc-text">本文学到的一些实用的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%96%91%E6%83%91"><span class="toc-number">6.</span> <span class="toc-text">一些疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png">
+  
+  
+  <meta property="description" content="本文中提出了一种网络结构的训练策略，它依赖于充分利用数据增强技术来更高效的使用带有标签的数据。**在U-Net结构中，包括一个捕获上下文信息的收缩路径和一个允许精确定位的对称拓展路径。**这种方法可以使用非常少的数据完成端到端的训练，并获得最好的效果。">
+  
+  <meta property="keywords" content="机器学习,深度学习,全卷积网络,语义分割,Unet">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-01-06">
+  <meta property="og:article:modified_time" content="2021-01-06">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  <meta property="og:article:tag" content="深度学习">
+  
+  <meta property="og:article:tag" content="Unet">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-01-06T07:53:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-01-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.6k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/" class="leancloud_visitors" data-flag-title="论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/深度学习/" class="post-meta-link">深度学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Unet/" class="post-meta-link">Unet</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="本文中提出了一种网络结构的训练策略，它依赖于充分利用数据增强技术来更高效的使用带有标签的数据。**在U-Net结构中，包括一个捕获上下文信息的收缩路径和一个允许精确定位的对称拓展路径。**这种方法可以使用非常少的数据完成端到端的训练，并获得最好的效果。">
+  
+  <meta name="keywords" content="机器学习,深度学习,全卷积网络,语义分割,Unet">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><ul>
+<li>本文中提出了一种网络结构的训练策略，它依赖于充分利用数据增强技术来更高效的使用带有标签的数据。<strong>在U-Net结构中，包括一个捕获上下文信息的收缩路径和一个允许精确定位的对称拓展路径。</strong>这种方法可以使用非常少的数据完成端到端的训练，并获得最好的效果。</li>
+</ul>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li><p>卷积网络的典型用途是分类任务，<strong>其中图像的输出是单个类别标签。</strong> 然而，在许多视觉任务中，<strong>尤其是在生物医学图像处理中，期望的输出应该包括定位，即，应该将类标签分配给每个像素。（也就是分割）</strong></p>
+</li>
+<li><p>Ciresan等人用滑动窗口取像素像素周围的局部区域俩训练网络，训练数据远远大于训练图像的数量。 </p>
+</li>
+<li><p>本文提出一种新的完全卷积网络，即U-Net网，主要思想是在收缩网络的后面补充一个与前面类似的网络，其中池化运算符由上采样运算符替换。因此，这些层增加了输出的分辨率。为了定位，从收缩路径的高分辨率特征与上采样输出相结合。然后，连续卷积层可以学习基于该信息组装更精确的输出。</p>
+</li>
+<li><p>作者提出U-Net的本意是将其用于医学图像分割，在以往的CNN中，想将其用于医学图像存在两个困难：</p>
+<ol>
+<li>通常CNN都是应用于分类，生物医学图像更关注的是分割以及定位的任务；</li>
+<li>CNN需要获取大量的训练数据，而医学图像很难获得那么大规模的数据。</li>
+</ol>
+</li>
+<li><p>以往解决上面两点困难的方法是使用滑窗的方法，为每一个待分类的像素点取周围的一部分邻域输入。这样的方法有两点好处，首先它完成了定位的工作，其次因为每次取一个像素点周围的邻域，所以大大增加了训练数据的数量。但是这样的方法也有两个缺点，首先通过滑窗所取的块之间具有较大的重叠，所以会导致速度变慢；其次是网络需要在局部准确性和获取上下文之间进行取舍。因为更大的块需要更多的池化层进而降低了定位的准确率，而小的块使网络只看到很小的一部分上下文。</p>
+</li>
+</ul>
+<h2 id="U-Net"><a href="#U-Net" class="headerlink" title="U-Net"></a>U-Net</h2><ul>
+<li>在本文中，作者修改并扩展了FCN网络结构，使它在使用少量的数据进行训练的情况下获得精确的分割结果，具体结构示意图如下所示：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154939.png" class="lozad post-image"></p>
+<ul>
+<li>在上图中，每一个蓝色块表示一个多通道特征图，<strong>特征图的通道数标记在顶部，X-Y尺寸设置在块的左下边缘。不同颜色的箭头代表不同的操作。图的左半部分是收缩路径，右半部分是扩展路径。</strong></li>
+<li>其中需要注意的是，每经过一次上采样都会将通道数减半，再与收缩路径对应的特征图进行拼接。在拼接之前进行 <code>crop</code> 是必要的(例如在上图中，64<em>64大与56</em>56，为了使这两个特征图能够顺利拼接，取64<em>64中间部分54</em>54的大小，然后拼接)，因为两者的尺寸并不相同（主要是因为 valid conv 造成的）。最后一层使用<code>1 X 1</code>大小的卷积核，将通道数降低至特定的数量（如像素点的类别数量）。</li>
+<li>网络对于输入的大小也是有要求的。为了使得输出的分割图无缝拼接，重要的是选择输入块的大小，以便所有的<code>2 X 2</code>的池化层都可以应用于偶数的 x 层和 y 层。一个比较好的方法是从最下的分辨率从反向推到，比如说在网络结构中，最小的是<code>32 X 32</code>，沿着收缩路径的反向进行推导可知，输入图像的尺寸应该为<code>572×572</code>。 </li>
+</ul>
+<h3 id="FCN与U-net的区别"><a href="#FCN与U-net的区别" class="headerlink" title="FCN与U-net的区别"></a>FCN与U-net的区别</h3><ul>
+<li>FCN的主要思想是使用连续的层补充通常的收缩网络，在判别输出的位置添加上采样层，这些层增加了输出层的分别率，为了定位。来自于收缩路径的高分别率与上采样输出相结合，基于这个信息，一个连续的卷积层可以学习组装更精确的输出。（关于FCN详细内容可以参考我的上一篇文章：<a href="http://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/">论文笔记：用于语义分割的全卷积网络 （fully convolutional networks for semantic segmentation）</a>）</li>
+<li>而U-net与FCN的不同在于，U-net的上采样依然有大量的通道，这使得网络将上下文信息向更高层分辨率传播，作为结果，扩展路径与收缩路径对称，形成一个U型的形状（如上图所示）。 网络没有全连接层并且只是用每一个卷积层的有效部分。</li>
+</ul>
+<h3 id="Overlap-tile"><a href="#Overlap-tile" class="headerlink" title="Overlap-tile"></a>Overlap-tile</h3><ul>
+<li>作者在文中介绍了一种<code>Overlap-tile</code>策略，使得任意大小的输入图像都可以获得一个无缝分割，因为输出的分割图它包含的像素点，它们的周围像素点（上下文）都出现在了输入图像中，因此使用<code>Overlap-tile</code>策略对数据进行预处理是有必要的。</li>
+<li><code>Overlap-tile</code>策略的过程具体如下所示：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154956.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106154956.jpeg" class="lozad post-image"></p>
+<ul>
+<li><p>上图是针对任意大小的输入图像的无缝分割的 <code>Overlap-tile</code> 策略。如果我们要预测黄色框内区域（即对黄色的内的细胞进行分割，获取它们的边缘），需要将蓝色框内部分作为输入，如果换色区域在输入图像的边缘的话，那么缺失的数据使用镜像进行补充。如上图左边图像所示，输入图像周围一圈都进行了镜像补充。</p>
+</li>
+<li><p>因为进行的是<code>valid卷积</code>，即上下文只取有效部分，可以理解为padding为0，卷积之后的图像尺寸会改变，所以需要取比黄色框大的图像来保证上下文的信息是有意义的，缺失的部分用镜像的方法补充是填充上下文信息最好的方法了。<strong>这种方法通常需要将图像进行分块的时候才使用。</strong></p>
+</li>
+<li><p><strong>那么为什么要对图像分块，不输入整张图像呢？</strong>因为内存限制，有的机器内存比较小，需要分块输入。但比之前的滑窗取块要好很多，一方面不用取那么多块，另一方面块之间也没有那么大的区域重叠。通过Overlap-tile 策略可以将图像分块输入，否则的话就只能对图像进行 resize 了，但是这样会降低输入图像的分辨率。</p>
+</li>
+<li><p>此外，<strong>如果数据不够的话可以应用弹性形变，对数据进行增强，增加数据量，</strong>这允许网络可以学习到这种形变的不变形，并且并不要求带有原始预料库进行到这样的变化（指弹性形变）。</p>
+</li>
+</ul>
+<h3 id="细胞分割"><a href="#细胞分割" class="headerlink" title="细胞分割"></a>细胞分割</h3><ul>
+<li>进行细胞的分割，另一种挑战是同一类物体的分类，如下图所示：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155008.jpeg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155008.jpeg" class="lozad post-image"></p>
+<ul>
+<li>上图是用DIC（二次干涉对比）显微技术记录的玻璃上的 HeLa 细胞。其中图 (a) 是原始图像；图 (b) 是基于 gt 的分割覆盖。其中不同的颜色表示不同的 HeLa 细胞示例。图 (c) 是生成的分割掩膜，其中白色部分是前景，黑色部分是后景；图 (d) 是像素级损失权重图，使得网络强制学习边缘像素。</li>
+<li> 为了解决这个问题，作者使用加权损失，对于位与细胞接触部分的像素加大权重，如图 (d) 中的红色的部分。</li>
+</ul>
+<h2 id="Training（训练）"><a href="#Training（训练）" class="headerlink" title="Training（训练）"></a>Training（训练）</h2><ul>
+<li>作者使用caffe框架，并采用带动量的SGD方法，其中动量的值设为 <code>momentum=0.99</code>。动量设这么大的原因是这样可以使用大量先前看到的训练样本确定当前最优步骤的更新(因为动量的原理就是用先前很多步的状态确定下一步的方向)。相比于大的<code>batchsize</code>，作者喜欢大的<code>input tiles</code>（指的是over-tile）中的那种图像块，因此我们可以将一个batch缩小为一个单张图片的输入。</li>
+<li>能量函数通过结合交叉熵损失函数的最后特征图上的像素级 soft-max 值来计算，<strong>通常多分类问题用soft-max函数作为输出，二分类问题用sigmoid函数作为输出，</strong>其中 soft-max 的计算方法如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155017.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155017.png" class="lozad post-image"></p>
+<ul>
+<li>其中 αk(x)代表在位置 x 处的像素在特征图中的第 k 层的激活值，其中 x∈Ω，，Ω⊂Z^2 ，即 x 属于空间 Ω，而空间 Ω是整数集合Z^2的子集。K 是像素点的类别总数，p_k(x)是近似最大函数。这里面的定义和我们平时使用的 sift-max 是一样的。损失函数是交叉熵损失函数，或者也可以成为 log-likelihood，具体如下所示</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155025.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155025.png" class="lozad post-image"></p>
+<ul>
+<li><p>其中需要注意的是这里使用的是加权的损失函数，对于每一个像素点有着自己的权重，这点可以在上面的细胞图中看到。</p>
+</li>
+<li><p>我们通过预先计算权重图来获得每一个像素在损失函数中的权值，这种方法补偿了训练数据每类像素的不同频率，并且使网络更注重学习相互接触的细胞的边缘。</p>
+</li>
+<li><p>分割边界使用形态学运算，特征图的计算方法如下：</p>
+</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155031.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155031.png" class="lozad post-image"></p>
+<ul>
+<li>其中的 w_c是用于平衡类别频率的权重图，d_1是该像素点到最近的细胞边界的距离；d_2是该像素点到第二近的细胞边界的距离。在我们的实验中，将 w0设置为10，将σs设置为大约 5 个像素。</li>
+<li>权值的初始化对于模型的正确训练起着很大的作用，一个好的初始化应该保证网络中的每一个特征图有近似的单位方差。在这里使用服从标准差为√2/N      的高斯分布来进行初始化（实际上就是 He normal），其中的 N 代表着一个神经元的传入节点的数目，比如说某一个卷积层，他的卷积核的大小为 3×3，通道数是 64，那么 N=9×64=576。<h3 id="Data-Augmentation（数据增强-扩充）"><a href="#Data-Augmentation（数据增强-扩充）" class="headerlink" title="Data Augmentation（数据增强/扩充）"></a>Data Augmentation（数据增强/扩充）</h3></li>
+<li>当只有少量训练样本的时候，对于让网络学习到所需的不变形和鲁棒性来说，数据增强是必要的。</li>
+<li>显微镜图像一般需要旋转平移不变性，弹性形变和灰度值变化鲁棒性。训练样本的随机性变形似乎是训练之后少量标注图像的分割网络的关键。</li>
+<li>此外在本文中，早收缩路径的最后加入了Drop-out，隐式的加强了数据增强。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>本文提出了很多数据预处理的技巧，有较强的实用性。</li>
+</ul>
+<h3 id="本文的创新点"><a href="#本文的创新点" class="headerlink" title="本文的创新点"></a>本文的创新点</h3><ol>
+<li>提出了U-net这种网络结构。它同时具备捕捉上下文信息的收缩路径和允许精确定位的对称扩展路径，并且与FCN相比，U-net的上采样过程依然有大量的通道，这使得网络将上下文信息向更高层分辨率传播。</li>
+<li><code>Overlap-tile</code> 策略，这种方法用于补全输入图像的上下信息，可以解决由于现存不足造成的图像输入的问题。</li>
+<li>使用随机弹性变形进行数据增强。</li>
+<li>使用加权损失。预先计算权重图，一方面补偿了训练数据每类像素的不同频率，另一方面是网络更注重学习相互接触的细胞间边缘。</li>
+</ol>
+<p>但是上面的这些创新点并不适合所有任务，比如说对刚体进行分割，那么久很难通过弹性变形对数据进行增强。</p>
+<h3 id="本文学到的一些实用的技巧"><a href="#本文学到的一些实用的技巧" class="headerlink" title="本文学到的一些实用的技巧"></a>本文学到的一些实用的技巧</h3><ol>
+<li>因为使用了 valid conv ，所以采用 Overlap - tile 策略补充图像，其中空白的部分用镜像的方法进行补充；</li>
+<li>因为有池化层，因此要保证输入的图像在经过每一次池化的时候都要是边长偶数。这点与一般的卷积神经网络不同，因为一般的网络会使用 padding ，这样会保证卷积前后的大小不变，但是 valid conv 会使卷积后的尺寸变小，所以要特别注意输入图像的尺寸。一个比较好的方法是从最小分辨率出发沿收缩路径的反方向进行计算，得到输入图像的尺寸。</li>
+<li>预先计算权重图，以此计算后面的加权损失函数；</li>
+<li>加权损失的权重中有一部分是经验值，因此对于不同的任务可以进行调整（只是理论上可以进行调整，并没有试验过）；</li>
+<li>使用标准差为√2/N的高斯分布来进行权值初始化，其中需要注意的是，对于不同的卷积层，N 的大小也是不同的。</li>
+<li>在收缩路径的最后部加入了 dropout ，隐式地加强了数据增强。</li>
+</ol>
+<h2 id="一些疑惑"><a href="#一些疑惑" class="headerlink" title="一些疑惑"></a>一些疑惑</h2><ul>
+<li>为什么加入 dropout 后可以对数据进行增强？</li>
+<li>反卷积（上采样）的具体过程是怎么样的？</li>
+<li>弹性形变数据增强具体是如何对数据增强的？</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>论文原文：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://pdfs.semanticscholar.org/0704/5f87709d0b7b998794e9fa912c0aba912281.pdf">U-Net: Convolutional Networks for Biomedical Image Segmentation</a></li>
+<li>CSDN-独孤呆博：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/dugudaibo/article/details/82934731">论文精读及分析：U-Net: Convolutional Networks for Biomedical Image Segmentation</a></li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/">https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/Data-enhancement-elastic-deformation/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">论文笔记：图像数据增强之弹性形变（Elastic Distortions） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/fully-convolutional-networks-for-semantic-segmentation/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">论文笔记：用于语义分割的全卷积网络 （fully convolutional networks for semantic segmentation） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-number">3.</span> <span class="toc-text">U-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8EU-net%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">FCN与U-net的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlap-tile"><span class="toc-number">3.2.</span> <span class="toc-text">Overlap-tile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%83%9E%E5%88%86%E5%89%B2"><span class="toc-number">3.3.</span> <span class="toc-text">细胞分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Training%EF%BC%88%E8%AE%AD%E7%BB%83%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Training（训练）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Augmentation%EF%BC%88%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E6%89%A9%E5%85%85%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">Data Augmentation（数据增强&#x2F;扩充）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E7%9A%84%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">本文的创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">5.2.</span> <span class="toc-text">本文学到的一些实用的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%96%91%E6%83%91"><span class="toc-number">6.</span> <span class="toc-text">一些疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-number">3.</span> <span class="toc-text">U-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8EU-net%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">FCN与U-net的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlap-tile"><span class="toc-number">3.2.</span> <span class="toc-text">Overlap-tile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%83%9E%E5%88%86%E5%89%B2"><span class="toc-number">3.3.</span> <span class="toc-text">细胞分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Training%EF%BC%88%E8%AE%AD%E7%BB%83%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Training（训练）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Augmentation%EF%BC%88%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E6%89%A9%E5%85%85%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">Data Augmentation（数据增强&#x2F;扩充）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E7%9A%84%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">本文的创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">5.2.</span> <span class="toc-text">本文学到的一些实用的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%96%91%E6%83%91"><span class="toc-number">6.</span> <span class="toc-text">一些疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#U-Net"><span class="toc-number">3.</span> <span class="toc-text">U-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FCN%E4%B8%8EU-net%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.1.</span> <span class="toc-text">FCN与U-net的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overlap-tile"><span class="toc-number">3.2.</span> <span class="toc-text">Overlap-tile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%83%9E%E5%88%86%E5%89%B2"><span class="toc-number">3.3.</span> <span class="toc-text">细胞分割</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Training%EF%BC%88%E8%AE%AD%E7%BB%83%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">Training（训练）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Augmentation%EF%BC%88%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%BC%BA-%E6%89%A9%E5%85%85%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">Data Augmentation（数据增强&#x2F;扩充）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E7%9A%84%E5%88%9B%E6%96%B0%E7%82%B9"><span class="toc-number">5.1.</span> <span class="toc-text">本文的创新点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E5%AD%A6%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="toc-number">5.2.</span> <span class="toc-text">本文学到的一些实用的技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%96%91%E6%83%91"><span class="toc-number">6.</span> <span class="toc-text">一些疑惑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">7.</span> <span class="toc-text">参考</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

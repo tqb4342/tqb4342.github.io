@@ -1,1 +1,1022 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>基于分层区域稀疏成分的肝脏分割&nbsp; | &nbsp;IT码农</title><meta property="title" content="基于分层区域稀疏成分的肝脏分割"><meta property="url" content="https://tanqingbo.cn/Liver-segmentation-of-sparse-components/index.html"><meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217162832.png"><meta property="description" content="基于分层区域稀疏成分的肝脏分割。"><meta property="keywords" content="机器学习,医学图像,深度学习"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2020-12-17"><meta property="og:article:modified_time" content="2020-12-17"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="机器学习"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/Liver-segmentation-of-sparse-components/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217162832.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217162832.png" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">基于分层区域稀疏成分的肝脏分割</h1></header><div class="post-meta post-show-meta"><time datetime="2020-12-17T08:27:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2020-12-17</span> </time><span class="dot"></span> <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a> <span class="dot"></span> <span>2.5k 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/Liver-segmentation-of-sparse-components/" class="leancloud_visitors" data-flag-title="基于分层区域稀疏成分的肝脏分割"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/机器学习/" class="post-meta-link">机器学习</a></div></div><meta name="description" content="基于分层区域稀疏成分的肝脏分割。"><meta name="keywords" content="机器学习,医学图像,深度学习"><div id="section" class="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文是我阅读医学图像分析论文<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.sciencedirect.com/science/article/pii/S0031320315003155">《A hierarchical local region-based sparse shape composition for liver<br>segmentation in CT scans》</a>所做的一些笔记。<br>翻译的中文名为：基于分层区域稀疏成分的肝脏分割。</p><h2 id="基于分层区域稀疏成分的肝脏分割"><a href="#基于分层区域稀疏成分的肝脏分割" class="headerlink" title="基于分层区域稀疏成分的肝脏分割"></a>基于分层区域稀疏成分的肝脏分割</h2><ul><li><p>本文的主要贡献可以概括如下:</p><ul><li>(1)提出了MLR-SSC增加形状先验模型的灵活性和获取详细的局部形状信息更忠实的小训练集(3.1节);</li><li>(2)一个有效和可伸缩的优化算法(即。,LARS-Homotopy方法[34])求解稀疏优化问题在MLR-SSC(3.1.2节);</li><li>(3)提出一种血液vessel-based肝脏形状初始化方法获得一个更特定的初始形状(3.2.1节);</li><li>(4)分级优化策略开发的细分框架更有效率和更健壮的局部最小值(3.2.2节),并成功地应用于部分肝组织从CT图像(5节)。<h3 id="背景和相关工作"><a href="#背景和相关工作" class="headerlink" title="背景和相关工作"></a>背景和相关工作</h3></li></ul></li><li><p>提出一个新颖的多级当地提出SSC(MLR-SSC)提高精度和降低计算成本。具体来说,我们将肝脏形状分解成多个区域多层次的方式,这样,每个地区都有均匀的形状变化。然后我们建立一个当地的形状库中为每个地区和完善地区的方式输入形状。</p></li><li><p>Zhang et al。[35]他们使用的内点方法解决稀疏优化问题,当我们使用一个更加高效和可伸缩的优化算法(即。LARS-Homotopy方法[34]);</p></li><li><p>他们应用来自每个次区域的稀疏系数xj来完善整个输入形状,而我们使用一个地区细化策略,更准确和高效。</p></li><li><p>在他们的层次分割框架,single-resolution技术(即。,只有使用原始输入图像)实现,我们开发一个多分辨率优化策略(即。,使用原始输入图像的高斯金字塔),已被证明对于局部最小值是更有效更健壮的[39]。</p><h3 id="方法（Method）"><a href="#方法（Method）" class="headerlink" title="方法（Method）"></a>方法（Method）</h3></li><li><p>在本节中,我们描述我们提出ASM-based分层肝脏分割框架。主要工作流程分割框架见图2,包括离线训练和运行时测试阶段。</p><h3 id="多级形状分割过程："><a href="#多级形状分割过程：" class="headerlink" title="多级形状分割过程："></a>多级形状分割过程：</h3></li><li><p>输入：</p><ul><li>M¯：主要的肝脏形状</li><li>{δi }：对于每一个三角形Ti的形状变化标准差</li><li>nl：多级形状分割L水平划分的区域个数</li></ul></li><li><p>step1：初始化：</p><ul><li>为每一个区域Ri创建一个随机的种子三角形Ti.</li><li>为每一个区域标记代理Pi：Pi=(mi)←δi.</li></ul></li><li><p>step2：区域划分：</p><ul><li><p>Ri←∅;将Ti添加到对应的区域Ri中，Ri←Ri∪Ti.</p></li><li><p>初始化一个全局优先队列Q： Q←∅.</p></li><li><p>将每一个与种子三角形Ti相邻的三角形Tj的近似误差L(Tj, Pi)和标签TagTj插入Q，L(Tj,Pi)=|δj−mi|。</p><pre class="highlight"><span class="line">while Q≠∅ do</span><br><span class="line">	 Tj← Pop 三角形最小的近似误差</span><br><span class="line">	  if 没有标签Tj then</span><br><span class="line">	    添加Tj地区表示其标签TagTj:RTagTj←RTagTj∪Tj。</span><br><span class="line">	    将TagTj重新插入Q</span><br><span class="line">	  end if</span><br><span class="line">	end while</span><br></pre></li></ul></li></ul><ul><li><p>step3:代理配件</p><ul><li>根据邻近区域Ri的平均形状变化更新每一个代理Pi=(mi)， mi←1/|Ri|∑Tj∈Ri δj.</li><li>为每一个新区域Ri更新种子三角形Ti，使Ri的近似误差最小。Ti←argminTj∈Ri L(Tj,Pi).</li></ul></li><li><p>step4:重复step3和step3.</p></li><li><p>输出在l区域水平主要肝脏形状的分割结果。R={R1,…,Rnl}.</p></li><li><p>MLR-SSC模型能够非常健壮的处理大型的稀疏错误和小密度的高斯噪音，能够恢复复杂的形状变形和详细地局部信息.</p><h3 id="分层肝脏分割框架"><a href="#分层肝脏分割框架" class="headerlink" title="分层肝脏分割框架"></a>分层肝脏分割框架</h3></li><li><p>我们的细分框架包含两个主要组件:肝脏形状初始化和分层优化算法。</p></li><li><p>肝脏形状初始化</p><ul><li>中值滤波应用于输入的CT图像减少噪音</li><li>Frangi׳s vesselness方法来增强肝脏血管</li><li>移动立方体算法将提取的肝血管转换成三角网格</li><li>使用Quickhull算法计算血管的凸包来提取肝脏的核心区域</li><li>ASM本地搜索策略可能会导致最终结果过度或欠分割</li></ul></li><li><p>使用我们提出的MLR-SSC策略能够更准确的分割肝脏形状</p><ul><li>设level l = 0，nl= 1（设0层只有一个区域）</li><li>用全局SSC定义核心区域</li><li>所推断出来的初始形状更准确，与真值更一致，尤其是在白色矩形所表示的区域<h3 id="分级优化策略"><a href="#分级优化策略" class="headerlink" title="分级优化策略"></a>分级优化策略</h3></li></ul></li><li><p>分级优化策略的形状模型是由粗到精的方式，是一个支持多分辨率的策略</p><ul><li>首先构造多分辨率高斯金字塔的所有训练体积，这样MLR-SSC在不同的级别对应不同的决议。</li><li>输入一个CT进行分割，我们同样为其建立一个多分辨率高斯金字塔，然后开始ASM搜索，设level l = 0，nl= 1，然后再level l 上逐渐增加跟多的区域，这样更详细的局部信息可以重建。</li><li>ASM搜索从输入的体积最低分辨率开始，外观模型对应这一级别。</li><li>在收敛或迭代预定义的次数之后移动到更高的分辨出。</li><li>每一级的分割结果直接用来初始化下一级。</li><li>重复这个过程直到收敛达到原始输入量的金字塔。<br></li></ul></li><li><p>上述算法描述：</p><ul><li><p>输入：</p><ul><li>V:腹部门静脉体积</li><li>Lmax:分辨率级别数量</li><li>Nmax:每级分辨率的迭代次数。</li></ul></li><li><p>输出：</p><ul><li><p>M(Lmax−1)：分割结果</p></li><li><p>M0:肝脏血管初始化形状</p></li><li><p>{ V0,V1,…,V(Lmax−1)= V }：为V构建的多分辨率高斯金字塔</p><pre class="highlight"><span class="line">for l=0 to (Lmax−1) do</span><br><span class="line">	 for i=0 to (Nmax−1) do</span><br><span class="line">	  for 所有的点vj∈Ml do</span><br><span class="line">		qj = ASM搜索算法在Vj中找到的目标点；</span><br><span class="line">		vj = qj；</span><br><span class="line">	  end for</span><br><span class="line">	  Ml = 使用MLR-SSC完善的中间变形形状</span><br><span class="line">	  i = i+1;</span><br><span class="line">	 end for </span><br><span class="line">	 l = l+1;</span><br><span class="line">	end for</span><br><span class="line">	return M(Lmax−1);</span><br></pre></li></ul></li></ul></li></ul><h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><ul><li>数据集：在这项研究中所有数据集的详细信息由表1给出<ul><li>注意,当比较我们的方法和先进的方法基于3 dircadb1(部分5.4.1之前)和SLIVER07-Test(5.4.2节)数据库中,我们仅仅使用SLIVER07-Train数据库作为训练数据。</li></ul></li><li>评价指标和统计分析<ul><li>为了定量评估我们的方法和性能，提供五个体积和表面的基础指标:体积重叠误差(VOE),标记相对体积差异(SRVD),平均对称表面距离(ASD),均方根对称表面距离(RMSD)和最大对称面的距离(MSD)。</li><li>这些评价指标,值越小,分割的结果更好。</li><li>在所有的指标中，VOE和ASD通常用来评价分割准确性。</li></ul></li><li>实现细节<ul><li>分层肝脏分割框架的参数集确定离线使用SLIVER07-Train数据库来获得最优性能</li><li>在我们的实现中，对所有的测试数据设置都是相同的</li><li>所有的参数设置部署都在表2中列出了</li><li>在Eq中选择稀疏参数 λ 的值</li><li>形状划分的层次数量L和分辨率水平Lmax 将在5.1.3和5.1.4详细讨论</li></ul></li></ul><h4 id="table-2"><a href="#table-2" class="headerlink" title="table 2"></a>table 2</h4><table><tbody><tr><th>参数</th><th>值</th><th>详细信息</th></tr><tr><td>np</td><td>2562</td><td>有意义的点的数量</td></tr><tr><td>L</td><td>5</td><td>形状分割层数</td></tr><tr><td>λ</td><td>100</td><td>Eq中稀疏参数</td></tr><tr><td>Lmax</td><td>5</td><td>分辨率级别数量</td></tr><tr><td>Nmax</td><td>10</td><td>每级分辨率的迭代次数</td></tr><tr><td>k</td><td>9</td><td>标准剖面两侧采样点的数量</td></tr><tr><td>ne</td><td>6</td><td>在每一次迭代时，评估两边点的新位置数量</td></tr></tbody></table><ul><li>在这项研究中,我们还将提出MLR-SSC模型与两个紧密相关的方法进行比较：<ol><li>SSM,统计形状模型使用主成分分析(PCA)学习形状先验模型</li><li>SSC,稀疏的形状组成使用形状库D中提炼的一个输入形状作为全局训练形状（这是我们提出的方法中的一个特例，levels L=1.）</li></ol></li><li><strong>用到的工具：C++实现，Ubuntu平台，SPAMS库（开源稀疏优化工具）</strong><h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3></li><li>MLR-SSC模型评估：在不同情况下，评价其泛化能力，在所有试验中令 level l=2 with nl=4 regions.</li><li>泛化能力、专一性和密实度是量化一个形状模型质量的三个最常用的措施。在本论文中采用泛化能力评价模型质量</li><li>泛化能力值越小,形状建模方法就越好。</li><li>泛化能力和效率完胜其他两个方法</li><li>训练数据的大小对泛化能力的影响<ul><li>我们的方法能够克服有限的训练数据的影响（一般训练数据越小，泛化值越大）</li></ul></li><li>稀疏参数对泛化能力的影响<ul><li>由图12，稀疏参数λ的选择对我们的成功至关重要</li><li>我们的方法在λ的值很大范围内都不敏感，一般选择固定值λ= 100</li></ul></li><li>层次和区域个数对MLR-SSC肝脏形状重建的影响<ul><li>MLR-SSC模型的特征是能够保存详细的局部形状信息，即使训练的数据上没有显著的统计</li><li>每一层的区域个数选择对MLR-SSC模型至关重要，区域个数小，不能更好的重建局部细节；个数多，在细分的交叉区域会发生矛盾，从而导致肝脏表面非常粗糙。</li><li>图13显示了泛化能力和区域个数的关系，随着地区的数量增加,泛化能力的价值下降,但20个区后,它开始上涨,使我们的方法达到最好的结果，区域个数在12-20。</li><li>最大数量的水平 level L = 6</li><li>我们选择 level L = 5，2的4次方 = 16，因此区域数16个，满足最佳重建结果。</li></ul></li></ul></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Liver-segmentation-of-sparse-components/">https://tanqingbo.cn/Liver-segmentation-of-sparse-components/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/分割精度说明/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">分割精度性能度量</div></div></a></div><div class="nav-item-next"><a href="/Deformation-model-based-sparse-representation/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">基于稀疏表示变形模型的肝脏分割方法</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E5%B1%82%E5%8C%BA%E5%9F%9F%E7%A8%80%E7%96%8F%E6%88%90%E5%88%86%E7%9A%84%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2"><span class="toc-number">2.</span> <span class="toc-text">基于分层区域稀疏成分的肝脏分割</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">背景和相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法（Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%BD%A2%E7%8A%B6%E5%88%86%E5%89%B2%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">多级形状分割过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.</span> <span class="toc-text">分层肝脏分割框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">2.5.</span> <span class="toc-text">分级优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.6.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#table-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">table 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.7.</span> <span class="toc-text">结果</span></a></li></ol></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E5%B1%82%E5%8C%BA%E5%9F%9F%E7%A8%80%E7%96%8F%E6%88%90%E5%88%86%E7%9A%84%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2"><span class="toc-number">2.</span> <span class="toc-text">基于分层区域稀疏成分的肝脏分割</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">背景和相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法（Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%BD%A2%E7%8A%B6%E5%88%86%E5%89%B2%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">多级形状分割过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.</span> <span class="toc-text">分层肝脏分割框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">2.5.</span> <span class="toc-text">分级优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.6.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#table-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">table 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.7.</span> <span class="toc-text">结果</span></a></li></ol></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E5%B1%82%E5%8C%BA%E5%9F%9F%E7%A8%80%E7%96%8F%E6%88%90%E5%88%86%E7%9A%84%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2"><span class="toc-number">2.</span> <span class="toc-text">基于分层区域稀疏成分的肝脏分割</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">背景和相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法（Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%BD%A2%E7%8A%B6%E5%88%86%E5%89%B2%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">多级形状分割过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.</span> <span class="toc-text">分层肝脏分割框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">2.5.</span> <span class="toc-text">分级优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.6.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#table-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">table 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.7.</span> <span class="toc-text">结果</span></a></li></ol></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>基于分层区域稀疏成分的肝脏分割&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="基于分层区域稀疏成分的肝脏分割">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Liver-segmentation-of-sparse-components/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217162832.png">
+  
+  
+  <meta property="description" content="基于分层区域稀疏成分的肝脏分割。">
+  
+  <meta property="keywords" content="机器学习,医学图像,深度学习">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-12-17">
+  <meta property="og:article:modified_time" content="2020-12-17">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Liver-segmentation-of-sparse-components/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217162832.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201217162832.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      基于分层区域稀疏成分的肝脏分割
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-17T08:27:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Liver-segmentation-of-sparse-components/" class="leancloud_visitors" data-flag-title="基于分层区域稀疏成分的肝脏分割">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="基于分层区域稀疏成分的肝脏分割。">
+  
+  <meta name="keywords" content="机器学习,医学图像,深度学习">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文是我阅读医学图像分析论文<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.sciencedirect.com/science/article/pii/S0031320315003155">《A hierarchical local region-based sparse shape composition for liver<br>segmentation in CT scans》</a>所做的一些笔记。<br>翻译的中文名为：基于分层区域稀疏成分的肝脏分割。</p>
+<h2 id="基于分层区域稀疏成分的肝脏分割"><a href="#基于分层区域稀疏成分的肝脏分割" class="headerlink" title="基于分层区域稀疏成分的肝脏分割"></a>基于分层区域稀疏成分的肝脏分割</h2><ul>
+<li><p>本文的主要贡献可以概括如下:</p>
+<ul>
+<li>(1)提出了MLR-SSC增加形状先验模型的灵活性和获取详细的局部形状信息更忠实的小训练集(3.1节);</li>
+<li>(2)一个有效和可伸缩的优化算法(即。,LARS-Homotopy方法[34])求解稀疏优化问题在MLR-SSC(3.1.2节);</li>
+<li>(3)提出一种血液vessel-based肝脏形状初始化方法获得一个更特定的初始形状(3.2.1节);</li>
+<li>(4)分级优化策略开发的细分框架更有效率和更健壮的局部最小值(3.2.2节),并成功地应用于部分肝组织从CT图像(5节)。<h3 id="背景和相关工作"><a href="#背景和相关工作" class="headerlink" title="背景和相关工作"></a>背景和相关工作</h3></li>
+</ul>
+</li>
+<li><p>提出一个新颖的多级当地提出SSC(MLR-SSC)提高精度和降低计算成本。具体来说,我们将肝脏形状分解成多个区域多层次的方式,这样,每个地区都有均匀的形状变化。然后我们建立一个当地的形状库中为每个地区和完善地区的方式输入形状。</p>
+</li>
+<li><p>Zhang et al。[35]他们使用的内点方法解决稀疏优化问题,当我们使用一个更加高效和可伸缩的优化算法(即。LARS-Homotopy方法[34]);</p>
+</li>
+<li><p>他们应用来自每个次区域的稀疏系数xj来完善整个输入形状,而我们使用一个地区细化策略,更准确和高效。</p>
+</li>
+<li><p>在他们的层次分割框架,single-resolution技术(即。,只有使用原始输入图像)实现,我们开发一个多分辨率优化策略(即。,使用原始输入图像的高斯金字塔),已被证明对于局部最小值是更有效更健壮的[39]。</p>
+<h3 id="方法（Method）"><a href="#方法（Method）" class="headerlink" title="方法（Method）"></a>方法（Method）</h3></li>
+<li><p>在本节中,我们描述我们提出ASM-based分层肝脏分割框架。主要工作流程分割框架见图2,包括离线训练和运行时测试阶段。</p>
+<h3 id="多级形状分割过程："><a href="#多级形状分割过程：" class="headerlink" title="多级形状分割过程："></a>多级形状分割过程：</h3></li>
+<li><p>输入：</p>
+<ul>
+<li>M¯：主要的肝脏形状</li>
+<li>{δi }：对于每一个三角形Ti的形状变化标准差</li>
+<li>nl：多级形状分割L水平划分的区域个数</li>
+</ul>
+</li>
+<li><p>step1：初始化：</p>
+<ul>
+<li>为每一个区域Ri创建一个随机的种子三角形Ti.</li>
+<li>为每一个区域标记代理Pi：Pi=(mi)←δi.</li>
+</ul>
+</li>
+<li><p>step2：区域划分：</p>
+<ul>
+<li><p>Ri←∅;将Ti添加到对应的区域Ri中，Ri←Ri∪Ti.</p>
+</li>
+<li><p>初始化一个全局优先队列Q： Q←∅.</p>
+</li>
+<li><p>将每一个与种子三角形Ti相邻的三角形Tj的近似误差L(Tj, Pi)和标签TagTj插入Q，L(Tj,Pi)=|δj−mi|。</p>
+<pre class="highlight"><span class="line">while Q≠∅ do</span><br><span class="line">	 Tj← Pop 三角形最小的近似误差</span><br><span class="line">	  if 没有标签Tj then</span><br><span class="line">	    添加Tj地区表示其标签TagTj:RTagTj←RTagTj∪Tj。</span><br><span class="line">	    将TagTj重新插入Q</span><br><span class="line">	  end if</span><br><span class="line">	end while</span><br></pre>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>step3:代理配件</p>
+<ul>
+<li>根据邻近区域Ri的平均形状变化更新每一个代理Pi=(mi)， mi←1/|Ri|∑Tj∈Ri δj.</li>
+<li>为每一个新区域Ri更新种子三角形Ti，使Ri的近似误差最小。Ti←argminTj∈Ri L(Tj,Pi).</li>
+</ul>
+</li>
+<li><p>step4:重复step3和step3.</p>
+</li>
+<li><p>输出在l区域水平主要肝脏形状的分割结果。R={R1,…,Rnl}.</p>
+</li>
+<li><p>MLR-SSC模型能够非常健壮的处理大型的稀疏错误和小密度的高斯噪音，能够恢复复杂的形状变形和详细地局部信息.</p>
+<h3 id="分层肝脏分割框架"><a href="#分层肝脏分割框架" class="headerlink" title="分层肝脏分割框架"></a>分层肝脏分割框架</h3></li>
+<li><p>我们的细分框架包含两个主要组件:肝脏形状初始化和分层优化算法。</p>
+</li>
+<li><p>肝脏形状初始化</p>
+<ul>
+<li>中值滤波应用于输入的CT图像减少噪音</li>
+<li>Frangi׳s vesselness方法来增强肝脏血管</li>
+<li>移动立方体算法将提取的肝血管转换成三角网格</li>
+<li>使用Quickhull算法计算血管的凸包来提取肝脏的核心区域</li>
+<li>ASM本地搜索策略可能会导致最终结果过度或欠分割</li>
+</ul>
+</li>
+<li><p>使用我们提出的MLR-SSC策略能够更准确的分割肝脏形状</p>
+<ul>
+<li>设level l = 0，nl= 1（设0层只有一个区域）</li>
+<li>用全局SSC定义核心区域</li>
+<li>所推断出来的初始形状更准确，与真值更一致，尤其是在白色矩形所表示的区域<h3 id="分级优化策略"><a href="#分级优化策略" class="headerlink" title="分级优化策略"></a>分级优化策略</h3></li>
+</ul>
+</li>
+<li><p>分级优化策略的形状模型是由粗到精的方式，是一个支持多分辨率的策略</p>
+<ul>
+<li>首先构造多分辨率高斯金字塔的所有训练体积，这样MLR-SSC在不同的级别对应不同的决议。</li>
+<li>输入一个CT进行分割，我们同样为其建立一个多分辨率高斯金字塔，然后开始ASM搜索，设level l = 0，nl= 1，然后再level l 上逐渐增加跟多的区域，这样更详细的局部信息可以重建。</li>
+<li>ASM搜索从输入的体积最低分辨率开始，外观模型对应这一级别。</li>
+<li>在收敛或迭代预定义的次数之后移动到更高的分辨出。</li>
+<li>每一级的分割结果直接用来初始化下一级。</li>
+<li>重复这个过程直到收敛达到原始输入量的金字塔。<br></li>
+</ul>
+</li>
+<li><p>上述算法描述：</p>
+<ul>
+<li><p>输入：</p>
+<ul>
+<li>V:腹部门静脉体积</li>
+<li>Lmax:分辨率级别数量</li>
+<li>Nmax:每级分辨率的迭代次数。</li>
+</ul>
+</li>
+<li><p>输出：</p>
+<ul>
+<li><p>M(Lmax−1)：分割结果</p>
+</li>
+<li><p>M0:肝脏血管初始化形状</p>
+</li>
+<li><p>{ V0,V1,…,V(Lmax−1)= V }：为V构建的多分辨率高斯金字塔  </p>
+ <pre class="highlight"><span class="line">for l=0 to (Lmax−1) do</span><br><span class="line">	 for i=0 to (Nmax−1) do</span><br><span class="line">	  for 所有的点vj∈Ml do</span><br><span class="line">		qj = ASM搜索算法在Vj中找到的目标点；</span><br><span class="line">		vj = qj；</span><br><span class="line">	  end for</span><br><span class="line">	  Ml = 使用MLR-SSC完善的中间变形形状</span><br><span class="line">	  i = i+1;</span><br><span class="line">	 end for </span><br><span class="line">	 l = l+1;</span><br><span class="line">	end for</span><br><span class="line">	return M(Lmax−1);</span><br></pre>
+
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>数据集：在这项研究中所有数据集的详细信息由表1给出<ul>
+<li>注意,当比较我们的方法和先进的方法基于3 dircadb1(部分5.4.1之前)和SLIVER07-Test(5.4.2节)数据库中,我们仅仅使用SLIVER07-Train数据库作为训练数据。</li>
+</ul>
+</li>
+<li>评价指标和统计分析<ul>
+<li>为了定量评估我们的方法和性能，提供五个体积和表面的基础指标:体积重叠误差(VOE),标记相对体积差异(SRVD),平均对称表面距离(ASD),均方根对称表面距离(RMSD)和最大对称面的距离(MSD)。</li>
+<li>这些评价指标,值越小,分割的结果更好。</li>
+<li>在所有的指标中，VOE和ASD通常用来评价分割准确性。</li>
+</ul>
+</li>
+<li>实现细节<ul>
+<li>分层肝脏分割框架的参数集确定离线使用SLIVER07-Train数据库来获得最优性能</li>
+<li>在我们的实现中，对所有的测试数据设置都是相同的</li>
+<li>所有的参数设置部署都在表2中列出了</li>
+<li>在Eq中选择稀疏参数 λ 的值</li>
+<li>形状划分的层次数量L和分辨率水平Lmax 将在5.1.3和5.1.4详细讨论 </li>
+</ul>
+</li>
+</ul>
+<h4 id="table-2"><a href="#table-2" class="headerlink" title="table 2"></a>table 2</h4><table>
+<tbody><tr><th>参数</th><th>值</th><th>详细信息
+</th></tr><tr><td>np</td><td>2562</td><td>有意义的点的数量
+</td></tr><tr><td>L</td><td>5</td><td>形状分割层数
+</td></tr><tr><td>λ</td><td>100</td><td>Eq中稀疏参数
+</td></tr><tr><td>Lmax</td><td>5</td><td>分辨率级别数量
+</td></tr><tr><td>Nmax</td><td>10</td><td>每级分辨率的迭代次数
+</td></tr><tr><td>k</td><td>9</td><td>标准剖面两侧采样点的数量
+</td></tr><tr><td>ne</td><td>6</td><td>在每一次迭代时，评估两边点的新位置数量
+</td></tr></tbody></table>
+
+
+<ul>
+<li>在这项研究中,我们还将提出MLR-SSC模型与两个紧密相关的方法进行比较：<ol>
+<li>SSM,统计形状模型使用主成分分析(PCA)学习形状先验模型</li>
+<li>SSC,稀疏的形状组成使用形状库D中提炼的一个输入形状作为全局训练形状（这是我们提出的方法中的一个特例，levels L=1.）</li>
+</ol>
+</li>
+<li><strong>用到的工具：C++实现，Ubuntu平台，SPAMS库（开源稀疏优化工具）</strong><h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3></li>
+<li>MLR-SSC模型评估：在不同情况下，评价其泛化能力，在所有试验中令  level l=2 with nl=4 regions.</li>
+<li>泛化能力、专一性和密实度是量化一个形状模型质量的三个最常用的措施。在本论文中采用泛化能力评价模型质量</li>
+<li>泛化能力值越小,形状建模方法就越好。</li>
+<li>泛化能力和效率完胜其他两个方法</li>
+<li>训练数据的大小对泛化能力的影响<ul>
+<li>我们的方法能够克服有限的训练数据的影响（一般训练数据越小，泛化值越大）</li>
+</ul>
+</li>
+<li>稀疏参数对泛化能力的影响<ul>
+<li>由图12，稀疏参数λ的选择对我们的成功至关重要</li>
+<li>我们的方法在λ的值很大范围内都不敏感，一般选择固定值λ= 100</li>
+</ul>
+</li>
+<li>层次和区域个数对MLR-SSC肝脏形状重建的影响<ul>
+<li>MLR-SSC模型的特征是能够保存详细的局部形状信息，即使训练的数据上没有显著的统计</li>
+<li>每一层的区域个数选择对MLR-SSC模型至关重要，区域个数小，不能更好的重建局部细节；个数多，在细分的交叉区域会发生矛盾，从而导致肝脏表面非常粗糙。</li>
+<li>图13显示了泛化能力和区域个数的关系，随着地区的数量增加,泛化能力的价值下降,但20个区后,它开始上涨,使我们的方法达到最好的结果，区域个数在12-20。</li>
+<li>最大数量的水平 level L = 6</li>
+<li>我们选择 level L = 5，2的4次方 = 16，因此区域数16个，满足最佳重建结果。</li>
+</ul>
+</li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Liver-segmentation-of-sparse-components/">https://tanqingbo.cn/Liver-segmentation-of-sparse-components/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/分割精度说明/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">分割精度性能度量 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/Deformation-model-based-sparse-representation/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">基于稀疏表示变形模型的肝脏分割方法 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E5%B1%82%E5%8C%BA%E5%9F%9F%E7%A8%80%E7%96%8F%E6%88%90%E5%88%86%E7%9A%84%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2"><span class="toc-number">2.</span> <span class="toc-text">基于分层区域稀疏成分的肝脏分割</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">背景和相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法（Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%BD%A2%E7%8A%B6%E5%88%86%E5%89%B2%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">多级形状分割过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.</span> <span class="toc-text">分层肝脏分割框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">2.5.</span> <span class="toc-text">分级优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.6.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#table-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">table 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.7.</span> <span class="toc-text">结果</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E5%B1%82%E5%8C%BA%E5%9F%9F%E7%A8%80%E7%96%8F%E6%88%90%E5%88%86%E7%9A%84%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2"><span class="toc-number">2.</span> <span class="toc-text">基于分层区域稀疏成分的肝脏分割</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">背景和相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法（Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%BD%A2%E7%8A%B6%E5%88%86%E5%89%B2%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">多级形状分割过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.</span> <span class="toc-text">分层肝脏分割框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">2.5.</span> <span class="toc-text">分级优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.6.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#table-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">table 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.7.</span> <span class="toc-text">结果</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%86%E5%B1%82%E5%8C%BA%E5%9F%9F%E7%A8%80%E7%96%8F%E6%88%90%E5%88%86%E7%9A%84%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2"><span class="toc-number">2.</span> <span class="toc-text">基于分层区域稀疏成分的肝脏分割</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E5%92%8C%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">背景和相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%EF%BC%88Method%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法（Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E5%BD%A2%E7%8A%B6%E5%88%86%E5%89%B2%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">多级形状分割过程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82%E8%82%9D%E8%84%8F%E5%88%86%E5%89%B2%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.</span> <span class="toc-text">分层肝脏分割框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">2.5.</span> <span class="toc-text">分级优化策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C"><span class="toc-number">2.6.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#table-2"><span class="toc-number">2.6.1.</span> <span class="toc-text">table 2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.7.</span> <span class="toc-text">结果</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

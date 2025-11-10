@@ -1,1 +1,930 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>论文精读与分析：Inception V1:Going Deeper with Convolution&nbsp; | &nbsp;IT码农</title><meta property="title" content="论文精读与分析：Inception V1:Going Deeper with Convolution"><meta property="url" content="https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/index.html"><meta property="og:img" content="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg"><meta property="description" content="Inception 的深度卷积网络结构，它在 ILSVRC14 的分类和检测任务上达到了 SOTA 的效果。"><meta property="keywords" content="机器学习,Inception,V1"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2020-12-14"><meta property="og:article:modified_time" content="2020-12-14"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="机器学习"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" data-src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">论文精读与分析：Inception V1:Going Deeper with Convolution</h1></header><div class="post-meta post-show-meta"><time datetime="2020-12-14T07:20:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2020-12-14</span> </time><span class="dot"></span> <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a> <span class="dot"></span> <span>8.7k 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/Inception-Going-Deeper-with-Convolution/" class="leancloud_visitors" data-flag-title="论文精读与分析：Inception V1:Going Deeper with Convolution"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/机器学习/" class="post-meta-link">机器学习</a></div></div><meta name="description" content="Inception 的深度卷积网络结构，它在 ILSVRC14 的分类和检测任务上达到了 SOTA 的效果。"><meta name="keywords" content="机器学习,Inception,V1"><div id="section" class="post-content"><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了一种名为 Inception 的深度卷积网络结构，它在 ILSVRC14 的分类和检测任务上达到了 SOTA 的效果。这个网络的特征是他提升了网络内部计算资源的利用率。通过精细的设计，我们在提升了网络的宽度和深度的同时保持了计算量不变。为了提升网络输出的质量，网络结构的决策是基于 Hebbian 原则和多尺度处理的直观性。在我们提交的 ILSVRC14 中，有一个特殊的体现被称为“谷歌网”，它是一个22层深的网络，其效果是在分类和检测的背景下进行评估的。</p><h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>神经网络和深度学习在目标分类和检测上效果的提升，不仅仅是因为更强大的计算硬件，更大的数据机和更大的模型，也是 idaes ，算法和改进的网络结构的结果。一个证明这种结论的实例是，在 ILSVRC14 中，我们所使用的网络的参数量比 ILSVRC12 最好的结果少 12 倍，并且准确率显著的提升，并且这两年的数据是相同的。在目标检测方面，最大的收益不是来源于越来越大的深层网络结构的简单应用，而是来自于深层网络结构和经典计算机视觉的协同作用，比如说 R-CNN。</p><p>随着手机和嵌入式设备的普及，我们算法的效率，特别是功耗和内存的使用变得越发重要。我们在设计这个网络的时候不仅仅考虑一个好的指标，也考虑了算法的效率。对于大多数的实验，我们将计算量控制在 15 亿次乘加计算，它们就不会纯粹是学术上的好奇心，而是可以以合理的成本投入到现实世界中，即使是在大型数据集上。</p><p>作者书写这段的逻辑是，理论上一个好的网络在是怎样的，在实际应用上的需求是怎样的。而我们设计的网络怎么怎么好，正好满足了这个需求。</p><h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p>从 LeNet-5 开始，卷积神经网络开始具有了一种典型的网络结构：叠加的卷积层，之后跟着归一化和最大池化。针对处理如 ImageNet 等更大的数据集，最近（2015年之前）的一个趋势是增加层的个数与层的尺寸，同时使用 dropout 来解决过拟合的问题。</p><p>受到了灵长类视觉皮层神经元模型的启发， Serre 等人使用了一系列不同尺寸的固定的 Gabor 滤波器来解决多尺度的问题。我们使用了类似的策略，没有使用固定的参数，在 Inception 模块中，所有的参数都是可以学习的。</p><p>Network-in-Network 是 Lin 等人提出的，用于增强网络表示能力的一种方法。在它们的模型中，网络中增加了额外的 1×1 1 \times 11×1 的卷积，用以增加网络的深度。我们在我们的网络中重度使用这种方法。然而，在我们的设定中， 1×1 1 \times 11×1 的卷积有着双重目标：最重要的，它们主要被用来作为降维的方法，以去除计算瓶颈，否则的话将会限制我们网络的尺寸。这样不仅可以增加网络的深度，还可以增加网络的宽度，而不会造成显著的性能损失。</p><p>最后，目前（2015年）目标检测的 SOTA 是 Girshick 等人提出的 R-CNN。R-CNN将整个检测问题分解为两个子问题：利用颜色和纹理等低级线索以类别不可知的方式生成对象位置建议，并使用CNN分类器在这些位置识别对象类别。这种两阶段的方法利用了低水平线索边界框分割的准确性，以及先进CNN的强大分类能力。我们在检测提交中采用了类似的方法，但在这两个阶段都进行了改进，例如针对更高对象边界框调用的多框[5]预测，以及用于更好地分类边界框建议的集成方法。</p><p>作者的相关工作的覆盖面，不仅仅很广， 而且在每一个部分分别指出了与自己的论文中工作的相关性，就是几乎没有废话，真的是大佬的文章，不佩服不行！</p><h2 id="3-Motivation-and-High-Level-Considerations"><a href="#3-Motivation-and-High-Level-Considerations" class="headerlink" title="3. Motivation and High Level Considerations"></a>3. Motivation and High Level Considerations</h2><p>提升深度学习网络性能的直接了当的方法是增加它的尺寸。它包括增加他的深度（神经网络的层数）以及他的宽度（每一层神经元的个数）。这是训练一个效果更好的网络的一种简单安全的方法，特别是当大量的已标注的数据是可以获得时候。然而这种简单的解决方法会带来两个缺点：</p><p>更大的尺寸常常意味着更大的数量的参数量，这会增大神经网络过拟合的可能，尤其当带有标签的训练集是有限的时候。这是一个主要的瓶颈，因为获得标注好的数据是很吃力并且昂贵的，通常需要专业的人工评分员来区分不同的细粒度视觉类别，如图1所示的ImageNet（甚至是1000级ILSVRC子集）中的视觉类别。</p><p><img src="https://pic4.zhimg.com/v2-effe4ac3c8199ced4f78fcc7750c6e87_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-effe4ac3c8199ced4f78fcc7750c6e87_b.jpg" class="lozad post-image"></p><p>另一个缺点是均匀增加的网络尺寸会急剧的增加计算资源的使用量。例如在一个深度视觉神经网络中，如果两个卷积层是链式的，任何滤波器数量均匀的增长都会导致计算量的翻倍增长。如果加法的能力使用不当（例如大部分的权重都接近于0），会导致大量的计算资源的浪费。因为计算资源总是有限的，所以即使当主要的目标是提升模型的效果，一个有效的计算资源分布也是要好于不加选择的增加网络的尺寸。</p><p>解决上面两个缺点的一个基本的方法是引入稀疏性，用稀疏的全连接层，替代普通的全连接层，甚至是在卷积的内部使用稀疏。包括模拟生物系统在内，因为 Arora 等人突破性的工作，这将胜过更严格的理论基础。它们的主要结论是如果一个数据集的概率分布是可以通过一个大的，非常稀疏的深度神经网络所表示，那么可以通过分析前一层激活的相关统计数据和具有高度相关输出的神经元聚类数据，构造出一个又一个最优的网络拓扑结构。虽然严格的数学证明需要非常强的假设，但事实上这个与著名的赫布原则（神经元激活在一起，连接在一起）产生了共鸣，意味着在实际中即使在不太严格的条件下其基本思想也是可以接受的。这也意味着确实存在这样的神经网络，并且从神经科学上可以找到一些依据，想表达的就是稀疏确实有用。</p><p>然而不幸的是，如今（2015年）的运算基础架构在处理非均匀稀疏结构的数值运算时是效率低下的。即使（稀疏的表示使得）算术运算的数目减少了100 倍，查找和缓存未命中的开销将占主导地位：切换到稀疏矩阵可能没有回报。通过使用稳定改进和高度调整的计算库，允许极快的密集矩阵乘法，利用底层CPU或GPU硬件的微小细节，进一步扩大了差距（因为加速，所以密集型矩阵乘法变得更快了）。并且，非均匀的稀疏模型需要更复杂的工程和计算基础架构。最近的面向视觉的机器学习系统大多利用卷积来利用空间的稀疏性。然而，卷积是作为到早期层 patches 的密集连接的集合实现的。自[11]以来，convnets一直使用特征维度中的随机和稀疏连接表来打破对称性并改进学习，但为了进一步优化并行计算，趋势又变回了与[9]的完全连接。现在的 SOTA 的视觉网络结构有着对称的结构。大量的滤波器和更大的 batch size 允许更为高效的使用密集型计算。</p><p>这引出了一个问题，是否存在这进行下一步的希望，一种折中的方法：如理论所建议的那样，使用这样的一种网络架构，他可以利用滤波器级别的稀疏能力，但利用我们目前的硬件，利用密集矩阵的计算。大量在稀疏矩阵计算上的文章建议，将稀疏矩阵聚类为相对密集的子矩阵，有助于获得稀疏矩阵乘法的竞争性能。认为在不久的将来，类似的方法将被用于非均匀深度学习体系结构的自动构建似乎并不牵强。</p><p>Inception 网络结构最初是一个案例研究，用于评估复杂网络拓扑结构构建算法的假设输出，该算法试图近似视觉网络的[2]所暗示的稀疏结构，并通过密集的、随时可用的组件覆盖假设结果。尽管这是一个高度投机的项目，但与基于[12]的参考网络相比，早期观察到了适度的收益。经过一点调整，差距变大了，并且事实证明在定位和检测的情况下，以 Inception 作为基础的网络结构尤其有用。有趣的是，虽然大多数最初的体系结构选择已经被分离地进行了彻底的质疑和测试，但结果证明它们接近于局部最优。有一个问题必须仔细的思考：虽然 Inception 在计算机视觉中获得了成功，但是是否可以归因为其构建的指导原则仍是一个疑问。确保这一点需要更彻底的分析和验证。</p><p>实际上这部分就是在陈述构建 Inception 结构的动机，简单的增加神经网络的尺寸会引起两个缺点：过拟合与计算量过大，解决这个问题一个较好的方式是使用稀疏的网络结构，并且从赫本原理的角度说明了可行性。然而一方面现有的计算基础架构使得稀疏的计算效率低下；另一方面，通过使用随机和稀疏连接的方式又使得网络有变回全连接的趋势。所以作者剔除了这种折衷的方式，使用这样的一种网络架构，他可以利用滤波器级别的稀疏能力，但利用我们目前的硬件，利用密集矩阵的计算，即 Inception。</p><h2 id="4-Architectural-Details"><a href="#4-Architectural-Details" class="headerlink" title="4. Architectural Details"></a>4. Architectural Details</h2><p>Inception 结构的主要想法在于考虑一个卷积视觉神经网络的最优局部稀疏结构是如何被现成的密集组件来近似和覆盖。值得注意的是，假设平移不变性意味着我们的网络将由卷积积木构建。 所有的我们所需要做的是找到最优的局部组织并在空间上重复它。 Arora 等人提出了一种逐层的构造方法，在这种方法中，应分析最后一层的相关统计数据，并将其聚类成具有高相关性的单元组。 这些簇构成下一层的单元，并连接到上一层的单元。我们假设来自早期层的每个单元对应于输入图像的某个区域，并且这些单元被分组到过滤器组中。 在较低层（靠近输入层）中，相关单元将集中在局部区域。因此，我们将以集中在单个区域的许多簇结束，并且它们可以被下一层1×1卷积的层覆盖，如[12]所示。然而，我们也可以预期，在更大的 patch 上，可以被卷积覆盖的更多空间分布的集群数量将会减少，在更大的区域，patch 数量也会减少。 为了避免块对齐的问题，现在的 Inception 网络结构的实现使用 1×1 1\times11×1，3×3 3\times33×3，5×5 5\times55×5 尺寸大小的卷积核，这种决定是因为方便操作，而不是必须的。这也意味着，建议的架构是所有这些层与它们的输出滤波器组的组合，这些滤波器组连接成一个单独的输出向量，形成下一阶段的输入。 此外，由于池操作对于当前卷积网络的成功至关重要，因此它建议在每个这样的阶段添加所有外部池路径也应具有额外的效益，如图 2 (a) 所示</p><p><img src="https://pic1.zhimg.com/v2-47cfac11ac57d459c6cfce7817e49a58_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-47cfac11ac57d459c6cfce7817e49a58_b.jpg" class="lozad post-image"></p><p>由于这些“初始模块”相互堆叠在一起，它们的输出相关性统计数据必然会有所不同：随着更高层次捕获更高抽象的特征，它们的空间集中度预计会降低。 这表明，3×3和5×5的卷积比应该随着我们向更高层移动而增加。 在Inception中1x1考虑到local region，3x3和5x5则考虑到spatially spread out clusters。所以在lower的层中主要是local信息，所以1x1的output number要多一些，但在higher的层中往往捕捉的是features of higher abstraction，所以在higher layer中3x3和5x5的比例应该增大。</p><p>上述模块的一个大问题，至少在这种形式下，是即使是少量的5×5卷积，在具有大量过滤器的卷积层的顶部也可能非常昂贵。一旦池化单元被加入到了里面这个问题就变得更加突出：因为输出滤波器的数量等于上一阶段滤波器的数量。池层的输出与卷积层的输出合并将不可避免地导致各个阶段输出数量的增加。虽然这种体系结构可以覆盖最优的稀疏结构，但它的效率非常低，导致在几个阶段内就会出现计算爆炸。</p><p>这就引出了 Inception 结构的第二个想法：明智地减少维度，否则计算需求会增加很多。这是基于嵌入的成功：即使是低维度的嵌入也可能包含大量关于相对较大的图像 patch 的信息。然而，嵌入式以一种密集的、压缩的形式表示信息，而压缩的信息很难处理。在大多数地方(根据[2]条件的要求)，表示应该保持稀疏，并且只在需要对信号进行大规模聚集时才对其进行压缩。也就是说 1×1 1\times11×1 的卷积在 3×3 3\times33×3 和 5×5 5\times55×5 之前降低了计算量。除了降低计算量，它们还包括使用矫正的线性激活，使它们具有双重用途。最后的结果图 2 的 (b) 所示。</p><p>整体来说，总体来说一个 Inception 网络有上面所示的模块堆积起来组成，偶尔使用带stride 2的max-pooling层来将网格的分辨率减半。由于技术的原因（训练时的内存利用率），似乎仅仅在高层次开始使用 Inception 而在低层次保持使用传统的卷积风格会比较有益。这并不是完全必要的，只是反映了我们当前实现中的一些基础设施效率低下。</p><p>该网络结构的一个有用的方面是，它允许在每个阶段显著增加单元的数量，而不会在后期的计算复杂性中出现无法控制的激增。这是通过在昂贵的卷积之前普遍使用降维来实现的。此外，该设计遵循的是一种实践直觉，即视觉信息应该在不同的尺度上进行处理，然后进行聚合，以便下一阶段能够同时从不同尺度上提取特征。</p><p>改进了对计算资源的使用，可以在不遇到计算困难的情况下增加每个阶段的宽度和阶段的数量。您可以利用Inception架构来创建稍微逊色一些，但是在计算上更便宜的版本。我们发现所有可用的旋钮和杠杆允许控制计算资源的平衡，导致速度是表现相似但没有 Inception 模块的3−10倍，然而在这一点上需要仔细的手工设计。</p><h2 id="关于网络结构的个人理解"><a href="#关于网络结构的个人理解" class="headerlink" title="关于网络结构的个人理解"></a>关于网络结构的个人理解</h2><p>首先是关于稀疏性的理解，下面的这句话是原文中关于稀疏性的解释</p><p>Inception 结构的主要想法在于考虑一个卷积视觉神经网络的最优局部稀疏结构是如何被现成的密集组件来近似和覆盖。</p><p>具体的是利用滤波器级别的稀疏能力，但利用我们目前的硬件和密集矩阵的计算。那下面的网络结构与稀疏有什么关系呢？</p><p><img src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" class="lozad post-image"></p><p>我们可以将 1×1 1\times11×1 ，3×3 3\times33×3 表示成如下的卷积</p><p><img src="https://pic4.zhimg.com/v2-574d9823495acc0455eb0d4e79c648eb_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-574d9823495acc0455eb0d4e79c648eb_b.jpg" class="lozad post-image"></p><p>实际上可以将 1×1 1\times11×1 和 3×3 3\times33×3 看成是 5×5 5\times55×5 的稀疏表示，只不过是一种特殊的稀疏表示。因为如果是一般形式的稀疏表示的话，那么在 5×5 5\times55×5 的矩阵中，哪个位置是 0 都是可以的，但是 1×1 1\times11×1 和 3×3 3\times33×3 却只有中心位置的数值是非零的，其余部分的数值都是 0。这也说明了为什么作者认为这是一种 “使用密集组建的 近似 和覆盖”。</p><p>在论文中作者使用了 1×1 1\times11×1 的卷积， 它可以降低维度，增加系统的非线性，这是使用了它的好处，但是为什么它是可行的？</p><p>我们一层可能会有多个卷积核，在同一个位置但在不同通道的卷积核输出结果相关性极高。一个1×1的卷积核可以很自然的把这些相关性很高，在同一个空间位置，但不同通道的特征结合起来。而其它尺寸的卷积核（3×3，5×5）可以保证特征的多样性，因此也可以适量使用[2]。</p><h2 id="New-Version比Old-version是如何减少参数量的？"><a href="#New-Version比Old-version是如何减少参数量的？" class="headerlink" title="New Version比Old version是如何减少参数量的？"></a>New Version比Old version是如何减少参数量的？</h2><p>1×1 的卷积核和正常的滤波器完全是一样的，只不过它不再感受一个局部区域，不考虑像素与像素之间的关系。1×1的卷积本身就是不同feature channel的线性叠加。1×1的卷积最早出现在Network in Network这篇文章中，在Google的inception结构中也采用了大量1×1的卷积。</p><p>NIN 论文中解释1×1的卷积实现了多个feature map的结合，从而整合了不同通道间的信息。（个人认为这个作用并不是特点，因为其它大小的卷积核也可以实现）</p><p>1×1的卷积可以实现通道数量的升维和降维。并且是低成本的特征变换（计算量比3×3小很多）。是一个性价比很高的聚合操作。怎么理解1×1是性价比很高的升降通道数的操作呢？[2]</p><p><img src="https://pic1.zhimg.com/v2-3b61ecc0399f7df554083af5298c7930_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-3b61ecc0399f7df554083af5298c7930_b.jpg" class="lozad post-image"></p><p><img src="https://pic4.zhimg.com/v2-0ebcdb9d959b4b8f373510b45b104a6b_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-0ebcdb9d959b4b8f373510b45b104a6b_b.jpg" class="lozad post-image"></p><p>原始结构：</p><p>参数：(1×1×192×64) + (3×3×192×128) + (5×5×192×32) = 153600</p><p>最终输出的feature map：64+128+32+192 = 416</p><p>加入不同channel的1×1卷积后：</p><p>参数：1×1×192×64+（1×1×192×96+3×3×96×128）+（1×1×192×16+5×5×16×32）=15872</p><p>最终输出的feature map： 64+128+32+32=256</p><p>所以加入1×1的卷积后，在降低大量运算的前提下，降低了维度。降低维度也是inception module一个非常明智的举措。</p><h2 id="5-GoogLeNet"><a href="#5-GoogLeNet" class="headerlink" title="5.GoogLeNet"></a>5.GoogLeNet</h2><p>GoogLeNet 是 Inception 的一个具体实现，我们尝试过更深更宽质量稍好的 Inception，但是提升的效果并不明显。我们忽略具体的网络细节，因为实验表明，精确的网络结构参数的影响相对较小。表格 1 表明了我们在比赛中大部分共用的实例。在我们的集成模型中的 7 个模型，有 6 个网络使用了这样的（表格1）网络，这 6 个网络使用了不同的图像块采样方法进行训练。也就是说作者在使用 GoogLeNet 参加比赛的时候最后使用了模型集成的方法，并且还有一个模型我们不知道时使用了什么样的一种算法。</p><p><img src="https://pic1.zhimg.com/v2-4387de7186e17ab57bd69d8c700f22bc_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-4387de7186e17ab57bd69d8c700f22bc_b.jpg" class="lozad post-image"></p><p>在所有的卷积中，包括 Inception 中的卷积，使用的都是修正线性激活函数（ReLu）。神经网络的感受野是大小为 224×224 224\times224224×224 均值为 0 彩色空间图像。在面上的表中，patchsize/ stride 表明卷积核的大小和步长，output size 表示输出的数据块的大小（当网络为传统卷积时还可以看出使用了多少个卷积核），depth 是该层重复了几次（具体来说是该行所表示的传统卷层重复了几次，或者是该行所表示的 Inception 重复了几次），#1× 1 表示 Inception 中最坐标的 1×1 大小的卷积核的数量，#3×3 reduce 表示在进行 3×3 的卷积之前，用来降维的 1×1 大小的卷积核的数量，#3×3 表示 3×3 大小卷积核的数量，#5×5 reduce 和 #5×5 同理，pool proj 表示最右侧经过池化之后 1×1 大小的卷积核的数量。</p><p>在思想上网络设计得具有计算效率和实用性，以至于前向推理的时候可以在单个设备上运行推理，包括计算资源有限的设备，尤其是内存占用较低的设备。当仅仅计算有参数的层数时，网络是22层（如果加上池化是27层）。在网络中使用的独立模块大概有 100 个。具体的数量如何计算依赖于机器学习基础设施是如何计数的。在分类之前使用了均值池化是基于 [12] 的想法，虽然我们添加了一个额外的线性层。线性层可以简单的将我们的网络应用到其他标签上，然而这只是为了方便，它并不起到一个主要的作用。我们发现从全连接层到平均池化的改变提升了 top1 正确率 0.6%，然而即使去掉了全连接层，dropout 仍然是必要的。</p><p>对于一个相对较深的神经网络，以一种有效的方式将剃度反向传播给所有层。浅层网络在梯度方向上反向传播的强大性能表明，网络中间层所产生的特征应该具有很强的识别性。通过在中间层添加辅助分类器，较低层分类器的识别性是可以期待的。辅助分类器被认为可以在提供正则化的同时，对抗梯度消失问题。这些分类器以小的卷积神经网络的形式放在了 Inception (4a) and (4d) 模块的上方。在训练过程中辅助分类器的损失被加权添加到总体的损失上（辅助分类器的损失权重设置为 0.3）。在进行前向推理的时候，辅助网络是禁用的。实验表明辅助网络的效果比较弱，仅仅使用一个辅助网络也可达到相同的效果。</p><p>包括辅助分类器在内，在侧面的额外网络的准确结构如下所示</p><p>(1) 卷积核大小为 5×5 5\times55×5 步长为 3 的均值池化层，所以 (4a) 的输出为 4×4×512 4\times4\times5124×4×512，(4d) 的输出为 4×4×528 4\times4\times5284×4×528。</p><p>(2) 大小为 1×1 1\times11×1 的128 个用来降维的卷积核和 ReLu 激活函数.</p><p>(3) 拥有 1024 个神经元的全连接层和 ReLu 激活函数</p><p>(4) 丢弃输出层 70 % 的 dropout 层</p><p>(5) 一个有 softmax 损失的线性层（预测与主分类器一样的 1000 个类别，但是在推理的时候会被去掉）。</p><p>结果网络的示意图如图3所示。</p><p><img src="https://pic3.zhimg.com/v2-49b0b34460429ae1b3a8418e9cffae32_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-49b0b34460429ae1b3a8418e9cffae32_b.jpg" class="lozad post-image"></p><p>使用districess[4]分布式机器学习系统，使用适度的模型和数据并行性对googlenet网络进行培训。虽然我们只使用了基于CPU的实现，但粗略估计表明，可以在一周内使用少量高端GPU将谷歌网络训练为收敛，主要限制是内存使用。我们的培训采用了 0.9 动量的异步随机梯度下降[17]，固定的学习速率计划（每8个周期降低4%的学习速率）。Polyak Averaging[13]用于创建推理时使用的最终模型。</p><p>在比赛的几个月中，图像采样方法已经发生了很大的变化，并且已经将模型与其他选项融合在一起，有时会与改变的超参数（如 dropout 和学习率）结合在一起。因此，很难对最有效的单一网络培训方式给出明确的指导。此外，为了使其更加复杂，一些模型是受[8]启发而设计的，其中一些模型是在较小的图像块中训练的，而另一些模型是在较大的图像块上的。尽管如此，有一个处方在比赛后证明效果很好，它包括对图像中大小均匀分布在图像区域8%到100%之间的各种大小的斑块进行采样，纵横比受间隔限制[3/4，4/3]。此外，我们还发现，安德鲁·霍华德（Andrew Howard）的光度畸变对克服训练数据成像条件的影响非常有用。</p><h2 id="7-ILSVRC-2014-Classiﬁcation-Challenge-Setup-and-Results"><a href="#7-ILSVRC-2014-Classiﬁcation-Challenge-Setup-and-Results" class="headerlink" title="7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results"></a>7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</h2><p>ILSVRC 2014分类挑战涉及到将图像分类为ImageNet层次结构中的1000叶节点类别的任务。训练图像约120万张，验证用图像约5万张，测试用图像约10万张。每幅图像都与一个 gt 类别相关联，并且性能是基于最高评分的更高级预测来衡量的。通常会报告两个数字：第一个准确率（将地面真实性与第一个预测类进行比较）和第五个错误率（将地面真实性与前五个预测类进行比较）：如果地面真实性在前五个预测类中，则不管图像中的等级如何，都认为图像是正确分类的。挑战使用前5个错误率进行排名。</p><p>我们没有使用额外的数据参加挑战。除了本文前面提到的训练技术之外，我们在测试过程中采用了一套技术来获得更高的性能（可以理解为超级疯狂的模型集成和数据拓展），下面我们将对此进行描述。</p><p>(1) 我们独立训练了同一个谷歌模型的7个版本（包括一个更广泛的版本），并与他们进行了模型集成。这些模型是用相同的初始化（甚至是相同的初始权重，由于一个监督）和学习率策略进行训练的。它们只在采样方法和随机输入图像顺序上有所不同。</p><p>(2) 在测试期间我们采取了比 Krizhevsky 等人更为激进的裁剪方法。具体的我们将图像缩放到 4 中尺度，其中他们的短边长度分别是256，288，320，352，取出图像的左中右三个方形（对于肖像图像，我们取顶部、中间和底部的方形）。对于每一个方形，我们取出 4 个角和中心部分，同时也将方形部分缩放回 224*224，并且获得他们的镜像图像。这将导致我们在一张图像中取出 4×3×6×2 = 144 个图像块。安德鲁·霍华德（Andrew Howard）在上一年的比赛中中也采用了类似的方法，我们根据经验证明，该方法的表现略差于我们提出的策略。我们注意到，在实际应用中，这种激进的剪裁可能不是必要的，因为在出现合理数量的剪裁图片之后，更多剪裁的效益变得微乎其微（稍后我们将展示）。</p><p>(3) softmax 的概率值是对所有的剪切出来的图像和所有的独立的分类器上得到的均值作为预测的结果。在验证集上我们分析了替代的方法，例如对单张图像的所有剪切图像的结果进行最大池化，然后对所有的分类器去均值，但是它们导致的性能比简单的平均差。</p><p>在本文的其余部分中，我们分析了有助于最终提交的总体性能的多个因素。</p><p>我们最后提交的挑战获得了6.67%的验证和测试数据的前5个错误，在其他参与者中排名第一。与2012年的训练方法相比，这是一个56.5%的相对减少，与上一年的最佳方法（Clarifai）相比，这是大约40%的相对减少，这两种方法都使用外部数据来训练网络。表2 显示了过去3年中一些表现最好的方法的统计数据。</p><p><img src="https://pic3.zhimg.com/v2-b17fa50ba15204f6f339ed49d6d5578a_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-b17fa50ba15204f6f339ed49d6d5578a_b.jpg" class="lozad post-image"></p><p>当预测一张图像的时候，我们通过改变模型的数量和剪裁的数量来分析和报告不同测试选择的效果，如表 3 所示。当我们使用一个模型时，我们选择了一个在验证数据上具有最低的前1个错误率的模型。所有数字都在验证数据集中报告，以避免超出测试数据统计的范围。</p><p><img src="https://pic4.zhimg.com/v2-778041b667951f5e9c838c9bd0cebcd7_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-778041b667951f5e9c838c9bd0cebcd7_b.jpg" class="lozad post-image"></p><h2 id="8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><a href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults" class="headerlink" title="8. ILSVRC 2014 Detection Challenge Setup andResults"></a>8. ILSVRC 2014 Detection Challenge Setup andResults</h2><p>ILSVRC检测任务是在200个可能的类中，围绕图像中的对象生成边界框。如果检测到的对象与GroundTruth的类相匹配，并且它们的边界框重叠至少50%（使用JacCard索引），则这些对象算是正确的。外来检测被视为假阳性并受到处罚。与分类任务相反，每个图像可以包含多个对象，也可以不包含任何对象，其比例可能有所不同。使用平均精度（MAP）报告结果。googlenet所采用的检测方法与r-cnn的方法相似，但作为区域分类，随着初始模型的增加而增加。此外，通过将选择性搜索[20]方法与多框[5]预测相结合，改进了区域建议步骤，以实现更高的对象边界框调用。</p><p>为了减少误报的数量，超级像素的大小增加了2倍。这使得来自选择性搜索算法的建议减半。我们增加了来自多框[5]的200个地区提案，总共占[6]所用提案的60%，同时将覆盖率从92%提高到93%。减少覆盖率增加的提案数量的总体效果是提高单个模型案例的平均精度1%。最后，在对每个区域进行分类时，我们使用6个谷歌地图的集合。这导致精确度从40%提高到43.9%。注意，与R-CNN相反，我们没有使用边界框回归，因为缺乏时间。</p><p>我们首先报告最高检测结果，并显示自检测任务第一版以来的进展。与2013年的结果相比，精度几乎翻了一番。表现最好的团队都使用卷积网络。我们在表4中报告了财务得分以及每个团队的常用策略：使用外部数据、整体模型或上下文模型。外部数据通常是ILSVRC12分类数据，用于对模型进行预培训，该模型稍后将根据检测数据进行重新定义。一些团队还提到了本地化数据的使用。由于本地化任务边界框的很大一部分不包含在检测数据集中，因此可以使用此数据对通用边界框回归器进行预训练，就像在预训练中使用分类一样。googlenet条目没有使用本地化数据进行预培训。</p><p>在表5中，我们只使用一个模型比较结果。最优秀的表演模型是由深刻的洞察力和令人惊讶的只有0.3分的提高与3个模型的合奏，而谷歌获得了显着更强的效果与合奏。</p><h2 id="9-Conclusions"><a href="#9-Conclusions" class="headerlink" title="9.Conclusions"></a>9.Conclusions</h2><p>我们的结果提供了一个确凿的证据，证明用现有的密集型卷积计算近似期望的最优稀疏结构是改进计算机视觉神经网络的一种可行方法。这种方法的主要优点是，与较浅和较窄的体系结构相比，在计算需求适度增加的情况下，效果会显著提高。</p><p>我们的对象检测工作具有竞争力，尽管没有使用上下文，也没有执行边界框回归，这进一步证明了初始体系结构的优势。</p><p>对于分类和检测任务，可以想象得到获得和我们效果相当的结果需要跟多的昂贵的非 Inception 模块来组成相似的宽度和深度。尽管如此，我们的方法仍然提供了确凿的证据，证明迁移到更稀疏的架构总体上是可行的和有用的。这表明，未来将在[2]的基础上，以自动化方式创建更为稀疏和更复杂的结构，并将 Inception 结构的见解应用到其他领域。</p><p>参考</p><p>[1] Szegedy C , Liu N W , Jia N Y , et al. Going deeper with convolutions[C]// 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR). IEEE Computer Society, 2015.</p><p>[2] BookThief 简书 《Google Inception Net论文细读》</p></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/">https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/2018ECCV-Paper-DL/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">ECCV所有论文下载链接</div></div></a></div><div class="nav-item-next"><a href="/CS-Classic-Books/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">计算机专业必读哪些经典书籍？</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2. Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Motivation-and-High-Level-Considerations"><span class="toc-number">4.</span> <span class="toc-text">3. Motivation and High Level Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Architectural-Details"><span class="toc-number">5.</span> <span class="toc-text">4. Architectural Details</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">关于网络结构的个人理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Version%E6%AF%94Old-version%E6%98%AF%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">New Version比Old version是如何减少参数量的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GoogLeNet"><span class="toc-number">8.</span> <span class="toc-text">5.GoogLeNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ILSVRC-2014-Classi%EF%AC%81cation-Challenge-Setup-and-Results"><span class="toc-number">9.</span> <span class="toc-text">7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><span class="toc-number">10.</span> <span class="toc-text">8. ILSVRC 2014 Detection Challenge Setup andResults</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusions"><span class="toc-number">11.</span> <span class="toc-text">9.Conclusions</span></a></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2. Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Motivation-and-High-Level-Considerations"><span class="toc-number">4.</span> <span class="toc-text">3. Motivation and High Level Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Architectural-Details"><span class="toc-number">5.</span> <span class="toc-text">4. Architectural Details</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">关于网络结构的个人理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Version%E6%AF%94Old-version%E6%98%AF%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">New Version比Old version是如何减少参数量的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GoogLeNet"><span class="toc-number">8.</span> <span class="toc-text">5.GoogLeNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ILSVRC-2014-Classi%EF%AC%81cation-Challenge-Setup-and-Results"><span class="toc-number">9.</span> <span class="toc-text">7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><span class="toc-number">10.</span> <span class="toc-text">8. ILSVRC 2014 Detection Challenge Setup andResults</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusions"><span class="toc-number">11.</span> <span class="toc-text">9.Conclusions</span></a></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2. Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Motivation-and-High-Level-Considerations"><span class="toc-number">4.</span> <span class="toc-text">3. Motivation and High Level Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Architectural-Details"><span class="toc-number">5.</span> <span class="toc-text">4. Architectural Details</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">关于网络结构的个人理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Version%E6%AF%94Old-version%E6%98%AF%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">New Version比Old version是如何减少参数量的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GoogLeNet"><span class="toc-number">8.</span> <span class="toc-text">5.GoogLeNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ILSVRC-2014-Classi%EF%AC%81cation-Challenge-Setup-and-Results"><span class="toc-number">9.</span> <span class="toc-text">7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><span class="toc-number">10.</span> <span class="toc-text">8. ILSVRC 2014 Detection Challenge Setup andResults</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusions"><span class="toc-number">11.</span> <span class="toc-text">9.Conclusions</span></a></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>论文精读与分析：Inception V1:Going Deeper with Convolution&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="论文精读与分析：Inception V1:Going Deeper with Convolution">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/index.html">
+  
+  
+  <meta property="og:img" content="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg">
+  
+  
+  <meta property="description" content="Inception 的深度卷积网络结构，它在 ILSVRC14 的分类和检测任务上达到了 SOTA 的效果。">
+  
+  <meta property="keywords" content="机器学习,Inception,V1">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2020-12-14">
+  <meta property="og:article:modified_time" content="2020-12-14">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" data-src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      论文精读与分析：Inception V1:Going Deeper with Convolution
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2020-12-14T07:20:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2020-12-14</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>8.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Inception-Going-Deeper-with-Convolution/" class="leancloud_visitors" data-flag-title="论文精读与分析：Inception V1:Going Deeper with Convolution">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Inception 的深度卷积网络结构，它在 ILSVRC14 的分类和检测任务上达到了 SOTA 的效果。">
+  
+  <meta name="keywords" content="机器学习,Inception,V1">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>我们提出了一种名为 Inception 的深度卷积网络结构，它在 ILSVRC14 的分类和检测任务上达到了 SOTA 的效果。这个网络的特征是他提升了网络内部计算资源的利用率。通过精细的设计，我们在提升了网络的宽度和深度的同时保持了计算量不变。为了提升网络输出的质量，网络结构的决策是基于 Hebbian 原则和多尺度处理的直观性。在我们提交的 ILSVRC14 中，有一个特殊的体现被称为“谷歌网”，它是一个22层深的网络，其效果是在分类和检测的背景下进行评估的。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a>1. Introduction</h2><p>神经网络和深度学习在目标分类和检测上效果的提升，不仅仅是因为更强大的计算硬件，更大的数据机和更大的模型，也是 idaes ，算法和改进的网络结构的结果。一个证明这种结论的实例是，在 ILSVRC14 中，我们所使用的网络的参数量比 ILSVRC12 最好的结果少 12 倍，并且准确率显著的提升，并且这两年的数据是相同的。在目标检测方面，最大的收益不是来源于越来越大的深层网络结构的简单应用，而是来自于深层网络结构和经典计算机视觉的协同作用，比如说 R-CNN。</p>
+<p>随着手机和嵌入式设备的普及，我们算法的效率，特别是功耗和内存的使用变得越发重要。我们在设计这个网络的时候不仅仅考虑一个好的指标，也考虑了算法的效率。对于大多数的实验，我们将计算量控制在 15 亿次乘加计算，它们就不会纯粹是学术上的好奇心，而是可以以合理的成本投入到现实世界中，即使是在大型数据集上。</p>
+<p>作者书写这段的逻辑是，理论上一个好的网络在是怎样的，在实际应用上的需求是怎样的。而我们设计的网络怎么怎么好，正好满足了这个需求。</p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2. Related Work"></a>2. Related Work</h2><p>从 LeNet-5 开始，卷积神经网络开始具有了一种典型的网络结构：叠加的卷积层，之后跟着归一化和最大池化。针对处理如 ImageNet 等更大的数据集，最近（2015年之前）的一个趋势是增加层的个数与层的尺寸，同时使用 dropout 来解决过拟合的问题。</p>
+<p>受到了灵长类视觉皮层神经元模型的启发， Serre 等人使用了一系列不同尺寸的固定的 Gabor 滤波器来解决多尺度的问题。我们使用了类似的策略，没有使用固定的参数，在 Inception 模块中，所有的参数都是可以学习的。</p>
+<p>Network-in-Network 是 Lin 等人提出的，用于增强网络表示能力的一种方法。在它们的模型中，网络中增加了额外的 1×1 1 \times 11×1 的卷积，用以增加网络的深度。我们在我们的网络中重度使用这种方法。然而，在我们的设定中， 1×1 1 \times 11×1 的卷积有着双重目标：最重要的，它们主要被用来作为降维的方法，以去除计算瓶颈，否则的话将会限制我们网络的尺寸。这样不仅可以增加网络的深度，还可以增加网络的宽度，而不会造成显著的性能损失。</p>
+<p>最后，目前（2015年）目标检测的 SOTA 是 Girshick 等人提出的 R-CNN。R-CNN将整个检测问题分解为两个子问题：利用颜色和纹理等低级线索以类别不可知的方式生成对象位置建议，并使用CNN分类器在这些位置识别对象类别。这种两阶段的方法利用了低水平线索边界框分割的准确性，以及先进CNN的强大分类能力。我们在检测提交中采用了类似的方法，但在这两个阶段都进行了改进，例如针对更高对象边界框调用的多框[5]预测，以及用于更好地分类边界框建议的集成方法。</p>
+<p>作者的相关工作的覆盖面，不仅仅很广， 而且在每一个部分分别指出了与自己的论文中工作的相关性，就是几乎没有废话，真的是大佬的文章，不佩服不行！</p>
+<h2 id="3-Motivation-and-High-Level-Considerations"><a href="#3-Motivation-and-High-Level-Considerations" class="headerlink" title="3. Motivation and High Level Considerations"></a>3. Motivation and High Level Considerations</h2><p>提升深度学习网络性能的直接了当的方法是增加它的尺寸。它包括增加他的深度（神经网络的层数）以及他的宽度（每一层神经元的个数）。这是训练一个效果更好的网络的一种简单安全的方法，特别是当大量的已标注的数据是可以获得时候。然而这种简单的解决方法会带来两个缺点：</p>
+<p>更大的尺寸常常意味着更大的数量的参数量，这会增大神经网络过拟合的可能，尤其当带有标签的训练集是有限的时候。这是一个主要的瓶颈，因为获得标注好的数据是很吃力并且昂贵的，通常需要专业的人工评分员来区分不同的细粒度视觉类别，如图1所示的ImageNet（甚至是1000级ILSVRC子集）中的视觉类别。</p>
+<p><img src="https://pic4.zhimg.com/v2-effe4ac3c8199ced4f78fcc7750c6e87_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-effe4ac3c8199ced4f78fcc7750c6e87_b.jpg" class="lozad post-image"></p>
+<p>另一个缺点是均匀增加的网络尺寸会急剧的增加计算资源的使用量。例如在一个深度视觉神经网络中，如果两个卷积层是链式的，任何滤波器数量均匀的增长都会导致计算量的翻倍增长。如果加法的能力使用不当（例如大部分的权重都接近于0），会导致大量的计算资源的浪费。因为计算资源总是有限的，所以即使当主要的目标是提升模型的效果，一个有效的计算资源分布也是要好于不加选择的增加网络的尺寸。</p>
+<p>解决上面两个缺点的一个基本的方法是引入稀疏性，用稀疏的全连接层，替代普通的全连接层，甚至是在卷积的内部使用稀疏。包括模拟生物系统在内，因为 Arora 等人突破性的工作，这将胜过更严格的理论基础。它们的主要结论是如果一个数据集的概率分布是可以通过一个大的，非常稀疏的深度神经网络所表示，那么可以通过分析前一层激活的相关统计数据和具有高度相关输出的神经元聚类数据，构造出一个又一个最优的网络拓扑结构。虽然严格的数学证明需要非常强的假设，但事实上这个与著名的赫布原则（神经元激活在一起，连接在一起）产生了共鸣，意味着在实际中即使在不太严格的条件下其基本思想也是可以接受的。这也意味着确实存在这样的神经网络，并且从神经科学上可以找到一些依据，想表达的就是稀疏确实有用。</p>
+<p>然而不幸的是，如今（2015年）的运算基础架构在处理非均匀稀疏结构的数值运算时是效率低下的。即使（稀疏的表示使得）算术运算的数目减少了100 倍，查找和缓存未命中的开销将占主导地位：切换到稀疏矩阵可能没有回报。通过使用稳定改进和高度调整的计算库，允许极快的密集矩阵乘法，利用底层CPU或GPU硬件的微小细节，进一步扩大了差距（因为加速，所以密集型矩阵乘法变得更快了）。并且，非均匀的稀疏模型需要更复杂的工程和计算基础架构。最近的面向视觉的机器学习系统大多利用卷积来利用空间的稀疏性。然而，卷积是作为到早期层 patches 的密集连接的集合实现的。自[11]以来，convnets一直使用特征维度中的随机和稀疏连接表来打破对称性并改进学习，但为了进一步优化并行计算，趋势又变回了与[9]的完全连接。现在的 SOTA 的视觉网络结构有着对称的结构。大量的滤波器和更大的 batch size 允许更为高效的使用密集型计算。</p>
+<p>这引出了一个问题，是否存在这进行下一步的希望，一种折中的方法：如理论所建议的那样，使用这样的一种网络架构，他可以利用滤波器级别的稀疏能力，但利用我们目前的硬件，利用密集矩阵的计算。大量在稀疏矩阵计算上的文章建议，将稀疏矩阵聚类为相对密集的子矩阵，有助于获得稀疏矩阵乘法的竞争性能。认为在不久的将来，类似的方法将被用于非均匀深度学习体系结构的自动构建似乎并不牵强。</p>
+<p>Inception 网络结构最初是一个案例研究，用于评估复杂网络拓扑结构构建算法的假设输出，该算法试图近似视觉网络的[2]所暗示的稀疏结构，并通过密集的、随时可用的组件覆盖假设结果。尽管这是一个高度投机的项目，但与基于[12]的参考网络相比，早期观察到了适度的收益。经过一点调整，差距变大了，并且事实证明在定位和检测的情况下，以 Inception 作为基础的网络结构尤其有用。有趣的是，虽然大多数最初的体系结构选择已经被分离地进行了彻底的质疑和测试，但结果证明它们接近于局部最优。有一个问题必须仔细的思考：虽然 Inception 在计算机视觉中获得了成功，但是是否可以归因为其构建的指导原则仍是一个疑问。确保这一点需要更彻底的分析和验证。</p>
+<p>实际上这部分就是在陈述构建 Inception 结构的动机，简单的增加神经网络的尺寸会引起两个缺点：过拟合与计算量过大，解决这个问题一个较好的方式是使用稀疏的网络结构，并且从赫本原理的角度说明了可行性。然而一方面现有的计算基础架构使得稀疏的计算效率低下；另一方面，通过使用随机和稀疏连接的方式又使得网络有变回全连接的趋势。所以作者剔除了这种折衷的方式，使用这样的一种网络架构，他可以利用滤波器级别的稀疏能力，但利用我们目前的硬件，利用密集矩阵的计算，即 Inception。</p>
+<h2 id="4-Architectural-Details"><a href="#4-Architectural-Details" class="headerlink" title="4. Architectural Details"></a>4. Architectural Details</h2><p>Inception 结构的主要想法在于考虑一个卷积视觉神经网络的最优局部稀疏结构是如何被现成的密集组件来近似和覆盖。值得注意的是，假设平移不变性意味着我们的网络将由卷积积木构建。 所有的我们所需要做的是找到最优的局部组织并在空间上重复它。 Arora 等人提出了一种逐层的构造方法，在这种方法中，应分析最后一层的相关统计数据，并将其聚类成具有高相关性的单元组。 这些簇构成下一层的单元，并连接到上一层的单元。我们假设来自早期层的每个单元对应于输入图像的某个区域，并且这些单元被分组到过滤器组中。 在较低层（靠近输入层）中，相关单元将集中在局部区域。因此，我们将以集中在单个区域的许多簇结束，并且它们可以被下一层1×1卷积的层覆盖，如[12]所示。然而，我们也可以预期，在更大的 patch 上，可以被卷积覆盖的更多空间分布的集群数量将会减少，在更大的区域，patch 数量也会减少。 为了避免块对齐的问题，现在的 Inception 网络结构的实现使用 1×1 1\times11×1，3×3 3\times33×3，5×5 5\times55×5 尺寸大小的卷积核，这种决定是因为方便操作，而不是必须的。这也意味着，建议的架构是所有这些层与它们的输出滤波器组的组合，这些滤波器组连接成一个单独的输出向量，形成下一阶段的输入。 此外，由于池操作对于当前卷积网络的成功至关重要，因此它建议在每个这样的阶段添加所有外部池路径也应具有额外的效益，如图 2 (a) 所示</p>
+<p><img src="https://pic1.zhimg.com/v2-47cfac11ac57d459c6cfce7817e49a58_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-47cfac11ac57d459c6cfce7817e49a58_b.jpg" class="lozad post-image"></p>
+<p>由于这些“初始模块”相互堆叠在一起，它们的输出相关性统计数据必然会有所不同：随着更高层次捕获更高抽象的特征，它们的空间集中度预计会降低。 这表明，3×3和5×5的卷积比应该随着我们向更高层移动而增加。 在Inception中1x1考虑到local region，3x3和5x5则考虑到spatially spread out clusters。所以在lower的层中主要是local信息，所以1x1的output number要多一些，但在higher的层中往往捕捉的是features of higher abstraction，所以在higher layer中3x3和5x5的比例应该增大。</p>
+<p>上述模块的一个大问题，至少在这种形式下，是即使是少量的5×5卷积，在具有大量过滤器的卷积层的顶部也可能非常昂贵。一旦池化单元被加入到了里面这个问题就变得更加突出：因为输出滤波器的数量等于上一阶段滤波器的数量。池层的输出与卷积层的输出合并将不可避免地导致各个阶段输出数量的增加。虽然这种体系结构可以覆盖最优的稀疏结构，但它的效率非常低，导致在几个阶段内就会出现计算爆炸。</p>
+<p>这就引出了 Inception 结构的第二个想法：明智地减少维度，否则计算需求会增加很多。这是基于嵌入的成功：即使是低维度的嵌入也可能包含大量关于相对较大的图像 patch 的信息。然而，嵌入式以一种密集的、压缩的形式表示信息，而压缩的信息很难处理。在大多数地方(根据[2]条件的要求)，表示应该保持稀疏，并且只在需要对信号进行大规模聚集时才对其进行压缩。也就是说 1×1 1\times11×1 的卷积在 3×3 3\times33×3 和 5×5 5\times55×5 之前降低了计算量。除了降低计算量，它们还包括使用矫正的线性激活，使它们具有双重用途。最后的结果图 2 的 (b) 所示。</p>
+<p>整体来说，总体来说一个 Inception 网络有上面所示的模块堆积起来组成，偶尔使用带stride 2的max-pooling层来将网格的分辨率减半。由于技术的原因（训练时的内存利用率），似乎仅仅在高层次开始使用 Inception 而在低层次保持使用传统的卷积风格会比较有益。这并不是完全必要的，只是反映了我们当前实现中的一些基础设施效率低下。</p>
+<p>该网络结构的一个有用的方面是，它允许在每个阶段显著增加单元的数量，而不会在后期的计算复杂性中出现无法控制的激增。这是通过在昂贵的卷积之前普遍使用降维来实现的。此外，该设计遵循的是一种实践直觉，即视觉信息应该在不同的尺度上进行处理，然后进行聚合，以便下一阶段能够同时从不同尺度上提取特征。</p>
+<p>改进了对计算资源的使用，可以在不遇到计算困难的情况下增加每个阶段的宽度和阶段的数量。您可以利用Inception架构来创建稍微逊色一些，但是在计算上更便宜的版本。我们发现所有可用的旋钮和杠杆允许控制计算资源的平衡，导致速度是表现相似但没有 Inception 模块的3−10倍，然而在这一点上需要仔细的手工设计。</p>
+<h2 id="关于网络结构的个人理解"><a href="#关于网络结构的个人理解" class="headerlink" title="关于网络结构的个人理解"></a>关于网络结构的个人理解</h2><p>首先是关于稀疏性的理解，下面的这句话是原文中关于稀疏性的解释</p>
+<p>Inception 结构的主要想法在于考虑一个卷积视觉神经网络的最优局部稀疏结构是如何被现成的密集组件来近似和覆盖。</p>
+<p>具体的是利用滤波器级别的稀疏能力，但利用我们目前的硬件和密集矩阵的计算。那下面的网络结构与稀疏有什么关系呢？</p>
+<p><img src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-f2c930dcf859e6c8b8bb15eea6151c04_b.jpg" class="lozad post-image"></p>
+<p>我们可以将 1×1 1\times11×1 ，3×3 3\times33×3 表示成如下的卷积</p>
+<p><img src="https://pic4.zhimg.com/v2-574d9823495acc0455eb0d4e79c648eb_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-574d9823495acc0455eb0d4e79c648eb_b.jpg" class="lozad post-image"></p>
+<p>实际上可以将 1×1 1\times11×1 和 3×3 3\times33×3 看成是 5×5 5\times55×5 的稀疏表示，只不过是一种特殊的稀疏表示。因为如果是一般形式的稀疏表示的话，那么在 5×5 5\times55×5 的矩阵中，哪个位置是 0 都是可以的，但是 1×1 1\times11×1 和 3×3 3\times33×3 却只有中心位置的数值是非零的，其余部分的数值都是 0。这也说明了为什么作者认为这是一种 “使用密集组建的 近似 和覆盖”。</p>
+<p>在论文中作者使用了 1×1 1\times11×1 的卷积， 它可以降低维度，增加系统的非线性，这是使用了它的好处，但是为什么它是可行的？</p>
+<p>我们一层可能会有多个卷积核，在同一个位置但在不同通道的卷积核输出结果相关性极高。一个1×1的卷积核可以很自然的把这些相关性很高，在同一个空间位置，但不同通道的特征结合起来。而其它尺寸的卷积核（3×3，5×5）可以保证特征的多样性，因此也可以适量使用[2]。</p>
+<h2 id="New-Version比Old-version是如何减少参数量的？"><a href="#New-Version比Old-version是如何减少参数量的？" class="headerlink" title="New Version比Old version是如何减少参数量的？"></a>New Version比Old version是如何减少参数量的？</h2><p>1×1 的卷积核和正常的滤波器完全是一样的，只不过它不再感受一个局部区域，不考虑像素与像素之间的关系。1×1的卷积本身就是不同feature channel的线性叠加。1×1的卷积最早出现在Network in Network这篇文章中，在Google的inception结构中也采用了大量1×1的卷积。</p>
+<p>NIN 论文中解释1×1的卷积实现了多个feature map的结合，从而整合了不同通道间的信息。（个人认为这个作用并不是特点，因为其它大小的卷积核也可以实现）</p>
+<p>1×1的卷积可以实现通道数量的升维和降维。并且是低成本的特征变换（计算量比3×3小很多）。是一个性价比很高的聚合操作。怎么理解1×1是性价比很高的升降通道数的操作呢？[2]</p>
+<p><img src="https://pic1.zhimg.com/v2-3b61ecc0399f7df554083af5298c7930_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-3b61ecc0399f7df554083af5298c7930_b.jpg" class="lozad post-image"></p>
+<p><img src="https://pic4.zhimg.com/v2-0ebcdb9d959b4b8f373510b45b104a6b_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-0ebcdb9d959b4b8f373510b45b104a6b_b.jpg" class="lozad post-image"></p>
+<p>原始结构：</p>
+<p>参数：(1×1×192×64) + (3×3×192×128) + (5×5×192×32) = 153600</p>
+<p>最终输出的feature map：64+128+32+192 = 416</p>
+<p>加入不同channel的1×1卷积后：</p>
+<p>参数：1×1×192×64+（1×1×192×96+3×3×96×128）+（1×1×192×16+5×5×16×32）=15872</p>
+<p>最终输出的feature map： 64+128+32+32=256</p>
+<p>所以加入1×1的卷积后，在降低大量运算的前提下，降低了维度。降低维度也是inception module一个非常明智的举措。</p>
+<h2 id="5-GoogLeNet"><a href="#5-GoogLeNet" class="headerlink" title="5.GoogLeNet"></a>5.GoogLeNet</h2><p>GoogLeNet 是 Inception 的一个具体实现，我们尝试过更深更宽质量稍好的 Inception，但是提升的效果并不明显。我们忽略具体的网络细节，因为实验表明，精确的网络结构参数的影响相对较小。表格 1 表明了我们在比赛中大部分共用的实例。在我们的集成模型中的 7 个模型，有 6 个网络使用了这样的（表格1）网络，这 6 个网络使用了不同的图像块采样方法进行训练。也就是说作者在使用 GoogLeNet 参加比赛的时候最后使用了模型集成的方法，并且还有一个模型我们不知道时使用了什么样的一种算法。</p>
+<p><img src="https://pic1.zhimg.com/v2-4387de7186e17ab57bd69d8c700f22bc_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-4387de7186e17ab57bd69d8c700f22bc_b.jpg" class="lozad post-image"></p>
+<p>在所有的卷积中，包括 Inception 中的卷积，使用的都是修正线性激活函数（ReLu）。神经网络的感受野是大小为 224×224 224\times224224×224 均值为 0 彩色空间图像。在面上的表中，patchsize/ stride 表明卷积核的大小和步长，output size 表示输出的数据块的大小（当网络为传统卷积时还可以看出使用了多少个卷积核），depth 是该层重复了几次（具体来说是该行所表示的传统卷层重复了几次，或者是该行所表示的 Inception 重复了几次），#1× 1 表示 Inception 中最坐标的 1×1 大小的卷积核的数量，#3×3 reduce 表示在进行 3×3 的卷积之前，用来降维的 1×1 大小的卷积核的数量，#3×3 表示 3×3 大小卷积核的数量，#5×5 reduce 和 #5×5 同理，pool proj 表示最右侧经过池化之后 1×1 大小的卷积核的数量。</p>
+<p>在思想上网络设计得具有计算效率和实用性，以至于前向推理的时候可以在单个设备上运行推理，包括计算资源有限的设备，尤其是内存占用较低的设备。当仅仅计算有参数的层数时，网络是22层（如果加上池化是27层）。在网络中使用的独立模块大概有 100 个。具体的数量如何计算依赖于机器学习基础设施是如何计数的。在分类之前使用了均值池化是基于 [12] 的想法，虽然我们添加了一个额外的线性层。线性层可以简单的将我们的网络应用到其他标签上，然而这只是为了方便，它并不起到一个主要的作用。我们发现从全连接层到平均池化的改变提升了 top1 正确率 0.6%，然而即使去掉了全连接层，dropout 仍然是必要的。</p>
+<p>对于一个相对较深的神经网络，以一种有效的方式将剃度反向传播给所有层。浅层网络在梯度方向上反向传播的强大性能表明，网络中间层所产生的特征应该具有很强的识别性。通过在中间层添加辅助分类器，较低层分类器的识别性是可以期待的。辅助分类器被认为可以在提供正则化的同时，对抗梯度消失问题。这些分类器以小的卷积神经网络的形式放在了 Inception (4a) and (4d) 模块的上方。在训练过程中辅助分类器的损失被加权添加到总体的损失上（辅助分类器的损失权重设置为 0.3）。在进行前向推理的时候，辅助网络是禁用的。实验表明辅助网络的效果比较弱，仅仅使用一个辅助网络也可达到相同的效果。</p>
+<p>包括辅助分类器在内，在侧面的额外网络的准确结构如下所示</p>
+<p>(1) 卷积核大小为 5×5 5\times55×5 步长为 3 的均值池化层，所以 (4a) 的输出为 4×4×512 4\times4\times5124×4×512，(4d) 的输出为 4×4×528 4\times4\times5284×4×528。</p>
+<p>(2) 大小为 1×1 1\times11×1 的128 个用来降维的卷积核和 ReLu 激活函数.</p>
+<p>(3) 拥有 1024 个神经元的全连接层和 ReLu 激活函数</p>
+<p>(4) 丢弃输出层 70 % 的 dropout 层</p>
+<p>(5) 一个有 softmax 损失的线性层（预测与主分类器一样的 1000 个类别，但是在推理的时候会被去掉）。</p>
+<p>结果网络的示意图如图3所示。</p>
+<p><img src="https://pic3.zhimg.com/v2-49b0b34460429ae1b3a8418e9cffae32_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-49b0b34460429ae1b3a8418e9cffae32_b.jpg" class="lozad post-image"></p>
+<p>使用districess[4]分布式机器学习系统，使用适度的模型和数据并行性对googlenet网络进行培训。虽然我们只使用了基于CPU的实现，但粗略估计表明，可以在一周内使用少量高端GPU将谷歌网络训练为收敛，主要限制是内存使用。我们的培训采用了 0.9 动量的异步随机梯度下降[17]，固定的学习速率计划（每8个周期降低4%的学习速率）。Polyak Averaging[13]用于创建推理时使用的最终模型。</p>
+<p>在比赛的几个月中，图像采样方法已经发生了很大的变化，并且已经将模型与其他选项融合在一起，有时会与改变的超参数（如 dropout 和学习率）结合在一起。因此，很难对最有效的单一网络培训方式给出明确的指导。此外，为了使其更加复杂，一些模型是受[8]启发而设计的，其中一些模型是在较小的图像块中训练的，而另一些模型是在较大的图像块上的。尽管如此，有一个处方在比赛后证明效果很好，它包括对图像中大小均匀分布在图像区域8%到100%之间的各种大小的斑块进行采样，纵横比受间隔限制[3/4，4/3]。此外，我们还发现，安德鲁·霍华德（Andrew Howard）的光度畸变对克服训练数据成像条件的影响非常有用。</p>
+<h2 id="7-ILSVRC-2014-Classiﬁcation-Challenge-Setup-and-Results"><a href="#7-ILSVRC-2014-Classiﬁcation-Challenge-Setup-and-Results" class="headerlink" title="7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results"></a>7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</h2><p>ILSVRC 2014分类挑战涉及到将图像分类为ImageNet层次结构中的1000叶节点类别的任务。训练图像约120万张，验证用图像约5万张，测试用图像约10万张。每幅图像都与一个 gt 类别相关联，并且性能是基于最高评分的更高级预测来衡量的。通常会报告两个数字：第一个准确率（将地面真实性与第一个预测类进行比较）和第五个错误率（将地面真实性与前五个预测类进行比较）：如果地面真实性在前五个预测类中，则不管图像中的等级如何，都认为图像是正确分类的。挑战使用前5个错误率进行排名。</p>
+<p>我们没有使用额外的数据参加挑战。除了本文前面提到的训练技术之外，我们在测试过程中采用了一套技术来获得更高的性能（可以理解为超级疯狂的模型集成和数据拓展），下面我们将对此进行描述。</p>
+<p>(1) 我们独立训练了同一个谷歌模型的7个版本（包括一个更广泛的版本），并与他们进行了模型集成。这些模型是用相同的初始化（甚至是相同的初始权重，由于一个监督）和学习率策略进行训练的。它们只在采样方法和随机输入图像顺序上有所不同。</p>
+<p>(2) 在测试期间我们采取了比 Krizhevsky 等人更为激进的裁剪方法。具体的我们将图像缩放到 4 中尺度，其中他们的短边长度分别是256，288，320，352，取出图像的左中右三个方形（对于肖像图像，我们取顶部、中间和底部的方形）。对于每一个方形，我们取出 4 个角和中心部分，同时也将方形部分缩放回 224*224，并且获得他们的镜像图像。这将导致我们在一张图像中取出 4×3×6×2 = 144 个图像块。安德鲁·霍华德（Andrew Howard）在上一年的比赛中中也采用了类似的方法，我们根据经验证明，该方法的表现略差于我们提出的策略。我们注意到，在实际应用中，这种激进的剪裁可能不是必要的，因为在出现合理数量的剪裁图片之后，更多剪裁的效益变得微乎其微（稍后我们将展示）。</p>
+<p>(3) softmax 的概率值是对所有的剪切出来的图像和所有的独立的分类器上得到的均值作为预测的结果。在验证集上我们分析了替代的方法，例如对单张图像的所有剪切图像的结果进行最大池化，然后对所有的分类器去均值，但是它们导致的性能比简单的平均差。</p>
+<p>在本文的其余部分中，我们分析了有助于最终提交的总体性能的多个因素。</p>
+<p>我们最后提交的挑战获得了6.67%的验证和测试数据的前5个错误，在其他参与者中排名第一。与2012年的训练方法相比，这是一个56.5%的相对减少，与上一年的最佳方法（Clarifai）相比，这是大约40%的相对减少，这两种方法都使用外部数据来训练网络。表2 显示了过去3年中一些表现最好的方法的统计数据。</p>
+<p><img src="https://pic3.zhimg.com/v2-b17fa50ba15204f6f339ed49d6d5578a_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-b17fa50ba15204f6f339ed49d6d5578a_b.jpg" class="lozad post-image"></p>
+<p>当预测一张图像的时候，我们通过改变模型的数量和剪裁的数量来分析和报告不同测试选择的效果，如表 3 所示。当我们使用一个模型时，我们选择了一个在验证数据上具有最低的前1个错误率的模型。所有数字都在验证数据集中报告，以避免超出测试数据统计的范围。</p>
+<p><img src="https://pic4.zhimg.com/v2-778041b667951f5e9c838c9bd0cebcd7_b.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-778041b667951f5e9c838c9bd0cebcd7_b.jpg" class="lozad post-image"></p>
+<h2 id="8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><a href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults" class="headerlink" title="8. ILSVRC 2014 Detection Challenge Setup andResults"></a>8. ILSVRC 2014 Detection Challenge Setup andResults</h2><p>ILSVRC检测任务是在200个可能的类中，围绕图像中的对象生成边界框。如果检测到的对象与GroundTruth的类相匹配，并且它们的边界框重叠至少50%（使用JacCard索引），则这些对象算是正确的。外来检测被视为假阳性并受到处罚。与分类任务相反，每个图像可以包含多个对象，也可以不包含任何对象，其比例可能有所不同。使用平均精度（MAP）报告结果。googlenet所采用的检测方法与r-cnn的方法相似，但作为区域分类，随着初始模型的增加而增加。此外，通过将选择性搜索[20]方法与多框[5]预测相结合，改进了区域建议步骤，以实现更高的对象边界框调用。</p>
+<p>为了减少误报的数量，超级像素的大小增加了2倍。这使得来自选择性搜索算法的建议减半。我们增加了来自多框[5]的200个地区提案，总共占[6]所用提案的60%，同时将覆盖率从92%提高到93%。减少覆盖率增加的提案数量的总体效果是提高单个模型案例的平均精度1%。最后，在对每个区域进行分类时，我们使用6个谷歌地图的集合。这导致精确度从40%提高到43.9%。注意，与R-CNN相反，我们没有使用边界框回归，因为缺乏时间。</p>
+<p>我们首先报告最高检测结果，并显示自检测任务第一版以来的进展。与2013年的结果相比，精度几乎翻了一番。表现最好的团队都使用卷积网络。我们在表4中报告了财务得分以及每个团队的常用策略：使用外部数据、整体模型或上下文模型。外部数据通常是ILSVRC12分类数据，用于对模型进行预培训，该模型稍后将根据检测数据进行重新定义。一些团队还提到了本地化数据的使用。由于本地化任务边界框的很大一部分不包含在检测数据集中，因此可以使用此数据对通用边界框回归器进行预训练，就像在预训练中使用分类一样。googlenet条目没有使用本地化数据进行预培训。</p>
+<p>在表5中，我们只使用一个模型比较结果。最优秀的表演模型是由深刻的洞察力和令人惊讶的只有0.3分的提高与3个模型的合奏，而谷歌获得了显着更强的效果与合奏。</p>
+<h2 id="9-Conclusions"><a href="#9-Conclusions" class="headerlink" title="9.Conclusions"></a>9.Conclusions</h2><p>我们的结果提供了一个确凿的证据，证明用现有的密集型卷积计算近似期望的最优稀疏结构是改进计算机视觉神经网络的一种可行方法。这种方法的主要优点是，与较浅和较窄的体系结构相比，在计算需求适度增加的情况下，效果会显著提高。</p>
+<p>我们的对象检测工作具有竞争力，尽管没有使用上下文，也没有执行边界框回归，这进一步证明了初始体系结构的优势。</p>
+<p>对于分类和检测任务，可以想象得到获得和我们效果相当的结果需要跟多的昂贵的非 Inception 模块来组成相似的宽度和深度。尽管如此，我们的方法仍然提供了确凿的证据，证明迁移到更稀疏的架构总体上是可行的和有用的。这表明，未来将在[2]的基础上，以自动化方式创建更为稀疏和更复杂的结构，并将 Inception 结构的见解应用到其他领域。</p>
+<p>参考</p>
+<p>[1] Szegedy C , Liu N W , Jia N Y , et al. Going deeper with convolutions[C]// 2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR). IEEE Computer Society, 2015.</p>
+<p>[2] BookThief 简书 《Google Inception Net论文细读》</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/">https://tanqingbo.cn/Inception-Going-Deeper-with-Convolution/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/2018ECCV-Paper-DL/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">ECCV所有论文下载链接 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/CS-Classic-Books/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">计算机专业必读哪些经典书籍？ </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2. Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Motivation-and-High-Level-Considerations"><span class="toc-number">4.</span> <span class="toc-text">3. Motivation and High Level Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Architectural-Details"><span class="toc-number">5.</span> <span class="toc-text">4. Architectural Details</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">关于网络结构的个人理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Version%E6%AF%94Old-version%E6%98%AF%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">New Version比Old version是如何减少参数量的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GoogLeNet"><span class="toc-number">8.</span> <span class="toc-text">5.GoogLeNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ILSVRC-2014-Classi%EF%AC%81cation-Challenge-Setup-and-Results"><span class="toc-number">9.</span> <span class="toc-text">7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><span class="toc-number">10.</span> <span class="toc-text">8. ILSVRC 2014 Detection Challenge Setup andResults</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusions"><span class="toc-number">11.</span> <span class="toc-text">9.Conclusions</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2. Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Motivation-and-High-Level-Considerations"><span class="toc-number">4.</span> <span class="toc-text">3. Motivation and High Level Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Architectural-Details"><span class="toc-number">5.</span> <span class="toc-text">4. Architectural Details</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">关于网络结构的个人理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Version%E6%AF%94Old-version%E6%98%AF%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">New Version比Old version是如何减少参数量的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GoogLeNet"><span class="toc-number">8.</span> <span class="toc-text">5.GoogLeNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ILSVRC-2014-Classi%EF%AC%81cation-Challenge-Setup-and-Results"><span class="toc-number">9.</span> <span class="toc-text">7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><span class="toc-number">10.</span> <span class="toc-text">8. ILSVRC 2014 Detection Challenge Setup andResults</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusions"><span class="toc-number">11.</span> <span class="toc-text">9.Conclusions</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1. Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2. Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Motivation-and-High-Level-Considerations"><span class="toc-number">4.</span> <span class="toc-text">3. Motivation and High Level Considerations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Architectural-Details"><span class="toc-number">5.</span> <span class="toc-text">4. Architectural Details</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E7%9A%84%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-number">6.</span> <span class="toc-text">关于网络结构的个人理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#New-Version%E6%AF%94Old-version%E6%98%AF%E5%A6%82%E4%BD%95%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">New Version比Old version是如何减少参数量的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-GoogLeNet"><span class="toc-number">8.</span> <span class="toc-text">5.GoogLeNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-ILSVRC-2014-Classi%EF%AC%81cation-Challenge-Setup-and-Results"><span class="toc-number">9.</span> <span class="toc-text">7. ILSVRC 2014 Classiﬁcation Challenge Setup and Results</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-ILSVRC-2014-Detection-Challenge-Setup-andResults"><span class="toc-number">10.</span> <span class="toc-text">8. ILSVRC 2014 Detection Challenge Setup andResults</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Conclusions"><span class="toc-number">11.</span> <span class="toc-text">9.Conclusions</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

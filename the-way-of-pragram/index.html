@@ -1,1 +1,874 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>4种高效编程方法，帮你快速搞定编程！&nbsp; | &nbsp;IT码农</title><meta property="title" content="4种高效编程方法，帮你快速搞定编程！"><meta property="url" content="https://tanqingbo.cn/the-way-of-pragram/index.html"><meta property="og:img" content="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20201124165721.png"><meta property="description" content="算法,数据结构,剑指offerd,电子书下载"><meta property="keywords" content="算法,数据结构,剑指offerd,电子书下载"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2021-12-13"><meta property="og:article:modified_time" content="2022-05-18"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="电子书下载"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/the-way-of-pragram/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20201124165721.png" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20201124165721.png" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">4种高效编程方法，帮你快速搞定编程！</h1></header><div class="post-meta post-show-meta"><time datetime="2021-12-13T08:49:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2021-12-13</span> </time><span class="dot"></span> <a href="/categories/编程经验/" class="post-meta-link">编程经验</a> <span class="dot"></span> <span>1.4k 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/the-way-of-pragram/" class="leancloud_visitors" data-flag-title="4种高效编程方法，帮你快速搞定编程！"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/电子书下载/" class="post-meta-link">电子书下载</a></div></div><meta name="description" content="算法,数据结构,剑指offerd,电子书下载"><meta name="keywords" content="算法,数据结构,剑指offerd,电子书下载"><div id="section" class="post-content"><h3 id="别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程"><a href="#别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程" class="headerlink" title="别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程"></a>别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</h3><p>代码写不出来、程序越看越烦、编程真的好难啊，我是不是不适合这个专业？</p><p>这可能是很多初学编程同学的心声。掌握着4种快速学习编程的方法，也许下一个计算机大神就是你。</p><p>首先大家要明确一点，学习编程不是一个下午就能学会的事情，当我们在学习编程的时候，其实可以做很多事情来让自己学习变得更加容易、更加快速。</p><h3 id="首先，当你在阅读教材的时候一定要认真查看示例代码"><a href="#首先，当你在阅读教材的时候一定要认真查看示例代码" class="headerlink" title="首先，当你在阅读教材的时候一定要认真查看示例代码"></a>首先，当你在阅读教材的时候一定要认真查看示例代码</h3><p>假如我是一个初学者，我第一次学习编程时候，通常我会先阅读代码示例，然后再看文字内容，确保看懂并理解每一个例子，理解这段代码所要做的工作，这样做可以有助于自己更深刻地理解这段代码的运行逻辑。</p><h3 id="第二、运行！修改！再运行-！"><a href="#第二、运行！修改！再运行-！" class="headerlink" title="第二、运行！修改！再运行 ！"></a>第二、运行！修改！再运行 ！</h3><p>当我们阅读编程教程或者书籍时候，特别是初学者经常会遇到一种情况，就是看完<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/search?q=%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2266578494%7D">示例代码</a>之后就会觉得“这个我都明白了”。当然，有可能确实是你已经明白了，但是如果要求让你自己动手写一个出来，你可能就蒙圈了。</p><p>因此强烈建议大家亲自去写一下运行一下！</p><p>首先要将示例代码手动输入，<strong>记住一定要手动输入，不要只是复制和粘贴，</strong>因为通过手动输入代码，这个可以迫使我们注意到编程语言语法中的一些细节，比如每行代码后面是否都有分号，换行符是不是都正确。</p><p>然后，编译和运行你刚刚输入的代码，看看是否有出错。</p><p>最后，请试着修改你写的代码，从最简单的改变开始，比如修改输出的内容。多试几次你就会知道代码要怎么写了。</p><h3 id="第三、学会使用调试器"><a href="#第三、学会使用调试器" class="headerlink" title="第三、学会使用调试器"></a>第三、学会使用调试器</h3><p>一般编程语言的调试器都不复杂，试着先学习如何调试代码，这将对你理解和掌握这门编程语言有着很大的帮助。</p><p>一开始的时候，可以先调试一些很简单的例子，比如这段C语言代码：</p><p>你可以通过调试器看看当程序运行到第5行的时候，X的值是多少，然后接着看大括号里面<code>y=5;</code>这行代码有没有运行。</p><pre class="highlight"><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span> Y;</span><br><span class="line">	<span class="keyword">if</span> (x&gt;<span class="number">4</span>）<span class="comment">//&lt;--这里x的值是多少？</span></span><br><span class="line">	{</span><br><span class="line">		y=<span class="number">5</span>; <span class="comment">//&lt;--这行代码执行了吗？</span></span><br><span class="line">	}</span><br><span class="line">}</span><br></pre><p>有同学可能会问，为什么要学会使用调试器呢？因为调试器可以帮助我们快速的找到代码中BUG的精准位置。所以一定要熟练使用，因为我看到过很多人没有使用调试器，结果耗费了很多时间去寻找一些实际上显而易见的bug。</p><h3 id="第四、善于寻找学习资源"><a href="#第四、善于寻找学习资源" class="headerlink" title="第四、善于寻找学习资源"></a>第四、善于寻找学习资源</h3><p>现在的互联网这么发达，大家想要学习的任何技术都可以再网上找到对应的学习资源，所以大家在学习编程语言的同时，花些时间去网上了解下，看看有没有适合自己的网络教程，因为有时候你需要学习的技术学校并不一定教，或者只是很浅显的提了一下，这个时候就需要你自己去网上寻找对应的学习教程了。</p><p>这边我也给大家推荐几个程序员经常逛的学习网站：</p><h4 id="1、B站"><a href="#1、B站" class="headerlink" title="1、B站"></a>1、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bilibili.com/">B站</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192551.png" alt="image-20211213192551287" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192551.png" class="lozad post-image"></p><p>这个网站最初是由游戏玩家带火起来的，但是里面也有特别多的程序员大佬入驻，你想要找的编程视频学习教程基本上都能在里面找到，而且都是免费的。</p><h4 id="2、CSDN"><a href="#2、CSDN" class="headerlink" title="2、CSDN"></a>2、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.csdn.net/">CSDN</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192724.png" alt="image-20211213192724235" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192724.png" class="lozad post-image"></p><p>这是一个专门为程序员提供的技术交流学习平台，以技术博客论坛为主，里面有超级多大牛博主入驻，各种技术帖子应有尽有，当然你也可以在CSDN上输出自己的技术博客文章，给有需要的人提供帮助。</p><h4 id="3、牛客网"><a href="#3、牛客网" class="headerlink" title="3、牛客网"></a>3、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.nowcoder.com/">牛客网</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192809.png" alt="image-20211213192809306" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192809.png" class="lozad post-image"></p><p>这个网站对找工作的同学来说价值非常大，里面能找到很多互联网大厂的面试经验帖子，各种知名的不知名的互联网公司的对应往年校招社招面试题库，可以刷到你手软，总而言之一句话：这是一个找工作必备的网站。</p><h4 id="4、GitHub"><a href="#4、GitHub" class="headerlink" title="4、GitHub"></a>4、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/">GitHub</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192902.png" alt="image-20211213192902566" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192902.png" class="lozad post-image"></p><p>这是一个开源的代码托管平台，上面托管了大量的优秀项目源码，你可以通过主题，榜单等方式在GitHub找到自己感兴趣的项目源码，通过多做一些项目，你就可以很快的提升自己的技术，从而进入到自己心仪的公司。</p><p>此外，还有一个非常关键的资源，那就是我们身边的师兄师姐、前辈以及老师。如果遇到不懂的问题，且身边有这种资源的情况下，一定要去请教一下他们，这也是解决问题效率最高的一种方法。</p></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/the-way-of-pragram/">https://tanqingbo.cn/the-way-of-pragram/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/程序员必备的几个技能！看完你也是大神/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">程序员必备的几个技能！看完你也是大神</div></div></a></div><div class="nav-item-next"><a href="/be-a-programmer-instead-of-a-code-farmer/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">如何做一个程序员而不是码农？</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BA%BA%E5%AD%A6%E7%9A%84%E5%A6%82%E9%B1%BC%E5%BE%97%E6%B0%B4%EF%BC%8C%E5%8F%AF%E6%98%AF%E6%88%91%E8%A7%89%E5%BE%97%E7%BC%96%E7%A8%8B%E5%A5%BD%E9%9A%BE%EF%BC%9F%E5%81%9A%E5%88%B0%E8%BF%994%E7%82%B9%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E6%90%9E%E5%AE%9A%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%BD%93%E4%BD%A0%E5%9C%A8%E9%98%85%E8%AF%BB%E6%95%99%E6%9D%90%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%80%E5%AE%9A%E8%A6%81%E8%AE%A4%E7%9C%9F%E6%9F%A5%E7%9C%8B%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">首先，当你在阅读教材的时候一定要认真查看示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%81%E4%BF%AE%E6%94%B9%EF%BC%81%E5%86%8D%E8%BF%90%E8%A1%8C-%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">第二、运行！修改！再运行 ！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E3%80%81%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第三、学会使用调试器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E3%80%81%E5%96%84%E4%BA%8E%E5%AF%BB%E6%89%BE%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">第四、善于寻找学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81B%E7%AB%99"><span class="toc-number">5.1.</span> <span class="toc-text">1、B站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81CSDN"><span class="toc-number">5.2.</span> <span class="toc-text">2、CSDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-number">5.3.</span> <span class="toc-text">3、牛客网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81GitHub"><span class="toc-number">5.4.</span> <span class="toc-text">4、GitHub</span></a></li></ol></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BA%BA%E5%AD%A6%E7%9A%84%E5%A6%82%E9%B1%BC%E5%BE%97%E6%B0%B4%EF%BC%8C%E5%8F%AF%E6%98%AF%E6%88%91%E8%A7%89%E5%BE%97%E7%BC%96%E7%A8%8B%E5%A5%BD%E9%9A%BE%EF%BC%9F%E5%81%9A%E5%88%B0%E8%BF%994%E7%82%B9%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E6%90%9E%E5%AE%9A%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%BD%93%E4%BD%A0%E5%9C%A8%E9%98%85%E8%AF%BB%E6%95%99%E6%9D%90%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%80%E5%AE%9A%E8%A6%81%E8%AE%A4%E7%9C%9F%E6%9F%A5%E7%9C%8B%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">首先，当你在阅读教材的时候一定要认真查看示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%81%E4%BF%AE%E6%94%B9%EF%BC%81%E5%86%8D%E8%BF%90%E8%A1%8C-%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">第二、运行！修改！再运行 ！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E3%80%81%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第三、学会使用调试器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E3%80%81%E5%96%84%E4%BA%8E%E5%AF%BB%E6%89%BE%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">第四、善于寻找学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81B%E7%AB%99"><span class="toc-number">5.1.</span> <span class="toc-text">1、B站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81CSDN"><span class="toc-number">5.2.</span> <span class="toc-text">2、CSDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-number">5.3.</span> <span class="toc-text">3、牛客网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81GitHub"><span class="toc-number">5.4.</span> <span class="toc-text">4、GitHub</span></a></li></ol></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BA%BA%E5%AD%A6%E7%9A%84%E5%A6%82%E9%B1%BC%E5%BE%97%E6%B0%B4%EF%BC%8C%E5%8F%AF%E6%98%AF%E6%88%91%E8%A7%89%E5%BE%97%E7%BC%96%E7%A8%8B%E5%A5%BD%E9%9A%BE%EF%BC%9F%E5%81%9A%E5%88%B0%E8%BF%994%E7%82%B9%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E6%90%9E%E5%AE%9A%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%BD%93%E4%BD%A0%E5%9C%A8%E9%98%85%E8%AF%BB%E6%95%99%E6%9D%90%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%80%E5%AE%9A%E8%A6%81%E8%AE%A4%E7%9C%9F%E6%9F%A5%E7%9C%8B%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">首先，当你在阅读教材的时候一定要认真查看示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%81%E4%BF%AE%E6%94%B9%EF%BC%81%E5%86%8D%E8%BF%90%E8%A1%8C-%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">第二、运行！修改！再运行 ！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E3%80%81%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第三、学会使用调试器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E3%80%81%E5%96%84%E4%BA%8E%E5%AF%BB%E6%89%BE%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">第四、善于寻找学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81B%E7%AB%99"><span class="toc-number">5.1.</span> <span class="toc-text">1、B站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81CSDN"><span class="toc-number">5.2.</span> <span class="toc-text">2、CSDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-number">5.3.</span> <span class="toc-text">3、牛客网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81GitHub"><span class="toc-number">5.4.</span> <span class="toc-text">4、GitHub</span></a></li></ol></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>4种高效编程方法，帮你快速搞定编程！&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="4种高效编程方法，帮你快速搞定编程！">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/the-way-of-pragram/index.html">
+  
+  
+  <meta property="og:img" content="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20201124165721.png">
+  
+  
+  <meta property="description" content="算法,数据结构,剑指offerd,电子书下载">
+  
+  <meta property="keywords" content="算法,数据结构,剑指offerd,电子书下载">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-12-13">
+  <meta property="og:article:modified_time" content="2022-05-18">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="电子书下载">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/the-way-of-pragram/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20201124165721.png" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20201124165721.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      4种高效编程方法，帮你快速搞定编程！
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-12-13T08:49:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-12-13</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/编程经验/" class="post-meta-link">编程经验</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/the-way-of-pragram/" class="leancloud_visitors" data-flag-title="4种高效编程方法，帮你快速搞定编程！">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/电子书下载/" class="post-meta-link">电子书下载</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="算法,数据结构,剑指offerd,电子书下载">
+  
+  <meta name="keywords" content="算法,数据结构,剑指offerd,电子书下载">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h3 id="别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程"><a href="#别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程" class="headerlink" title="别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程"></a>别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</h3><p>代码写不出来、程序越看越烦、编程真的好难啊，我是不是不适合这个专业？</p>
+<p>这可能是很多初学编程同学的心声。掌握着4种快速学习编程的方法，也许下一个计算机大神就是你。</p>
+<p>首先大家要明确一点，学习编程不是一个下午就能学会的事情，当我们在学习编程的时候，其实可以做很多事情来让自己学习变得更加容易、更加快速。</p>
+<h3 id="首先，当你在阅读教材的时候一定要认真查看示例代码"><a href="#首先，当你在阅读教材的时候一定要认真查看示例代码" class="headerlink" title="首先，当你在阅读教材的时候一定要认真查看示例代码"></a>首先，当你在阅读教材的时候一定要认真查看示例代码</h3><p>假如我是一个初学者，我第一次学习编程时候，通常我会先阅读代码示例，然后再看文字内容，确保看懂并理解每一个例子，理解这段代码所要做的工作，这样做可以有助于自己更深刻地理解这段代码的运行逻辑。</p>
+<h3 id="第二、运行！修改！再运行-！"><a href="#第二、运行！修改！再运行-！" class="headerlink" title="第二、运行！修改！再运行 ！"></a>第二、运行！修改！再运行 ！</h3><p>当我们阅读编程教程或者书籍时候，特别是初学者经常会遇到一种情况，就是看完<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/search?q=%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2266578494%7D">示例代码</a>之后就会觉得“这个我都明白了”。当然，有可能确实是你已经明白了，但是如果要求让你自己动手写一个出来，你可能就蒙圈了。</p>
+<p>因此强烈建议大家亲自去写一下运行一下！</p>
+<p>首先要将示例代码手动输入，<strong>记住一定要手动输入，不要只是复制和粘贴，</strong>因为通过手动输入代码，这个可以迫使我们注意到编程语言语法中的一些细节，比如每行代码后面是否都有分号，换行符是不是都正确。</p>
+<p>然后，编译和运行你刚刚输入的代码，看看是否有出错。</p>
+<p>最后，请试着修改你写的代码，从最简单的改变开始，比如修改输出的内容。多试几次你就会知道代码要怎么写了。</p>
+<h3 id="第三、学会使用调试器"><a href="#第三、学会使用调试器" class="headerlink" title="第三、学会使用调试器"></a>第三、学会使用调试器</h3><p>一般编程语言的调试器都不复杂，试着先学习如何调试代码，这将对你理解和掌握这门编程语言有着很大的帮助。</p>
+<p>一开始的时候，可以先调试一些很简单的例子，比如这段C语言代码：</p>
+<p>你可以通过调试器看看当程序运行到第5行的时候，X的值是多少，然后接着看大括号里面<code>y=5;</code>这行代码有没有运行。</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span> Y;</span><br><span class="line">	<span class="keyword">if</span> (x&gt;<span class="number">4</span>）<span class="comment">//&lt;--这里x的值是多少？</span></span><br><span class="line">	{</span><br><span class="line">		y=<span class="number">5</span>; <span class="comment">//&lt;--这行代码执行了吗？</span></span><br><span class="line">	}</span><br><span class="line">}</span><br></pre>
+
+<p>有同学可能会问，为什么要学会使用调试器呢？因为调试器可以帮助我们快速的找到代码中BUG的精准位置。所以一定要熟练使用，因为我看到过很多人没有使用调试器，结果耗费了很多时间去寻找一些实际上显而易见的bug。</p>
+<h3 id="第四、善于寻找学习资源"><a href="#第四、善于寻找学习资源" class="headerlink" title="第四、善于寻找学习资源"></a>第四、善于寻找学习资源</h3><p>现在的互联网这么发达，大家想要学习的任何技术都可以再网上找到对应的学习资源，所以大家在学习编程语言的同时，花些时间去网上了解下，看看有没有适合自己的网络教程，因为有时候你需要学习的技术学校并不一定教，或者只是很浅显的提了一下，这个时候就需要你自己去网上寻找对应的学习教程了。</p>
+<p>这边我也给大家推荐几个程序员经常逛的学习网站：</p>
+<h4 id="1、B站"><a href="#1、B站" class="headerlink" title="1、B站"></a>1、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bilibili.com/">B站</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192551.png" alt="image-20211213192551287" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192551.png" class="lozad post-image"></p>
+<p>这个网站最初是由游戏玩家带火起来的，但是里面也有特别多的程序员大佬入驻，你想要找的编程视频学习教程基本上都能在里面找到，而且都是免费的。</p>
+<h4 id="2、CSDN"><a href="#2、CSDN" class="headerlink" title="2、CSDN"></a>2、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.csdn.net/">CSDN</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192724.png" alt="image-20211213192724235" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192724.png" class="lozad post-image"></p>
+<p>这是一个专门为程序员提供的技术交流学习平台，以技术博客论坛为主，里面有超级多大牛博主入驻，各种技术帖子应有尽有，当然你也可以在CSDN上输出自己的技术博客文章，给有需要的人提供帮助。</p>
+<h4 id="3、牛客网"><a href="#3、牛客网" class="headerlink" title="3、牛客网"></a>3、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.nowcoder.com/">牛客网</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192809.png" alt="image-20211213192809306" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192809.png" class="lozad post-image"></p>
+<p>这个网站对找工作的同学来说价值非常大，里面能找到很多互联网大厂的面试经验帖子，各种知名的不知名的互联网公司的对应往年校招社招面试题库，可以刷到你手软，总而言之一句话：这是一个找工作必备的网站。</p>
+<h4 id="4、GitHub"><a href="#4、GitHub" class="headerlink" title="4、GitHub"></a>4、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/">GitHub</a></h4><p><img src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192902.png" alt="image-20211213192902566" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://raw.githubusercontent.com/tqb4342/BlogPhoto/master/20211213192902.png" class="lozad post-image"></p>
+<p>这是一个开源的代码托管平台，上面托管了大量的优秀项目源码，你可以通过主题，榜单等方式在GitHub找到自己感兴趣的项目源码，通过多做一些项目，你就可以很快的提升自己的技术，从而进入到自己心仪的公司。</p>
+<p>此外，还有一个非常关键的资源，那就是我们身边的师兄师姐、前辈以及老师。如果遇到不懂的问题，且身边有这种资源的情况下，一定要去请教一下他们，这也是解决问题效率最高的一种方法。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/the-way-of-pragram/">https://tanqingbo.cn/the-way-of-pragram/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/程序员必备的几个技能！看完你也是大神/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">程序员必备的几个技能！看完你也是大神 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/be-a-programmer-instead-of-a-code-farmer/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">如何做一个程序员而不是码农？ </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BA%BA%E5%AD%A6%E7%9A%84%E5%A6%82%E9%B1%BC%E5%BE%97%E6%B0%B4%EF%BC%8C%E5%8F%AF%E6%98%AF%E6%88%91%E8%A7%89%E5%BE%97%E7%BC%96%E7%A8%8B%E5%A5%BD%E9%9A%BE%EF%BC%9F%E5%81%9A%E5%88%B0%E8%BF%994%E7%82%B9%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E6%90%9E%E5%AE%9A%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%BD%93%E4%BD%A0%E5%9C%A8%E9%98%85%E8%AF%BB%E6%95%99%E6%9D%90%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%80%E5%AE%9A%E8%A6%81%E8%AE%A4%E7%9C%9F%E6%9F%A5%E7%9C%8B%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">首先，当你在阅读教材的时候一定要认真查看示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%81%E4%BF%AE%E6%94%B9%EF%BC%81%E5%86%8D%E8%BF%90%E8%A1%8C-%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">第二、运行！修改！再运行 ！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E3%80%81%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第三、学会使用调试器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E3%80%81%E5%96%84%E4%BA%8E%E5%AF%BB%E6%89%BE%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">第四、善于寻找学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81B%E7%AB%99"><span class="toc-number">5.1.</span> <span class="toc-text">1、B站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81CSDN"><span class="toc-number">5.2.</span> <span class="toc-text">2、CSDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-number">5.3.</span> <span class="toc-text">3、牛客网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81GitHub"><span class="toc-number">5.4.</span> <span class="toc-text">4、GitHub</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BA%BA%E5%AD%A6%E7%9A%84%E5%A6%82%E9%B1%BC%E5%BE%97%E6%B0%B4%EF%BC%8C%E5%8F%AF%E6%98%AF%E6%88%91%E8%A7%89%E5%BE%97%E7%BC%96%E7%A8%8B%E5%A5%BD%E9%9A%BE%EF%BC%9F%E5%81%9A%E5%88%B0%E8%BF%994%E7%82%B9%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E6%90%9E%E5%AE%9A%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%BD%93%E4%BD%A0%E5%9C%A8%E9%98%85%E8%AF%BB%E6%95%99%E6%9D%90%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%80%E5%AE%9A%E8%A6%81%E8%AE%A4%E7%9C%9F%E6%9F%A5%E7%9C%8B%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">首先，当你在阅读教材的时候一定要认真查看示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%81%E4%BF%AE%E6%94%B9%EF%BC%81%E5%86%8D%E8%BF%90%E8%A1%8C-%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">第二、运行！修改！再运行 ！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E3%80%81%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第三、学会使用调试器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E3%80%81%E5%96%84%E4%BA%8E%E5%AF%BB%E6%89%BE%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">第四、善于寻找学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81B%E7%AB%99"><span class="toc-number">5.1.</span> <span class="toc-text">1、B站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81CSDN"><span class="toc-number">5.2.</span> <span class="toc-text">2、CSDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-number">5.3.</span> <span class="toc-text">3、牛客网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81GitHub"><span class="toc-number">5.4.</span> <span class="toc-text">4、GitHub</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BA%BA%E5%AD%A6%E7%9A%84%E5%A6%82%E9%B1%BC%E5%BE%97%E6%B0%B4%EF%BC%8C%E5%8F%AF%E6%98%AF%E6%88%91%E8%A7%89%E5%BE%97%E7%BC%96%E7%A8%8B%E5%A5%BD%E9%9A%BE%EF%BC%9F%E5%81%9A%E5%88%B0%E8%BF%994%E7%82%B9%EF%BC%8C%E5%B8%AE%E4%BD%A0%E5%BF%AB%E9%80%9F%E6%90%9E%E5%AE%9A%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">别人学的如鱼得水，可是我觉得编程好难？做到这4点，帮你快速搞定编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E5%85%88%EF%BC%8C%E5%BD%93%E4%BD%A0%E5%9C%A8%E9%98%85%E8%AF%BB%E6%95%99%E6%9D%90%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%80%E5%AE%9A%E8%A6%81%E8%AE%A4%E7%9C%9F%E6%9F%A5%E7%9C%8B%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">首先，当你在阅读教材的时候一定要认真查看示例代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%81%E4%BF%AE%E6%94%B9%EF%BC%81%E5%86%8D%E8%BF%90%E8%A1%8C-%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">第二、运行！修改！再运行 ！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E3%80%81%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-number">4.</span> <span class="toc-text">第三、学会使用调试器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E3%80%81%E5%96%84%E4%BA%8E%E5%AF%BB%E6%89%BE%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">第四、善于寻找学习资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81B%E7%AB%99"><span class="toc-number">5.1.</span> <span class="toc-text">1、B站</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81CSDN"><span class="toc-number">5.2.</span> <span class="toc-text">2、CSDN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E7%89%9B%E5%AE%A2%E7%BD%91"><span class="toc-number">5.3.</span> <span class="toc-text">3、牛客网</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81GitHub"><span class="toc-number">5.4.</span> <span class="toc-text">4、GitHub</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

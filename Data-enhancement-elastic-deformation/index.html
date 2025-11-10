@@ -1,1 +1,919 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>论文笔记：图像数据增强之弹性形变（Elastic Distortions）&nbsp; | &nbsp;IT码农</title><meta property="title" content="论文笔记：图像数据增强之弹性形变（Elastic Distortions）"><meta property="url" content="https://tanqingbo.cn/Data-enhancement-elastic-deformation/index.html"><meta property="og:img" content="https://pic1.zhimg.com/v2-79387fb70d8760b420c5012bc6334884_1440w.jpg"><meta property="description" content="对于图像而言，常用的增加训练样本的方法主要有对图像进行旋转、移位等仿射变换，也可以使用镜像变换等等，这里介绍一种常用于字符样本上的变换方法，弹性变换算法(Elastic Distortion)。"><meta property="keywords" content="机器学习,深度学习,弹性形变,图像数据"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2021-01-06"><meta property="og:article:modified_time" content="2021-01-06"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="机器学习"><meta property="og:article:tag" content="深度学习"><meta property="og:article:tag" content="弹性形变"><meta property="og:article:tag" content="图像数据"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/Data-enhancement-elastic-deformation/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://pic1.zhimg.com/v2-79387fb70d8760b420c5012bc6334884_1440w.jpg" data-src="https://pic1.zhimg.com/v2-79387fb70d8760b420c5012bc6334884_1440w.jpg" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">论文笔记：图像数据增强之弹性形变（Elastic Distortions）</h1></header><div class="post-meta post-show-meta"><time datetime="2021-01-06T07:57:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2021-01-06</span> </time><span class="dot"></span> <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a> <span class="dot"></span> <span>2.5k 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/Data-enhancement-elastic-deformation/" class="leancloud_visitors" data-flag-title="论文笔记：图像数据增强之弹性形变（Elastic Distortions）"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/机器学习/" class="post-meta-link">机器学习</a> <span class="dot"></span> <a href="/tags/深度学习/" class="post-meta-link">深度学习</a> <span class="dot"></span> <a href="/tags/弹性形变/" class="post-meta-link">弹性形变</a> <span class="dot"></span> <a href="/tags/图像数据/" class="post-meta-link">图像数据</a></div></div><meta name="description" content="对于图像而言，常用的增加训练样本的方法主要有对图像进行旋转、移位等仿射变换，也可以使用镜像变换等等，这里介绍一种常用于字符样本上的变换方法，弹性变换算法(Elastic Distortion)。"><meta name="keywords" content="机器学习,深度学习,弹性形变,图像数据"><div id="section" class="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul><li><p>我们都知道，深度学习的成功的原因主要有两点：</p><ol><li>当前计算机的计算能力有很大提升；</li><li>随着大数据时代的到来，当前的训练样本数目有很大的提升。</li></ol></li><li><p>然而深度学习的一大问题是，有的问题并没有大量的训练数据，而由于深度神经网络具有非常强的学习能力，如果没有大量的训练数据，会造成过拟合，训练出的模型难以应用。因此对于一些没有足够样本数量的问题，可以通过已有的样本，对其进行变化，人工增加训练样本。</p></li><li><p>对于图像而言，常用的增加训练样本的方法主要有<strong>对图像进行旋转、移位等仿射变换，也可以使用镜像变换等等，</strong>这里介绍一种常用于字符样本上的变换方法，**弹性变换算法(Elastic Distortion)**。</p></li><li><p>该算法最先是由Patrice等人在2003年的ICDAR上发表的《<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cognitivemedium.com/assets/rmnist/Simard.pdf">Best Practices for Convolutional Neural Networks Applied to Visual Document Analysis</a>》。<strong>本文主要是对论文中提出的弹性形变数据增强方法进行解读。</strong></p></li></ul><h2 id="插播一下双线性插值的定义"><a href="#插播一下双线性插值的定义" class="headerlink" title="插播一下双线性插值的定义"></a>插播一下双线性插值的定义</h2><ul><li><strong>双线性插值</strong>，顾名思义就是两个方向的线性插值加起来（这解释过于简单粗暴，哈哈）。所以只要了解什么是线性插值，分别在x轴和y轴都做一遍，就是双线性插值了。</li><li><strong>线性插值：</strong>两个点A，B，要在AB中间插入一个点C（点C坐标在AB连线上），就直接让C的值落在AB的值的连线上就可以了。如A点坐标(0,0),值为3，B点坐标(0,2)，值为5，那要对坐标为(0,1)的点C进行插值，就让C落在AB线上，值为4就可以了。</li><li>但是如果C不在AB的线上肿么办捏，所以就有了双线性插值。如下图，已知Q12，Q22，Q11，Q21，但是要插值的点为P点，这就要用双线性插值了，首先在x轴方向上，对R1和R2两个点进行插值，这个很简单，然后根据R1和R2对P点进行插值，这就是所谓的双线性插值。</li></ul><p><img srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155445.png" class="lozad post-image" src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155445.png"></p><h2 id="1、仿射变换"><a href="#1、仿射变换" class="headerlink" title="1、仿射变换"></a>1、仿射变换</h2><ul><li>仿射变换是最常用的空间坐标变换的方法之一，具体定义可参考冈萨雷斯的《数字图像处理第三版》50页。论文中是如下解释仿射变换的：</li><li>将仿射变换应用于图像，新像素的位置是由原始位置确定的，Δx(x,y)=1，Δy(x,y)=0代表向右移一个单位，Δx(x,y)= αx, Δy(x,y)= αy代表像素点由原点位置进行缩放。</li><li>上面说明了如何计算变换之后每个像素点的坐标，下图说明了如何应用位移字段来计算每个像素的新值（其实就是<strong>双线性插值的方法</strong>）：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155538.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155538.png" class="lozad post-image"></p><ul><li>假设A是原点(0,0),而数字3,7,5,9是图像要转换的灰度等级，坐标分别为(1,0),(2,0),(1,-1),(1,-2),A的位移由Δx(0,0) = 1.75 and Δy(0,0) = -0.5给出，如箭头所示。通过评估原始图像的位置（1.75，-0.5）处的灰度级来计算新（扭曲）图像中的A的新灰度值。用于评估灰度级的简单算法是原始图像的像素值进行“线性插值”。尽管可以使用其他插值方案（例如，双三次和B样条插值），但双线性插值是最简单的插值方法之一，并且适用于以所选分辨率（29×29）生成附加的扭曲字符图像。</li><li>先水平插值，然后垂直插值，完成评估。箭头结束的位置在3,5,7,9的方格内，这样我们先计算箭头相对于它结束的方格的坐标。在这种情况下，它相对于正方形方格中的坐标是（0.75,0.5），假设该正方形的原点是左下角（也就是灰度值为5的点）。在此示例中，水平插值为：<code>3 +0.75×(7-3)= 6</code>;垂直插值为：<code>8 +0.5×(6-8)= 7</code>，因此A的新像素值为7.</li><li>对所有像素都进行了类似的计算。在给定图像之外的所有像素位置都假定有一个灰度值。</li></ul><h2 id="2、弹性形变"><a href="#2、弹性形变" class="headerlink" title="2、弹性形变"></a>2、弹性形变</h2><ul><li><strong>仿射变换改善了在MNIST数据集上的实验结果，但是实验在弹性形变后的数据集上取得了最好的结果。</strong><h3 id="那么什么是弹性形变呢？"><a href="#那么什么是弹性形变呢？" class="headerlink" title="那么什么是弹性形变呢？"></a>那么什么是弹性形变呢？</h3></li><li>首先创建随机位移场来使图像变形，即<code>Δx(x,y) = rand(-1,+1)、Δy(x,y)=rand(-1,+1)</code>,其中<code>rand(-1,+1)</code>是生成一个在(-1,1)之间均匀分布的随机数，然后用标准差为σ的高斯函数对Δx和Δy进行卷积，如果σ值很大，则结果值很小，因为随机值平均为0.如果我们将位移场标准化（达到1的范数），则该字段接近常数，具有随机方向。</li><li>如果σ很小，则归一化后该字段看起来像一个完全随机的字段（如图2右上角所示）。</li><li>对于中间σ值，位移场看起来像弹性变形，其中σ是弹性系数。然后将位移场乘以控制变形强度的比例因子α。 在我们的MNIST实验（29x29输入图像）中，<strong>产生最佳结果的值是σ = 4和α= 34。</strong></li><li>将经过高斯卷积的位移场乘以控制变形强度的比例因子α，得到一个弹性形变的位移场，最后将这个位移场作用在仿射变换之后的图像上，得到最终弹性形变增强的数据。作用的过程相当于在仿射图像上插值的过程，最后返回插值之后的结果。</li><li>关于高斯卷积的原理可以参考这篇文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/sunmc1204953974/article/details/50634652">高斯卷积滤波</a></li><li>如果文章看完文章，还是不太懂弹性形变数据增强的原理的话，可以结合代码一起看，下面是参考代码，我都有注释。</li></ul><h2 id="3、参考代码"><a href="#3、参考代码" class="headerlink" title="3、参考代码"></a>3、参考代码</h2><pre class="highlight"><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">@author:TanQingBo</span></span><br><span class="line"><span class="string">@file:elastic_transform.py</span></span><br><span class="line"><span class="string">@time:2018/10/1221:56</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># Import stuff</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage.interpolation <span class="keyword">import</span> map_coordinates</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage.filters <span class="keyword">import</span> gaussian_filter</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt		</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to distort image  alpha = im_merge.shape[1]*2、sigma=im_merge.shape[1]*0.08、alpha_affine=sigma</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">elastic_transform</span>(<span class="params">image, alpha, sigma, alpha_affine, random_state=None</span>):</span></span><br><span class="line">    <span class="string">"""Elastic deformation of images as described in [Simard2003]_ (with modifications).</span></span><br><span class="line"><span class="string">    .. [Simard2003] Simard, Steinkraus and Platt, "Best Practices for</span></span><br><span class="line"><span class="string">         Convolutional Neural Networks applied to Visual Document Analysis", in</span></span><br><span class="line"><span class="string">         Proc. of the International Conference on Document Analysis and</span></span><br><span class="line"><span class="string">         Recognition, 2003.				</span></span><br><span class="line"><span class="string">     Based on https://gist.github.com/erniejunior/601cdf56d2b424757de5</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> random_state <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        random_state = np.random.RandomState(<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    shape = image.shape</span><br><span class="line">    shape_size = shape[:<span class="number">2</span>]   <span class="comment">#(512,512)表示图像的尺寸				</span></span><br><span class="line">    <span class="comment"># Random affine</span></span><br><span class="line">    center_square = np.float32(shape_size) // <span class="number">2</span></span><br><span class="line">    square_size = min(shape_size) // <span class="number">3</span></span><br><span class="line">    <span class="comment"># pts1为变换前的坐标，pts2为变换后的坐标，范围为什么是center_square+-square_size？</span></span><br><span class="line">    <span class="comment"># 其中center_square是图像的中心，square_size=512//3=170</span></span><br><span class="line">    pts1 = np.float32([center_square + square_size, [center_square[<span class="number">0</span>] + square_size, center_square[<span class="number">1</span>] - square_size],</span><br><span class="line">                       center_square - square_size])</span><br><span class="line">    pts2 = pts1 + random_state.uniform(-alpha_affine, alpha_affine, size=pts1.shape).astype(np.float32)</span><br><span class="line">    <span class="comment"># Mat getAffineTransform(InputArray src, InputArray dst)  src表示输入的三个点，dst表示输出的三个点，获取变换矩阵M</span></span><br><span class="line">    M = cv2.getAffineTransform(pts1, pts2)  <span class="comment">#获取变换矩阵</span></span><br><span class="line">    <span class="comment">#默认使用 双线性插值，</span></span><br><span class="line">    image = cv2.warpAffine(image, M, shape_size[::<span class="number">-1</span>], borderMode=cv2.BORDER_REFLECT_101)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># # random_state.rand(*shape) 会产生一个和 shape 一样打的服从[0,1]均匀分布的矩阵</span></span><br><span class="line">    <span class="comment"># * 2 - 1 是为了将分布平移到 [-1, 1] 的区间</span></span><br><span class="line">    <span class="comment"># 对random_state.rand(*shape)做高斯卷积，没有对图像做高斯卷积，为什么？因为论文上这样操作的</span></span><br><span class="line">    <span class="comment"># 高斯卷积原理可参考：https://blog.csdn.net/sunmc1204953974/article/details/50634652</span></span><br><span class="line">    <span class="comment"># 实际上 dx 和 dy 就是在计算论文中弹性变换的那三步：产生一个随机的位移，将卷积核作用在上面，用 alpha 决定尺度的大小</span></span><br><span class="line">    dx = gaussian_filter((random_state.rand(*shape) * <span class="number">2</span> - <span class="number">1</span>), sigma) * alpha</span><br><span class="line">    dy = gaussian_filter((random_state.rand(*shape) * <span class="number">2</span> - <span class="number">1</span>), sigma) * alpha</span><br><span class="line">    dz = np.zeros_like(dx)  <span class="comment">#构造一个尺寸与dx相同的O矩阵				</span></span><br><span class="line">    <span class="comment"># np.meshgrid 生成网格点坐标矩阵，并在生成的网格点坐标矩阵上加上刚刚的到的dx dy</span></span><br><span class="line">    x, y, z = np.meshgrid(np.arange(shape[<span class="number">1</span>]), np.arange(shape[<span class="number">0</span>]), np.arange(shape[<span class="number">2</span>]))  <span class="comment">#网格采样点函数</span></span><br><span class="line">    indices = np.reshape(y + dy, (<span class="number">-1</span>, <span class="number">1</span>)), np.reshape(x + dx, (<span class="number">-1</span>, <span class="number">1</span>)), np.reshape(z, (<span class="number">-1</span>, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># indices = np.reshape(y+dy, (-1, 1)), np.reshape(x+dx, (-1, 1)), np.reshape(z, (-1, 1))				</span></span><br><span class="line">    <span class="keyword">return</span> map_coordinates(image, indices, order=<span class="number">1</span>, mode=<span class="string">'reflect'</span>).reshape(shape)				</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define function to draw a grid</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_grid</span>(<span class="params">im, grid_size</span>):</span></span><br><span class="line">    <span class="comment"># Draw grid lines</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, im.shape[<span class="number">1</span>], grid_size):</span><br><span class="line">        cv2.line(im, (i, <span class="number">0</span>), (i, im.shape[<span class="number">0</span>]), color=(<span class="number">255</span>,))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, im.shape[<span class="number">0</span>], grid_size):</span><br><span class="line">        cv2.line(im, (<span class="number">0</span>, j), (im.shape[<span class="number">1</span>], j), color=(<span class="number">255</span>,))				</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    img_path = <span class="string">'E:/liverdata/nii/png/img'</span></span><br><span class="line">    mask_path = <span class="string">'E:/liverdata/nii/png/label'</span></span><br><span class="line">    <span class="comment"># img_path =  '/home/changzhang/ liubo_workspace/tmp_for_test/img'</span></span><br><span class="line">    <span class="comment"># mask_path = '/home/changzhang/liubo_workspace/tmp_for_test/mask'				</span></span><br><span class="line">    img_list = sorted(os.listdir(img_path))</span><br><span class="line">    mask_list = sorted(os.listdir(mask_path))</span><br><span class="line">    print(img_list)				</span><br><span class="line">    img_num = len(img_list)</span><br><span class="line">    mask_num = len(mask_list)				</span><br><span class="line">    <span class="keyword">assert</span> img_num == mask_num, <span class="string">'img nuimber is not equal to mask num.'</span>				</span><br><span class="line">    count_total = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(img_num):</span><br><span class="line">        print(os.path.join(img_path, img_list[i]))   <span class="comment">#将路径和文件名合成一个整体</span></span><br><span class="line">        im = cv2.imread(os.path.join(img_path, img_list[i]), <span class="number">-1</span>)</span><br><span class="line">        im_mask = cv2.imread(os.path.join(mask_path, mask_list[i]), <span class="number">-1</span>)				</span><br><span class="line">        <span class="comment"># # Draw grid lines</span></span><br><span class="line">        <span class="comment"># draw_grid(im, 50)</span></span><br><span class="line">        <span class="comment"># draw_grid(im_mask, 50)				</span></span><br><span class="line">        <span class="comment"># Merge images into separete channels (shape will be (cols, rols, 2))</span></span><br><span class="line">        im_merge = np.concatenate((im[..., <span class="literal">None</span>], im_mask[..., <span class="literal">None</span>]), axis=<span class="number">2</span>)				</span><br><span class="line">        <span class="comment"># get img and mask shortname</span></span><br><span class="line">        (img_shotname, img_extension) = os.path.splitext(img_list[i])  <span class="comment">#将文件名和扩展名分开</span></span><br><span class="line">        (mask_shotname, mask_extension) = os.path.splitext(mask_list[i])				</span><br><span class="line">        <span class="comment"># Elastic deformation 10 times</span></span><br><span class="line">        count = <span class="number">0</span>				</span><br><span class="line">        <span class="keyword">while</span> count &lt; <span class="number">10</span>:</span><br><span class="line">            <span class="comment"># Apply transformation on image  im_merge.shape[1]表示图像中像素点的个数</span></span><br><span class="line">            im_merge_t = elastic_transform(im_merge, im_merge.shape[<span class="number">1</span>] * <span class="number">2</span>, im_merge.shape[<span class="number">1</span>] * <span class="number">0.08</span>,</span><br><span class="line">                                           im_merge.shape[<span class="number">1</span>] * <span class="number">0.08</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Split image and mask</span></span><br><span class="line">            im_t = im_merge_t[..., <span class="number">0</span>]</span><br><span class="line">            im_mask_t = im_merge_t[..., <span class="number">1</span>]				</span><br><span class="line">            <span class="comment"># save the new imgs and masks</span></span><br><span class="line">            cv2.imwrite(os.path.join(img_path, img_shotname + <span class="string">'-'</span> + str(count) + img_extension), im_t)</span><br><span class="line">            cv2.imwrite(os.path.join(mask_path, mask_shotname + <span class="string">'-'</span> + str(count) + mask_extension), im_mask_t)				</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            count_total += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> count_total % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Elastic deformation generated {} imgs'</span>, format(count_total))</span><br><span class="line">            <span class="comment"># # Display result</span></span><br><span class="line">            <span class="comment"># print 'Display result'</span></span><br><span class="line">            <span class="comment"># plt.figure(figsize = (16,14))</span></span><br><span class="line">            <span class="comment"># plt.imshow(np.c_[np.r_[im, im_mask], np.r_[im_t, im_mask_t]], cmap='gray')</span></span><br><span class="line">            <span class="comment"># plt.show()</span></span><br></pre><ul><li>关于map_coordinates函数原理的参考文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverrun.com/cn/q/1244773">Python/Scipy插值（map_coordinates）</a></li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li>论文原文：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cognitivemedium.com/assets/rmnist/Simard.pdf">Best Practices for Convolutional Neural Networks Applied to Visual Document Analysis</a></li><li>MingChaoSun-CSDN：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/sunmc1204953974/article/details/50634652">高斯卷积滤波</a></li><li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverrun.com/cn/q/1244773">Python/Scipy插值（map_coordinates）</a></li></ul></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Data-enhancement-elastic-deformation/">https://tanqingbo.cn/Data-enhancement-elastic-deformation/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">论文笔记：基于3D卷积神经网络的人体行为识别(3D Convolutional Neural Networks for Human Action Recognition)</div></div></a></div><div class="nav-item-next"><a href="/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation)</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E6%92%AD%E4%B8%80%E4%B8%8B%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">插播一下双线性插值的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">1、仿射变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98"><span class="toc-number">4.</span> <span class="toc-text">2、弹性形变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98%E5%91%A2%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那么什么是弹性形变呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">3、参考代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E6%92%AD%E4%B8%80%E4%B8%8B%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">插播一下双线性插值的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">1、仿射变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98"><span class="toc-number">4.</span> <span class="toc-text">2、弹性形变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98%E5%91%A2%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那么什么是弹性形变呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">3、参考代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E6%92%AD%E4%B8%80%E4%B8%8B%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">插播一下双线性插值的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">1、仿射变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98"><span class="toc-number">4.</span> <span class="toc-text">2、弹性形变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98%E5%91%A2%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那么什么是弹性形变呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">3、参考代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>论文笔记：图像数据增强之弹性形变（Elastic Distortions）&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="论文笔记：图像数据增强之弹性形变（Elastic Distortions）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Data-enhancement-elastic-deformation/index.html">
+  
+  
+  <meta property="og:img" content="https://pic1.zhimg.com/v2-79387fb70d8760b420c5012bc6334884_1440w.jpg">
+  
+  
+  <meta property="description" content="对于图像而言，常用的增加训练样本的方法主要有对图像进行旋转、移位等仿射变换，也可以使用镜像变换等等，这里介绍一种常用于字符样本上的变换方法，弹性变换算法(Elastic Distortion)。">
+  
+  <meta property="keywords" content="机器学习,深度学习,弹性形变,图像数据">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-01-06">
+  <meta property="og:article:modified_time" content="2021-01-06">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  <meta property="og:article:tag" content="深度学习">
+  
+  <meta property="og:article:tag" content="弹性形变">
+  
+  <meta property="og:article:tag" content="图像数据">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Data-enhancement-elastic-deformation/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic1.zhimg.com/v2-79387fb70d8760b420c5012bc6334884_1440w.jpg" data-src="https://pic1.zhimg.com/v2-79387fb70d8760b420c5012bc6334884_1440w.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      论文笔记：图像数据增强之弹性形变（Elastic Distortions）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-01-06T07:57:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-01-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Data-enhancement-elastic-deformation/" class="leancloud_visitors" data-flag-title="论文笔记：图像数据增强之弹性形变（Elastic Distortions）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/深度学习/" class="post-meta-link">深度学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/弹性形变/" class="post-meta-link">弹性形变</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/图像数据/" class="post-meta-link">图像数据</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="对于图像而言，常用的增加训练样本的方法主要有对图像进行旋转、移位等仿射变换，也可以使用镜像变换等等，这里介绍一种常用于字符样本上的变换方法，弹性变换算法(Elastic Distortion)。">
+  
+  <meta name="keywords" content="机器学习,深度学习,弹性形变,图像数据">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li><p>我们都知道，深度学习的成功的原因主要有两点：</p>
+<ol>
+<li>当前计算机的计算能力有很大提升；</li>
+<li>随着大数据时代的到来，当前的训练样本数目有很大的提升。</li>
+</ol>
+</li>
+<li><p>然而深度学习的一大问题是，有的问题并没有大量的训练数据，而由于深度神经网络具有非常强的学习能力，如果没有大量的训练数据，会造成过拟合，训练出的模型难以应用。因此对于一些没有足够样本数量的问题，可以通过已有的样本，对其进行变化，人工增加训练样本。</p>
+</li>
+<li><p>对于图像而言，常用的增加训练样本的方法主要有<strong>对图像进行旋转、移位等仿射变换，也可以使用镜像变换等等，</strong>这里介绍一种常用于字符样本上的变换方法，**弹性变换算法(Elastic Distortion)**。</p>
+</li>
+<li><p>该算法最先是由Patrice等人在2003年的ICDAR上发表的《<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cognitivemedium.com/assets/rmnist/Simard.pdf">Best Practices for Convolutional Neural Networks Applied to Visual Document Analysis</a>》。<strong>本文主要是对论文中提出的弹性形变数据增强方法进行解读。</strong></p>
+</li>
+</ul>
+<h2 id="插播一下双线性插值的定义"><a href="#插播一下双线性插值的定义" class="headerlink" title="插播一下双线性插值的定义"></a>插播一下双线性插值的定义</h2><ul>
+<li><strong>双线性插值</strong>，顾名思义就是两个方向的线性插值加起来（这解释过于简单粗暴，哈哈）。所以只要了解什么是线性插值，分别在x轴和y轴都做一遍，就是双线性插值了。</li>
+<li><strong>线性插值：</strong>两个点A，B，要在AB中间插入一个点C（点C坐标在AB连线上），就直接让C的值落在AB的值的连线上就可以了。如A点坐标(0,0),值为3，B点坐标(0,2)，值为5，那要对坐标为(0,1)的点C进行插值，就让C落在AB线上，值为4就可以了。</li>
+<li>但是如果C不在AB的线上肿么办捏，所以就有了双线性插值。如下图，已知Q12，Q22，Q11，Q21，但是要插值的点为P点，这就要用双线性插值了，首先在x轴方向上，对R1和R2两个点进行插值，这个很简单，然后根据R1和R2对P点进行插值，这就是所谓的双线性插值。</li>
+</ul>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155445.png" class="lozad post-image"src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155445.png"></p>
+<h2 id="1、仿射变换"><a href="#1、仿射变换" class="headerlink" title="1、仿射变换"></a>1、仿射变换</h2><ul>
+<li>仿射变换是最常用的空间坐标变换的方法之一，具体定义可参考冈萨雷斯的《数字图像处理第三版》50页。论文中是如下解释仿射变换的：</li>
+<li>将仿射变换应用于图像，新像素的位置是由原始位置确定的，Δx(x,y)=1，Δy(x,y)=0代表向右移一个单位，Δx(x,y)= αx, Δy(x,y)= αy代表像素点由原点位置进行缩放。</li>
+<li>上面说明了如何计算变换之后每个像素点的坐标，下图说明了如何应用位移字段来计算每个像素的新值（其实就是<strong>双线性插值的方法</strong>）：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155538.png" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210106155538.png" class="lozad post-image"></p>
+<ul>
+<li>假设A是原点(0,0),而数字3,7,5,9是图像要转换的灰度等级，坐标分别为(1,0),(2,0),(1,-1),(1,-2),A的位移由Δx(0,0) = 1.75 and Δy(0,0) = -0.5给出，如箭头所示。通过评估原始图像的位置（1.75，-0.5）处的灰度级来计算新（扭曲）图像中的A的新灰度值。用于评估灰度级的简单算法是原始图像的像素值进行“线性插值”。尽管可以使用其他插值方案（例如，双三次和B样条插值），但双线性插值是最简单的插值方法之一，并且适用于以所选分辨率（29×29）生成附加的扭曲字符图像。</li>
+<li>先水平插值，然后垂直插值，完成评估。箭头结束的位置在3,5,7,9的方格内，这样我们先计算箭头相对于它结束的方格的坐标。在这种情况下，它相对于正方形方格中的坐标是（0.75,0.5），假设该正方形的原点是左下角（也就是灰度值为5的点）。在此示例中，水平插值为：<code>3 +0.75×(7-3)= 6</code>;垂直插值为：<code>8 +0.5×(6-8)= 7</code>，因此A的新像素值为7.</li>
+<li>对所有像素都进行了类似的计算。在给定图像之外的所有像素位置都假定有一个灰度值。</li>
+</ul>
+<h2 id="2、弹性形变"><a href="#2、弹性形变" class="headerlink" title="2、弹性形变"></a>2、弹性形变</h2><ul>
+<li><strong>仿射变换改善了在MNIST数据集上的实验结果，但是实验在弹性形变后的数据集上取得了最好的结果。</strong><h3 id="那么什么是弹性形变呢？"><a href="#那么什么是弹性形变呢？" class="headerlink" title="那么什么是弹性形变呢？"></a>那么什么是弹性形变呢？</h3></li>
+<li>首先创建随机位移场来使图像变形，即<code>Δx(x,y) = rand(-1,+1)、Δy(x,y)=rand(-1,+1)</code>,其中<code>rand(-1,+1)</code>是生成一个在(-1,1)之间均匀分布的随机数，然后用标准差为σ的高斯函数对Δx和Δy进行卷积，如果σ值很大，则结果值很小，因为随机值平均为0.如果我们将位移场标准化（达到1的范数），则该字段接近常数，具有随机方向。</li>
+<li>如果σ很小，则归一化后该字段看起来像一个完全随机的字段（如图2右上角所示）。</li>
+<li>对于中间σ值，位移场看起来像弹性变形，其中σ是弹性系数。然后将位移场乘以控制变形强度的比例因子α。 在我们的MNIST实验（29x29输入图像）中，<strong>产生最佳结果的值是σ = 4和α= 34。</strong></li>
+<li>将经过高斯卷积的位移场乘以控制变形强度的比例因子α，得到一个弹性形变的位移场，最后将这个位移场作用在仿射变换之后的图像上，得到最终弹性形变增强的数据。作用的过程相当于在仿射图像上插值的过程，最后返回插值之后的结果。</li>
+<li>关于高斯卷积的原理可以参考这篇文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/sunmc1204953974/article/details/50634652">高斯卷积滤波</a></li>
+<li>如果文章看完文章，还是不太懂弹性形变数据增强的原理的话，可以结合代码一起看，下面是参考代码，我都有注释。</li>
+</ul>
+<h2 id="3、参考代码"><a href="#3、参考代码" class="headerlink" title="3、参考代码"></a>3、参考代码</h2><pre class="highlight"><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">@author:TanQingBo</span></span><br><span class="line"><span class="string">@file:elastic_transform.py</span></span><br><span class="line"><span class="string">@time:2018/10/1221:56</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="comment"># Import stuff</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage.interpolation <span class="keyword">import</span> map_coordinates</span><br><span class="line"><span class="keyword">from</span> scipy.ndimage.filters <span class="keyword">import</span> gaussian_filter</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt		</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to distort image  alpha = im_merge.shape[1]*2、sigma=im_merge.shape[1]*0.08、alpha_affine=sigma</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">elastic_transform</span>(<span class="params">image, alpha, sigma, alpha_affine, random_state=None</span>):</span></span><br><span class="line">    <span class="string">"""Elastic deformation of images as described in [Simard2003]_ (with modifications).</span></span><br><span class="line"><span class="string">    .. [Simard2003] Simard, Steinkraus and Platt, "Best Practices for</span></span><br><span class="line"><span class="string">         Convolutional Neural Networks applied to Visual Document Analysis", in</span></span><br><span class="line"><span class="string">         Proc. of the International Conference on Document Analysis and</span></span><br><span class="line"><span class="string">         Recognition, 2003.				</span></span><br><span class="line"><span class="string">     Based on https://gist.github.com/erniejunior/601cdf56d2b424757de5</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> random_state <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        random_state = np.random.RandomState(<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    shape = image.shape</span><br><span class="line">    shape_size = shape[:<span class="number">2</span>]   <span class="comment">#(512,512)表示图像的尺寸				</span></span><br><span class="line">    <span class="comment"># Random affine</span></span><br><span class="line">    center_square = np.float32(shape_size) // <span class="number">2</span></span><br><span class="line">    square_size = min(shape_size) // <span class="number">3</span></span><br><span class="line">    <span class="comment"># pts1为变换前的坐标，pts2为变换后的坐标，范围为什么是center_square+-square_size？</span></span><br><span class="line">    <span class="comment"># 其中center_square是图像的中心，square_size=512//3=170</span></span><br><span class="line">    pts1 = np.float32([center_square + square_size, [center_square[<span class="number">0</span>] + square_size, center_square[<span class="number">1</span>] - square_size],</span><br><span class="line">                       center_square - square_size])</span><br><span class="line">    pts2 = pts1 + random_state.uniform(-alpha_affine, alpha_affine, size=pts1.shape).astype(np.float32)</span><br><span class="line">    <span class="comment"># Mat getAffineTransform(InputArray src, InputArray dst)  src表示输入的三个点，dst表示输出的三个点，获取变换矩阵M</span></span><br><span class="line">    M = cv2.getAffineTransform(pts1, pts2)  <span class="comment">#获取变换矩阵</span></span><br><span class="line">    <span class="comment">#默认使用 双线性插值，</span></span><br><span class="line">    image = cv2.warpAffine(image, M, shape_size[::<span class="number">-1</span>], borderMode=cv2.BORDER_REFLECT_101)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># # random_state.rand(*shape) 会产生一个和 shape 一样打的服从[0,1]均匀分布的矩阵</span></span><br><span class="line">    <span class="comment"># * 2 - 1 是为了将分布平移到 [-1, 1] 的区间</span></span><br><span class="line">    <span class="comment"># 对random_state.rand(*shape)做高斯卷积，没有对图像做高斯卷积，为什么？因为论文上这样操作的</span></span><br><span class="line">    <span class="comment"># 高斯卷积原理可参考：https://blog.csdn.net/sunmc1204953974/article/details/50634652</span></span><br><span class="line">    <span class="comment"># 实际上 dx 和 dy 就是在计算论文中弹性变换的那三步：产生一个随机的位移，将卷积核作用在上面，用 alpha 决定尺度的大小</span></span><br><span class="line">    dx = gaussian_filter((random_state.rand(*shape) * <span class="number">2</span> - <span class="number">1</span>), sigma) * alpha</span><br><span class="line">    dy = gaussian_filter((random_state.rand(*shape) * <span class="number">2</span> - <span class="number">1</span>), sigma) * alpha</span><br><span class="line">    dz = np.zeros_like(dx)  <span class="comment">#构造一个尺寸与dx相同的O矩阵				</span></span><br><span class="line">    <span class="comment"># np.meshgrid 生成网格点坐标矩阵，并在生成的网格点坐标矩阵上加上刚刚的到的dx dy</span></span><br><span class="line">    x, y, z = np.meshgrid(np.arange(shape[<span class="number">1</span>]), np.arange(shape[<span class="number">0</span>]), np.arange(shape[<span class="number">2</span>]))  <span class="comment">#网格采样点函数</span></span><br><span class="line">    indices = np.reshape(y + dy, (<span class="number">-1</span>, <span class="number">1</span>)), np.reshape(x + dx, (<span class="number">-1</span>, <span class="number">1</span>)), np.reshape(z, (<span class="number">-1</span>, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># indices = np.reshape(y+dy, (-1, 1)), np.reshape(x+dx, (-1, 1)), np.reshape(z, (-1, 1))				</span></span><br><span class="line">    <span class="keyword">return</span> map_coordinates(image, indices, order=<span class="number">1</span>, mode=<span class="string">'reflect'</span>).reshape(shape)				</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define function to draw a grid</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_grid</span>(<span class="params">im, grid_size</span>):</span></span><br><span class="line">    <span class="comment"># Draw grid lines</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, im.shape[<span class="number">1</span>], grid_size):</span><br><span class="line">        cv2.line(im, (i, <span class="number">0</span>), (i, im.shape[<span class="number">0</span>]), color=(<span class="number">255</span>,))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, im.shape[<span class="number">0</span>], grid_size):</span><br><span class="line">        cv2.line(im, (<span class="number">0</span>, j), (im.shape[<span class="number">1</span>], j), color=(<span class="number">255</span>,))				</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    img_path = <span class="string">'E:/liverdata/nii/png/img'</span></span><br><span class="line">    mask_path = <span class="string">'E:/liverdata/nii/png/label'</span></span><br><span class="line">    <span class="comment"># img_path =  '/home/changzhang/ liubo_workspace/tmp_for_test/img'</span></span><br><span class="line">    <span class="comment"># mask_path = '/home/changzhang/liubo_workspace/tmp_for_test/mask'				</span></span><br><span class="line">    img_list = sorted(os.listdir(img_path))</span><br><span class="line">    mask_list = sorted(os.listdir(mask_path))</span><br><span class="line">    print(img_list)				</span><br><span class="line">    img_num = len(img_list)</span><br><span class="line">    mask_num = len(mask_list)				</span><br><span class="line">    <span class="keyword">assert</span> img_num == mask_num, <span class="string">'img nuimber is not equal to mask num.'</span>				</span><br><span class="line">    count_total = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(img_num):</span><br><span class="line">        print(os.path.join(img_path, img_list[i]))   <span class="comment">#将路径和文件名合成一个整体</span></span><br><span class="line">        im = cv2.imread(os.path.join(img_path, img_list[i]), <span class="number">-1</span>)</span><br><span class="line">        im_mask = cv2.imread(os.path.join(mask_path, mask_list[i]), <span class="number">-1</span>)				</span><br><span class="line">        <span class="comment"># # Draw grid lines</span></span><br><span class="line">        <span class="comment"># draw_grid(im, 50)</span></span><br><span class="line">        <span class="comment"># draw_grid(im_mask, 50)				</span></span><br><span class="line">        <span class="comment"># Merge images into separete channels (shape will be (cols, rols, 2))</span></span><br><span class="line">        im_merge = np.concatenate((im[..., <span class="literal">None</span>], im_mask[..., <span class="literal">None</span>]), axis=<span class="number">2</span>)				</span><br><span class="line">        <span class="comment"># get img and mask shortname</span></span><br><span class="line">        (img_shotname, img_extension) = os.path.splitext(img_list[i])  <span class="comment">#将文件名和扩展名分开</span></span><br><span class="line">        (mask_shotname, mask_extension) = os.path.splitext(mask_list[i])				</span><br><span class="line">        <span class="comment"># Elastic deformation 10 times</span></span><br><span class="line">        count = <span class="number">0</span>				</span><br><span class="line">        <span class="keyword">while</span> count &lt; <span class="number">10</span>:</span><br><span class="line">            <span class="comment"># Apply transformation on image  im_merge.shape[1]表示图像中像素点的个数</span></span><br><span class="line">            im_merge_t = elastic_transform(im_merge, im_merge.shape[<span class="number">1</span>] * <span class="number">2</span>, im_merge.shape[<span class="number">1</span>] * <span class="number">0.08</span>,</span><br><span class="line">                                           im_merge.shape[<span class="number">1</span>] * <span class="number">0.08</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Split image and mask</span></span><br><span class="line">            im_t = im_merge_t[..., <span class="number">0</span>]</span><br><span class="line">            im_mask_t = im_merge_t[..., <span class="number">1</span>]				</span><br><span class="line">            <span class="comment"># save the new imgs and masks</span></span><br><span class="line">            cv2.imwrite(os.path.join(img_path, img_shotname + <span class="string">'-'</span> + str(count) + img_extension), im_t)</span><br><span class="line">            cv2.imwrite(os.path.join(mask_path, mask_shotname + <span class="string">'-'</span> + str(count) + mask_extension), im_mask_t)				</span><br><span class="line">            count += <span class="number">1</span></span><br><span class="line">            count_total += <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> count_total % <span class="number">100</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Elastic deformation generated {} imgs'</span>, format(count_total))</span><br><span class="line">            <span class="comment"># # Display result</span></span><br><span class="line">            <span class="comment"># print 'Display result'</span></span><br><span class="line">            <span class="comment"># plt.figure(figsize = (16,14))</span></span><br><span class="line">            <span class="comment"># plt.imshow(np.c_[np.r_[im, im_mask], np.r_[im_t, im_mask_t]], cmap='gray')</span></span><br><span class="line">            <span class="comment"># plt.show()</span></span><br></pre>
+
+<ul>
+<li>关于map_coordinates函数原理的参考文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverrun.com/cn/q/1244773">Python/Scipy插值（map_coordinates）</a></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>论文原文：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cognitivemedium.com/assets/rmnist/Simard.pdf">Best Practices for Convolutional Neural Networks Applied to Visual Document Analysis</a></li>
+<li>MingChaoSun-CSDN：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/sunmc1204953974/article/details/50634652">高斯卷积滤波</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverrun.com/cn/q/1244773">Python/Scipy插值（map_coordinates）</a></li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Data-enhancement-elastic-deformation/">https://tanqingbo.cn/Data-enhancement-elastic-deformation/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">论文笔记：基于3D卷积神经网络的人体行为识别(3D Convolutional Neural Networks for Human Action Recognition) </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">论文笔记：Unet用于医学图像分割的卷积网络(UNet Convolutional Networks for Biomedical Image Segmentation) </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E6%92%AD%E4%B8%80%E4%B8%8B%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">插播一下双线性插值的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">1、仿射变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98"><span class="toc-number">4.</span> <span class="toc-text">2、弹性形变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98%E5%91%A2%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那么什么是弹性形变呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">3、参考代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E6%92%AD%E4%B8%80%E4%B8%8B%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">插播一下双线性插值的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">1、仿射变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98"><span class="toc-number">4.</span> <span class="toc-text">2、弹性形变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98%E5%91%A2%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那么什么是弹性形变呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">3、参考代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E6%92%AD%E4%B8%80%E4%B8%8B%E5%8F%8C%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">插播一下双线性插值的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">1、仿射变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98"><span class="toc-number">4.</span> <span class="toc-text">2、弹性形变</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E4%BB%80%E4%B9%88%E6%98%AF%E5%BC%B9%E6%80%A7%E5%BD%A2%E5%8F%98%E5%91%A2%EF%BC%9F"><span class="toc-number">4.1.</span> <span class="toc-text">那么什么是弹性形变呢？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%8F%82%E8%80%83%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">3、参考代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

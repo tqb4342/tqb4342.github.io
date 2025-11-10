@@ -1,1 +1,970 @@
-<!DOCTYPE html><html><meta lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="theme-color" content="#fff" id="theme-color"><link rel="icon" href="/img/logo.jpg"><title>常见医疗扫描图像处理步骤&nbsp; | &nbsp;IT码农</title><meta property="title" content="常见医疗扫描图像处理步骤"><meta property="url" content="https://tanqingbo.cn/Medical-scan-image-processing/index.html"><meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142312.png"><meta property="description" content="DICOM是医学图像中的标准文件，这些文件包含了诸多元数据信息（比如像素尺寸）"><meta property="keywords" content="机器学习,深度学习,医疗图像"><meta property="og:type" content="article"><meta property="og:article:published_time" content="2021-01-08"><meta property="og:article:modified_time" content="2021-01-08"><meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农"><meta property="og:article:tag" content="机器学习"><meta property="og:article:tag" content="深度学习"><meta property="og:article:tag" content="医疗图像"><meta name="yandex-verification" content="6b899e6f05914428"><link rel="canonical" href="https://tanqingbo.cn/Medical-scan-image-processing/index.html"><script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-178024758-1")</script><script>(()=>{var t=document.createElement("script"),e=window.location.protocol.split(":")[0];t.src="https"===e?"https://zz.bdstatic.com/linksubmit/push.js":"http://push.zhanzhang.baidu.com/push.js",(e=document.getElementsByTagName("script")[0]).parentNode.insertBefore(t,e)})()</script><script>document.write('<script src="https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba" id="sozz"><\/script>')</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464" crossorigin="anonymous"></script><script>var _hmt=_hmt||[];(()=>{var e=document.createElement("script"),t=(e.src="https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8",document.getElementsByTagName("script")[0]);t.parentNode.insertBefore(e,t)})()</script><link rel="preconnect" href="https://tanqingbo.cn/" crossorigin><script>var reverseDarkList={dark:"light",light:"dark"},themeColor={dark:"#1c1c1e",light:"#fff"},getCssMediaQuery=function(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"},reverseDarkModeSetting=function(){var e=localStorage.getItem("user-color-scheme");if(reverseDarkList[e])e=reverseDarkList[e];else{if(null!==e)return;e=reverseDarkList[getCssMediaQuery()]}return localStorage.setItem("user-color-scheme",e),e},setDarkmode=function(e){e=e||localStorage.getItem("user-color-scheme");e===getCssMediaQuery()?(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[e]):reverseDarkList[e]?(document.documentElement.setAttribute("data-user-color-scheme",e),document.getElementById("theme-color").content=themeColor[e]):(document.documentElement.removeAttribute("data-user-color-scheme"),localStorage.removeItem("user-color-scheme"),document.getElementById("theme-color").content=themeColor[getCssMediaQuery()])};setDarkmode()</script><script>function loadScript(c,n){var d=document.createElement("script");d.src=c,n&&(d.onload=n),d.async=!0,document.body.appendChild(d)}</script><link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style"><link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style"><link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script"><link rel="preload" href="/js/lib/lozad.min.js" as="script"><link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script"><link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css"><meta name="generator" content="Hexo 5.1.1"><style>.github-emoji{position:relative;display:inline-block;width:1.2em;min-height:1.2em;overflow:hidden;vertical-align:top;color:transparent}.github-emoji>span{position:relative;z-index:10}.github-emoji .fancybox,.github-emoji img{margin:0!important;padding:0!important;border:none!important;outline:0!important;text-decoration:none!important;user-select:none!important;cursor:auto!important}.github-emoji img{height:1.2em!important;width:1.2em!important;position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;user-select:none!important;cursor:auto!important}.github-emoji-fallback{color:inherit}.github-emoji-fallback img{opacity:0!important}</style></head><body><div class="wrapper"><nav class="navbar"><div class="navbar-logo"><span class="navbar-logo-main"><img class="navbar-logo-img" src="/img/logo.jpg"> <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span></span></div><div class="navbar-menu"><a href="/" class="navbar-menu-item">首页 </a><a href="/CSBook001" class="navbar-menu-item">电子书下载 </a><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">科学上网 </a><a href="/categories" class="navbar-menu-item">分类 </a><a href="/links" class="navbar-menu-item">友链 </a><a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a> <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size:1.2rem;font-weight:400"></i></a></div></nav><div id="local-search" style="display:none"><input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容..."><div id="search-content"></div></div><div class="section-wrap"><div class="container"><div class="columns"><main class="main-column"><div class="image-wrapper"><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142312.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142312.png" srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E" class="image lozad"></div><article class="card card-content"><header><h1 class="post-title">常见医疗扫描图像处理步骤</h1></header><div class="post-meta post-show-meta"><time datetime="2021-01-08T06:23:18.000Z" style="display:flex;align-items:center"><i class="iconfont icon-calendar" style="margin-right:2px"></i> <span>2021-01-08</span> </time><span class="dot"></span> <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a> <span class="dot"></span> <span>3.3k 字</span> &nbsp;&nbsp;<div style="display:flex;align-items:center"><i class="iconfont icon-wodebaobiao" style="margin-right:2px;font-size:1.15rem"></i> <span id="/Medical-scan-image-processing/" class="leancloud_visitors" data-flag-title="常见医疗扫描图像处理步骤"><em class="post-meta-item-text">阅读量 </em><i class="leancloud-visitors-count">loading</i></span></div></div><div class="post-meta post-show-meta" style="margin-top:-10px"><div style="display:flex;align-items:center"><i class="iconfont icon-biaoqian" style="margin-right:2px;font-size:1.15rem"></i> <a href="/tags/机器学习/" class="post-meta-link">机器学习</a> <span class="dot"></span> <a href="/tags/深度学习/" class="post-meta-link">深度学习</a> <span class="dot"></span> <a href="/tags/医疗图像/" class="post-meta-link">医疗图像</a></div></div><meta name="description" content="DICOM是医学图像中的标准文件，这些文件包含了诸多元数据信息（比如像素尺寸）"><meta name="keywords" content="机器学习,深度学习,医疗图像"><div id="section" class="post-content"><h2 id="一、数据格式"><a href="#一、数据格式" class="headerlink" title="一、数据格式"></a>一、数据格式</h2><h3 id="1-1-dicom"><a href="#1-1-dicom" class="headerlink" title="1.1 dicom"></a>1.1 dicom</h3><ul><li>DICOM是医学图像中的标准文件，这些文件包含了诸多元数据信息（比如像素尺寸），此处以<code>kaggle Data Science Bowl</code>数据集为例：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.kaggle.com/c/data-science-bowl-2017/data">data-science-bowl-2017</a>,数据列表如下：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142353.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142353.jpeg" class="lozad post-image"></p><ul><li>后缀为 .dcm。</li><li>每个病人的一次扫描CT(scan)可能有几十到一百多个dcm数据文件(slices)。可以使用 python的<code>dicom</code>包读取，读取示例代码如下:<pre class="highlight"><span class="line">dicom.read_file(<span class="string">'/data/lung_competition/stage1/7050f8141e92fa42fd9c471a8b2f50ce/498d16aa2222d76cae1da144ddc59a13.dcm'</span>)</span><br></pre></li><li>其<code>pixl_array</code>包含了真实数据。<pre class="highlight"><span class="line">slices = [dicom.read_file(os.path.join(folder_name,filename)) <span class="keyword">for</span> filename <span class="keyword">in</span> os.listdir(folder_name)]</span><br><span class="line">slices = np.stack([s.pixel_array <span class="keyword">for</span> s <span class="keyword">in</span> slices])</span><br></pre><h3 id="1-2-mhd格式"><a href="#1-2-mhd格式" class="headerlink" title="1.2 mhd格式"></a>1.2 mhd格式</h3></li><li>mhd格式是另外一种数据格式，来源于(LUNA2016)[<a target="_blank" rel="noopener external nofollow noreferrer" href="https://luna16.grand-challenge.org/data/]%E3%80%82%E6%AF%8F%E4%B8%AA%E7%97%85%E4%BA%BA%E4%B8%80%E4%B8%AAmhd%E6%96%87%E4%BB%B6%E5%92%8C%E4%B8%80%E4%B8%AA%E5%90%8C%E5%90%8D%E7%9A%84raw%E6%96%87%E4%BB%B6%E3%80%82%E5%A6%82%E4%B8%8B">https://luna16.grand-challenge.org/data/]。每个病人一个mhd文件和一个同名的raw文件。如下</a>:</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142412.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142412.jpeg" class="lozad post-image"></p><ul><li>一个raw通常有几百兆，对应的mhd文件只有1kb。mhd文件需要借助python的SimpleITK包来处理。SimpleITK 示例代码如下:<pre class="highlight"><span class="line"><span class="keyword">import</span> SimpleITK <span class="keyword">as</span> sitk</span><br><span class="line">itk_img = sitk.ReadImage(img_file)</span><br><span class="line">img_array = sitk.GetArrayFromImage(itk_img) <span class="comment"># indexes are z,y,x (notice the ordering)</span></span><br><span class="line">num_z, height, width = img_array.shape        <span class="comment">#heightXwidth constitute the transverse plane</span></span><br><span class="line">origin = np.array(itk_img.GetOrigin())      <span class="comment"># x,y,z  Origin in world coordinates (mm)</span></span><br><span class="line">spacing = np.array(itk_img.GetSpacing())    <span class="comment"># spacing of voxels in world coor. (mm)</span></span><br></pre></li><li>需要注意的是，SimpleITK的<code>img_array</code>的数组不是直接的像素值，<strong>而是相对于CT扫描中原点位置的差值，需要做进一步转换。</strong></li></ul><h3 id="1-3-查看CT扫描文件软件"><a href="#1-3-查看CT扫描文件软件" class="headerlink" title="1.3 查看CT扫描文件软件"></a>1.3 查看CT扫描文件软件</h3><ul><li>一个开源免费的查看软件 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://ric.uthscsa.edu/mango/">mango</a></li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142422.png" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142422.png" class="lozad post-image"></p><h2 id="二-dicom格式数据处理过程"><a href="#二-dicom格式数据处理过程" class="headerlink" title="二 dicom格式数据处理过程"></a>二 dicom格式数据处理过程</h2><h2 id="2-1-处理思路"><a href="#2-1-处理思路" class="headerlink" title="2.1 处理思路"></a>2.1 处理思路</h2><ul><li>首先，需要明白的是医学扫描图像其实是三维图像，使用代码读取之后查看不同的切面的切片(slices),可以从不同轴切割。</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142431.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142431.jpeg" class="lozad post-image"></p><ul><li>如下图展示了一个病人CT扫描中，其中部分切片slices：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142438.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142438.jpeg" class="lozad post-image"></p><ul><li>其次，CT扫描图是包含了所有组织的，如果直接去看，看不到任何有用的信息，需要做一些预处理，预处理中一个重要概念是仿射剂量，衡量单位为<code>HU(Hounsfield Unit)</code>,下表是不同放射剂量对应的组织器官：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142447.png" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142447.png" class="lozad post-image"></p><pre class="highlight"><span class="line"></span><br><span class="line">Hounsfield Unit = pixel_value * rescale_slope + rescale_intercept</span><br></pre><ul><li>一般情况rescale slope = 1, intercept = -1024。</li><li>上表中肺部组织的HU数值为-500,但通常是大于这个值，比如-320、-400。挑选出这些区域，然后做其他变换抽取出肺部像素点。</li></ul><h2 id="2-2-先载入必要的包"><a href="#2-2-先载入必要的包" class="headerlink" title="2.2 先载入必要的包"></a>2.2 先载入必要的包</h2><pre class="highlight"><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">this script is used for basic process of lung 2017 in Data Science Bowl</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> SimpleITK <span class="keyword">as</span> sitk</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment"># linear algebra</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd <span class="comment"># data processing, CSV file I/O (e.g. pd.read_csv)</span></span><br><span class="line"><span class="keyword">import</span> skimage, os</span><br><span class="line"><span class="keyword">from</span> skimage.morphology <span class="keyword">import</span> ball, disk, dilation, binary_erosion, remove_small_objects, erosion, closing, reconstruction, binary_closing</span><br><span class="line"><span class="keyword">from</span> skimage.measure <span class="keyword">import</span> label,regionprops, perimeter</span><br><span class="line"><span class="keyword">from</span> skimage.morphology <span class="keyword">import</span> binary_dilation, binary_opening</span><br><span class="line"><span class="keyword">from</span> skimage.filters <span class="keyword">import</span> roberts, sobel</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> measure, feature</span><br><span class="line"><span class="keyword">from</span> skimage.segmentation <span class="keyword">import</span> clear_border</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> data</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> ndimage <span class="keyword">as</span> ndi</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="comment">#matplotlib.use('Agg')</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d.art3d <span class="keyword">import</span> Poly3DCollection</span><br><span class="line"><span class="keyword">import</span> dicom</span><br><span class="line"><span class="keyword">import</span> scipy.misc</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre><h3 id="2-3-将厚度加入到元数据"><a href="#2-3-将厚度加入到元数据" class="headerlink" title="2.3 将厚度加入到元数据"></a>2.3 将厚度加入到元数据</h3><ul><li>如下代码是载入一个扫描面，包含了多个(slices)，我们仅简化的将其存储为python列表，数据集中每个目录都是一个扫描集(一个病人)。有个元数据域丢失，即Z轴方向上的像素尺寸，也即切片的厚度，所幸，我们可以用其他值推测出来，并加入到元数据中。</li></ul><pre class="highlight"><span class="line"><span class="comment"># Load the scans in given folder path</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_scan</span>(<span class="params">path</span>):</span></span><br><span class="line">    slices = [dicom.read_file(path + <span class="string">'/'</span> + s) <span class="keyword">for</span> s <span class="keyword">in</span> os.listdir(path)]</span><br><span class="line">	<span class="comment">#对一个病人的所有slices进行排序，x指的是一个slice。slice里面有好多属性，</span></span><br><span class="line">	<span class="comment">#有一个是ImagePositionPatient.按照他的这个属性进行对这些slices排序，方便我们组三维rendering。</span></span><br><span class="line">	<span class="comment">#imageOrientationPatient表示的是当前图像的第一行在空间中的三维方向向量与第一列的三维方向向量。</span></span><br><span class="line">    slices.sort(key = <span class="keyword">lambda</span> x: int(x.ImagePositionPatient[<span class="number">2</span>]))</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        slice_thickness = np.abs(slices[<span class="number">0</span>].ImagePositionPatient[<span class="number">2</span>] - slices[<span class="number">1</span>].ImagePositionPatient[<span class="number">2</span>])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        slice_thickness = np.abs(slices[<span class="number">0</span>].SliceLocation - slices[<span class="number">1</span>].SliceLocation)  <span class="comment">#SliceLocation：表示的图像平面的相对位置。</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> slices:</span><br><span class="line">        s.SliceThickness = slice_thickness   <span class="comment">#切片厚度</span></span><br><span class="line">    <span class="keyword">return</span> slices</span><br></pre><h3 id="2-4-灰度值转换为HU单元"><a href="#2-4-灰度值转换为HU单元" class="headerlink" title="2.4 灰度值转换为HU单元"></a>2.4 灰度值转换为HU单元</h3><ul><li>首先去除灰度值为-2000的pixl_array(<code>pixl_array</code>包含了真实数据),CT扫描边界之外的灰度值固定为-2000(dicom和mhd都是这个值)。第一步设定这些值为0，当前对应为空气(值为0).</li><li>回到HU单元，乘以rescale比率并加上intercept(存储在扫描面的元数据中)。(Hounsfield Unit = pixel_value * rescale_slope + rescale_intercept).<pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_pixels_hu</span>(<span class="params">slices</span>):</span></span><br><span class="line">    image = np.stack([s.pixel_array <span class="keyword">for</span> s <span class="keyword">in</span> slices])</span><br><span class="line">    <span class="comment"># Convert to int16 (from sometimes int16),</span></span><br><span class="line">    <span class="comment"># should be possible as values should always be low enough (&lt;32k)</span></span><br><span class="line">    image = image.astype(np.int16)</span><br><span class="line">    <span class="comment"># Set outside-of-scan pixels to 0</span></span><br><span class="line">    <span class="comment"># The intercept is usually -1024, so air is approximately 0</span></span><br><span class="line">    image[image == <span class="number">-2000</span>] = <span class="number">0</span></span><br><span class="line">    <span class="comment"># Convert to Hounsfield units (HU)</span></span><br><span class="line">    <span class="keyword">for</span> slice_number <span class="keyword">in</span> range(len(slices)):</span><br><span class="line">        intercept = slices[slice_number].RescaleIntercept  <span class="comment">#Intercept</span></span><br><span class="line">        slope = slices[slice_number].RescaleSlope  <span class="comment">#Rescale</span></span><br><span class="line">        <span class="keyword">if</span> slope != <span class="number">1</span>:</span><br><span class="line">            image[slice_number] = slope * image[slice_number].astype(np.float64)</span><br><span class="line">            image[slice_number] = image[slice_number].astype(np.int16)</span><br><span class="line">        image[slice_number] += np.int16(intercept)</span><br><span class="line">    <span class="keyword">return</span> np.array(image, dtype=np.int16)</span><br></pre></li><li>可以查看病人的扫描HU分布值情况：<pre class="highlight"><span class="line">first_patient = load_scan(INPUT_FOLDER + patients[<span class="number">0</span>])</span><br><span class="line">first_patient_pixels = get_pixels_hu(first_patient)</span><br><span class="line">plt.hist(first_patient_pixels.flatten(), bins=<span class="number">80</span>, color=<span class="string">'c'</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Hounsfield Units (HU)"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Frequency"</span>)</span><br><span class="line">plt.show()</span><br></pre><h3 id="2-5-重采样"><a href="#2-5-重采样" class="headerlink" title="2.5 重采样"></a>2.5 重采样</h3></li><li>不同扫描面的像素尺寸，粗细粒度是不同的，这不利于我们进行CNN任务，我们可以使用同构采样。</li><li>一个扫描面的像素区间可能是[2.5,0.5,0.5],即切片之间的距离为2.5mm。可能另外一个扫描面的范围是[1.5,0.725,0.725]。这可能不利于自动分析。常见的处理方法是从全数据集中以固定的同构分辨率重新采样，将所有的东西采样为(1,1,1).<pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">resample</span>(<span class="params">image, scan, new_spacing=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]</span>):</span> <span class="comment"># scan是load_scan函数返回的结果</span></span><br><span class="line">    <span class="comment"># Determine current pixel spacing</span></span><br><span class="line">    spacing = map(float, ([scan[<span class="number">0</span>].SliceThickness] + scan[<span class="number">0</span>].PixelSpacing))</span><br><span class="line">    spacing = np.array(list(spacing))</span><br><span class="line">    resize_factor = spacing / new_spacing</span><br><span class="line">    new_real_shape = image.shape * resize_factor</span><br><span class="line">    new_shape = np.round(new_real_shape)   <span class="comment">#返回浮点数x的四舍五入值。</span></span><br><span class="line">    real_resize_factor = new_shape / image.shape</span><br><span class="line">    new_spacing = spacing / real_resize_factor</span><br><span class="line">    image = scipy.ndimage.interpolation.zoom(image, real_resize_factor, mode=<span class="string">'nearest'</span>) <span class="comment">#使用所请求顺序的样条插值来缩放数组。</span></span><br><span class="line">    <span class="keyword">return</span> image, new_spacing</span><br><span class="line"><span class="comment"># 现在重新取样病人的像素，将其映射到一个同构分辨率 1mm x1mm x1mm。</span></span><br><span class="line">pix_resampled, spacing = resample(first_patient_pixels, first_patient, [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])</span><br></pre></li><li>使用matplotlib输出肺部扫描的3D图像方法。可能需要一两分钟。<pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_3d</span>(<span class="params">image, threshold=<span class="number">-300</span></span>):</span></span><br><span class="line">    <span class="comment"># Position the scan upright,</span></span><br><span class="line">    <span class="comment"># so the head of the patient would be at the top facing the camera</span></span><br><span class="line">    p = image.transpose(<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>)  <span class="comment">#将扫描件竖直放置</span></span><br><span class="line">    verts, faces = measure.marching_cubes(p, threshold) <span class="comment">#Liner推进立方体算法来查找3D体积数据中的曲面。</span></span><br><span class="line">    fig = plt.figure(figsize=(<span class="number">10</span>, <span class="number">10</span>))</span><br><span class="line">    ax = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">'3d'</span>)</span><br><span class="line">    <span class="comment"># Fancy indexing: `verts[faces]` to generate a collection of triangles</span></span><br><span class="line">    mesh = Poly3DCollection(verts[faces], alpha=<span class="number">0.1</span>)  <span class="comment">#创建3Dpoly</span></span><br><span class="line">    face_color = [<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">1</span>]</span><br><span class="line">    mesh.set_facecolor(face_color)  <span class="comment">#设置颜色</span></span><br><span class="line">    ax.add_collection3d(mesh)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, p.shape[<span class="number">0</span>])</span><br><span class="line">    ax.set_ylim(<span class="number">0</span>, p.shape[<span class="number">1</span>])</span><br><span class="line">    ax.set_zlim(<span class="number">0</span>, p.shape[<span class="number">2</span>])</span><br><span class="line">    plt.show()</span><br><span class="line"><span class="comment"># 调用函数</span></span><br><span class="line">plot_3d(pix_resampled, <span class="number">400</span>)</span><br></pre></li><li>打印函数有个阈值（<code>threshold</code>）参数，来打印特定的结构，比如tissue或者骨头。400是一个仅仅打印骨头的阈值(HU对照表)，如下图：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142508.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142508.jpeg" class="lozad post-image"></p><h3 id="2-6-输出一个病人scans中所有的slices"><a href="#2-6-输出一个病人scans中所有的slices" class="headerlink" title="2.6 输出一个病人scans中所有的slices"></a>2.6 输出一个病人scans中所有的slices</h3><pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_ct_scan</span>(<span class="params">scan</span>):</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">            plot a few more images of the slices</span></span><br><span class="line"><span class="string">    :param scan:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    f, plots = plt.subplots(int(scan.shape[<span class="number">0</span>] / <span class="number">20</span>) + <span class="number">1</span>, <span class="number">4</span>, figsize=(<span class="number">50</span>, <span class="number">50</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, scan.shape[<span class="number">0</span>], <span class="number">5</span>):</span><br><span class="line">        plots[int(i / <span class="number">20</span>), int((i % <span class="number">20</span>) / <span class="number">5</span>)].axis(<span class="string">'off'</span>)</span><br><span class="line">        plots[int(i / <span class="number">20</span>), int((i % <span class="number">20</span>) / <span class="number">5</span>)].imshow(scan[i], cmap=plt.cm.bone)</span><br></pre><ul><li>此方法的效果示例如下:</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142517.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142517.jpeg" class="lozad post-image"></p><h3 id="2-7-数据标准化处理"><a href="#2-7-数据标准化处理" class="headerlink" title="2.7 数据标准化处理"></a>2.7 数据标准化处理</h3><ul><li><strong>归一化处理：</strong><ul><li>当前的值范围是[-1024,2000]。而任意大于400的值并不是处理肺结节需要考虑，因为它们都是不同反射密度下的骨头。LUNA16竞赛中常用来做归一化处理的阈值集是-1000和400.以下代码：</li></ul></li></ul><pre class="highlight"><span class="line">MIN_BOUND = <span class="number">-1000.0</span></span><br><span class="line">MAX_BOUND = <span class="number">400.0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize</span>(<span class="params">image</span>):</span></span><br><span class="line">    image = (image - MIN_BOUND) / (MAX_BOUND - MIN_BOUND)</span><br><span class="line">    image[image&gt;<span class="number">1</span>] = <span class="number">1.</span></span><br><span class="line">    image[image&lt;<span class="number">0</span>] = <span class="number">0.</span></span><br><span class="line">    <span class="keyword">return</span> image</span><br></pre><ul><li><strong>0值中心化：</strong><ul><li>简单来说就是所有像素值减去均值。LUNA16竞赛中的均值大约是0.25.</li><li>不要对每一张图像做零值中心化（此处像是在kernel中完成的）CT扫描器返回的是校准后的精确HU计量。不会出现普通图像中会出现某些图像低对比度和明亮度的情况<pre class="highlight"><span class="line">PIXEL_MEAN = <span class="number">0.25</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zero_center</span>(<span class="params">image</span>):</span></span><br><span class="line">    image = image - PIXEL_MEAN</span><br><span class="line">    <span class="keyword">return</span> image</span><br></pre></li></ul></li></ul><h2 id="三-mhd格式数据处理过程"><a href="#三-mhd格式数据处理过程" class="headerlink" title="三 mhd格式数据处理过程"></a>三 mhd格式数据处理过程</h2><ul><li>mhd的数据只是格式与dicom不一样，其实质包含的都是病人的扫描，处理MHD需要借助<code>SimpleITK</code>这个包，处理思路详情可以参考Data Science Bowl2017的toturail <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.kaggle.com/c/data-science-bowl-2017#tutorial">Data Science Bowl 2017</a>.需要注意的是MHD格式的数据没有HU值，它的值域范围与dicom很不同。</li><li>我们以LUNA2016年的数据处理流程为例。参考代码为: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/booz-allen-hamilton/DSB3Tutorial/tree/master/tutorial_code">LUNA2016数据切割</a>.<h3 id="3-1-载入必要的包"><a href="#3-1-载入必要的包" class="headerlink" title="3.1 载入必要的包"></a>3.1 载入必要的包</h3><pre class="highlight"><span class="line"><span class="keyword">import</span> SimpleITK <span class="keyword">as</span> sitk</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">from</span> glob <span class="keyword">import</span> glob  <span class="comment">#用它可以查找符合自己目的的文件</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># glob方法返回所有匹配的文件路径列表（list）；该方法需要一个参数用来指定匹配的路径字符串，</span></span><br><span class="line"><span class="comment"># 其返回的文件名只包括当前目录里的文件名，不包括子文件夹里的文件。</span></span><br><span class="line">file_list=glob(luna_subset_path+<span class="string">"*.mhd"</span>)  </span><br><span class="line"><span class="comment">#####################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Helper function to get rows in data frame associated</span></span><br><span class="line"><span class="comment"># with each file</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_filename</span>(<span class="params">case</span>):</span></span><br><span class="line">	<span class="comment"># 如果你想要为一个定义在函数外的变量，那么你就得告诉Python这个变量名不是局部的，而是 全局 的。</span></span><br><span class="line">    <span class="keyword">global</span> file_list</span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> file_list:</span><br><span class="line">        <span class="keyword">if</span> case <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">return</span>(f)</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># The locations of the nodes</span></span><br><span class="line">df_node = pd.read_csv(luna_path+<span class="string">"annotations.csv"</span>)</span><br><span class="line">df_node[<span class="string">"file"</span>] = df_node[<span class="string">"seriesuid"</span>].apply(get_filename)  <span class="comment">#调用get_filename函数，并函数参数为df_node["seriesuid"]</span></span><br><span class="line">df_node = df_node.dropna() <span class="comment">#将所有含有nan项的row删除</span></span><br><span class="line"><span class="comment">#####</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Looping over the image files</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">fcount = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> img_file <span class="keyword">in</span> file_list:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Getting mask for image file %s"</span> % img_file.replace(luna_subset_path,<span class="string">""</span>)</span><br><span class="line">    mini_df = df_node[df_node[<span class="string">"file"</span>]==img_file] <span class="comment">#get all nodules associate with file</span></span><br><span class="line">    <span class="keyword">if</span> len(mini_df)&gt;<span class="number">0</span>:       <span class="comment"># some files may not have a nodule--skipping those</span></span><br><span class="line">        biggest_node = np.argsort(mini_df[<span class="string">"diameter_mm"</span>].values)[<span class="number">-1</span>]   <span class="comment"># just using the biggest node</span></span><br><span class="line">        node_x = mini_df[<span class="string">"coordX"</span>].values[biggest_node]</span><br><span class="line">        node_y = mini_df[<span class="string">"coordY"</span>].values[biggest_node]</span><br><span class="line">        node_z = mini_df[<span class="string">"coordZ"</span>].values[biggest_node]</span><br><span class="line">        diam = mini_df[<span class="string">"diameter_mm"</span>].values[biggest_node]</span><br></pre><h3 id="3-2-LUNA16的MHD格式数据的值"><a href="#3-2-LUNA16的MHD格式数据的值" class="headerlink" title="3.2 LUNA16的MHD格式数据的值"></a>3.2 LUNA16的MHD格式数据的值</h3></li><li>一直在寻找MHD格式数据的处理方法，对于dicom格式的CT有很多论文根据其HU值域可以轻易地分割肺、骨头、血液等，但是对于MHD没有这样的参考。从LUNA16论坛得到的解释是，LUNA16的MHD数据已经转换为HU值了，不需要再使用slope和intercept来做rescale变换了。此论坛主题下，有人提出MHD格式没有提供pixel spacing(mm) 和 slice thickness(mm) ，而标准文件annotation.csv文件中结节的半径和坐标都是mm单位，最后确认的是<strong>MHD格式文件中只保留了体素尺寸以及坐标原点位置，没有保存slice thickness。</strong>即，dicom才是原始数据格式。</li></ul><h3 id="3-4-坐标体系变换"><a href="#3-4-坐标体系变换" class="headerlink" title="3.4 坐标体系变换"></a>3.4 坐标体系变换</h3><ul><li>MHD值的坐标体系是体素，以mm为单位（dicom的值是GV灰度值）。结节的位置是CT scanner坐标轴里面相对原点的mm值，需要将其转换到真实坐标轴位置，可以使用SimpleITK包中的 <code>GetOrigin()</code> <code>GetSpacing()</code>。图像数据是以512x512数组的形式给出的。</li><li>坐标体系变换如下：</li></ul><p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142528.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142528.jpeg" class="lozad post-image"></p><ul><li><p>相应的代码处理如下：</p><pre class="highlight"><span class="line">itk_img = sitk.ReadImage(img_file)</span><br><span class="line">img_array = sitk.GetArrayFromImage(itk_img) <span class="comment"># indexes are z,y,x (notice the ordering)</span></span><br><span class="line">center = np.array([node_x,node_y,node_z])   <span class="comment"># nodule center</span></span><br><span class="line">origin = np.array(itk_img.GetOrigin())      <span class="comment"># x,y,z  Origin in world coordinates (mm)</span></span><br><span class="line">spacing = np.array(itk_img.GetSpacing())    <span class="comment"># spacing of voxels in world coor. (mm)</span></span><br><span class="line"><span class="comment"># np.rint(a) 各元素四舍五入</span></span><br><span class="line">v_center = np.rint((center-origin)/spacing)  <span class="comment"># nodule center in voxel space (still x,y,z ordering) </span></span><br></pre></li><li><p>在LUNA16的标注CSV文件中标注了结节中心的X,Y,Z轴坐标，但是实际取值的时候取的是Z轴最后三层的数组(img_array)。</p></li><li><p>下述代码只提取了包含结节的最后三个slice的数据，代码参考自 <code>LUNA_mask_extraction.py</code></p></li></ul><pre class="highlight"><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i_z <span class="keyword">in</span> range(int(v_center[<span class="number">2</span>])<span class="number">-1</span>,int(v_center[<span class="number">2</span>])+<span class="number">2</span>):</span><br><span class="line">    mask = make_mask(center,diam,i_z*spacing[<span class="number">2</span>]+origin[<span class="number">2</span>],width,height,spacing,origin)</span><br><span class="line">    masks[i] = mask</span><br><span class="line">    imgs[i] = matrix2int16(img_array[i_z])</span><br><span class="line">    i+=<span class="number">1</span></span><br><span class="line">np.save(output_path+<span class="string">"images_%d.npy"</span> % (fcount) ,imgs)</span><br><span class="line">np.save(output_path+<span class="string">"masks_%d.npy"</span> % (fcount) ,masks)</span><br></pre><h3 id="3-5-查看节点"><a href="#3-5-查看节点" class="headerlink" title="3.5 查看节点"></a>3.5 查看节点</h3><ul><li>以下代码用于查看原始CT和结节mask。其实就是用matplotlib打印上一步存储的npy文件。<pre class="highlight"><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">imgs = np.load(output_path+<span class="string">'images_0.npy'</span>)</span><br><span class="line">masks = np.load(output_path+<span class="string">'masks_0.npy'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(imgs)):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"image %d"</span> % i</span><br><span class="line">    fig,ax = plt.subplots(<span class="number">2</span>,<span class="number">2</span>,figsize=[<span class="number">8</span>,<span class="number">8</span>])</span><br><span class="line">    ax[<span class="number">0</span>,<span class="number">0</span>].imshow(imgs[i],cmap=<span class="string">'gray'</span>)</span><br><span class="line">    ax[<span class="number">0</span>,<span class="number">1</span>].imshow(masks[i],cmap=<span class="string">'gray'</span>)</span><br><span class="line">    ax[<span class="number">1</span>,<span class="number">0</span>].imshow(imgs[i]*masks[i],cmap=<span class="string">'gray'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line">    raw_input(<span class="string">"hit enter to cont : "</span>)</span><br></pre></li><li>接下来的处理和DICOM格式数据差不多，腐蚀膨胀、连通区域标记等。</li></ul><h2 id="参考信息"><a href="#参考信息" class="headerlink" title="参考信息"></a>参考信息</h2><ul><li><p>灰度值是pixel value经过重重LUT转换得到的用来进行显示的值，而这个转换过程是不可逆的，也就是说，灰度值无法转换为ct值。只能根据窗宽窗位得到一个大概的范围。 pixel value经过modality lut得到Hu，但是怀疑pixelvalue的读取出了问题。dicom文件中存在（0028，0106）（0028，0107）两个tag，分别是最大最小pixel value，可以用来检验你读取的pixel value 矩阵是否正确。</p></li><li><p>LUT全称look up table，实际上就是一张像素灰度值的映射表，它将实际采样到的像素灰度值经过一定的变换如阈值、反转、二值化、对比度调整、线性变换等，变成了另外一 个与之对应的灰度值，这样可以起到突出图像的有用信息，增强图像的光对比度的作用。</p></li></ul></div><p align="center" style="margin-top:15px;font-size:16px;color:#337ab7"><strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-transform:none;text-decoration-line:underline">点击下载：计算机专业最全PDF高清电子书！</a></strong></p><div><div class="post-note note-warning copyright" style="margin-top:42px"><p><span style="font-weight:700">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p><p><span style="font-weight:700">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Medical-scan-image-processing/">https://tanqingbo.cn/Medical-scan-image-processing/</a></p><p><span style="font-weight:700">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p></div></div></article><div class="nav"><div class="nav-item-prev"><a href="/Deeply-Supervised-Nets/" class="nav-link"><i class="iconfont icon-left nav-prev-icon"></i><div><div class="nav-label">上一篇</div><div class="nav-title">论文解读:深度监督网络 Deeply-Supervised Nets</div></div></a></div><div class="nav-item-next"><a href="/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/" class="nav-link"><div><div class="nav-label">下一篇</div><div class="nav-title">论文笔记：基于3D卷积神经网络的人体行为识别(3D Convolutional Neural Networks for Human Action Recognition)</div></div><i class="iconfont icon-right nav-next-icon"></i></a></div></div><div class="card card-content comment-card" style="margin-top:16px"><div class="comment-card-title">评论</div><div id="vcomments"></div><script>loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");var oldLoadVa=window.onload;window.onload=function(){oldLoadVa&&oldLoadVa(),new Valine({el:"#vcomments",appId:"RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz",appKey:"M8e7BRAbupxzxRVSoj9JkJ5E",placeholder:"Just go go",path:window.location.pathname,avatar:"mp",meta:["nick","mail","link"],pageSize:"10",lang:"",visitor:"true",highlight:!0,recordIP:!1,enableQQ:"false",requiredFields:[]})}</script></div><div class="card card-content toc-card" id="mobiletoc"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-dicom"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 dicom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-mhd%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 mhd格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9F%A5%E7%9C%8BCT%E6%89%AB%E6%8F%8F%E6%96%87%E4%BB%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 查看CT扫描文件软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-dicom%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">二 dicom格式数据处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">2.1 处理思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%88%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">4.</span> <span class="toc-text">2.2 先载入必要的包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B0%86%E5%8E%9A%E5%BA%A6%E5%8A%A0%E5%85%A5%E5%88%B0%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">2.3 将厚度加入到元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%81%B0%E5%BA%A6%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BAHU%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">2.4 灰度值转换为HU单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">2.5 重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E7%97%85%E4%BA%BAscans%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84slices"><span class="toc-number">4.4.</span> <span class="toc-text">2.6 输出一个病人scans中所有的slices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">2.7 数据标准化处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-mhd%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">三 mhd格式数据处理过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 载入必要的包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-LUNA16%E7%9A%84MHD%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%80%BC"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 LUNA16的MHD格式数据的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">3.4 坐标体系变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9"><span class="toc-number">5.4.</span> <span class="toc-text">3.5 查看节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">参考信息</span></a></li></ol></div></main><aside class="left-column"><div class="card card-author"><img src="/img/logo.jpg" class="author-img"><p class="author-name">IT&nbsp; 码&nbsp; 农</p><p class="author-description">一个专注于程序员成长的网站</p><div class="author-message"><a class="author-posts-count" href="/archives"><span>309</span> <span>文章</span> </a><a class="author-categories-count" href="/categories"><span>17</span> <span>分类</span> </a><a class="author-tags-count" href="/tags"><span>118</span> <span>标签</span></a></div><div class="author-card-society"><div class="author-card-society-icon"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/"><i class="iconfont icon-wechat society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342"><i class="iconfont icon-github society-icon"></i></a></div><div class="author-card-society-icon"><a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342"><i class="iconfont icon-sina society-icon"></i></a></div></div></div><div class="sticky-tablet"><article class="display-when-two-columns spacer"><div class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-dicom"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 dicom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-mhd%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 mhd格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9F%A5%E7%9C%8BCT%E6%89%AB%E6%8F%8F%E6%96%87%E4%BB%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 查看CT扫描文件软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-dicom%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">二 dicom格式数据处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">2.1 处理思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%88%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">4.</span> <span class="toc-text">2.2 先载入必要的包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B0%86%E5%8E%9A%E5%BA%A6%E5%8A%A0%E5%85%A5%E5%88%B0%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">2.3 将厚度加入到元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%81%B0%E5%BA%A6%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BAHU%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">2.4 灰度值转换为HU单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">2.5 重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E7%97%85%E4%BA%BAscans%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84slices"><span class="toc-number">4.4.</span> <span class="toc-text">2.6 输出一个病人scans中所有的slices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">2.7 数据标准化处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-mhd%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">三 mhd格式数据处理过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 载入必要的包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-LUNA16%E7%9A%84MHD%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%80%BC"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 LUNA16的MHD格式数据的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">3.4 坐标体系变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9"><span class="toc-number">5.4.</span> <span class="toc-text">3.5 查看节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">参考信息</span></a></li></ol></div></article><article class="card card-content categories-widget"><div class="categories-card"><div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right:2px"></i>分类</div><div class="categories-list"><a href="/categories/技术以外"><div class="categories-list-item">技术以外 <span class="categories-list-item-badge">82</span></div></a><a href="/categories/工具"><div class="categories-list-item">工具 <span class="categories-list-item-badge">20</span></div></a><a href="/categories/数据结构与算法"><div class="categories-list-item">数据结构与算法 <span class="categories-list-item-badge">13</span></div></a><a href="/categories/图像处理与机器学习"><div class="categories-list-item">图像处理与机器学习 <span class="categories-list-item-badge">59</span></div></a><a href="/categories/设计模式"><div class="categories-list-item">设计模式 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程资料"><div class="categories-list-item">编程资料 <span class="categories-list-item-badge">31</span></div></a><a href="/categories/科学上网"><div class="categories-list-item">科学上网 <span class="categories-list-item-badge">23</span></div></a><a href="/categories/C与C✙✙"><div class="categories-list-item">C与C✙✙ <span class="categories-list-item-badge">2</span></div></a><a href="/categories/计算机基础知识"><div class="categories-list-item">计算机基础知识 <span class="categories-list-item-badge">12</span></div></a><a href="/categories/Java"><div class="categories-list-item">Java <span class="categories-list-item-badge">28</span></div></a><a href="/categories/Go语言"><div class="categories-list-item">Go语言 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/Python"><div class="categories-list-item">Python <span class="categories-list-item-badge">7</span></div></a><a href="/categories/ITK与VTK"><div class="categories-list-item">ITK与VTK <span class="categories-list-item-badge">7</span></div></a><a href="/categories/编程经验"><div class="categories-list-item">编程经验 <span class="categories-list-item-badge">7</span></div></a><a href="/categories/Linux"><div class="categories-list-item">Linux <span class="categories-list-item-badge">5</span></div></a><a href="/categories/SEO教程"><div class="categories-list-item">SEO教程 <span class="categories-list-item-badge">2</span></div></a><a href="/categories/PLC"><div class="categories-list-item">PLC <span class="categories-list-item-badge">2</span></div></a></div></div></article><article class="card card-content tags-widget"><div class="tags-card"><div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right:2px"></i>热门标签</div><div class="tags-list"><a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a><a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a><a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a><a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a><a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a><a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a><a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a><a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a><a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a><a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a><a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a><a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a><a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a><a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a><a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a><a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a></div></div></article></div></aside><aside class="right-column"><div class="sticky-widescreen"><article class="card card-content toc-card"><div><div style="float:left;width:125px;height:125px"><img class="adv" style="width:100%;height:100%;border:solid 1px #ddd" src="/img/ewm.jpeg"></div><div style="float:left;margin-left:17px;margin-top:12px"><div style="font-size:18px;margin-bottom:12px;margin-left:4px">关注我的公众号</div><small style="font-size:.8em">→「技术干货」每日推送<br>→「免费资料」随时领取<br>→「签到活动」每周福利<br></small></div><div style="clear:both"></div><div style="font-size:.8em;margin:15px 0 10px 0"><a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size:14px" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a><br><div style="height:8px"></div>更多干货，等你来看，我在微信上等你！</div></div></article><article class="card card-content toc-card"><div class="xingqiu-img"><a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div></article><article class="card card-content toc-card"><div class="toc-header"><i class="iconfont icon-menu" style="padding-right:2px"></i>目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-dicom"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 dicom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-mhd%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 mhd格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9F%A5%E7%9C%8BCT%E6%89%AB%E6%8F%8F%E6%96%87%E4%BB%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 查看CT扫描文件软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-dicom%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">二 dicom格式数据处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">2.1 处理思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%88%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">4.</span> <span class="toc-text">2.2 先载入必要的包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B0%86%E5%8E%9A%E5%BA%A6%E5%8A%A0%E5%85%A5%E5%88%B0%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">2.3 将厚度加入到元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%81%B0%E5%BA%A6%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BAHU%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">2.4 灰度值转换为HU单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">2.5 重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E7%97%85%E4%BA%BAscans%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84slices"><span class="toc-number">4.4.</span> <span class="toc-text">2.6 输出一个病人scans中所有的slices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">2.7 数据标准化处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-mhd%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">三 mhd格式数据处理过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 载入必要的包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-LUNA16%E7%9A%84MHD%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%80%BC"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 LUNA16的MHD格式数据的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">3.4 坐标体系变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9"><span class="toc-number">5.4.</span> <span class="toc-text">3.5 查看节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">参考信息</span></a></li></ol></article><article class="card card-content"><div class="recent-posts-card"><div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right:2px"></i>最近文章</div><div class="recent-posts-list"><div class="recent-posts-item"><div class="recent-posts-item-title">2028-02-28</div><a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-05</div><a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a></div><div class="recent-posts-item"><div class="recent-posts-item-title">2025-11-04</div><a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a></div></div></div></article></div></aside></div></div></div></div><footer class="footer"><div class="footer-container"><div><div class="footer-dsc"><span>Copyright © 2020 - 2025 </span>&nbsp; <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农</a></div><div class="footer-dsc"><center><span><a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a></span></center></div></div><div class="footer-dsc"><script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次 </span>&nbsp;|&nbsp <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span></div></div></footer><a role="button" id="scrollbutton" class="basebutton"><i class="iconfont icon-arrowleft button-icon"></i> </a><a role="button" id="menubutton" class="basebutton"><i class="iconfont icon-menu button-icon"></i> </a><a role="button" id="popbutton" class="basebutton"><i class="iconfont icon-expand button-icon"></i> </a><a role="button" id="darkbutton" class="basebutton darkwidget"><i class="iconfont icon-weather button-icon"></i> </a><a role="button" id="searchbutton" class="basebutton searchwidget"><i class="iconfont icon-search button-icon"></i></a><script>var addImgLayout=function(){for(var t=document.querySelectorAll(".post-content img"),e=0;e<t.length;e++){var r=document.createElement("a");r.setAttribute("data-fslightbox","gallery"),r.setAttribute("href",t[e].getAttribute("data-src")),r.style.cssText="width: 100%; display: flex; justify-content: center;",t[e].before(r),r.append(t[e])}refreshFsLightbox()}</script><script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js",addImgLayout)</script><script src="/js/main.js"></script><script>var addLazyload=function(){lozad(".lozad",{load:function(a){a.srcset=a.getAttribute("data-src")},loaded:function(a){a.classList.add("loaded")}}).observe()}</script><script>loadScript("/js/lib/lozad.min.js",addLazyload)</script><script>var googleAnalytics=function(){function a(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],a("js",new Date),a("config","UA-178024758-1")}</script><script>loadScript("https://www.googletagmanager.com/gtag/js?id=UA-178024758-1",googleAnalytics)</script><script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.jpg">
+  <title>常见医疗扫描图像处理步骤&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="常见医疗扫描图像处理步骤">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Medical-scan-image-processing/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142312.png">
+  
+  
+  <meta property="description" content="DICOM是医学图像中的标准文件，这些文件包含了诸多元数据信息（比如像素尺寸）">
+  
+  <meta property="keywords" content="机器学习,深度学习,医疗图像">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2021-01-08">
+  <meta property="og:article:modified_time" content="2021-01-08">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="机器学习">
+  
+  <meta property="og:article:tag" content="深度学习">
+  
+  <meta property="og:article:tag" content="医疗图像">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Medical-scan-image-processing/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.jpg">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142312.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142312.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      常见医疗扫描图像处理步骤
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2021-01-08T06:23:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2021-01-08</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/图像处理与机器学习/" class="post-meta-link">图像处理与机器学习</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Medical-scan-image-processing/" class="leancloud_visitors" data-flag-title="常见医疗扫描图像处理步骤">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/机器学习/" class="post-meta-link">机器学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/深度学习/" class="post-meta-link">深度学习</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/医疗图像/" class="post-meta-link">医疗图像</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="DICOM是医学图像中的标准文件，这些文件包含了诸多元数据信息（比如像素尺寸）">
+  
+  <meta name="keywords" content="机器学习,深度学习,医疗图像">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="一、数据格式"><a href="#一、数据格式" class="headerlink" title="一、数据格式"></a>一、数据格式</h2><h3 id="1-1-dicom"><a href="#1-1-dicom" class="headerlink" title="1.1 dicom"></a>1.1 dicom</h3><ul>
+<li>DICOM是医学图像中的标准文件，这些文件包含了诸多元数据信息（比如像素尺寸），此处以<code>kaggle Data Science Bowl</code>数据集为例：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.kaggle.com/c/data-science-bowl-2017/data">data-science-bowl-2017</a>,数据列表如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142353.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142353.jpeg" class="lozad post-image"></p>
+<ul>
+<li>后缀为 .dcm。</li>
+<li>每个病人的一次扫描CT(scan)可能有几十到一百多个dcm数据文件(slices)。可以使用 python的<code>dicom</code>包读取，读取示例代码如下:<pre class="highlight"><span class="line">dicom.read_file(<span class="string">'/data/lung_competition/stage1/7050f8141e92fa42fd9c471a8b2f50ce/498d16aa2222d76cae1da144ddc59a13.dcm'</span>)</span><br></pre></li>
+<li>其<code>pixl_array</code>包含了真实数据。<pre class="highlight"><span class="line">slices = [dicom.read_file(os.path.join(folder_name,filename)) <span class="keyword">for</span> filename <span class="keyword">in</span> os.listdir(folder_name)]</span><br><span class="line">slices = np.stack([s.pixel_array <span class="keyword">for</span> s <span class="keyword">in</span> slices])</span><br></pre>
+<h3 id="1-2-mhd格式"><a href="#1-2-mhd格式" class="headerlink" title="1.2 mhd格式"></a>1.2 mhd格式</h3></li>
+<li>mhd格式是另外一种数据格式，来源于(LUNA2016)[<a target="_blank" rel="noopener external nofollow noreferrer" href="https://luna16.grand-challenge.org/data/]%E3%80%82%E6%AF%8F%E4%B8%AA%E7%97%85%E4%BA%BA%E4%B8%80%E4%B8%AAmhd%E6%96%87%E4%BB%B6%E5%92%8C%E4%B8%80%E4%B8%AA%E5%90%8C%E5%90%8D%E7%9A%84raw%E6%96%87%E4%BB%B6%E3%80%82%E5%A6%82%E4%B8%8B">https://luna16.grand-challenge.org/data/]。每个病人一个mhd文件和一个同名的raw文件。如下</a>:</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142412.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142412.jpeg" class="lozad post-image"></p>
+<ul>
+<li>一个raw通常有几百兆，对应的mhd文件只有1kb。mhd文件需要借助python的SimpleITK包来处理。SimpleITK 示例代码如下:<pre class="highlight"><span class="line"><span class="keyword">import</span> SimpleITK <span class="keyword">as</span> sitk</span><br><span class="line">itk_img = sitk.ReadImage(img_file)</span><br><span class="line">img_array = sitk.GetArrayFromImage(itk_img) <span class="comment"># indexes are z,y,x (notice the ordering)</span></span><br><span class="line">num_z, height, width = img_array.shape        <span class="comment">#heightXwidth constitute the transverse plane</span></span><br><span class="line">origin = np.array(itk_img.GetOrigin())      <span class="comment"># x,y,z  Origin in world coordinates (mm)</span></span><br><span class="line">spacing = np.array(itk_img.GetSpacing())    <span class="comment"># spacing of voxels in world coor. (mm)</span></span><br></pre></li>
+<li>需要注意的是，SimpleITK的<code>img_array</code>的数组不是直接的像素值，<strong>而是相对于CT扫描中原点位置的差值，需要做进一步转换。</strong></li>
+</ul>
+<h3 id="1-3-查看CT扫描文件软件"><a href="#1-3-查看CT扫描文件软件" class="headerlink" title="1.3 查看CT扫描文件软件"></a>1.3 查看CT扫描文件软件</h3><ul>
+<li>一个开源免费的查看软件 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://ric.uthscsa.edu/mango/">mango</a></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142422.png" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142422.png" class="lozad post-image"></p>
+<h2 id="二-dicom格式数据处理过程"><a href="#二-dicom格式数据处理过程" class="headerlink" title="二 dicom格式数据处理过程"></a>二 dicom格式数据处理过程</h2><h2 id="2-1-处理思路"><a href="#2-1-处理思路" class="headerlink" title="2.1 处理思路"></a>2.1 处理思路</h2><ul>
+<li>首先，需要明白的是医学扫描图像其实是三维图像，使用代码读取之后查看不同的切面的切片(slices),可以从不同轴切割。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142431.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142431.jpeg" class="lozad post-image"></p>
+<ul>
+<li>如下图展示了一个病人CT扫描中，其中部分切片slices：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142438.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142438.jpeg" class="lozad post-image"></p>
+<ul>
+<li>其次，CT扫描图是包含了所有组织的，如果直接去看，看不到任何有用的信息，需要做一些预处理，预处理中一个重要概念是仿射剂量，衡量单位为<code>HU(Hounsfield Unit)</code>,下表是不同放射剂量对应的组织器官：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142447.png" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142447.png" class="lozad post-image"></p>
+<pre class="highlight"><span class="line"></span><br><span class="line">Hounsfield Unit = pixel_value * rescale_slope + rescale_intercept</span><br></pre>
+<ul>
+<li>一般情况rescale slope = 1, intercept = -1024。</li>
+<li>上表中肺部组织的HU数值为-500,但通常是大于这个值，比如-320、-400。挑选出这些区域，然后做其他变换抽取出肺部像素点。</li>
+</ul>
+<h2 id="2-2-先载入必要的包"><a href="#2-2-先载入必要的包" class="headerlink" title="2.2 先载入必要的包"></a>2.2 先载入必要的包</h2><pre class="highlight"><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">this script is used for basic process of lung 2017 in Data Science Bowl</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> SimpleITK <span class="keyword">as</span> sitk</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment"># linear algebra</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd <span class="comment"># data processing, CSV file I/O (e.g. pd.read_csv)</span></span><br><span class="line"><span class="keyword">import</span> skimage, os</span><br><span class="line"><span class="keyword">from</span> skimage.morphology <span class="keyword">import</span> ball, disk, dilation, binary_erosion, remove_small_objects, erosion, closing, reconstruction, binary_closing</span><br><span class="line"><span class="keyword">from</span> skimage.measure <span class="keyword">import</span> label,regionprops, perimeter</span><br><span class="line"><span class="keyword">from</span> skimage.morphology <span class="keyword">import</span> binary_dilation, binary_opening</span><br><span class="line"><span class="keyword">from</span> skimage.filters <span class="keyword">import</span> roberts, sobel</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> measure, feature</span><br><span class="line"><span class="keyword">from</span> skimage.segmentation <span class="keyword">import</span> clear_border</span><br><span class="line"><span class="keyword">from</span> skimage <span class="keyword">import</span> data</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> ndimage <span class="keyword">as</span> ndi</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="comment">#matplotlib.use('Agg')</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d.art3d <span class="keyword">import</span> Poly3DCollection</span><br><span class="line"><span class="keyword">import</span> dicom</span><br><span class="line"><span class="keyword">import</span> scipy.misc</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre>
+<h3 id="2-3-将厚度加入到元数据"><a href="#2-3-将厚度加入到元数据" class="headerlink" title="2.3 将厚度加入到元数据"></a>2.3 将厚度加入到元数据</h3><ul>
+<li>如下代码是载入一个扫描面，包含了多个(slices)，我们仅简化的将其存储为python列表，数据集中每个目录都是一个扫描集(一个病人)。有个元数据域丢失，即Z轴方向上的像素尺寸，也即切片的厚度，所幸，我们可以用其他值推测出来，并加入到元数据中。</li>
+</ul>
+<pre class="highlight"><span class="line"><span class="comment"># Load the scans in given folder path</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_scan</span>(<span class="params">path</span>):</span></span><br><span class="line">    slices = [dicom.read_file(path + <span class="string">'/'</span> + s) <span class="keyword">for</span> s <span class="keyword">in</span> os.listdir(path)]</span><br><span class="line">	<span class="comment">#对一个病人的所有slices进行排序，x指的是一个slice。slice里面有好多属性，</span></span><br><span class="line">	<span class="comment">#有一个是ImagePositionPatient.按照他的这个属性进行对这些slices排序，方便我们组三维rendering。</span></span><br><span class="line">	<span class="comment">#imageOrientationPatient表示的是当前图像的第一行在空间中的三维方向向量与第一列的三维方向向量。</span></span><br><span class="line">    slices.sort(key = <span class="keyword">lambda</span> x: int(x.ImagePositionPatient[<span class="number">2</span>]))</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        slice_thickness = np.abs(slices[<span class="number">0</span>].ImagePositionPatient[<span class="number">2</span>] - slices[<span class="number">1</span>].ImagePositionPatient[<span class="number">2</span>])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        slice_thickness = np.abs(slices[<span class="number">0</span>].SliceLocation - slices[<span class="number">1</span>].SliceLocation)  <span class="comment">#SliceLocation：表示的图像平面的相对位置。</span></span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> slices:</span><br><span class="line">        s.SliceThickness = slice_thickness   <span class="comment">#切片厚度</span></span><br><span class="line">    <span class="keyword">return</span> slices</span><br></pre>
+<h3 id="2-4-灰度值转换为HU单元"><a href="#2-4-灰度值转换为HU单元" class="headerlink" title="2.4 灰度值转换为HU单元"></a>2.4 灰度值转换为HU单元</h3><ul>
+<li>首先去除灰度值为-2000的pixl_array(<code>pixl_array</code>包含了真实数据),CT扫描边界之外的灰度值固定为-2000(dicom和mhd都是这个值)。第一步设定这些值为0，当前对应为空气(值为0).</li>
+<li>回到HU单元，乘以rescale比率并加上intercept(存储在扫描面的元数据中)。(Hounsfield Unit = pixel_value * rescale_slope + rescale_intercept).<pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_pixels_hu</span>(<span class="params">slices</span>):</span></span><br><span class="line">    image = np.stack([s.pixel_array <span class="keyword">for</span> s <span class="keyword">in</span> slices])</span><br><span class="line">    <span class="comment"># Convert to int16 (from sometimes int16),</span></span><br><span class="line">    <span class="comment"># should be possible as values should always be low enough (&lt;32k)</span></span><br><span class="line">    image = image.astype(np.int16)</span><br><span class="line">    <span class="comment"># Set outside-of-scan pixels to 0</span></span><br><span class="line">    <span class="comment"># The intercept is usually -1024, so air is approximately 0</span></span><br><span class="line">    image[image == <span class="number">-2000</span>] = <span class="number">0</span></span><br><span class="line">    <span class="comment"># Convert to Hounsfield units (HU)</span></span><br><span class="line">    <span class="keyword">for</span> slice_number <span class="keyword">in</span> range(len(slices)):</span><br><span class="line">        intercept = slices[slice_number].RescaleIntercept  <span class="comment">#Intercept</span></span><br><span class="line">        slope = slices[slice_number].RescaleSlope  <span class="comment">#Rescale</span></span><br><span class="line">        <span class="keyword">if</span> slope != <span class="number">1</span>:</span><br><span class="line">            image[slice_number] = slope * image[slice_number].astype(np.float64)</span><br><span class="line">            image[slice_number] = image[slice_number].astype(np.int16)</span><br><span class="line">        image[slice_number] += np.int16(intercept)</span><br><span class="line">    <span class="keyword">return</span> np.array(image, dtype=np.int16)</span><br></pre></li>
+<li>可以查看病人的扫描HU分布值情况：<pre class="highlight"><span class="line">first_patient = load_scan(INPUT_FOLDER + patients[<span class="number">0</span>])</span><br><span class="line">first_patient_pixels = get_pixels_hu(first_patient)</span><br><span class="line">plt.hist(first_patient_pixels.flatten(), bins=<span class="number">80</span>, color=<span class="string">'c'</span>)</span><br><span class="line">plt.xlabel(<span class="string">"Hounsfield Units (HU)"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Frequency"</span>)</span><br><span class="line">plt.show()</span><br></pre>
+<h3 id="2-5-重采样"><a href="#2-5-重采样" class="headerlink" title="2.5 重采样"></a>2.5 重采样</h3></li>
+<li>不同扫描面的像素尺寸，粗细粒度是不同的，这不利于我们进行CNN任务，我们可以使用同构采样。</li>
+<li>一个扫描面的像素区间可能是[2.5,0.5,0.5],即切片之间的距离为2.5mm。可能另外一个扫描面的范围是[1.5,0.725,0.725]。这可能不利于自动分析。常见的处理方法是从全数据集中以固定的同构分辨率重新采样，将所有的东西采样为(1,1,1).<pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">resample</span>(<span class="params">image, scan, new_spacing=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]</span>):</span> <span class="comment"># scan是load_scan函数返回的结果</span></span><br><span class="line">    <span class="comment"># Determine current pixel spacing</span></span><br><span class="line">    spacing = map(float, ([scan[<span class="number">0</span>].SliceThickness] + scan[<span class="number">0</span>].PixelSpacing))</span><br><span class="line">    spacing = np.array(list(spacing))</span><br><span class="line">    resize_factor = spacing / new_spacing</span><br><span class="line">    new_real_shape = image.shape * resize_factor</span><br><span class="line">    new_shape = np.round(new_real_shape)   <span class="comment">#返回浮点数x的四舍五入值。</span></span><br><span class="line">    real_resize_factor = new_shape / image.shape</span><br><span class="line">    new_spacing = spacing / real_resize_factor</span><br><span class="line">    image = scipy.ndimage.interpolation.zoom(image, real_resize_factor, mode=<span class="string">'nearest'</span>) <span class="comment">#使用所请求顺序的样条插值来缩放数组。</span></span><br><span class="line">    <span class="keyword">return</span> image, new_spacing</span><br><span class="line"><span class="comment"># 现在重新取样病人的像素，将其映射到一个同构分辨率 1mm x1mm x1mm。</span></span><br><span class="line">pix_resampled, spacing = resample(first_patient_pixels, first_patient, [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])</span><br></pre></li>
+<li>使用matplotlib输出肺部扫描的3D图像方法。可能需要一两分钟。<pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_3d</span>(<span class="params">image, threshold=<span class="number">-300</span></span>):</span></span><br><span class="line">    <span class="comment"># Position the scan upright,</span></span><br><span class="line">    <span class="comment"># so the head of the patient would be at the top facing the camera</span></span><br><span class="line">    p = image.transpose(<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>)  <span class="comment">#将扫描件竖直放置</span></span><br><span class="line">    verts, faces = measure.marching_cubes(p, threshold) <span class="comment">#Liner推进立方体算法来查找3D体积数据中的曲面。</span></span><br><span class="line">    fig = plt.figure(figsize=(<span class="number">10</span>, <span class="number">10</span>))</span><br><span class="line">    ax = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">'3d'</span>)</span><br><span class="line">    <span class="comment"># Fancy indexing: `verts[faces]` to generate a collection of triangles</span></span><br><span class="line">    mesh = Poly3DCollection(verts[faces], alpha=<span class="number">0.1</span>)  <span class="comment">#创建3Dpoly</span></span><br><span class="line">    face_color = [<span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">1</span>]</span><br><span class="line">    mesh.set_facecolor(face_color)  <span class="comment">#设置颜色</span></span><br><span class="line">    ax.add_collection3d(mesh)</span><br><span class="line">    ax.set_xlim(<span class="number">0</span>, p.shape[<span class="number">0</span>])</span><br><span class="line">    ax.set_ylim(<span class="number">0</span>, p.shape[<span class="number">1</span>])</span><br><span class="line">    ax.set_zlim(<span class="number">0</span>, p.shape[<span class="number">2</span>])</span><br><span class="line">    plt.show()</span><br><span class="line"><span class="comment"># 调用函数</span></span><br><span class="line">plot_3d(pix_resampled, <span class="number">400</span>)</span><br></pre></li>
+<li>打印函数有个阈值（<code>threshold</code>）参数，来打印特定的结构，比如tissue或者骨头。400是一个仅仅打印骨头的阈值(HU对照表)，如下图：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142508.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142508.jpeg" class="lozad post-image"></p>
+<h3 id="2-6-输出一个病人scans中所有的slices"><a href="#2-6-输出一个病人scans中所有的slices" class="headerlink" title="2.6 输出一个病人scans中所有的slices"></a>2.6 输出一个病人scans中所有的slices</h3><pre class="highlight"><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_ct_scan</span>(<span class="params">scan</span>):</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">            plot a few more images of the slices</span></span><br><span class="line"><span class="string">    :param scan:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    f, plots = plt.subplots(int(scan.shape[<span class="number">0</span>] / <span class="number">20</span>) + <span class="number">1</span>, <span class="number">4</span>, figsize=(<span class="number">50</span>, <span class="number">50</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, scan.shape[<span class="number">0</span>], <span class="number">5</span>):</span><br><span class="line">        plots[int(i / <span class="number">20</span>), int((i % <span class="number">20</span>) / <span class="number">5</span>)].axis(<span class="string">'off'</span>)</span><br><span class="line">        plots[int(i / <span class="number">20</span>), int((i % <span class="number">20</span>) / <span class="number">5</span>)].imshow(scan[i], cmap=plt.cm.bone)</span><br></pre>
+
+<ul>
+<li>此方法的效果示例如下:</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142517.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142517.jpeg" class="lozad post-image"></p>
+<h3 id="2-7-数据标准化处理"><a href="#2-7-数据标准化处理" class="headerlink" title="2.7 数据标准化处理"></a>2.7 数据标准化处理</h3><ul>
+<li><strong>归一化处理：</strong><ul>
+<li>当前的值范围是[-1024,2000]。而任意大于400的值并不是处理肺结节需要考虑，因为它们都是不同反射密度下的骨头。LUNA16竞赛中常用来做归一化处理的阈值集是-1000和400.以下代码：</li>
+</ul>
+</li>
+</ul>
+<pre class="highlight"><span class="line">MIN_BOUND = <span class="number">-1000.0</span></span><br><span class="line">MAX_BOUND = <span class="number">400.0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize</span>(<span class="params">image</span>):</span></span><br><span class="line">    image = (image - MIN_BOUND) / (MAX_BOUND - MIN_BOUND)</span><br><span class="line">    image[image&gt;<span class="number">1</span>] = <span class="number">1.</span></span><br><span class="line">    image[image&lt;<span class="number">0</span>] = <span class="number">0.</span></span><br><span class="line">    <span class="keyword">return</span> image</span><br></pre>
+
+<ul>
+<li><strong>0值中心化：</strong><ul>
+<li>简单来说就是所有像素值减去均值。LUNA16竞赛中的均值大约是0.25.</li>
+<li>不要对每一张图像做零值中心化（此处像是在kernel中完成的）CT扫描器返回的是校准后的精确HU计量。不会出现普通图像中会出现某些图像低对比度和明亮度的情况<pre class="highlight"><span class="line">PIXEL_MEAN = <span class="number">0.25</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zero_center</span>(<span class="params">image</span>):</span></span><br><span class="line">    image = image - PIXEL_MEAN</span><br><span class="line">    <span class="keyword">return</span> image</span><br></pre>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="三-mhd格式数据处理过程"><a href="#三-mhd格式数据处理过程" class="headerlink" title="三 mhd格式数据处理过程"></a>三 mhd格式数据处理过程</h2><ul>
+<li>mhd的数据只是格式与dicom不一样，其实质包含的都是病人的扫描，处理MHD需要借助<code>SimpleITK</code>这个包，处理思路详情可以参考Data Science Bowl2017的toturail <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.kaggle.com/c/data-science-bowl-2017#tutorial">Data Science Bowl 2017</a>.需要注意的是MHD格式的数据没有HU值，它的值域范围与dicom很不同。</li>
+<li>我们以LUNA2016年的数据处理流程为例。参考代码为: <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/booz-allen-hamilton/DSB3Tutorial/tree/master/tutorial_code">LUNA2016数据切割</a>.<h3 id="3-1-载入必要的包"><a href="#3-1-载入必要的包" class="headerlink" title="3.1 载入必要的包"></a>3.1 载入必要的包</h3><pre class="highlight"><span class="line"><span class="keyword">import</span> SimpleITK <span class="keyword">as</span> sitk</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">from</span> glob <span class="keyword">import</span> glob  <span class="comment">#用它可以查找符合自己目的的文件</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># glob方法返回所有匹配的文件路径列表（list）；该方法需要一个参数用来指定匹配的路径字符串，</span></span><br><span class="line"><span class="comment"># 其返回的文件名只包括当前目录里的文件名，不包括子文件夹里的文件。</span></span><br><span class="line">file_list=glob(luna_subset_path+<span class="string">"*.mhd"</span>)  </span><br><span class="line"><span class="comment">#####################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Helper function to get rows in data frame associated</span></span><br><span class="line"><span class="comment"># with each file</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_filename</span>(<span class="params">case</span>):</span></span><br><span class="line">	<span class="comment"># 如果你想要为一个定义在函数外的变量，那么你就得告诉Python这个变量名不是局部的，而是 全局 的。</span></span><br><span class="line">    <span class="keyword">global</span> file_list</span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> file_list:</span><br><span class="line">        <span class="keyword">if</span> case <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">return</span>(f)</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># The locations of the nodes</span></span><br><span class="line">df_node = pd.read_csv(luna_path+<span class="string">"annotations.csv"</span>)</span><br><span class="line">df_node[<span class="string">"file"</span>] = df_node[<span class="string">"seriesuid"</span>].apply(get_filename)  <span class="comment">#调用get_filename函数，并函数参数为df_node["seriesuid"]</span></span><br><span class="line">df_node = df_node.dropna() <span class="comment">#将所有含有nan项的row删除</span></span><br><span class="line"><span class="comment">#####</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Looping over the image files</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line">fcount = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> img_file <span class="keyword">in</span> file_list:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"Getting mask for image file %s"</span> % img_file.replace(luna_subset_path,<span class="string">""</span>)</span><br><span class="line">    mini_df = df_node[df_node[<span class="string">"file"</span>]==img_file] <span class="comment">#get all nodules associate with file</span></span><br><span class="line">    <span class="keyword">if</span> len(mini_df)&gt;<span class="number">0</span>:       <span class="comment"># some files may not have a nodule--skipping those</span></span><br><span class="line">        biggest_node = np.argsort(mini_df[<span class="string">"diameter_mm"</span>].values)[<span class="number">-1</span>]   <span class="comment"># just using the biggest node</span></span><br><span class="line">        node_x = mini_df[<span class="string">"coordX"</span>].values[biggest_node]</span><br><span class="line">        node_y = mini_df[<span class="string">"coordY"</span>].values[biggest_node]</span><br><span class="line">        node_z = mini_df[<span class="string">"coordZ"</span>].values[biggest_node]</span><br><span class="line">        diam = mini_df[<span class="string">"diameter_mm"</span>].values[biggest_node]</span><br></pre>
+<h3 id="3-2-LUNA16的MHD格式数据的值"><a href="#3-2-LUNA16的MHD格式数据的值" class="headerlink" title="3.2 LUNA16的MHD格式数据的值"></a>3.2 LUNA16的MHD格式数据的值</h3></li>
+<li>一直在寻找MHD格式数据的处理方法，对于dicom格式的CT有很多论文根据其HU值域可以轻易地分割肺、骨头、血液等，但是对于MHD没有这样的参考。从LUNA16论坛得到的解释是，LUNA16的MHD数据已经转换为HU值了，不需要再使用slope和intercept来做rescale变换了。此论坛主题下，有人提出MHD格式没有提供pixel spacing(mm) 和 slice thickness(mm) ，而标准文件annotation.csv文件中结节的半径和坐标都是mm单位，最后确认的是<strong>MHD格式文件中只保留了体素尺寸以及坐标原点位置，没有保存slice thickness。</strong>即，dicom才是原始数据格式。</li>
+</ul>
+<h3 id="3-4-坐标体系变换"><a href="#3-4-坐标体系变换" class="headerlink" title="3.4 坐标体系变换"></a>3.4 坐标体系变换</h3><ul>
+<li>MHD值的坐标体系是体素，以mm为单位（dicom的值是GV灰度值）。结节的位置是CT scanner坐标轴里面相对原点的mm值，需要将其转换到真实坐标轴位置，可以使用SimpleITK包中的 <code>GetOrigin()</code> <code>GetSpacing()</code>。图像数据是以512x512数组的形式给出的。</li>
+<li>坐标体系变换如下：</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142528.jpeg" alt="医学图像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20210108142528.jpeg" class="lozad post-image"></p>
+<ul>
+<li><p>相应的代码处理如下：</p>
+<pre class="highlight"><span class="line">itk_img = sitk.ReadImage(img_file)</span><br><span class="line">img_array = sitk.GetArrayFromImage(itk_img) <span class="comment"># indexes are z,y,x (notice the ordering)</span></span><br><span class="line">center = np.array([node_x,node_y,node_z])   <span class="comment"># nodule center</span></span><br><span class="line">origin = np.array(itk_img.GetOrigin())      <span class="comment"># x,y,z  Origin in world coordinates (mm)</span></span><br><span class="line">spacing = np.array(itk_img.GetSpacing())    <span class="comment"># spacing of voxels in world coor. (mm)</span></span><br><span class="line"><span class="comment"># np.rint(a) 各元素四舍五入</span></span><br><span class="line">v_center = np.rint((center-origin)/spacing)  <span class="comment"># nodule center in voxel space (still x,y,z ordering) </span></span><br></pre>
+</li>
+<li><p>在LUNA16的标注CSV文件中标注了结节中心的X,Y,Z轴坐标，但是实际取值的时候取的是Z轴最后三层的数组(img_array)。</p>
+</li>
+<li><p>下述代码只提取了包含结节的最后三个slice的数据，代码参考自 <code>LUNA_mask_extraction.py</code></p>
+</li>
+</ul>
+<pre class="highlight"><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i_z <span class="keyword">in</span> range(int(v_center[<span class="number">2</span>])<span class="number">-1</span>,int(v_center[<span class="number">2</span>])+<span class="number">2</span>):</span><br><span class="line">    mask = make_mask(center,diam,i_z*spacing[<span class="number">2</span>]+origin[<span class="number">2</span>],width,height,spacing,origin)</span><br><span class="line">    masks[i] = mask</span><br><span class="line">    imgs[i] = matrix2int16(img_array[i_z])</span><br><span class="line">    i+=<span class="number">1</span></span><br><span class="line">np.save(output_path+<span class="string">"images_%d.npy"</span> % (fcount) ,imgs)</span><br><span class="line">np.save(output_path+<span class="string">"masks_%d.npy"</span> % (fcount) ,masks)</span><br></pre>
+
+<h3 id="3-5-查看节点"><a href="#3-5-查看节点" class="headerlink" title="3.5 查看节点"></a>3.5 查看节点</h3><ul>
+<li>以下代码用于查看原始CT和结节mask。其实就是用matplotlib打印上一步存储的npy文件。<pre class="highlight"><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">imgs = np.load(output_path+<span class="string">'images_0.npy'</span>)</span><br><span class="line">masks = np.load(output_path+<span class="string">'masks_0.npy'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(imgs)):</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"image %d"</span> % i</span><br><span class="line">    fig,ax = plt.subplots(<span class="number">2</span>,<span class="number">2</span>,figsize=[<span class="number">8</span>,<span class="number">8</span>])</span><br><span class="line">    ax[<span class="number">0</span>,<span class="number">0</span>].imshow(imgs[i],cmap=<span class="string">'gray'</span>)</span><br><span class="line">    ax[<span class="number">0</span>,<span class="number">1</span>].imshow(masks[i],cmap=<span class="string">'gray'</span>)</span><br><span class="line">    ax[<span class="number">1</span>,<span class="number">0</span>].imshow(imgs[i]*masks[i],cmap=<span class="string">'gray'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line">    raw_input(<span class="string">"hit enter to cont : "</span>)</span><br></pre></li>
+<li>接下来的处理和DICOM格式数据差不多，腐蚀膨胀、连通区域标记等。</li>
+</ul>
+<h2 id="参考信息"><a href="#参考信息" class="headerlink" title="参考信息"></a>参考信息</h2><ul>
+<li><p>灰度值是pixel value经过重重LUT转换得到的用来进行显示的值，而这个转换过程是不可逆的，也就是说，灰度值无法转换为ct值。只能根据窗宽窗位得到一个大概的范围。 pixel value经过modality lut得到Hu，但是怀疑pixelvalue的读取出了问题。dicom文件中存在（0028，0106）（0028，0107）两个tag，分别是最大最小pixel value，可以用来检验你读取的pixel value 矩阵是否正确。</p>
+</li>
+<li><p>LUT全称look up table，实际上就是一张像素灰度值的映射表，它将实际采样到的像素灰度值经过一定的变换如阈值、反转、二值化、对比度调整、线性变换等，变成了另外一 个与之对应的灰度值，这样可以起到突出图像的有用信息，增强图像的光对比度的作用。</p>
+</li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/CSBook001/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">点击下载：计算机专业最全PDF高清电子书！</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Medical-scan-image-processing/">https://tanqingbo.cn/Medical-scan-image-processing/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/Deeply-Supervised-Nets/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">论文解读:深度监督网络 Deeply-Supervised Nets </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">论文笔记：基于3D卷积神经网络的人体行为识别(3D Convolutional Neural Networks for Human Action Recognition) </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-dicom"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 dicom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-mhd%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 mhd格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9F%A5%E7%9C%8BCT%E6%89%AB%E6%8F%8F%E6%96%87%E4%BB%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 查看CT扫描文件软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-dicom%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">二 dicom格式数据处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">2.1 处理思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%88%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">4.</span> <span class="toc-text">2.2 先载入必要的包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B0%86%E5%8E%9A%E5%BA%A6%E5%8A%A0%E5%85%A5%E5%88%B0%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">2.3 将厚度加入到元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%81%B0%E5%BA%A6%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BAHU%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">2.4 灰度值转换为HU单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">2.5 重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E7%97%85%E4%BA%BAscans%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84slices"><span class="toc-number">4.4.</span> <span class="toc-text">2.6 输出一个病人scans中所有的slices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">2.7 数据标准化处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-mhd%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">三 mhd格式数据处理过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 载入必要的包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-LUNA16%E7%9A%84MHD%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%80%BC"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 LUNA16的MHD格式数据的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">3.4 坐标体系变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9"><span class="toc-number">5.4.</span> <span class="toc-text">3.5 查看节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">参考信息</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.jpg" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>309</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://weibo.com/tqb4342">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-dicom"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 dicom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-mhd%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 mhd格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9F%A5%E7%9C%8BCT%E6%89%AB%E6%8F%8F%E6%96%87%E4%BB%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 查看CT扫描文件软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-dicom%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">二 dicom格式数据处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">2.1 处理思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%88%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">4.</span> <span class="toc-text">2.2 先载入必要的包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B0%86%E5%8E%9A%E5%BA%A6%E5%8A%A0%E5%85%A5%E5%88%B0%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">2.3 将厚度加入到元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%81%B0%E5%BA%A6%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BAHU%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">2.4 灰度值转换为HU单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">2.5 重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E7%97%85%E4%BA%BAscans%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84slices"><span class="toc-number">4.4.</span> <span class="toc-text">2.6 输出一个病人scans中所有的slices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">2.7 数据标准化处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-mhd%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">三 mhd格式数据处理过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 载入必要的包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-LUNA16%E7%9A%84MHD%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%80%BC"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 LUNA16的MHD格式数据的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">3.4 坐标体系变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9"><span class="toc-number">5.4.</span> <span class="toc-text">3.5 查看节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">参考信息</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">13</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.jpeg">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">一、数据格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-dicom"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 dicom</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-mhd%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 mhd格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%9F%A5%E7%9C%8BCT%E6%89%AB%E6%8F%8F%E6%96%87%E4%BB%B6%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 查看CT扫描文件软件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-dicom%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">二 dicom格式数据处理过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%A4%84%E7%90%86%E6%80%9D%E8%B7%AF"><span class="toc-number">3.</span> <span class="toc-text">2.1 处理思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%85%88%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">4.</span> <span class="toc-text">2.2 先载入必要的包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B0%86%E5%8E%9A%E5%BA%A6%E5%8A%A0%E5%85%A5%E5%88%B0%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">4.1.</span> <span class="toc-text">2.3 将厚度加入到元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%81%B0%E5%BA%A6%E5%80%BC%E8%BD%AC%E6%8D%A2%E4%B8%BAHU%E5%8D%95%E5%85%83"><span class="toc-number">4.2.</span> <span class="toc-text">2.4 灰度值转换为HU单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%87%8D%E9%87%87%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">2.5 重采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E7%97%85%E4%BA%BAscans%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84slices"><span class="toc-number">4.4.</span> <span class="toc-text">2.6 输出一个病人scans中所有的slices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96%E5%A4%84%E7%90%86"><span class="toc-number">4.5.</span> <span class="toc-text">2.7 数据标准化处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-mhd%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">三 mhd格式数据处理过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BD%BD%E5%85%A5%E5%BF%85%E8%A6%81%E7%9A%84%E5%8C%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 载入必要的包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-LUNA16%E7%9A%84MHD%E6%A0%BC%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E5%80%BC"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 LUNA16的MHD格式数据的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%9D%90%E6%A0%87%E4%BD%93%E7%B3%BB%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">3.4 坐标体系变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%9F%A5%E7%9C%8B%E8%8A%82%E7%82%B9"><span class="toc-number">5.4.</span> <span class="toc-text">3.5 查看节点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">参考信息</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-05</div>
+        <a href="/PicGo-Gitee/"><div class="recent-posts-item-content">PicGo + Gitee(码云)实现markdown图床，Typora配置PicGo</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-04</div>
+        <a href="/GitHub-2FA/"><div class="recent-posts-item-content">Github双因素身份验证（2FA）注册教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
