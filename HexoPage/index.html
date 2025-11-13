@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.webp">
+  <title>如何搭建HEXO静态博客网站&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="如何搭建HEXO静态博客网站">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/HexoPage/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225160240.png">
+  
+  
+  <meta property="description" content="给大家推荐一本程序员必看的书---《**程序是怎么跑起来的**》，本书从计算机的内部结构开始讲起，以图配文的形式详细讲解了操作系统和应用程序的关系，目的是让读者了解从用户双击程序图标到程序开始运行之间到底发生了什么。">
+  
+  <meta property="keywords" content="给大家推荐一本程序员必看的书---《**程序是怎么跑起来的**》，本书从计算机的内部结构开始讲起，以图配文的形式详细讲解了操作系统和应用程序的关系，目的是让读者了解从用户双击程序图标到程序开始运行之间到底发生了什么。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2025-11-12">
+  <meta property="og:article:modified_time" content="2025-11-12">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="操作系统">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/HexoPage/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225160240.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201225160240.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      如何搭建HEXO静态博客网站
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2025-11-12T07:31:06.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2025-11-12</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/编程资料/" class="post-meta-link">编程资料</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/HexoPage/" class="leancloud_visitors" data-flag-title="如何搭建HEXO静态博客网站">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/操作系统/" class="post-meta-link">操作系统</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="给大家推荐一本程序员必看的书---《**程序是怎么跑起来的**》，本书从计算机的内部结构开始讲起，以图配文的形式详细讲解了操作系统和应用程序的关系，目的是让读者了解从用户双击程序图标到程序开始运行之间到底发生了什么。">
+  
+  <meta name="keywords" content="给大家推荐一本程序员必看的书---《**程序是怎么跑起来的**》，本书从计算机的内部结构开始讲起，以图配文的形式详细讲解了操作系统和应用程序的关系，目的是让读者了解从用户双击程序图标到程序开始运行之间到底发生了什么。">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <p><strong>前言</strong></p>
+<p>建网站本身是一个很大的工程，涉及前端页面的搭建，网站数据的存储，还要购置服务器资源，甚至是后期的维护，过程相当繁琐。</p>
+<p>不过如果仅仅是想搭建个人的网站，写写博客，想要美观，又不想操心太多和写博客无关的事情。那么，Hexo + Kaze + Gitee Pages 的方式就很适合你。</p>
+<p><strong>我自己的个人网站也是通过该方法搭建的：</strong><a href="https://link.zhihu.com/?target=https://tanqingbo.cn/clashvpn/" rel="external nofollow noreferrer">IT码农 - 一个专注于程序员成长的网站 | IT码农</a></p>
+<p>本文就讲下如何借助这三样免费的技术或服务，来搭建一个可访问的静态博客网站。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-999efc5e2b91ba7218d9083ee6defb8d_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-999efc5e2b91ba7218d9083ee6defb8d_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="Hexo-简介"><a href="#Hexo-简介" class="headerlink" title="Hexo 简介"></a>Hexo 简介</h3><h3 id="Hexo-是什么？"><a href="#Hexo-是什么？" class="headerlink" title="Hexo 是什么？"></a>Hexo 是什么？</h3><p><strong>Hexo</strong>[1] 是一个快速，简单且功能强大的博客框架。如果你用 Markdown 写博客，Hexo 可以在几秒内生成带有精美主题的静态文件。</p>
+<h3 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h3><h3 id="前置要求"><a href="#前置要求" class="headerlink" title="前置要求"></a>前置要求</h3><ul>
+<li>Node.js（版本 10.13 以上，建议使用 12.0 以上版本）</li>
+<li>Git</li>
+</ul>
+<h3 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h3><ul>
+<li>Windows：下载并安装 <strong>git</strong>[2]。</li>
+<li>Mac：使用 <strong>Homebrew</strong>[3] 安装。</li>
+<li>Linux（Ubuntu，Debian）：<code>sudo apt-get install git-core</code></li>
+<li>Linux（Fedora，Red Hat，CentOS）：<code>sudo yum install git-core</code></li>
+</ul>
+<h3 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a>安装 Node.js</h3><p>Node.js 为大多数平台提供了 <strong>官方安装程序</strong>[4]。</p>
+<p>替代安装方法：</p>
+<ul>
+<li>Windows：使用 <strong>nvs</strong>[5] 安装它。</li>
+<li>Mac：使用 <strong>Homebrew</strong>[6] 安装。</li>
+<li>Linux（基于 DEB / RPM）：与 <strong>NodeSource</strong>[7] 一起安装。</li>
+<li>其他：通过相应的软件包管理器进行安装。请参阅 Node.js 提供的<strong>指南</strong>[8]。</li>
+</ul>
+<h3 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h3><p>用 npm 安装 Hexo。</p>
+<pre class="highlight"><span class="line">npm install -g hexo-cli</span><br></pre>
+
+
+
+<p><img src="https://pic1.zhimg.com/80/v2-4374aea9591ab55411da49ce082c6fad_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-4374aea9591ab55411da49ce082c6fad_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>使用以下指令查看是否安装成功。</p>
+<pre class="highlight"><span class="line">hexo version</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-730f9ca69cb9b378e929db36074f3c06_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-730f9ca69cb9b378e929db36074f3c06_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>如果你想卸载 Hexo，使用以下指令：</p>
+<pre class="highlight"><span class="line">npm uninstall -g hexo-cli</span><br></pre>
+
+<h3 id="运行-hexo"><a href="#运行-hexo" class="headerlink" title="运行 hexo"></a>运行 hexo</h3><p>安装后，你可以通过 <code>hexo &lt;command&gt;</code> 运行 Hexo。比如通过 <code>hexo help</code> 指令来获取使用帮助。</p>
+<pre class="highlight"><span class="line">hexo help</span><br></pre>
+
+
+
+<p><img src="https://pica.zhimg.com/80/v2-79850d0e55bc0f6c8cc2806ba61b84d4_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-79850d0e55bc0f6c8cc2806ba61b84d4_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>帮助里提到 <code>hexo init</code> 命令可以创建一个新的 Hexo 文件夹，这个文件夹其实就是利用 Hexo 生成的站点信息了。接下来讲下怎么建站。</p>
+<h3 id="Hexo-建站"><a href="#Hexo-建站" class="headerlink" title="Hexo 建站"></a>Hexo 建站</h3><h3 id="初始化操作"><a href="#初始化操作" class="headerlink" title="初始化操作"></a>初始化操作</h3><p>使用 <code>hexo init &lt;folder&gt;</code> 指令就可以在指定文件夹下建立站点信息，我一般用域名做名称，如下：</p>
+<pre class="highlight"><span class="line">hexo init java4u.cn</span><br></pre>
+
+<p>站点初始化中：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-7f7e5d810312cde845e88e1b23a9f475_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-7f7e5d810312cde845e88e1b23a9f475_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>站点初始化完成，会生成指定的文件夹：</p>
+<p><img src="https://picx.zhimg.com/80/v2-9f4112f5bb5d5a2802d78673cfb54a74_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-9f4112f5bb5d5a2802d78673cfb54a74_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>进入该站点，我们看下目录结构，如下：</p>
+<p><img src="https://pica.zhimg.com/80/v2-60c069c8767198c50412bd8fb37238fc_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-60c069c8767198c50412bd8fb37238fc_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>图片</p>
+<p>这些文件有着各自的职责：</p>
+<ul>
+<li>_config.landscape.yml：自定义的主题配置文件，此处的 landscape 是默认主题。配置其他主题可以参考这种方式。</li>
+<li>_config.yml：站点全局的配置文件。</li>
+<li>node_modules：node 模块文件夹。包含可执行文件和依赖的资源。</li>
+<li>package-lock.json：node_modules 文件中所有模块的版本信息，模块来源。</li>
+<li>package.json：Hexo 框架的基本参数信息以及它所依赖的插件。</li>
+<li>scaffolds：scaffolds 原意是脚手架，这里可以理解为模板文件夹。当你创建新的文章时，Hexo 会根据该文件夹下的对应文件进行初始化构建。</li>
+<li>source：资源文件夹。这里是你放自己资源比如博文和图片的地方。<code>_posts</code> 文件夹下的 Markdown 和 HTML 文件会被解析并放到 <code>public</code> 文件夹下。其他文件或文件夹，如果开头命名不是 <code>_</code> (下划线)，也都会被拷贝过去。</li>
+<li>themes：主题文件夹。Hexo 会根据主题来生成静态页面。</li>
+</ul>
+<p>基于这样的结构，Hexo 就具备了生成静态网站的能力。</p>
+<h3 id="本地启动"><a href="#本地启动" class="headerlink" title="本地启动"></a>本地启动</h3><p>我们先本地启动，看下实际效果。输入以下命令：</p>
+<pre class="highlight"><span class="line">hexo server</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-669e2f4fb66dd610e3058b9462fc49b8_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-669e2f4fb66dd610e3058b9462fc49b8_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>Hexo 会启动服务，将默认生成的网站运行在本机的 4000 端口上，可以直接访问 <code>http://localhost:4000</code> 就能看到网站首页，它基于默认主题生成，同时有一篇默认文章。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-a5e2c851ce7cb056a31a65fcdc985b55_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-a5e2c851ce7cb056a31a65fcdc985b55_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>这个页面只是官方提供的一个样例，看到它就意味着你本地环境跑通了。我们可以通过修改配置的方式，对页面相关元素做调整。</p>
+<h3 id="核心配置"><a href="#核心配置" class="headerlink" title="核心配置"></a>核心配置</h3><p>以下是我们需要了解或者修改的配置信息。</p>
+<h3 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h3><p>这个文件列出了 Hexo 的基本参数信息以及它所依赖的插件。可以看到，<strong>EJS</strong>[9]，<strong>Stylus</strong>[10] 和 <strong>Markdown</strong>[11] 渲染器都是默认安装的。</p>
+<pre class="highlight"><span class="line">{</span><br><span class="line">  "name": "hexo-site",</span><br><span class="line">  "version": "0.0.0",</span><br><span class="line">  "private": true,</span><br><span class="line">  "scripts": {</span><br><span class="line">    "build": "hexo generate",</span><br><span class="line">    "clean": "hexo clean",</span><br><span class="line">    "deploy": "hexo deploy",</span><br><span class="line">    "server": "hexo server"</span><br><span class="line">  },</span><br><span class="line">  "hexo": {</span><br><span class="line">    "version": ""</span><br><span class="line">  },</span><br><span class="line">  "dependencies": {</span><br><span class="line">    "hexo": "^5.0.0",</span><br><span class="line">    "hexo-generator-archive": "^1.0.0",</span><br><span class="line">    "hexo-generator-category": "^1.0.0",</span><br><span class="line">    "hexo-generator-index": "^2.0.0",</span><br><span class="line">    "hexo-generator-tag": "^1.0.0",</span><br><span class="line">    "hexo-renderer-ejs": "^1.0.0",</span><br><span class="line">    "hexo-renderer-marked": "^3.0.0",</span><br><span class="line">    "hexo-renderer-stylus": "^2.0.0",</span><br><span class="line">    "hexo-server": "^2.0.0",</span><br><span class="line">    "hexo-theme-landscape": "^0.0.3"</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre>
+
+<blockquote>
+<p>如果后边要切换主题，记得把最后一个默认的主题依赖删除掉。</p>
+</blockquote>
+<h3 id="config-yml"><a href="#config-yml" class="headerlink" title="_config.yml"></a>_config.yml</h3><p>可设置网站、网址、目录、文章、分类&amp;标签、日期/时间格式、分页和扩展等信息。</p>
+<h3 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h3><p><img src="https://picx.zhimg.com/80/v2-602ad7f99654c2e269bde557a408dbdc_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-602ad7f99654c2e269bde557a408dbdc_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>网站标题</td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>网站副标题</td>
+</tr>
+<tr>
+<td>description</td>
+<td>网站描述，用于 SEO</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>网站的关键词，支持多个关键词。</td>
+</tr>
+<tr>
+<td>author</td>
+<td>文章作者。</td>
+</tr>
+<tr>
+<td>language</td>
+<td>网站使用的语言。对于简体中文用户来说，使用不同的主题可能需要设置成不同的值，请参考你的主题的文档自行设置，常见的有 zh-Hans和 zh-CN。</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>网站时区。Hexo 默认使用你电脑的时区。请参考 时区列表[12] 进行设置，如 America/New_York, Japan, 和 UTC 。一般的，对于中国大陆地区可以使用 Asia/Shanghai。</td>
+</tr>
+</tbody></table>
+<h3 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h3><p><img src="https://picx.zhimg.com/80/v2-deb4cc3f9295599a9db53af6654b2822_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-deb4cc3f9295599a9db53af6654b2822_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>网址, must starts with http:// or https://</td>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://example.com/">http://example.com</a></td>
+</tr>
+<tr>
+<td>root</td>
+<td>网站根目录，如果放子目录，设置 /blog/</td>
+<td>/</td>
+</tr>
+<tr>
+<td>permalink</td>
+<td>文章的 永久链接[13] 格式</td>
+<td>:year/:month/:day/:title/</td>
+</tr>
+<tr>
+<td>permalink_defaults</td>
+<td>永久链接中各部分的默认值</td>
+<td></td>
+</tr>
+<tr>
+<td>pretty_urls</td>
+<td>改写 permalink[14] 的值来美化 URL</td>
+<td></td>
+</tr>
+<tr>
+<td>pretty_urls.trailing_index</td>
+<td>是否在永久链接中保留尾部的 index.html，设置为 false 时去除</td>
+<td>true</td>
+</tr>
+<tr>
+<td>pretty_urls.trailing_html</td>
+<td>是否在永久链接中保留尾部的 .html, 设置为 false 时去除 (对尾部的 index.html无效)</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p><img src="https://picx.zhimg.com/80/v2-e08ca80fc54a34580becf9d3c00dc151_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-e08ca80fc54a34580becf9d3c00dc151_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>source_dir</td>
+<td>资源文件夹，这个文件夹用来存放内容。</td>
+<td>source</td>
+</tr>
+<tr>
+<td>public_dir</td>
+<td>公共文件夹，这个文件夹用于存放生成的站点文件。</td>
+<td>public</td>
+</tr>
+<tr>
+<td>tag_dir</td>
+<td>标签文件夹</td>
+<td>tags</td>
+</tr>
+<tr>
+<td>archive_dir</td>
+<td>归档文件夹</td>
+<td>archives</td>
+</tr>
+<tr>
+<td>category_dir</td>
+<td>分类文件夹</td>
+<td>categories</td>
+</tr>
+<tr>
+<td>code_dir</td>
+<td>Include code 文件夹，source_dir 下的子目录</td>
+<td>downloads/code</td>
+</tr>
+<tr>
+<td>i18n_dir</td>
+<td>国际化（i18n）文件夹</td>
+<td>:lang</td>
+</tr>
+<tr>
+<td>skip_render</td>
+<td>跳过指定文件的渲染。匹配到的文件将会被不做改动地复制到 public 目录中。</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h3><p><img src="https://pic1.zhimg.com/80/v2-61c3a15c042864d008839b452b32eefc_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-61c3a15c042864d008839b452b32eefc_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>new_post_name</td>
+<td>新文章的文件名称</td>
+<td>:title.md</td>
+</tr>
+<tr>
+<td>default_layout</td>
+<td>预设布局</td>
+<td>post</td>
+</tr>
+<tr>
+<td>auto_spacing</td>
+<td>在中文和英文之间加入空格</td>
+<td>false</td>
+</tr>
+<tr>
+<td>titlecase</td>
+<td>把标题转换为 title case</td>
+<td>false</td>
+</tr>
+<tr>
+<td>external_link</td>
+<td>在新标签中打开链接</td>
+<td>true</td>
+</tr>
+<tr>
+<td>external_link.enable</td>
+<td>在新标签中打开链接</td>
+<td>true</td>
+</tr>
+<tr>
+<td>external_link.field</td>
+<td>对整个网站（site）生效或仅对文章（post）生效</td>
+<td>site</td>
+</tr>
+<tr>
+<td>external_link.exclude</td>
+<td>需要排除的域名。主域名和子域名如 www 需分别配置</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>filename_case</td>
+<td>把文件名称转换为 (1) 小写或 (2) 大写</td>
+<td>0</td>
+</tr>
+<tr>
+<td>render_drafts</td>
+<td>显示草稿</td>
+<td>false</td>
+</tr>
+<tr>
+<td>post_asset_folder</td>
+<td>启动 Asset 文件夹[15]</td>
+<td>false</td>
+</tr>
+<tr>
+<td>relative_link</td>
+<td>把链接改为与根目录的相对地址，建议使用绝对地址。</td>
+<td>false</td>
+</tr>
+<tr>
+<td>future</td>
+<td>显示未来的文章</td>
+<td>true</td>
+</tr>
+<tr>
+<td>highlight</td>
+<td>代码块的设置, see Highlight.js[16] section for usage guide</td>
+<td></td>
+</tr>
+<tr>
+<td>prismjs</td>
+<td>代码块的设置, see PrismJS[17] section for usage guide</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="分类-amp-标签"><a href="#分类-amp-标签" class="headerlink" title="分类 &amp; 标签"></a>分类 &amp; 标签</h3><p><img src="https://pic1.zhimg.com/80/v2-aa9e6b83907721092e596306eecbaa1c_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-aa9e6b83907721092e596306eecbaa1c_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>default_category</td>
+<td>默认分类</td>
+<td>uncategorized</td>
+</tr>
+<tr>
+<td>category_map</td>
+<td>分类别名</td>
+<td></td>
+</tr>
+<tr>
+<td>tag_map</td>
+<td>标签别名</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="日期-时间格式"><a href="#日期-时间格式" class="headerlink" title="日期/时间格式"></a>日期/时间格式</h3><p><img src="https://picx.zhimg.com/80/v2-ed51f7e85723009a444a5454b3f57917_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-ed51f7e85723009a444a5454b3f57917_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>Hexo 使用 <strong>Moment.js</strong>[18] 来解析和显示时间。</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>date_format</td>
+<td>日期格式</td>
+<td>YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>time_format</td>
+<td>时间格式</td>
+<td>HH:mm:ss</td>
+</tr>
+<tr>
+<td>updated_option</td>
+<td>当 Front Matter 中没有指定 updated[19] 时 updated 的取值，支持 mtime(文件最后修改时间)，date(使用 date 的值)，empty(不指定)</td>
+<td>mtime</td>
+</tr>
+</tbody></table>
+<h3 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h3><p><img src="https://picx.zhimg.com/80/v2-a0f382855486cb510572c1c587e58633_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-a0f382855486cb510572c1c587e58633_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>per_page</td>
+<td>每页显示的文章量 (0 = 关闭分页功能)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>pagination_dir</td>
+<td>分页目录</td>
+<td>page</td>
+</tr>
+</tbody></table>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p><img src="https://picx.zhimg.com/80/v2-90dcd3f63c3aa7aeb40e11d9a5b10bb5_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-90dcd3f63c3aa7aeb40e11d9a5b10bb5_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>【主题】</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>theme</td>
+<td>当前主题名称。值为false时禁用主题</td>
+<td>landscape</td>
+</tr>
+<tr>
+<td>theme_config</td>
+<td>主题的配置文件。在这里放置的配置会覆盖主题目录下的 _config.yml 中的配置</td>
+<td>无初始配置</td>
+</tr>
+<tr>
+<td>deploy</td>
+<td>部署部分的设置</td>
+<td></td>
+</tr>
+<tr>
+<td>meta_generator</td>
+<td>Meta generator[20] 标签。值为 false 时 Hexo 不会在头部插入该标签</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<p>【部署】</p>
+<p>配置如下：</p>
+<pre class="highlight"><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: &lt;repository url&gt; #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io</span><br><span class="line">  branch: [branch]</span><br><span class="line">  message: [message]</span><br></pre>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>repo</td>
+<td>库（Repository）地址</td>
+<td></td>
+</tr>
+<tr>
+<td>branch</td>
+<td>分支名称</td>
+<td>gh-pages (GitHub) coding-pages (<a href="https://link.zhihu.com/?target=http://Coding.net" rel="external nofollow noreferrer">http://Coding.net</a>) master (others)</td>
+</tr>
+<tr>
+<td>message</td>
+<td>自定义提交信息</td>
+<td></td>
+</tr>
+<tr>
+<td>token</td>
+<td>Optional token value to authenticate with the repo. Prefix with $ to read token from environment variable</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><h3 id="创建文章"><a href="#创建文章" class="headerlink" title="创建文章"></a>创建文章</h3><p>使用以下指令：</p>
+<pre class="highlight"><span class="line">hexo new "test"</span><br></pre>
+
+<p>或者简写：</p>
+<pre class="highlight"><span class="line">hexo n "test"</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-3eedb28fbf4794bdacf3b26d283ad183_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-3eedb28fbf4794bdacf3b26d283ad183_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="运行服务器"><a href="#运行服务器" class="headerlink" title="运行服务器"></a>运行服务器</h3><p>输入以下命令以启动服务器，你的网站会在 <code>http://localhost:4000</code> 下启动。在服务器启动期间，Hexo 会监视文件变动并自动更新，你无须重启服务器。</p>
+<pre class="highlight"><span class="line">hexo server</span><br></pre>
+
+<p>或者简写：</p>
+<pre class="highlight"><span class="line">hexo s</span><br></pre>
+
+
+
+<p><img src="https://pica.zhimg.com/80/v2-a7a38ba0f6a7ac7d0aeb693596655877_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-a7a38ba0f6a7ac7d0aeb693596655877_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h3><pre class="highlight"><span class="line">hexo generate</span><br></pre>
+
+<p>或者简写</p>
+<pre class="highlight"><span class="line">hexo g</span><br></pre>
+
+<p>监视文件变动立即重新生成。该操作会阻塞命令。</p>
+<pre class="highlight"><span class="line">hexo g --watch</span><br></pre>
+
+<p>生成完毕后自动部署网站。</p>
+<pre class="highlight"><span class="line">hexo generate --deploy</span><br></pre>
+
+<h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h3><p>Hexo 提供了快速方便的一键部署功能，让你只需一条命令就能将网站部署到服务器上。</p>
+<pre class="highlight"><span class="line">hexo deploy</span><br></pre>
+
+<p>或者简写为：</p>
+<pre class="highlight"><span class="line">hexo d</span><br></pre>
+
+<h3 id="Hexo-主题"><a href="#Hexo-主题" class="headerlink" title="Hexo 主题"></a>Hexo 主题</h3><h3 id="为什么选择-Kaze"><a href="#为什么选择-Kaze" class="headerlink" title="为什么选择 Kaze"></a>为什么选择 Kaze</h3><p>Hexo 默认主题为 landscape，但我觉得不够美观，这里推荐 <strong>kaze[21]</strong> ,它有以下特性：</p>
+<ul>
+<li><p>响应式设计，适配桌面端、平板、手机等各种设备</p>
+</li>
+<li><p>前端性能优化，加载快速，眨眼之间即可加载完成</p>
+</li>
+<li><ul>
+<li>图片懒加载，应用懒加载技术加快页面的生成速度</li>
+</ul>
+</li>
+<li><p>资源压缩，提升本地资源请求速度</p>
+</li>
+<li><p>精简设计，不包含 Jquery 等额外库</p>
+</li>
+<li><p>支持侧边栏小组件，例如最近文章，作者卡片</p>
+</li>
+<li><p>暗黑模式，享受黑夜的魅力</p>
+</li>
+<li><p>代码高亮，支持 <strong>prismjs</strong></p>
+</li>
+<li><p>公式渲染，支持 <strong>katex</strong> 和 <strong>mathjax</strong></p>
+</li>
+<li><p>评论系统，集成 <strong>valine</strong>、<strong>gitalk</strong> 和 <strong>livere</strong></p>
+</li>
+<li><p>访问量统计和谷歌分析支持</p>
+</li>
+</ul>
+<h3 id="安装-Kaze"><a href="#安装-Kaze" class="headerlink" title="安装 Kaze"></a>安装 Kaze</h3><p>在 <code>your site/themes</code> 下输入</p>
+<pre class="highlight"><span class="line">cd themes</span><br><span class="line">git clone https://github.com/theme-kaze/hexo-theme-Kaze.git</span><br></pre>
+
+
+
+<p><img src="https://pic1.zhimg.com/80/v2-898a507dd0fd107cd470c4394c26c2ae_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-898a507dd0fd107cd470c4394c26c2ae_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>安装成功后，会生出目录：hexo-theme-Kaze。</p>
+<p>修改站点配置文件 <code>_config.yml</code> 下的主题值为：hexo-theme-Kaze。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-53816f6da72f6d3a127ae41c149d6ce0_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-53816f6da72f6d3a127ae41c149d6ce0_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>用 <code>hexo server</code> 启动 Hexo 服务看下效果。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-226597d8e3256143acabf599af38dfc4_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-226597d8e3256143acabf599af38dfc4_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>会看到已经生成了默认的主题，只是很多东西都没有，需要改造一下。</p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><p>可在该主题目录下的 <strong>_config.yml</strong> 文件里配置。</p>
+<h3 id="主题颜色"><a href="#主题颜色" class="headerlink" title="主题颜色"></a>主题颜色</h3><p>在 <strong>color</strong> 中进行配置，以下是默认值。</p>
+<pre class="highlight"><span class="line">color:</span><br><span class="line">  text-color: "#3c4858"</span><br><span class="line">  text-strong-color: "#2f3d4e"</span><br><span class="line">  text-light-color: "#909faf"</span><br><span class="line">  divider-color: "#e6e8ee"</span><br><span class="line">  title-color: "#475b6d"</span><br><span class="line">  link-color: "#3273dc"</span><br><span class="line">  link-hover-color: "#6596e5"</span><br><span class="line">  info-text-color: "#909faf"</span><br><span class="line">  widget-background-color: "#fff"</span><br><span class="line">  body-background-color: "#f2f5f8"</span><br><span class="line">  border-color: "#e1e4e9"</span><br><span class="line">  pre-color: "#2d2d2d"</span><br><span class="line">  code-color: "#50687c"</span><br><span class="line">  code-background-color: "#e9eaf0"</span><br></pre>
+
+<h3 id="字号与字体"><a href="#字号与字体" class="headerlink" title="字号与字体"></a>字号与字体</h3><p>在 <strong>font</strong> 中进行配置，以下是默认值。</p>
+<pre class="highlight"><span class="line">font:</span><br><span class="line">  font-size: 16px # global font-size</span><br><span class="line">  font-family: '-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif' # global font-family</span><br></pre>
+
+<h3 id="站点访问量统计"><a href="#站点访问量统计" class="headerlink" title="站点访问量统计"></a>站点访问量统计</h3><p>访问量统计目前仅支持不蒜子，默认关闭，可统计站点总访问量和总访客数。</p>
+<pre class="highlight"><span class="line">footer:</span><br><span class="line">  #------------------------</span><br><span class="line">  # pv / uv statistics config</span><br><span class="line">  #------------------------</span><br><span class="line">  statistics:</span><br><span class="line">    enable: false</span><br><span class="line">    type: busuanzi # now version only supports busuanzi</span><br><span class="line">    pv:</span><br><span class="line">      enable: true</span><br><span class="line">      style: 本站总访问量{}次 # the style will be shown as $1{pv}$2</span><br><span class="line">    uv:</span><br><span class="line">      enable: true</span><br><span class="line">      style: 本站总访客数{}次 # the style will be shown as $1{uv}$2</span><br></pre>
+
+<h3 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h3><pre class="highlight"><span class="line">analytics:</span><br><span class="line">  enable: false</span><br><span class="line">  type: google # google</span><br><span class="line">  google:</span><br><span class="line">    id:</span><br></pre>
+
+<p><code>enable</code> 开启分析支持（默认关闭）</p>
+<p>type 目前仅支持 google</p>
+<p><code>google.id</code> 有关谷歌分析的具体使用说明和 <code>id</code> 使用可以参考<strong>谷歌文档</strong>[22]</p>
+<h3 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h3><h3 id="文章头图"><a href="#文章头图" class="headerlink" title="文章头图"></a>文章头图</h3><p>在文章 <code>Front-matter</code> 中 <code>banner_img</code> 可以设置首页头图</p>
+<h3 id="小组件"><a href="#小组件" class="headerlink" title="小组件"></a>小组件</h3><pre class="highlight"><span class="line">widgets:</span><br><span class="line">  showWidgetsMobiles: "none"</span><br></pre>
+
+<p><code>showWidgetsMobiles</code> : 在窄屏幕上是否显示小组件，<code>none</code> 关闭（默认），<code>flex</code> 开启</p>
+<h3 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h3><p>关于页面需要自行创建，在站点 <code>source</code> 中新建 <code>about</code> 文件夹并在文件夹内创建 <code>index.md</code>，该文件至少需要包含</p>
+<pre class="highlight"><span class="line"># at ${yoursite}/about/index.md</span><br><span class="line">---</span><br><span class="line">title: 关于</span><br><span class="line">layout: about</span><br><span class="line">---</span><br></pre>
+
+<h3 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h3><p>在 about 下的 <code>social_links</code>中进行配置，主题图标依赖于 <strong>iconfont</strong>[23]，Hexo 内置了一部分社交图标，你可以自定义其他 icon 文件或者解决方案来添加自定义图标。</p>
+<pre class="highlight"><span class="line">about:</span><br><span class="line">  description: description</span><br><span class="line">  social_links:</span><br><span class="line">    - { icon: icon-github, link:  https://xxx}</span><br><span class="line">    # - { icon: icon, link: your link }</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-7ec7486cfb679c986cf216523965a6e7_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-7ec7486cfb679c986cf216523965a6e7_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="友链"><a href="#友链" class="headerlink" title="友链"></a>友链</h3><p>友链格式按如下填写即可生成友链页面</p>
+<pre class="highlight"><span class="line">links:</span><br><span class="line">  example-name-1:</span><br><span class="line">    url: https://example.com</span><br><span class="line">    avatar: https://example.com/avatar.jpg</span><br><span class="line">  example-name-2:</span><br><span class="line">    url: https://example.com</span><br><span class="line">    avatar: https://example.com/avatar.jpg</span><br></pre>
+
+<h3 id="文章页"><a href="#文章页" class="headerlink" title="文章页"></a>文章页</h3><h3 id="搜索功能"><a href="#搜索功能" class="headerlink" title="搜索功能"></a>搜索功能</h3><pre class="highlight"><span class="line">search:</span><br><span class="line">  enable: true</span><br><span class="line">  path: search.json</span><br><span class="line">  field: posts</span><br><span class="line">  searchContent: true</span><br></pre>
+
+<ul>
+<li><code>enable</code> 开启搜索功能（默认开启）</li>
+<li><code>path</code> 文件名称（暂无用处）</li>
+<li><code>field</code> 需要搜索的范围，支持 posts | pages | all</li>
+<li><code>searchContent</code> 搜索文件是否包含正文内容（不建议开启，包含所有文章内容这样会使得搜索文件异常巨大）替代方案是搜索分类标签或使用 algolia 等第三方搜索服务（Todo）</li>
+</ul>
+<h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>主题目录通过 Hexo 原生函数生成，具体可参见 <strong>文档</strong>[24]</p>
+<pre class="highlight"><span class="line">toc:</span><br><span class="line">  showListNumber: false</span><br><span class="line">  maxDepth: 6</span><br><span class="line">  minDepth: 1</span><br></pre>
+
+<p><code>showListNumber</code> 是否生成编号</p>
+<p><code>maxDepth</code> TOC 最大深度</p>
+<p><code>minDepth</code> TOC 最小深度</p>
+<h3 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h3><p>参见代码 <strong>高亮文档</strong>[25]</p>
+<h3 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h3><p>主题支持 <code>mathjax</code> 和 <code>katex</code> 两种渲染引擎，具体参见 <strong>相关文档</strong>[26]</p>
+<h3 id="copyright"><a href="#copyright" class="headerlink" title="copyright"></a>copyright</h3><pre class="highlight"><span class="line">copyright:</span><br><span class="line">  enable: true</span><br><span class="line">  writer: # if writer is empty we will use config.author as writer</span><br><span class="line">  declare: 本博客所有文章除特别声明外，均采用&lt;a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh"&gt;CC BY-NC-SA 4.0 协议&lt;/a&gt;。转载请注明出处！</span><br><span class="line">  style: warning</span><br></pre>
+
+<p><code>enable</code> 开起版权说明（默认开启）</p>
+<p><code>writer</code> 作者id，如果不填则会使用主题配置 author 或站点配置 author</p>
+<p><code>declare</code> 版权声明具体内容，支持 html 语句</p>
+<p><code>style</code> 声明内容样式，与 note 样式相同</p>
+<p>版权内容有三部分：作者、文章链接、版权声明</p>
+<p>作者使用 writer 参数，文章链接基于站点配置文件中<code>url</code>参数生成，版权声明使用 declare 参数</p>
+<h3 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h3><h3 id="banner-img"><a href="#banner-img" class="headerlink" title="banner_img"></a>banner_img</h3><p>设置文章与首页头图</p>
+<h3 id="banner-img-set"><a href="#banner-img-set" class="headerlink" title="banner_img_set"></a>banner_img_set</h3><p>在图片加载时预先加载的图片，可以设置为 loading 图或缩略图等</p>
+<h3 id="excerpt"><a href="#excerpt" class="headerlink" title="excerpt"></a>excerpt</h3><p>为文章设置在首页显示的简介，还可以通过 <code>&lt;!--more--&gt;</code> 来控制显示</p>
+<h3 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h3><p>支持 <code>valine</code>，<code>gitalk</code> 和 <code>livere</code></p>
+<p>具体设置可参考主题配置文档说明和相关评论插件文档</p>
+<h3 id="字数统计"><a href="#字数统计" class="headerlink" title="字数统计"></a>字数统计</h3><p>主题集成 <strong>hexo-wordcount</strong>[27] 插件，在主题配置文件中设置</p>
+<pre class="highlight"><span class="line">wordcount:</span><br><span class="line">  enable: true</span><br></pre>
+
+<p>开启（默认开启）</p>
+<h3 id="图片画廊"><a href="#图片画廊" class="headerlink" title="图片画廊"></a>图片画廊</h3><p>图片画廊功能基于 <strong>fslightbox</strong>[28]，在主题配置文件中设置</p>
+<pre class="highlight"><span class="line">fslightbox:</span><br><span class="line">  enable: true</span><br></pre>
+
+<p>开启（默认开启）</p>
+<h3 id="标签插件"><a href="#标签插件" class="headerlink" title="标签插件"></a>标签插件</h3><p>主题集成了一些标签方便书写</p>
+<h3 id="note"><a href="#note" class="headerlink" title="note"></a>note</h3><p>在 <code>markdown</code> 文件中如下书写即可</p>
+<pre class="highlight"><span class="line">{% note style %}</span><br><span class="line">...markdown content</span><br><span class="line">{% endnote %}</span><br></pre>
+
+<p>有五种样式可以选择，<code>primary</code>，<code>success</code>，<code>info</code>，<code>warning</code>，<code>danger</code></p>
+<p><img src="https://pica.zhimg.com/80/v2-71d363063d00feca06f24202d288284c_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/80/v2-71d363063d00feca06f24202d288284c_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="备案信息"><a href="#备案信息" class="headerlink" title="备案信息"></a>备案信息</h3><p>你可以在主题配置文件内增加备案信息。</p>
+<pre class="highlight"><span class="line">footer:</span><br><span class="line">  #------------------------</span><br><span class="line">  # 备案配置</span><br><span class="line">  # 请将公安备案的缩略图置于 ${yoursite}/img/beian.png</span><br><span class="line">  RecordInfo: "" # '某ICP备xxx号'</span><br><span class="line">  govRecordInfo: "" # '某公网安备xxx号'</span><br><span class="line">  govRecordUrl: "" # 公网安备案信息地址</span><br><span class="line">  #------------------------</span><br></pre>
+
+<h3 id="站点托管"><a href="#站点托管" class="headerlink" title="站点托管"></a>站点托管</h3><h3 id="为什么选择-Gitee-Pages"><a href="#为什么选择-Gitee-Pages" class="headerlink" title="为什么选择 Gitee Pages"></a>为什么选择 Gitee Pages</h3><p>GitHub 和 Gitee 都提供免费的静态网页托管服务。我们可以使用 GitHub Pages 或 Gitee Pages 托管博客、项目官网等静态网页，这样就省去了购买服务器的钱，也不需要耗费太多精力维护。</p>
+<p>GitHub Pages 使用很广泛，我之前也用过，不过访问不够稳定，会影响页面加载速度。Gitee 是国内版的 GitHub，访问速度优秀，并且国内发展势头不错，因此我选取 Gitee Pages 来托管我的网站。</p>
+<h3 id="建立仓库"><a href="#建立仓库" class="headerlink" title="建立仓库"></a>建立仓库</h3><p>申请一个 Gitee 账号，创建一个新的仓库，仓库名尽量和账号名一致，这样可以避免一些因为路径引发的问题。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-c8caa7735c3e858d21596f761ec369cd_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-c8caa7735c3e858d21596f761ec369cd_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>然后在仓库首页服务一栏开启 Gitee Pages 服务。</p>
+<p><img src="https://picx.zhimg.com/80/v2-a963cd178330de0c573a1e24d676bbcd_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-a963cd178330de0c573a1e24d676bbcd_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>开启后，你就拥有了专属的二级域名网址。</p>
+<p>注意：仓库内容有变化，需要手动触发更新，页面才能真正生效。</p>
+<h3 id="连接仓库"><a href="#连接仓库" class="headerlink" title="连接仓库"></a>连接仓库</h3><p>一、安装 <strong>hexo-deployer-git</strong>[29]。</p>
+<pre class="highlight"><span class="line">npm install hexo-deployer-git --save</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-ecc663c18e27fe8fb8af41429691d5a9_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-ecc663c18e27fe8fb8af41429691d5a9_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>二、修改配置。</p>
+<pre class="highlight"><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@gitee.com:java4u/java4u.git</span><br></pre>
+
+<p>注意上面的 repo 地址并不是仓库的地址，而是你下载/克隆项目时弹出的那个地址，type 如果是 git 就选择 SSH。</p>
+<p><img src="https://picx.zhimg.com/80/v2-74971fec3c64237d6bdbea53db28c5d1_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-74971fec3c64237d6bdbea53db28c5d1_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>图片</p>
+<p>三、生成/添加 SSH 公钥</p>
+<p>Gitee 、GitHub 提供了基于 SSH 协议的 Git 服务，在使用 SSH 协议访问仓库仓库之前，需要先配置好账户/仓库的 SSH 公钥。</p>
+<p>先看下自己有没有配置过用户名和邮箱：</p>
+<pre class="highlight"><span class="line">git config --global user.name</span><br><span class="line">git config --global user.email</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-a5196ce4add76dfbd9b5555771f3eaa3_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-a5196ce4add76dfbd9b5555771f3eaa3_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>如果没有就做下配置：</p>
+<pre class="highlight"><span class="line"># 设置邮箱</span><br><span class="line">git config --global user.email *********@qq.com</span><br><span class="line"></span><br><span class="line"># 设置用户名</span><br><span class="line">git config --global user.name '****'</span><br></pre>
+
+<p>然后本地生成 SSH 公钥，邮箱为刚配置好的账户：</p>
+<pre class="highlight"><span class="line">ssh-keygen -t rsa -C yong__1994@163.com</span><br></pre>
+
+<p>生成后可查看 SSH 公钥：</p>
+<pre class="highlight"><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre>
+
+<p>复制公钥去 Gitee 粘贴，添加。</p>
+<p><img src="https://picx.zhimg.com/80/v2-9e5137ccf9d0e9367372dca776088878_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-9e5137ccf9d0e9367372dca776088878_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>图片</p>
+<p>测试是否连接成功：</p>
+<pre class="highlight"><span class="line">ssh -T git@gitee.com</span><br></pre>
+
+
+
+<p><img src="https://picx.zhimg.com/80/v2-6ea5572e9ee9b5996b7a3d720d91cae9_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-6ea5572e9ee9b5996b7a3d720d91cae9_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<h3 id="上传仓库"><a href="#上传仓库" class="headerlink" title="上传仓库"></a>上传仓库</h3><p>执行部署命令，即可将本地资源上传远程仓库。</p>
+<pre class="highlight"><span class="line">hexo d</span><br></pre>
+
+
+
+<p><img src="https://pic1.zhimg.com/80/v2-1e2c19267d7b14895e9fc20951495ed3_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/80/v2-1e2c19267d7b14895e9fc20951495ed3_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>图片</p>
+<h3 id="手动更新"><a href="#手动更新" class="headerlink" title="手动更新"></a>手动更新</h3><p>远程仓库虽然可以看到提交记录，但静态网站不会感知到实时变更，需要去 Gitee Pages 服务页面做下更新。</p>
+<p><img src="https://picx.zhimg.com/80/v2-886b108bb9517e01eecdcef65a5d1d1f_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-886b108bb9517e01eecdcef65a5d1d1f_720w.webp?source=2c26e567" class="lozad post-image"></p>
+<p>稍等片刻，访问 <a href="https://link.zhihu.com/?target=http://tanqingbo.cn" rel="external nofollow noreferrer">http://tanqingbo.cn</a> 即可看到 Hexo 结合 kaze 主题搭建的静态网站。</p>
+<p><img src="https://picx.zhimg.com/80/v2-4c09ceb0b6b38360db954649414c9dd3_720w.webp?source=2c26e567" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-4c09ceb0b6b38360db954649414c9dd3_720w.webp?source=2c26e567" class="lozad post-image"></p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/HexoPage/">https://tanqingbo.cn/HexoPage/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/clashvpn/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/popcorn/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">外网流媒体自由！ </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Hexo 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">Hexo 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">Hexo 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="toc-number">4.</span> <span class="toc-text">前置要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Git"><span class="toc-number">5.</span> <span class="toc-text">安装 Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Node-js"><span class="toc-number">6.</span> <span class="toc-text">安装 Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Hexo"><span class="toc-number">7.</span> <span class="toc-text">安装 Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-hexo"><span class="toc-number">8.</span> <span class="toc-text">运行 hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E5%BB%BA%E7%AB%99"><span class="toc-number">9.</span> <span class="toc-text">Hexo 建站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="toc-number">10.</span> <span class="toc-text">初始化操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">11.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%90%AF%E5%8A%A8"><span class="toc-number">12.</span> <span class="toc-text">本地启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE"><span class="toc-number">13.</span> <span class="toc-text">核心配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#package-json"><span class="toc-number">14.</span> <span class="toc-text">package.json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config-yml"><span class="toc-number">15.</span> <span class="toc-text">_config.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99"><span class="toc-number">16.</span> <span class="toc-text">网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL"><span class="toc-number">17.</span> <span class="toc-text">URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">18.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0"><span class="toc-number">19.</span> <span class="toc-text">文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB-amp-%E6%A0%87%E7%AD%BE"><span class="toc-number">20.</span> <span class="toc-text">分类 &amp; 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F"><span class="toc-number">21.</span> <span class="toc-text">日期&#x2F;时间格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5"><span class="toc-number">22.</span> <span class="toc-text">分页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95"><span class="toc-number">23.</span> <span class="toc-text">扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">24.</span> <span class="toc-text">常用指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E7%AB%A0"><span class="toc-number">25.</span> <span class="toc-text">创建文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">26.</span> <span class="toc-text">运行服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">27.</span> <span class="toc-text">生成静态文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">28.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E4%B8%BB%E9%A2%98"><span class="toc-number">29.</span> <span class="toc-text">Hexo 主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Kaze"><span class="toc-number">30.</span> <span class="toc-text">为什么选择 Kaze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Kaze"><span class="toc-number">31.</span> <span class="toc-text">安装 Kaze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-number">32.</span> <span class="toc-text">主题配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%A2%9C%E8%89%B2"><span class="toc-number">33.</span> <span class="toc-text">主题颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%8F%B7%E4%B8%8E%E5%AD%97%E4%BD%93"><span class="toc-number">34.</span> <span class="toc-text">字号与字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1"><span class="toc-number">35.</span> <span class="toc-text">站点访问量统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">36.</span> <span class="toc-text">数据分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5"><span class="toc-number">37.</span> <span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE"><span class="toc-number">38.</span> <span class="toc-text">文章头图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">39.</span> <span class="toc-text">小组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E"><span class="toc-number">40.</span> <span class="toc-text">关于</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BE%E4%BA%A4%E9%93%BE%E6%8E%A5"><span class="toc-number">41.</span> <span class="toc-text">社交链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8B%E9%93%BE"><span class="toc-number">42.</span> <span class="toc-text">友链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E9%A1%B5"><span class="toc-number">43.</span> <span class="toc-text">文章页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD"><span class="toc-number">44.</span> <span class="toc-text">搜索功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95-1"><span class="toc-number">45.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">46.</span> <span class="toc-text">代码高亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">47.</span> <span class="toc-text">数学公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copyright"><span class="toc-number">48.</span> <span class="toc-text">copyright</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Front-matter"><span class="toc-number">49.</span> <span class="toc-text">Front-matter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#banner-img"><span class="toc-number">50.</span> <span class="toc-text">banner_img</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#banner-img-set"><span class="toc-number">51.</span> <span class="toc-text">banner_img_set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#excerpt"><span class="toc-number">52.</span> <span class="toc-text">excerpt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E8%AE%BA"><span class="toc-number">53.</span> <span class="toc-text">评论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%95%B0%E7%BB%9F%E8%AE%A1"><span class="toc-number">54.</span> <span class="toc-text">字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%94%BB%E5%BB%8A"><span class="toc-number">55.</span> <span class="toc-text">图片画廊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6"><span class="toc-number">56.</span> <span class="toc-text">标签插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">57.</span> <span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%A1%88%E4%BF%A1%E6%81%AF"><span class="toc-number">58.</span> <span class="toc-text">备案信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E6%89%98%E7%AE%A1"><span class="toc-number">59.</span> <span class="toc-text">站点托管</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Gitee-Pages"><span class="toc-number">60.</span> <span class="toc-text">为什么选择 Gitee Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BB%93%E5%BA%93"><span class="toc-number">61.</span> <span class="toc-text">建立仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E4%BB%93%E5%BA%93"><span class="toc-number">62.</span> <span class="toc-text">连接仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E4%BB%93%E5%BA%93"><span class="toc-number">63.</span> <span class="toc-text">上传仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="toc-number">64.</span> <span class="toc-text">手动更新</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>313</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>118</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Hexo 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">Hexo 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">Hexo 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="toc-number">4.</span> <span class="toc-text">前置要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Git"><span class="toc-number">5.</span> <span class="toc-text">安装 Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Node-js"><span class="toc-number">6.</span> <span class="toc-text">安装 Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Hexo"><span class="toc-number">7.</span> <span class="toc-text">安装 Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-hexo"><span class="toc-number">8.</span> <span class="toc-text">运行 hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E5%BB%BA%E7%AB%99"><span class="toc-number">9.</span> <span class="toc-text">Hexo 建站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="toc-number">10.</span> <span class="toc-text">初始化操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">11.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%90%AF%E5%8A%A8"><span class="toc-number">12.</span> <span class="toc-text">本地启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE"><span class="toc-number">13.</span> <span class="toc-text">核心配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#package-json"><span class="toc-number">14.</span> <span class="toc-text">package.json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config-yml"><span class="toc-number">15.</span> <span class="toc-text">_config.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99"><span class="toc-number">16.</span> <span class="toc-text">网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL"><span class="toc-number">17.</span> <span class="toc-text">URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">18.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0"><span class="toc-number">19.</span> <span class="toc-text">文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB-amp-%E6%A0%87%E7%AD%BE"><span class="toc-number">20.</span> <span class="toc-text">分类 &amp; 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F"><span class="toc-number">21.</span> <span class="toc-text">日期&#x2F;时间格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5"><span class="toc-number">22.</span> <span class="toc-text">分页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95"><span class="toc-number">23.</span> <span class="toc-text">扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">24.</span> <span class="toc-text">常用指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E7%AB%A0"><span class="toc-number">25.</span> <span class="toc-text">创建文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">26.</span> <span class="toc-text">运行服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">27.</span> <span class="toc-text">生成静态文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">28.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E4%B8%BB%E9%A2%98"><span class="toc-number">29.</span> <span class="toc-text">Hexo 主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Kaze"><span class="toc-number">30.</span> <span class="toc-text">为什么选择 Kaze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Kaze"><span class="toc-number">31.</span> <span class="toc-text">安装 Kaze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-number">32.</span> <span class="toc-text">主题配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%A2%9C%E8%89%B2"><span class="toc-number">33.</span> <span class="toc-text">主题颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%8F%B7%E4%B8%8E%E5%AD%97%E4%BD%93"><span class="toc-number">34.</span> <span class="toc-text">字号与字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1"><span class="toc-number">35.</span> <span class="toc-text">站点访问量统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">36.</span> <span class="toc-text">数据分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5"><span class="toc-number">37.</span> <span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE"><span class="toc-number">38.</span> <span class="toc-text">文章头图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">39.</span> <span class="toc-text">小组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E"><span class="toc-number">40.</span> <span class="toc-text">关于</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BE%E4%BA%A4%E9%93%BE%E6%8E%A5"><span class="toc-number">41.</span> <span class="toc-text">社交链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8B%E9%93%BE"><span class="toc-number">42.</span> <span class="toc-text">友链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E9%A1%B5"><span class="toc-number">43.</span> <span class="toc-text">文章页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD"><span class="toc-number">44.</span> <span class="toc-text">搜索功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95-1"><span class="toc-number">45.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">46.</span> <span class="toc-text">代码高亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">47.</span> <span class="toc-text">数学公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copyright"><span class="toc-number">48.</span> <span class="toc-text">copyright</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Front-matter"><span class="toc-number">49.</span> <span class="toc-text">Front-matter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#banner-img"><span class="toc-number">50.</span> <span class="toc-text">banner_img</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#banner-img-set"><span class="toc-number">51.</span> <span class="toc-text">banner_img_set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#excerpt"><span class="toc-number">52.</span> <span class="toc-text">excerpt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E8%AE%BA"><span class="toc-number">53.</span> <span class="toc-text">评论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%95%B0%E7%BB%9F%E8%AE%A1"><span class="toc-number">54.</span> <span class="toc-text">字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%94%BB%E5%BB%8A"><span class="toc-number">55.</span> <span class="toc-text">图片画廊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6"><span class="toc-number">56.</span> <span class="toc-text">标签插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">57.</span> <span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%A1%88%E4%BF%A1%E6%81%AF"><span class="toc-number">58.</span> <span class="toc-text">备案信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E6%89%98%E7%AE%A1"><span class="toc-number">59.</span> <span class="toc-text">站点托管</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Gitee-Pages"><span class="toc-number">60.</span> <span class="toc-text">为什么选择 Gitee Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BB%93%E5%BA%93"><span class="toc-number">61.</span> <span class="toc-text">建立仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E4%BB%93%E5%BA%93"><span class="toc-number">62.</span> <span class="toc-text">连接仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E4%BB%93%E5%BA%93"><span class="toc-number">63.</span> <span class="toc-text">上传仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="toc-number">64.</span> <span class="toc-text">手动更新</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">14</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">32</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">25</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 125px; height: 125px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.8em;">
+            →「技术干货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="https://tanqingbo.cn/coder-source/" target="_blank" style="color:orange;font-size: 14px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">Hexo 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">Hexo 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text">Hexo 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="toc-number">4.</span> <span class="toc-text">前置要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Git"><span class="toc-number">5.</span> <span class="toc-text">安装 Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Node-js"><span class="toc-number">6.</span> <span class="toc-text">安装 Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Hexo"><span class="toc-number">7.</span> <span class="toc-text">安装 Hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-hexo"><span class="toc-number">8.</span> <span class="toc-text">运行 hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E5%BB%BA%E7%AB%99"><span class="toc-number">9.</span> <span class="toc-text">Hexo 建站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="toc-number">10.</span> <span class="toc-text">初始化操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">11.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E5%90%AF%E5%8A%A8"><span class="toc-number">12.</span> <span class="toc-text">本地启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE"><span class="toc-number">13.</span> <span class="toc-text">核心配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#package-json"><span class="toc-number">14.</span> <span class="toc-text">package.json</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config-yml"><span class="toc-number">15.</span> <span class="toc-text">_config.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99"><span class="toc-number">16.</span> <span class="toc-text">网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL"><span class="toc-number">17.</span> <span class="toc-text">URL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">18.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0"><span class="toc-number">19.</span> <span class="toc-text">文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB-amp-%E6%A0%87%E7%AD%BE"><span class="toc-number">20.</span> <span class="toc-text">分类 &amp; 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F"><span class="toc-number">21.</span> <span class="toc-text">日期&#x2F;时间格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%A1%B5"><span class="toc-number">22.</span> <span class="toc-text">分页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95"><span class="toc-number">23.</span> <span class="toc-text">扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="toc-number">24.</span> <span class="toc-text">常用指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E7%AB%A0"><span class="toc-number">25.</span> <span class="toc-text">创建文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">26.</span> <span class="toc-text">运行服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">27.</span> <span class="toc-text">生成静态文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">28.</span> <span class="toc-text">部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexo-%E4%B8%BB%E9%A2%98"><span class="toc-number">29.</span> <span class="toc-text">Hexo 主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Kaze"><span class="toc-number">30.</span> <span class="toc-text">为什么选择 Kaze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Kaze"><span class="toc-number">31.</span> <span class="toc-text">安装 Kaze</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE"><span class="toc-number">32.</span> <span class="toc-text">主题配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E9%A2%9C%E8%89%B2"><span class="toc-number">33.</span> <span class="toc-text">主题颜色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%8F%B7%E4%B8%8E%E5%AD%97%E4%BD%93"><span class="toc-number">34.</span> <span class="toc-text">字号与字体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E8%AE%BF%E9%97%AE%E9%87%8F%E7%BB%9F%E8%AE%A1"><span class="toc-number">35.</span> <span class="toc-text">站点访问量统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90"><span class="toc-number">36.</span> <span class="toc-text">数据分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A6%96%E9%A1%B5"><span class="toc-number">37.</span> <span class="toc-text">首页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%A4%B4%E5%9B%BE"><span class="toc-number">38.</span> <span class="toc-text">文章头图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">39.</span> <span class="toc-text">小组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E"><span class="toc-number">40.</span> <span class="toc-text">关于</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BE%E4%BA%A4%E9%93%BE%E6%8E%A5"><span class="toc-number">41.</span> <span class="toc-text">社交链接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8B%E9%93%BE"><span class="toc-number">42.</span> <span class="toc-text">友链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E9%A1%B5"><span class="toc-number">43.</span> <span class="toc-text">文章页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD"><span class="toc-number">44.</span> <span class="toc-text">搜索功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95-1"><span class="toc-number">45.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE"><span class="toc-number">46.</span> <span class="toc-text">代码高亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">47.</span> <span class="toc-text">数学公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#copyright"><span class="toc-number">48.</span> <span class="toc-text">copyright</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Front-matter"><span class="toc-number">49.</span> <span class="toc-text">Front-matter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#banner-img"><span class="toc-number">50.</span> <span class="toc-text">banner_img</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#banner-img-set"><span class="toc-number">51.</span> <span class="toc-text">banner_img_set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#excerpt"><span class="toc-number">52.</span> <span class="toc-text">excerpt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E8%AE%BA"><span class="toc-number">53.</span> <span class="toc-text">评论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E6%95%B0%E7%BB%9F%E8%AE%A1"><span class="toc-number">54.</span> <span class="toc-text">字数统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%94%BB%E5%BB%8A"><span class="toc-number">55.</span> <span class="toc-text">图片画廊</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E6%8F%92%E4%BB%B6"><span class="toc-number">56.</span> <span class="toc-text">标签插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#note"><span class="toc-number">57.</span> <span class="toc-text">note</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%A1%88%E4%BF%A1%E6%81%AF"><span class="toc-number">58.</span> <span class="toc-text">备案信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E6%89%98%E7%AE%A1"><span class="toc-number">59.</span> <span class="toc-text">站点托管</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-Gitee-Pages"><span class="toc-number">60.</span> <span class="toc-text">为什么选择 Gitee Pages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E4%BB%93%E5%BA%93"><span class="toc-number">61.</span> <span class="toc-text">建立仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E4%BB%93%E5%BA%93"><span class="toc-number">62.</span> <span class="toc-text">连接仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E4%BB%93%E5%BA%93"><span class="toc-number">63.</span> <span class="toc-text">上传仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="toc-number">64.</span> <span class="toc-text">手动更新</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-12</div>
+        <a href="/clashvpn/"><div class="recent-posts-item-content">外网挂梯子/电脑翻墙教程：2025年最稳定的科学上网方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-12</div>
+        <a href="/HexoPage/"><div class="recent-posts-item-content">如何搭建HEXO静态博客网站</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-11</div>
+        <a href="/popcorn/"><div class="recent-posts-item-content">外网流媒体自由！</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
