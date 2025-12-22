@@ -17,7 +17,7 @@
   <meta property="url" content="https://tanqingbo.cn/Marching-Cubes/index.html">
   
   
-  <meta property="og:img" content="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170232281-616754282.jpg">
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170232281-616754282.jpg">
   
   
   <meta property="description" content="Marching Cubes算法是三维重建算法中的经典算法，算法主要思想是检测与等值面相交的体素单元并计算交点的坐标，然后对不同的相交情况利用查找表在体素单元内构建相应的网格拓扑关系">
@@ -250,7 +250,7 @@ var _hmt = _hmt || [];
         <div class="columns">
           <main class="main-column">
 <div class="image-wrapper">
-  <img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170232281-616754282.jpg" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170232281-616754282.jpg"
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170232281-616754282.jpg" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170232281-616754282.jpg"
     srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
     class="image lozad">
 </div>
@@ -326,29 +326,29 @@ var _hmt = _hmt || [];
 	-->
     <p>上一篇介绍了Marching Cubes算法，Marching Cubes算法是三维重建算法中的经典算法，算法主要思想是检测与等值面相交的体素单元并计算交点的坐标，然后对不同的相交情况利用查找表在体素单元内构建相应的网格拓扑关系。Marching Cubes算法简单，但是存在一些缺陷：1.模型二义性问题；2.模型特征问题。</p>
 <p>　　对于二义性问题，以2D情形为例，存在一个单元中同一顶点状态而不同的连接方式（如下图所示）。</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170149688-587602140.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170149688-587602140.jpg" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170149688-587602140.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170149688-587602140.jpg" class="lozad post-image"></p>
 <p>图：2D中Marching Cubes算法的二义性问题</p>
 <p>　　那么对于上图中两种连接方式的不同选择，可能会导致在同一张图像上完全不同的结果（如下图所示），二义性在3D中的直接后果是产生“孔洞”。如果在一个单元中，一条对角线的两端点值大于等值面阈值，另一条对角线的两端点值小于等值面阈值，那么通常会发生这种二义性问题。</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170204203-2090370998.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170204203-2090370998.jpg" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170204203-2090370998.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170204203-2090370998.jpg" class="lozad post-image"></p>
 <p>图：二义性问题的不同结果</p>
 <p>　　对于特征问题，由于Marching Cubes算法只计算体素单元的交点坐标信息，并根据这些交点连接的三角面片来构建体素单元内的几何模型，这样假如体素单元内存在几何模型的特征信息（棱边、棱角），但是Marching Cubes算法最终构建出的几何模型会缺少这些特征信息（如下图所示）。</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170232281-616754282.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170232281-616754282.jpg" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170232281-616754282.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170232281-616754282.jpg" class="lozad post-image"></p>
 <p>图：左上-交点坐标和法向；右上-Marching Cubes算法；左下-Extended Marching Cubes算法；右下-Dual Contouring算法</p>
 <p>　　Dual Contouring算法[Ju et al. 2002]也是经典的等值面提取算法，相比Marching Cubes算法，Dual Contouring算法利用Hermite数据（交点的位置和法向）进行等值面构建，它克服了Marching Cubes算法所出现的缺陷。具体算法分两步：</p>
 <p>　　<strong>第一步：</strong>利用二次误差函数生成顶点坐标</p>
 <p>　　对于每个与等值面相交的体素单元，通过最小化二次误差函数来生成一个顶点坐标：</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170252047-1812948317.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170252047-1812948317.jpg" class="lozad post-image"> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170252047-1812948317.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170252047-1812948317.jpg" class="lozad post-image"> </p>
 <p>其中pi为交点的位置，ni为交点的法向。</p>
 <p>　　误差函数可以写成矩阵形式：</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170304485-1683600023.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170304485-1683600023.jpg" class="lozad post-image"> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170304485-1683600023.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170304485-1683600023.jpg" class="lozad post-image"> </p>
 <p>其中矩阵A的行向量为交点的法向ni，向量b的每个元素为ni·pi。</p>
 <p>　　极值点可以通过求解正则方程得到：</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170316531-220209432.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170316531-220209432.jpg" class="lozad post-image"> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170316531-220209432.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170316531-220209432.jpg" class="lozad post-image"> </p>
 <p>　　但是文章指出这种方式会存在数值不稳定，并提出一种解决方法。基于QR矩阵分解计算正交矩阵Q，使得Q与[A b]相乘为如下上三角矩阵形式：</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170332422-504910444.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170332422-504910444.jpg" class="lozad post-image"> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170332422-504910444.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170332422-504910444.jpg" class="lozad post-image"> </p>
 <p>其中A’为3*3的上三角矩阵，b’为长度为3的向量，r为标量。</p>
 <p>　　那么误差函数可以变化为：</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170345000-693586328.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170345000-693586328.jpg" class="lozad post-image"> </p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170345000-693586328.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170345000-693586328.jpg" class="lozad post-image"> </p>
 <p>　　然后再根据上式计算极值点。</p>
 <p>　　<strong>第二步：</strong>生成网格面片</p>
 <p>　　对于每一条等值面相交的体素边，那么包含该体素边的4个相邻体素单元内必然都存在顶点，将这4个顶点连接生成1个四边形面片。</p>
@@ -363,11 +363,11 @@ var _hmt = _hmt || [];
 <p>　　6. 将计算得到的偏移量x加上质心位置c即为体素单元中的顶点坐标；</p>
 <p>　　7. 如果计算得到的顶点坐标位于体素单元之外，那么顶点坐标用质心位置c来代替；</p>
 <p>　　8. 对于每一条相交的体素边，将其周围4个体素单元内的顶点连接生成1个四边形面片。</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170450500-1601733501.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170450500-1601733501.jpg" class="lozad post-image"> <img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170456453-1242626166.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170456453-1242626166.jpg" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170450500-1601733501.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170450500-1601733501.jpg" class="lozad post-image"> <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170456453-1242626166.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170456453-1242626166.jpg" class="lozad post-image"></p>
 <p>图：左- Marching Cubes算法；右-Dual Contouring算法</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170505969-242824375.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170505969-242824375.jpg" class="lozad post-image"> <img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170514203-1811143151.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170514203-1811143151.jpg" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170505969-242824375.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170505969-242824375.jpg" class="lozad post-image"> <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170514203-1811143151.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170514203-1811143151.jpg" class="lozad post-image"></p>
 <p>图：左- Marching Cubes算法；右-Dual Contouring算法</p>
-<p><img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170528000-543631743.gif" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170528000-543631743.gif" class="lozad post-image"> <img src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170534906-226872638.gif" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://images2015.cnblogs.com/blog/778572/201606/778572-20160622170534906-226872638.gif" class="lozad post-image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170528000-543631743.gif" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170528000-543631743.gif" class="lozad post-image"> <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170534906-226872638.gif" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/778572-20160622170534906-226872638.gif" class="lozad post-image"></p>
 <p>图：box与sphere相交模拟</p>
 		
   </div>	
