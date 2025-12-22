@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.webp">
+  <title>2026 保姆级科学上网/魔法上网教程：Clash机场 / VPN / 自建 VPS 全面解析&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="2026 保姆级科学上网/魔法上网教程：Clash机场 / VPN / 自建 VPS 全面解析">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/VPN2026/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/2026VPN.png">
+  
+  
+  <meta property="description" content="“科学上网”是中文互联网社区对通过技术手段访问被限制或屏蔽的国外互联网内容的通俗称谓，也被称为“翻墙”。这一术语并不意味着从事违法活动，而是强调以技术方式突破网络封锁，实现对信息的自由访问。">
+  
+  <meta property="keywords" content="科学上网,科技上网,VPN,翻墙软件,VPN工具,程序员VPN,梯子工具,电脑翻墙,Windows翻墙">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2025-12-22">
+  <meta property="og:article:modified_time" content="2025-12-22">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/VPN2026/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    领红包
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/2026VPN.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/2026VPN.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      2026 保姆级科学上网/魔法上网教程：Clash机场 / VPN / 自建 VPS 全面解析
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2025-12-22T02:14:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2025-12-22</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/VPN2026/" class="leancloud_visitors" data-flag-title="2026 保姆级科学上网/魔法上网教程：Clash机场 / VPN / 自建 VPS 全面解析">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  
+
+
+		
+  
+  <meta name="description" content="“科学上网”是中文互联网社区对通过技术手段访问被限制或屏蔽的国外互联网内容的通俗称谓，也被称为“翻墙”。这一术语并不意味着从事违法活动，而是强调以技术方式突破网络封锁，实现对信息的自由访问。">
+  
+  <meta name="keywords" content="科学上网,科技上网,VPN,翻墙软件,VPN工具,程序员VPN,梯子工具,电脑翻墙,Windows翻墙">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="引言：什么是“科学上网”？"><a href="#引言：什么是“科学上网”？" class="headerlink" title="引言：什么是“科学上网”？"></a>引言：什么是“科学上网”？</h2><p>“科学上网”是中文互联网社区对通过技术手段访问被限制或屏蔽的国外互联网内容的通俗称谓，也被称为“翻墙”。这一术语并不意味着从事违法活动，而是强调以技术方式突破网络封锁，实现对信息的自由访问。</p>
+<p>在全球信息高度互联的时代，科学上网不仅关乎网络自由，也关乎学术、工作与生活的全面发展。本文将以科普角度，系统介绍中国用户为什么需要科学上网、突破网络封锁之后能做什么，以及三种主流方式（自建 VPS、Clash 机场、VPN）的区别与选择建议。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/2026VPN.png" alt="2026VPN" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/2026VPN.png" class="lozad post-image"></p>
+<hr>
+<h2 id="本项目说明-amp-免责声明"><a href="#本项目说明-amp-免责声明" class="headerlink" title="本项目说明 &amp; 免责声明"></a>本项目说明 &amp; 免责声明</h2><ul>
+<li>本项目不提供任何代理节点、配置文件或翻墙软件，仅做网络环境与工具的科普与选型建议；</li>
+<li>请严格遵守所在地区法律法规，仅将本文内容用于学习、访问合规网站和工作/科研用途；</li>
+<li>不鼓励也不支持任何形式的违法犯罪、政治活动或攻击行为，使用者应对自己的行为负责。</li>
+</ul>
+<hr>
+<h2 id="快速导航（建议收藏本页）"><a href="#快速导航（建议收藏本页）" class="headerlink" title="快速导航（建议收藏本页）"></a>快速导航（建议收藏本页）</h2><ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E4%B8%AD%E5%9B%BD%E9%9C%80%E8%A6%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91">为什么在中国需要科学上网？</a></li>
+<li><a href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8B%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88">科学上网之后可以做什么？</a></li>
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B3%E5%88%86%E9%92%9F">快速开始（3分钟）</a></li>
+<li><a href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E4%B8%BB%E8%A6%81%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94">科学上网的主要方式对比</a></li>
+<li><a href="#%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94%E4%B8%8E%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE">三种方式的对比与选择建议</a></li>
+<li><a href="#%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%E5%BF%85%E8%AF%BB">安全与隐私（必读）</a></li>
+<li><a href="#%E6%B3%95%E5%BE%8B%E4%B8%8E%E5%90%88%E8%A7%84%E9%A3%8E%E9%99%A9%E6%8F%90%E7%A4%BA%E9%87%8D%E8%A6%81">法律与合规风险提示（重要）</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E7%AD%94faq">常见问答（FAQ）</a></li>
+<li><a href="#%E5%9B%BD%E5%A4%96%E5%B8%B8%E7%94%A8%E7%BD%91%E7%AB%99%E5%AF%BC%E8%88%AA">国外常用网站导航</a></li>
+</ul>
+<hr>
+<h2 id="为什么在中国需要科学上网？"><a href="#为什么在中国需要科学上网？" class="headerlink" title="为什么在中国需要科学上网？"></a>为什么在中国需要科学上网？</h2><h3 id="1-互联网信息访问限制现状"><a href="#1-互联网信息访问限制现状" class="headerlink" title="1. 互联网信息访问限制现状"></a>1. 互联网信息访问限制现状</h3><p>在中国，互联网实行严格的网络审查制度，许多国际主流网站和服务在境内无法直接访问。这种限制不仅影响用户获取全球信息的能力，也在一定程度上阻碍了技术学习、跨境交流和商业拓展。</p>
+<p>以下是常见受限平台的分类列表：</p>
+<ul>
+<li><p><strong>搜索引擎</strong>：<br>Google、Bing、DuckDuckGo、Yahoo、Startpage</p>
+</li>
+<li><p><strong>视频平台</strong>：<br>YouTube、Twitch、Vimeo、Dailymotion</p>
+</li>
+<li><p><strong>社交媒体</strong>：<br>Twitter、Facebook、Instagram、Reddit、LinkedIn</p>
+</li>
+<li><p><strong>学术资源</strong>：<br>Wikipedia、Google Scholar、Archive.org、JSTOR、ResearchGate</p>
+</li>
+<li><p><strong>AI 工具</strong>：<br>ChatGPT、Gemini（原 Bard）、Copilot、Claude、Perplexity AI</p>
+</li>
+<li><p><strong>流媒体服务</strong>：<br>Netflix、Disney+、Max（HBO Max）、Amazon Prime Video、Hulu</p>
+</li>
+</ul>
+<blockquote>
+<p>⚠️ <em>这些平台涵盖了学习、工作、研究、娱乐等多个领域，对于现代数字生活极为重要。</em></p>
+</blockquote>
+<p>因此，越来越多用户会选择使用科学上网工具（如 VPN、代理或机场服务）来突破限制，恢复自由、开放的互联网访问环境。</p>
+<hr>
+<h3 id="2-获取多维度的信息来源"><a href="#2-获取多维度的信息来源" class="headerlink" title="2. 获取多维度的信息来源"></a>2. 获取多维度的信息来源</h3><p>在信息碎片化与同质化严重的背景下，获取来自不同国家、不同文化背景的信息显得尤为重要，不同信息来源有助于用户对事物有更客观的判断。科学上网可以帮助用户：</p>
+<ul>
+<li>了解不同政治、经济、科技、文化观点</li>
+<li>验证事件真相，打破信息孤岛</li>
+<li>查阅国际研究、科学论文与数据库</li>
+<li>提高外语阅读与批判性思维能力</li>
+</ul>
+<p>特别是对于学术研究者、媒体从业者和科技开发人员，多维信息的输入几乎是必需的。</p>
+<hr>
+<h3 id="3-社交与工作需求"><a href="#3-社交与工作需求" class="headerlink" title="3. 社交与工作需求"></a>3. 社交与工作需求</h3><p>在全球化背景下，与国外的亲友、客户或合作方保持联系已成为常态。科学上网可以帮助用户：</p>
+<ul>
+<li>使用 WhatsApp、Telegram、Signal 等通讯工具保持跨境沟通</li>
+<li>登录 Gmail、Zoom、Slack 等远程办公平台</li>
+<li>访问 GitHub、Notion、Trello 等团队协作服务</li>
+<li>管理海外业务后台，如 Amazon、Shopify、PayPal 等</li>
+</ul>
+<p>对于从事跨境电商、远程编程、内容创作、自媒体和数字游民群体而言，稳定可控的“出海”通道至关重要。</p>
+<hr>
+<h2 id="科学上网之后可以做什么？"><a href="#科学上网之后可以做什么？" class="headerlink" title="科学上网之后可以做什么？"></a>科学上网之后可以做什么？</h2><h3 id="4-访问全球互联网服务"><a href="#4-访问全球互联网服务" class="headerlink" title="4. 访问全球互联网服务"></a>4. 访问全球互联网服务</h3><p>一旦成功突破网络封锁，用户便可无障碍访问全球互联网中的各种服务与平台，包括但不限于：</p>
+<ul>
+<li><strong>通信与办公</strong>：Gmail、Outlook、Slack、Zoom、Google Docs、Dropbox</li>
+<li><strong>AI 工具</strong>：ChatGPT、Gemini（原 Bard）、Claude、Midjourney、Notion AI</li>
+<li><strong>云服务与开发平台</strong>：GitHub、AWS、Google Cloud、Heroku</li>
+<li><strong>学术研究</strong>：Google Scholar、arXiv、JSTOR、SpringerLink</li>
+<li><strong>媒体与资讯</strong>：BBC、纽约时报、华盛顿邮报、The Verge、NPR</li>
+<li><strong>支付平台</strong>：PayPal、Stripe、Wise（TransferWise）</li>
+</ul>
+<p>这些平台构建了全球知识流动和科技发展的主干线，对从业者与学习者而言意义重大。</p>
+<hr>
+<h3 id="5-自主选择信息渠道"><a href="#5-自主选择信息渠道" class="headerlink" title="5. 自主选择信息渠道"></a>5. 自主选择信息渠道</h3><p>科学上网的核心价值之一在于用户可以“自主选择”所接收的信息源，而不是被动接受过滤后的内容。通过科学上网，用户可以：</p>
+<ul>
+<li>跟踪全球多个视角下的新闻与时政分析</li>
+<li>订阅自己信赖的海外播客、YouTube 频道或博客</li>
+<li>参与 Reddit、Quora 等全球社区的讨论</li>
+<li>使用 RSS 服务自主聚合资讯</li>
+</ul>
+<p>这种信息“自由组合”的能力，是现代公民素养的重要体现，也是构建知识体系的基础之一。</p>
+<hr>
+<h3 id="6-技术学习与成长"><a href="#6-技术学习与成长" class="headerlink" title="6. 技术学习与成长"></a>6. 技术学习与成长</h3><p>对于程序员、设计师、研究者、创作者和学生来说，科学上网能极大拓宽学习资源：</p>
+<ul>
+<li><strong>开发平台</strong>：访问 Stack Overflow、GitHub、CodePen、Hacker News</li>
+<li><strong>在线课程</strong>：Coursera、edX、Udemy、Khan Academy、freeCodeCamp</li>
+<li><strong>开源工具与文档</strong>：Node.js、Python、React、TensorFlow 等</li>
+<li><strong>AI 与前沿技术动态</strong>：订阅 MIT Technology Review、TechCrunch、IEEE Spectrum</li>
+</ul>
+<p>这些资源的获取，为技术成长提供了重要土壤。</p>
+<h3 id="7-娱乐"><a href="#7-娱乐" class="headerlink" title="7. 娱乐"></a>7. 娱乐</h3><p>对于游戏玩家和视频爱好者，科学上网可以帮助他们：</p>
+<ul>
+<li>访问海外原版高清电影、游戏、音乐等</li>
+<li>观看海外电影、电视节目、播客</li>
+<li>参与全球在线社区，分享想法和经验</li>
+</ul>
+<hr>
+<h2 id="快速开始（3分钟）"><a href="#快速开始（3分钟）" class="headerlink" title="快速开始（3分钟）"></a>快速开始（3分钟）</h2><p>如果你只想尽快“能用起来”，按下面流程做就够了（细节看文末延伸阅读）。</p>
+<ol>
+<li>明确你的主要用途：AI（ChatGPT/Claude）、学术资料、远程办公、流媒体、游戏。用途会决定你更需要“地区/IP/线路/延迟/稳定性”里的哪一项。</li>
+<li>新手首选 <strong>Clash（规则分流）+ 机场订阅</strong>：一个客户端 + 一条订阅链接，通常比自建 VPS 更省心。<ul>
+<li>直接看入口与折扣：<a href="#register">#快速注册入口</a></li>
+</ul>
+</li>
+<li>按图文教程完成配置：导入订阅 → 选 <code>Rule</code> 模式 → 开启系统代理或 <code>TUN</code> → 测速选节点 → 访问测试网站。<ul>
+<li>图文教程（含各平台客户端）：<a href="https://tanqingbo.cn/VPN-HELP/">Clash 机场使用图文教程：订阅导入到测速</a></li>
+</ul>
+</li>
+<li>选购前先把关键概念搞懂（能少踩一半坑）：<ul>
+<li><a href="https://tanqingbo.cn/VPN-HELP/">如何挑选优质机场（避坑指南）</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342/Open-Internet/blob/main/protocols.md">Vmess/Vless/Trojan/Reality/Hysteria 等协议科普</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342/Open-Internet/blob/main/mingci.md">Clash 机场常用名称解释（名词科普大全）</a></li>
+</ul>
+</li>
+<li>做好备份与冗余：保存订阅链接（不要外泄）、准备至少 2 个可用地区/线路，出问题先按“排障清单”排查。</li>
+</ol>
+<hr>
+<h2 id="科学上网的主要方式对比"><a href="#科学上网的主要方式对比" class="headerlink" title="科学上网的主要方式对比"></a>科学上网的主要方式对比</h2><p>下面按“新手优先 → 进阶 → 折腾党”的思路介绍，便于你快速做选择。</p>
+<h3 id="方式一：自建-VPS（适合技术用户-备援-学习）"><a href="#方式一：自建-VPS（适合技术用户-备援-学习）" class="headerlink" title="方式一：自建 VPS（适合技术用户/备援/学习）"></a>方式一：自建 VPS（适合技术用户/备援/学习）</h3><p><strong>VPS（Virtual Private Server）</strong> 即虚拟专用服务器。通过部署代理程序（如 V2Ray、Xray、Shadowsocks 等）并结合 TLS、WebSocket 等方式，可实现自主科学上网方案。</p>
+<ul>
+<li><strong>推荐配置</strong>：Linux + Nginx + TLS + V2Ray/Xray</li>
+<li><strong>适用平台</strong>：DigitalOcean、Vultr、Oracle Cloud、HostHatch、Linode 等</li>
+</ul>
+<h4 id="✅-优点"><a href="#✅-优点" class="headerlink" title="✅ 优点"></a>✅ 优点</h4><ul>
+<li><strong>完全可控</strong>：节点配置、加密方式、协议选择自由度高</li>
+<li><strong>安全性强</strong>：结合 TLS+WebSocket 可高度伪装流量，减少被识别概率</li>
+<li><strong>长期成本低</strong>：按月计费，一台服务器可多人使用或自搭多节点</li>
+<li><strong>适合技术型用户</strong>：具备一定动手能力者可持续优化性能和稳定性</li>
+</ul>
+<h4 id="❌-缺点与风险（2026-年更新）"><a href="#❌-缺点与风险（2026-年更新）" class="headerlink" title="❌ 缺点与风险（2026 年更新）"></a>❌ 缺点与风险（2026 年更新）</h4><ul>
+<li><strong>可用性不稳定</strong>：网络环境与服务商风控变化会影响可用性，可能出现需要换 IP 或重建实例的情况</li>
+<li><strong>IP 质量不可控</strong>：部分云厂商分配到的 IP 可能存在可用性问题，部署后仍可能无法正常使用</li>
+<li><strong>配置门槛高</strong>：需要掌握 Linux、证书、域名、端口与防火墙等基础运维</li>
+<li><strong>维护负担重</strong>：更新、监控、备份、安全加固都需要自己负责</li>
+</ul>
+<hr>
+<h4 id="💸-IP-被封后如何处理？是否要花钱？"><a href="#💸-IP-被封后如何处理？是否要花钱？" class="headerlink" title="💸 IP 被封后如何处理？是否要花钱？"></a>💸 IP 被封后如何处理？是否要花钱？</h4><p>是的，<strong>IP 被封后更换 IP 或实例通常会产生额外费用</strong>，以下是常见平台的对比：</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>更换 IP 成本</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DigitalOcean</strong></td>
+<td>✅ 需删除实例重建</td>
+<td>不支持单独换 IP，重建浪费配额</td>
+</tr>
+<tr>
+<td><strong>Vultr</strong></td>
+<td>✅ 工单更换或重建</td>
+<td>新建实例分配新 IP 但可能仍被封</td>
+</tr>
+<tr>
+<td><strong>Oracle Cloud</strong></td>
+<td>❌ 免费但不支持换 IP</td>
+<td>免费额度资源易被回收，风控强</td>
+</tr>
+<tr>
+<td><strong>HostHatch / RackNerd</strong></td>
+<td>✅/❌ 有时不给换</td>
+<td>多为年付套餐，被封 IP 无法恢复</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔁 更换 IP = 额外支出 + 运维复杂 + 时间浪费<br>尤其是做多地区部署时，每换一个节点，成本都要叠加。</p>
+</blockquote>
+<hr>
+<h4 id="✅-建议策略（面向-2026）"><a href="#✅-建议策略（面向-2026）" class="headerlink" title="✅ 建议策略（面向 2026）"></a>✅ 建议策略（面向 2026）</h4><ul>
+<li>✅ 优先月付/按量测试，确认可用后再长期投入</li>
+<li>✅ 优先选择支持更换 IP / 重装实例 / 工单响应快的服务商</li>
+<li>✅ 把自建当“备援/学习”而不是唯一通道，日常优先用机场省心</li>
+<li>✅ 做好最基本的安全：更新系统、限制管理端口、开启防火墙与日志审计</li>
+</ul>
+<hr>
+<h3 id="方式二：Clash（规则分流）-机场订阅（最推荐新手）"><a href="#方式二：Clash（规则分流）-机场订阅（最推荐新手）" class="headerlink" title="方式二：Clash（规则分流）+ 机场订阅（最推荐新手）"></a>方式二：Clash（规则分流）+ 机场订阅（最推荐新手）</h3><p><strong>Clash（规则分流客户端）</strong> 是基于规则引擎的跨平台代理客户端（不同客户端可能内置不同 Clash 系内核/维护分支）。配合订阅型“机场”节点服务，可以做到：一键导入、多端通用、规则分流、自动更新。</p>
+<p>购买机场服务地址：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.club/aff.php?aff=4818">https://order.yizhihongxing.club/aff.php?aff=4818</a></p>
+<ul>
+<li><strong>操作流程</strong>：购买服务→ 获取订阅链接 → 导入客户端 → 选择策略组/节点 → 开启系统代理 → 测速与日常使用</li>
+<li><strong>客户端选择</strong>：不同平台推荐见图文教程<strong>（含下载地址与配置截图）</strong>，<a href="#register">#图文教程</a></li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>使用便捷，适合小白用户</li>
+<li>自动更新节点，支持规则分流</li>
+<li>支持多端（Windows、Mac、iOS、Android、Apple TV）</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>依赖第三方服务：服务商质量参差，需要花时间做功课与试用</li>
+<li>节点体验波动：晚高峰拥堵、地区/线路质量差异会影响速度与稳定性</li>
+<li>订阅链接是“账号密钥”：一旦泄露可能被他人盗用流量或滥用你的账号</li>
+</ul>
+<p><a id="register"></a></p>
+<h4 id="🔝-快速注册入口（图文教程）"><a href="#🔝-快速注册入口（图文教程）" class="headerlink" title="🔝 快速注册入口（图文教程）"></a>🔝 快速注册入口（图文教程）</h4><p>点击下方表格中的链接即可查看详细的图文教程：</p>
+<table>
+<thead>
+<tr>
+<th align="center">平台</th>
+<th align="center">推荐客户端</th>
+<th align="center">主要特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>Windows</strong></td>
+<td align="center"><a href="https://tanqingbo.cn/Win-OpenInternet/">Clash for Windows</a></td>
+<td align="center">功能丰富，订阅管理优秀</td>
+</tr>
+<tr>
+<td align="center"><strong>macOS</strong></td>
+<td align="center"><a href="https://tanqingbo.cn/iphone-open-internet/">Spectre</a></td>
+<td align="center">适配良好，支持 Clash 订阅</td>
+</tr>
+<tr>
+<td align="center"><strong>Android</strong></td>
+<td align="center"><a href="https://tanqingbo.cn/Android-VPN/">Clash for Android</a></td>
+<td align="center">功能强大，支持多个订阅</td>
+</tr>
+<tr>
+<td align="center"><strong>iOS</strong></td>
+<td align="center"><a href="https://tanqingbo.cn/iphone-open-internet/">Spectre</a></td>
+<td align="center">免费安装，支持多协议</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="方式三：商业-VPN（适合海外-出差-公共-Wi‑Fi-隐私保护）"><a href="#方式三：商业-VPN（适合海外-出差-公共-Wi‑Fi-隐私保护）" class="headerlink" title="方式三：商业 VPN（适合海外/出差/公共 Wi‑Fi 隐私保护）"></a>方式三：商业 VPN（适合海外/出差/公共 Wi‑Fi 隐私保护）</h3><p>商业 VPN 通常是合规注册的国际服务商提供的加密连接服务，常用于隐私保护、跨区访问与公共 Wi‑Fi 安全。</p>
+<ul>
+<li><strong>主流品牌</strong>：ExpressVPN、NordVPN、Surfshark、ProtonVPN、PureVPN</li>
+<li><strong>支持平台</strong>：Windows、macOS、Android、iOS、Linux、浏览器插件</li>
+</ul>
+<p><strong>优点：</strong></p>
+<ul>
+<li>界面友好，开箱即用</li>
+<li>覆盖全球多个服务器节点</li>
+<li>适合流媒体、浏览、隐私保护</li>
+<li>多数产品提供退款保障或试用期（以官网条款为准）</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>在中国大陆的可用性会随地区与时间变化，购买前需确认是否支持退款/试用</li>
+<li>优质服务一般需订阅付费</li>
+<li>无法定制底层配置，灵活度低于 VPS</li>
+<li>对“规则分流/策略组/精细化控制”的支持通常不如 Clash 类客户端</li>
+</ul>
+<hr>
+<h2 id="三种方式的对比与选择建议"><a href="#三种方式的对比与选择建议" class="headerlink" title="三种方式的对比与选择建议"></a>三种方式的对比与选择建议</h2><h3 id="一张表快速看懂"><a href="#一张表快速看懂" class="headerlink" title="一张表快速看懂"></a>一张表快速看懂</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>上手难度</th>
+<th>费用结构</th>
+<th>国内环境稳定性（经验）</th>
+<th>可控性</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Clash（规则分流）+ 机场订阅</td>
+<td>低</td>
+<td>月付/年付</td>
+<td>中-高（看机场与线路）</td>
+<td>中</td>
+<td>AI/办公/资料/流媒体</td>
+</tr>
+<tr>
+<td>商业 VPN</td>
+<td>低（境外）/中（境内）</td>
+<td>月付/年付</td>
+<td>不稳定（需试用验证）</td>
+<td>低-中</td>
+<td>出差/公共 Wi‑Fi/隐私</td>
+</tr>
+<tr>
+<td>自建 VPS</td>
+<td>高</td>
+<td>服务器+域名等</td>
+<td>不稳定（需维护）</td>
+<td>高</td>
+<td>技术学习/备援/可控链路</td>
+</tr>
+</tbody></table>
+<h3 id="速查：按需求怎么选"><a href="#速查：按需求怎么选" class="headerlink" title="速查：按需求怎么选"></a>速查：按需求怎么选</h3><ul>
+<li>AI（ChatGPT/Claude）与远程办公：优先“稳定性 + 可用地区”的机场，准备备用节点/线路</li>
+<li>流媒体（YouTube/Netflix/Disney+）：优先有专线/优化线路且明确维护解锁的机场</li>
+<li>公共 Wi‑Fi 隐私保护（酒店/咖啡店/机场）：商业 VPN 或可信的自建方案更合适</li>
+<li>技术学习/备援：自建 VPS 可以学到完整链路，但建议和机场搭配使用，别把自建当唯一通道</li>
+</ul>
+<hr>
+<h2 id="安全与隐私（必读）"><a href="#安全与隐私（必读）" class="headerlink" title="安全与隐私（必读）"></a>安全与隐私（必读）</h2><ul>
+<li>把订阅链接当“密码”：不要公开、不要截图发群、不要交给第三方代导入</li>
+<li>不使用来路不明的“免费 VPN/破解版客户端/共享订阅”，隐私与账号风险极高</li>
+<li>避免使用不可信的“在线订阅转换/订阅解析”网站，必要时在本地工具内完成</li>
+<li>尽量开启 <code>Rule</code> 分流，避免把所有国内流量都走代理；需要全局再临时切 <code>Global</code></li>
+<li>在公共网络环境下，优先使用带 <code>Kill Switch</code> 的方案，避免断连后流量直连泄露</li>
+</ul>
+<hr>
+<h2 id="法律与合规风险提示（重要）"><a href="#法律与合规风险提示（重要）" class="headerlink" title="法律与合规风险提示（重要）"></a>法律与合规风险提示（重要）</h2><h3 id="13-中国境内科学上网的法律风险说明"><a href="#13-中国境内科学上网的法律风险说明" class="headerlink" title="13. 中国境内科学上网的法律风险说明"></a>13. 中国境内科学上网的法律风险说明</h3><p>在中国大陆，未经许可擅自建立或使用 VPN、代理服务连接国际互联网，可能违反相关法规。</p>
+<p>依据《中华人民共和国计算机信息网络国际联网管理暂行规定》第六条、第十四条的规定，以下行为存在法律风险：</p>
+<ul>
+<li>提供未经许可的 VPN 服务；</li>
+<li>建立代理节点用于商业化用途；</li>
+<li>散布非法信息、参与政治活动、攻击国内网站等违法行为。</li>
+</ul>
+<p>⚠️ 合规提醒：不同地区的法规、政策与执法口径可能随时间变化。本文仅做信息整理与技术科普，不构成法律建议；请自行了解并遵守所在地法律法规。</p>
+<hr>
+<h3 id="14-如何降低使用风险"><a href="#14-如何降低使用风险" class="headerlink" title="14. 如何降低使用风险"></a>14. 如何降低使用风险</h3><p>为最大限度保障安全与合规，建议用户：</p>
+<ul>
+<li>不传播违法内容，不参与违法活动；</li>
+<li>不搭建/转售未经许可的代理服务，不进行商业化兜售；</li>
+<li>仅将相关工具用于学习、科研、跨境办公等合规用途；</li>
+<li>认真阅读服务条款、隐私政策与退款/试用规则，避免误买误用；</li>
+<li>出现争议场景时，优先咨询专业法律人士。</li>
+</ul>
+<p>📌 <strong>免责声明</strong>：本文内容仅供信息参考与技术科普之用，不构成法律建议，使用者应对自己的行为负责。</p>
+<hr>
+<h2 id="总结与建议"><a href="#总结与建议" class="headerlink" title="总结与建议"></a>总结与建议</h2><h3 id="15-根据需求选择最合适的方式"><a href="#15-根据需求选择最合适的方式" class="headerlink" title="15. 根据需求选择最合适的方式"></a>15. 根据需求选择最合适的方式</h3><p>“科学上网”并非目的，而是一种工具，服务于学习、研究、工作与信息获取的需求。无论是使用 VPS、机场节点还是商业 VPN，每种方式都有其适用场景：</p>
+<ul>
+<li><strong>如果你是开发者、技术爱好者</strong>：建议选择自建 VPS，可高度定制且安全可控；</li>
+<li><strong>如果你是普通用户或学生</strong>：Clash + 机场服务兼顾稳定与便利；</li>
+<li><strong>如果你希望快速使用、无需配置</strong>：商业 VPN 是最友好入门选择。</li>
+</ul>
+<p>🚀 关键建议：</p>
+<ul>
+<li>明确使用目的，不涉及违法内容；</li>
+<li>重视节点安全，避免使用来路不明的服务；</li>
+<li>关注协议加密方式与数据隐私政策；</li>
+<li>保持良好的数字素养与信息判断力。</li>
+</ul>
+<p>整体建议是：普通用户优先选择靠谱机场，有经验又愿意折腾的技术用户可以再考虑自建 VPS 作为补充，商业 VPN 更适合境外用户或经常出差的人群，而不是长期在中国大陆本地使用。</p>
+<p>翻墙并不是“翻越一道墙”，而是打破信息孤岛的一种手段。合理使用，是实现知识自由流通、个体认知成长的重要方式。</p>
+<hr>
+<h2 id="常见问答（FAQ）"><a href="#常见问答（FAQ）" class="headerlink" title="常见问答（FAQ）"></a>常见问答（FAQ）</h2><h3 id="1-我“连上了”，但浏览器还是打不开网页-只有部分软件能用？"><a href="#1-我“连上了”，但浏览器还是打不开网页-只有部分软件能用？" class="headerlink" title="1. 我“连上了”，但浏览器还是打不开网页 / 只有部分软件能用？"></a>1. 我“连上了”，但浏览器还是打不开网页 / 只有部分软件能用？</h3><p>优先按这个顺序排查：</p>
+<ol>
+<li>是否开启了系统代理或 <code>TUN</code>：浏览器一般依赖系统代理；部分应用需要 <code>TUN</code> 才能接管流量</li>
+<li>Clash 模式是否选对：日常推荐 <code>Rule</code>，误开 <code>Direct</code> 会导致所有流量直连</li>
+<li>DNS 是否正常：DNS 污染/劫持可能导致“节点可用但网站打不开”，建议启用客户端内置的安全 DNS / 加密 DNS</li>
+</ol>
+<h3 id="2-订阅导入后没节点-更新失败怎么办？"><a href="#2-订阅导入后没节点-更新失败怎么办？" class="headerlink" title="2. 订阅导入后没节点 / 更新失败怎么办？"></a>2. 订阅导入后没节点 / 更新失败怎么办？</h3><ul>
+<li>检查订阅链接是否被截断（复制时漏字符、末尾多空格）</li>
+<li>登录服务商面板确认订阅未过期、流量未用尽、账号未被风控</li>
+<li>先在客户端里“更新订阅”，不行再删除订阅重新导入</li>
+</ul>
+<h3 id="3-ChatGPT-Claude-提示-403、地区不可用或验证码频繁？"><a href="#3-ChatGPT-Claude-提示-403、地区不可用或验证码频繁？" class="headerlink" title="3. ChatGPT/Claude 提示 403、地区不可用或验证码频繁？"></a>3. ChatGPT/Claude 提示 403、地区不可用或验证码频繁？</h3><ul>
+<li>更换到服务支持的地区节点（不同服务限制不同）</li>
+<li>清理浏览器 Cookie 或用无痕窗口测试，避免“旧地区会话”干扰</li>
+<li>减少频繁切换节点与高频刷新，部分服务会触发风控</li>
+</ul>
+<h3 id="4-速度慢、晚高峰卡顿怎么改善？"><a href="#4-速度慢、晚高峰卡顿怎么改善？" class="headerlink" title="4. 速度慢、晚高峰卡顿怎么改善？"></a>4. 速度慢、晚高峰卡顿怎么改善？</h3><ul>
+<li>优先选“更近地区 + 更好线路”（中转/专线通常比直连更稳）</li>
+<li>用策略组的自动测速（<code>url-test</code>）与故障切换（<code>fallback</code>），避免死磕单一节点</li>
+<li>流媒体优先选标注解锁且长期维护的节点/套餐</li>
+</ul>
+<h3 id="5-iOS-用什么客户端？"><a href="#5-iOS-用什么客户端？" class="headerlink" title="5. iOS 用什么客户端？"></a>5. iOS 用什么客户端？</h3><p>iOS 常见客户端有 <a href="https://tanqingbo.cn/iphone-open-internet/">Spectre</a>、Stash 等（可能需要外区 Apple ID）。具体安装与配置见图文教程：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/iphone-open-internet/">IOS如何用外网/苹果手机搭梯子-翻墙VPN软件工具 </a></li>
+</ul>
+<h3 id="6-免费科学上网工具能用吗？"><a href="#6-免费科学上网工具能用吗？" class="headerlink" title="6. 免费科学上网工具能用吗？"></a>6. 免费科学上网工具能用吗？</h3><p>短期“能连上”不等于长期“安全可靠”。大量免费/超低价服务可能存在广告注入、隐私风险、稳定性差等问题；更建议选择口碑较好的服务。</p>
+<hr>
+<h2 id="🌐-国外常用网站导航"><a href="#🌐-国外常用网站导航" class="headerlink" title="🌐 国外常用网站导航"></a>🌐 国外常用网站导航</h2><p>以下是整理的一些常用国外网站，涵盖搜索引擎、社交平台、流媒体、学术资源等多个领域，适合日常浏览、学习、工作与娱乐使用。</p>
+<h3 id="🔍-搜索引擎"><a href="#🔍-搜索引擎" class="headerlink" title="🔍 搜索引擎"></a>🔍 搜索引擎</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.google.com/">Google</a> – 全球最强搜索引擎，信息全面</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.bing.com/">Bing</a> – 微软旗下，界面简洁，图像搜索强</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://duckduckgo.com/">DuckDuckGo</a> – 主打隐私保护，不追踪用户行为</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.startpage.com/">Startpage</a> – 使用 Google 结果但无隐私追踪</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.yahoo.com/">Yahoo</a> – 集新闻、邮箱、搜索于一体</li>
+</ul>
+<h3 id="📺-视频与流媒体"><a href="#📺-视频与流媒体" class="headerlink" title="📺 视频与流媒体"></a>📺 视频与流媒体</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/">YouTube</a> – 全球最大视频平台</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.twitch.tv/">Twitch</a> – 游戏与直播社区</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.netflix.com/">Netflix</a> – 高质量剧集电影流媒体服务</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.disneyplus.com/">Disney+</a> – 迪士尼旗下流媒体，包含漫威/星战内容</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.primevideo.com/">Amazon Prime Video</a> – 亚马逊会员专属影视平台</li>
+</ul>
+<h3 id="💬-社交与社区"><a href="#💬-社交与社区" class="headerlink" title="💬 社交与社区"></a>💬 社交与社区</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://twitter.com/">Twitter (X)</a> – 全球热点信息首发平台</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.facebook.com/">Facebook</a> – 世界最大社交网络</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.reddit.com/">Reddit</a> – 海外社区讨论中心，话题广泛</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.instagram.com/">Instagram</a> – 图片/短视频分享平台</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.linkedin.com/">LinkedIn</a> – 海外职业社交首选平台</li>
+</ul>
+<h3 id="📚-学术与工具"><a href="#📚-学术与工具" class="headerlink" title="📚 学术与工具"></a>📚 学术与工具</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.wikipedia.org/">Wikipedia</a> – 开源百科全书</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://scholar.google.com/">Google Scholar</a> – 免费学术论文搜索引擎</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://archive.org/">Archive.org</a> – 互联网档案馆，保存旧网页/书籍/视频</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.researchgate.net/">ResearchGate</a> – 全球科研人员社交与论文交流平台</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jstor.org/">JSTOR</a> – 权威论文与文献数据库</li>
+</ul>
+<h3 id="💻-开发者与文档"><a href="#💻-开发者与文档" class="headerlink" title="💻 开发者与文档"></a>💻 开发者与文档</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/">GitHub</a> – 开源项目与代码托管平台</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/">Stack Overflow</a> – 编程问答社区</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.mozilla.org/">MDN Web Docs</a> – Web 开发权威文档</li>
+</ul>
+<h3 id="🤖-AI-与生产力工具"><a href="#🤖-AI-与生产力工具" class="headerlink" title="🤖 AI 与生产力工具"></a>🤖 AI 与生产力工具</h3><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://chatgpt.com/">ChatGPT</a> – 对话式 AI 智能助手</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://gemini.google.com/">Gemini (原 Bard)</a> – Google 推出的 AI 工具</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://claude.ai/">Claude</a> – Anthropic 公司出品的大模型助手</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.perplexity.ai/">Perplexity AI</a> – 问答型 AI 搜索引擎</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.notion.so/">Notion</a> – 效率工具，可做笔记/知识库/项目管理</li>
+</ul>
+<hr>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/VPN2026/">https://tanqingbo.cn/VPN2026/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/VPN-HELP/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2026最新科学上网教程：Clash/Spectre/Trojan等翻墙工具全指南 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E2%80%9D%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">引言：什么是“科学上网”？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E-amp-%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">本项目说明 &amp; 免责声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AF%BC%E8%88%AA%EF%BC%88%E5%BB%BA%E8%AE%AE%E6%94%B6%E8%97%8F%E6%9C%AC%E9%A1%B5%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">快速导航（建议收藏本页）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E4%B8%AD%E5%9B%BD%E9%9C%80%E8%A6%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">为什么在中国需要科学上网？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%92%E8%81%94%E7%BD%91%E4%BF%A1%E6%81%AF%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%8E%B0%E7%8A%B6"><span class="toc-number">4.1.</span> <span class="toc-text">1. 互联网信息访问限制现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96%E5%A4%9A%E7%BB%B4%E5%BA%A6%E7%9A%84%E4%BF%A1%E6%81%AF%E6%9D%A5%E6%BA%90"><span class="toc-number">4.2.</span> <span class="toc-text">2. 获取多维度的信息来源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A4%BE%E4%BA%A4%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%9C%80%E6%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text">3. 社交与工作需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8B%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">科学上网之后可以做什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%BF%E9%97%AE%E5%85%A8%E7%90%83%E4%BA%92%E8%81%94%E7%BD%91%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.1.</span> <span class="toc-text">4. 访问全球互联网服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%87%AA%E4%B8%BB%E9%80%89%E6%8B%A9%E4%BF%A1%E6%81%AF%E6%B8%A0%E9%81%93"><span class="toc-number">5.2.</span> <span class="toc-text">5. 自主选择信息渠道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%88%90%E9%95%BF"><span class="toc-number">5.3.</span> <span class="toc-text">6. 技术学习与成长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%A8%B1%E4%B9%90"><span class="toc-number">5.4.</span> <span class="toc-text">7. 娱乐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B%EF%BC%883%E5%88%86%E9%92%9F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">快速开始（3分钟）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E4%B8%BB%E8%A6%81%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">7.</span> <span class="toc-text">科学上网的主要方式对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E8%87%AA%E5%BB%BA-VPS%EF%BC%88%E9%80%82%E5%90%88%E6%8A%80%E6%9C%AF%E7%94%A8%E6%88%B7-%E5%A4%87%E6%8F%B4-%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">方式一：自建 VPS（适合技术用户&#x2F;备援&#x2F;学习）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E4%BC%98%E7%82%B9"><span class="toc-number">7.1.1.</span> <span class="toc-text">✅ 优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-%E7%BC%BA%E7%82%B9%E4%B8%8E%E9%A3%8E%E9%99%A9%EF%BC%882026-%E5%B9%B4%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="toc-number">7.1.2.</span> <span class="toc-text">❌ 缺点与风险（2026 年更新）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%B8-IP-%E8%A2%AB%E5%B0%81%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F%E6%98%AF%E5%90%A6%E8%A6%81%E8%8A%B1%E9%92%B1%EF%BC%9F"><span class="toc-number">7.1.3.</span> <span class="toc-text">💸 IP 被封后如何处理？是否要花钱？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E5%BB%BA%E8%AE%AE%E7%AD%96%E7%95%A5%EF%BC%88%E9%9D%A2%E5%90%91-2026%EF%BC%89"><span class="toc-number">7.1.4.</span> <span class="toc-text">✅ 建议策略（面向 2026）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9AClash%EF%BC%88%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81%EF%BC%89-%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%88%E6%9C%80%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">方式二：Clash（规则分流）+ 机场订阅（最推荐新手）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%9D-%E5%BF%AB%E9%80%9F%E6%B3%A8%E5%86%8C%E5%85%A5%E5%8F%A3%EF%BC%88%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%89"><span class="toc-number">7.2.1.</span> <span class="toc-text">🔝 快速注册入口（图文教程）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E5%95%86%E4%B8%9A-VPN%EF%BC%88%E9%80%82%E5%90%88%E6%B5%B7%E5%A4%96-%E5%87%BA%E5%B7%AE-%E5%85%AC%E5%85%B1-Wi%E2%80%91Fi-%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">方式三：商业 VPN（适合海外&#x2F;出差&#x2F;公共 Wi‑Fi 隐私保护）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94%E4%B8%8E%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">8.</span> <span class="toc-text">三种方式的对比与选择建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%BF%AB%E9%80%9F%E7%9C%8B%E6%87%82"><span class="toc-number">8.1.</span> <span class="toc-text">一张表快速看懂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E6%9F%A5%EF%BC%9A%E6%8C%89%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">8.2.</span> <span class="toc-text">速查：按需求怎么选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%EF%BC%88%E5%BF%85%E8%AF%BB%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">安全与隐私（必读）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%95%E5%BE%8B%E4%B8%8E%E5%90%88%E8%A7%84%E9%A3%8E%E9%99%A9%E6%8F%90%E7%A4%BA%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">法律与合规风险提示（重要）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E4%B8%AD%E5%9B%BD%E5%A2%83%E5%86%85%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E6%B3%95%E5%BE%8B%E9%A3%8E%E9%99%A9%E8%AF%B4%E6%98%8E"><span class="toc-number">10.1.</span> <span class="toc-text">13. 中国境内科学上网的法律风险说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E4%BD%BF%E7%94%A8%E9%A3%8E%E9%99%A9"><span class="toc-number">10.2.</span> <span class="toc-text">14. 如何降低使用风险</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.</span> <span class="toc-text">总结与建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E6%A0%B9%E6%8D%AE%E9%9C%80%E6%B1%82%E9%80%89%E6%8B%A9%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">11.1.</span> <span class="toc-text">15. 根据需求选择最合适的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E7%AD%94%EF%BC%88FAQ%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">常见问答（FAQ）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%88%91%E2%80%9C%E8%BF%9E%E4%B8%8A%E4%BA%86%E2%80%9D%EF%BC%8C%E4%BD%86%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%98%E6%98%AF%E6%89%93%E4%B8%8D%E5%BC%80%E7%BD%91%E9%A1%B5-%E5%8F%AA%E6%9C%89%E9%83%A8%E5%88%86%E8%BD%AF%E4%BB%B6%E8%83%BD%E7%94%A8%EF%BC%9F"><span class="toc-number">12.1.</span> <span class="toc-text">1. 我“连上了”，但浏览器还是打不开网页 &#x2F; 只有部分软件能用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%A2%E9%98%85%E5%AF%BC%E5%85%A5%E5%90%8E%E6%B2%A1%E8%8A%82%E7%82%B9-%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.2.</span> <span class="toc-text">2. 订阅导入后没节点 &#x2F; 更新失败怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ChatGPT-Claude-%E6%8F%90%E7%A4%BA-403%E3%80%81%E5%9C%B0%E5%8C%BA%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%88%96%E9%AA%8C%E8%AF%81%E7%A0%81%E9%A2%91%E7%B9%81%EF%BC%9F"><span class="toc-number">12.3.</span> <span class="toc-text">3. ChatGPT&#x2F;Claude 提示 403、地区不可用或验证码频繁？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%80%9F%E5%BA%A6%E6%85%A2%E3%80%81%E6%99%9A%E9%AB%98%E5%B3%B0%E5%8D%A1%E9%A1%BF%E6%80%8E%E4%B9%88%E6%94%B9%E5%96%84%EF%BC%9F"><span class="toc-number">12.4.</span> <span class="toc-text">4. 速度慢、晚高峰卡顿怎么改善？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-iOS-%E7%94%A8%E4%BB%80%E4%B9%88%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9F"><span class="toc-number">12.5.</span> <span class="toc-text">5. iOS 用什么客户端？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%B7%A5%E5%85%B7%E8%83%BD%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">12.6.</span> <span class="toc-text">6. 免费科学上网工具能用吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8C%90-%E5%9B%BD%E5%A4%96%E5%B8%B8%E7%94%A8%E7%BD%91%E7%AB%99%E5%AF%BC%E8%88%AA"><span class="toc-number">13.</span> <span class="toc-text">🌐 国外常用网站导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="toc-number">13.1.</span> <span class="toc-text">🔍 搜索引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E4%B8%8E%E6%B5%81%E5%AA%92%E4%BD%93"><span class="toc-number">13.2.</span> <span class="toc-text">📺 视频与流媒体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%AC-%E7%A4%BE%E4%BA%A4%E4%B8%8E%E7%A4%BE%E5%8C%BA"><span class="toc-number">13.3.</span> <span class="toc-text">💬 社交与社区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9A-%E5%AD%A6%E6%9C%AF%E4%B8%8E%E5%B7%A5%E5%85%B7"><span class="toc-number">13.4.</span> <span class="toc-text">📚 学术与工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%BB-%E5%BC%80%E5%8F%91%E8%80%85%E4%B8%8E%E6%96%87%E6%A1%A3"><span class="toc-number">13.5.</span> <span class="toc-text">💻 开发者与文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A4%96-AI-%E4%B8%8E%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7"><span class="toc-number">13.6.</span> <span class="toc-text">🤖 AI 与生产力工具</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>320</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>119</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E2%80%9D%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">引言：什么是“科学上网”？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E-amp-%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">本项目说明 &amp; 免责声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AF%BC%E8%88%AA%EF%BC%88%E5%BB%BA%E8%AE%AE%E6%94%B6%E8%97%8F%E6%9C%AC%E9%A1%B5%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">快速导航（建议收藏本页）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E4%B8%AD%E5%9B%BD%E9%9C%80%E8%A6%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">为什么在中国需要科学上网？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%92%E8%81%94%E7%BD%91%E4%BF%A1%E6%81%AF%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%8E%B0%E7%8A%B6"><span class="toc-number">4.1.</span> <span class="toc-text">1. 互联网信息访问限制现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96%E5%A4%9A%E7%BB%B4%E5%BA%A6%E7%9A%84%E4%BF%A1%E6%81%AF%E6%9D%A5%E6%BA%90"><span class="toc-number">4.2.</span> <span class="toc-text">2. 获取多维度的信息来源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A4%BE%E4%BA%A4%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%9C%80%E6%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text">3. 社交与工作需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8B%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">科学上网之后可以做什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%BF%E9%97%AE%E5%85%A8%E7%90%83%E4%BA%92%E8%81%94%E7%BD%91%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.1.</span> <span class="toc-text">4. 访问全球互联网服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%87%AA%E4%B8%BB%E9%80%89%E6%8B%A9%E4%BF%A1%E6%81%AF%E6%B8%A0%E9%81%93"><span class="toc-number">5.2.</span> <span class="toc-text">5. 自主选择信息渠道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%88%90%E9%95%BF"><span class="toc-number">5.3.</span> <span class="toc-text">6. 技术学习与成长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%A8%B1%E4%B9%90"><span class="toc-number">5.4.</span> <span class="toc-text">7. 娱乐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B%EF%BC%883%E5%88%86%E9%92%9F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">快速开始（3分钟）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E4%B8%BB%E8%A6%81%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">7.</span> <span class="toc-text">科学上网的主要方式对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E8%87%AA%E5%BB%BA-VPS%EF%BC%88%E9%80%82%E5%90%88%E6%8A%80%E6%9C%AF%E7%94%A8%E6%88%B7-%E5%A4%87%E6%8F%B4-%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">方式一：自建 VPS（适合技术用户&#x2F;备援&#x2F;学习）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E4%BC%98%E7%82%B9"><span class="toc-number">7.1.1.</span> <span class="toc-text">✅ 优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-%E7%BC%BA%E7%82%B9%E4%B8%8E%E9%A3%8E%E9%99%A9%EF%BC%882026-%E5%B9%B4%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="toc-number">7.1.2.</span> <span class="toc-text">❌ 缺点与风险（2026 年更新）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%B8-IP-%E8%A2%AB%E5%B0%81%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F%E6%98%AF%E5%90%A6%E8%A6%81%E8%8A%B1%E9%92%B1%EF%BC%9F"><span class="toc-number">7.1.3.</span> <span class="toc-text">💸 IP 被封后如何处理？是否要花钱？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E5%BB%BA%E8%AE%AE%E7%AD%96%E7%95%A5%EF%BC%88%E9%9D%A2%E5%90%91-2026%EF%BC%89"><span class="toc-number">7.1.4.</span> <span class="toc-text">✅ 建议策略（面向 2026）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9AClash%EF%BC%88%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81%EF%BC%89-%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%88%E6%9C%80%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">方式二：Clash（规则分流）+ 机场订阅（最推荐新手）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%9D-%E5%BF%AB%E9%80%9F%E6%B3%A8%E5%86%8C%E5%85%A5%E5%8F%A3%EF%BC%88%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%89"><span class="toc-number">7.2.1.</span> <span class="toc-text">🔝 快速注册入口（图文教程）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E5%95%86%E4%B8%9A-VPN%EF%BC%88%E9%80%82%E5%90%88%E6%B5%B7%E5%A4%96-%E5%87%BA%E5%B7%AE-%E5%85%AC%E5%85%B1-Wi%E2%80%91Fi-%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">方式三：商业 VPN（适合海外&#x2F;出差&#x2F;公共 Wi‑Fi 隐私保护）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94%E4%B8%8E%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">8.</span> <span class="toc-text">三种方式的对比与选择建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%BF%AB%E9%80%9F%E7%9C%8B%E6%87%82"><span class="toc-number">8.1.</span> <span class="toc-text">一张表快速看懂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E6%9F%A5%EF%BC%9A%E6%8C%89%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">8.2.</span> <span class="toc-text">速查：按需求怎么选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%EF%BC%88%E5%BF%85%E8%AF%BB%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">安全与隐私（必读）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%95%E5%BE%8B%E4%B8%8E%E5%90%88%E8%A7%84%E9%A3%8E%E9%99%A9%E6%8F%90%E7%A4%BA%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">法律与合规风险提示（重要）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E4%B8%AD%E5%9B%BD%E5%A2%83%E5%86%85%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E6%B3%95%E5%BE%8B%E9%A3%8E%E9%99%A9%E8%AF%B4%E6%98%8E"><span class="toc-number">10.1.</span> <span class="toc-text">13. 中国境内科学上网的法律风险说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E4%BD%BF%E7%94%A8%E9%A3%8E%E9%99%A9"><span class="toc-number">10.2.</span> <span class="toc-text">14. 如何降低使用风险</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.</span> <span class="toc-text">总结与建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E6%A0%B9%E6%8D%AE%E9%9C%80%E6%B1%82%E9%80%89%E6%8B%A9%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">11.1.</span> <span class="toc-text">15. 根据需求选择最合适的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E7%AD%94%EF%BC%88FAQ%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">常见问答（FAQ）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%88%91%E2%80%9C%E8%BF%9E%E4%B8%8A%E4%BA%86%E2%80%9D%EF%BC%8C%E4%BD%86%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%98%E6%98%AF%E6%89%93%E4%B8%8D%E5%BC%80%E7%BD%91%E9%A1%B5-%E5%8F%AA%E6%9C%89%E9%83%A8%E5%88%86%E8%BD%AF%E4%BB%B6%E8%83%BD%E7%94%A8%EF%BC%9F"><span class="toc-number">12.1.</span> <span class="toc-text">1. 我“连上了”，但浏览器还是打不开网页 &#x2F; 只有部分软件能用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%A2%E9%98%85%E5%AF%BC%E5%85%A5%E5%90%8E%E6%B2%A1%E8%8A%82%E7%82%B9-%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.2.</span> <span class="toc-text">2. 订阅导入后没节点 &#x2F; 更新失败怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ChatGPT-Claude-%E6%8F%90%E7%A4%BA-403%E3%80%81%E5%9C%B0%E5%8C%BA%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%88%96%E9%AA%8C%E8%AF%81%E7%A0%81%E9%A2%91%E7%B9%81%EF%BC%9F"><span class="toc-number">12.3.</span> <span class="toc-text">3. ChatGPT&#x2F;Claude 提示 403、地区不可用或验证码频繁？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%80%9F%E5%BA%A6%E6%85%A2%E3%80%81%E6%99%9A%E9%AB%98%E5%B3%B0%E5%8D%A1%E9%A1%BF%E6%80%8E%E4%B9%88%E6%94%B9%E5%96%84%EF%BC%9F"><span class="toc-number">12.4.</span> <span class="toc-text">4. 速度慢、晚高峰卡顿怎么改善？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-iOS-%E7%94%A8%E4%BB%80%E4%B9%88%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9F"><span class="toc-number">12.5.</span> <span class="toc-text">5. iOS 用什么客户端？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%B7%A5%E5%85%B7%E8%83%BD%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">12.6.</span> <span class="toc-text">6. 免费科学上网工具能用吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8C%90-%E5%9B%BD%E5%A4%96%E5%B8%B8%E7%94%A8%E7%BD%91%E7%AB%99%E5%AF%BC%E8%88%AA"><span class="toc-number">13.</span> <span class="toc-text">🌐 国外常用网站导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="toc-number">13.1.</span> <span class="toc-text">🔍 搜索引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E4%B8%8E%E6%B5%81%E5%AA%92%E4%BD%93"><span class="toc-number">13.2.</span> <span class="toc-text">📺 视频与流媒体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%AC-%E7%A4%BE%E4%BA%A4%E4%B8%8E%E7%A4%BE%E5%8C%BA"><span class="toc-number">13.3.</span> <span class="toc-text">💬 社交与社区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9A-%E5%AD%A6%E6%9C%AF%E4%B8%8E%E5%B7%A5%E5%85%B7"><span class="toc-number">13.4.</span> <span class="toc-text">📚 学术与工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%BB-%E5%BC%80%E5%8F%91%E8%80%85%E4%B8%8E%E6%96%87%E6%A1%A3"><span class="toc-number">13.5.</span> <span class="toc-text">💻 开发者与文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A4%96-AI-%E4%B8%8E%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7"><span class="toc-number">13.6.</span> <span class="toc-text">🤖 AI 与生产力工具</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">14</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">32</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">29</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\图谱分割" title="图谱分割"><div class="tags-list-item">图谱分割</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\框架" title="框架"><div class="tags-list-item">框架</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/hb.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">支付宝大额红包来啦</div>
+        <small style="font-size: 0.9em;">
+            →「大额红包」最高99元<br>
+            →「购物立减」无门槛用<br>
+            →「1 秒到账」消费立减<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/about/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">支付宝扫一扫，立得现金红包</a>
+    <br>
+    <div style="height: 8px;"></div>
+    无套路直接花，奶茶、打车、购物全能用，快冲！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E2%80%9D%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">引言：什么是“科学上网”？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E-amp-%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">本项目说明 &amp; 免责声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%AF%BC%E8%88%AA%EF%BC%88%E5%BB%BA%E8%AE%AE%E6%94%B6%E8%97%8F%E6%9C%AC%E9%A1%B5%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">快速导航（建议收藏本页）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9C%A8%E4%B8%AD%E5%9B%BD%E9%9C%80%E8%A6%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">为什么在中国需要科学上网？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%92%E8%81%94%E7%BD%91%E4%BF%A1%E6%81%AF%E8%AE%BF%E9%97%AE%E9%99%90%E5%88%B6%E7%8E%B0%E7%8A%B6"><span class="toc-number">4.1.</span> <span class="toc-text">1. 互联网信息访问限制现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96%E5%A4%9A%E7%BB%B4%E5%BA%A6%E7%9A%84%E4%BF%A1%E6%81%AF%E6%9D%A5%E6%BA%90"><span class="toc-number">4.2.</span> <span class="toc-text">2. 获取多维度的信息来源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%A4%BE%E4%BA%A4%E4%B8%8E%E5%B7%A5%E4%BD%9C%E9%9C%80%E6%B1%82"><span class="toc-number">4.3.</span> <span class="toc-text">3. 社交与工作需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8B%E5%90%8E%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">科学上网之后可以做什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%BF%E9%97%AE%E5%85%A8%E7%90%83%E4%BA%92%E8%81%94%E7%BD%91%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.1.</span> <span class="toc-text">4. 访问全球互联网服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%87%AA%E4%B8%BB%E9%80%89%E6%8B%A9%E4%BF%A1%E6%81%AF%E6%B8%A0%E9%81%93"><span class="toc-number">5.2.</span> <span class="toc-text">5. 自主选择信息渠道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E4%B8%8E%E6%88%90%E9%95%BF"><span class="toc-number">5.3.</span> <span class="toc-text">6. 技术学习与成长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%A8%B1%E4%B9%90"><span class="toc-number">5.4.</span> <span class="toc-text">7. 娱乐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B%EF%BC%883%E5%88%86%E9%92%9F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">快速开始（3分钟）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E4%B8%BB%E8%A6%81%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">7.</span> <span class="toc-text">科学上网的主要方式对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E8%87%AA%E5%BB%BA-VPS%EF%BC%88%E9%80%82%E5%90%88%E6%8A%80%E6%9C%AF%E7%94%A8%E6%88%B7-%E5%A4%87%E6%8F%B4-%E5%AD%A6%E4%B9%A0%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">方式一：自建 VPS（适合技术用户&#x2F;备援&#x2F;学习）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E4%BC%98%E7%82%B9"><span class="toc-number">7.1.1.</span> <span class="toc-text">✅ 优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-%E7%BC%BA%E7%82%B9%E4%B8%8E%E9%A3%8E%E9%99%A9%EF%BC%882026-%E5%B9%B4%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="toc-number">7.1.2.</span> <span class="toc-text">❌ 缺点与风险（2026 年更新）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%B8-IP-%E8%A2%AB%E5%B0%81%E5%90%8E%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F%E6%98%AF%E5%90%A6%E8%A6%81%E8%8A%B1%E9%92%B1%EF%BC%9F"><span class="toc-number">7.1.3.</span> <span class="toc-text">💸 IP 被封后如何处理？是否要花钱？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9C%85-%E5%BB%BA%E8%AE%AE%E7%AD%96%E7%95%A5%EF%BC%88%E9%9D%A2%E5%90%91-2026%EF%BC%89"><span class="toc-number">7.1.4.</span> <span class="toc-text">✅ 建议策略（面向 2026）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9AClash%EF%BC%88%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81%EF%BC%89-%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%88%E6%9C%80%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">方式二：Clash（规则分流）+ 机场订阅（最推荐新手）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%9D-%E5%BF%AB%E9%80%9F%E6%B3%A8%E5%86%8C%E5%85%A5%E5%8F%A3%EF%BC%88%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%89"><span class="toc-number">7.2.1.</span> <span class="toc-text">🔝 快速注册入口（图文教程）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E5%BC%8F%E4%B8%89%EF%BC%9A%E5%95%86%E4%B8%9A-VPN%EF%BC%88%E9%80%82%E5%90%88%E6%B5%B7%E5%A4%96-%E5%87%BA%E5%B7%AE-%E5%85%AC%E5%85%B1-Wi%E2%80%91Fi-%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">方式三：商业 VPN（适合海外&#x2F;出差&#x2F;公共 Wi‑Fi 隐私保护）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94%E4%B8%8E%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">8.</span> <span class="toc-text">三种方式的对比与选择建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%BF%AB%E9%80%9F%E7%9C%8B%E6%87%82"><span class="toc-number">8.1.</span> <span class="toc-text">一张表快速看懂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E6%9F%A5%EF%BC%9A%E6%8C%89%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">8.2.</span> <span class="toc-text">速查：按需求怎么选</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9A%90%E7%A7%81%EF%BC%88%E5%BF%85%E8%AF%BB%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">安全与隐私（必读）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%95%E5%BE%8B%E4%B8%8E%E5%90%88%E8%A7%84%E9%A3%8E%E9%99%A9%E6%8F%90%E7%A4%BA%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">法律与合规风险提示（重要）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E4%B8%AD%E5%9B%BD%E5%A2%83%E5%86%85%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E6%B3%95%E5%BE%8B%E9%A3%8E%E9%99%A9%E8%AF%B4%E6%98%8E"><span class="toc-number">10.1.</span> <span class="toc-text">13. 中国境内科学上网的法律风险说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E4%BD%BF%E7%94%A8%E9%A3%8E%E9%99%A9"><span class="toc-number">10.2.</span> <span class="toc-text">14. 如何降低使用风险</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.</span> <span class="toc-text">总结与建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E6%A0%B9%E6%8D%AE%E9%9C%80%E6%B1%82%E9%80%89%E6%8B%A9%E6%9C%80%E5%90%88%E9%80%82%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">11.1.</span> <span class="toc-text">15. 根据需求选择最合适的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E7%AD%94%EF%BC%88FAQ%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">常见问答（FAQ）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%88%91%E2%80%9C%E8%BF%9E%E4%B8%8A%E4%BA%86%E2%80%9D%EF%BC%8C%E4%BD%86%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%98%E6%98%AF%E6%89%93%E4%B8%8D%E5%BC%80%E7%BD%91%E9%A1%B5-%E5%8F%AA%E6%9C%89%E9%83%A8%E5%88%86%E8%BD%AF%E4%BB%B6%E8%83%BD%E7%94%A8%EF%BC%9F"><span class="toc-number">12.1.</span> <span class="toc-text">1. 我“连上了”，但浏览器还是打不开网页 &#x2F; 只有部分软件能用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%A2%E9%98%85%E5%AF%BC%E5%85%A5%E5%90%8E%E6%B2%A1%E8%8A%82%E7%82%B9-%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="toc-number">12.2.</span> <span class="toc-text">2. 订阅导入后没节点 &#x2F; 更新失败怎么办？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ChatGPT-Claude-%E6%8F%90%E7%A4%BA-403%E3%80%81%E5%9C%B0%E5%8C%BA%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%88%96%E9%AA%8C%E8%AF%81%E7%A0%81%E9%A2%91%E7%B9%81%EF%BC%9F"><span class="toc-number">12.3.</span> <span class="toc-text">3. ChatGPT&#x2F;Claude 提示 403、地区不可用或验证码频繁？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%80%9F%E5%BA%A6%E6%85%A2%E3%80%81%E6%99%9A%E9%AB%98%E5%B3%B0%E5%8D%A1%E9%A1%BF%E6%80%8E%E4%B9%88%E6%94%B9%E5%96%84%EF%BC%9F"><span class="toc-number">12.4.</span> <span class="toc-text">4. 速度慢、晚高峰卡顿怎么改善？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-iOS-%E7%94%A8%E4%BB%80%E4%B9%88%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9F"><span class="toc-number">12.5.</span> <span class="toc-text">5. iOS 用什么客户端？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%85%8D%E8%B4%B9%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%B7%A5%E5%85%B7%E8%83%BD%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">12.6.</span> <span class="toc-text">6. 免费科学上网工具能用吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%8C%90-%E5%9B%BD%E5%A4%96%E5%B8%B8%E7%94%A8%E7%BD%91%E7%AB%99%E5%AF%BC%E8%88%AA"><span class="toc-number">13.</span> <span class="toc-text">🌐 国外常用网站导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E"><span class="toc-number">13.1.</span> <span class="toc-text">🔍 搜索引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%BA-%E8%A7%86%E9%A2%91%E4%B8%8E%E6%B5%81%E5%AA%92%E4%BD%93"><span class="toc-number">13.2.</span> <span class="toc-text">📺 视频与流媒体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%AC-%E7%A4%BE%E4%BA%A4%E4%B8%8E%E7%A4%BE%E5%8C%BA"><span class="toc-number">13.3.</span> <span class="toc-text">💬 社交与社区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%9A-%E5%AD%A6%E6%9C%AF%E4%B8%8E%E5%B7%A5%E5%85%B7"><span class="toc-number">13.4.</span> <span class="toc-text">📚 学术与工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%BB-%E5%BC%80%E5%8F%91%E8%80%85%E4%B8%8E%E6%96%87%E6%A1%A3"><span class="toc-number">13.5.</span> <span class="toc-text">💻 开发者与文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A4%96-AI-%E4%B8%8E%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7"><span class="toc-number">13.6.</span> <span class="toc-text">🤖 AI 与生产力工具</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-12-22</div>
+        <a href="/VPN2026/"><div class="recent-posts-item-content">2026 保姆级科学上网/魔法上网教程：Clash机场 / VPN / 自建 VPS 全面解析</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-12-10</div>
+        <a href="/VPN-HELP/"><div class="recent-posts-item-content">2026最新科学上网教程：Clash/Spectre/Trojan等翻墙工具全指南</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-11-27</div>
+        <a href="/Seata/"><div class="recent-posts-item-content">Seata分布式事务详解（入门级教程）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2025
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
