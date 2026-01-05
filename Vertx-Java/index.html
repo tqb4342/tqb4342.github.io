@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.webp">
+  <title>从小白到高手，你需要理解同步与异步（ Vert.x 与 Java 对比）&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="从小白到高手，你需要理解同步与异步（ Vert.x 与 Java 对比）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Vertx-Java/index.html">
+  
+  
+  <meta property="og:img" content="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/hero.png">
+  
+  
+  <meta property="description" content="编程中同步与异步的核心区别及 Vert.x 与 Java 对比">
+  
+  <meta property="keywords" content="Vert.x,Java">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-01-05">
+  <meta property="og:article:modified_time" content="2026-01-05">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="Vertx">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Vertx-Java/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    领红包
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/hero.png" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/hero.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      从小白到高手，你需要理解同步与异步（ Vert.x 与 Java 对比）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-01-05T07:23:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-01-05</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/Java/" class="post-meta-link">Java</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Vertx-Java/" class="leancloud_visitors" data-flag-title="从小白到高手，你需要理解同步与异步（ Vert.x 与 Java 对比）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Vertx/" class="post-meta-link">Vertx</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="编程中同步与异步的核心区别及 Vert.x 与 Java 对比">
+  
+  <meta name="keywords" content="Vert.x,Java">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h3 id="一、异步与同步核心定义（生活化类比）"><a href="#一、异步与同步核心定义（生活化类比）" class="headerlink" title="一、异步与同步核心定义（生活化类比）"></a>一、异步与同步核心定义（生活化类比）</h3><p>先通过「餐厅点餐」这个场景理解核心区别，这是新手最易接受的方式：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>核心特征（生活例子）</th>
+<th>编程中的对应逻辑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同步（同步）</td>
+<td>点餐后站在柜台<strong>等餐</strong>，直到拿到餐才能做其他事（期间啥也干不了）</td>
+<td>代码按顺序执行，前一个任务没完成，后一个任务<strong>阻塞等待</strong>，线程被占用直到任务结束</td>
+</tr>
+<tr>
+<td>异步（异步）</td>
+<td>点餐后拿取餐号，去旁边玩手机/聊天（做其他事），餐好了服务员喊号再取</td>
+<td>发起任务后，代码继续执行后续逻辑，任务在<strong>后台完成</strong>，完成后通过「回调/通知」处理结果，线程不阻塞</td>
+</tr>
+</tbody></table>
+<h3 id="二、编程场景举例（HTTP-服务器对比）"><a href="#二、编程场景举例（HTTP-服务器对比）" class="headerlink" title="二、编程场景举例（HTTP 服务器对比）"></a>二、编程场景举例（HTTP 服务器对比）</h3><p> Vert.x 异步代码对比传统同步 HTTP 服务器，能最直观看到差异：</p>
+<h4 id="场景：实现一个监听-8888-端口的-HTTP-服务器，处理-name-xxx-请求并返回响应"><a href="#场景：实现一个监听-8888-端口的-HTTP-服务器，处理-name-xxx-请求并返回响应" class="headerlink" title="场景：实现一个监听 8888 端口的 HTTP 服务器，处理 ?name=xxx 请求并返回响应"></a>场景：实现一个监听 8888 端口的 HTTP 服务器，处理 <code>?name=xxx</code> 请求并返回响应</h4><hr>
+<h5 id="示例-1：同步代码（传统-Java-ServerSocket）"><a href="#示例-1：同步代码（传统-Java-ServerSocket）" class="headerlink" title="示例 1：同步代码（传统 Java ServerSocket）"></a>示例 1：同步代码（传统 Java ServerSocket）</h5><p>同步模式下，服务器<strong>一次只能处理一个请求</strong>，第二个请求必须等第一个处理完才能被响应（阻塞）：</p>
+<pre class="highlight"><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStreamWriter;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncHttpServer</span> </span>{</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>{</span><br><span class="line">        <span class="comment">// 启动同步服务器，监听8888端口</span></span><br><span class="line">        ServerSocket server = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        System.out.println(<span class="string">"同步HTTP服务器启动在端口：8888"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 死循环等待请求（同步阻塞）</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {</span><br><span class="line">            <span class="comment">// 核心阻塞点1：accept() 会阻塞，直到有客户端连接</span></span><br><span class="line">            Socket socket = server.accept();</span><br><span class="line">            System.out.println(<span class="string">"新客户端连接："</span> + socket.getRemoteSocketAddress());</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 处理这个请求（全程阻塞，直到响应发送完成）</span></span><br><span class="line">            handleRequest(socket);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 同步处理请求（一个请求处理完，才能处理下一个）</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(Socket socket)</span> <span class="keyword">throws</span> IOException </span>{</span><br><span class="line">        <span class="comment">// 核心阻塞点2：读取请求数据，阻塞直到读完</span></span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(socket.getInputStream());</span><br><span class="line">        String requestLine = scanner.nextLine(); <span class="comment">// 读取请求行（如 GET /?name=Francesco HTTP/1.1）</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 解析name参数</span></span><br><span class="line">        String name = <span class="string">"unknown"</span>;</span><br><span class="line">        <span class="keyword">if</span> (requestLine.contains(<span class="string">"name="</span>)) {</span><br><span class="line">            String[] parts = requestLine.split(<span class="string">"name="</span>);</span><br><span class="line">            name = parts[<span class="number">1</span>].split(<span class="string">" "</span>)[<span class="number">0</span>]; <span class="comment">// 截取name的值</span></span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟「耗时操作」（比如数据库查询）—— 同步模式下，整个服务器会卡住</span></span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            Thread.sleep(<span class="number">3000</span>); <span class="comment">// 阻塞3秒，期间服务器无法处理任何新请求</span></span><br><span class="line">        } <span class="keyword">catch</span> (InterruptedException e) {</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 核心阻塞点3：发送响应，阻塞直到发送完成</span></span><br><span class="line">        BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(socket.getOutputStream()));</span><br><span class="line">        writer.write(<span class="string">"HTTP/1.1 200 OK\r\n"</span>);</span><br><span class="line">        writer.write(<span class="string">"Content-Type: application/json\r\n\r\n"</span>);</span><br><span class="line">        writer.write(<span class="string">"{\"name\":\""</span> + name + <span class="string">"\",\"message\":\"Hello "</span> + name + <span class="string">"\"}"</span>);</span><br><span class="line">        writer.flush();</span><br><span class="line">        writer.close();</span><br><span class="line">        socket.close(); <span class="comment">// 关闭连接</span></span><br><span class="line">        System.out.println(<span class="string">"请求处理完成，释放连接"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre>
+
+<p><strong>同步代码的问题</strong>：</p>
+<ul>
+<li><p>你打开 2 个浏览器标签页访问 <code>http://localhost:8888?name=A</code> 和 <code>http://localhost:8888?name=B</code>，第二个请求会<strong>等待3秒（第一个请求的sleep时间）</strong> 才开始处理；</p>
+</li>
+<li><p>线程全程被占用，一个线程只能处理一个请求，高并发下会瞬间耗尽服务器线程资源。</p>
+</li>
+</ul>
+<hr>
+<h5 id="示例-2：异步代码（你之前写的-Vert-x-版本）"><a href="#示例-2：异步代码（你之前写的-Vert-x-版本）" class="headerlink" title="示例 2：异步代码（你之前写的 Vert.x 版本）"></a>示例 2：异步代码（你之前写的 Vert.x 版本）</h5><p>异步模式下，服务器<strong>无需等待请求处理完成</strong>，一个线程就能处理成百上千个请求（非阻塞）：</p>
+<pre class="highlight"><span class="line"></span><br><span class="line"><span class="keyword">import</span> io.vertx.core.Future;</span><br><span class="line"><span class="keyword">import</span> io.vertx.core.Vertx;</span><br><span class="line"><span class="keyword">import</span> io.vertx.core.json.JsonObject;</span><br><span class="line"><span class="keyword">import</span> io.vertx.ext.web.Router;</span><br><span class="line"><span class="keyword">import</span> io.vertx.ext.web.RoutingContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncHttpServer</span> </span>{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Vertx vertx = Vertx.vertx();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Future&lt;?&gt; start() {</span><br><span class="line">        Router router = Router.router(vertx);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 异步处理所有请求（非阻塞）</span></span><br><span class="line">        router.route().handler(<span class="keyword">this</span>::handleRequestAsync);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 异步启动服务器，监听8888端口</span></span><br><span class="line">        <span class="keyword">return</span> vertx.createHttpServer()</span><br><span class="line">                .requestHandler(router)</span><br><span class="line">                .listen(<span class="number">8888</span>)</span><br><span class="line">                .onSuccess(server -&gt; System.out.println(<span class="string">"异步HTTP服务器启动在端口："</span> + server.actualPort()))</span><br><span class="line">                .onFailure(throwable -&gt; throwable.printStackTrace());</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 异步处理请求（无阻塞）</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleRequestAsync</span><span class="params">(RoutingContext context)</span> </span>{</span><br><span class="line">        <span class="comment">// 获取name参数（非阻塞操作）</span></span><br><span class="line">        String name = context.queryParams().getOrDefault(<span class="string">"name"</span>, <span class="string">"unknown"</span>);</span><br><span class="line">        String address = context.request().connection().remoteAddress().toString();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模拟「耗时操作」（比如数据库查询）—— 异步执行，不阻塞事件循环</span></span><br><span class="line">        vertx.setTimer(<span class="number">3000</span>, id -&gt; { <span class="comment">// 3秒后执行回调，期间线程可处理其他请求</span></span><br><span class="line">            <span class="comment">// 异步返回响应</span></span><br><span class="line">            context.json(<span class="keyword">new</span> JsonObject()</span><br><span class="line">                    .put(<span class="string">"name"</span>, name)</span><br><span class="line">                    .put(<span class="string">"address"</span>, address)</span><br><span class="line">                    .put(<span class="string">"message"</span>, <span class="string">"Hello "</span> + name + <span class="string">" connected from "</span> + address));</span><br><span class="line">        });</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line">        <span class="keyword">new</span> AsyncHttpServer().start();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre>
+
+<p><strong>异步代码的优势</strong>：</p>
+<ul>
+<li><p>你打开 10 个浏览器标签页访问 <code>http://localhost:8888?name=xxx</code>，所有请求会<strong>同时被接收</strong>，3 秒后<strong>同时返回响应</strong>；</p>
+</li>
+<li><p>处理耗时操作（<code>vertx.setTimer</code> 模拟）时，线程不会被阻塞，而是去处理其他请求，直到耗时操作完成后，通过「回调（timer的lambda）」返回响应。</p>
+</li>
+</ul>
+<h3 id="三、同步-vs-异步-核心区别总结"><a href="#三、同步-vs-异步-核心区别总结" class="headerlink" title="三、同步 vs 异步 核心区别总结"></a>三、同步 vs 异步 核心区别总结</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>同步（Sync）</th>
+<th>异步（Async）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>执行顺序</td>
+<td>代码按「从上到下」顺序执行，前一个任务没完成，后一个不执行</td>
+<td>发起任务后，代码继续执行后续逻辑，任务后台运行，完成后回调处理</td>
+</tr>
+<tr>
+<td>线程状态</td>
+<td>任务执行期间，线程<strong>阻塞等待</strong>（闲置但占用资源）</td>
+<td>任务执行期间，线程<strong>非阻塞</strong>（可处理其他任务，资源利用率高）</td>
+</tr>
+<tr>
+<td>资源消耗</td>
+<td>高（一个请求占用一个线程，高并发下线程耗尽）</td>
+<td>低（少量线程处理大量请求，如 Vert.x 用 4-8 个线程就能支撑万级并发）</td>
+</tr>
+<tr>
+<td>编程复杂度</td>
+<td>低（逻辑线性，易理解）</td>
+<td>稍高（需处理回调/异步结果，Vert.x 已封装得很友好）</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>简单场景、低并发、耗时短的操作（如本地文件读取、简单计算）</td>
+<td>高并发、耗时操作（如 HTTP 服务器、数据库查询、网络请求）</td>
+</tr>
+</tbody></table>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li><p><strong>核心差异</strong>：同步是「阻塞等待」，异步是「非阻塞+回调通知」，核心是线程是否被闲置占用；</p>
+</li>
+<li><p><strong>资源利用</strong>：异步用少量线程处理大量任务，适合高并发（如你的 Vert.x 服务器）；同步逻辑简单，但高并发下性能差；</p>
+</li>
+<li><p><strong>实战选择</strong>：简单工具/低并发场景用同步（易开发），后端接口/高并发服务用异步（如 Vert.x、Netty、Spring WebFlux）。</p>
+</li>
+</ol>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Vertx-Java/">https://tanqingbo.cn/Vertx-Java/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/2025年终总结/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2025年终总结 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%90%8C%E6%AD%A5%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89%EF%BC%88%E7%94%9F%E6%B4%BB%E5%8C%96%E7%B1%BB%E6%AF%94%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、异步与同步核心定义（生活化类比）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E7%A8%8B%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B%EF%BC%88HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、编程场景举例（HTTP 服务器对比）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%9B%91%E5%90%AC-8888-%E7%AB%AF%E5%8F%A3%E7%9A%84-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%A4%84%E7%90%86-name-xxx-%E8%AF%B7%E6%B1%82%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%93%8D%E5%BA%94"><span class="toc-number">2.1.</span> <span class="toc-text">场景：实现一个监听 8888 端口的 HTTP 服务器，处理 ?name&#x3D;xxx 请求并返回响应</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E4%BC%A0%E7%BB%9F-Java-ServerSocket%EF%BC%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">示例 1：同步代码（传统 Java ServerSocket）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A%E5%BC%82%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E4%BD%A0%E4%B9%8B%E5%89%8D%E5%86%99%E7%9A%84-Vert-x-%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">示例 2：异步代码（你之前写的 Vert.x 版本）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%90%8C%E6%AD%A5-vs-%E5%BC%82%E6%AD%A5-%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">三、同步 vs 异步 核心区别总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>323</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>120</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%90%8C%E6%AD%A5%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89%EF%BC%88%E7%94%9F%E6%B4%BB%E5%8C%96%E7%B1%BB%E6%AF%94%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、异步与同步核心定义（生活化类比）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E7%A8%8B%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B%EF%BC%88HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、编程场景举例（HTTP 服务器对比）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%9B%91%E5%90%AC-8888-%E7%AB%AF%E5%8F%A3%E7%9A%84-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%A4%84%E7%90%86-name-xxx-%E8%AF%B7%E6%B1%82%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%93%8D%E5%BA%94"><span class="toc-number">2.1.</span> <span class="toc-text">场景：实现一个监听 8888 端口的 HTTP 服务器，处理 ?name&#x3D;xxx 请求并返回响应</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E4%BC%A0%E7%BB%9F-Java-ServerSocket%EF%BC%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">示例 1：同步代码（传统 Java ServerSocket）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A%E5%BC%82%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E4%BD%A0%E4%B9%8B%E5%89%8D%E5%86%99%E7%9A%84-Vert-x-%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">示例 2：异步代码（你之前写的 Vert.x 版本）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%90%8C%E6%AD%A5-vs-%E5%BC%82%E6%AD%A5-%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">三、同步 vs 异步 核心区别总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">83</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">32</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\内推" title="内推"><div class="tags-list-item">内推</div></a>
+    
+    <a href="\tags\Keras" title="Keras"><div class="tags-list-item">Keras</div></a>
+    
+    <a href="\tags\树" title="树"><div class="tags-list-item">树</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/hb.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">支付宝大额红包来啦</div>
+        <small style="font-size: 0.9em;">
+            →「大额红包」最高99元<br>
+            →「购物立减」无门槛用<br>
+            →「1 秒到账」消费立减<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/about/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">支付宝扫一扫，立得现金红包</a>
+    <br>
+    <div style="height: 8px;"></div>
+    无套路直接花，奶茶、打车、购物全能用，快冲！
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_self"><img src="/img/vpn.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%82%E6%AD%A5%E4%B8%8E%E5%90%8C%E6%AD%A5%E6%A0%B8%E5%BF%83%E5%AE%9A%E4%B9%89%EF%BC%88%E7%94%9F%E6%B4%BB%E5%8C%96%E7%B1%BB%E6%AF%94%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、异步与同步核心定义（生活化类比）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%BC%96%E7%A8%8B%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B%EF%BC%88HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、编程场景举例（HTTP 服务器对比）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%9B%91%E5%90%AC-8888-%E7%AB%AF%E5%8F%A3%E7%9A%84-HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%A4%84%E7%90%86-name-xxx-%E8%AF%B7%E6%B1%82%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%93%8D%E5%BA%94"><span class="toc-number">2.1.</span> <span class="toc-text">场景：实现一个监听 8888 端口的 HTTP 服务器，处理 ?name&#x3D;xxx 请求并返回响应</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1%EF%BC%9A%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E4%BC%A0%E7%BB%9F-Java-ServerSocket%EF%BC%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">示例 1：同步代码（传统 Java ServerSocket）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-2%EF%BC%9A%E5%BC%82%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E4%BD%A0%E4%B9%8B%E5%89%8D%E5%86%99%E7%9A%84-Vert-x-%E7%89%88%E6%9C%AC%EF%BC%89"><span class="toc-number">2.1.2.</span> <span class="toc-text">示例 2：异步代码（你之前写的 Vert.x 版本）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%90%8C%E6%AD%A5-vs-%E5%BC%82%E6%AD%A5-%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">三、同步 vs 异步 核心区别总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-01-05</div>
+        <a href="/Vertx-Java/"><div class="recent-posts-item-content">从小白到高手，你需要理解同步与异步（ Vert.x 与 Java 对比）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-01-04</div>
+        <a href="/2025年终总结/"><div class="recent-posts-item-content">2025年终总结</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2025-12-22</div>
+        <a href="/VPN2026/"><div class="recent-posts-item-content">2026 保姆级科学上网/魔法上网教程：Clash机场 / VPN / 自建 VPS 全面解析</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
