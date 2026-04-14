@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.webp">
+  <title>2026 Clash 机场各种协议差别介绍与选择指南（Vmess / Vless / Trojan / Reality / Hysteria）&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="2026 Clash 机场各种协议差别介绍与选择指南（Vmess / Vless / Trojan / Reality / Hysteria）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/protocols/index.html">
+  
+  
+  <meta property="og:img" content="https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png">
+  
+  
+  <meta property="description" content="2026 Clash 机场各种协议差别介绍与选择指南">
+  
+  <meta property="keywords" content="科学上网,科技上网,VPN,翻墙软件,VPN工具,程序员VPN,梯子工具,电脑翻墙,Windows翻墙">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-04-14">
+  <meta property="og:article:modified_time" content="2026-04-14">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/protocols/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png" data-src="https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      2026 Clash 机场各种协议差别介绍与选择指南（Vmess / Vless / Trojan / Reality / Hysteria）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-04-14T08:14:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-04-14</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/protocols/" class="leancloud_visitors" data-flag-title="2026 Clash 机场各种协议差别介绍与选择指南（Vmess / Vless / Trojan / Reality / Hysteria）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  
+
+
+		
+  
+  <meta name="description" content="2026 Clash 机场各种协议差别介绍与选择指南">
+  
+  <meta name="keywords" content="科学上网,科技上网,VPN,翻墙软件,VPN工具,程序员VPN,梯子工具,电脑翻墙,Windows翻墙">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h2 id="Clash-介绍"><a href="#Clash-介绍" class="headerlink" title="Clash 介绍"></a>Clash 介绍</h2><p>Clash 是一款跨平台的规则化网络代理客户端，主要用于科学上网、网络调试、流量转发等目的。它采用 YAML 格式进行配置，支持多种代理协议，并通过灵活的规则系统实现自动选择最佳节点。Clash 的设计理念强调高可扩展性和稳定性，深受高级用户与开发者欢迎。</p>
+<h3 id="Clash-的应用场景"><a href="#Clash-的应用场景" class="headerlink" title="Clash 的应用场景"></a>Clash 的应用场景</h3><ul>
+<li>科学上网突破网络封锁</li>
+<li>网站加速与内容解锁</li>
+<li>国际数据传输优化</li>
+<li>多节点选择与负载均衡</li>
+<li>网络请求调试</li>
+</ul>
+<h2 id="Clash-支持的协议概览（总览图先看这里）"><a href="#Clash-支持的协议概览（总览图先看这里）" class="headerlink" title="Clash 支持的协议概览（总览图先看这里）"></a>Clash 支持的协议概览（总览图先看这里）</h2><p>Clash 支持众多主流代理协议，使其可以适配不同类型的机场服务与传输需求。常见协议包括：</p>
+<ul>
+<li>Vmess（V2Ray 核心协议）</li>
+<li>Vless（更轻量的无状态版本）</li>
+<li>Shadowsocks（SS）</li>
+<li>ShadowsocksR（SSR）</li>
+<li>Trojan</li>
+<li>SOCKS5</li>
+<li>HTTP(S) 代理</li>
+<li>Hysteria / TUIC（基于 UDP 的高性能协议）</li>
+<li>Reality（新一代伪装式抗审查协议）</li>
+</ul>
+<h3 id="协议对比简表（基础）"><a href="#协议对比简表（基础）" class="headerlink" title="协议对比简表（基础）"></a>协议对比简表（基础）</h3><table>
+<thead>
+<tr>
+<th>协议</th>
+<th>加密机制</th>
+<th>伪装能力</th>
+<th>UDP支持</th>
+<th>隐蔽性</th>
+<th>安全性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vmess</td>
+<td>有</td>
+<td>中</td>
+<td>支持</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>Vless</td>
+<td>无（需TLS）</td>
+<td>强</td>
+<td>支持</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>Shadowsocks</td>
+<td>有</td>
+<td>弱</td>
+<td>支持</td>
+<td>中</td>
+<td>中</td>
+</tr>
+<tr>
+<td>Trojan</td>
+<td>TLS</td>
+<td>强</td>
+<td>支持</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>Hysteria</td>
+<td>QUIC+UDP</td>
+<td>中</td>
+<td>强</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>Reality</td>
+<td>TLS+X25519</td>
+<td>极强</td>
+<td>支持</td>
+<td>极高</td>
+<td>极高</td>
+</tr>
+</tbody></table>
+<h2 id="Vmess"><a href="#Vmess" class="headerlink" title="Vmess"></a>Vmess</h2><p>Vmess 是 V2Ray 项目的核心协议之一，具备加密传输、身份验证等功能，广泛应用于中高端机场服务中。</p>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><ul>
+<li>客户端与服务端建立连接后，通过动态生成的加密信息进行身份验证。</li>
+<li>支持多种传输方式：TCP、mKCP、WebSocket、HTTP/2、QUIC 等。</li>
+<li>默认启用 AES-128-GCM 或 ChaCha20 加密算法。</li>
+</ul>
+<h3 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h3><p>Vmess 具备中等至高等级的安全性，避免明文传输并且内置时间戳机制以防止重放攻击。但相较于后起的 Vless 与 Reality，在伪装能力上略逊一筹。</p>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p><strong>优点：</strong></p>
+<ul>
+<li>加密算法内建，配置简单。</li>
+<li>与 V2Ray 完美兼容，部署广泛。</li>
+<li>支持多种传输方式与混淆手段。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>易被主动探测识别（在无 TLS 伪装时）。</li>
+<li>配置更新缓慢，依赖 V2Ray 核心升级。</li>
+</ul>
+<h2 id="Vless"><a href="#Vless" class="headerlink" title="Vless"></a>Vless</h2><p>Vless 是 V2Ray 项目对 Vmess 协议的轻量替代版本，采用无状态设计，并不包含加密层，必须结合 TLS 或 XTLS 实现安全传输。</p>
+<h3 id="特性与改进"><a href="#特性与改进" class="headerlink" title="特性与改进"></a>特性与改进</h3><ul>
+<li>移除了加密逻辑，完全依赖外部加密（如 TLS）。</li>
+<li>减少客户端和服务器之间的数据交互负担。</li>
+<li>支持 XTLS，为绕过防火墙提供更高隐蔽性。</li>
+</ul>
+<h3 id="Vless-与-Vmess-的差异"><a href="#Vless-与-Vmess-的差异" class="headerlink" title="Vless 与 Vmess 的差异"></a>Vless 与 Vmess 的差异</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Vmess</th>
+<th>Vless</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是否加密</td>
+<td>是</td>
+<td>否（需TLS）</td>
+</tr>
+<tr>
+<td>状态机制</td>
+<td>有状态</td>
+<td>无状态</td>
+</tr>
+<tr>
+<td>伪装能力</td>
+<td>中</td>
+<td>强</td>
+</tr>
+<tr>
+<td>TLS/XTLS支持</td>
+<td>支持</td>
+<td>强制</td>
+</tr>
+<tr>
+<td>性能优化</td>
+<td>一般</td>
+<td>更优</td>
+</tr>
+</tbody></table>
+<h3 id="TLS-与-XTLS-的优势"><a href="#TLS-与-XTLS-的优势" class="headerlink" title="TLS 与 XTLS 的优势"></a>TLS 与 XTLS 的优势</h3><ul>
+<li><strong>TLS</strong>：通用加密传输标准，可结合 CDN 进行伪装，适合 Web 环境中传输。</li>
+<li><strong>XTLS</strong>：专为代理协议设计的扩展传输层，具备低延迟、高隐蔽、低功耗等优势，适合高性能节点使用。</li>
+</ul>
+<hr>
+<h2 id="Shadowsocks-SS"><a href="#Shadowsocks-SS" class="headerlink" title="Shadowsocks (SS)"></a>Shadowsocks (SS)</h2><p>Shadowsocks 是一款轻量级、高性能的加密代理协议，最早由中国开发者 clowwindy 创建，旨在突破网络审查和屏蔽。</p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><ul>
+<li>使用 SOCKS5 代理协议接口。</li>
+<li>客户端将请求通过加密算法发送至服务端，服务端解密并转发请求。</li>
+<li>双向通信均加密，避免明文泄露。</li>
+</ul>
+<h3 id="加密算法选择"><a href="#加密算法选择" class="headerlink" title="加密算法选择"></a>加密算法选择</h3><p>Shadowsocks 支持多种对称加密算法，包括：</p>
+<ul>
+<li>AES-256-GCM</li>
+<li>ChaCha20-IETF-Poly1305</li>
+<li>AES-128-GCM</li>
+</ul>
+<p>推荐使用 GCM 或 Poly1305 类别算法，以获得更高安全性和性能。</p>
+<h3 id="SS-与-Vmess-Vless-对比"><a href="#SS-与-Vmess-Vless-对比" class="headerlink" title="SS 与 Vmess/Vless 对比"></a>SS 与 Vmess/Vless 对比</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Shadowsocks</th>
+<th>Vmess</th>
+<th>Vless</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加密机制</td>
+<td>客户端自选</td>
+<td>内建</td>
+<td>外部依赖</td>
+</tr>
+<tr>
+<td>隐蔽性</td>
+<td>较弱</td>
+<td>中</td>
+<td>强</td>
+</tr>
+<tr>
+<td>协议扩展性</td>
+<td>差</td>
+<td>强</td>
+<td>强</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>高</td>
+<td>中</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<p><strong>优点：</strong></p>
+<ul>
+<li>简洁、轻量、易于部署。</li>
+<li>广泛兼容客户端、平台和路由器。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>缺乏高级伪装能力，容易被审查识别。</li>
+<li>不支持多路复用和动态节点切换。</li>
+</ul>
+<h2 id="ShadowsocksR-SSR"><a href="#ShadowsocksR-SSR" class="headerlink" title="ShadowsocksR (SSR)"></a>ShadowsocksR (SSR)</h2><p>ShadowsocksR 是 Shadowsocks 的非官方增强版本，由 BreakWa11 开发，加入了多项混淆机制和协议扩展，目的是增强抗封锁能力。</p>
+<h3 id="SSR-的特点"><a href="#SSR-的特点" class="headerlink" title="SSR 的特点"></a>SSR 的特点</h3><ul>
+<li>支持多种协议混淆（如 <code>auth_sha1_v4</code>, <code>http_simple</code>）。</li>
+<li>支持混淆插件与流量分流。</li>
+<li>对不同流量特征进行模拟，降低被探测风险。</li>
+</ul>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul>
+<li>高封锁环境（如中国大陆）中绕过 GFW。</li>
+<li>与 CDN、TLS 伪装结合效果更佳。</li>
+<li>多为私有协议，不建议用于公共环境。</li>
+</ul>
+<p><strong>注意</strong>：由于 SSR 属于非主流协议，已基本停止更新，新机场和客户端逐步弃用。</p>
+<h2 id="Trojan"><a href="#Trojan" class="headerlink" title="Trojan"></a>Trojan</h2><p>Trojan 是一种基于 TLS 加密层的代理协议，设计理念是“不可识别”，即让代理流量看起来像普通 HTTPS 流量，最大程度避免被 DPI（深度包检测）识别。</p>
+<h3 id="工作机制"><a href="#工作机制" class="headerlink" title="工作机制"></a>工作机制</h3><ul>
+<li>Trojan 基于 TLS 1.3 建立连接。</li>
+<li>使用域名证书伪装为普通 HTTPS 网站（如 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.google.com)./">www.google.com）。</a></li>
+<li>流量高度混淆，适合 CDN 中转与前置伪装。</li>
+</ul>
+<h3 id="安全性分析-1"><a href="#安全性分析-1" class="headerlink" title="安全性分析"></a>安全性分析</h3><ul>
+<li>完整依赖 TLS 加密，具备高安全等级。</li>
+<li>可集成 Let’s Encrypt 免费证书，易于部署。</li>
+<li>几乎无法通过特征识别进行封锁（只要配置合理）。</li>
+</ul>
+<h3 id="Trojan-与-Vless-的差异"><a href="#Trojan-与-Vless-的差异" class="headerlink" title="Trojan 与 Vless 的差异"></a>Trojan 与 Vless 的差异</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Trojan</th>
+<th>Vless</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TLS伪装</td>
+<td>必须</td>
+<td>可选</td>
+</tr>
+<tr>
+<td>支持CDN</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>加密层</td>
+<td>原生TLS</td>
+<td>依赖外部</td>
+</tr>
+<tr>
+<td>性能</td>
+<td>高</td>
+<td>更高（XTLS）</td>
+</tr>
+<tr>
+<td>易部署性</td>
+<td>中</td>
+<td>一般</td>
+</tr>
+</tbody></table>
+<p><strong>优点：</strong></p>
+<ul>
+<li>安全性极高，天然伪装 HTTPS。</li>
+<li>可与主流 Web 服务器共存（如 Nginx）。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>对服务器 TLS 配置要求较高。</li>
+<li>初学者配置门槛较大。</li>
+</ul>
+<h2 id="HTTP-HTTPS-Proxy"><a href="#HTTP-HTTPS-Proxy" class="headerlink" title="HTTP/HTTPS Proxy"></a>HTTP/HTTPS Proxy</h2><p>传统的 HTTP/HTTPS 代理是一种较为古老的代理协议形式，主要用于 Web 请求代理传输。</p>
+<h3 id="HTTP-代理介绍"><a href="#HTTP-代理介绍" class="headerlink" title="HTTP 代理介绍"></a>HTTP 代理介绍</h3><ul>
+<li>仅支持 TCP 连接（主要为 Web 请求）。</li>
+<li>不支持 UDP、流媒体、游戏等需求。</li>
+<li>安全性较低，容易被监控与识别。</li>
+</ul>
+<h3 id="HTTPS-代理介绍"><a href="#HTTPS-代理介绍" class="headerlink" title="HTTPS 代理介绍"></a>HTTPS 代理介绍</h3><ul>
+<li>增加 TLS 加密层，数据安全性稍强。</li>
+<li>部分客户端支持 CONNECT 方法穿透 TLS。</li>
+</ul>
+<h3 id="与现代代理协议的对比"><a href="#与现代代理协议的对比" class="headerlink" title="与现代代理协议的对比"></a>与现代代理协议的对比</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>HTTP/HTTPS Proxy</th>
+<th>Vmess/Vless/Trojan</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加密支持</td>
+<td>仅 HTTPS</td>
+<td>原生或外接支持</td>
+</tr>
+<tr>
+<td>UDP支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>伪装能力</td>
+<td>弱</td>
+<td>强</td>
+</tr>
+<tr>
+<td>易识别性</td>
+<td>高</td>
+<td>低</td>
+</tr>
+</tbody></table>
+<p><strong>优点：</strong></p>
+<ul>
+<li>配置简易，客户端原生支持。</li>
+<li>在企业、校园网中可短期应急使用。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>缺乏安全与隐蔽性。</li>
+<li>不适合长期科学上网使用。</li>
+</ul>
+<hr>
+<h2 id="SOCKS5"><a href="#SOCKS5" class="headerlink" title="SOCKS5"></a>SOCKS5</h2><p>SOCKS5 是一种通用型代理协议，最初由 NEC 开发，用于客户端与服务器之间转发任意协议的网络请求。</p>
+<h3 id="工作机制-1"><a href="#工作机制-1" class="headerlink" title="工作机制"></a>工作机制</h3><ul>
+<li>支持 TCP 和 UDP 流量。</li>
+<li>不对流量进行加密，仅做数据转发。</li>
+<li>可实现基于用户名与密码的简单认证。</li>
+</ul>
+<h3 id="应用场景与限制"><a href="#应用场景与限制" class="headerlink" title="应用场景与限制"></a>应用场景与限制</h3><ul>
+<li><p><strong>优点：</strong></p>
+<ul>
+<li>协议简单、兼容性高。</li>
+<li>原生支持浏览器与多种客户端。</li>
+<li>支持 UDP（如 DNS、游戏）转发。</li>
+</ul>
+</li>
+<li><p><strong>缺点：</strong></p>
+<ul>
+<li>无加密与伪装机制，易被识别。</li>
+<li>不适合公共网络环境中使用。</li>
+<li>安全性完全取决于传输链路。</li>
+</ul>
+</li>
+</ul>
+<p>适用于本地转发、内网代理、中继链构建等需求，但不建议单独用于科学上网主通道。</p>
+<h2 id="Reality-Xray协议"><a href="#Reality-Xray协议" class="headerlink" title="Reality (Xray协议)"></a>Reality (Xray协议)</h2><p>Reality 是由 V2Ray 项目的衍生版本 Xray-core 所推出的新一代抗审查代理协议，结合 TLS 1.3 与曲线加密，实现极致伪装与匿名性。</p>
+<h3 id="协议简介"><a href="#协议简介" class="headerlink" title="协议简介"></a>协议简介</h3><ul>
+<li>基于 TLS 1.3 + X25519 + Vision 混淆技术。</li>
+<li>模拟真实的 HTTPS 流量（如模拟 Cloudflare 的访问）。</li>
+<li>使用 Service Name Indication（SNI）与 Server Name 分离实现最大隐蔽性。</li>
+</ul>
+<h3 id="对抗审查能力"><a href="#对抗审查能力" class="headerlink" title="对抗审查能力"></a>对抗审查能力</h3><ul>
+<li>Reality 通过抓包也难以与真实 HTTPS 区分。</li>
+<li>已成为中国大陆等强审查环境中最具前景的协议之一。</li>
+<li>可动态使用公网真实服务器进行“透明代理”。</li>
+</ul>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li>极高隐蔽性与抗干扰性。</li>
+<li>支持 TLS Vision 特征变形。</li>
+<li>可绕过主动探测、深度包检测。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>配置复杂，对服务器要求高。</li>
+<li>客户端需使用兼容 Reality 的 Xray 核心。</li>
+</ul>
+<h2 id="Hysteria"><a href="#Hysteria" class="headerlink" title="Hysteria"></a>Hysteria</h2><p>Hysteria 是一款基于 UDP、专为高延迟网络优化的代理协议。尤其适用于游戏加速、海外远程访问等场景。</p>
+<h3 id="协议特性"><a href="#协议特性" class="headerlink" title="协议特性"></a>协议特性</h3><ul>
+<li>基于 QUIC 协议，内建 UDP 加密支持。</li>
+<li>自动丢包重传与拥塞控制机制。</li>
+<li>默认使用 TLS 进行传输加密。</li>
+</ul>
+<h3 id="性能优势"><a href="#性能优势" class="headerlink" title="性能优势"></a>性能优势</h3><ul>
+<li>极低延迟、抗丢包能力强。</li>
+<li>可自适应流量质量，保持稳定连接。</li>
+<li>在网络波动较大的环境（如移动网络）中表现优越。</li>
+</ul>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li>游戏加速（如 Steam、战网等）。</li>
+<li>跨境视频通话、直播推流。</li>
+<li>对 UDP 需求高的 App（如 WhatsApp、Telegram）。</li>
+</ul>
+<p><strong>注意</strong>：需支持 UDP 的服务器端口，否则无法正常运行。</p>
+<h2 id="TUIC"><a href="#TUIC" class="headerlink" title="TUIC"></a>TUIC</h2><p>TUIC 是近年来新兴的代理协议，主打基于 UDP 的高性能加密传输，被视为 Hysteria 的“竞品”。</p>
+<h3 id="协议概述"><a href="#协议概述" class="headerlink" title="协议概述"></a>协议概述</h3><ul>
+<li>采用 QUIC 协议栈，内建 TLS 加密。</li>
+<li>具备多路复用、0-RTT 建连等先进特性。</li>
+<li>更注重稳定性与安全性。</li>
+</ul>
+<h3 id="Hysteria-vs-TUIC"><a href="#Hysteria-vs-TUIC" class="headerlink" title="Hysteria vs TUIC"></a>Hysteria vs TUIC</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Hysteria</th>
+<th>TUIC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>协议基础</td>
+<td>UDP + TLS</td>
+<td>QUIC + TLS</td>
+</tr>
+<tr>
+<td>多路复用</td>
+<td>支持</td>
+<td>更强</td>
+</tr>
+<tr>
+<td>抗丢包机制</td>
+<td>自动</td>
+<td>更智能</td>
+</tr>
+<tr>
+<td>性能稳定性</td>
+<td>高</td>
+<td>极高</td>
+</tr>
+<tr>
+<td>隐蔽性</td>
+<td>中</td>
+<td>中</td>
+</tr>
+</tbody></table>
+<h3 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h3><ul>
+<li>TUIC 更适合严苛环境下的长时间稳定连接。</li>
+<li>若对传输质量要求极高，建议优先选择 TUIC。</li>
+<li>若需求为低延迟响应，则 Hysteria 依然有优势。</li>
+</ul>
+<hr>
+<h2 id="Clash-配置各类协议"><a href="#Clash-配置各类协议" class="headerlink" title="Clash 配置各类协议"></a>Clash 配置各类协议</h2><p>Clash 使用 YAML 配置文件支持多种协议组合。以下为各类型协议的配置示例与注意事项：</p>
+<h3 id="配置示例：Vmess-节点"><a href="#配置示例：Vmess-节点" class="headerlink" title="配置示例：Vmess 节点"></a>配置示例：Vmess 节点</h3><pre class="highlight"><span class="line"><span class="attr">proxies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"Vmess 节点"</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">vmess</span></span><br><span class="line">    <span class="attr">server:</span> <span class="string">example.com</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">443</span></span><br><span class="line">    <span class="attr">uuid:</span> <span class="string">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></span><br><span class="line">    <span class="attr">alterId:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">cipher:</span> <span class="string">auto</span></span><br><span class="line">    <span class="attr">tls:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">network:</span> <span class="string">ws</span></span><br><span class="line">    <span class="attr">ws-opts:</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">"/ws"</span></span><br><span class="line">      <span class="attr">headers:</span></span><br><span class="line">        <span class="attr">Host:</span> <span class="string">example.com</span></span><br></pre>
+
+<h3 id="配置示例：Vless-XTLS"><a href="#配置示例：Vless-XTLS" class="headerlink" title="配置示例：Vless + XTLS"></a>配置示例：Vless + XTLS</h3><pre class="highlight"><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"Vless XTLS"</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">vless</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">example.com</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">443</span></span><br><span class="line">  <span class="attr">uuid:</span> <span class="string">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></span><br><span class="line">  <span class="attr">flow:</span> <span class="string">xtls-rprx-vision</span></span><br><span class="line">  <span class="attr">tls:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">network:</span> <span class="string">tcp</span></span><br><span class="line">  <span class="attr">servername:</span> <span class="string">example.com</span></span><br></pre>
+
+<h3 id="配置示例：Trojan"><a href="#配置示例：Trojan" class="headerlink" title="配置示例：Trojan"></a>配置示例：Trojan</h3><pre class="highlight"><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"Trojan TLS"</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">trojan</span></span><br><span class="line">  <span class="attr">server:</span> <span class="string">example.com</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">443</span></span><br><span class="line">  <span class="attr">password:</span> <span class="string">"your_password"</span></span><br><span class="line">  <span class="attr">sni:</span> <span class="string">example.com</span></span><br><span class="line">  <span class="attr">skip-cert-verify:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">network:</span> <span class="string">tcp</span></span><br></pre>
+
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><ul>
+<li>Clash Premium 版本才能支持 TUIC、Reality、Hysteria 等新协议。</li>
+<li>某些协议（如 XTLS）不兼容特定客户端，如 Clash Meta。</li>
+<li>注意填写正确的 ServerName 与路径字段，避免 handshake 失败。</li>
+</ul>
+<h2 id="对比总结"><a href="#对比总结" class="headerlink" title="对比总结"></a>对比总结</h2><p>对各协议的综合特性进行整理，便于用户依据自身需求做出选择。</p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>加密</th>
+<th>UDP</th>
+<th>多路复用</th>
+<th>隐蔽性</th>
+<th>安全性</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vmess</td>
+<td>有</td>
+<td>是</td>
+<td>支持</td>
+<td>中</td>
+<td>高</td>
+<td>通用网络代理</td>
+</tr>
+<tr>
+<td>Vless</td>
+<td>无</td>
+<td>是</td>
+<td>支持</td>
+<td>高</td>
+<td>高</td>
+<td>需要伪装、低延迟场景</td>
+</tr>
+<tr>
+<td>Trojan</td>
+<td>TLS</td>
+<td>是</td>
+<td>支持</td>
+<td>高</td>
+<td>高</td>
+<td>高安全HTTPS伪装需求</td>
+</tr>
+<tr>
+<td>SS</td>
+<td>有</td>
+<td>是</td>
+<td>无</td>
+<td>低</td>
+<td>中</td>
+<td>简洁代理、移动设备</td>
+</tr>
+<tr>
+<td>SSR</td>
+<td>有</td>
+<td>是</td>
+<td>无</td>
+<td>中</td>
+<td>中</td>
+<td>高封锁环境绕墙</td>
+</tr>
+<tr>
+<td>Hysteria</td>
+<td>TLS</td>
+<td>是</td>
+<td>支持</td>
+<td>中</td>
+<td>高</td>
+<td>游戏、实时通信</td>
+</tr>
+<tr>
+<td>TUIC</td>
+<td>TLS</td>
+<td>是</td>
+<td>强</td>
+<td>中</td>
+<td>高</td>
+<td>高稳定性传输</td>
+</tr>
+<tr>
+<td>Reality</td>
+<td>TLS</td>
+<td>是</td>
+<td>支持</td>
+<td>极高</td>
+<td>极高</td>
+<td>抗审查、极限伪装</td>
+</tr>
+<tr>
+<td>SOCKS5</td>
+<td>无</td>
+<td>是</td>
+<td>无</td>
+<td>低</td>
+<td>低</td>
+<td>内网、本地中转</td>
+</tr>
+<tr>
+<td>HTTP(S)</td>
+<td>TLS</td>
+<td>否</td>
+<td>无</td>
+<td>低</td>
+<td>低</td>
+<td>临时Web代理</td>
+</tr>
+</tbody></table>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h3 id="协议选择建议"><a href="#协议选择建议" class="headerlink" title="协议选择建议"></a>协议选择建议</h3><ul>
+<li><strong>新手用户</strong>：推荐使用 Trojan + TLS 或 Vless + TLS，兼顾安全与隐蔽。</li>
+<li><strong>老用户/折腾党</strong>：建议尝试 Reality（需 Clash Premium）或 TUIC，拥有最前沿性能。</li>
+<li><strong>游戏加速</strong>：优先选择 Hysteria 或 TUIC，优化 UDP 丢包问题。</li>
+<li><strong>轻量配置</strong>：Shadowsocks 仍具价值，适用于移动设备或路由器。</li>
+</ul>
+<h3 id="后续发展趋势"><a href="#后续发展趋势" class="headerlink" title="后续发展趋势"></a>后续发展趋势</h3><ul>
+<li>Reality 正在快速普及，或将成为主流抗审查协议。</li>
+<li>QUIC/UDP 类协议（如 TUIC、Hysteria）将在流媒体与高性能网络中占据优势。</li>
+<li>Clash 核心与 Meta、Premium 版本的生态逐渐分化，需关注官方兼容性更新。</li>
+</ul>
+<hr>
+<h2 id="FAQs"><a href="#FAQs" class="headerlink" title="FAQs"></a>FAQs</h2><p><strong>1. Clash Premium 与 Clash Meta 有什么区别？</strong><br>Clash Premium 支持更多新协议如 TUIC、Reality、Hysteria，Meta 更侧重快速开发更新，二者配置兼容性略有不同。</p>
+<p><strong>2. 为什么我的 Vless 节点连接失败？</strong><br>检查 servername、UUID、端口是否正确，同时确认 TLS 是否启用，并确保服务器端配置无误。</p>
+<p><strong>3. 哪些协议适合稳定科学上网抗审查？</strong><br>Reality、Trojan、Vless + TLS 都具备较强伪装能力，是目前科学上网主流选择。</p>
+<p><strong>4. Shadowsocks 还能用吗？</strong><br>可以，但在高级审查环境中容易被识别，适合轻度使用或配合插件增强。</p>
+<p><strong>5. Clash 是否支持移动端？</strong><br>是，Clash 有 Clash for Android、Stash (iOS)、Shadowrocket (iOS) 等多款兼容客户端。</p>
+<hr>
+<h2 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h2><ul>
+<li><a href="https://tanqingbo.cn/Win-OpenInternet/">机场推荐榜单 | 2026科学上网指南 </a></li>
+<li><a href="https://tanqingbo.cn/mingci">Clash机场常用名称解释</a></li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/protocols/">https://tanqingbo.cn/protocols/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/route/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Clash 机场线路类型详解：直连 / 中转 / 专线（IPLC / IEPL）区别与选择指南 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/HAND-User-Forum/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">汉得2026用户大会“焕芯砺刃，敏捷致胜”学习心得 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">Clash 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">Clash 的应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E6%94%AF%E6%8C%81%E7%9A%84%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%A7%88%EF%BC%88%E6%80%BB%E8%A7%88%E5%9B%BE%E5%85%88%E7%9C%8B%E8%BF%99%E9%87%8C%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">Clash 支持的协议概览（总览图先看这里）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%AF%B9%E6%AF%94%E7%AE%80%E8%A1%A8%EF%BC%88%E5%9F%BA%E7%A1%80%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">协议对比简表（基础）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vmess"><span class="toc-number">3.</span> <span class="toc-text">Vmess</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.3.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vless"><span class="toc-number">4.</span> <span class="toc-text">Vless</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%80%A7%E4%B8%8E%E6%94%B9%E8%BF%9B"><span class="toc-number">4.1.</span> <span class="toc-text">特性与改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vless-%E4%B8%8E-Vmess-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">4.2.</span> <span class="toc-text">Vless 与 Vmess 的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-%E4%B8%8E-XTLS-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.3.</span> <span class="toc-text">TLS 与 XTLS 的优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shadowsocks-SS"><span class="toc-number">5.</span> <span class="toc-text">Shadowsocks (SS)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9"><span class="toc-number">5.2.</span> <span class="toc-text">加密算法选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SS-%E4%B8%8E-Vmess-Vless-%E5%AF%B9%E6%AF%94"><span class="toc-number">5.3.</span> <span class="toc-text">SS 与 Vmess&#x2F;Vless 对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ShadowsocksR-SSR"><span class="toc-number">6.</span> <span class="toc-text">ShadowsocksR (SSR)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSR-%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">6.1.</span> <span class="toc-text">SSR 的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">6.2.</span> <span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trojan"><span class="toc-number">7.</span> <span class="toc-text">Trojan</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">7.1.</span> <span class="toc-text">工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-1"><span class="toc-number">7.2.</span> <span class="toc-text">安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Trojan-%E4%B8%8E-Vless-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">7.3.</span> <span class="toc-text">Trojan 与 Vless 的差异</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-HTTPS-Proxy"><span class="toc-number">8.</span> <span class="toc-text">HTTP&#x2F;HTTPS Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E4%BB%A3%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.1.</span> <span class="toc-text">HTTP 代理介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS-%E4%BB%A3%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.2.</span> <span class="toc-text">HTTPS 代理介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E7%8E%B0%E4%BB%A3%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">8.3.</span> <span class="toc-text">与现代代理协议的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOCKS5"><span class="toc-number">9.</span> <span class="toc-text">SOCKS5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6-1"><span class="toc-number">9.1.</span> <span class="toc-text">工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E9%99%90%E5%88%B6"><span class="toc-number">9.2.</span> <span class="toc-text">应用场景与限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reality-Xray%E5%8D%8F%E8%AE%AE"><span class="toc-number">10.</span> <span class="toc-text">Reality (Xray协议)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B"><span class="toc-number">10.1.</span> <span class="toc-text">协议简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%8A%97%E5%AE%A1%E6%9F%A5%E8%83%BD%E5%8A%9B"><span class="toc-number">10.2.</span> <span class="toc-text">对抗审查能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">10.3.</span> <span class="toc-text">优点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hysteria"><span class="toc-number">11.</span> <span class="toc-text">Hysteria</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7"><span class="toc-number">11.1.</span> <span class="toc-text">协议特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8A%BF"><span class="toc-number">11.2.</span> <span class="toc-text">性能优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">11.3.</span> <span class="toc-text">使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TUIC"><span class="toc-number">12.</span> <span class="toc-text">TUIC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">12.1.</span> <span class="toc-text">协议概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hysteria-vs-TUIC"><span class="toc-number">12.2.</span> <span class="toc-text">Hysteria vs TUIC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">12.3.</span> <span class="toc-text">使用建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E9%85%8D%E7%BD%AE%E5%90%84%E7%B1%BB%E5%8D%8F%E8%AE%AE"><span class="toc-number">13.</span> <span class="toc-text">Clash 配置各类协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9AVmess-%E8%8A%82%E7%82%B9"><span class="toc-number">13.1.</span> <span class="toc-text">配置示例：Vmess 节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9AVless-XTLS"><span class="toc-number">13.2.</span> <span class="toc-text">配置示例：Vless + XTLS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9ATrojan"><span class="toc-number">13.3.</span> <span class="toc-text">配置示例：Trojan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">13.4.</span> <span class="toc-text">常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93"><span class="toc-number">14.</span> <span class="toc-text">对比总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">15.</span> <span class="toc-text">结论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">15.1.</span> <span class="toc-text">协议选择建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF"><span class="toc-number">15.2.</span> <span class="toc-text">后续发展趋势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQs"><span class="toc-number">16.</span> <span class="toc-text">FAQs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-number">17.</span> <span class="toc-text">推荐阅读</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>347</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>126</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">Clash 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">Clash 的应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E6%94%AF%E6%8C%81%E7%9A%84%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%A7%88%EF%BC%88%E6%80%BB%E8%A7%88%E5%9B%BE%E5%85%88%E7%9C%8B%E8%BF%99%E9%87%8C%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">Clash 支持的协议概览（总览图先看这里）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%AF%B9%E6%AF%94%E7%AE%80%E8%A1%A8%EF%BC%88%E5%9F%BA%E7%A1%80%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">协议对比简表（基础）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vmess"><span class="toc-number">3.</span> <span class="toc-text">Vmess</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.3.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vless"><span class="toc-number">4.</span> <span class="toc-text">Vless</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%80%A7%E4%B8%8E%E6%94%B9%E8%BF%9B"><span class="toc-number">4.1.</span> <span class="toc-text">特性与改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vless-%E4%B8%8E-Vmess-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">4.2.</span> <span class="toc-text">Vless 与 Vmess 的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-%E4%B8%8E-XTLS-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.3.</span> <span class="toc-text">TLS 与 XTLS 的优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shadowsocks-SS"><span class="toc-number">5.</span> <span class="toc-text">Shadowsocks (SS)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9"><span class="toc-number">5.2.</span> <span class="toc-text">加密算法选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SS-%E4%B8%8E-Vmess-Vless-%E5%AF%B9%E6%AF%94"><span class="toc-number">5.3.</span> <span class="toc-text">SS 与 Vmess&#x2F;Vless 对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ShadowsocksR-SSR"><span class="toc-number">6.</span> <span class="toc-text">ShadowsocksR (SSR)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSR-%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">6.1.</span> <span class="toc-text">SSR 的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">6.2.</span> <span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trojan"><span class="toc-number">7.</span> <span class="toc-text">Trojan</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">7.1.</span> <span class="toc-text">工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-1"><span class="toc-number">7.2.</span> <span class="toc-text">安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Trojan-%E4%B8%8E-Vless-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">7.3.</span> <span class="toc-text">Trojan 与 Vless 的差异</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-HTTPS-Proxy"><span class="toc-number">8.</span> <span class="toc-text">HTTP&#x2F;HTTPS Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E4%BB%A3%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.1.</span> <span class="toc-text">HTTP 代理介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS-%E4%BB%A3%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.2.</span> <span class="toc-text">HTTPS 代理介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E7%8E%B0%E4%BB%A3%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">8.3.</span> <span class="toc-text">与现代代理协议的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOCKS5"><span class="toc-number">9.</span> <span class="toc-text">SOCKS5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6-1"><span class="toc-number">9.1.</span> <span class="toc-text">工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E9%99%90%E5%88%B6"><span class="toc-number">9.2.</span> <span class="toc-text">应用场景与限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reality-Xray%E5%8D%8F%E8%AE%AE"><span class="toc-number">10.</span> <span class="toc-text">Reality (Xray协议)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B"><span class="toc-number">10.1.</span> <span class="toc-text">协议简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%8A%97%E5%AE%A1%E6%9F%A5%E8%83%BD%E5%8A%9B"><span class="toc-number">10.2.</span> <span class="toc-text">对抗审查能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">10.3.</span> <span class="toc-text">优点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hysteria"><span class="toc-number">11.</span> <span class="toc-text">Hysteria</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7"><span class="toc-number">11.1.</span> <span class="toc-text">协议特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8A%BF"><span class="toc-number">11.2.</span> <span class="toc-text">性能优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">11.3.</span> <span class="toc-text">使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TUIC"><span class="toc-number">12.</span> <span class="toc-text">TUIC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">12.1.</span> <span class="toc-text">协议概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hysteria-vs-TUIC"><span class="toc-number">12.2.</span> <span class="toc-text">Hysteria vs TUIC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">12.3.</span> <span class="toc-text">使用建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E9%85%8D%E7%BD%AE%E5%90%84%E7%B1%BB%E5%8D%8F%E8%AE%AE"><span class="toc-number">13.</span> <span class="toc-text">Clash 配置各类协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9AVmess-%E8%8A%82%E7%82%B9"><span class="toc-number">13.1.</span> <span class="toc-text">配置示例：Vmess 节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9AVless-XTLS"><span class="toc-number">13.2.</span> <span class="toc-text">配置示例：Vless + XTLS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9ATrojan"><span class="toc-number">13.3.</span> <span class="toc-text">配置示例：Trojan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">13.4.</span> <span class="toc-text">常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93"><span class="toc-number">14.</span> <span class="toc-text">对比总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">15.</span> <span class="toc-text">结论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">15.1.</span> <span class="toc-text">协议选择建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF"><span class="toc-number">15.2.</span> <span class="toc-text">后续发展趋势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQs"><span class="toc-number">16.</span> <span class="toc-text">FAQs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-number">17.</span> <span class="toc-text">推荐阅读</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">86</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">49</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费盗料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="https://pic1.zhimg.com/80/v2-e236d638b98a20326cbf754b2c0c2c85.png"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">Clash 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">Clash 的应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E6%94%AF%E6%8C%81%E7%9A%84%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%A7%88%EF%BC%88%E6%80%BB%E8%A7%88%E5%9B%BE%E5%85%88%E7%9C%8B%E8%BF%99%E9%87%8C%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">Clash 支持的协议概览（总览图先看这里）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E5%AF%B9%E6%AF%94%E7%AE%80%E8%A1%A8%EF%BC%88%E5%9F%BA%E7%A1%80%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">协议对比简表（基础）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vmess"><span class="toc-number">3.</span> <span class="toc-text">Vmess</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">3.2.</span> <span class="toc-text">安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.3.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vless"><span class="toc-number">4.</span> <span class="toc-text">Vless</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%80%A7%E4%B8%8E%E6%94%B9%E8%BF%9B"><span class="toc-number">4.1.</span> <span class="toc-text">特性与改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vless-%E4%B8%8E-Vmess-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">4.2.</span> <span class="toc-text">Vless 与 Vmess 的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-%E4%B8%8E-XTLS-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.3.</span> <span class="toc-text">TLS 与 XTLS 的优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shadowsocks-SS"><span class="toc-number">5.</span> <span class="toc-text">Shadowsocks (SS)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">5.1.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95%E9%80%89%E6%8B%A9"><span class="toc-number">5.2.</span> <span class="toc-text">加密算法选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SS-%E4%B8%8E-Vmess-Vless-%E5%AF%B9%E6%AF%94"><span class="toc-number">5.3.</span> <span class="toc-text">SS 与 Vmess&#x2F;Vless 对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ShadowsocksR-SSR"><span class="toc-number">6.</span> <span class="toc-text">ShadowsocksR (SSR)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSR-%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">6.1.</span> <span class="toc-text">SSR 的特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">6.2.</span> <span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trojan"><span class="toc-number">7.</span> <span class="toc-text">Trojan</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">7.1.</span> <span class="toc-text">工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-1"><span class="toc-number">7.2.</span> <span class="toc-text">安全性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Trojan-%E4%B8%8E-Vless-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">7.3.</span> <span class="toc-text">Trojan 与 Vless 的差异</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-HTTPS-Proxy"><span class="toc-number">8.</span> <span class="toc-text">HTTP&#x2F;HTTPS Proxy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-%E4%BB%A3%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.1.</span> <span class="toc-text">HTTP 代理介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTPS-%E4%BB%A3%E7%90%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.2.</span> <span class="toc-text">HTTPS 代理介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E7%8E%B0%E4%BB%A3%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">8.3.</span> <span class="toc-text">与现代代理协议的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SOCKS5"><span class="toc-number">9.</span> <span class="toc-text">SOCKS5</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6-1"><span class="toc-number">9.1.</span> <span class="toc-text">工作机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E9%99%90%E5%88%B6"><span class="toc-number">9.2.</span> <span class="toc-text">应用场景与限制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reality-Xray%E5%8D%8F%E8%AE%AE"><span class="toc-number">10.</span> <span class="toc-text">Reality (Xray协议)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%AE%80%E4%BB%8B"><span class="toc-number">10.1.</span> <span class="toc-text">协议简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E6%8A%97%E5%AE%A1%E6%9F%A5%E8%83%BD%E5%8A%9B"><span class="toc-number">10.2.</span> <span class="toc-text">对抗审查能力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">10.3.</span> <span class="toc-text">优点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hysteria"><span class="toc-number">11.</span> <span class="toc-text">Hysteria</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E7%89%B9%E6%80%A7"><span class="toc-number">11.1.</span> <span class="toc-text">协议特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8A%BF"><span class="toc-number">11.2.</span> <span class="toc-text">性能优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">11.3.</span> <span class="toc-text">使用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TUIC"><span class="toc-number">12.</span> <span class="toc-text">TUIC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">12.1.</span> <span class="toc-text">协议概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hysteria-vs-TUIC"><span class="toc-number">12.2.</span> <span class="toc-text">Hysteria vs TUIC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-number">12.3.</span> <span class="toc-text">使用建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Clash-%E9%85%8D%E7%BD%AE%E5%90%84%E7%B1%BB%E5%8D%8F%E8%AE%AE"><span class="toc-number">13.</span> <span class="toc-text">Clash 配置各类协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9AVmess-%E8%8A%82%E7%82%B9"><span class="toc-number">13.1.</span> <span class="toc-text">配置示例：Vmess 节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9AVless-XTLS"><span class="toc-number">13.2.</span> <span class="toc-text">配置示例：Vless + XTLS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B%EF%BC%9ATrojan"><span class="toc-number">13.3.</span> <span class="toc-text">配置示例：Trojan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">13.4.</span> <span class="toc-text">常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E6%80%BB%E7%BB%93"><span class="toc-number">14.</span> <span class="toc-text">对比总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">15.</span> <span class="toc-text">结论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%AE%AE%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">15.1.</span> <span class="toc-text">协议选择建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF"><span class="toc-number">15.2.</span> <span class="toc-text">后续发展趋势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQs"><span class="toc-number">16.</span> <span class="toc-text">FAQs</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="toc-number">17.</span> <span class="toc-text">推荐阅读</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-04-14</div>
+        <a href="/route/"><div class="recent-posts-item-content">Clash 机场线路类型详解：直连 / 中转 / 专线（IPLC / IEPL）区别与选择指南</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-04-14</div>
+        <a href="/protocols/"><div class="recent-posts-item-content">2026 Clash 机场各种协议差别介绍与选择指南（Vmess / Vless / Trojan / Reality / Hysteria）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-04-14</div>
+        <a href="/HAND-User-Forum/"><div class="recent-posts-item-content">汉得2026用户大会“焕芯砺刃，敏捷致胜”学习心得</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
