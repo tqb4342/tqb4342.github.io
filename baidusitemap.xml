@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tanqingbo.cn/magic-vpn/</loc>
-    <lastmod>2026-05-07</lastmod>
+    <loc>https://tanqingbo.cn/magic-internet/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/python-yeild/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/What-is-crawler/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/CSBook005/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/alibaba-Java/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/linux-java-opencv/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/CSBook001/</loc>
+    <lastmod>2026-05-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/SPHARMPDM-MEPP/</loc>
+    <lastmod>2026-05-09</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/HAND-User-Forum/</loc>
@@ -34,7 +62,7 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/freego/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-04-20</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/route/</loc>
@@ -246,10 +274,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/0010-city/</loc>
-    <lastmod>2025-09-29</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/CSBook001/</loc>
     <lastmod>2025-09-29</lastmod>
   </url>
   <url>
@@ -653,10 +677,6 @@
     <lastmod>2021-08-02</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/alibaba-Java/</loc>
-    <lastmod>2021-08-01</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/%E5%8E%BB%E7%89%B9%E6%96%AF%E6%8B%89%E8%AF%95%E8%BD%A6%E4%BA%86/</loc>
     <lastmod>2021-06-21</lastmod>
   </url>
@@ -993,10 +1013,6 @@
     <lastmod>2020-12-29</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/CSBook005/</loc>
-    <lastmod>2020-12-29</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/Linear-regression-of-machine-learning/</loc>
     <lastmod>2020-12-25</lastmod>
   </url>
@@ -1173,10 +1189,6 @@
     <lastmod>2020-12-07</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/SPHARMPDM-MEPP/</loc>
-    <lastmod>2020-12-07</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/Maximum-Likelihood-to-EM-algorithm/</loc>
     <lastmod>2020-12-07</lastmod>
   </url>
@@ -1241,14 +1253,6 @@
     <lastmod>2020-12-03</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/What-is-crawler/</loc>
-    <lastmod>2020-12-03</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/python-yeild/</loc>
-    <lastmod>2020-12-03</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/Python-base/</loc>
     <lastmod>2020-12-03</lastmod>
   </url>
@@ -1263,10 +1267,6 @@
   <url>
     <loc>https://tanqingbo.cn/Encryption-Algorithm/</loc>
     <lastmod>2020-12-03</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/linux-java-opencv/</loc>
-    <lastmod>2020-11-30</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/Linux-Compile-C/</loc>
