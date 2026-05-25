@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.webp">
+  <title>如何使用 Google Gemini：详细的初学者指南&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="如何使用 Google Gemini：详细的初学者指南">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/Google-Gemini/index.html">
+  
+  
+  <meta property="og:img" content="https://picx.zhimg.com/70/v2-6f9a25ff2e00b02fa7c4f206dbde4074_1440w.avis">
+  
+  
+  <meta property="description" content="Gemini是谷歌推出的一款强大的人工智能工具，是公认的国外最好用的AI工具之一。">
+  
+  <meta property="keywords" content="Gemini是谷歌推出的一款强大的人工智能工具，是公认的国外最好用的AI工具之一。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-05-25">
+  <meta property="og:article:modified_time" content="2026-05-25">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/Google-Gemini/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://picx.zhimg.com/70/v2-6f9a25ff2e00b02fa7c4f206dbde4074_1440w.avis" data-src="https://picx.zhimg.com/70/v2-6f9a25ff2e00b02fa7c4f206dbde4074_1440w.avis"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      如何使用 Google Gemini：详细的初学者指南
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-05-25T03:14:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-05-25</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/Google-Gemini/" class="leancloud_visitors" data-flag-title="如何使用 Google Gemini：详细的初学者指南">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  
+
+
+		
+  
+  <meta name="description" content="Gemini是谷歌推出的一款强大的人工智能工具，是公认的国外最好用的AI工具之一。">
+  
+  <meta name="keywords" content="Gemini是谷歌推出的一款强大的人工智能工具，是公认的国外最好用的AI工具之一。">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <p>Google 的AI 聊天机器人<a href="https://tanqingbo.cn/Gemini-vpn/">Gemini</a>（前身为 Google Bard）。它类似于<a href="https://tanqingbo.cn/ChatGPT-VPN/">ChatGPT</a>等其他 AI 驱动的文本生成工具，但它应该将Google 搜索（我大部分时间都花在其中）的强大功能打包到对话机器人中。</p>
+<p>这有可能使我的工作轻松得多。与其在互联网上搜索有关特定主题的来源和当前信息，不如让 Gemini 给我提供内幕。但显然，事情并没有那么简单。以下是您需要了解的有关如何使用 Gemini 的所有信息。</p>
+<p><strong>注意</strong>：Gemini 还提到了Google 的 AI 模型系列，它为 AI 聊天机器人 Gemini 提供支持（我知道这很令人困惑）。在本文中，我使用 Gemini 这个名字来仅指代 AI 聊天机器人。</p>
+<h2 id="Google-Gemini是什么？"><a href="#Google-Gemini是什么？" class="headerlink" title="Google Gemini是什么？"></a>Google Gemini是什么？</h2><p>Google Gemini 是由 Gemini 1.5 Flash 提供支持的人工智能聊天机器人。Gemini 背后的多模态 AI 模型使其能够理解和生成文本，同时还可以本地理解、操作和组合其他类型的信息，例如图像、音频、视频和代码。</p>
+<p>例如，您可以上传一张海崖的图像，然后询问 AI 聊天机器人：“这些悬崖在哪里？然后，Gemini 将响应您的提示，提供有关它的更多信息，并响应要求提供更复杂信息的进一步提示。</p>
+<p><img src="https://picx.zhimg.com/v2-f4fea985f300e304b242750d651f6755_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-f4fea985f300e304b242750d651f6755_1440w.jpg" class="lozad post-image"></p>
+<p>您可以要求 Gemini 执行一些操作，例如将文档从英语翻译成韩语（或当前可用的 40 多种语言中的一种）、总结文章或告诉您当地的天气。那么为什么不直接在 Google 上搜索一个主题呢？不是一回事吗？</p>
+<p>使用 Gemini，您不必检查各个页面、点击不同的链接或比较新闻文章。你可以直接问 Gemini 一个问题，得到你想要的摘要版本，然后如果你需要更多信息，可以提出后续问题。这是开始研究或旅行计划等工作的好方法。如果你想更深入地挖掘或核查某件事，你可以随时使用 Gemini 的内置事实核查器或点击其他资源的链接。目前肯定远非完美，但您可以想象 Gemini 最终会如何改变搜索的工作方式。</p>
+<h2 id="什么是Gemini-Advanced？"><a href="#什么是Gemini-Advanced？" class="headerlink" title="什么是Gemini Advanced？"></a>什么是Gemini Advanced？</h2><p>Gemini Advanced 是一个 AI 聊天机器人，用户每月 20 美元。除了由更强大的 Gemini 1.5 Pro 提供动力外，它还提供了一些其他好处。</p>
+<ul>
+<li>最多 200 万个令牌的上下文窗口（Gemini 的上下文窗口大小只有原来的一半）</li>
+<li>能够直接在应用程序中运行和编辑 Python 代码</li>
+<li>优先使用新功能</li>
+<li>在其他 Google 应用（包括 Gmail 和 Docs）中访问 Gemini</li>
+</ul>
+<h2 id="如何在网络应用程序上使用-Google-Gemini"><a href="#如何在网络应用程序上使用-Google-Gemini" class="headerlink" title="如何在网络应用程序上使用 Google Gemini"></a>如何在网络应用程序上使用 Google Gemini</h2><p>注册Google Gemini账号之前，必备翻墙梯子，必备的网络条件都没有的话，肯定是不行的，网址都进不去。</p>
+<p><strong>翻墙梯子教程：</strong><a href="https://tanqingbo.cn/Clash-VPS/index.html">手机电脑如何翻墙？2026年科学上网保姆级教程！！</a></p>
+<p>其次需要准备Google账户，注册谷歌账户教程如下：</p>
+<p><a href="https://tanqingbo.cn/accounts-google/">谷歌账号注册教程（保姆级），适合新手（2026实测）</a></p>
+<p>以下是如何在 Web 应用程序上使用 Google Gemini 的简短版本：</p>
+<ol>
+<li>转到 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://gemini.google.com并使用您的/">https://gemini.google.com并使用您的</a> Google 帐户登录或注册（免费）。</li>
+<li>在 Gemini 主页的消息框中键入您的提示。</li>
+<li>一旦 Gemini 给出回应，您就有以下几种选择：</li>
+</ol>
+<ul>
+<li>赞或踩赞响应</li>
+<li>要求 Gemini 修改其响应</li>
+<li>分享回复</li>
+<li>事实核查 Gemini 的回应</li>
+<li>查看 Gemini 的不同版本回复</li>
+</ul>
+<h3 id="1-登录-Gemini"><a href="#1-登录-Gemini" class="headerlink" title="1. 登录 Gemini"></a>1. 登录 Gemini</h3><p>要开始使用，请转到 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://gemini.google.com,然后单击/">https://gemini.google.com，然后单击</a> <strong>Sign in （登录</strong>）。按照提示使用您的 Google 帐户登录（如果您还没有帐户，请<a target="_blank" rel="noopener external nofollow noreferrer" href="https://support.google.com/accounts/answer/27441?hl=zh-Hans">创建一个帐户</a>）。</p>
+<p>现在让我们仔细看看使用 Gemini 的更多细节。</p>
+<p><img src="https://pica.zhimg.com/v2-a1bd82e5598ae4f4df578eabfad1f8e8_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-a1bd82e5598ae4f4df578eabfad1f8e8_1440w.jpg" class="lozad post-image"></p>
+<p>注意：如果您使用的是单位或学校的 Google 帐号，则您的 Workspace 管理员可能已禁用对 Gemini 的访问权限。因此，如果您无法访问它，这可能就是原因。</p>
+<h3 id="2-向-Gemini-提问"><a href="#2-向-Gemini-提问" class="headerlink" title="2. 向 Gemini 提问"></a>2. 向 Gemini 提问</h3><p>将提示拖放到文本框中，然后按 <strong>Enter</strong>（或单击 <strong>Submit</strong> 图标，它看起来像一架纸飞机）。</p>
+<p>您还可以上传一张您发现的鸟的图片，并让 Gemini 告诉您它是什么类型，以及关于它的三个有趣事实。</p>
+<p><img src="https://pic4.zhimg.com/v2-00da3c4502e313f6d107779dcf3a06dd_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-00da3c4502e313f6d107779dcf3a06dd_1440w.jpg" class="lozad post-image"></p>
+<h3 id="3-与-Gemini-的回应互动"><a href="#3-与-Gemini-的回应互动" class="headerlink" title="3. 与 Gemini 的回应互动"></a>3. 与 Gemini 的回应互动</h3><p>在几秒钟内，Gemini 将以易于扫描的格式生成回复。从这里，您有多种选择。</p>
+<ol>
+<li><strong>喜欢或不喜欢回复</strong>。Gemini 依靠真实世界的反馈来提高其响应的质量。如果响应有帮助，请单击 <strong>Good response</strong> 图标，该图标看起来像一个竖起的大拇指。如果它不准确或没有帮助，请单击 <strong>Bad response</strong> 图标，该图标看起来像一个竖起大拇指的图标。</li>
+</ol>
+<p>2.<strong>让 Gemini 修改其响应。</strong>假设您想将 Gemini 的回答的语气更改为听起来不那么专业，而更随意。或者你想缩短它。单击<strong>Modify response</strong>图标（看起来像一堆水平条），然后选择以下可用修改之一：<em>Shorter（更短）、Longer（更长）、Simpler（更简单）、More casual（更随意）</em>或<em>More professional（更专业）。</em></p>
+<p><img src="https://pic4.zhimg.com/v2-152fdad0b326f2756eb86efb8cc5efa7_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-152fdad0b326f2756eb86efb8cc5efa7_1440w.jpg" class="lozad post-image"></p>
+<p>3.<strong>分享回复。</strong>如果你想分享Gemini的答案，请点击<strong>分享和导出</strong>图标，然后选择<strong>分享</strong>。</p>
+<p><img src="https://pic3.zhimg.com/v2-4ed8e9082ae5b65a6b3bfdb6ef1516da_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-4ed8e9082ae5b65a6b3bfdb6ef1516da_1440w.jpg" class="lozad post-image"></p>
+<p>在显示的弹出窗口中，选择 Share<strong>This prompt and response （共享此提示和响应</strong>） 或<strong>Entire chat （整个聊天</strong>），然后单击<strong>Create public link （创建公共链接</strong>）。复制聊天链接并像往常一样分享。</p>
+<p><img src="https://pic4.zhimg.com/v2-9c774b1803ddfed4ce5314976ee67cad_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-9c774b1803ddfed4ce5314976ee67cad_1440w.jpg" class="lozad post-image"></p>
+<p>当您与之共享链接的人打开聊天时，他们甚至可以从您上次中断的地方继续。（注意：如果您将图像上传到聊天，然后共享整个聊天，则该图像将对有权访问该对话的任何人可见和下载。</p>
+<p>要取消共享 Gemini 聊天的公共链接，请单击 <strong>设置</strong> ，然后选择 <strong>公共链接</strong>。找到要取消共享的对话，然后单击 <strong>Remove public link</strong> 图标，它看起来像一个垃圾桶。</p>
+<p><img src="https://pic1.zhimg.com/v2-ff2cda189a97e188436bb663327929b2_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-ff2cda189a97e188436bb663327929b2_1440w.jpg" class="lozad post-image"></p>
+<p><strong>4.对回复进行事实核查</strong>。如果你想仔细检查 Gemini 的来源及其真实性（鉴于AI 倾向于编造东西，我强烈建议你这样做），请点击<strong>Google</strong>图标仔细检查并获取相关的 Google 搜索查询。</p>
+<p><img src="https://pic2.zhimg.com/v2-f9e7de63504027a5721eb968ba76472f_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-f9e7de63504027a5721eb968ba76472f_1440w.jpg" class="lozad post-image"></p>
+<p><strong>查看响应的不同版本。</strong>如果您想要更详细的回复或更多信息，请单击<strong>Show drafts（显示草稿</strong>）。这使您可以查看 Gemini 最新答案（不是以前的答案）的多个版本，然后您可以喜欢或不喜欢这些答案，让它知道哪个答案最好。</p>
+<p><img src="https://pic1.zhimg.com/v2-37c6a58f7bf9aef1b50141ac5e7c4602_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-37c6a58f7bf9aef1b50141ac5e7c4602_1440w.jpg" class="lozad post-image"></p>
+<h2 id="如何在-Chrome-浏览器栏中使用-Google-Gemini"><a href="#如何在-Chrome-浏览器栏中使用-Google-Gemini" class="headerlink" title="如何在 Chrome 浏览器栏中使用 Google Gemini"></a>如何在 Chrome 浏览器栏中使用 Google Gemini</h2><p>您还可以直接从任何 Chrome 窗口的浏览器栏发起与 Gemini 的聊天。</p>
+<ol>
+<li>在 Chrome 窗口的地址栏中输入。<code>@gemini</code></li>
+<li>单击 <strong>@gemini - Chat with Gemini（与 Gemini 聊天</strong>）。</li>
+<li>在地址栏中输入您的提示，然后按<strong>Enter</strong>。</li>
+<li>您将被重定向到 Gemini 主页。单击 <strong>Chat with Gemini（与 Gemini 聊天</strong>）。（系统可能会提示您先登录。</li>
+<li>您的回答将显示在 Web 应用程序中。</li>
+<li>继续像往常一样与 Gemini 聊天。</li>
+</ol>
+<p><img src="https://pic1.zhimg.com/v2-814bf323bec9c6e7446a444238f6d998_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-814bf323bec9c6e7446a444238f6d998_1440w.jpg" class="lozad post-image"></p>
+<h2 id="Gemini-能做什么？"><a href="#Gemini-能做什么？" class="headerlink" title="Gemini 能做什么？"></a>Gemini 能做什么？</h2><p>我不可能在这里列出 Gemini 的所有用例，你几乎肯定会使用它做什么，这取决于你的角色。例如，工程师可能会使用 Gemini 来理解一段代码的复杂性。活动策划者可能会使用它来集思广益场地位置。</p>
+<p>为了节省时间，我将把用例专门限制在我认为最有价值的那些用例上。以下是我的主要类别：</p>
+<ul>
+<li>从你常用的 Google 应用中检索信息</li>
+<li>汇总文章和网页</li>
+<li>集思广益并产生内容创意</li>
+<li>撰写标语和简短的文案以获得灵感</li>
+<li>获取有关图像的信息</li>
+<li>在图表中比较研究和数据</li>
+<li>提供旅行和活动建议（附图）</li>
+<li>创建 AI 生成的图像</li>
+</ul>
+<h2 id="从你常用的-Google-应用中检索信息"><a href="#从你常用的-Google-应用中检索信息" class="headerlink" title="从你常用的 Google 应用中检索信息"></a>从你常用的 Google 应用中检索信息</h2><p>使用 Gemini Extensions，您可以要求 Gemini 从其他 Google 应用程序（包括 Gmail、Drive、地图、航班、酒店甚至 YouTube）中检索实时信息。只需键入，然后输入您的提示。<code>@[name of the app you want to look in]</code></p>
+<p>这意味着您可以执行一些操作，例如要求 Gemini 从 Gmail 中的电子邮件线程中提取详细信息。</p>
+<p><img src="https://pic2.zhimg.com/v2-407aec7ea382b67259c5e730b73845b3_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-407aec7ea382b67259c5e730b73845b3_1440w.jpg" class="lozad post-image"></p>
+<p>您甚至可以要求它共享存储在 Google Drive 中的文件的链接。或者让 Gemini 直接在你的对话中输出该文件的内容，它也会自动分享该文件的链接。</p>
+<p>Gemini 扩展仍有一些问题需要解决——例如，当我让它参考 Google Doc 来告诉我是否有任何操作项时，它生成了一个不存在的操作项列表。但我可以看到 Extensions 如何随着准确性的提高而加快工作流程。</p>
+<p>请注意： 未经您的许可，Gemini 不会使用扩展程序访问您在其他服务中的个人内容。但是，值得注意的是，如果您通过 Gemini 与其他 Google 服务交互，您的活动可能会被该其他服务保存。</p>
+<h2 id="汇总文章和网页"><a href="#汇总文章和网页" class="headerlink" title="汇总文章和网页"></a>汇总文章和网页</h2><p>你有多少次因为太长而跳过一篇文章，或者遇到一些本质上如此复杂的东西，以至于你放弃了试图理解它？加入俱乐部。这就是为什么我真的在挖掘 Gemini 总结文章的能力。我发现这个用例是很偶然的，我真的很惊讶更多的人没有赞美它。</p>
+<p>使用 Gemini，您可以在文本框中放置指向文章的链接，并要求它以清晰的方式对其进行总结。看看这个。</p>
+<p><img src="https://pic1.zhimg.com/v2-4c8acb98e62a05d205c9ece58198d894_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-4c8acb98e62a05d205c9ece58198d894_1440w.jpg" class="lozad post-image"></p>
+<h3 id="创建-AI-生成的图像"><a href="#创建-AI-生成的图像" class="headerlink" title="创建 AI 生成的图像"></a>创建 AI 生成的图像</h3><p>Gemini 不仅限于从网络上获取现有图像。它还具有生成图像的能力（由他们的 Imagen 2 模型提供支持）。输入您的描述，然后看着它把您最疯狂的想法（比如，一个快乐的蘑菇浇花）变为现实。</p>
+<p><img src="https://pic2.zhimg.com/v2-63a869c55291ecd57581651305d53641_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-63a869c55291ecd57581651305d53641_1440w.jpg" class="lozad post-image"></p>
+<h2 id="Gemini-有哪些局限性？"><a href="#Gemini-有哪些局限性？" class="headerlink" title="Gemini 有哪些局限性？"></a>Gemini 有哪些局限性？</h2><p>从我目前的经验来看，双子座可能是一个有点不可靠的叙述者，而且它并不总是按照它所说的可以做的事情去做。例如：</p>
+<ul>
+<li><strong>它会产生幻觉。</strong>当 AI 错误地陈述或坚持某事是真的时，即使它没有基于逻辑或事实，也会发生这种情况。例如，当我让 Gemini 列出 2014 年至 2023 年的奥斯卡最佳影片奖得主时，它把大部分电影的名字都选对了——但它把每部电影都分配到了错误的年份。</li>
+<li><strong>它表明缺乏写作技巧。</strong>让 Gemini 为你写一段内容，它几乎肯定会有点乏味和维基百科式的。当您将它们与专业（人类）作家的写作技巧进行比较时，它的写作技巧非常有限。</li>
+<li><strong>它忘记引用来源</strong>。Gemini 有一种令人讨厌的倾向，除非你特别要求，否则它不会引用它正在讨论的话题的来源。不过，当它确实引用了它的来源时，它有点偶然。我见过它为与 Gemini 所说的相矛盾或与手头主题无关的网站提供来源，所以请注意：这有点小故障。</li>
+</ul>
+<h2 id="将-Gemini-用作（随意的）研究工具"><a href="#将-Gemini-用作（随意的）研究工具" class="headerlink" title="将 Gemini 用作（随意的）研究工具"></a>将 Gemini 用作（随意的）研究工具</h2><p>Gemini 可能不够可靠，无法为您完成工作（这是个好消息），但它可以用作有价值的研究工具，帮助您提出想法、总结内容并以可访问的方式呈现数据。</p>
+<p>我的建议是：用一品脱盐来理解它所说的。Gemini 仍然是一项正在进行的工作，只有时间才能证明它是否在写作方面变得更好——并且对它的简历诚实。</p>
+<h2 id="如何使用-Google-Gemini：常见问题解答"><a href="#如何使用-Google-Gemini：常见问题解答" class="headerlink" title="如何使用 Google Gemini：常见问题解答"></a>如何使用 Google Gemini：常见问题解答</h2><p>我们在这个 Gemini 教程中涵盖了很多内容，但由于 Google 一直在不断发展其聊天机器人，如果您仍有疑问，这是可以理解的。以下是一些最常见问题的答案。</p>
+<h3 id="Google-Gemini-可以免费使用吗？"><a href="#Google-Gemini-可以免费使用吗？" class="headerlink" title="Google Gemini 可以免费使用吗？"></a>Google Gemini 可以免费使用吗？</h3><p>Gemini 在功能较弱的 Gemini 1.5 Flash 型号上运行，可以免费使用。如果您想使用更强大的 Gemini 1.5 Pro 型号，您需要以每月 20 美元的价格升级到 Gemini Advanced。</p>
+<h3 id="Gemini-和-Google-Assistant-有什么区别？"><a href="#Gemini-和-Google-Assistant-有什么区别？" class="headerlink" title="Gemini 和 Google Assistant 有什么区别？"></a>Gemini 和 Google Assistant 有什么区别？</h3><p>Gemini 和 Google Assistant 都是 AI 聊天机器人，但根据其预期用途、功能和底层技术，它们存在关键差异。</p>
+<ul>
+<li><strong>Gemini</strong> 是一个 AI 聊天机器人，旨在进行类似人类的对话并处理更复杂的查询，例如，您可以要求它起草 500 页研究论文的摘要或描述图像。</li>
+<li><strong>Google Assistant</strong> 主要是一种语音助手，嵌入到各种 Google 服务和产品中，包括 Google Home 和 Android 设备。其预期目的是进行基于任务的快速交互，例如，回答有关天气的问题、执行计算和控制智能家居设备。</li>
+</ul>
+<h3 id="如何从-Gemini-切换回-Google-Assistant？"><a href="#如何从-Gemini-切换回-Google-Assistant？" class="headerlink" title="如何从 Gemini 切换回 Google Assistant？"></a>如何从 Gemini 切换回 Google Assistant？</h3><p>如果您使用 Gemini 取代 Google Assistant 作为 Android 设备上的主要助手，则很容易切换回来。</p>
+<ol>
+<li>打开您的 Gemini 移动应用程序。</li>
+<li>点击您的个人资料照片（右上角）。</li>
+<li>点击 <strong>切换到 Google 助理</strong>。</li>
+<li>点击 <strong>Google 助理</strong>。</li>
+<li>在出现的弹出窗口中，点击 <strong>Switch 开关</strong> 确认您要用 Google Assistant 替换 Gemini。</li>
+</ol>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/Google-Gemini/">https://tanqingbo.cn/Google-Gemini/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/accounts-google/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">谷歌账号注册教程（保姆级），适合新手（2026实测） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-Gemini%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Google Gemini是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGemini-Advanced%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什么是Gemini Advanced？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8A%E4%BD%BF%E7%94%A8-Google-Gemini"><span class="toc-number">3.</span> <span class="toc-text">如何在网络应用程序上使用 Google Gemini</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%99%BB%E5%BD%95-Gemini"><span class="toc-number">3.1.</span> <span class="toc-text">1. 登录 Gemini</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%91-Gemini-%E6%8F%90%E9%97%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 向 Gemini 提问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8E-Gemini-%E7%9A%84%E5%9B%9E%E5%BA%94%E4%BA%92%E5%8A%A8"><span class="toc-number">3.3.</span> <span class="toc-text">3. 与 Gemini 的回应互动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-Chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A0%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-Google-Gemini"><span class="toc-number">4.</span> <span class="toc-text">如何在 Chrome 浏览器栏中使用 Google Gemini</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">Gemini 能做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E4%BD%A0%E5%B8%B8%E7%94%A8%E7%9A%84-Google-%E5%BA%94%E7%94%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">从你常用的 Google 应用中检索信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E6%80%BB%E6%96%87%E7%AB%A0%E5%92%8C%E7%BD%91%E9%A1%B5"><span class="toc-number">7.</span> <span class="toc-text">汇总文章和网页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-AI-%E7%94%9F%E6%88%90%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-number">7.1.</span> <span class="toc-text">创建 AI 生成的图像</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B1%80%E9%99%90%E6%80%A7%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">Gemini 有哪些局限性？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-Gemini-%E7%94%A8%E4%BD%9C%EF%BC%88%E9%9A%8F%E6%84%8F%E7%9A%84%EF%BC%89%E7%A0%94%E7%A9%B6%E5%B7%A5%E5%85%B7"><span class="toc-number">9.</span> <span class="toc-text">将 Gemini 用作（随意的）研究工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Google-Gemini%EF%BC%9A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">10.</span> <span class="toc-text">如何使用 Google Gemini：常见问题解答</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Gemini-%E5%8F%AF%E4%BB%A5%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">Google Gemini 可以免费使用吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gemini-%E5%92%8C-Google-Assistant-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">10.2.</span> <span class="toc-text">Gemini 和 Google Assistant 有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BB%8E-Gemini-%E5%88%87%E6%8D%A2%E5%9B%9E-Google-Assistant%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">如何从 Gemini 切换回 Google Assistant？</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>358</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>17</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>127</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-Gemini%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Google Gemini是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGemini-Advanced%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什么是Gemini Advanced？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8A%E4%BD%BF%E7%94%A8-Google-Gemini"><span class="toc-number">3.</span> <span class="toc-text">如何在网络应用程序上使用 Google Gemini</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%99%BB%E5%BD%95-Gemini"><span class="toc-number">3.1.</span> <span class="toc-text">1. 登录 Gemini</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%91-Gemini-%E6%8F%90%E9%97%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 向 Gemini 提问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8E-Gemini-%E7%9A%84%E5%9B%9E%E5%BA%94%E4%BA%92%E5%8A%A8"><span class="toc-number">3.3.</span> <span class="toc-text">3. 与 Gemini 的回应互动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-Chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A0%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-Google-Gemini"><span class="toc-number">4.</span> <span class="toc-text">如何在 Chrome 浏览器栏中使用 Google Gemini</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">Gemini 能做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E4%BD%A0%E5%B8%B8%E7%94%A8%E7%9A%84-Google-%E5%BA%94%E7%94%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">从你常用的 Google 应用中检索信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E6%80%BB%E6%96%87%E7%AB%A0%E5%92%8C%E7%BD%91%E9%A1%B5"><span class="toc-number">7.</span> <span class="toc-text">汇总文章和网页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-AI-%E7%94%9F%E6%88%90%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-number">7.1.</span> <span class="toc-text">创建 AI 生成的图像</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B1%80%E9%99%90%E6%80%A7%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">Gemini 有哪些局限性？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-Gemini-%E7%94%A8%E4%BD%9C%EF%BC%88%E9%9A%8F%E6%84%8F%E7%9A%84%EF%BC%89%E7%A0%94%E7%A9%B6%E5%B7%A5%E5%85%B7"><span class="toc-number">9.</span> <span class="toc-text">将 Gemini 用作（随意的）研究工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Google-Gemini%EF%BC%9A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">10.</span> <span class="toc-text">如何使用 Google Gemini：常见问题解答</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Gemini-%E5%8F%AF%E4%BB%A5%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">Google Gemini 可以免费使用吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gemini-%E5%92%8C-Google-Assistant-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">10.2.</span> <span class="toc-text">Gemini 和 Google Assistant 有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BB%8E-Gemini-%E5%88%87%E6%8D%A2%E5%9B%9E-Google-Assistant%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">如何从 Gemini 切换回 Google Assistant？</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">87</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">57</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-Gemini%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Google Gemini是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGemini-Advanced%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">什么是Gemini Advanced？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%8A%E4%BD%BF%E7%94%A8-Google-Gemini"><span class="toc-number">3.</span> <span class="toc-text">如何在网络应用程序上使用 Google Gemini</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%99%BB%E5%BD%95-Gemini"><span class="toc-number">3.1.</span> <span class="toc-text">1. 登录 Gemini</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%91-Gemini-%E6%8F%90%E9%97%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 向 Gemini 提问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8E-Gemini-%E7%9A%84%E5%9B%9E%E5%BA%94%E4%BA%92%E5%8A%A8"><span class="toc-number">3.3.</span> <span class="toc-text">3. 与 Gemini 的回应互动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-Chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E6%A0%8F%E4%B8%AD%E4%BD%BF%E7%94%A8-Google-Gemini"><span class="toc-number">4.</span> <span class="toc-text">如何在 Chrome 浏览器栏中使用 Google Gemini</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini-%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">Gemini 能做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E4%BD%A0%E5%B8%B8%E7%94%A8%E7%9A%84-Google-%E5%BA%94%E7%94%A8%E4%B8%AD%E6%A3%80%E7%B4%A2%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">从你常用的 Google 应用中检索信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E6%80%BB%E6%96%87%E7%AB%A0%E5%92%8C%E7%BD%91%E9%A1%B5"><span class="toc-number">7.</span> <span class="toc-text">汇总文章和网页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-AI-%E7%94%9F%E6%88%90%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-number">7.1.</span> <span class="toc-text">创建 AI 生成的图像</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B1%80%E9%99%90%E6%80%A7%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">Gemini 有哪些局限性？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86-Gemini-%E7%94%A8%E4%BD%9C%EF%BC%88%E9%9A%8F%E6%84%8F%E7%9A%84%EF%BC%89%E7%A0%94%E7%A9%B6%E5%B7%A5%E5%85%B7"><span class="toc-number">9.</span> <span class="toc-text">将 Gemini 用作（随意的）研究工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Google-Gemini%EF%BC%9A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">10.</span> <span class="toc-text">如何使用 Google Gemini：常见问题解答</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Gemini-%E5%8F%AF%E4%BB%A5%E5%85%8D%E8%B4%B9%E4%BD%BF%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">Google Gemini 可以免费使用吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gemini-%E5%92%8C-Google-Assistant-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">10.2.</span> <span class="toc-text">Gemini 和 Google Assistant 有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BB%8E-Gemini-%E5%88%87%E6%8D%A2%E5%9B%9E-Google-Assistant%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">如何从 Gemini 切换回 Google Assistant？</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-05-25</div>
+        <a href="/Google-Gemini/"><div class="recent-posts-item-content">如何使用 Google Gemini：详细的初学者指南</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-05-25</div>
+        <a href="/accounts-google/"><div class="recent-posts-item-content">谷歌账号注册教程（保姆级），适合新手（2026实测）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-05-22</div>
+        <a href="/best-vps/"><div class="recent-posts-item-content">2026年最好用的“VPN”翻墙工具推荐：开源、稳定、全订阅支持（最新版）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
