@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  <link rel="icon" href="/img/logo.webp">
+  <title>大模型推理 DP\TP\PP\EP 理解&nbsp; | &nbsp;IT码农</title>
+  
+  
+  <meta property="title" content="大模型推理 DP\TP\PP\EP 理解">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/LLM-DP-TP-EP/index.html">
+  
+  
+  <meta property="og:img" content="https://pic1.zhimg.com/80/v2-fdffd54ef3a3161f553fc70e9501bcfd_720w.png">
+  
+  
+  <meta property="description" content="在大模型推理 DP\TP\PP\EP 理解">
+  
+  <meta property="keywords" content="AI,大模型">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-07-03">
+  <meta property="og:article:modified_time" content="2026-07-03">
+  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  
+  
+  <meta property="og:article:tag" content="AI">
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/LLM-DP-TP-EP/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/categories" class="navbar-menu-item">
+    
+    分类
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic1.zhimg.com/80/v2-fdffd54ef3a3161f553fc70e9501bcfd_720w.png" data-src="https://pic1.zhimg.com/80/v2-fdffd54ef3a3161f553fc70e9501bcfd_720w.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      大模型推理 DP\TP\PP\EP 理解
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-07-03T08:48:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-07-03</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>7.1k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/LLM-DP-TP-EP/" class="leancloud_visitors" data-flag-title="大模型推理 DP\TP\PP\EP 理解">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/AI/" class="post-meta-link">AI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="在大模型推理 DP\TP\PP\EP 理解">
+  
+  <meta name="keywords" content="AI,大模型">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h4 id="文章目录"><a href="#文章目录" class="headerlink" title="文章目录"></a>文章目录</h4><ul>
+<li><p>\1. DP：Data Parallel，数据并行</p>
+<ul>
+<li>1.1 直观理解</li>
+<li>1.2 DP 在训练和推理中的区别</li>
+<li>1.3 DP 的结构图</li>
+<li>1.4 DP 的优点</li>
+<li>1.5 DP 的缺点</li>
+</ul>
+</li>
+<li><p>\2. TP：Tensor Parallel，张量并行</p>
+<ul>
+<li>2.1 直观理解</li>
+<li>2.2 TP 的基本图示</li>
+<li>2.3 TP 的计算流程</li>
+<li>2.4 TP 为什么常用于大模型推理？</li>
+<li>2.5 TP 的优点</li>
+<li>2.6 TP 的缺点</li>
+</ul>
+</li>
+<li><p>\3. PP：Pipeline Parallel，流水线并行</p>
+<ul>
+<li>3.1 直观理解</li>
+<li>3.2 PP 的结构图</li>
+<li>3.3 PP 的关键问题：流水线气泡</li>
+<li>3.4 PP 的优点</li>
+<li>3.5 PP 的缺点</li>
+</ul>
+</li>
+<li><p>\4. EP：Expert Parallel，专家并行</p>
+<ul>
+<li>4.1 直观理解</li>
+<li>4.2 MoE 层结构</li>
+<li>4.3 EP 的图示</li>
+<li>4.4 EP 的计算流程</li>
+<li>4.5 EP 的优点</li>
+<li>4.6 EP 的缺点<ul>
+<li>问题 1：All-to-All 通信开销大</li>
+<li>问题 2：专家负载不均衡</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>\5. 四种并行方式的核心区别</p>
+</li>
+<li><p>\6. 用一个厨房类比整体理解</p>
+<ul>
+<li>DP 数据并行</li>
+<li>TP 张量并行</li>
+<li>PP 流水线并行</li>
+<li>EP 专家并行</li>
+</ul>
+</li>
+<li><p>\7. 推理时它们对显存的影响</p>
+<ul>
+<li>7.1 DP 对显存的影响</li>
+<li>7.2 TP 对显存的影响</li>
+<li>7.3 PP 对显存的影响</li>
+<li>7.4 EP 对显存的影响</li>
+</ul>
+</li>
+<li><p>\8. 推理时它们对通信的影响</p>
+</li>
+<li><p>\9. 推理时它们对延迟和吞吐的影响</p>
+<ul>
+<li>9.1 DP</li>
+<li>9.2 TP</li>
+<li>9.3 PP</li>
+<li>9.4 EP</li>
+</ul>
+</li>
+<li><p>\10. 实际部署中如何组合？</p>
+<ul>
+<li>10.1 Dense 模型常见组合</li>
+<li>10.2 超大 Dense 模型组合</li>
+<li>10.3 MoE 模型常见组合</li>
+</ul>
+</li>
+<li><p>\11. 一个具体例子：8 张 </p>
+<p>GPU</p>
+<p> 怎么选？</p>
+<ul>
+<li>情况 A：模型单卡能放下，并发很多</li>
+<li>情况 B：模型单卡放不下，需要 4 张卡才能放下</li>
+<li>情况 C：模型需要 8 张卡才能放下</li>
+<li>情况 D：MoE 模型，专家很多</li>
+</ul>
+</li>
+<li><p>\12. 什么时候该用哪种并行？</p>
+<ul>
+<li>12.1 优先判断模型是否能放下</li>
+<li>12.2 再判断目标是吞吐还是延迟</li>
+</ul>
+</li>
+<li><p>\13. 几个容易混淆的问题</p>
+<ul>
+<li>13.1 DP 是不是效率最高？</li>
+<li>13.2 TP 越大越好吗？</li>
+<li>13.3 PP 适合低延迟吗？</li>
+<li>13.4 EP 是不是只适合 MoE？</li>
+</ul>
+</li>
+<li><p>\14. 和 KV Cache 的关系</p>
+<ul>
+<li>DP 与 KV Cache</li>
+<li>TP 与 KV Cache</li>
+<li>PP 与 KV Cache</li>
+<li>EP 与 KV Cache</li>
+</ul>
+</li>
+<li><p>\15. 最终总结图</p>
+</li>
+</ul>
+<p>这几个并行方式，本质上是在回答同一个问题：</p>
+<blockquote>
+<p><strong>❝一个大模型太大、请求太多、计算太慢时，如何把模型和请求拆到多张 GPU 上？</strong></p>
+</blockquote>
+<p>可以先用一句话理解：</p>
+<table>
+<thead>
+<tr>
+<th align="left">并行方式</th>
+<th align="left">拆的是什么</th>
+<th align="left">直观类比</th>
+<th align="left">主要目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DP 数据并行</td>
+<td align="left">拆请求 / batch</td>
+<td align="left">多个完整厨师各做一桌菜</td>
+<td align="left">提高并发吞吐</td>
+</tr>
+<tr>
+<td align="left">TP 张量并行</td>
+<td align="left">拆矩阵计算</td>
+<td align="left">几个人一起切同一块大肉</td>
+<td align="left">让单层计算放得下、算得快</td>
+</tr>
+<tr>
+<td align="left">PP 流水线并行</td>
+<td align="left">拆模型层</td>
+<td align="left">工厂流水线，每人负责几道工序</td>
+<td align="left">让超深模型分层放到多卡</td>
+</tr>
+<tr>
+<td align="left">EP 专家并行</td>
+<td align="left">拆 MoE 专家</td>
+<td align="left">不同专家坐在不同办公室</td>
+<td align="left">支撑超大 MoE 模型</td>
+</tr>
+</tbody></table>
+<h2 id="1-DP：Data-Parallel，数据并行"><a href="#1-DP：Data-Parallel，数据并行" class="headerlink" title="1. DP：Data Parallel，数据并行"></a><strong>1. DP：Data Parallel，数据并行</strong></h2><h3 id="1-1-直观理解"><a href="#1-1-直观理解" class="headerlink" title="1.1 直观理解"></a><strong>1.1 直观理解</strong></h3><p><strong>DP 的核心思想是：每组 GPU 上都有一份完整模型，请求被分发到不同副本上处理。</strong></p>
+<p>例如有 4 张 GPU，每张 GPU 都能完整放下模型，那么可以这样：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">用户请求队列</span><br><span class="line">    │</span><br><span class="line">    ├── 请求 A ──&gt; GPU0：完整模型副本</span><br><span class="line">    ├── 请求 B ──&gt; GPU1：完整模型副本</span><br><span class="line">    ├── 请求 C ──&gt; GPU2：完整模型副本</span><br><span class="line">    └── 请求 D ──&gt; GPU3：完整模型副本</span><br></pre>
+
+<p>这就像开了 4 个独立窗口，每个窗口都能完整服务用户。</p>
+<hr>
+<h3 id="1-2-DP-在训练和推理中的区别"><a href="#1-2-DP-在训练和推理中的区别" class="headerlink" title="1.2 DP 在训练和推理中的区别"></a><strong>1.2 DP 在训练和推理中的区别</strong></h3><p>很多人第一次接触 DP 是在训练中。</p>
+<p>训练时：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">不同 GPU 处理不同 batch</span><br><span class="line">      ↓</span><br><span class="line">各自计算梯度</span><br><span class="line">      ↓</span><br><span class="line">AllReduce 同步梯度</span><br><span class="line">      ↓</span><br><span class="line">更新相同模型参数</span><br></pre>
+
+<p>但是在<strong>推理阶段</strong>，一般没有反向传播，也没有梯度同步，所以 DP 更简单：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">请求分发到不同模型副本</span><br><span class="line">      ↓</span><br><span class="line">各自独立推理</span><br><span class="line">      ↓</span><br><span class="line">返回结果</span><br></pre>
+
+<p>因此，推理中的 DP 更像是：</p>
+<blockquote>
+<p><strong>❝多开几个模型服务实例，提高并发处理能力。</strong></p>
+</blockquote>
+<hr>
+<h3 id="1-3-DP-的结构图"><a href="#1-3-DP-的结构图" class="headerlink" title="1.3 DP 的结构图"></a><strong>1.3 DP 的结构图</strong></h3><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">              Load Balancer / Scheduler</span><br><span class="line">                      │</span><br><span class="line">     ┌────────────────┼────────────────┐</span><br><span class="line">     │                │                │</span><br><span class="line">DP Replica <span class="number">0</span>     DP Replica <span class="number">1</span>     DP Replica <span class="number">2</span></span><br><span class="line">     │                │                │</span><br><span class="line">完整模型副本      完整模型副本      完整模型副本</span><br><span class="line">     │                │                │</span><br><span class="line"> GPU Group <span class="number">0</span>      GPU Group <span class="number">1</span>      GPU Group <span class="number">2</span></span><br></pre>
+
+<p>注意，这里的一个 <strong>DP Replica</strong> 不一定只是一张 GPU。</p>
+<p>比如大模型太大，需要 TP=8 才能放下，那么一个 DP 副本可能是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP Replica <span class="number">0</span> = <span class="number">8</span> 张 GPU 做 TP</span><br><span class="line">DP Replica <span class="number">1</span> = <span class="number">8</span> 张 GPU 做 TP</span><br><span class="line">DP Replica <span class="number">2</span> = <span class="number">8</span> 张 GPU 做 TP</span><br></pre>
+
+<p>也就是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP = <span class="number">3</span></span><br><span class="line">TP = <span class="number">8</span></span><br><span class="line">总 GPU 数 = <span class="number">3</span> × <span class="number">8</span> = <span class="number">24</span></span><br></pre>
+
+<hr>
+<h3 id="1-4-DP-的优点"><a href="#1-4-DP-的优点" class="headerlink" title="1.4 DP 的优点"></a><strong>1.4 DP 的优点</strong></h3><p>DP 最大的优点是简单、稳定、吞吐扩展好。</p>
+<p>当单个模型副本已经可以正常运行时，增加 DP 副本通常可以接近线性提升并发能力。</p>
+<p>例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">1</span> 个副本：每秒处理 <span class="number">100</span> tokens</span><br><span class="line"><span class="number">2</span> 个副本：理论上接近 <span class="number">200</span> tokens</span><br><span class="line"><span class="number">4</span> 个副本：理论上接近 <span class="number">400</span> tokens</span><br></pre>
+
+<p>当然，真实场景还会受调度、显存、CPU、网络、KV Cache、请求长度差异影响。</p>
+<hr>
+<h3 id="1-5-DP-的缺点"><a href="#1-5-DP-的缺点" class="headerlink" title="1.5 DP 的缺点"></a><strong>1.5 DP 的缺点</strong></h3><p>DP 的主要问题是：</p>
+<blockquote>
+<p><strong>❝每个副本都要保存一份模型权重，显存开销大。</strong></p>
+</blockquote>
+<p>如果模型本身已经需要 8 张 GPU 才能放下，那么做 DP 就需要更多 GPU。</p>
+<p>例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">一个模型副本需要 TP=<span class="number">8</span></span><br><span class="line">如果 DP=<span class="number">4</span></span><br><span class="line">总共需要 <span class="number">8</span> × <span class="number">4</span> = <span class="number">32</span> 张 GPU</span><br></pre>
+
+<p>所以 DP 适合：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型已经能在一个 GPU 组内放下</span><br><span class="line">并且你想提高并发吞吐</span><br></pre>
+
+<p>不适合：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型太大，连一个副本都放不下</span><br></pre>
+
+<p>这种情况要先考虑 TP、PP、EP。</p>
+<hr>
+<h2 id="2-TP：Tensor-Parallel，张量并行"><a href="#2-TP：Tensor-Parallel，张量并行" class="headerlink" title="2. TP：Tensor Parallel，张量并行"></a><strong>2. TP：Tensor Parallel，张量并行</strong></h2><h3 id="2-1-直观理解"><a href="#2-1-直观理解" class="headerlink" title="2.1 直观理解"></a><strong>2.1 直观理解</strong></h3><p><strong>TP 是把模型中的大矩阵切开，让多张 GPU 一起完成同一层的计算。</strong></p>
+<p>Transformer 里面最重的计算主要是矩阵乘法，例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Y = XW</span><br></pre>
+
+<p>其中：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">X：输入激活</span><br><span class="line">W：模型权重矩阵</span><br><span class="line">Y：输出</span><br></pre>
+
+<p>如果 W 太大，一张 GPU 放不下，或者计算太慢，就可以把 W 切开。</p>
+<hr>
+<h3 id="2-2-TP-的基本图示"><a href="#2-2-TP-的基本图示" class="headerlink" title="2.2 TP 的基本图示"></a><strong>2.2 TP 的基本图示</strong></h3><p>假设一个线性层权重矩阵 W 被切成 4 份：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">原始权重矩阵 W</span><br><span class="line">┌──────────────────────────────┐</span><br><span class="line">│                              │</span><br><span class="line">│              W               │</span><br><span class="line">│                              │</span><br><span class="line">└──────────────────────────────┘</span><br><span class="line"></span><br><span class="line">切成 <span class="number">4</span> 份：</span><br><span class="line"></span><br><span class="line">┌───────┬───────┬───────┬───────┐</span><br><span class="line">│ W_0   │ W_1   │ W_2   │ W_3   │</span><br><span class="line">└───────┴───────┴───────┴───────┘</span><br><span class="line">   │       │       │       │</span><br><span class="line">  GPU0    GPU1    GPU2    GPU3</span><br></pre>
+
+<p>每张 GPU 只保存一部分权重，并计算一部分结果。</p>
+<hr>
+<h3 id="2-3-TP-的计算流程"><a href="#2-3-TP-的计算流程" class="headerlink" title="2.3 TP 的计算流程"></a><strong>2.3 TP 的计算流程</strong></h3><p>以列切分为例：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">输入 X</span><br><span class="line"> │</span><br><span class="line"> ├── GPU0: X × W0 → Y0</span><br><span class="line"> ├── GPU1: X × W1 → Y1</span><br><span class="line"> ├── GPU2: X × W2 → Y2</span><br><span class="line"> └── GPU3: X × W3 → Y3</span><br><span class="line">             │</span><br><span class="line">             ↓</span><br><span class="line">       拼接 / 通信</span><br><span class="line">             ↓</span><br><span class="line">        完整输出 Y</span><br></pre>
+
+<p>也就是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Y = concat(Y0, Y1, Y2, Y3)</span><br></pre>
+
+<p>在一些层里面还需要做 AllReduce：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0 局部结果</span><br><span class="line">GPU1 局部结果</span><br><span class="line">GPU2 局部结果</span><br><span class="line">GPU3 局部结果</span><br><span class="line">      │</span><br><span class="line">      ↓</span><br><span class="line">  AllReduce 汇总</span><br><span class="line">      │</span><br><span class="line">      ↓</span><br><span class="line">  每张 GPU 得到完整或所需结果</span><br></pre>
+
+<hr>
+<h3 id="2-4-TP-为什么常用于大模型推理？"><a href="#2-4-TP-为什么常用于大模型推理？" class="headerlink" title="2.4 TP 为什么常用于大模型推理？"></a><strong>2.4 TP 为什么常用于大模型推理？</strong></h3><p>因为 Dense Transformer 模型的很多层都很大，例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Attention 的 Q/K/V/O 投影</span><br><span class="line">MLP 的 up_proj、gate_proj、down_proj</span><br></pre>
+
+<p>这些矩阵可能非常巨大。</p>
+<p>TP 可以解决两个问题：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">1.</span> 单卡显存放不下完整模型</span><br><span class="line"><span class="number">2.</span> 单卡算力不够，需要多卡一起算一层</span><br></pre>
+
+<hr>
+<h3 id="2-5-TP-的优点"><a href="#2-5-TP-的优点" class="headerlink" title="2.5 TP 的优点"></a><strong>2.5 TP 的优点</strong></h3><p>TP 的优点是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">1.</span> 可以把单层权重拆到多张 GPU 上</span><br><span class="line"><span class="number">2.</span> 适合 Dense 大模型</span><br><span class="line"><span class="number">3.</span> 对单请求延迟也可能有帮助</span><br><span class="line"><span class="number">4.</span> 是 vLLM、TensorRT-LLM、Megatron-LM 等框架常用方式</span><br></pre>
+
+<p>比如一个 70B 或 100B 级别模型，可能需要：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP=<span class="number">4</span></span><br><span class="line">TP=<span class="number">8</span></span><br></pre>
+
+<p>才能比较舒服地跑起来。</p>
+<hr>
+<h3 id="2-6-TP-的缺点"><a href="#2-6-TP-的缺点" class="headerlink" title="2.6 TP 的缺点"></a><strong>2.6 TP 的缺点</strong></h3><p>TP 的缺点主要是通信频繁。</p>
+<p>因为每一层内部都可能需要 GPU 之间通信：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Attention 层通信</span><br><span class="line">MLP 层通信</span><br><span class="line">Residual 相关通信</span><br><span class="line">Logits 相关通信</span><br></pre>
+
+<p>所以 TP 对硬件互联要求较高。</p>
+<p>理想情况：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">同一台机器内 NVLink / NVSwitch</span><br></pre>
+
+<p>可以比较高效。</p>
+<p>如果跨机器做 TP：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">机器 A 的 GPU 需要频繁和机器 B 的 GPU 通信</span><br></pre>
+
+<p>可能通信开销很大，效率下降明显。</p>
+<p>所以经验上：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP 优先放在单机内部</span><br><span class="line">跨机器慎用 TP</span><br></pre>
+
+<hr>
+<h2 id="3-PP：Pipeline-Parallel，流水线并行"><a href="#3-PP：Pipeline-Parallel，流水线并行" class="headerlink" title="3. PP：Pipeline Parallel，流水线并行"></a><strong>3. PP：Pipeline Parallel，流水线并行</strong></h2><h3 id="3-1-直观理解"><a href="#3-1-直观理解" class="headerlink" title="3.1 直观理解"></a><strong>3.1 直观理解</strong></h3><p><strong>PP 是把模型按层切开，不同 GPU 负责不同层。</strong></p>
+<p>比如一个 Transformer 有 80 层，可以这样切：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0：第 <span class="number">1</span> ~ <span class="number">20</span> 层</span><br><span class="line">GPU1：第 <span class="number">21</span> ~ <span class="number">40</span> 层</span><br><span class="line">GPU2：第 <span class="number">41</span> ~ <span class="number">60</span> 层</span><br><span class="line">GPU3：第 <span class="number">61</span> ~ <span class="number">80</span> 层</span><br></pre>
+
+<p>请求从第一段流向最后一段。</p>
+<hr>
+<h3 id="3-2-PP-的结构图"><a href="#3-2-PP-的结构图" class="headerlink" title="3.2 PP 的结构图"></a><strong>3.2 PP 的结构图</strong></h3><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">输入 Token</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">┌──────────────┐</span><br><span class="line">│ GPU0         │</span><br><span class="line">│ Layer <span class="number">1</span><span class="number">-20</span>   │</span><br><span class="line">└──────┬───────┘</span><br><span class="line">       │ 激活传递</span><br><span class="line">       ▼</span><br><span class="line">┌──────────────┐</span><br><span class="line">│ GPU1         │</span><br><span class="line">│ Layer <span class="number">21</span><span class="number">-40</span>  │</span><br><span class="line">└──────┬───────┘</span><br><span class="line">       │ 激活传递</span><br><span class="line">       ▼</span><br><span class="line">┌──────────────┐</span><br><span class="line">│ GPU2         │</span><br><span class="line">│ Layer <span class="number">41</span><span class="number">-60</span>  │</span><br><span class="line">└──────┬───────┘</span><br><span class="line">       │ 激活传递</span><br><span class="line">       ▼</span><br><span class="line">┌──────────────┐</span><br><span class="line">│ GPU3         │</span><br><span class="line">│ Layer <span class="number">61</span><span class="number">-80</span>  │</span><br><span class="line">└──────┬───────┘</span><br><span class="line">       │</span><br><span class="line">       ▼</span><br><span class="line">输出 Token</span><br></pre>
+
+<p>这就像工厂流水线：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">工人 <span class="number">1</span> 负责切菜</span><br><span class="line">工人 <span class="number">2</span> 负责炒菜</span><br><span class="line">工人 <span class="number">3</span> 负责装盘</span><br><span class="line">工人 <span class="number">4</span> 负责上菜</span><br></pre>
+
+<p>每个人只负责一部分工序。</p>
+<hr>
+<h3 id="3-3-PP-的关键问题：流水线气泡"><a href="#3-3-PP-的关键问题：流水线气泡" class="headerlink" title="3.3 PP 的关键问题：流水线气泡"></a><strong>3.3 PP 的关键问题：流水线气泡</strong></h3><p>如果只有一个请求，它必须依次经过 GPU0、GPU1、GPU2、GPU3：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">时间 <span class="number">1</span>：GPU0 工作，GPU1/GPU2/GPU3 空闲</span><br><span class="line">时间 <span class="number">2</span>：GPU1 工作，GPU0/GPU2/GPU3 空闲</span><br><span class="line">时间 <span class="number">3</span>：GPU2 工作，GPU0/GPU1/GPU3 空闲</span><br><span class="line">时间 <span class="number">4</span>：GPU3 工作，GPU0/GPU1/GPU2 空闲</span><br></pre>
+
+<p>这会造成大量空闲，叫做：</p>
+<blockquote>
+<p><strong>❝Pipeline Bubble，流水线气泡。</strong></p>
+</blockquote>
+<p>图示：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">时间 →      T1      T2      T3      T4</span><br><span class="line">GPU0       工作     空闲    空闲    空闲</span><br><span class="line">GPU1       空闲     工作    空闲    空闲</span><br><span class="line">GPU2       空闲     空闲    工作    空闲</span><br><span class="line">GPU3       空闲     空闲    空闲    工作</span><br></pre>
+
+<p>为了提高利用率，需要多个 micro-batch 或多个请求同时进入流水线：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">时间 →      T1      T2      T3      T4      T5      T6</span><br><span class="line">GPU0       A       B       C       D       ...</span><br><span class="line">GPU1       空闲    A       B       C       D</span><br><span class="line">GPU2       空闲    空闲    A       B       C</span><br><span class="line">GPU3       空闲    空闲    空闲    A       B</span><br></pre>
+
+<p>这样 GPU 就能更连续地工作。</p>
+<hr>
+<h3 id="3-4-PP-的优点"><a href="#3-4-PP-的优点" class="headerlink" title="3.4 PP 的优点"></a><strong>3.4 PP 的优点</strong></h3><p>PP 的优点是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">1.</span> 可以把很多层拆到不同 GPU</span><br><span class="line"><span class="number">2.</span> 适合模型深度很大、层数很多的模型</span><br><span class="line"><span class="number">3.</span> 跨机器时比 TP 更容易一些，因为层间只传激活</span><br><span class="line"><span class="number">4.</span> 可以和 TP 组合，形成 TP + PP</span><br></pre>
+
+<p>例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型总共 <span class="number">80</span> 层</span><br><span class="line">PP=<span class="number">4</span></span><br><span class="line">每个 stage <span class="number">20</span> 层</span><br><span class="line">每个 stage 内部再 TP=<span class="number">8</span></span><br><span class="line">总 GPU = PP × TP = <span class="number">4</span> × <span class="number">8</span> = <span class="number">32</span></span><br></pre>
+
+<p>结构如下：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">             Pipeline Stage <span class="number">0</span>       Pipeline Stage <span class="number">1</span>       Pipeline Stage <span class="number">2</span>       Pipeline Stage <span class="number">3</span></span><br><span class="line">输入 ───&gt;   Layer <span class="number">1</span><span class="number">-20</span>       ───&gt;   Layer <span class="number">21</span><span class="number">-40</span>      ───&gt;   Layer <span class="number">41</span><span class="number">-60</span>      ───&gt;   Layer <span class="number">61</span><span class="number">-80</span> ───&gt; 输出</span><br><span class="line">              TP=<span class="number">8</span>                  TP=<span class="number">8</span>                  TP=<span class="number">8</span>                  TP=<span class="number">8</span></span><br></pre>
+
+<hr>
+<h3 id="3-5-PP-的缺点"><a href="#3-5-PP-的缺点" class="headerlink" title="3.5 PP 的缺点"></a><strong>3.5 PP 的缺点</strong></h3><p>PP 的主要缺点：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">1.</span> 单请求延迟可能变高</span><br><span class="line"><span class="number">2.</span> 有流水线气泡</span><br><span class="line"><span class="number">3.</span> 调度复杂</span><br><span class="line"><span class="number">4.</span> 不同 stage 负载不均会拖慢整体</span><br></pre>
+
+<p>比如某些层更重，某些层更轻，如果切分不均匀，就会出现：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0 很忙</span><br><span class="line">GPU1 很闲</span><br><span class="line">GPU2 很忙</span><br><span class="line">GPU3 很闲</span><br></pre>
+
+<p>这会降低整体效率。</p>
+<hr>
+<h2 id="4-EP：Expert-Parallel，专家并行"><a href="#4-EP：Expert-Parallel，专家并行" class="headerlink" title="4. EP：Expert Parallel，专家并行"></a><strong>4. EP：Expert Parallel，专家并行</strong></h2><h3 id="4-1-直观理解"><a href="#4-1-直观理解" class="headerlink" title="4.1 直观理解"></a><strong>4.1 直观理解</strong></h3><p><strong>EP 主要用于 MoE 模型。</strong></p>
+<p>MoE 全称是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Mixture <span class="keyword">of</span> Experts</span><br><span class="line">混合专家模型</span><br></pre>
+
+<p>MoE 模型里面有很多专家网络，但每个 token 通常只激活其中少数几个专家。</p>
+<p>例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">总共有 <span class="number">64</span> 个专家</span><br><span class="line">每个 token 只选择 Top<span class="number">-2</span> 个专家</span><br></pre>
+
+<p>这意味着：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型参数很大</span><br><span class="line">但每次实际计算只用一小部分</span><br></pre>
+
+<hr>
+<h3 id="4-2-MoE-层结构"><a href="#4-2-MoE-层结构" class="headerlink" title="4.2 MoE 层结构"></a><strong>4.2 MoE 层结构</strong></h3><p>普通 Dense MLP 是这样：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">输入 Token</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">一个巨大的 MLP</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">输出</span><br></pre>
+
+<p>MoE MLP 是这样：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">输入 Token</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">Router / Gate</span><br><span class="line">   │</span><br><span class="line">   ├── Expert <span class="number">0</span></span><br><span class="line">   ├── Expert <span class="number">1</span></span><br><span class="line">   ├── Expert <span class="number">2</span></span><br><span class="line">   ├── Expert <span class="number">3</span></span><br><span class="line">   ├── ...</span><br><span class="line">   └── Expert N</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">加权合并输出</span><br></pre>
+
+<p>Router 会判断：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">这个 token 应该交给哪些专家处理？</span><br></pre>
+
+<hr>
+<h3 id="4-3-EP-的图示"><a href="#4-3-EP-的图示" class="headerlink" title="4.3 EP 的图示"></a><strong>4.3 EP 的图示</strong></h3><p>假设有 8 个专家，分布在 4 张 GPU 上：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0: Expert <span class="number">0</span>, Expert <span class="number">1</span></span><br><span class="line">GPU1: Expert <span class="number">2</span>, Expert <span class="number">3</span></span><br><span class="line">GPU2: Expert <span class="number">4</span>, Expert <span class="number">5</span></span><br><span class="line">GPU3: Expert <span class="number">6</span>, Expert <span class="number">7</span></span><br></pre>
+
+<p>图示：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">             MoE Router</span><br><span class="line">                 │</span><br><span class="line">    ┌────────────┼────────────┐</span><br><span class="line">    │            │            │</span><br><span class="line">  Token A      Token B      Token C</span><br><span class="line">    │            │            │</span><br><span class="line">    ▼            ▼            ▼</span><br><span class="line">Expert <span class="number">1</span>     Expert <span class="number">4</span>     Expert <span class="number">7</span></span><br><span class="line"> GPU0         GPU2         GPU3</span><br></pre>
+
+<p>每个 token 被<a target="_blank" rel="noopener external nofollow noreferrer" href="https://cloud.tencent.com/developer/techpedia/1612?from_column=20065&amp;from=20065">路由</a>到不同专家，因此需要 token 在 GPU 之间流动。</p>
+<hr>
+<h3 id="4-4-EP-的计算流程"><a href="#4-4-EP-的计算流程" class="headerlink" title="4.4 EP 的计算流程"></a><strong>4.4 EP 的计算流程</strong></h3><p>典型 MoE 推理流程如下：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">输入 Token</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">Router 计算每个 token 应该去哪个专家</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">All-to-All：把 token 发送到对应专家所在 GPU</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">各 GPU 上的专家计算</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">All-to-All：把专家输出送回原位置</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">合并输出</span><br></pre>
+
+<p>更形象一点：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Token 分发前：</span><br><span class="line"></span><br><span class="line">GPU0: token a, token b</span><br><span class="line">GPU1: token c, token d</span><br><span class="line">GPU2: token e, token f</span><br><span class="line">GPU3: token g, token h</span><br><span class="line"></span><br><span class="line">Router 判断后：</span><br><span class="line"></span><br><span class="line">token a → GPU2 的 Expert <span class="number">5</span></span><br><span class="line">token b → GPU1 的 Expert <span class="number">3</span></span><br><span class="line">token c → GPU3 的 Expert <span class="number">7</span></span><br><span class="line">token d → GPU0 的 Expert <span class="number">1</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">经过 All-to-All 重新分发后，各专家开始计算。</span><br></pre>
+
+<hr>
+<h3 id="4-5-EP-的优点"><a href="#4-5-EP-的优点" class="headerlink" title="4.5 EP 的优点"></a><strong>4.5 EP 的优点</strong></h3><p>EP 的核心价值是：</p>
+<blockquote>
+<p><strong>❝把大量专家参数分布在多张 GPU 上，同时每个 token 只激活少量专家。</strong></p>
+</blockquote>
+<p>优点：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">1.</span> 支持超大 MoE 模型</span><br><span class="line"><span class="number">2.</span> 专家权重不用每张 GPU 都保存</span><br><span class="line"><span class="number">3.</span> 激活参数少，计算量相对可控</span><br><span class="line"><span class="number">4.</span> 对 DeepSeek-V3 / DeepSeek-V4 / Mixtral / Qwen-MoE 这类模型很重要</span><br></pre>
+
+<p>比如一个 MoE 模型总参数很大，但每个 token 只用一部分专家：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">总参数：数百 B</span><br><span class="line">激活参数：几十 B</span><br></pre>
+
+<p>EP 就是为了高效管理这些专家。</p>
+<hr>
+<h3 id="4-6-EP-的缺点"><a href="#4-6-EP-的缺点" class="headerlink" title="4.6 EP 的缺点"></a><strong>4.6 EP 的缺点</strong></h3><p>EP 的主要问题是通信和<a target="_blank" rel="noopener external nofollow noreferrer" href="https://cloud.tencent.com/developer/techpedia/1093?from_column=20065&amp;from=20065">负载均衡</a>。</p>
+<h4 id="问题-1：All-to-All-通信开销大"><a href="#问题-1：All-to-All-通信开销大" class="headerlink" title="问题 1：All-to-All 通信开销大"></a><strong>问题 1：All-to-All 通信开销大</strong></h4><p>EP 需要频繁把 token 发送到专家所在 GPU：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0 发 token 给 GPU1/GPU2/GPU3</span><br><span class="line">GPU1 发 token 给 GPU0/GPU2/GPU3</span><br><span class="line">GPU2 发 token 给 GPU0/GPU1/GPU3</span><br><span class="line">GPU3 发 token 给 GPU0/GPU1/GPU2</span><br></pre>
+
+<p>这种通信叫：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">All-to-All</span><br></pre>
+
+<p>它比普通 AllReduce 更复杂，对网络要求高。</p>
+<hr>
+<h4 id="问题-2：专家负载不均衡"><a href="#问题-2：专家负载不均衡" class="headerlink" title="问题 2：专家负载不均衡"></a><strong>问题 2：专家负载不均衡</strong></h4><p>如果 Router 总是喜欢某几个专家，就会出现：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Expert <span class="number">3</span> 非常忙</span><br><span class="line">Expert <span class="number">7</span> 非常忙</span><br><span class="line">Expert <span class="number">1</span> 几乎没活</span><br><span class="line">Expert <span class="number">5</span> 几乎没活</span><br></pre>
+
+<p>这会导致：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">部分 GPU 很忙</span><br><span class="line">部分 GPU 空闲</span><br><span class="line">整体速度被最忙的专家拖慢</span><br></pre>
+
+<p>所以 MoE 推理里经常会考虑：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">expert load balancing</span><br><span class="line">专家负载均衡</span><br></pre>
+
+<hr>
+<h2 id="5-四种并行方式的核心区别"><a href="#5-四种并行方式的核心区别" class="headerlink" title="5. 四种并行方式的核心区别"></a><strong>5. 四种并行方式的核心区别</strong></h2><p>可以用这张总图理解：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">                   大模型多 GPU 推理并行</span><br><span class="line">                           │</span><br><span class="line">       ┌───────────────────┼───────────────────┐</span><br><span class="line">       │                   │                   │</span><br><span class="line">    拆请求               拆模型              拆专家</span><br><span class="line">       │                   │                   │</span><br><span class="line">       ▼                   ▼                   ▼</span><br><span class="line">  DP 数据并行        TP / PP 模型并行        EP 专家并行</span><br><span class="line">       │              │          │             │</span><br><span class="line">       │              │          │             │</span><br><span class="line">多个完整副本      拆每一层矩阵   拆模型层     拆 MoE 专家</span><br><span class="line">       │              │          │             │</span><br><span class="line">提高并发吞吐      降低单层压力   支撑深层模型  支撑超大 MoE</span><br></pre>
+
+<hr>
+<h2 id="6-用一个厨房类比整体理解"><a href="#6-用一个厨房类比整体理解" class="headerlink" title="6. 用一个厨房类比整体理解"></a><strong>6. 用一个厨房类比整体理解</strong></h2><p>假设大模型是一家超级餐厅。</p>
+<h3 id="DP-数据并行"><a href="#DP-数据并行" class="headerlink" title="DP 数据并行"></a><strong>DP 数据并行</strong></h3><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">开 <span class="number">4</span> 家一模一样的餐厅</span><br><span class="line">每家餐厅都有完整厨师团队</span><br><span class="line">不同顾客去不同餐厅</span><br></pre>
+
+<p>对应：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">多个完整模型副本</span><br><span class="line">不同请求分给不同副本</span><br></pre>
+
+<hr>
+<h3 id="TP-张量并行"><a href="#TP-张量并行" class="headerlink" title="TP 张量并行"></a><strong>TP 张量并行</strong></h3><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">一块巨大的牛排，一个厨师切不动</span><br><span class="line"><span class="number">4</span> 个厨师一起切同一块牛排</span><br></pre>
+
+<p>对应：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">一个大矩阵太大</span><br><span class="line">多张 GPU 一起算同一层</span><br></pre>
+
+<hr>
+<h3 id="PP-流水线并行"><a href="#PP-流水线并行" class="headerlink" title="PP 流水线并行"></a><strong>PP 流水线并行</strong></h3><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">厨师 A 负责洗菜</span><br><span class="line">厨师 B 负责切菜</span><br><span class="line">厨师 C 负责炒菜</span><br><span class="line">厨师 D 负责装盘</span><br></pre>
+
+<p>对应：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">不同 GPU 负责不同 Transformer 层</span><br></pre>
+
+<hr>
+<h3 id="EP-专家并行"><a href="#EP-专家并行" class="headerlink" title="EP 专家并行"></a><strong>EP 专家并行</strong></h3><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">中餐专家、西餐专家、甜品专家、烧烤专家分别在不同工位</span><br><span class="line">不同订单被分配给不同专家</span><br></pre>
+
+<p>对应：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">不同 GPU 保存不同 MoE Expert</span><br><span class="line">不同 token 路由到不同专家</span><br></pre>
+
+<hr>
+<h2 id="7-推理时它们对显存的影响"><a href="#7-推理时它们对显存的影响" class="headerlink" title="7. 推理时它们对显存的影响"></a><strong>7. 推理时它们对显存的影响</strong></h2><h3 id="7-1-DP-对显存的影响"><a href="#7-1-DP-对显存的影响" class="headerlink" title="7.1 DP 对显存的影响"></a><strong>7.1 DP 对显存的影响</strong></h3><p>DP 是复制模型，所以：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">每个 DP 副本都需要一份完整模型权重</span><br></pre>
+
+<p>如果一个模型副本需要 8 张 GPU，那么 DP=2 就需要 16 张 GPU。</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP 显存特点：</span><br><span class="line">模型权重复制</span><br><span class="line">KV Cache 也按副本独立保存</span><br></pre>
+
+<hr>
+<h3 id="7-2-TP-对显存的影响"><a href="#7-2-TP-对显存的影响" class="headerlink" title="7.2 TP 对显存的影响"></a><strong>7.2 TP 对显存的影响</strong></h3><p>TP 会切分权重：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP=<span class="number">4</span></span><br><span class="line">每张 GPU 大约保存 <span class="number">1</span>/<span class="number">4</span> 的部分权重</span><br></pre>
+
+<p>但是实际显存不一定严格等于 1/4，因为还有：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">激活</span><br><span class="line">KV Cache</span><br><span class="line">通信 buffer</span><br><span class="line">CUDA graph buffer</span><br><span class="line">临时 workspace</span><br><span class="line">框架额外开销</span><br></pre>
+
+<p>所以只能近似理解为：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP 越大，单卡模型权重压力越小，但通信压力越大。</span><br></pre>
+
+<hr>
+<h3 id="7-3-PP-对显存的影响"><a href="#7-3-PP-对显存的影响" class="headerlink" title="7.3 PP 对显存的影响"></a><strong>7.3 PP 对显存的影响</strong></h3><p>PP 按层切模型：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">PP=<span class="number">4</span></span><br><span class="line">每个 stage 保存大约 <span class="number">1</span>/<span class="number">4</span> 的层</span><br></pre>
+
+<p>但不同层大小可能不完全一样，尤其 MoE 模型中，某些层可能有专家模块，显存不一定均匀。</p>
+<hr>
+<h3 id="7-4-EP-对显存的影响"><a href="#7-4-EP-对显存的影响" class="headerlink" title="7.4 EP 对显存的影响"></a><strong>7.4 EP 对显存的影响</strong></h3><p>EP 主要切专家权重。</p>
+<p>例如：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">64</span> 个专家</span><br><span class="line">EP=<span class="number">8</span></span><br><span class="line">每张 GPU 放 <span class="number">8</span> 个专家</span><br></pre>
+
+<p>这样每张 GPU 不需要保存全部专家。</p>
+<p>但是 EP 不能切掉所有权重，因为模型中还有：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Attention 层</span><br><span class="line">Router</span><br><span class="line">Embedding</span><br><span class="line">Norm</span><br><span class="line">非 MoE 层</span><br></pre>
+
+<p>这些部分可能还需要 TP、DP 或 PP 配合。</p>
+<hr>
+<h2 id="8-推理时它们对通信的影响"><a href="#8-推理时它们对通信的影响" class="headerlink" title="8. 推理时它们对通信的影响"></a><strong>8. 推理时它们对通信的影响</strong></h2><table>
+<thead>
+<tr>
+<th align="left">并行方式</th>
+<th align="left">通信强度</th>
+<th align="left">主要通信类型</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DP</td>
+<td align="left">低</td>
+<td align="left">请求级调度</td>
+<td align="left">推理时副本之间通常不需要频繁通信</td>
+</tr>
+<tr>
+<td align="left">TP</td>
+<td align="left">高</td>
+<td align="left">AllReduce / AllGather</td>
+<td align="left">每层内部都可能通信</td>
+</tr>
+<tr>
+<td align="left">PP</td>
+<td align="left">中</td>
+<td align="left">Stage 间激活传递</td>
+<td align="left">每个 stage 之间传激活</td>
+</tr>
+<tr>
+<td align="left">EP</td>
+<td align="left">高</td>
+<td align="left">All-to-All</td>
+<td align="left">token 要发到对应专家所在 GPU</td>
+</tr>
+</tbody></table>
+<p>简单排序：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">通信复杂度大致：</span><br><span class="line">DP &lt; PP &lt; TP ≈ EP</span><br></pre>
+
+<p>但这不是绝对的，具体取决于模型结构、batch size、序列长度、并行度、网络拓扑。</p>
+<hr>
+<h2 id="9-推理时它们对延迟和吞吐的影响"><a href="#9-推理时它们对延迟和吞吐的影响" class="headerlink" title="9. 推理时它们对延迟和吞吐的影响"></a><strong>9. 推理时它们对延迟和吞吐的影响</strong></h2><h3 id="9-1-DP"><a href="#9-1-DP" class="headerlink" title="9.1 DP"></a><strong>9.1 DP</strong></h3><p>DP 主要提高吞吐，不一定降低单请求延迟。</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">单个请求还是只在某一个副本上跑</span><br></pre>
+
+<p>所以：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP 对高并发有利</span><br><span class="line">DP 对单请求延迟帮助有限</span><br></pre>
+
+<hr>
+<h3 id="9-2-TP"><a href="#9-2-TP" class="headerlink" title="9.2 TP"></a><strong>9.2 TP</strong></h3><p>TP 可能降低单请求延迟，因为一层计算被多卡分担。</p>
+<p>但是 TP 通信频繁，如果通信慢，反而可能变慢。</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP 好不好，取决于：</span><br><span class="line">计算节省 &gt; 通信开销</span><br></pre>
+
+<hr>
+<h3 id="9-3-PP"><a href="#9-3-PP" class="headerlink" title="9.3 PP"></a><strong>9.3 PP</strong></h3><p>PP 更偏向解决模型放置问题和吞吐问题。</p>
+<p>如果请求少，PP 容易有流水线气泡，单请求延迟可能变差。</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">PP 适合较大 batch 或持续请求流</span><br></pre>
+
+<hr>
+<h3 id="9-4-EP"><a href="#9-4-EP" class="headerlink" title="9.4 EP"></a><strong>9.4 EP</strong></h3><p>EP 对 MoE 模型非常关键。</p>
+<p>如果专家分布合理，EP 可以显著降低单卡专家权重压力。</p>
+<p>但如果 All-to-All 很慢，或者专家负载不均衡，速度会下降。</p>
+<hr>
+<h2 id="10-实际部署中如何组合？"><a href="#10-实际部署中如何组合？" class="headerlink" title="10. 实际部署中如何组合？"></a><strong>10. 实际部署中如何组合？</strong></h2><p>真实大模型部署一般不是只用一种并行，而是组合使用。</p>
+<h3 id="10-1-Dense-模型常见组合"><a href="#10-1-Dense-模型常见组合" class="headerlink" title="10.1 Dense 模型常见组合"></a><strong>10.1 Dense 模型常见组合</strong></h3><p>例如 LLaMA、Qwen Dense、Baichuan Dense 等：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP + DP</span><br></pre>
+
+<p>或者更大时：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP + PP + DP</span><br></pre>
+
+<p>示意：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">              请求调度器</span><br><span class="line">                 │</span><br><span class="line">     ┌───────────┴───────────┐</span><br><span class="line">     │                       │</span><br><span class="line"> DP Replica <span class="number">0</span>            DP Replica <span class="number">1</span></span><br><span class="line">     │                       │</span><br><span class="line">┌────┴────┐             ┌────┴────┐</span><br><span class="line">│ TP=<span class="number">4</span>    │             │ TP=<span class="number">4</span>    │</span><br><span class="line">│ GPU0<span class="number">-3</span>  │             │ GPU4<span class="number">-7</span>  │</span><br><span class="line">└─────────┘             └─────────┘</span><br></pre>
+
+<p>含义：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">每 <span class="number">4</span> 张 GPU 组成一个 TP 模型副本</span><br><span class="line">一共有 <span class="number">2</span> 个副本</span><br><span class="line">所以 DP=<span class="number">2</span>，TP=<span class="number">4</span>，总 GPU=<span class="number">8</span></span><br></pre>
+
+<hr>
+<h3 id="10-2-超大-Dense-模型组合"><a href="#10-2-超大-Dense-模型组合" class="headerlink" title="10.2 超大 Dense 模型组合"></a><strong>10.2 超大 Dense 模型组合</strong></h3><p>如果模型太深、太大：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">PP=<span class="number">2</span></span><br><span class="line">TP=<span class="number">8</span></span><br><span class="line">DP=<span class="number">2</span></span><br></pre>
+
+<p>总 GPU：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">总 GPU = PP × TP × DP</span><br><span class="line">       = <span class="number">2</span> × <span class="number">8</span> × <span class="number">2</span></span><br><span class="line">       = <span class="number">32</span></span><br></pre>
+
+<p>结构：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">                       DP=<span class="number">2</span></span><br><span class="line">          ┌─────────────────────────────┐</span><br><span class="line">          │                             │</span><br><span class="line">      Replica <span class="number">0</span>                     Replica <span class="number">1</span></span><br><span class="line">          │                             │</span><br><span class="line">   ┌──────┴──────┐              ┌──────┴──────┐</span><br><span class="line">   │             │              │             │</span><br><span class="line">PP Stage <span class="number">0</span>    PP Stage <span class="number">1</span>     PP Stage <span class="number">0</span>    PP Stage <span class="number">1</span></span><br><span class="line"> TP=<span class="number">8</span>          TP=<span class="number">8</span>           TP=<span class="number">8</span>          TP=<span class="number">8</span></span><br></pre>
+
+<hr>
+<h3 id="10-3-MoE-模型常见组合"><a href="#10-3-MoE-模型常见组合" class="headerlink" title="10.3 MoE 模型常见组合"></a><strong>10.3 MoE 模型常见组合</strong></h3><p>对于 DeepSeek-V3、DeepSeek-V4、Mixtral、Qwen-MoE 这类模型，常见组合是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP + EP + DP</span><br></pre>
+
+<p>更大规模时：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP + EP + PP + DP</span><br></pre>
+
+<p>示意：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">              一个 MoE 模型副本</span><br><span class="line">                     │</span><br><span class="line">    ┌────────────────┼────────────────┐</span><br><span class="line">    │                │                │</span><br><span class="line">Attention 部分     MoE Expert 部分    层间结构</span><br><span class="line">    │                │                │</span><br><span class="line">   TP               EP               PP 可选</span><br></pre>
+
+<p>也就是说：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Attention / Dense 层：常用 TP</span><br><span class="line">MoE Expert 层：常用 EP</span><br><span class="line">模型太深：再加 PP</span><br><span class="line">并发不够：再加 DP</span><br></pre>
+
+<hr>
+<h2 id="11-一个具体例子：8-张-GPU-怎么选？"><a href="#11-一个具体例子：8-张-GPU-怎么选？" class="headerlink" title="11. 一个具体例子：8 张 GPU 怎么选？"></a><strong>11. 一个具体例子：8 张 GPU 怎么选？</strong></h2><p>假设你有 8 张 GPU。</p>
+<h3 id="情况-A：模型单卡能放下，并发很多"><a href="#情况-A：模型单卡能放下，并发很多" class="headerlink" title="情况 A：模型单卡能放下，并发很多"></a><strong>情况 A：模型单卡能放下，并发很多</strong></h3><p>建议：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP=<span class="number">8</span></span><br><span class="line">TP=<span class="number">1</span></span><br><span class="line">PP=<span class="number">1</span></span><br><span class="line">EP=<span class="number">1</span></span><br></pre>
+
+<p>结构：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line"><span class="number">8</span> 个独立模型副本</span><br><span class="line">每张 GPU 一个副本</span><br></pre>
+
+<p>适合：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">小模型</span><br><span class="line">高并发</span><br><span class="line">低通信</span><br></pre>
+
+<hr>
+<h3 id="情况-B：模型单卡放不下，需要-4-张卡才能放下"><a href="#情况-B：模型单卡放不下，需要-4-张卡才能放下" class="headerlink" title="情况 B：模型单卡放不下，需要 4 张卡才能放下"></a><strong>情况 B：模型单卡放不下，需要 4 张卡才能放下</strong></h3><p>建议：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP=<span class="number">4</span></span><br><span class="line">DP=<span class="number">2</span></span><br></pre>
+
+<p>结构：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0<span class="number">-3</span>：模型副本 <span class="number">1</span>，TP=<span class="number">4</span></span><br><span class="line">GPU4<span class="number">-7</span>：模型副本 <span class="number">2</span>，TP=<span class="number">4</span></span><br></pre>
+
+<p>适合：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型较大</span><br><span class="line">还想保留一定并发能力</span><br></pre>
+
+<hr>
+<h3 id="情况-C：模型需要-8-张卡才能放下"><a href="#情况-C：模型需要-8-张卡才能放下" class="headerlink" title="情况 C：模型需要 8 张卡才能放下"></a><strong>情况 C：模型需要 8 张卡才能放下</strong></h3><p>建议：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP=<span class="number">8</span></span><br><span class="line">DP=<span class="number">1</span></span><br></pre>
+
+<p>结构：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0<span class="number">-7</span> 一起跑一个模型副本</span><br></pre>
+
+<p>适合：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">大 Dense 模型</span><br><span class="line">单副本推理</span><br></pre>
+
+<p>缺点：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">只有一个副本，并发能力主要靠 continuous batching</span><br></pre>
+
+<hr>
+<h3 id="情况-D：MoE-模型，专家很多"><a href="#情况-D：MoE-模型，专家很多" class="headerlink" title="情况 D：MoE 模型，专家很多"></a><strong>情况 D：MoE 模型，专家很多</strong></h3><p>可能使用：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">EP=<span class="number">8</span></span><br><span class="line">TP=<span class="number">1</span> 或 TP=<span class="number">2</span>/<span class="number">4</span></span><br><span class="line">DP=<span class="number">1</span></span><br></pre>
+
+<p>或者：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP=<span class="number">4</span></span><br><span class="line">EP=<span class="number">8</span></span><br></pre>
+
+<p>具体要看框架是否支持这种组合，以及模型结构。</p>
+<hr>
+<h2 id="12-什么时候该用哪种并行？"><a href="#12-什么时候该用哪种并行？" class="headerlink" title="12. 什么时候该用哪种并行？"></a><strong>12. 什么时候该用哪种并行？</strong></h2><h3 id="12-1-优先判断模型是否能放下"><a href="#12-1-优先判断模型是否能放下" class="headerlink" title="12.1 优先判断模型是否能放下"></a><strong>12.1 优先判断模型是否能放下</strong></h3><p>第一步不是问“哪个最快”，而是问：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型能不能放进 GPU？</span><br></pre>
+
+<p>如果单卡能放下：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">优先 DP，提高并发</span><br></pre>
+
+<p>如果单卡放不下：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">优先 TP</span><br></pre>
+
+<p>如果 TP 到单机极限还放不下：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">考虑 PP</span><br></pre>
+
+<p>如果是 MoE 模型：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">必须重点考虑 EP</span><br></pre>
+
+<hr>
+<h3 id="12-2-再判断目标是吞吐还是延迟"><a href="#12-2-再判断目标是吞吐还是延迟" class="headerlink" title="12.2 再判断目标是吞吐还是延迟"></a><strong>12.2 再判断目标是吞吐还是延迟</strong></h3><p>如果目标是高并发吞吐：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP 更重要</span><br><span class="line">continuous batching 更重要</span><br><span class="line">KV Cache 管理更重要</span><br></pre>
+
+<p>如果目标是降低单请求延迟：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP 可能有帮助</span><br><span class="line">但通信不能太慢</span><br></pre>
+
+<p>如果目标是部署超大模型：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">TP / PP / EP 是基础</span><br><span class="line">DP 是锦上添花</span><br></pre>
+
+<hr>
+<h2 id="13-几个容易混淆的问题"><a href="#13-几个容易混淆的问题" class="headerlink" title="13. 几个容易混淆的问题"></a><strong>13. 几个容易混淆的问题</strong></h2><h3 id="13-1-DP-是不是效率最高？"><a href="#13-1-DP-是不是效率最高？" class="headerlink" title="13.1 DP 是不是效率最高？"></a><strong>13.1 DP 是不是效率最高？</strong></h3><p>不一定。</p>
+<p>DP 的优势是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">副本之间通信少</span><br><span class="line">扩展吞吐简单</span><br></pre>
+
+<p>但是前提是：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">每个副本能放下模型</span><br></pre>
+
+<p>如果一个模型需要 8 张 GPU 才能放下，你不能简单地说 DP=8 效率最高，因为每张 GPU 单独根本放不下模型。</p>
+<p>所以更准确地说：</p>
+<blockquote>
+<p><strong>❝当模型副本已经能放下时，DP 通常是最简单、最稳定的吞吐扩展方式。</strong></p>
+</blockquote>
+<p>但它不是万能的。</p>
+<hr>
+<h3 id="13-2-TP-越大越好吗？"><a href="#13-2-TP-越大越好吗？" class="headerlink" title="13.2 TP 越大越好吗？"></a><strong>13.2 TP 越大越好吗？</strong></h3><p>不是。</p>
+<p>TP 增大以后：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">单卡权重变少</span><br><span class="line">单卡计算变少</span><br></pre>
+
+<p>但同时：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU 间通信变多</span><br><span class="line">同步等待变多</span><br><span class="line">通信延迟变高</span><br></pre>
+
+<p>所以 TP 有一个合适范围。</p>
+<p>常见经验：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">单机内 TP=<span class="number">2</span>/<span class="number">4</span>/<span class="number">8</span> 比较常见</span><br><span class="line">跨机 TP 要谨慎</span><br></pre>
+
+<hr>
+<h3 id="13-3-PP-适合低延迟吗？"><a href="#13-3-PP-适合低延迟吗？" class="headerlink" title="13.3 PP 适合低延迟吗？"></a><strong>13.3 PP 适合低延迟吗？</strong></h3><p>通常不是特别适合单请求低延迟。</p>
+<p>PP 更适合：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">模型太大</span><br><span class="line">层数太多</span><br><span class="line">需要跨多组 GPU 放置</span><br></pre>
+
+<p>如果请求流稳定、batch 足够大，PP 的吞吐可以较好。</p>
+<p>但如果请求少，流水线气泡明显，GPU 利用率会差。</p>
+<hr>
+<h3 id="13-4-EP-是不是只适合-MoE？"><a href="#13-4-EP-是不是只适合-MoE？" class="headerlink" title="13.4 EP 是不是只适合 MoE？"></a><strong>13.4 EP 是不是只适合 MoE？</strong></h3><p>是的，严格来说 EP 主要针对 MoE 中的专家模块。</p>
+<p>对于普通 Dense 模型，没有专家结构，也就谈不上专家并行。</p>
+<p>Dense 模型主要用：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">DP</span><br><span class="line">TP</span><br><span class="line">PP</span><br></pre>
+
+<p>MoE 模型才会重点使用：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">EP</span><br></pre>
+
+<hr>
+<h2 id="14-和-KV-Cache-的关系"><a href="#14-和-KV-Cache-的关系" class="headerlink" title="14. 和 KV Cache 的关系"></a><strong>14. 和 KV Cache 的关系</strong></h2><p>大模型推理时，KV Cache 非常关键。</p>
+<h3 id="DP-与-KV-Cache"><a href="#DP-与-KV-Cache" class="headerlink" title="DP 与 KV Cache"></a><strong>DP 与 KV Cache</strong></h3><p>每个 DP 副本有自己的 KV Cache：</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">Replica <span class="number">0</span> 保存自己请求的 KV Cache</span><br><span class="line">Replica <span class="number">1</span> 保存自己请求的 KV Cache</span><br><span class="line">Replica <span class="number">2</span> 保存自己请求的 KV Cache</span><br></pre>
+
+<p>不同副本之间通常不共享。</p>
+<p>优点是简单，缺点是缓存不能跨副本复用，除非系统做了额外的粘性调度或分布式缓存。</p>
+<hr>
+<h3 id="TP-与-KV-Cache"><a href="#TP-与-KV-Cache" class="headerlink" title="TP 与 KV Cache"></a><strong>TP 与 KV Cache</strong></h3><p>TP 下，一个请求会跨多个 GPU 共同计算。</p>
+<p>KV Cache 通常也会按照 attention head 或张量维度分布在 TP 组内。</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">一个请求的 KV Cache</span><br><span class="line">   ├── 一部分在 GPU0</span><br><span class="line">   ├── 一部分在 GPU1</span><br><span class="line">   ├── 一部分在 GPU2</span><br><span class="line">   └── 一部分在 GPU3</span><br></pre>
+
+<p>所以 TP 组内 GPU 是强绑定的。</p>
+<hr>
+<h3 id="PP-与-KV-Cache"><a href="#PP-与-KV-Cache" class="headerlink" title="PP 与 KV Cache"></a><strong>PP 与 KV Cache</strong></h3><p>PP 下，不同 GPU 保存不同层的 KV Cache。</p>
+<p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">GPU0：Layer <span class="number">1</span><span class="number">-20</span> 的 KV Cache</span><br><span class="line">GPU1：Layer <span class="number">21</span><span class="number">-40</span> 的 KV Cache</span><br><span class="line">GPU2：Layer <span class="number">41</span><span class="number">-60</span> 的 KV Cache</span><br><span class="line">GPU3：Layer <span class="number">61</span><span class="number">-80</span> 的 KV Cache</span><br></pre>
+
+<p>请求必须按相同的 pipeline 路径走完整个模型。</p>
+<hr>
+<h3 id="EP-与-KV-Cache"><a href="#EP-与-KV-Cache" class="headerlink" title="EP 与 KV Cache"></a><strong>EP 与 KV Cache</strong></h3><p>EP 主要作用在 MoE 专家层。</p>
+<p>KV Cache 主要来自 Attention 层，因此 EP 本身不是直接切 KV Cache 的主要方式。</p>
+<p>不过 MoE 层的 token 分发会影响整体调度、显存和通信效率。</p>
+<hr>
+<h2 id="15-最终总结图"><a href="#15-最终总结图" class="headerlink" title="15. 最终总结图"></a><strong>15. 最终总结图</strong></h2><p>代码语言：javascript</p>
+<p>AI代码解释</p>
+<pre class="highlight"><span class="line">┌──────────────────────────────────────────────────────────────┐</span><br><span class="line">│                     大模型推理并行体系                        │</span><br><span class="line">├──────────────────────────────────────────────────────────────┤</span><br><span class="line">│                                                              │</span><br><span class="line">│  DP 数据并行                                                  │</span><br><span class="line">│  - 多个完整模型副本                                           │</span><br><span class="line">│  - 分摊不同请求                                               │</span><br><span class="line">│  - 提高并发吞吐                                               │</span><br><span class="line">│                                                              │</span><br><span class="line">│  TP 张量并行                                                  │</span><br><span class="line">│  - 拆单层矩阵计算                                             │</span><br><span class="line">│  - 多 GPU 一起算同一层                                        │</span><br><span class="line">│  - 适合大 Dense 模型                                          │</span><br><span class="line">│                                                              │</span><br><span class="line">│  PP 流水线并行                                                │</span><br><span class="line">│  - 按 Transformer 层切分                                      │</span><br><span class="line">│  - 不同 GPU 负责不同层                                        │</span><br><span class="line">│  - 适合超深、超大模型                                         │</span><br><span class="line">│                                                              │</span><br><span class="line">│  EP 专家并行                                                  │</span><br><span class="line">│  - 拆 MoE Expert                                              │</span><br><span class="line">│  - token 被路由到不同专家                                     │</span><br><span class="line">│  - 适合 DeepSeek / Mixtral / Qwen-MoE 等 MoE 模型              │</span><br><span class="line">│                                                              │</span><br><span class="line">└──────────────────────────────────────────────────────────────┘</span><br></pre>
+
+<p>一句话记忆：</p>
+<blockquote>
+<p><strong>❝DP 拆请求，TP 拆矩阵，PP 拆层，EP 拆专家。</strong></p>
+</blockquote>
+<p>更工程化地说：</p>
+<blockquote>
+<p><strong>❝DP 解决并发问题，TP 解决单层太大的问题，PP 解决层数太多和模型太深的问题，EP 解决 MoE 专家太多的问题。</strong></p>
+</blockquote>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/LLM-DP-TP-EP/">https://tanqingbo.cn/LLM-DP-TP-EP/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/telegram-search/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">新手必看：Telegram电报如何高效搜索资源？ </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">文章目录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DP%EF%BC%9AData-Parallel%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">1. DP：Data Parallel，数据并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">1.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-DP-%E5%9C%A8%E8%AE%AD%E7%BB%83%E5%92%8C%E6%8E%A8%E7%90%86%E4%B8%AD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number"></span> <span class="toc-text">1.2 DP 在训练和推理中的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-DP-%E7%9A%84%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">1.3 DP 的结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-DP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">1.4 DP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-DP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">1.5 DP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-TP%EF%BC%9ATensor-Parallel%EF%BC%8C%E5%BC%A0%E9%87%8F%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">2. TP：Tensor Parallel，张量并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">2.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-TP-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%A4%BA"><span class="toc-number"></span> <span class="toc-text">2.2 TP 的基本图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-TP-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">2.3 TP 的计算流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-TP-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B8%B8%E7%94%A8%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">2.4 TP 为什么常用于大模型推理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-TP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">2.5 TP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-TP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">2.6 TP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-PP%EF%BC%9APipeline-Parallel%EF%BC%8C%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">3. PP：Pipeline Parallel，流水线并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">3.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-PP-%E7%9A%84%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">3.2 PP 的结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-PP-%E7%9A%84%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%B0%94%E6%B3%A1"><span class="toc-number"></span> <span class="toc-text">3.3 PP 的关键问题：流水线气泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-PP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">3.4 PP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-PP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">3.5 PP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-EP%EF%BC%9AExpert-Parallel%EF%BC%8C%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">4. EP：Expert Parallel，专家并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">4.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-MoE-%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number"></span> <span class="toc-text">4.2 MoE 层结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-EP-%E7%9A%84%E5%9B%BE%E7%A4%BA"><span class="toc-number"></span> <span class="toc-text">4.3 EP 的图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-EP-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">4.4 EP 的计算流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-EP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">4.5 EP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-EP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">4.6 EP 的缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1%EF%BC%9AAll-to-All-%E9%80%9A%E4%BF%A1%E5%BC%80%E9%94%80%E5%A4%A7"><span class="toc-number">1.</span> <span class="toc-text">问题 1：All-to-All 通信开销大</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-2%EF%BC%9A%E4%B8%93%E5%AE%B6%E8%B4%9F%E8%BD%BD%E4%B8%8D%E5%9D%87%E8%A1%A1"><span class="toc-number">2.</span> <span class="toc-text">问题 2：专家负载不均衡</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%9B%9B%E7%A7%8D%E5%B9%B6%E8%A1%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-number"></span> <span class="toc-text">5. 四种并行方式的核心区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%94%A8%E4%B8%80%E4%B8%AA%E5%8E%A8%E6%88%BF%E7%B1%BB%E6%AF%94%E6%95%B4%E4%BD%93%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">6. 用一个厨房类比整体理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DP-%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">DP 数据并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-%E5%BC%A0%E9%87%8F%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">TP 张量并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PP-%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">PP 流水线并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EP-%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">EP 专家并行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7. 推理时它们对显存的影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-DP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.1 DP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-TP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.2 TP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-PP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.3 PP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-EP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.4 EP 对显存的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E9%80%9A%E4%BF%A1%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">8. 推理时它们对通信的影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E5%BB%B6%E8%BF%9F%E5%92%8C%E5%90%9E%E5%90%90%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">9. 推理时它们对延迟和吞吐的影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-DP"><span class="toc-number"></span> <span class="toc-text">9.1 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-TP"><span class="toc-number"></span> <span class="toc-text">9.2 TP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-PP"><span class="toc-number"></span> <span class="toc-text">9.3 PP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-EP"><span class="toc-number"></span> <span class="toc-text">9.4 EP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%AE%9E%E9%99%85%E9%83%A8%E7%BD%B2%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%84%E5%90%88%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">10. 实际部署中如何组合？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-Dense-%E6%A8%A1%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.1 Dense 模型常见组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E8%B6%85%E5%A4%A7-Dense-%E6%A8%A1%E5%9E%8B%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.2 超大 Dense 模型组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-MoE-%E6%A8%A1%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.3 MoE 模型常见组合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E4%BE%8B%E5%AD%90%EF%BC%9A8-%E5%BC%A0-GPU-%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">11. 一个具体例子：8 张 GPU 怎么选？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-A%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8D%95%E5%8D%A1%E8%83%BD%E6%94%BE%E4%B8%8B%EF%BC%8C%E5%B9%B6%E5%8F%91%E5%BE%88%E5%A4%9A"><span class="toc-number"></span> <span class="toc-text">情况 A：模型单卡能放下，并发很多</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-B%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8D%95%E5%8D%A1%E6%94%BE%E4%B8%8D%E4%B8%8B%EF%BC%8C%E9%9C%80%E8%A6%81-4-%E5%BC%A0%E5%8D%A1%E6%89%8D%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">情况 B：模型单卡放不下，需要 4 张卡才能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-C%EF%BC%9A%E6%A8%A1%E5%9E%8B%E9%9C%80%E8%A6%81-8-%E5%BC%A0%E5%8D%A1%E6%89%8D%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">情况 C：模型需要 8 张卡才能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-D%EF%BC%9AMoE-%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%93%E5%AE%B6%E5%BE%88%E5%A4%9A"><span class="toc-number"></span> <span class="toc-text">情况 D：MoE 模型，专家很多</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E5%B9%B6%E8%A1%8C%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">12. 什么时候该用哪种并行？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E4%BC%98%E5%85%88%E5%88%A4%E6%96%AD%E6%A8%A1%E5%9E%8B%E6%98%AF%E5%90%A6%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">12.1 优先判断模型是否能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E5%86%8D%E5%88%A4%E6%96%AD%E7%9B%AE%E6%A0%87%E6%98%AF%E5%90%9E%E5%90%90%E8%BF%98%E6%98%AF%E5%BB%B6%E8%BF%9F"><span class="toc-number"></span> <span class="toc-text">12.2 再判断目标是吞吐还是延迟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%87%A0%E4%B8%AA%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">13. 几个容易混淆的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-DP-%E6%98%AF%E4%B8%8D%E6%98%AF%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.1 DP 是不是效率最高？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-TP-%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%A5%BD%E5%90%97%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.2 TP 越大越好吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-PP-%E9%80%82%E5%90%88%E4%BD%8E%E5%BB%B6%E8%BF%9F%E5%90%97%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.3 PP 适合低延迟吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-4-EP-%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8F%AA%E9%80%82%E5%90%88-MoE%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.4 EP 是不是只适合 MoE？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%92%8C-KV-Cache-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number"></span> <span class="toc-text">14. 和 KV Cache 的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">DP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">TP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">PP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">EP 与 KV Cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%9C%80%E7%BB%88%E6%80%BB%E7%BB%93%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">15. 最终总结图</span></a>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
+<p class="author-description">一个专注于程序员成长的网站</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>366</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>131</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">文章目录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DP%EF%BC%9AData-Parallel%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">1. DP：Data Parallel，数据并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">1.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-DP-%E5%9C%A8%E8%AE%AD%E7%BB%83%E5%92%8C%E6%8E%A8%E7%90%86%E4%B8%AD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number"></span> <span class="toc-text">1.2 DP 在训练和推理中的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-DP-%E7%9A%84%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">1.3 DP 的结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-DP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">1.4 DP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-DP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">1.5 DP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-TP%EF%BC%9ATensor-Parallel%EF%BC%8C%E5%BC%A0%E9%87%8F%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">2. TP：Tensor Parallel，张量并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">2.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-TP-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%A4%BA"><span class="toc-number"></span> <span class="toc-text">2.2 TP 的基本图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-TP-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">2.3 TP 的计算流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-TP-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B8%B8%E7%94%A8%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">2.4 TP 为什么常用于大模型推理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-TP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">2.5 TP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-TP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">2.6 TP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-PP%EF%BC%9APipeline-Parallel%EF%BC%8C%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">3. PP：Pipeline Parallel，流水线并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">3.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-PP-%E7%9A%84%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">3.2 PP 的结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-PP-%E7%9A%84%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%B0%94%E6%B3%A1"><span class="toc-number"></span> <span class="toc-text">3.3 PP 的关键问题：流水线气泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-PP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">3.4 PP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-PP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">3.5 PP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-EP%EF%BC%9AExpert-Parallel%EF%BC%8C%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">4. EP：Expert Parallel，专家并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">4.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-MoE-%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number"></span> <span class="toc-text">4.2 MoE 层结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-EP-%E7%9A%84%E5%9B%BE%E7%A4%BA"><span class="toc-number"></span> <span class="toc-text">4.3 EP 的图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-EP-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">4.4 EP 的计算流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-EP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">4.5 EP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-EP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">4.6 EP 的缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1%EF%BC%9AAll-to-All-%E9%80%9A%E4%BF%A1%E5%BC%80%E9%94%80%E5%A4%A7"><span class="toc-number">1.</span> <span class="toc-text">问题 1：All-to-All 通信开销大</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-2%EF%BC%9A%E4%B8%93%E5%AE%B6%E8%B4%9F%E8%BD%BD%E4%B8%8D%E5%9D%87%E8%A1%A1"><span class="toc-number">2.</span> <span class="toc-text">问题 2：专家负载不均衡</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%9B%9B%E7%A7%8D%E5%B9%B6%E8%A1%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-number"></span> <span class="toc-text">5. 四种并行方式的核心区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%94%A8%E4%B8%80%E4%B8%AA%E5%8E%A8%E6%88%BF%E7%B1%BB%E6%AF%94%E6%95%B4%E4%BD%93%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">6. 用一个厨房类比整体理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DP-%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">DP 数据并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-%E5%BC%A0%E9%87%8F%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">TP 张量并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PP-%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">PP 流水线并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EP-%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">EP 专家并行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7. 推理时它们对显存的影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-DP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.1 DP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-TP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.2 TP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-PP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.3 PP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-EP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.4 EP 对显存的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E9%80%9A%E4%BF%A1%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">8. 推理时它们对通信的影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E5%BB%B6%E8%BF%9F%E5%92%8C%E5%90%9E%E5%90%90%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">9. 推理时它们对延迟和吞吐的影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-DP"><span class="toc-number"></span> <span class="toc-text">9.1 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-TP"><span class="toc-number"></span> <span class="toc-text">9.2 TP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-PP"><span class="toc-number"></span> <span class="toc-text">9.3 PP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-EP"><span class="toc-number"></span> <span class="toc-text">9.4 EP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%AE%9E%E9%99%85%E9%83%A8%E7%BD%B2%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%84%E5%90%88%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">10. 实际部署中如何组合？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-Dense-%E6%A8%A1%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.1 Dense 模型常见组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E8%B6%85%E5%A4%A7-Dense-%E6%A8%A1%E5%9E%8B%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.2 超大 Dense 模型组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-MoE-%E6%A8%A1%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.3 MoE 模型常见组合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E4%BE%8B%E5%AD%90%EF%BC%9A8-%E5%BC%A0-GPU-%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">11. 一个具体例子：8 张 GPU 怎么选？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-A%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8D%95%E5%8D%A1%E8%83%BD%E6%94%BE%E4%B8%8B%EF%BC%8C%E5%B9%B6%E5%8F%91%E5%BE%88%E5%A4%9A"><span class="toc-number"></span> <span class="toc-text">情况 A：模型单卡能放下，并发很多</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-B%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8D%95%E5%8D%A1%E6%94%BE%E4%B8%8D%E4%B8%8B%EF%BC%8C%E9%9C%80%E8%A6%81-4-%E5%BC%A0%E5%8D%A1%E6%89%8D%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">情况 B：模型单卡放不下，需要 4 张卡才能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-C%EF%BC%9A%E6%A8%A1%E5%9E%8B%E9%9C%80%E8%A6%81-8-%E5%BC%A0%E5%8D%A1%E6%89%8D%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">情况 C：模型需要 8 张卡才能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-D%EF%BC%9AMoE-%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%93%E5%AE%B6%E5%BE%88%E5%A4%9A"><span class="toc-number"></span> <span class="toc-text">情况 D：MoE 模型，专家很多</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E5%B9%B6%E8%A1%8C%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">12. 什么时候该用哪种并行？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E4%BC%98%E5%85%88%E5%88%A4%E6%96%AD%E6%A8%A1%E5%9E%8B%E6%98%AF%E5%90%A6%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">12.1 优先判断模型是否能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E5%86%8D%E5%88%A4%E6%96%AD%E7%9B%AE%E6%A0%87%E6%98%AF%E5%90%9E%E5%90%90%E8%BF%98%E6%98%AF%E5%BB%B6%E8%BF%9F"><span class="toc-number"></span> <span class="toc-text">12.2 再判断目标是吞吐还是延迟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%87%A0%E4%B8%AA%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">13. 几个容易混淆的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-DP-%E6%98%AF%E4%B8%8D%E6%98%AF%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.1 DP 是不是效率最高？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-TP-%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%A5%BD%E5%90%97%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.2 TP 越大越好吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-PP-%E9%80%82%E5%90%88%E4%BD%8E%E5%BB%B6%E8%BF%9F%E5%90%97%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.3 PP 适合低延迟吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-4-EP-%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8F%AA%E9%80%82%E5%90%88-MoE%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.4 EP 是不是只适合 MoE？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%92%8C-KV-Cache-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number"></span> <span class="toc-text">14. 和 KV Cache 的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">DP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">TP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">PP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">EP 与 KV Cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%9C%80%E7%BB%88%E6%80%BB%E7%BB%93%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">15. 最终总结图</span></a>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">87</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">63</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\内推" title="内推"><div class="tags-list-item">内推</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">文章目录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-DP%EF%BC%9AData-Parallel%EF%BC%8C%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">1. DP：Data Parallel，数据并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">1.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-DP-%E5%9C%A8%E8%AE%AD%E7%BB%83%E5%92%8C%E6%8E%A8%E7%90%86%E4%B8%AD%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number"></span> <span class="toc-text">1.2 DP 在训练和推理中的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-DP-%E7%9A%84%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">1.3 DP 的结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-DP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">1.4 DP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-DP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">1.5 DP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-TP%EF%BC%9ATensor-Parallel%EF%BC%8C%E5%BC%A0%E9%87%8F%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">2. TP：Tensor Parallel，张量并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">2.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-TP-%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%A4%BA"><span class="toc-number"></span> <span class="toc-text">2.2 TP 的基本图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-TP-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">2.3 TP 的计算流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-TP-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B8%B8%E7%94%A8%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">2.4 TP 为什么常用于大模型推理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-TP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">2.5 TP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-TP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">2.6 TP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-PP%EF%BC%9APipeline-Parallel%EF%BC%8C%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">3. PP：Pipeline Parallel，流水线并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">3.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-PP-%E7%9A%84%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">3.2 PP 的结构图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-PP-%E7%9A%84%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98%EF%BC%9A%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%B0%94%E6%B3%A1"><span class="toc-number"></span> <span class="toc-text">3.3 PP 的关键问题：流水线气泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-PP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">3.4 PP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-PP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">3.5 PP 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-EP%EF%BC%9AExpert-Parallel%EF%BC%8C%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">4. EP：Expert Parallel，专家并行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%9B%B4%E8%A7%82%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">4.1 直观理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-MoE-%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-number"></span> <span class="toc-text">4.2 MoE 层结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-EP-%E7%9A%84%E5%9B%BE%E7%A4%BA"><span class="toc-number"></span> <span class="toc-text">4.3 EP 的图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-EP-%E7%9A%84%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number"></span> <span class="toc-text">4.4 EP 的计算流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-EP-%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">4.5 EP 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-EP-%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number"></span> <span class="toc-text">4.6 EP 的缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1%EF%BC%9AAll-to-All-%E9%80%9A%E4%BF%A1%E5%BC%80%E9%94%80%E5%A4%A7"><span class="toc-number">1.</span> <span class="toc-text">问题 1：All-to-All 通信开销大</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-2%EF%BC%9A%E4%B8%93%E5%AE%B6%E8%B4%9F%E8%BD%BD%E4%B8%8D%E5%9D%87%E8%A1%A1"><span class="toc-number">2.</span> <span class="toc-text">问题 2：专家负载不均衡</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%9B%9B%E7%A7%8D%E5%B9%B6%E8%A1%8C%E6%96%B9%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-number"></span> <span class="toc-text">5. 四种并行方式的核心区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%94%A8%E4%B8%80%E4%B8%AA%E5%8E%A8%E6%88%BF%E7%B1%BB%E6%AF%94%E6%95%B4%E4%BD%93%E7%90%86%E8%A7%A3"><span class="toc-number"></span> <span class="toc-text">6. 用一个厨房类比整体理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DP-%E6%95%B0%E6%8D%AE%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">DP 数据并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-%E5%BC%A0%E9%87%8F%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">TP 张量并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PP-%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">PP 流水线并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EP-%E4%B8%93%E5%AE%B6%E5%B9%B6%E8%A1%8C"><span class="toc-number"></span> <span class="toc-text">EP 专家并行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7. 推理时它们对显存的影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-DP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.1 DP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-TP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.2 TP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-PP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.3 PP 对显存的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-EP-%E5%AF%B9%E6%98%BE%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">7.4 EP 对显存的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E9%80%9A%E4%BF%A1%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">8. 推理时它们对通信的影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%8E%A8%E7%90%86%E6%97%B6%E5%AE%83%E4%BB%AC%E5%AF%B9%E5%BB%B6%E8%BF%9F%E5%92%8C%E5%90%9E%E5%90%90%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number"></span> <span class="toc-text">9. 推理时它们对延迟和吞吐的影响</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-DP"><span class="toc-number"></span> <span class="toc-text">9.1 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-TP"><span class="toc-number"></span> <span class="toc-text">9.2 TP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-PP"><span class="toc-number"></span> <span class="toc-text">9.3 PP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-EP"><span class="toc-number"></span> <span class="toc-text">9.4 EP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%AE%9E%E9%99%85%E9%83%A8%E7%BD%B2%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%84%E5%90%88%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">10. 实际部署中如何组合？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-Dense-%E6%A8%A1%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.1 Dense 模型常见组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E8%B6%85%E5%A4%A7-Dense-%E6%A8%A1%E5%9E%8B%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.2 超大 Dense 模型组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-MoE-%E6%A8%A1%E5%9E%8B%E5%B8%B8%E8%A7%81%E7%BB%84%E5%90%88"><span class="toc-number"></span> <span class="toc-text">10.3 MoE 模型常见组合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E4%BE%8B%E5%AD%90%EF%BC%9A8-%E5%BC%A0-GPU-%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">11. 一个具体例子：8 张 GPU 怎么选？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-A%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8D%95%E5%8D%A1%E8%83%BD%E6%94%BE%E4%B8%8B%EF%BC%8C%E5%B9%B6%E5%8F%91%E5%BE%88%E5%A4%9A"><span class="toc-number"></span> <span class="toc-text">情况 A：模型单卡能放下，并发很多</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-B%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8D%95%E5%8D%A1%E6%94%BE%E4%B8%8D%E4%B8%8B%EF%BC%8C%E9%9C%80%E8%A6%81-4-%E5%BC%A0%E5%8D%A1%E6%89%8D%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">情况 B：模型单卡放不下，需要 4 张卡才能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-C%EF%BC%9A%E6%A8%A1%E5%9E%8B%E9%9C%80%E8%A6%81-8-%E5%BC%A0%E5%8D%A1%E6%89%8D%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">情况 C：模型需要 8 张卡才能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-D%EF%BC%9AMoE-%E6%A8%A1%E5%9E%8B%EF%BC%8C%E4%B8%93%E5%AE%B6%E5%BE%88%E5%A4%9A"><span class="toc-number"></span> <span class="toc-text">情况 D：MoE 模型，专家很多</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E5%B9%B6%E8%A1%8C%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">12. 什么时候该用哪种并行？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E4%BC%98%E5%85%88%E5%88%A4%E6%96%AD%E6%A8%A1%E5%9E%8B%E6%98%AF%E5%90%A6%E8%83%BD%E6%94%BE%E4%B8%8B"><span class="toc-number"></span> <span class="toc-text">12.1 优先判断模型是否能放下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E5%86%8D%E5%88%A4%E6%96%AD%E7%9B%AE%E6%A0%87%E6%98%AF%E5%90%9E%E5%90%90%E8%BF%98%E6%98%AF%E5%BB%B6%E8%BF%9F"><span class="toc-number"></span> <span class="toc-text">12.2 再判断目标是吞吐还是延迟</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E5%87%A0%E4%B8%AA%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">13. 几个容易混淆的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-DP-%E6%98%AF%E4%B8%8D%E6%98%AF%E6%95%88%E7%8E%87%E6%9C%80%E9%AB%98%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.1 DP 是不是效率最高？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-TP-%E8%B6%8A%E5%A4%A7%E8%B6%8A%E5%A5%BD%E5%90%97%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.2 TP 越大越好吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-PP-%E9%80%82%E5%90%88%E4%BD%8E%E5%BB%B6%E8%BF%9F%E5%90%97%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.3 PP 适合低延迟吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-4-EP-%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8F%AA%E9%80%82%E5%90%88-MoE%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">13.4 EP 是不是只适合 MoE？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%92%8C-KV-Cache-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number"></span> <span class="toc-text">14. 和 KV Cache 的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">DP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">TP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">PP 与 KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EP-%E4%B8%8E-KV-Cache"><span class="toc-number"></span> <span class="toc-text">EP 与 KV Cache</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%9C%80%E7%BB%88%E6%80%BB%E7%BB%93%E5%9B%BE"><span class="toc-number"></span> <span class="toc-text">15. 最终总结图</span></a>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-03</div>
+        <a href="/LLM-DP-TP-EP/"><div class="recent-posts-item-content">大模型推理 DP\TP\PP\EP 理解</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-01</div>
+        <a href="/telegram-search/"><div class="recent-posts-item-content">新手必看：Telegram电报如何高效搜索资源？</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-06-25</div>
+        <a href="/vpn-freego/"><div class="recent-posts-item-content">2026 年科学上网完全指南：翻墙方式对比、Clash 机场推荐与客户端配置教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
