@@ -7,8 +7,67 @@
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "操作系统之进程与线程",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2020-12-08T08:49:18.000Z",
+  "dateModified": "2020-12-08T08:52:10.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/OS-processes-threads/"
+  },
+  "image": "https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto@master/20201208164805.png",
+  "description": "大部分操作系统(如Windows、Linux)的任务调度是采用时间片轮转的抢占式调度方式，也就是说一个任务执行一小段时间后强制暂停去执行下一个任务，每个任务轮流执行。",
+  "keywords": "操作系统,进程,线程"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "计算机基础知识",
+      "item": "https://tanqingbo.cn/categories/计算机基础知识/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "操作系统之进程与线程"
+    }
+  ]
+}
+  </script>
+  
   <link rel="icon" href="/img/logo.webp">
-  <title>操作系统之进程与线程&nbsp; | &nbsp;IT码农</title>
+  <title>操作系统之进程与线程</title>
   
   
   <meta property="title" content="操作系统之进程与线程">
@@ -27,7 +86,7 @@
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2020-12-08">
   <meta property="og:article:modified_time" content="2020-12-08">
-  <meta property="og:article:author" content="IT&amp;nbsp; 码&amp;nbsp; 农">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
   
   
   <meta property="og:article:tag" content="操作系统">
@@ -207,7 +266,7 @@ var _hmt = _hmt || [];
       
       <img class="navbar-logo-img" src="/img/logo.webp">
       
-      <span class="navbar-logo-dsc">IT&nbsp; 码&nbsp; 农</span>
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
     </span>
   </div>
   <div class="navbar-menu">
@@ -215,6 +274,12 @@ var _hmt = _hmt || [];
     <a href="/" class="navbar-menu-item">
     
     首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
     
     </a>
     
@@ -230,9 +295,9 @@ var _hmt = _hmt || [];
     
     </a>
     
-    <a href="/categories" class="navbar-menu-item">
+    <a href="/about" class="navbar-menu-item">
     
-    分类
+    关于
     
     </a>
     
@@ -263,6 +328,7 @@ var _hmt = _hmt || [];
 </div>
 
 <article class="card card-content">
+  
   <header>
     <h1 class="post-title">
       操作系统之进程与线程
@@ -485,8 +551,8 @@ var _hmt = _hmt || [];
               
 <img src="/img/logo.webp" class="author-img">
 
-<p class="author-name">IT&nbsp; 码&nbsp; 农</p>
-<p class="author-description">一个专注于程序员成长的网站</p>
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
     <span>371</span>
@@ -542,17 +608,17 @@ var _hmt = _hmt || [];
   <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
-      <a href="/categories/技术以外">
-        <div class="categories-list-item">
-          技术以外
-          <span class="categories-list-item-badge">84</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据结构与算法">
         <div class="categories-list-item">
           数据结构与算法
           <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
         </div>
       </a>
     
@@ -577,10 +643,10 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/设计模式">
+      <a href="/categories/AI大模型">
         <div class="categories-list-item">
-          设计模式
-          <span class="categories-list-item-badge">7</span>
+          AI大模型
+          <span class="categories-list-item-badge">16</span>
         </div>
       </a>
     
@@ -588,6 +654,13 @@ var _hmt = _hmt || [];
         <div class="categories-list-item">
           编程资料
           <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
         </div>
       </a>
     
@@ -658,13 +731,6 @@ var _hmt = _hmt || [];
         <div class="categories-list-item">
           PLC
           <span class="categories-list-item-badge">2</span>
-        </div>
-      </a>
-    
-      <a href="/categories/AI大模型">
-        <div class="categories-list-item">
-          AI大模型
-          <span class="categories-list-item-badge">16</span>
         </div>
       </a>
     
@@ -819,7 +885,7 @@ var _hmt = _hmt || [];
           2026
         </span>
         &nbsp;
-        <a href="/" class="footer-link">IT&nbsp; 码&nbsp; 农 </a>
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
       </div>
 		<div class="footer-dsc">
 			<center><span>
