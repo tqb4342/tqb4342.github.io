@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-07-23T02:27:32.000Z",
+  "dateModified": "2026-07-27T03:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/science-internet-guide/"
+  },
+  "image": "https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png",
+  "description": "2026年最全科学上网指南：一文看懂 VPN、Clash 机场、VPS 自建三大方案的区别与选择，附全平台配置教程、机场推荐、协议详解与排障。新手5分钟选对方案。",
+  "keywords": "科学上网,科学上网教程,科技上网,VPN,翻墙,翻墙软件,翻墙教程,Clash,Clash教程,机场,机场推荐,VPS,梯子,梯子推荐,代理协议,trojan,v2ray,vless,reality,科学上网违法吗"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "科学上网是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "科学上网指通过代理服务器转发网络流量、访问被限制的境外网站的技术，俗称「翻墙」「挂梯子」。详见本文第一节。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "科学上网 / 翻墙违法吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "在中国大陆，未经批准擅自建立或使用信道进行国际联网、售卖\"翻墙\"软件均违反相关法律法规，已有相关刑事案例。本站内容仅作技术原理分享，请遵守所在地法律，仅用于合法用途。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "VPN 和 Clash 机场哪个更好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "新手图省事选 VPN；追求性价比、速度和可玩性选 Clash 机场（目前最主流）。详细对比见 科学上网工具怎么选。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "免费翻墙和付费的差别大吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "差别很大。免费节点普遍速度慢、不稳定、且存在隐私泄露风险，部分免费服务甚至窃取用户数据。长期使用建议选有口碑的付费服务，参见 机场 VPN 测评与推荐。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "科学上网有什么风险？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "主要风险包括：隐私数据被服务商窃取、误装带木马的恶意软件、因使用来源不明的\"翻墙\"工具导致设备被远程控制。建议只使用有口碑的服务，不在代理环境下进行网银等敏感操作。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么有时候连不上？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "多为节点失效、协议被识别或本地配置问题。先按 排障指南 逐项排查，再考虑更换订阅或协议。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "手机和电脑能共用一个订阅吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "绝大多数机场和 VPN 支持多端同时登录，一般一个订阅可在 3-5 台设备同时使用，具体以服务商说明为准。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "新手第一次用，该从哪里开始？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "建议从 2026 最适合新手的科学上网方案 或 VPN 推荐 2026 入手，按教程装好客户端、导入订阅即可。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程</title>
+  
+  
+  <meta property="title" content="科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/science-internet-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png">
+  
+  
+  <meta property="description" content="2026年最全科学上网指南：一文看懂 VPN、Clash 机场、VPS 自建三大方案的区别与选择，附全平台配置教程、机场推荐、协议详解与排障。新手5分钟选对方案。">
+  
+  <meta property="keywords" content="科学上网,科学上网教程,科技上网,VPN,翻墙,翻墙软件,翻墙教程,Clash,Clash教程,机场,机场推荐,VPS,梯子,梯子推荐,代理协议,trojan,v2ray,vless,reality,科学上网违法吗">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-07-23">
+  <meta property="og:article:modified_time" content="2026-07-27">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="翻墙">
+  
+  <meta property="og:article:tag" content="VPN">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="机场">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/science-internet-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png" data-src="https://pica.zhimg.com/80/v2-730bb3fcf91a8a31fffb265055c8ec9b.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-07-23T02:27:32.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-07-23</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/science-internet-guide/" class="leancloud_visitors" data-flag-title="科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/翻墙/" class="post-meta-link">翻墙</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/VPN/" class="post-meta-link">VPN</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机场/" class="post-meta-link">机场</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="2026年最全科学上网指南：一文看懂 VPN、Clash 机场、VPS 自建三大方案的区别与选择，附全平台配置教程、机场推荐、协议详解与排障。新手5分钟选对方案。">
+  
+  <meta name="keywords" content="科学上网,科学上网教程,科技上网,VPN,翻墙,翻墙软件,翻墙教程,Clash,Clash教程,机场,机场推荐,VPS,梯子,梯子推荐,代理协议,trojan,v2ray,vless,reality,科学上网违法吗">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong>tanqingbo.cn「科学上网」专题的总览枢纽页（Pillar Page）</strong>，汇总站内 50+ 篇教程，按「选方案 → 选工具 → 配客户端 → 懂协议 → 上手各平台 → 排障」重新组织。<br>✍️ 作者：小胖穷　｜　最后更新：2026-07-27　｜　阅读约 8 分钟</p>
+</blockquote>
+<p><strong>科学上网</strong>（俗称「翻墙」「挂梯子」）是指通过代理服务器转发网络流量，访问被限制的境外网站与服务的技术。主流方案分三类：<strong>VPN</strong>（一键式）、<strong>Clash 机场</strong>（订阅式）、<strong>VPS 自建</strong>（技术向）。本页帮你用最短路径选对方案、找到对应教程。</p>
+<blockquote>
+<p>💡 <strong>怎么用本页</strong>：先在第二节用对比表选方案，再点进对应章节看详细教程。所有链接均为站内文章，可放心跳转。</p>
+<p>⚠️ <strong>合规提示</strong>：本站内容仅作技术原理与工具使用分享。请务必遵守所在国家/地区的法律法规，仅将相关技术用于合法用途。</p>
+</blockquote>
+<h2 id="一、什么是科学上网？"><a href="#一、什么是科学上网？" class="headerlink" title="一、什么是科学上网？"></a>一、什么是科学上网？</h2><p>科学上网（Bypassing Internet Censorship）俗称「翻墙」「挂梯子」，指绕过网络审查与内容封锁、自由访问被限制网站或服务的技术。其核心原理是：把你的网络流量通过一台位于「墙外」的服务器转发，让你以该服务器的身份访问目标网站，从而规避本地网络封锁。</p>
+<p>常见被屏蔽的服务包括：</p>
+<ul>
+<li><strong>搜索引擎</strong>：Google、Bing（部分地区）</li>
+<li><strong>社交媒体</strong>：YouTube、Twitter/X、Facebook、Instagram、Telegram</li>
+<li><strong>生产力工具</strong>：ChatGPT、Claude、Gemini、GitHub、Google 账号体系</li>
+<li><strong>流媒体</strong>：Netflix、Disney+、Spotify</li>
+</ul>
+<p>三类主流方案的区别，本质就在于「这台转发服务器由谁提供、怎么提供」——这正是第二节要回答的问题。</p>
+<h2 id="二、科学上网三大方案对比：VPN-Clash-机场-VPS-自建"><a href="#二、科学上网三大方案对比：VPN-Clash-机场-VPS-自建" class="headerlink" title="二、科学上网三大方案对比：VPN / Clash 机场 / VPS 自建"></a>二、科学上网三大方案对比：VPN / Clash 机场 / VPS 自建</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>适合人群</th>
+<th>上手难度</th>
+<th>稳定性</th>
+<th>月成本</th>
+<th>可控性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>VPN（一键式）</strong></td>
+<td>纯新手、怕折腾</td>
+<td>⭐ 极低</td>
+<td>中</td>
+<td>中</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>Clash 机场（订阅式）</strong></td>
+<td>大多数用户</td>
+<td>⭐⭐ 低</td>
+<td>高</td>
+<td>低~中</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>VPS 自建（技术向）</strong></td>
+<td>折腾党、极客</td>
+<td>⭐⭐⭐⭐ 较高</td>
+<td>高（看运维）</td>
+<td>低~中</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<p><strong>一句话决策</strong>：</p>
+<ul>
+<li>想省心、装好就能用 → <strong>VPN</strong></li>
+<li>想要性价比、速度和可玩性 → <strong>Clash 机场</strong>（目前最主流）</li>
+<li>想完全自主、不怕折腾 → <strong>VPS 自建</strong></li>
+</ul>
+<p>延伸阅读：</p>
+<ul>
+<li>还在纠结选哪个？先看 <a href="https://tanqingbo.cn/choose/">科学上网工具怎么选：VPN、Clash、VPS 方案对比</a></li>
+<li>不知道机场怎么挑？<a href="https://tanqingbo.cn/choose2/">如何挑选 Clash 机场服务</a></li>
+<li>想直接要新手方案？<a href="https://tanqingbo.cn/clash-pro/">2026 最适合新手的科学上网方案</a></li>
+<li>想要一站式测评？<a href="https://tanqingbo.cn/freego/">科学上网保姆级教程：2026 机场 VPN 测评与推荐</a></li>
+</ul>
+<h2 id="三、VPN-推荐与教程"><a href="#三、VPN-推荐与教程" class="headerlink" title="三、VPN 推荐与教程"></a>三、VPN 推荐与教程</h2><p>VPN（Virtual Private Network，虚拟专用网络）是最省心的科学上网方式：安装客户端、登录、一键连接即可，无需理解协议与节点。它的缺点是通常不支持规则分流（多为全局代理），且部分商业 VPN 在封锁高峰期容易被识别。适合不想折腾、只求能用的用户。</p>
+<p>推荐阅读：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/best-vpn/">VPN 推荐 2026：稳定高速翻墙梯子搭建完全指南</a></li>
+<li><a href="https://tanqingbo.cn/2026-best-vpn/">2026 年 VPN 推荐：支持全平台的高速稳定科学上网工具</a></li>
+<li><a href="https://tanqingbo.cn/best-vps/">2026 最好用的 VPN 翻墙工具推荐：开源稳定全订阅</a></li>
+<li><a href="https://tanqingbo.cn/yzhx-vpn/">一枝红杏加速器老牌机场 VPN 评测（附专属优惠）</a></li>
+<li><a href="https://tanqingbo.cn/magic-vpn/">2026 翻墙梯子推荐：最稳定、最适合新手的教程</a></li>
+<li><a href="https://tanqingbo.cn/2026-clash-vpn/">2026 科学上网教程：电脑手机翻墙最稳定方案</a></li>
+<li><a href="https://tanqingbo.cn/clashvpn/">外网挂梯子/电脑翻墙教程：2026 年最稳定的科学上网方案</a></li>
+<li><a href="https://tanqingbo.cn/mobile-vpn/">手机如何翻墙？2026 年最新 Android 与 iOS 保姆级教程</a></li>
+<li><a href="https://tanqingbo.cn/VPN2025/">科学上网教程：2026 年最新 VPN 选择与使用指南</a></li>
+<li><a href="https://tanqingbo.cn/VPN-HELP/">2026 最新科学上网教程：Clash/Spectre/Trojan 等翻墙工具全指南</a></li>
+<li><a href="https://tanqingbo.cn/VPN2026/">2026 保姆级科学上网/魔法上网教程：Clash 机场 / VPN / 自建 VPS</a></li>
+<li><a href="https://tanqingbo.cn/VPN202607/">2026 保姆级科学上网/梯子翻墙教程：Clash 机场 / VPN / 自建 VPS 全面解析</a></li>
+</ul>
+<h2 id="四、Clash-客户端配置"><a href="#四、Clash-客户端配置" class="headerlink" title="四、Clash 客户端配置"></a>四、Clash 客户端配置</h2><p>Clash（及其继任者 Mihomo）是目前最主流的订阅式代理客户端，核心优势是<strong>规则分流</strong>：可按域名/进程自动选择直连或代理，配合 TUN 模式实现全局透明代理。典型使用流程是：购买机场订阅 → 导入订阅链接 → 选节点 → 开启系统代理。不同平台的客户端各不相同，见下方教程。</p>
+<ul>
+<li><a href="https://tanqingbo.cn/ClashForWindows/">Clash for Windows 教程：电脑翻墙科学上网配置指南</a></li>
+<li><a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程：科学上网新手必读，机场订阅选择指南</a></li>
+<li><a href="https://tanqingbo.cn/Clash-Party/">Mac 科学上网教程：Clash Party 客户端配置指南</a></li>
+<li><a href="https://tanqingbo.cn/Clash-VPS/">手机电脑翻墙教程：2026 科学上网保姆级指南</a></li>
+</ul>
+<h2 id="五、机场与订阅选择"><a href="#五、机场与订阅选择" class="headerlink" title="五、机场与订阅选择"></a>五、机场与订阅选择</h2><p>「机场」是圈内对提供 Clash/V2Ray 订阅的商业代理服务的俗称（因早期订阅链接被叫做”航班”而得名）。<strong>选机场比选客户端更关键</strong>，主要看：节点数量与地区分布、线路类型（直连/中转/专线 IPLC/IEPL）、协议支持、倍率规则、售后与跑路风险。免费机场普遍不可靠，长期使用建议选有口碑的付费服务。</p>
+<ul>
+<li><a href="https://tanqingbo.cn/clash-free/">科学上网实用攻略：2026 翻墙 VPN 推荐与入门指南</a></li>
+<li><a href="https://tanqingbo.cn/choose2/">如何挑选 Clash 机场服务</a></li>
+<li><a href="https://tanqingbo.cn/mingci/">Clash 机场专用名词解释字典（V2Ray / Vless / Trojan / Reality 全面科普）</a></li>
+<li><a href="https://tanqingbo.cn/protocols/">2026 Clash 机场各种协议差别介绍与选择指南（Vmess / Vless / Trojan / Reality / Hysteria）</a></li>
+<li><a href="https://tanqingbo.cn/route/">Clash 机场线路类型详解：直连 / 中转 / 专线（IPLC / IEPL）区别与选择指南</a></li>
+</ul>
+<h2 id="六、代理协议详解（V2Ray-VLESS-Trojan-Reality-Hysteria）"><a href="#六、代理协议详解（V2Ray-VLESS-Trojan-Reality-Hysteria）" class="headerlink" title="六、代理协议详解（V2Ray / VLESS / Trojan / Reality / Hysteria）"></a>六、代理协议详解（V2Ray / VLESS / Trojan / Reality / Hysteria）</h2><p>协议决定了流量如何被伪装、加密与传输，直接影响<strong>速度</strong>与<strong>抗封锁能力</strong>。简明对比：</p>
+<ul>
+<li><strong>VMess / V2Ray</strong>：经典协议，生态成熟，但特征相对明显</li>
+<li><strong>VLESS</strong>：VMess 的轻量版，去掉冗余加密，更快</li>
+<li><strong>Trojan</strong>：伪装成正常 HTTPS 流量，较难被识别</li>
+<li><strong>Reality</strong>：无需自有域名/证书，直接借用真实站点握手，目前抗封锁能力最强</li>
+<li><strong>Hysteria</strong>：基于 QUIC/UDP，弱网环境下速度快，但部分网络会对 UDP 限速</li>
+</ul>
+<p>延伸阅读：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/protocols/">2026 Clash 机场各种协议差别介绍与选择指南</a></li>
+<li><a href="https://tanqingbo.cn/mingci/">Clash 机场专用名词解释字典</a></li>
+<li><a href="https://tanqingbo.cn/route/">Clash 机场线路类型详解：直连 / 中转 / 专线</a></li>
+</ul>
+<h2 id="七、各平台配置教程"><a href="#七、各平台配置教程" class="headerlink" title="七、各平台配置教程"></a>七、各平台配置教程</h2><p>不同平台的客户端与配置步骤差异较大，建议按设备选择对应教程。Windows 常用 Clash for Windows / Clash Verge；Android 常用 ClashMetaForAndroid；iOS 因系统限制需使用 Shadowrocket 等付费客户端。</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ul>
+<li><a href="https://tanqingbo.cn/Win-Open-Internet/">Windows 翻墙教程：从零开始科学上网（最稳定的方案）</a></li>
+<li><a href="https://tanqingbo.cn/Win-Internet/">Windows 电脑翻墙教程：从零开始科学上网（2026 最稳定方案）</a></li>
+<li><a href="https://tanqingbo.cn/Win-OpenInternet/">Windows 翻墙教程：从零开始科学上网</a></li>
+<li><a href="https://tanqingbo.cn/windows-science-internet/">2026 年最稳定的科学上网教程，新手也能 10 分钟学会</a></li>
+<li><a href="https://tanqingbo.cn/computer-censorship/">电脑翻墙教程 2026：小白也能学会的科学上网指南</a></li>
+<li><a href="https://tanqingbo.cn/phone-win-open-Internet/">手机/电脑如何翻墙上外网：VPN 推荐、科学上网教程</a></li>
+</ul>
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><ul>
+<li><a href="https://tanqingbo.cn/Android-open-internet/">安卓/Android 系统手机实现科学上网教程</a></li>
+<li><a href="https://tanqingbo.cn/Android-VPN/">Android 如何用外网/安卓手机搭梯子</a></li>
+</ul>
+<h3 id="iOS（iPhone-iPad）"><a href="#iOS（iPhone-iPad）" class="headerlink" title="iOS（iPhone / iPad）"></a>iOS（iPhone / iPad）</h3><ul>
+<li><a href="https://tanqingbo.cn/ios-open-internet/">苹果/iOS 系统手机实现科学上网教程</a></li>
+<li><a href="https://tanqingbo.cn/iphone-open-internet/">iPhone 如何用外网/苹果手机搭梯子</a></li>
+</ul>
+<h2 id="八、AI-与海外服务访问"><a href="#八、AI-与海外服务访问" class="headerlink" title="八、AI 与海外服务访问"></a>八、AI 与海外服务访问</h2><p>翻墙后最常见的需求是使用海外 AI 工具与注册海外账号。需注意：ChatGPT、Claude 等服务除科学上网外，往往还需要海外手机号、海外支付方式才能完整使用。</p>
+<ul>
+<li><a href="https://tanqingbo.cn/how-to-signup-chatgpt/">ChatGPT 注册教程 2026：国内用户详细注册指南</a></li>
+<li><a href="https://tanqingbo.cn/GPT-4o/">GPT-4o 国内使用教程：注册、访问与功能详解</a></li>
+<li><a href="https://tanqingbo.cn/accounts-google/">谷歌账号注册教程（保姆级），适合新手（2026 实测）</a></li>
+<li><a href="https://tanqingbo.cn/GitHub-2FA/">GitHub 双因素身份验证（2FA）注册教程</a></li>
+<li><a href="https://tanqingbo.cn/Netflix-VPN/">奈飞（Netflix）全教程：如何注册观看奈飞？</a></li>
+<li><a href="https://tanqingbo.cn/open-app/">科学上网（翻墙）后必下的 App，2025 最佳国外 App 推荐</a></li>
+</ul>
+<h2 id="九、排障与常见问题"><a href="#九、排障与常见问题" class="headerlink" title="九、排障与常见问题"></a>九、排障与常见问题</h2><p>科学上网最常见的故障是：节点全红连不上、速度慢、能连但打不开网页、特定 App 不走代理。多数问题出在节点失效、协议被识别或本地配置（系统代理/TUN 未开启）。建议按症状逐项排查。</p>
+<ul>
+<li><a href="https://tanqingbo.cn/troubleshooting/">Clash / Mihomo 独立排障指南（按症状排查）</a></li>
+</ul>
+<h2 id="十、更多总览与导航"><a href="#十、更多总览与导航" class="headerlink" title="十、更多总览与导航"></a>十、更多总览与导航</h2><p>如果你喜欢「一篇文章看全貌」的写法，下面这些汇总型文章也值得收藏：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/internet-dir/">2026 最全科学上网教程，翻墙机场 VPN 测评推荐（文章目录汇总）</a></li>
+<li><a href="https://tanqingbo.cn/Windows-Android-Apple/">科学上网分类导航：Windows、安卓、苹果翻墙教程合集（2026 最新）</a></li>
+<li><a href="https://tanqingbo.cn/Open-Internet/">如何使用梯子工具实现翻墙科学上网？</a></li>
+<li><a href="https://tanqingbo.cn/Open-Internet2/">科学上网最全指南，含翻墙软件</a></li>
+<li><a href="https://tanqingbo.cn/openinternet/">2026 最全翻墙、科学上网指南，保姆级教程（含翻墙工具）</a></li>
+<li><a href="https://tanqingbo.cn/great-firewall/">中国科学上网终极指南：2026 VPN 推荐与翻墙教程</a></li>
+<li><a href="https://tanqingbo.cn/magic-internet/">2026 年科学上网入门必读：最稳定好用的翻墙梯子工具精选</a></li>
+<li><a href="https://tanqingbo.cn/vpn-freego/">2026 年科学上网完全指南：翻墙方式对比、Clash 机场推荐与客户端配置教程</a></li>
+<li><a href="https://tanqingbo.cn/2026-Open-Internet/">2026 梯子翻墙教程：科学上网工具选择与使用方法</a></li>
+<li><a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">科学上网（翻墙）软件之——VPN 篇</a></li>
+<li><a href="https://tanqingbo.cn/Vpn-OpenInternet/">翻墙-科学上网、翻墙工具、翻墙教程项目库</a></li>
+</ul>
+<h2 id="十一、FAQ-常见问题"><a href="#十一、FAQ-常见问题" class="headerlink" title="十一、FAQ 常见问题"></a>十一、FAQ 常见问题</h2><!-- 维护提醒：以下问答须与 front-matter 的 faq 数组保持一致，否则 Google 会忽略 FAQ 结构化数据。修改时两处同步更新。 -->
+
+<p><strong>Q1：科学上网是什么意思？</strong><br>科学上网指通过代理服务器转发网络流量、访问被限制的境外网站的技术，俗称「翻墙」「挂梯子」。详见本文第一节。</p>
+<p><strong>Q2：科学上网 / 翻墙违法吗？</strong><br>在中国大陆，未经批准擅自建立或使用信道进行国际联网、售卖”翻墙”软件均违反相关法律法规，已有相关刑事案例。本站内容仅作技术原理分享，请遵守所在地法律，仅用于合法用途。</p>
+<p><strong>Q3：VPN 和 Clash 机场哪个更好？</strong><br>新手图省事选 VPN；追求性价比、速度和可玩性选 Clash 机场（目前最主流）。详细对比见 <a href="https://tanqingbo.cn/choose/">科学上网工具怎么选</a>。</p>
+<p><strong>Q4：免费翻墙和付费的差别大吗？</strong><br>差别很大。免费节点普遍速度慢、不稳定、且存在隐私泄露风险，部分免费服务甚至窃取用户数据。长期使用建议选有口碑的付费服务，参见 <a href="https://tanqingbo.cn/freego/">机场 VPN 测评与推荐</a>。</p>
+<p><strong>Q5：科学上网有什么风险？</strong><br>主要风险包括：隐私数据被服务商窃取、误装带木马的恶意软件、因使用来源不明的”翻墙”工具导致设备被远程控制。建议只使用有口碑的服务，不在代理环境下进行网银等敏感操作。</p>
+<p><strong>Q6：为什么有时候连不上？</strong><br>多为节点失效、协议被识别或本地配置问题。先按 <a href="https://tanqingbo.cn/troubleshooting/">排障指南</a> 逐项排查，再考虑更换订阅或协议。</p>
+<p><strong>Q7：手机和电脑能共用一个订阅吗？</strong><br>绝大多数机场和 VPN 支持多端同时登录，一般一个订阅可在 3-5 台设备同时使用，具体以服务商说明为准。</p>
+<p><strong>Q8：新手第一次用，该从哪里开始？</strong><br>建议从 <a href="https://tanqingbo.cn/clash-pro/">2026 最适合新手的科学上网方案</a> 或 <a href="https://tanqingbo.cn/best-vpn/">VPN 推荐 2026</a> 入手，按教程装好客户端、导入订阅即可。</p>
+<hr>
+<p><em>本页为 tanqingbo.cn「科学上网」专题的总览枢纽，持续更新。作者：小胖穷。如需补充内容，欢迎留言。</em></p>
+<p><em>参考来源：本页技术原理综合自站内 50+ 篇教程；法律法规相关表述参考官方公开报道。</em></p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+-->
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+  
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/science-internet-guide/">https://tanqingbo.cn/science-internet-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Clash-VPS/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        手机电脑翻墙教程：2026科学上网保姆级指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-05-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-Open-Internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026梯子翻墙教程：科学上网工具选择与使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-clash-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026科学上网教程：电脑手机翻墙最稳定方案
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-12</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-best-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026年VPN推荐：支持全平台的高速稳定科学上网工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Android如何用外网/安卓手机搭梯子-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-26</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/VPN202607/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2026 保姆级科学上网/梯子翻墙教程：Clash机场 / VPN / 自建 VPS 全面解析 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是科学上网？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B8%89%E5%A4%A7%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94%EF%BC%9AVPN-Clash-%E6%9C%BA%E5%9C%BA-VPS-%E8%87%AA%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">二、科学上网三大方案对比：VPN &#x2F; Clash 机场 &#x2F; VPS 自建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81VPN-%E6%8E%A8%E8%8D%90%E4%B8%8E%E6%95%99%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">三、VPN 推荐与教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">四、Clash 客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%BA%E5%9C%BA%E4%B8%8E%E8%AE%A2%E9%98%85%E9%80%89%E6%8B%A9"><span class="toc-number">5.</span> <span class="toc-text">五、机场与订阅选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3%EF%BC%88V2Ray-VLESS-Trojan-Reality-Hysteria%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、代理协议详解（V2Ray &#x2F; VLESS &#x2F; Trojan &#x2F; Reality &#x2F; Hysteria）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">七、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">7.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">7.2.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81AI-%E4%B8%8E%E6%B5%B7%E5%A4%96%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE"><span class="toc-number">8.</span> <span class="toc-text">八、AI 与海外服务访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">九、排障与常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十一、FAQ 常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>372</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>140</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是科学上网？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B8%89%E5%A4%A7%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94%EF%BC%9AVPN-Clash-%E6%9C%BA%E5%9C%BA-VPS-%E8%87%AA%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">二、科学上网三大方案对比：VPN &#x2F; Clash 机场 &#x2F; VPS 自建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81VPN-%E6%8E%A8%E8%8D%90%E4%B8%8E%E6%95%99%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">三、VPN 推荐与教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">四、Clash 客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%BA%E5%9C%BA%E4%B8%8E%E8%AE%A2%E9%98%85%E9%80%89%E6%8B%A9"><span class="toc-number">5.</span> <span class="toc-text">五、机场与订阅选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3%EF%BC%88V2Ray-VLESS-Trojan-Reality-Hysteria%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、代理协议详解（V2Ray &#x2F; VLESS &#x2F; Trojan &#x2F; Reality &#x2F; Hysteria）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">七、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">7.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">7.2.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81AI-%E4%B8%8E%E6%B5%B7%E5%A4%96%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE"><span class="toc-number">8.</span> <span class="toc-text">八、AI 与海外服务访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">九、排障与常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十一、FAQ 常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">54</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是科学上网？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B8%89%E5%A4%A7%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94%EF%BC%9AVPN-Clash-%E6%9C%BA%E5%9C%BA-VPS-%E8%87%AA%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">二、科学上网三大方案对比：VPN &#x2F; Clash 机场 &#x2F; VPS 自建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81VPN-%E6%8E%A8%E8%8D%90%E4%B8%8E%E6%95%99%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">三、VPN 推荐与教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">四、Clash 客户端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%BA%E5%9C%BA%E4%B8%8E%E8%AE%A2%E9%98%85%E9%80%89%E6%8B%A9"><span class="toc-number">5.</span> <span class="toc-text">五、机场与订阅选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3%EF%BC%88V2Ray-VLESS-Trojan-Reality-Hysteria%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、代理协议详解（V2Ray &#x2F; VLESS &#x2F; Trojan &#x2F; Reality &#x2F; Hysteria）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">七、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">7.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">7.2.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81AI-%E4%B8%8E%E6%B5%B7%E5%A4%96%E6%9C%8D%E5%8A%A1%E8%AE%BF%E9%97%AE"><span class="toc-number">8.</span> <span class="toc-text">八、AI 与海外服务访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E4%B8%8E%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">九、排障与常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十一、FAQ 常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-23</div>
+        <a href="/science-internet-guide/"><div class="recent-posts-item-content">科学上网完全指南（2026最新版）：VPN、Clash、VPS 方案对比与教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-20</div>
+        <a href="/VPN202607/"><div class="recent-posts-item-content">2026 保姆级科学上网/梯子翻墙教程：Clash机场 / VPN / 自建 VPS 全面解析</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-14</div>
+        <a href="/Windows-Android-Apple/"><div class="recent-posts-item-content">科学上网分类导航：Windows、安卓、苹果翻墙教程合集（2026最新）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
