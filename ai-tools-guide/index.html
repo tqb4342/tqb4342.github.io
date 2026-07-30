@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-07-30T02:30:00.000Z",
+  "dateModified": "2026-07-30T02:48:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/ai-tools-guide/"
+  },
+  "image": "https://www.fanqiangzhe.com/images/post/648591a5f1641.jpg",
+  "description": "2026 年最全 AI 工具指南：一文看懂 ChatGPT、Gemini、Kimi、豆包、DeepSeek 等主流大模型怎么选、免费还是付费、国内怎么访问，附 AI 写作/PPT/编程/Agent 工具推荐与新手入门路径。",
+  "keywords": "AI工具,人工智能,ChatGPT,Gemini,Kimi,OpenClaw,大模型,AI写作,AI PPT,AI Agent,AI编程,国产大模型,AI工具推荐,豆包,DeepSeek,通义千问,文心一言"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 工具是什么？和搜索引擎、Siri 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI 工具指以大语言模型（LLM）为内核的软件，能理解自然语言并完成写作、问答、翻译、代码、画图等任务。和搜索引擎不同——搜索给一堆链接，AI 直接给整理好的答案；和 Siri 不同——Siri 只能执行固定指令，AI 能理解你说的任何话并生成内容。代表有 ChatGPT、Gemini、Kimi 等。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ChatGPT 在国内能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ChatGPT 等海外 AI 工具在部分地区需配合合规的网络访问方式才能使用。具体步骤可看 ChatGPT 国内注册与使用教程、以及科学上网完全指南。请务必遵守当地法律法规。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini 和 ChatGPT 哪个更好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两者都是顶级大模型。ChatGPT 生态与插件更成熟、通用任务稳、深度研究强；Gemini 原生多模态强、与 Google 服务打通、长上下文有优势、免费版够用。日常使用差别不大，建议都试用再定。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 工具哪个免费好用？必须付费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不必付费。国产的豆包、通义千问、Kimi、腾讯元宝都有可观的免费额度，日常 80% 需求够用；ChatGPT/Gemini 也有免费版。重度生产力（更长上下文、最新模型、文件分析）才值得上付费版。新手先用免费版跑通用法。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "国产大模型怎么选？Kimi、豆包、DeepSeek 哪个好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看场景：Kimi 强在中文长文本与文档总结；豆包对话自然、语音与一站式体验好、适合小白；DeepSeek 开源、推理与性价比突出、适合折腾与私有化。免配置、中文优先，三者都值得一试。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 写 PPT 哪个工具好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI PPT 工具可一句话生成大纲与排版。本站实测过 20 款，办公小浣熊等综合体验较好；也可让 ChatGPT/Gemini 先出大纲再导入 PPT 工具。详见 AI PPT 工具横评。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 编程 / Agent 工具怎么入门？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "从编程助手类工具起步写代码，再到 OpenClaw、rmux-agent 这类 Agent/终端工具做自动化任务。新手先看相关上手教程，配合具体项目练手最快。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "新手该从哪个 AI 工具开始？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先选一个主力对话模型（ChatGPT 或 Gemini，或国产豆包/Kimi）熟悉提示词，再按需求叠加：写作用 AI 写作、做 PPT 用 AI PPT 工具、搞自动化试 Agent 工具。先专精一个，别贪多。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用</title>
+  
+  
+  <meta property="title" content="AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/ai-tools-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://www.fanqiangzhe.com/images/post/648591a5f1641.jpg">
+  
+  
+  <meta property="description" content="2026 年最全 AI 工具指南：一文看懂 ChatGPT、Gemini、Kimi、豆包、DeepSeek 等主流大模型怎么选、免费还是付费、国内怎么访问，附 AI 写作/PPT/编程/Agent 工具推荐与新手入门路径。">
+  
+  <meta property="keywords" content="AI工具,人工智能,ChatGPT,Gemini,Kimi,OpenClaw,大模型,AI写作,AI PPT,AI Agent,AI编程,国产大模型,AI工具推荐,豆包,DeepSeek,通义千问,文心一言">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-07-30">
+  <meta property="og:article:modified_time" content="2026-07-30">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="人工智能">
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="AI工具">
+  
+  <meta property="og:article:tag" content="ChatGPT">
+  
+  <meta property="og:article:tag" content="Gemini">
+  
+  <meta property="og:article:tag" content="Kimi">
+  
+  <meta property="og:article:tag" content="AI写作">
+  
+  <meta property="og:article:tag" content="AI PPT">
+  
+  <meta property="og:article:tag" content="AI Agent">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/ai-tools-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://www.fanqiangzhe.com/images/post/648591a5f1641.jpg" data-src="https://www.fanqiangzhe.com/images/post/648591a5f1641.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-07-30T02:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-07-30</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/ai-tools-guide/" class="leancloud_visitors" data-flag-title="AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/人工智能/" class="post-meta-link">人工智能</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI工具/" class="post-meta-link">AI工具</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/ChatGPT/" class="post-meta-link">ChatGPT</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Gemini/" class="post-meta-link">Gemini</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Kimi/" class="post-meta-link">Kimi</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI写作/" class="post-meta-link">AI写作</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-PPT/" class="post-meta-link">AI PPT</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-Agent/" class="post-meta-link">AI Agent</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="2026 年最全 AI 工具指南：一文看懂 ChatGPT、Gemini、Kimi、豆包、DeepSeek 等主流大模型怎么选、免费还是付费、国内怎么访问，附 AI 写作/PPT/编程/Agent 工具推荐与新手入门路径。">
+  
+  <meta name="keywords" content="AI工具,人工智能,ChatGPT,Gemini,Kimi,OpenClaw,大模型,AI写作,AI PPT,AI Agent,AI编程,国产大模型,AI工具推荐,豆包,DeepSeek,通义千问,文心一言">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong>tanqingbo.cn「AI 工具」专题的总览枢纽页（Pillar Page）</strong>，汇总站内 ChatGPT、Gemini、Kimi、AI PPT、AI Agent 等教程，按「懂概念 → 选模型 → 按场景用 → 上平台」重新组织。<br>✍️ 作者：小胖穷　｜　最后更新：2026-07-30　｜　阅读约 12 分钟</p>
+</blockquote>
+<p><strong>AI 工具</strong> 是以大语言模型（LLM）为内核的软件，能理解自然语言并完成写作、问答、翻译、总结、代码、画图等任务。2026 年主流玩家分三股力量：海外通用模型（OpenAI <strong>ChatGPT</strong>、Google <strong>Gemini</strong>、Anthropic <strong>Claude</strong>）、国产模型（<strong>Kimi</strong>、<strong>豆包</strong>、<strong>通义千问</strong>、<strong>DeepSeek</strong> 等），以及在此之上的生产力工具（AI 写作、AI PPT、AI 编程 / Agent）。</p>
+<blockquote>
+<p>💡 <strong>怎么用本页</strong>：先用第一、二节建立全局认知，再按你的需求跳到对应教程。所有链接均为站内文章，可放心跳转。如果你还想了解”怎么在国内顺畅访问海外 AI”，可先看 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a>。</p>
+<p>⚠️ <strong>合规提示</strong>：本站只分享工具使用与原理。请遵守所在国家/地区的法律法规，仅将相关技术用于合法用途；涉及账号注册与付费，请以各官网为准。</p>
+</blockquote>
+<h2 id="一、什么是-AI-工具（一句话定义）"><a href="#一、什么是-AI-工具（一句话定义）" class="headerlink" title="一、什么是 AI 工具（一句话定义）"></a>一、什么是 AI 工具（一句话定义）</h2><p><strong>AI 工具是什么？</strong> 一句话：它是”会理解语言、能帮你干活”的软件——你用中文或英文下指令（提示词 / Prompt），它返回写作、答案、代码或图片。底层是”大语言模型”，本质是从海量数据里学出的概率模型，能续写和推理，但不是真正”理解”世界。</p>
+<p>理解它最快的方式，是和两个老朋友对比：</p>
+<ul>
+<li><strong>和搜索引擎的区别</strong>：搜索给你一堆链接，你自己挑；AI 工具直接给你整理好的答案。</li>
+<li><strong>和 Siri / 语音助手的区别</strong>：Siri 只能执行固定指令（设闹钟、查天气）；AI 能理解你说的任何话，并生成新内容。</li>
+</ul>
+<p>一句话：<strong>你跟它聊天，它帮你做事</strong>。这种”自然语言交互 + 生成能力”的组合，就是当前 AI 工具的核心。</p>
+<h2 id="二、主流-AI-工具全景对比"><a href="#二、主流-AI-工具全景对比" class="headerlink" title="二、主流 AI 工具全景对比"></a>二、主流 AI 工具全景对比</h2><p>2026 年最常被比较的几家（能力综合自各产品公开信息与公开测评，截至 2026 年；✅ 表示站内有专题教程，— 表示仅作格局参考）：</p>
+<table>
+<thead>
+<tr>
+<th>工具 / 模型</th>
+<th>厂商</th>
+<th>强项</th>
+<th>免费 / 付费</th>
+<th>国内访问</th>
+<th>站内教程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ChatGPT</strong></td>
+<td>OpenAI</td>
+<td>生态最成熟、插件多、通用任务稳、深度研究强</td>
+<td>免费版 + 付费约 $20/月</td>
+<td>需合规网络</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>GPT-4o</strong></td>
+<td>OpenAI</td>
+<td>多模态（图/音/文）、响应快</td>
+<td>付费为主</td>
+<td>需合规网络</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Gemini</strong></td>
+<td>Google</td>
+<td>原生多模态、长上下文、接 Google 生态</td>
+<td>免费版够用 + 付费</td>
+<td>需合规网络</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Claude</td>
+<td>Anthropic</td>
+<td>超长上下文、文笔细腻、写代码强</td>
+<td>免费 + 付费</td>
+<td>需合规网络</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Kimi</strong></td>
+<td>月之暗面</td>
+<td>中文长文本、文档总结、免额外配置</td>
+<td>免费</td>
+<td>直接可用</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>豆包</td>
+<td>字节跳动</td>
+<td>对话自然、语音、一站式、适合小白</td>
+<td>免费</td>
+<td>直接可用</td>
+<td>—</td>
+</tr>
+<tr>
+<td>通义千问</td>
+<td>阿里</td>
+<td>综合均衡、开源可选</td>
+<td>免费</td>
+<td>直接可用</td>
+<td>—</td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td>深度求索</td>
+<td>开源、推理强、性价比高</td>
+<td>免费 / 开源</td>
+<td>直接可用</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>OpenClaw</strong></td>
+<td>国内开源</td>
+<td>轻量、可私有化、Agent 友好</td>
+<td>开源</td>
+<td>直接可用</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>办公小浣熊 等 AI PPT</strong></td>
+<td>各家</td>
+<td>一句话出 PPT 大纲与排版</td>
+<td>多有免费额度</td>
+<td>直接可用</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<p><strong>一句话选型</strong>：海外通用能力看 ChatGPT / Gemini，中文长文与免配置看 Kimi，小白起步看豆包，折腾开源看 DeepSeek / OpenClaw，做 PPT 用 AI PPT 工具，搞自动化看 Agent 类。</p>
+<h3 id="免费还是付费？怎么决策"><a href="#免费还是付费？怎么决策" class="headerlink" title="免费还是付费？怎么决策"></a>免费还是付费？怎么决策</h3><p>这是新手最常纠结的问题，给你一个清晰判断：</p>
+<ul>
+<li><strong>先用免费版跑通用法</strong>。国产的豆包、通义千问、Kimi、腾讯元宝都有可观免费额度，覆盖日常 80% 需求；ChatGPT、Gemini 也有免费版。</li>
+<li><strong>什么时候值得付费</strong>：当你需要更长上下文（喂整本书/长报告）、最新最强模型、文件/图像分析、更高频次或 API 接入时，再上付费版（ChatGPT Plus 约 $20/月、Gemini Advanced 类似）。</li>
+<li><strong>别一上来就买会员</strong>。工具的价值取决于你用不用得起来——先用免费版产出 10 次结果，建立使用习惯，再谈升级装备。</li>
+</ul>
+<h2 id="三、在国内怎么访问海外-AI（ChatGPT-Gemini）"><a href="#三、在国内怎么访问海外-AI（ChatGPT-Gemini）" class="headerlink" title="三、在国内怎么访问海外 AI（ChatGPT / Gemini）"></a>三、在国内怎么访问海外 AI（ChatGPT / Gemini）</h2><p>ChatGPT、Gemini 等海外工具在部分地区需要配合合规的网络访问方式。这不是 AI 工具本身的问题，而是网络环境差异。本站有两篇专门的”国内注册与使用”教程，按需取用：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/ChatGPT-VPN/">如何在国内注册 ChatGPT？ChatGPT 怎么用？</a></li>
+<li><a href="https://tanqingbo.cn/Gemini-vpn/">公认最好用的 AI 工具：Gemini 到底该如何使用？（最全教程）</a></li>
+<li>想系统了解整体访问方案 → <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026 最新版）</a></li>
+</ul>
+<blockquote>
+<p>📌 访问方式属动态领域，规则与服务时常变化，请以各官网最新说明与当地法规为准。</p>
+</blockquote>
+<h2 id="四、按场景选工具"><a href="#四、按场景选工具" class="headerlink" title="四、按场景选工具"></a>四、按场景选工具</h2><p>不同任务，最顺手的工具不同：</p>
+<h3 id="写作-问答-总结"><a href="#写作-问答-总结" class="headerlink" title="写作 / 问答 / 总结"></a>写作 / 问答 / 总结</h3><p>日常对话、改文案、翻译、总结长文：ChatGPT、Gemini 都好用；中文长文档优先 Kimi；不想折腾网络直接用豆包。</p>
+<ul>
+<li><a href="https://tanqingbo.cn/ChatGPT/">最近很火的 ChatGPT 到底该怎么玩？</a></li>
+<li><a href="https://tanqingbo.cn/%E6%9C%80%E8%BF%91%E5%BE%88%E7%81%AB%E7%9A%84ChatGPT%E5%88%B0%E5%BA%95%E8%AF%A5%E6%80%8E%E4%B9%88%E7%8E%A9%EF%BC%9F/">ChatGPT 进阶玩法（另一篇详解）</a></li>
+<li><a href="https://tanqingbo.cn/Gemini-pro/">深度体验：为什么我推荐你认真用一次 Gemini？</a></li>
+<li><a href="https://tanqingbo.cn/Google-Gemini/">Google Gemini 使用指南：初学者详细教程</a></li>
+<li><a href="https://tanqingbo.cn/how-to-use-Gemini/">Gemini 中国使用教程：Google Gemini 怎么用</a></li>
+</ul>
+<h3 id="PPT-演示"><a href="#PPT-演示" class="headerlink" title="PPT / 演示"></a>PPT / 演示</h3><p>不想自己排版？AI PPT 工具一句话出大纲和版式：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/AI-PPT/">测了 20 款 AI PPT，最后汇报保命的，居然只有「办公小浣熊」？</a></li>
+</ul>
+<h3 id="编程-自动化（Agent）"><a href="#编程-自动化（Agent）" class="headerlink" title="编程 / 自动化（Agent）"></a>编程 / 自动化（Agent）</h3><p>从”帮写代码”到”替你跑任务”，Agent 类是 2026 年增长最快的方向：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/openclaw/">快速部署龙虾极简教程 PDF（附链接）</a></li>
+<li><a href="https://tanqingbo.cn/kimiclaw/">Kimi 版 OpenClaw 来了，5000+ Skills 随便用，确实给力！</a></li>
+<li><a href="https://tanqingbo.cn/rmux-agent/">专为 Agent 而生的终端神器，开源了！</a></li>
+</ul>
+<h3 id="底层原理（进阶）"><a href="#底层原理（进阶）" class="headerlink" title="底层原理（进阶）"></a>底层原理（进阶）</h3><p>想搞懂大模型怎么”思考”的推理并行机制：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/LLM-DP-TP-EP/">大模型推理 DP/TP/PP/EP 理解</a></li>
+</ul>
+<h2 id="五、ChatGPT-系列教程"><a href="#五、ChatGPT-系列教程" class="headerlink" title="五、ChatGPT 系列教程"></a>五、ChatGPT 系列教程</h2><p>ChatGPT 是入门首选，版本与玩法多，按需要挑：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/how-to-signup-chatgpt/">ChatGPT 注册教程 2026：国内用户详细注册指南</a></li>
+<li><a href="https://tanqingbo.cn/GPT-4o/">GPT-4o 国内使用教程：注册、访问与功能详解</a></li>
+<li><a href="https://tanqingbo.cn/ChatGPT%EF%BC%81%E7%8E%8B%E7%82%B8%E7%BA%A7%E6%9B%B4%E6%96%B0%EF%BC%81%EF%BC%81%EF%BC%81/">ChatGPT！王炸级更新！！！</a></li>
+</ul>
+<h2 id="六、Gemini-系列教程"><a href="#六、Gemini-系列教程" class="headerlink" title="六、Gemini 系列教程"></a>六、Gemini 系列教程</h2><p>Google 的 Gemini 在多模态和长上下文上有特色：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/Gemini/">公认最好用的 AI 工具：Gemini 到底该如何使用？（最全教程）</a></li>
+<li><a href="https://tanqingbo.cn/Gemini-vpn/">公认最好用的 AI 工具：Gemini 到底该如何使用？（最全教程·VPN 版）</a></li>
+</ul>
+<h2 id="七、国产模型与-Agent-工具"><a href="#七、国产模型与-Agent-工具" class="headerlink" title="七、国产模型与 Agent 工具"></a>七、国产模型与 Agent 工具</h2><p>不想折腾网络、追求中文体验和私有化部署，重点看这几篇：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/kimiclaw/">Kimi 版 OpenClaw 来了，5000+ Skills 随便用，确实给力！</a></li>
+<li><a href="https://tanqingbo.cn/openclaw/">快速部署龙虾极简教程 PDF（附链接）</a></li>
+<li><a href="https://tanqingbo.cn/rmux-agent/">专为 Agent 而生的终端神器，开源了！</a></li>
+</ul>
+<h2 id="八、提示词（Prompt）入门：第一次用怎么开口"><a href="#八、提示词（Prompt）入门：第一次用怎么开口" class="headerlink" title="八、提示词（Prompt）入门：第一次用怎么开口"></a>八、提示词（Prompt）入门：第一次用怎么开口</h2><p>很多人第一次打开 AI 工具，在对话框愣半天不知道说什么。其实就像和真人助手说话——三条通用心法：</p>
+<ol>
+<li><strong>直接说目的，别客气</strong>：不用加”请”。把目标说清楚，越具体越好。</li>
+<li><strong>给角色与背景</strong>：「你是一名资深产品经理，帮我写一封给客户的跟进邮件，背景是……」比「写一封邮件」质量高得多。</li>
+<li><strong>不满意就继续对话</strong>：AI 的回答不理想？直接说哪里不对让它重写。一条对话可以来回迭代 5-10 轮，越聊越接近你要的结果。</li>
+</ol>
+<p>一个真实例子，体会”迭代”的威力：</p>
+<blockquote>
+<p><strong>你</strong>：帮我写一封请假条，明天要去看病，请一天假。<br><strong>AI</strong>：尊敬的领导：我因身体不适，需要于明日前往医院就医，特此申请请假一天……（偏正式）<br><strong>你</strong>：太正式了，改得口语一点、轻松一些。<br><strong>AI</strong>：王经理好，我明天身体不太舒服要去看个医生，请一天假，工作上我会提前安排好，麻烦您审批一下，谢谢！</p>
+</blockquote>
+<p>你看，不满意直接说，AI 会马上调整。把模糊需求说清楚、再迭代两三轮，输出立刻上一个台阶。</p>
+<h2 id="九、合规与安全提示"><a href="#九、合规与安全提示" class="headerlink" title="九、合规与安全提示"></a>九、合规与安全提示</h2><ul>
+<li><strong>账号与付费</strong>：注册、订阅请以各产品官网为准，警惕仿冒站点与代充风险；</li>
+<li><strong>隐私数据</strong>：不要把身份证号、密码、公司机密直接粘进对话；</li>
+<li><strong>内容合规</strong>：生成内容请遵守当地法律法规与平台规范，勿用于侵权或违规用途；</li>
+<li><strong>网络访问</strong>：涉及海外工具的访问方式属动态领域，请以官方与法规最新要求为准。</li>
+</ul>
+<h2 id="十、更多总览与导航"><a href="#十、更多总览与导航" class="headerlink" title="十、更多总览与导航"></a>十、更多总览与导航</h2><ul>
+<li>想看「科学上网」全局方案（含如何顺畅访问海外 AI）→ <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026 最新版）</a></li>
+<li>想看「Clash 客户端」怎么配订阅与分流 → <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程（2026）</a></li>
+<li>想横向看海外 AI 工具大盘 → <a href="https://tanqingbo.cn/Best-AI-tools/">2025 最佳 AI 工具：国外最新人工智能工具一览</a></li>
+</ul>
+<h2 id="十一、FAQ-常见问题"><a href="#十一、FAQ-常见问题" class="headerlink" title="十一、FAQ 常见问题"></a>十一、FAQ 常见问题</h2><!-- 维护提醒：以下问答须与 front-matter 的 faq 数组保持一致，否则 Google 会忽略 FAQ 结构化数据。修改时两处同步更新。 -->
+
+<p><strong>Q1：AI 工具是什么？和搜索引擎、Siri 有什么区别？</strong><br>AI 工具指以大语言模型（LLM）为内核的软件，能理解自然语言并完成写作、问答、翻译、代码、画图等任务。和搜索引擎不同——搜索给一堆链接，AI 直接给整理好的答案；和 Siri 不同——Siri 只能执行固定指令，AI 能理解你说的任何话并生成内容。代表有 ChatGPT、Gemini、Kimi 等。</p>
+<p><strong>Q2：ChatGPT 在国内能用吗？</strong><br>ChatGPT 等海外 AI 工具在部分地区需配合合规的网络访问方式才能使用。具体步骤可看 <a href="https://tanqingbo.cn/ChatGPT-VPN/">ChatGPT 国内注册与使用教程</a>、以及 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a>。请务必遵守当地法律法规。</p>
+<p><strong>Q3：Gemini 和 ChatGPT 哪个更好？</strong><br>两者都是顶级大模型。ChatGPT 生态与插件更成熟、通用任务稳、深度研究强；Gemini 原生多模态强、与 Google 服务打通、长上下文有优势、免费版够用。日常使用差别不大，建议都试用再定。</p>
+<p><strong>Q4：AI 工具哪个免费好用？必须付费吗？</strong><br>不必付费。国产的豆包、通义千问、Kimi、腾讯元宝都有可观的免费额度，日常 80% 需求够用；ChatGPT/Gemini 也有免费版。重度生产力（更长上下文、最新模型、文件分析）才值得上付费版。新手先用免费版跑通用法。</p>
+<p><strong>Q5：国产大模型怎么选？Kimi、豆包、DeepSeek 哪个好？</strong><br>看场景：Kimi 强在中文长文本与文档总结；豆包对话自然、语音与一站式体验好、适合小白；DeepSeek 开源、推理与性价比突出、适合折腾与私有化。免配置、中文优先，三者都值得一试。</p>
+<p><strong>Q6：AI 写 PPT 哪个工具好？</strong><br>AI PPT 工具可一句话生成大纲与排版。本站实测过 20 款，办公小浣熊等综合体验较好；也可让 ChatGPT/Gemini 先出大纲再导入 PPT 工具。详见 <a href="https://tanqingbo.cn/AI-PPT/">AI PPT 工具横评</a>。</p>
+<p><strong>Q7：AI 编程 / Agent 工具怎么入门？</strong><br>从编程助手类工具起步写代码，再到 OpenClaw、rmux-agent 这类 Agent/终端工具做自动化任务。新手先看相关上手教程，配合具体项目练手最快。</p>
+<p><strong>Q8：新手该从哪个 AI 工具开始？</strong><br>先选一个主力对话模型（ChatGPT 或 Gemini，或国产豆包/Kimi）熟悉提示词，再按需求叠加：写作用 AI 写作、做 PPT 用 AI PPT 工具、搞自动化试 Agent 工具。先专精一个，别贪多。</p>
+<hr>
+<p><em>本页为 tanqingbo.cn「AI 工具」专题的总览枢纽，持续更新。作者：小胖穷。如需补充内容，欢迎留言。</em></p>
+<p><em>参考来源：本页能力对比综合自各产品官方公开信息与公开测评（如 ChatGPT/Gemini/Kimi/豆包/DeepSeek 的公开能力说明）；免费/付费档位以各官网最新公示为准。国内访问方案详见站内对应教程。</em></p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/ai-tools-guide/">https://tanqingbo.cn/ai-tools-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/AI-PPT/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        测了 20 款 AI PPT，最后汇报保命的，居然只有「办公小浣熊」？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-4o/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-4o国内使用教程：注册、访问与功能详解
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-11</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Best-AI-tools/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2025最佳AI工具：国外最新人工智能工具一览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-10-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        如何在国内注册ChatGPT？ChatGPT怎么用？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT！王炸级更新！！！/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT！王炸级更新！！！
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2023-04-08</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/protocol-cheatsheet/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-AI-%E5%B7%A5%E5%85%B7%EF%BC%88%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%AE%9A%E4%B9%89%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 AI 工具（一句话定义）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-AI-%E5%B7%A5%E5%85%B7%E5%85%A8%E6%99%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">二、主流 AI 工具全景对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E8%BF%98%E6%98%AF%E4%BB%98%E8%B4%B9%EF%BC%9F%E6%80%8E%E4%B9%88%E5%86%B3%E7%AD%96"><span class="toc-number">2.1.</span> <span class="toc-text">免费还是付费？怎么决策</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E5%9B%BD%E5%86%85%E6%80%8E%E4%B9%88%E8%AE%BF%E9%97%AE%E6%B5%B7%E5%A4%96-AI%EF%BC%88ChatGPT-Gemini%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">三、在国内怎么访问海外 AI（ChatGPT &#x2F; Gemini）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8C%89%E5%9C%BA%E6%99%AF%E9%80%89%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">四、按场景选工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E4%BD%9C-%E9%97%AE%E7%AD%94-%E6%80%BB%E7%BB%93"><span class="toc-number">4.1.</span> <span class="toc-text">写作 &#x2F; 问答 &#x2F; 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPT-%E6%BC%94%E7%A4%BA"><span class="toc-number">4.2.</span> <span class="toc-text">PPT &#x2F; 演示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B-%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%88Agent%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">编程 &#x2F; 自动化（Agent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%EF%BC%88%E8%BF%9B%E9%98%B6%EF%BC%89"><span class="toc-number">4.4.</span> <span class="toc-text">底层原理（进阶）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81ChatGPT-%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">五、ChatGPT 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Gemini-%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">六、Gemini 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%9B%BD%E4%BA%A7%E6%A8%A1%E5%9E%8B%E4%B8%8E-Agent-%E5%B7%A5%E5%85%B7"><span class="toc-number">7.</span> <span class="toc-text">七、国产模型与 Agent 工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%8F%90%E7%A4%BA%E8%AF%8D%EF%BC%88Prompt%EF%BC%89%E5%85%A5%E9%97%A8%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%94%A8%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%A3"><span class="toc-number">8.</span> <span class="toc-text">八、提示词（Prompt）入门：第一次用怎么开口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">九、合规与安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十一、FAQ 常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>375</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>153</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-AI-%E5%B7%A5%E5%85%B7%EF%BC%88%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%AE%9A%E4%B9%89%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 AI 工具（一句话定义）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-AI-%E5%B7%A5%E5%85%B7%E5%85%A8%E6%99%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">二、主流 AI 工具全景对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E8%BF%98%E6%98%AF%E4%BB%98%E8%B4%B9%EF%BC%9F%E6%80%8E%E4%B9%88%E5%86%B3%E7%AD%96"><span class="toc-number">2.1.</span> <span class="toc-text">免费还是付费？怎么决策</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E5%9B%BD%E5%86%85%E6%80%8E%E4%B9%88%E8%AE%BF%E9%97%AE%E6%B5%B7%E5%A4%96-AI%EF%BC%88ChatGPT-Gemini%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">三、在国内怎么访问海外 AI（ChatGPT &#x2F; Gemini）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8C%89%E5%9C%BA%E6%99%AF%E9%80%89%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">四、按场景选工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E4%BD%9C-%E9%97%AE%E7%AD%94-%E6%80%BB%E7%BB%93"><span class="toc-number">4.1.</span> <span class="toc-text">写作 &#x2F; 问答 &#x2F; 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPT-%E6%BC%94%E7%A4%BA"><span class="toc-number">4.2.</span> <span class="toc-text">PPT &#x2F; 演示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B-%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%88Agent%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">编程 &#x2F; 自动化（Agent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%EF%BC%88%E8%BF%9B%E9%98%B6%EF%BC%89"><span class="toc-number">4.4.</span> <span class="toc-text">底层原理（进阶）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81ChatGPT-%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">五、ChatGPT 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Gemini-%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">六、Gemini 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%9B%BD%E4%BA%A7%E6%A8%A1%E5%9E%8B%E4%B8%8E-Agent-%E5%B7%A5%E5%85%B7"><span class="toc-number">7.</span> <span class="toc-text">七、国产模型与 Agent 工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%8F%90%E7%A4%BA%E8%AF%8D%EF%BC%88Prompt%EF%BC%89%E5%85%A5%E9%97%A8%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%94%A8%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%A3"><span class="toc-number">8.</span> <span class="toc-text">八、提示词（Prompt）入门：第一次用怎么开口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">九、合规与安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十一、FAQ 常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">54</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-AI-%E5%B7%A5%E5%85%B7%EF%BC%88%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%AE%9A%E4%B9%89%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 AI 工具（一句话定义）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-AI-%E5%B7%A5%E5%85%B7%E5%85%A8%E6%99%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">二、主流 AI 工具全景对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E8%BF%98%E6%98%AF%E4%BB%98%E8%B4%B9%EF%BC%9F%E6%80%8E%E4%B9%88%E5%86%B3%E7%AD%96"><span class="toc-number">2.1.</span> <span class="toc-text">免费还是付费？怎么决策</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E5%9B%BD%E5%86%85%E6%80%8E%E4%B9%88%E8%AE%BF%E9%97%AE%E6%B5%B7%E5%A4%96-AI%EF%BC%88ChatGPT-Gemini%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">三、在国内怎么访问海外 AI（ChatGPT &#x2F; Gemini）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8C%89%E5%9C%BA%E6%99%AF%E9%80%89%E5%B7%A5%E5%85%B7"><span class="toc-number">4.</span> <span class="toc-text">四、按场景选工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E4%BD%9C-%E9%97%AE%E7%AD%94-%E6%80%BB%E7%BB%93"><span class="toc-number">4.1.</span> <span class="toc-text">写作 &#x2F; 问答 &#x2F; 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPT-%E6%BC%94%E7%A4%BA"><span class="toc-number">4.2.</span> <span class="toc-text">PPT &#x2F; 演示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B-%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%88Agent%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">编程 &#x2F; 自动化（Agent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%EF%BC%88%E8%BF%9B%E9%98%B6%EF%BC%89"><span class="toc-number">4.4.</span> <span class="toc-text">底层原理（进阶）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81ChatGPT-%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">五、ChatGPT 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Gemini-%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">六、Gemini 系列教程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%9B%BD%E4%BA%A7%E6%A8%A1%E5%9E%8B%E4%B8%8E-Agent-%E5%B7%A5%E5%85%B7"><span class="toc-number">7.</span> <span class="toc-text">七、国产模型与 Agent 工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%8F%90%E7%A4%BA%E8%AF%8D%EF%BC%88Prompt%EF%BC%89%E5%85%A5%E9%97%A8%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%94%A8%E6%80%8E%E4%B9%88%E5%BC%80%E5%8F%A3"><span class="toc-number">8.</span> <span class="toc-text">八、提示词（Prompt）入门：第一次用怎么开口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">九、合规与安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十一、FAQ 常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-30</div>
+        <a href="/ai-tools-guide/"><div class="recent-posts-item-content">AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-30</div>
+        <a href="/protocol-cheatsheet/"><div class="recent-posts-item-content">科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-29</div>
+        <a href="/clash-guide/"><div class="recent-posts-item-content">Clash 完全教程（2026）：客户端、订阅与规则分流</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

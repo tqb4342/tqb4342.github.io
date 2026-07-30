@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-07-30T01:00:00.000Z",
+  "dateModified": "2026-07-30T02:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/protocol-cheatsheet/"
+  },
+  "description": "2026 最新科学上网协议速查表：一张表看懂 VMess、VLESS、Trojan、Reality、Hysteria2 的加密方式、证书要求、隐蔽性与速度，附协议演进时间线、Clash 配置示例与选型建议。",
+  "keywords": [
+    "科学上网协议",
+    "Vmess",
+    "VLESS",
+    "Trojan",
+    "Reality",
+    "Hysteria2",
+    "翻墙协议对比",
+    "Clash配置"
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "2026 年科学上网最推荐用哪个协议？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "个人自建优先 VLESS+Reality，隐蔽且免证书；用机场则跟随订阅（多为 VLESS/Reality 或 Trojan）。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "哪个协议最隐蔽、最难被封锁？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VLESS+Reality 与 Trojan 最隐蔽：前者借真实网站 TLS 握手抗主动探测，后者伪装成正常 HTTPS 流量。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "VLESS 和 VMess 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "VLESS 是 VMess 的轻量后继协议，本身不含加密、依赖 TLS/Reality，更快更现代；VMess 已不推荐新部署。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Reality 需要自己申请 SSL 证书吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不需要。Reality 直接复用目标真实网站的证书完成 TLS 握手，因此无需自签或申请证书。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hysteria2 和 TUIC 适合什么场景？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两者基于 QUIC/UDP，专为高延迟、高丢包的国际线路优化，适合跑量、游戏或弱网环境。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "免费节点一般用哪种协议？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "多为 Shadowsocks 或 Trojan，但免费节点速度慢、易被封且存在隐私风险，不建议长期依赖。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "SSR（ShadowsocksR）还能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不建议。SSR 已停止维护多年，协议特征明显、易被主动探测识别，主流客户端已不再支持，新部署应改用 VLESS+Reality 或 Trojan。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "手机上用哪个协议最省电稳定？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "手机日常推荐跟随机场订阅（多为 VLESS/Reality 或 Trojan），TCP 类协议在移动网络下连接更稳定；Hysteria2/TUIC 虽快但 UDP 在部分移动网络会被限速。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比</title>
+  
+  
+  <meta property="title" content="科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/protocol-cheatsheet/index.html">
+  
+  
+  <meta property="og:img" content="/img/logo.webp">
+  
+  
+  <meta property="description" content="2026 最新科学上网协议速查表：一张表看懂 VMess、VLESS、Trojan、Reality、Hysteria2 的加密方式、证书要求、隐蔽性与速度，附协议演进时间线、Clash 配置示例与选型建议。">
+  
+  <meta property="keywords" content="科学上网协议,Vmess,VLESS,Trojan,Reality,Hysteria2,翻墙协议对比,Clash配置">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-07-30">
+  <meta property="og:article:modified_time" content="2026-07-30">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="翻墙">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="协议对比">
+  
+  <meta property="og:article:tag" content="V2Ray">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/protocol-cheatsheet/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-07-30T01:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-07-30</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.8k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/protocol-cheatsheet/" class="leancloud_visitors" data-flag-title="科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/翻墙/" class="post-meta-link">翻墙</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/协议对比/" class="post-meta-link">协议对比</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/V2Ray/" class="post-meta-link">V2Ray</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="2026 最新科学上网协议速查表：一张表看懂 VMess、VLESS、Trojan、Reality、Hysteria2 的加密方式、证书要求、隐蔽性与速度，附协议演进时间线、Clash 配置示例与选型建议。">
+  
+  <meta name="keywords" content="科学上网协议,Vmess,VLESS,Trojan,Reality,Hysteria2,翻墙协议对比,Clash配置">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h1 id="科学上网协议速查表（2026）"><a href="#科学上网协议速查表（2026）" class="headerlink" title="科学上网协议速查表（2026）"></a>科学上网协议速查表（2026）</h1><blockquote>
+<p>一张表看懂主流科学上网协议的加密方式、证书要求、隐蔽性与速度。配合 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a> 与 <a href="/clash-guide/">Clash 完全教程</a> 食用更佳。</p>
+</blockquote>
+<p><strong>科学上网协议</strong>是指用于绕过网络封锁的代理 / 隧道传输协议。主流包括 Shadowsocks、VMess、VLESS、Trojan、Reality 与 Hysteria2，它们在隐蔽性、速度与部署难度上各有侧重。下面这张速查表帮你 30 秒定位该用哪个。</p>
+<p>📅 <strong>最后更新：2026 年 7 月 30 日</strong> · 作者：小胖穷 · 本文持续维护，欢迎引用（注明出处即可）。</p>
+<h2 id="一、协议速查总表"><a href="#一、协议速查总表" class="headerlink" title="一、协议速查总表"></a>一、协议速查总表</h2><table>
+<thead>
+<tr>
+<th>协议</th>
+<th>加密 / 伪装方式</th>
+<th>证书要求</th>
+<th>隐蔽性</th>
+<th>速度特点</th>
+<th>部署难度</th>
+<th>现状</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Shadowsocks (SS)</strong></td>
+<td>SOCKS5 自有加密</td>
+<td>无需</td>
+<td>低</td>
+<td>日常流畅，延迟低</td>
+<td>简单</td>
+<td>仍可用，但易被主动探测</td>
+</tr>
+<tr>
+<td><strong>VMess</strong></td>
+<td>V2Ray 自有加密 + 可选 TLS</td>
+<td>可选</td>
+<td>中</td>
+<td>中等，开销偏重</td>
+<td>中</td>
+<td>已不推荐新部署</td>
+</tr>
+<tr>
+<td><strong>VLESS</strong></td>
+<td>不加密，依赖外层 TLS</td>
+<td>需 TLS</td>
+<td>中（配合 TLS 高）</td>
+<td>很快，开销最小</td>
+<td>中</td>
+<td>当前主流</td>
+</tr>
+<tr>
+<td><strong>Trojan</strong></td>
+<td>TLS 伪装成正常 HTTPS</td>
+<td>需可信证书</td>
+<td>高</td>
+<td>快</td>
+<td>中（需证书）</td>
+<td>主流推荐</td>
+</tr>
+<tr>
+<td><strong>VLESS + Reality</strong></td>
+<td>借真实网站 TLS 握手</td>
+<td>无需（借用）</td>
+<td>极高</td>
+<td>很快</td>
+<td>中</td>
+<td>2026 黄金标准</td>
+</tr>
+<tr>
+<td><strong>Hysteria2 (HY2)</strong></td>
+<td>QUIC + 混淆</td>
+<td>需 TLS</td>
+<td>中</td>
+<td>极快，弱网优势大</td>
+<td>中</td>
+<td>新兴热门</td>
+</tr>
+<tr>
+<td><strong>TUIC</strong></td>
+<td>QUIC + 混淆</td>
+<td>需 TLS</td>
+<td>中</td>
+<td>极快，弱网优势大</td>
+<td>中</td>
+<td>新兴热门</td>
+</tr>
+<tr>
+<td><strong>WireGuard</strong></td>
+<td>UDP 加密隧道（无混淆）</td>
+<td>无需</td>
+<td>低（无伪装）</td>
+<td>极快</td>
+<td>简单</td>
+<td>直连易被墙，多做内网隧道</td>
+</tr>
+<tr>
+<td><strong>SSR（ShadowsocksR）</strong></td>
+<td>SS 变体 + 混淆插件</td>
+<td>无需</td>
+<td>低</td>
+<td>中</td>
+<td>简单</td>
+<td>已停维，不建议使用</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>隐蔽性核心：能否扛住防火墙的<strong>主动探测</strong>。Shadowsocks / SSR 因特征明显，主动探测即可识别；Reality / Trojan 因完美伪装成 HTTPS 流量，抗封锁能力最强。</p>
+</blockquote>
+<h2 id="二、各协议一句话解读"><a href="#二、各协议一句话解读" class="headerlink" title="二、各协议一句话解读"></a>二、各协议一句话解读</h2><ul>
+<li><strong>Shadowsocks</strong>：轻量加密代理，部署最简单，但特征已被充分研究，不适合长期高隐蔽方案。</li>
+<li><strong>VMess</strong>：V2Ray 早期协议，安全性尚可但体量偏重，官方已建议新项目改用 VLESS。</li>
+<li><strong>VLESS</strong>：V2Ray 的轻量现代协议，本身不带加密，需配合 TLS 或 Reality 使用，速度更快。</li>
+<li><strong>Trojan</strong>：把流量伪装成正常 HTTPS，需要一张可信证书，隐蔽性高，是自建常用选择。</li>
+<li><strong>VLESS + Reality</strong>：复用真实网站的 TLS 证书完成握手，无需自签证书，隐蔽性拉满，目前最推荐。</li>
+<li><strong>Hysteria2 / TUIC</strong>：基于 QUIC 的 UDP 协议，专为跨国高丢包链路设计，弱网下速度优势明显。</li>
+<li><strong>WireGuard</strong>：现代 VPN 协议，速度极快但无流量伪装，直连易被 GFW 识别封锁，常用于 VPS 之间内网隧道。</li>
+<li><strong>SSR</strong>：Shadowsocks 的早期分支，已停止维护多年，特征明显易被封，主流客户端不再支持。</li>
+</ul>
+<h2 id="三、协议演进时间线"><a href="#三、协议演进时间线" class="headerlink" title="三、协议演进时间线"></a>三、协议演进时间线</h2><p>了解协议演进，能帮你判断哪些是”还在维护的活协议”、哪些已被淘汰：</p>
+<ul>
+<li><strong>2012</strong> — Shadowsocks 开源发布，开创轻量加密代理方向</li>
+<li><strong>2017</strong> — V2Ray 项目启动，VMess 协议诞生（更强调可扩展性）</li>
+<li><strong>2019</strong> — Trojan 问世，首次把流量伪装成标准 HTTPS</li>
+<li><strong>2020</strong> — VLESS 发布，去掉 VMess 冗余加密，追求极致轻量</li>
+<li><strong>2022</strong> — Reality（XTLS Reality）发布，免证书借真实站 TLS 握手，抗主动探测</li>
+<li><strong>2023</strong> — Hysteria2 / TUIC 兴起，基于 QUIC 主攻弱网与高吞吐</li>
+</ul>
+<blockquote>
+<p>一句话规律：协议演进方向是”更轻 + 更像正常 HTTPS + 更少自维护成本”。Reality 是目前这条线的最新答案。</p>
+</blockquote>
+<h2 id="四、为什么-Reality-是-2026-年首选"><a href="#四、为什么-Reality-是-2026-年首选" class="headerlink" title="四、为什么 Reality 是 2026 年首选"></a>四、为什么 Reality 是 2026 年首选</h2><p>Reality（XTLS Reality）的核心在于：它<strong>不使用你自己的证书</strong>，而是”借用”一个真实存在的大型网站（如 apple.com、microsoft.com）的 TLS 握手。</p>
+<p>当防火墙主动探测你的节点时，看到的是与真实访问该网站<strong>完全一致的握手行为</strong>，无法区分。这解决了 Trojan / 传统 TLS 方案”自有证书可被识别”的隐患，是 2026 年抗主动探测能力最强的方案。加上无需申请或自签证书，部署门槛比 Trojan 还低——这就是它被称为”黄金标准”的原因。</p>
+<h2 id="五、怎么选：30-秒决策"><a href="#五、怎么选：30-秒决策" class="headerlink" title="五、怎么选：30 秒决策"></a>五、怎么选：30 秒决策</h2><ol>
+<li><strong>用机场订阅</strong> → 直接用机场提供的配置（多为 VLESS/Reality 或 Trojan），无需自己选。</li>
+<li><strong>个人 VPS 自建、追求极致隐蔽</strong> → <strong>VLESS + Reality</strong>（免证书、抗封锁最强）。</li>
+<li><strong>个人自建、想要成熟稳定</strong> → <strong>Trojan</strong>（需自备 TLS 证书）。</li>
+<li><strong>国际线路卡顿、要跑量或打游戏</strong> → <strong>Hysteria2</strong> 或 <strong>TUIC</strong>。</li>
+<li><strong>只想极简临时用</strong> → <strong>Shadowsocks</strong>（但注意探测风险，不建议长期）。</li>
+<li><strong>VPS 之间内网组网</strong> → <strong>WireGuard</strong>（仅做隧道，不直接抗墙）。</li>
+</ol>
+<h2 id="六、Clash-配置里的-type-对照"><a href="#六、Clash-配置里的-type-对照" class="headerlink" title="六、Clash 配置里的 type 对照"></a>六、Clash 配置里的 <code>type</code> 对照</h2><p>在 Clash / Mihomo 的 <code>proxies</code> 里，不同协议对应不同 <code>type</code> 字段：</p>
+<pre class="highlight"><span class="line"><span class="attr">proxies:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"Reality节点"</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">vless</span>          <span class="comment"># vless / trojan / ss / vmess / hysteria2 / tuic</span></span><br><span class="line">    <span class="attr">server:</span> <span class="string">example.com</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">443</span></span><br><span class="line">    <span class="attr">uuid:</span> <span class="string">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></span><br><span class="line">    <span class="attr">network:</span> <span class="string">ws</span></span><br><span class="line">    <span class="attr">tls:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">client-fingerprint:</span> <span class="string">chrome</span>   <span class="comment"># Reality 推荐</span></span><br><span class="line">    <span class="attr">reality-opts:</span></span><br><span class="line">      <span class="attr">public-key:</span> <span class="string">xxxx</span></span><br></pre>
+
+<blockquote>
+<p>注意：SSR（ShadowsocksR）已不被 Mihomo 主流支持，新配置里不要使用 <code>type: ssr</code>。完整配置说明参见 <a href="/clash-guide/">Clash 完全教程</a> 的「配置文件」一节。</p>
+</blockquote>
+<h2 id="七、常见误区"><a href="#七、常见误区" class="headerlink" title="七、常见误区"></a>七、常见误区</h2><ul>
+<li>❌ “协议越新越快” —— 速度更多取决于线路与落地 IP，协议主要影响隐蔽性与弱网表现。</li>
+<li>❌ “用了 Reality 就万无一失” —— 节点本身的质量、IP 信誉同样关键，Reality 只解决”流量伪装”这一环。</li>
+<li>❌ “免费节点随便用” —— 免费节点普遍速度慢、易封且存在流量截取风险。</li>
+<li>❌ “SSR 还能用就继续用” —— 已停维且特征明显，新部署没有任何理由选它。</li>
+</ul>
+<h2 id="八、FAQ-常见问题"><a href="#八、FAQ-常见问题" class="headerlink" title="八、FAQ 常见问题"></a>八、FAQ 常见问题</h2><p><strong>Q1：2026 年科学上网最推荐用哪个协议？</strong><br>个人自建优先 VLESS+Reality，隐蔽且免证书；用机场则跟随订阅（多为 VLESS/Reality 或 Trojan）。</p>
+<p><strong>Q2：哪个协议最隐蔽、最难被封锁？</strong><br>VLESS+Reality 与 Trojan 最隐蔽：前者借真实网站 TLS 握手抗主动探测，后者伪装成正常 HTTPS 流量。</p>
+<p><strong>Q3：VLESS 和 VMess 有什么区别？</strong><br>VLESS 是 VMess 的轻量后继协议，本身不含加密、依赖 TLS/Reality，更快更现代；VMess 已不推荐新部署。</p>
+<p><strong>Q4：Reality 需要自己申请 SSL 证书吗？</strong><br>不需要。Reality 直接复用目标真实网站的证书完成 TLS 握手，因此无需自签或申请证书。</p>
+<p><strong>Q5：Hysteria2 和 TUIC 适合什么场景？</strong><br>两者基于 QUIC/UDP，专为高延迟、高丢包的国际线路优化，适合跑量、游戏或弱网环境。</p>
+<p><strong>Q6：免费节点一般用哪种协议？</strong><br>多为 Shadowsocks 或 Trojan，但免费节点速度慢、易被封且存在隐私风险，不建议长期依赖。</p>
+<p><strong>Q7：SSR（ShadowsocksR）还能用吗？</strong><br>不建议。SSR 已停止维护多年，协议特征明显、易被主动探测识别，主流客户端已不再支持，新部署应改用 VLESS+Reality 或 Trojan。</p>
+<p><strong>Q8：手机上用哪个协议最省电稳定？</strong><br>手机日常推荐跟随机场订阅（多为 VLESS/Reality 或 Trojan），TCP 类协议在移动网络下连接更稳定；Hysteria2/TUIC 虽快但 UDP 在部分移动网络会被限速。</p>
+<hr>
+<p>📌 本文可自由引用与转载，注明出处即可。想系统了解科学上网与 Clash 配置，回看 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a> 与 <a href="/clash-guide/">Clash 完全教程</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/protocol-cheatsheet/">https://tanqingbo.cn/protocol-cheatsheet/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-Open-Internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026梯子翻墙教程：科学上网工具选择与使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-clash-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026科学上网教程：电脑手机翻墙最稳定方案
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-12</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-best-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026年VPN推荐：支持全平台的高速稳定科学上网工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Android如何用外网/安卓手机搭梯子-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-26</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-open-internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        安卓/Android系统手机实现科学上网教程-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-12</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/ai-tools-guide/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/clash-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Clash 完全教程（2026）：客户端、订阅与规则分流 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E9%80%9F%E6%9F%A5%E8%A1%A8%EF%BC%882026%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">科学上网协议速查表（2026）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8D%8F%E8%AE%AE%E9%80%9F%E6%9F%A5%E6%80%BB%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">一、协议速查总表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%84%E5%8D%8F%E8%AE%AE%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.2.</span> <span class="toc-text">二、各协议一句话解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8D%8F%E8%AE%AE%E6%BC%94%E8%BF%9B%E6%97%B6%E9%97%B4%E7%BA%BF"><span class="toc-number">1.3.</span> <span class="toc-text">三、协议演进时间线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Reality-%E6%98%AF-2026-%E5%B9%B4%E9%A6%96%E9%80%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、为什么 Reality 是 2026 年首选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A30-%E7%A7%92%E5%86%B3%E7%AD%96"><span class="toc-number">1.5.</span> <span class="toc-text">五、怎么选：30 秒决策</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Clash-%E9%85%8D%E7%BD%AE%E9%87%8C%E7%9A%84-type-%E5%AF%B9%E7%85%A7"><span class="toc-number">1.6.</span> <span class="toc-text">六、Clash 配置里的 type 对照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">1.7.</span> <span class="toc-text">七、常见误区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.8.</span> <span class="toc-text">八、FAQ 常见问题</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>375</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>153</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E9%80%9F%E6%9F%A5%E8%A1%A8%EF%BC%882026%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">科学上网协议速查表（2026）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8D%8F%E8%AE%AE%E9%80%9F%E6%9F%A5%E6%80%BB%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">一、协议速查总表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%84%E5%8D%8F%E8%AE%AE%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.2.</span> <span class="toc-text">二、各协议一句话解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8D%8F%E8%AE%AE%E6%BC%94%E8%BF%9B%E6%97%B6%E9%97%B4%E7%BA%BF"><span class="toc-number">1.3.</span> <span class="toc-text">三、协议演进时间线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Reality-%E6%98%AF-2026-%E5%B9%B4%E9%A6%96%E9%80%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、为什么 Reality 是 2026 年首选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A30-%E7%A7%92%E5%86%B3%E7%AD%96"><span class="toc-number">1.5.</span> <span class="toc-text">五、怎么选：30 秒决策</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Clash-%E9%85%8D%E7%BD%AE%E9%87%8C%E7%9A%84-type-%E5%AF%B9%E7%85%A7"><span class="toc-number">1.6.</span> <span class="toc-text">六、Clash 配置里的 type 对照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">1.7.</span> <span class="toc-text">七、常见误区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.8.</span> <span class="toc-text">八、FAQ 常见问题</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">15</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">54</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E9%80%9F%E6%9F%A5%E8%A1%A8%EF%BC%882026%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">科学上网协议速查表（2026）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8D%8F%E8%AE%AE%E9%80%9F%E6%9F%A5%E6%80%BB%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">一、协议速查总表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%84%E5%8D%8F%E8%AE%AE%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.2.</span> <span class="toc-text">二、各协议一句话解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8D%8F%E8%AE%AE%E6%BC%94%E8%BF%9B%E6%97%B6%E9%97%B4%E7%BA%BF"><span class="toc-number">1.3.</span> <span class="toc-text">三、协议演进时间线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Reality-%E6%98%AF-2026-%E5%B9%B4%E9%A6%96%E9%80%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、为什么 Reality 是 2026 年首选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A30-%E7%A7%92%E5%86%B3%E7%AD%96"><span class="toc-number">1.5.</span> <span class="toc-text">五、怎么选：30 秒决策</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81Clash-%E9%85%8D%E7%BD%AE%E9%87%8C%E7%9A%84-type-%E5%AF%B9%E7%85%A7"><span class="toc-number">1.6.</span> <span class="toc-text">六、Clash 配置里的 type 对照</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">1.7.</span> <span class="toc-text">七、常见误区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.8.</span> <span class="toc-text">八、FAQ 常见问题</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-30</div>
+        <a href="/ai-tools-guide/"><div class="recent-posts-item-content">AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-30</div>
+        <a href="/protocol-cheatsheet/"><div class="recent-posts-item-content">科学上网协议速查表（2026）：VMess / VLESS / Trojan / Reality / Hysteria2 对比</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-07-29</div>
+        <a href="/clash-guide/"><div class="recent-posts-item-content">Clash 完全教程（2026）：客户端、订阅与规则分流</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
