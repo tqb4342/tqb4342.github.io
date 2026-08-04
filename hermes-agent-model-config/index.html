@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-04T13:00:00.000Z",
+  "dateModified": "2026-08-04T14:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/hermes-agent-model-config/"
+  },
+  "image": "/images/banners/A_modern_tech_illustration_for_2026-08-04T14-22-31.png",
+  "description": "Hermes Agent 模型配置完全教程：讲透交互式配置（hermes model）和手动编辑 config.yaml 两种方式，覆盖 OpenRouter/DeepSeek/Gemini/Kimi 等一等提供商、自定义 Provider（key_env）、多模型别名切换、辅助模型配置，以及\"配了 key 却报 401\"的 host 门控排障。",
+  "keywords": "hermes agent 配置模型,hermes model config,hermes agent 教程,hermes 自定义provider,hermes 401,hermes config.yaml,hermes 多模型切换,hermes deepseek,hermes openrouter,hermes key_env,hermes agent windows,hermes api key 配置"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hermes Agent 怎么配置模型？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两种方式：一是运行 hermes model 进入交互式向导，选择提供商、输入 API Key、选模型即可；二是手动编辑 config.yaml（hermes config edit），在 model 段填写 provider、default、base_url，在 .env 填 API Key。多模型场景建议用手动方式，可定义多个 provider 和 aliases。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hermes Agent 的 config.yaml 在哪里？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Windows 路径：%LOCALAPPDATA%\\hermes\\config.yaml（即 C:\\Users\\<用户名>\\AppData\\Local\\hermes\\config.yaml）；Linux / macOS 路径：~/.hermes/config.yaml。也可以运行 hermes config edit 直接用编辑器打开。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hermes Agent 配了 key 却报 401 怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是 Hermes 的 host 安全门控机制导致的。OPENAI_API_KEY 只会发给 openai.com，IP 地址和 localhost 无法推导 vendor 名，key 解析为空后发送占位符导致 401。解决办法：不要用 OPENAI_API_KEY 给自定义端点配 key，改用命名 custom provider 配合 key_env 显式指定环境变量名。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hermes Agent 怎么配置多个模型切换？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "在 config.yaml 的 providers 段定义多个 provider，在 model.aliases 段给每个模型定义短名字，然后会话中用 /model <别名> 切换，或命令行 hermes chat -m <别名> 指定。多模型配置互不影响，可随时切换。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hermes Agent 支持哪些模型提供商？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方集成（一等提供商）包括 OpenRouter、DeepSeek、z.ai/GLM、Kimi、MiniMax、Google Gemini、Hugging Face、阿里云 Qwen 等。任意 OpenAI 兼容端点可通过命名 Custom Provider 方式接入，包括公司内部网关、私有化部署和国内镜像端点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hermes Agent 编辑配置后需要重启吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不需要。Hermes 每次运行都会重新读取配置，编辑 config.yaml 后下一次 hermes chat 自动生效。但已打开的会话不会热更新，需要开新会话或在会话内用 /model 斜杠命令切换。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）</title>
+  
+  
+  <meta property="title" content="Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/hermes-agent-model-config/index.html">
+  
+  
+  <meta property="og:img" content="/images/banners/A_modern_tech_illustration_for_2026-08-04T14-22-31.png">
+  
+  
+  <meta property="description" content="Hermes Agent 模型配置完全教程：讲透交互式配置（hermes model）和手动编辑 config.yaml 两种方式，覆盖 OpenRouter/DeepSeek/Gemini/Kimi 等一等提供商、自定义 Provider（key_env）、多模型别名切换、辅助模型配置，以及&#34;配了 key 却报 401&#34;的 host 门控排障。">
+  
+  <meta property="keywords" content="hermes agent 配置模型,hermes model config,hermes agent 教程,hermes 自定义provider,hermes 401,hermes config.yaml,hermes 多模型切换,hermes deepseek,hermes openrouter,hermes key_env,hermes agent windows,hermes api key 配置">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-04">
+  <meta property="og:article:modified_time" content="2026-08-04">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="AI工具">
+  
+  <meta property="og:article:tag" content="AI Agent">
+  
+  <meta property="og:article:tag" content="Hermes Agent">
+  
+  <meta property="og:article:tag" content="模型配置">
+  
+  <meta property="og:article:tag" content="DeepSeek">
+  
+  <meta property="og:article:tag" content="OpenRouter">
+  
+  <meta property="og:article:tag" content="config.yaml">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/hermes-agent-model-config/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/images/banners/A_modern_tech_illustration_for_2026-08-04T14-22-31.png" data-src="/images/banners/A_modern_tech_illustration_for_2026-08-04T14-22-31.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-04T13:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-04</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/hermes-agent-model-config/" class="leancloud_visitors" data-flag-title="Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI工具/" class="post-meta-link">AI工具</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-Agent/" class="post-meta-link">AI Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Hermes-Agent/" class="post-meta-link">Hermes Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/模型配置/" class="post-meta-link">模型配置</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DeepSeek/" class="post-meta-link">DeepSeek</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/OpenRouter/" class="post-meta-link">OpenRouter</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/config-yaml/" class="post-meta-link">config.yaml</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Hermes Agent 模型配置完全教程：讲透交互式配置（hermes model）和手动编辑 config.yaml 两种方式，覆盖 OpenRouter/DeepSeek/Gemini/Kimi 等一等提供商、自定义 Provider（key_env）、多模型别名切换、辅助模型配置，以及&#34;配了 key 却报 401&#34;的 host 门控排障。">
+  
+  <meta name="keywords" content="hermes agent 配置模型,hermes model config,hermes agent 教程,hermes 自定义provider,hermes 401,hermes config.yaml,hermes 多模型切换,hermes deepseek,hermes openrouter,hermes key_env,hermes agent windows,hermes api key 配置">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用</a></strong> 的配套教程。想系统了解 AI 工具怎么选、国内怎么访问、按场景怎么用，欢迎访问总览页。</p>
+</blockquote>
+<h1 id="Hermes-Agent-配置模型完全教程（2026）"><a href="#Hermes-Agent-配置模型完全教程（2026）" class="headerlink" title="Hermes Agent 配置模型完全教程（2026）"></a>Hermes Agent 配置模型完全教程（2026）</h1><p>Hermes Agent 的模型配置有两种方式：交互式向导（<code>hermes model</code>）和手动编辑 <code>config.yaml</code>。本文基于 Hermes Agent v0.19.x（Windows 原生安装）实际配置经验，覆盖两种配置方式、8 家常见提供商的配置方法、自定义 Provider 接入任意 OpenAI 兼容端点、多模型别名切换、辅助模型配置，以及一个很容易踩坑的 host 安全门控机制（”配了 key 却报 401”）。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#%E4%B8%80%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%E6%80%BB%E8%A7%88">一、配置方式总览</a></li>
+<li><a href="#%E4%BA%8C%E6%96%B9%E5%BC%8F%E4%B8%80%E4%BA%A4%E4%BA%92%E5%BC%8F%E9%85%8D%E7%BD%AEhermes-model">二、方式一：交互式配置（<code>hermes model</code>）</a></li>
+<li><a href="#%E4%B8%89%E6%96%B9%E5%BC%8F%E4%BA%8C%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%8E%A8%E8%8D%90%E5%8F%AF%E5%A4%8D%E7%8E%B0">三、方式二：编辑配置文件（推荐、可复现）</a><ul>
+<li><a href="#31-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%9C%A8%E5%93%AA%E9%87%8C">3.1 配置文件在哪里</a></li>
+<li><a href="#32-%E4%B8%80%E7%AD%89%E6%8F%90%E4%BE%9B%E5%95%86%E5%AE%98%E6%96%B9%E9%9B%86%E6%88%90">3.2 一等提供商（官方集成）</a></li>
+<li><a href="#33-%E5%91%BD%E5%90%8D-custom-provider%E4%BB%BB%E6%84%8F-openai-%E5%85%BC%E5%AE%B9%E7%AB%AF%E7%82%B9">3.3 命名 Custom Provider（任意 OpenAI 兼容端点）</a></li>
+<li><a href="#34-%E5%A4%9A%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%88%87%E6%8D%A2">3.4 多模型配置与切换</a></li>
+<li><a href="#35-%E8%BE%85%E5%8A%A9%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE">3.5 辅助模型配置</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9B%9B%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88">四、验证配置是否生效</a></li>
+<li><a href="#%E4%BA%94%E5%B8%B8%E8%A7%81%E5%9D%91%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%85%8D%E4%BA%86-key-%E5%8D%B4%E6%8A%A5-401">五、常见坑：为什么我配了 key 却报 401？</a></li>
+<li><a href="#%E5%85%AD%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%E4%B8%89%E6%A8%A1%E5%9E%8B%E5%85%B1%E5%AD%98%E9%85%8D%E7%BD%AE">六、完整示例：三模型共存配置</a></li>
+<li><a href="#%E4%B8%83faq">七、FAQ</a></li>
+</ul>
+<hr>
+<h2 id="一、配置方式总览"><a href="#一、配置方式总览" class="headerlink" title="一、配置方式总览"></a>一、配置方式总览</h2><p>Hermes 的模型配置存储在两个文件里：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>作用</th>
+<th>存放内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>config.yaml</code></td>
+<td>模型、provider、终端等非敏感配置</td>
+<td>provider、base_url、默认模型、别名</td>
+</tr>
+<tr>
+<td><code>.env</code></td>
+<td>敏感信息</td>
+<td>API Key 等环境变量</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>Windows 路径：<code>%LOCALAPPDATA%\hermes\</code>（即 <code>C:\Users\&lt;用户名&gt;\AppData\Local\hermes\</code>）<br>Linux / macOS 路径：<code>~/.hermes/</code></p>
+</blockquote>
+<p>配置优先级（从高到低）：</p>
+<ol>
+<li>CLI 参数（如 <code>hermes chat --model xxx</code>）</li>
+<li><code>config.yaml</code></li>
+<li><code>.env</code></li>
+<li>内置默认值</li>
+</ol>
+<p>两种配置方式任选其一：</p>
+<ul>
+<li>交互式：运行 <code>hermes model</code> 或 <code>hermes setup</code>，跟着向导选择</li>
+<li>手动：直接编辑 <code>config.yaml</code> + <code>.env</code>（适合多模型、团队复现、快速切换）</li>
+</ul>
+<hr>
+<h2 id="二、方式一：交互式配置（hermes-model）"><a href="#二、方式一：交互式配置（hermes-model）" class="headerlink" title="二、方式一：交互式配置（hermes model）"></a>二、方式一：交互式配置（<code>hermes model</code>）</h2><pre class="highlight"><span class="line">hermes model</span><br></pre>
+
+<p>进入交互界面后：</p>
+<ol>
+<li>选择提供商（OpenRouter、DeepSeek、Anthropic、自定义端点等）</li>
+<li>按提示输入 API Key</li>
+<li>选择具体模型</li>
+<li>确认后即写入配置</li>
+</ol>
+<p>常用配套命令：</p>
+<pre class="highlight"><span class="line">hermes setup          <span class="comment"># 完整配置向导（模型、终端、消息平台等）</span></span><br><span class="line">hermes config <span class="built_in">set</span> model.provider deepseek    <span class="comment"># 命令行直接设置</span></span><br><span class="line">hermes config <span class="built_in">set</span> model.default deepseek<span class="literal">-chat</span></span><br><span class="line">hermes config <span class="built_in">set</span> OPENROUTER_API_KEY sk<span class="operator">-or</span><span class="literal">-xxx</span>   <span class="comment"># key 会自动写入 .env</span></span><br></pre>
+
+<p>交互式方式适合第一次配置、只有一个模型的情况；多模型管理建议用手动方式。</p>
+<hr>
+<h2 id="三、方式二：编辑配置文件（推荐、可复现）"><a href="#三、方式二：编辑配置文件（推荐、可复现）" class="headerlink" title="三、方式二：编辑配置文件（推荐、可复现）"></a>三、方式二：编辑配置文件（推荐、可复现）</h2><h3 id="3-1-配置文件在哪里"><a href="#3-1-配置文件在哪里" class="headerlink" title="3.1 配置文件在哪里"></a>3.1 配置文件在哪里</h3><pre class="highlight"><span class="line">hermes config edit    <span class="comment"># 直接用编辑器打开 config.yaml</span></span><br></pre>
+
+<p>编辑后无需重启，下一次 <code>hermes chat</code> 自动生效（与 opencode 不同，Hermes 每次运行都会重新读取配置）。但已打开的会话不会热更新，需要开新会话或在会话内用 <code>/model</code> 切换。</p>
+<h3 id="3-2-一等提供商（官方集成）"><a href="#3-2-一等提供商（官方集成）" class="headerlink" title="3.2 一等提供商（官方集成）"></a>3.2 一等提供商（官方集成）</h3><p>Hermes 对常见厂商有内置集成，只需在 <code>.env</code> 设置对应变量，<code>provider</code> 填内置名字：</p>
+<table>
+<thead>
+<tr>
+<th>提供商</th>
+<th>.env 变量</th>
+<th>provider 值</th>
+<th>默认端点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenRouter</td>
+<td><code>OPENROUTER_API_KEY</code></td>
+<td><code>openrouter</code></td>
+<td>openrouter.ai</td>
+</tr>
+<tr>
+<td>DeepSeek 官方</td>
+<td><code>DEEPSEEK_API_KEY</code></td>
+<td><code>deepseek</code></td>
+<td>api.deepseek.com</td>
+</tr>
+<tr>
+<td>z.ai / GLM</td>
+<td><code>GLM_API_KEY</code></td>
+<td><code>zai</code></td>
+<td>api.z.ai</td>
+</tr>
+<tr>
+<td>Kimi</td>
+<td><code>KIMI_API_KEY</code></td>
+<td><code>kimi-coding</code></td>
+<td>api.kimi.com</td>
+</tr>
+<tr>
+<td>MiniMax</td>
+<td><code>MINIMAX_API_KEY</code></td>
+<td><code>minimax</code></td>
+<td>api.minimax.io</td>
+</tr>
+<tr>
+<td>Google Gemini</td>
+<td><code>GOOGLE_API_KEY</code></td>
+<td><code>gemini</code></td>
+<td>AI Studio</td>
+</tr>
+<tr>
+<td>Hugging Face</td>
+<td><code>HF_TOKEN</code></td>
+<td><code>huggingface</code></td>
+<td>router.huggingface.co</td>
+</tr>
+<tr>
+<td>阿里云 Qwen</td>
+<td><code>DASHSCOPE_API_KEY</code></td>
+<td><code>alibaba</code></td>
+<td>DashScope</td>
+</tr>
+</tbody></table>
+<p>示例（.env）：</p>
+<pre class="highlight"><span class="line"><span class="attr">DEEPSEEK_API_KEY</span>=sk-你的DeepSeek密钥</span><br></pre>
+
+<p>示例（config.yaml）：</p>
+<pre class="highlight"><span class="line"><span class="attr">model:</span></span><br><span class="line">  <span class="attr">default:</span> <span class="string">deepseek-chat</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">deepseek</span></span><br></pre>
+
+<h3 id="3-3-命名-Custom-Provider（任意-OpenAI-兼容端点）"><a href="#3-3-命名-Custom-Provider（任意-OpenAI-兼容端点）" class="headerlink" title="3.3 命名 Custom Provider（任意 OpenAI 兼容端点）"></a>3.3 命名 Custom Provider（任意 OpenAI 兼容端点）</h3><p>公司内部网关、私有化部署、国内镜像端点等，往往不是官方端点。这时要在 <code>config.yaml</code> 的 <code>providers:</code> 段定义一个命名 provider：</p>
+<pre class="highlight"><span class="line"><span class="attr">providers:</span></span><br><span class="line">  <span class="attr">my-vendor:</span>                    <span class="comment"># 自定义名字，全局唯一</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">我的模型服务</span>           <span class="comment"># 显示名（可选）</span></span><br><span class="line">    <span class="attr">base_url:</span> <span class="string">https://api.example.com/v1</span></span><br><span class="line">    <span class="attr">key_env:</span> <span class="string">MY_VENDOR_API_KEY</span>   <span class="comment"># 指定 key 从哪个环境变量读取</span></span><br><span class="line">    <span class="attr">default_model:</span> <span class="string">my-model-x</span>    <span class="comment"># 该端点的默认模型 ID</span></span><br><span class="line">    <span class="attr">api_mode:</span> <span class="string">chat_completions</span>   <span class="comment"># OpenAI 兼容协议</span></span><br></pre>
+
+<p><code>.env</code> 中对应设置：</p>
+<pre class="highlight"><span class="line"><span class="attr">MY_VENDOR_API_KEY</span>=sk-你的密钥</span><br></pre>
+
+<p>然后让默认模型指向它：</p>
+<pre class="highlight"><span class="line"><span class="attr">model:</span></span><br><span class="line">  <span class="attr">default:</span> <span class="string">my-model-x</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">my-vendor</span></span><br><span class="line">  <span class="attr">base_url:</span> <span class="string">https://api.example.com/v1</span></span><br></pre>
+
+<blockquote>
+<p>为什么要用 <code>key_env</code>？因为 Hermes 有 host 安全门控机制（见第五节）。用 <code>key_env</code> 明确指定变量名，是给任意自定义端点配 key 的唯一可靠方式。</p>
+</blockquote>
+<h3 id="3-4-多模型配置与切换"><a href="#3-4-多模型配置与切换" class="headerlink" title="3.4 多模型配置与切换"></a>3.4 多模型配置与切换</h3><p>多个 provider 可以共存，互不影响：</p>
+<pre class="highlight"><span class="line"><span class="attr">model:</span></span><br><span class="line">  <span class="attr">default:</span> <span class="string">glm-5.2</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">talkweb-glm</span></span><br><span class="line">  <span class="attr">aliases:</span></span><br><span class="line">    <span class="attr">glm-5.2:</span> <span class="string">talkweb-glm/glm-5.2</span></span><br><span class="line">    <span class="attr">deepseek-v4-flash:</span> <span class="string">talkweb-deepseek-flash/deepseek-v4-flash</span></span><br><span class="line">    <span class="attr">inner-deepseek:</span> <span class="string">inner-deepseek/DeepSeek-R1</span></span><br><span class="line"><span class="attr">providers:</span></span><br><span class="line">  <span class="attr">talkweb-glm:</span> { <span class="string">...</span> }</span><br><span class="line">  <span class="attr">talkweb-deepseek-flash:</span> { <span class="string">...</span> }</span><br><span class="line">  <span class="attr">inner-deepseek:</span> { <span class="string">...</span> }</span><br></pre>
+
+<p><code>aliases</code> 给每个模型定义好记的短名字。会话中切换：</p>
+<pre class="highlight"><span class="line">/model glm-5.2</span><br><span class="line">/model deepseek-v4-flash</span><br></pre>
+
+<p>命令行单次指定：</p>
+<pre class="highlight"><span class="line">hermes chat -<span class="literal">-model</span> glm<span class="literal">-5</span>.<span class="number">2</span></span><br><span class="line">hermes chat <span class="literal">-m</span> inner<span class="literal">-deepseek</span></span><br></pre>
+
+<h3 id="3-5-辅助模型配置"><a href="#3-5-辅助模型配置" class="headerlink" title="3.5 辅助模型配置"></a>3.5 辅助模型配置</h3><p>Hermes 除了主模型（Main model）外，还支持辅助模型（Auxiliary models），用于上下文压缩、视觉分析、网页摘要、审批评分、MCP 工具路由、会话标题生成等边缘任务。每个任务有独立槽位，可以单独覆盖。</p>
+<p>默认所有辅助任务都是 <code>auto</code>，即跟随主模型。当主模型不支持某能力或想省钱时，可以给特定任务指定更便宜的模型：</p>
+<pre class="highlight"><span class="line"><span class="attr">auxiliary:</span></span><br><span class="line">  <span class="attr">vision:</span></span><br><span class="line">    <span class="attr">provider:</span> <span class="string">openrouter</span></span><br><span class="line">    <span class="attr">model:</span> <span class="string">google/gemini-2.5-flash</span>  <span class="comment"># 主模型不支持视觉时，用 gemini flash</span></span><br><span class="line">  <span class="attr">compression:</span></span><br><span class="line">    <span class="attr">provider:</span> <span class="string">deepseek</span></span><br><span class="line">    <span class="attr">model:</span> <span class="string">deepseek-chat</span>  <span class="comment"># 上下文压缩用便宜模型，省推理 token</span></span><br><span class="line">  <span class="attr">title_gen:</span></span><br><span class="line">    <span class="attr">provider:</span> <span class="string">openrouter</span></span><br><span class="line">    <span class="attr">model:</span> <span class="string">google/gemini-3-flash-preview</span>  <span class="comment"># 标题生成用最便宜的 flash</span></span><br></pre>
+
+<p>常见覆盖场景：</p>
+<table>
+<thead>
+<tr>
+<th>辅助任务</th>
+<th>何时覆盖</th>
+<th>推荐模型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>标题生成</td>
+<td>几乎总是——$0.10/M 的 flash 写标题和 Opus 一样好</td>
+<td>gemini-flash / gpt-5-mini</td>
+</tr>
+<tr>
+<td>视觉</td>
+<td>主模型不支持图片时</td>
+<td>gemini-2.5-flash / gpt-4o-mini</td>
+</tr>
+<tr>
+<td>上下文压缩</td>
+<td>用 Opus/M2.7 的推理 token 摘要太浪费</td>
+<td>deepseek-chat / 任意便宜 chat 模型</td>
+</tr>
+<tr>
+<td>审批评分</td>
+<td>approval_mode: smart 时</td>
+<td>haiku / flash / gpt-5-mini</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、验证配置是否生效"><a href="#四、验证配置是否生效" class="headerlink" title="四、验证配置是否生效"></a>四、验证配置是否生效</h2><pre class="highlight"><span class="line">hermes config                 <span class="comment"># 查看当前解析出的配置</span></span><br><span class="line">hermes doctor                 <span class="comment"># 体检：检查 key、依赖、配置版本</span></span><br><span class="line">hermes doctor -<span class="literal">-fix</span>           <span class="comment"># 自动修复可修复项（如配置版本迁移）</span></span><br></pre>
+
+<p>非交互式快速实测（脚本里验证非常好用）：</p>
+<pre class="highlight"><span class="line">hermes chat <span class="literal">-q</span> <span class="string">"你好，用一句话介绍你自己"</span> <span class="literal">-Q</span></span><br></pre>
+
+<ul>
+<li><code>-q</code>：单条消息模式，不会进入交互界面</li>
+<li><code>-Q</code>：安静模式，只输出最终回复（可用于 CI / 脚本）</li>
+</ul>
+<p>若输出正常回复，说明模型链路完全打通。</p>
+<hr>
+<h2 id="五、常见坑：为什么我配了-key-却报-401？"><a href="#五、常见坑：为什么我配了-key-却报-401？" class="headerlink" title="五、常见坑：为什么我配了 key 却报 401？"></a>五、常见坑：为什么我配了 key 却报 401？</h2><p>症状：<code>hermes chat</code> 报 <code>HTTP 401: Invalid token</code>，但用 curl / Python 直接调同一个端点却完全正常。</p>
+<p>原因在 Hermes 的 host 安全门控。出于防止 API Key 被泄露给无关服务器的考虑，Hermes 对 API Key 的使用有严格限制：</p>
+<ol>
+<li><code>OPENAI_API_KEY</code> 只会发给 <code>openai.com</code> / <code>openai.azure.com</code> 的主机；</li>
+<li><code>OPENROUTER_API_KEY</code> 只会发给 <code>openrouter.ai</code>；</li>
+<li>其他主机名会尝试推导 <code>&lt;VENDOR&gt;_API_KEY</code>（如 <code>api.deepseek.com</code> → <code>DEEPSEEK_API_KEY</code>）；</li>
+<li>IP 地址、localhost 无法推导 vendor 名，于是 key 解析结果为空；</li>
+<li>key 为空时，自定义端点会退化为占位符 <code>no-key-required</code> 发送出去，网关拒绝，返回 401。</li>
+</ol>
+<p>解决办法：不要用 <code>OPENAI_API_KEY</code> 给自定义端点配 key，改用命名 custom provider + <code>key_env</code>：</p>
+<pre class="highlight"><span class="line"><span class="attr">providers:</span></span><br><span class="line">  <span class="attr">inner-deepseek:</span></span><br><span class="line">    <span class="attr">base_url:</span> <span class="string">http://10.0.59.210:8080/v2</span>   <span class="comment"># IP 地址也完全没问题</span></span><br><span class="line">    <span class="attr">key_env:</span> <span class="string">INNER_DEEPSEEK_API_KEY</span>          <span class="comment"># 关键：显式指定变量名</span></span><br><span class="line">    <span class="attr">default_model:</span> <span class="string">DeepSeek-R1</span></span><br><span class="line">    <span class="attr">api_mode:</span> <span class="string">chat_completions</span></span><br></pre>
+
+<pre class="highlight"><span class="line"><span class="comment"># .env</span></span><br><span class="line"><span class="attr">INNER_DEEPSEEK_API_KEY</span>=sk-真正的密钥</span><br></pre>
+
+<p>其他常见问题：</p>
+<ul>
+<li><code>hermes</code> 命令找不到：安装后 PATH 生效需要重开 PowerShell。</li>
+<li>配置版本过旧：<code>hermes doctor --fix</code> 自动迁移。</li>
+<li>交互式 TUI 报 <code>NoConsoleScreenBufferError</code>：<code>hermes chat</code> 需要真实控制台，脚本里请用 <code>-q</code>。</li>
+<li>改完没生效：检查是否改了正确的文件（Windows 是 <code>%LOCALAPPDATA%\hermes\</code>，不是 <code>~/.hermes/</code>），运行 <code>hermes config</code> 确认解析结果。</li>
+</ul>
+<hr>
+<h2 id="六、完整示例：三模型共存配置"><a href="#六、完整示例：三模型共存配置" class="headerlink" title="六、完整示例：三模型共存配置"></a>六、完整示例：三模型共存配置</h2><p>一个生产可用的完整配置（一内网端点 + 一云端网关两个模型）：</p>
+<p>config.yaml：</p>
+<pre class="highlight"><span class="line"><span class="attr">model:</span></span><br><span class="line">  <span class="attr">default:</span> <span class="string">deepseek-v4-flash</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">talkweb-deepseek-flash</span></span><br><span class="line">  <span class="attr">base_url:</span> <span class="string">https://hlyc.talkweb.com.cn/v1</span></span><br><span class="line">  <span class="attr">aliases:</span></span><br><span class="line">    <span class="attr">glm-5.2:</span> <span class="string">talkweb-glm/glm-5.2</span></span><br><span class="line">    <span class="attr">deepseek-v4-flash:</span> <span class="string">talkweb-deepseek-flash/deepseek-v4-flash</span></span><br><span class="line">    <span class="attr">inner-deepseek:</span> <span class="string">inner-deepseek/DeepSeek-R1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">auxiliary:</span></span><br><span class="line">  <span class="attr">title_gen:</span></span><br><span class="line">    <span class="attr">provider:</span> <span class="string">talkweb-deepseek-flash</span></span><br><span class="line">    <span class="attr">model:</span> <span class="string">deepseek-v4-flash</span></span><br><span class="line">  <span class="attr">compression:</span></span><br><span class="line">    <span class="attr">provider:</span> <span class="string">talkweb-deepseek-flash</span></span><br><span class="line">    <span class="attr">model:</span> <span class="string">deepseek-v4-flash</span></span><br><span class="line"></span><br><span class="line"><span class="attr">providers:</span></span><br><span class="line">  <span class="attr">inner-deepseek:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">内网</span> <span class="string">DeepSeek-R1</span></span><br><span class="line">    <span class="attr">base_url:</span> <span class="string">http://10.0.59.210:8080/v2</span></span><br><span class="line">    <span class="attr">key_env:</span> <span class="string">INNER_DEEPSEEK_API_KEY</span></span><br><span class="line">    <span class="attr">default_model:</span> <span class="string">DeepSeek-R1</span></span><br><span class="line">    <span class="attr">api_mode:</span> <span class="string">chat_completions</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">talkweb-glm:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">拓维</span> <span class="string">GLM-5.2</span></span><br><span class="line">    <span class="attr">base_url:</span> <span class="string">https://hlyc.talkweb.com.cn/v1</span></span><br><span class="line">    <span class="attr">key_env:</span> <span class="string">TALKWEB_GLM_API_KEY</span></span><br><span class="line">    <span class="attr">default_model:</span> <span class="string">glm-5.2</span></span><br><span class="line">    <span class="attr">api_mode:</span> <span class="string">chat_completions</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">talkweb-deepseek-flash:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">拓维</span> <span class="string">DeepSeek</span> <span class="string">V4</span> <span class="string">Flash</span></span><br><span class="line">    <span class="attr">base_url:</span> <span class="string">https://hlyc.talkweb.com.cn/v1</span></span><br><span class="line">    <span class="attr">key_env:</span> <span class="string">TALKWEB_GLM_API_KEY</span></span><br><span class="line">    <span class="attr">default_model:</span> <span class="string">deepseek-v4-flash</span></span><br><span class="line">    <span class="attr">api_mode:</span> <span class="string">chat_completions</span></span><br></pre>
+
+<p>.env：</p>
+<pre class="highlight"><span class="line"><span class="attr">INNER_DEEPSEEK_API_KEY</span>=sk-内网密钥</span><br><span class="line"><span class="attr">TALKWEB_GLM_API_KEY</span>=sk-拓维密钥</span><br></pre>
+
+<p>验证：</p>
+<pre class="highlight"><span class="line">hermes chat <span class="literal">-q</span> <span class="string">"你好"</span> <span class="literal">-Q</span>                    <span class="comment"># 默认模型</span></span><br><span class="line">hermes chat <span class="literal">-q</span> <span class="string">"你好"</span> <span class="literal">-Q</span> -<span class="literal">-model</span> glm<span class="literal">-5</span>.<span class="number">2</span>    <span class="comment"># 指定模型</span></span><br><span class="line">hermes doctor                               <span class="comment"># 体检</span></span><br></pre>
+
+<hr>
+<h2 id="七、FAQ"><a href="#七、FAQ" class="headerlink" title="七、FAQ"></a>七、FAQ</h2><p><strong>Hermes Agent 和 OpenClaw / Claude Code 有什么区别？</strong></p>
+<p>Hermes Agent 是开源 AI 智能体框架，支持多模型提供商、终端工具、消息平台接入（飞书/微信/Discord）、技能系统和 MCP 集成。和 OpenClaw 类似但社区更活跃，对 Windows 原生安装适配也更好。</p>
+<p><strong>Hermes Agent 支持哪些消息平台？</strong></p>
+<p>通过 gateway 接入飞书、微信、QQ、Discord、WhatsApp、Signal、邮件、Home Assistant 等。运行 <code>hermes gateway setup</code> 配置。</p>
+<p><strong>配置文件改了但不生效？</strong></p>
+<p>确认改对了文件（Windows 是 <code>%LOCALAPPDATA%\hermes\</code>），运行 <code>hermes config</code> 看解析结果。已打开的会话不会热更新，需要开新会话或用 <code>/model</code> 切换。</p>
+<p><strong>能同时用多个模型的 API Key 吗？</strong></p>
+<p>能。每个 provider 用独立的 <code>key_env</code> 指定不同的环境变量，互不影响。<code>.env</code> 文件里可以放多个 key。</p>
+<hr>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li>官方文档（中文社区）：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hermesagent.org.cn/">https://hermesagent.org.cn</a></li>
+<li>环境变量参考：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hermesagent.org.cn/docs/reference/environment-variables">https://hermesagent.org.cn/docs/reference/environment-variables</a></li>
+<li>模型配置：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hermesagent.org.cn/docs/user-guide/configuring-models">https://hermesagent.org.cn/docs/user-guide/configuring-models</a></li>
+<li>AI 提供商：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hermesagent.org.cn/docs/integrations/providers">https://hermesagent.org.cn/docs/integrations/providers</a></li>
+</ul>
+<blockquote>
+<p>想了解更多 AI 工具的选型和用法？回到 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a> 看总览。</p>
+</blockquote>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/hermes-agent-model-config/">https://tanqingbo.cn/hermes-agent-model-config/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Gemini-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        公认最好用的AI工具：Gemini到底该如何使用？（最全教程）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-23</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/AI-PPT/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        测了 20 款 AI PPT，最后汇报保命的，居然只有「办公小浣熊」？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Best-AI-tools/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2025最佳AI工具：国外最新人工智能工具一览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-10-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        如何在国内注册ChatGPT？ChatGPT怎么用？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT！王炸级更新！！！/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT！王炸级更新！！！
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2023-04-08</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/clash-tun-mode/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Clash TUN 模式是什么？怎么开启？游戏/软件不走代理的终极解法（2026） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/v2ex-eight-sorting-post/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">面试背了八大排序，工作几年后发现大部分用不上 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hermes-Agent-%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%882026%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Hermes Agent 配置模型完全教程（2026）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%E6%80%BB%E8%A7%88"><span class="toc-number">1.2.</span> <span class="toc-text">一、配置方式总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BA%A4%E4%BA%92%E5%BC%8F%E9%85%8D%E7%BD%AE%EF%BC%88hermes-model%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">二、方式一：交互式配置（hermes model）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88%E6%8E%A8%E8%8D%90%E3%80%81%E5%8F%AF%E5%A4%8D%E7%8E%B0%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">三、方式二：编辑配置文件（推荐、可复现）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 配置文件在哪里</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%B8%80%E7%AD%89%E6%8F%90%E4%BE%9B%E5%95%86%EF%BC%88%E5%AE%98%E6%96%B9%E9%9B%86%E6%88%90%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 一等提供商（官方集成）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%91%BD%E5%90%8D-Custom-Provider%EF%BC%88%E4%BB%BB%E6%84%8F-OpenAI-%E5%85%BC%E5%AE%B9%E7%AB%AF%E7%82%B9%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 命名 Custom Provider（任意 OpenAI 兼容端点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%A4%9A%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 多模型配置与切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%BE%85%E5%8A%A9%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.5.</span> <span class="toc-text">3.5 辅助模型配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-number">1.5.</span> <span class="toc-text">四、验证配置是否生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E5%9D%91%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%85%8D%E4%BA%86-key-%E5%8D%B4%E6%8A%A5-401%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">五、常见坑：为什么我配了 key 却报 401？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%EF%BC%9A%E4%B8%89%E6%A8%A1%E5%9E%8B%E5%85%B1%E5%AD%98%E9%85%8D%E7%BD%AE"><span class="toc-number">1.7.</span> <span class="toc-text">六、完整示例：三模型共存配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81FAQ"><span class="toc-number">1.8.</span> <span class="toc-text">七、FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.9.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>378</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>164</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hermes-Agent-%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%882026%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Hermes Agent 配置模型完全教程（2026）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%E6%80%BB%E8%A7%88"><span class="toc-number">1.2.</span> <span class="toc-text">一、配置方式总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BA%A4%E4%BA%92%E5%BC%8F%E9%85%8D%E7%BD%AE%EF%BC%88hermes-model%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">二、方式一：交互式配置（hermes model）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88%E6%8E%A8%E8%8D%90%E3%80%81%E5%8F%AF%E5%A4%8D%E7%8E%B0%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">三、方式二：编辑配置文件（推荐、可复现）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 配置文件在哪里</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%B8%80%E7%AD%89%E6%8F%90%E4%BE%9B%E5%95%86%EF%BC%88%E5%AE%98%E6%96%B9%E9%9B%86%E6%88%90%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 一等提供商（官方集成）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%91%BD%E5%90%8D-Custom-Provider%EF%BC%88%E4%BB%BB%E6%84%8F-OpenAI-%E5%85%BC%E5%AE%B9%E7%AB%AF%E7%82%B9%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 命名 Custom Provider（任意 OpenAI 兼容端点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%A4%9A%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 多模型配置与切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%BE%85%E5%8A%A9%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.5.</span> <span class="toc-text">3.5 辅助模型配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-number">1.5.</span> <span class="toc-text">四、验证配置是否生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E5%9D%91%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%85%8D%E4%BA%86-key-%E5%8D%B4%E6%8A%A5-401%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">五、常见坑：为什么我配了 key 却报 401？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%EF%BC%9A%E4%B8%89%E6%A8%A1%E5%9E%8B%E5%85%B1%E5%AD%98%E9%85%8D%E7%BD%AE"><span class="toc-number">1.7.</span> <span class="toc-text">六、完整示例：三模型共存配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81FAQ"><span class="toc-number">1.8.</span> <span class="toc-text">七、FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.9.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">20</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">55</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Hermes-Agent-%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%882026%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Hermes Agent 配置模型完全教程（2026）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F%E6%80%BB%E8%A7%88"><span class="toc-number">1.2.</span> <span class="toc-text">一、配置方式总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%96%B9%E5%BC%8F%E4%B8%80%EF%BC%9A%E4%BA%A4%E4%BA%92%E5%BC%8F%E9%85%8D%E7%BD%AE%EF%BC%88hermes-model%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">二、方式一：交互式配置（hermes model）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%96%B9%E5%BC%8F%E4%BA%8C%EF%BC%9A%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%88%E6%8E%A8%E8%8D%90%E3%80%81%E5%8F%AF%E5%A4%8D%E7%8E%B0%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">三、方式二：编辑配置文件（推荐、可复现）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%9C%A8%E5%93%AA%E9%87%8C"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 配置文件在哪里</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%B8%80%E7%AD%89%E6%8F%90%E4%BE%9B%E5%95%86%EF%BC%88%E5%AE%98%E6%96%B9%E9%9B%86%E6%88%90%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 一等提供商（官方集成）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%91%BD%E5%90%8D-Custom-Provider%EF%BC%88%E4%BB%BB%E6%84%8F-OpenAI-%E5%85%BC%E5%AE%B9%E7%AB%AF%E7%82%B9%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 命名 Custom Provider（任意 OpenAI 兼容端点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%A4%9A%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E4%B8%8E%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 多模型配置与切换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%BE%85%E5%8A%A9%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.5.</span> <span class="toc-text">3.5 辅助模型配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-number">1.5.</span> <span class="toc-text">四、验证配置是否生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E5%9D%91%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E9%85%8D%E4%BA%86-key-%E5%8D%B4%E6%8A%A5-401%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">五、常见坑：为什么我配了 key 却报 401？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%EF%BC%9A%E4%B8%89%E6%A8%A1%E5%9E%8B%E5%85%B1%E5%AD%98%E9%85%8D%E7%BD%AE"><span class="toc-number">1.7.</span> <span class="toc-text">六、完整示例：三模型共存配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81FAQ"><span class="toc-number">1.8.</span> <span class="toc-text">七、FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.9.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-04</div>
+        <a href="/clash-tun-mode/"><div class="recent-posts-item-content">Clash TUN 模式是什么？怎么开启？游戏/软件不走代理的终极解法（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-04</div>
+        <a href="/hermes-agent-model-config/"><div class="recent-posts-item-content">Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-03</div>
+        <a href="/v2ex-eight-sorting-post/"><div class="recent-posts-item-content">面试背了八大排序，工作几年后发现大部分用不上</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
