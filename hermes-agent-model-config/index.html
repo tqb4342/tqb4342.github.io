@@ -419,7 +419,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>2.4k 字</span>
+    <span>2.5k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -714,6 +714,7 @@ var _hmt = _hmt || [];
 <li>IP 地址、localhost 无法推导 vendor 名，于是 key 解析结果为空；</li>
 <li>key 为空时，自定义端点会退化为占位符 <code>no-key-required</code> 发送出去，网关拒绝，返回 401。</li>
 </ol>
+<p>这个机制本质上是一道数据安全防线：模型调用方的密钥、Prompt、上下文都会发往模型服务商，密钥写错变量名就可能被发到无关服务器。关于企业使用大模型时 Prompt、RAG、工具调用等环节的整体风险与防护，可参考 <a href="https://tanqingbo.cn/ai-model-security/">企业使用 AI 大模型如何保障数据安全？</a>。</p>
 <p>解决办法：不要用 <code>OPENAI_API_KEY</code> 给自定义端点配 key，改用命名 custom provider + <code>key_env</code>：</p>
 <pre class="highlight"><span class="line"><span class="attr">providers:</span></span><br><span class="line">  <span class="attr">inner-deepseek:</span></span><br><span class="line">    <span class="attr">base_url:</span> <span class="string">http://10.0.59.210:8080/v2</span>   <span class="comment"># IP 地址也完全没问题</span></span><br><span class="line">    <span class="attr">key_env:</span> <span class="string">INNER_DEEPSEEK_API_KEY</span>          <span class="comment"># 关键：显式指定变量名</span></span><br><span class="line">    <span class="attr">default_model:</span> <span class="string">DeepSeek-R1</span></span><br><span class="line">    <span class="attr">api_mode:</span> <span class="string">chat_completions</span></span><br></pre>
 
@@ -908,7 +909,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>379</span>
+    <span>380</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -916,7 +917,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>169</span>
+    <span>170</span>
     <span>标签</span>
   </a>
 </div>
@@ -992,7 +993,7 @@ var _hmt = _hmt || [];
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
-          <span class="categories-list-item-badge">20</span>
+          <span class="categories-list-item-badge">21</span>
         </div>
       </a>
     
@@ -1199,6 +1200,11 @@ var _hmt = _hmt || [];
       </div>
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-06</div>
+        <a href="/ai-model-security/"><div class="recent-posts-item-content">企业使用 AI 大模型如何保障数据安全？六大风险环节与落地清单（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-08-05</div>
         <a href="/mihomo-clash-difference/"><div class="recent-posts-item-content">Mihomo 是什么？Mihomo 和 Clash 有什么区别？（2026 最新版）</div></a>
       </div>
@@ -1206,11 +1212,6 @@ var _hmt = _hmt || [];
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-08-04</div>
         <a href="/clash-tun-mode/"><div class="recent-posts-item-content">Clash TUN 模式是什么？怎么开启？游戏/软件不走代理的终极解法（2026）</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-08-04</div>
-        <a href="/hermes-agent-model-config/"><div class="recent-posts-item-content">Hermes Agent 配置模型完全教程：交互式 / config.yaml / 多模型切换 / 401 排障（2026）</div></a>
       </div>
     
   </div>
@@ -1339,4 +1340,6 @@ var _hmt = _hmt || [];
   </script>
   <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
   
-<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+</body>
+
+</html>
