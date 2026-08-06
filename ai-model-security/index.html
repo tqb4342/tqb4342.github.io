@@ -33,7 +33,7 @@
     "@type": "WebPage",
     "@id": "https://tanqingbo.cn/ai-model-security/"
   },
-  "image": "https://img2024.cnblogs.com/blog/2435483/202607/2435483-20260728071849763-956721569.png",
+  "image": "https://pic1.zhimg.com/v2-92e343733420cafecdc1b35ab8c88ed2_r.jpg",
   "description": "企业 AI 应用的数据泄露并不只发生在模型训练环节，更多来自 Prompt、RAG 检索、工具调用、日志留存和输出传播。本文梳理六大风险环节与六条落地措施，附数据分级部署选型表与 OWASP LLM Top 10 对照，帮助企业安全使用大模型。",
   "keywords": "AI安全,大模型安全,企业AI安全,AI数据安全,大模型数据安全,数据泄露,prompt injection,提示词注入,间接提示词注入,RAG安全,AI安全网关,数据脱敏,LLM安全,OWASP LLM Top 10,数据分级,大模型隐私,AI Agent安全,企业使用大模型"
 }
@@ -134,7 +134,7 @@
   <meta property="url" content="https://tanqingbo.cn/ai-model-security/index.html">
   
   
-  <meta property="og:img" content="https://img2024.cnblogs.com/blog/2435483/202607/2435483-20260728071849763-956721569.png">
+  <meta property="og:img" content="https://pic1.zhimg.com/v2-92e343733420cafecdc1b35ab8c88ed2_r.jpg">
   
   
   <meta property="description" content="企业 AI 应用的数据泄露并不只发生在模型训练环节，更多来自 Prompt、RAG 检索、工具调用、日志留存和输出传播。本文梳理六大风险环节与六条落地措施，附数据分级部署选型表与 OWASP LLM Top 10 对照，帮助企业安全使用大模型。">
@@ -394,7 +394,7 @@ var _hmt = _hmt || [];
         <div class="columns">
           <main class="main-column">
 <div class="image-wrapper">
-  <img src="https://img2024.cnblogs.com/blog/2435483/202607/2435483-20260728071849763-956721569.png" data-src="https://img2024.cnblogs.com/blog/2435483/202607/2435483-20260728071849763-956721569.png"
+  <img src="https://pic1.zhimg.com/v2-92e343733420cafecdc1b35ab8c88ed2_r.jpg" data-src="https://pic1.zhimg.com/v2-92e343733420cafecdc1b35ab8c88ed2_r.jpg"
     srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
     class="image lozad">
 </div>
@@ -553,7 +553,7 @@ var _hmt = _hmt || [];
 <p>第四，RAG 知识库必须做权限过滤。文档入库时记录来源、部门、角色、密级和可见范围；检索时先计算用户身份和资源权限，再召回可访问片段；答案中保留引用来源，便于审计。多租户场景还要注意向量库的隔离，避免跨租户检索到他人文档。</p>
 <p>第五，限制 Tool、MCP 和 Skill 的执行边界。Agent 能调用工具后，风险从”回答错”升级为”误调用系统””越权查询数据””把参数发给外部接口”。企业应使用工具白名单、参数校验、沙箱执行、人工确认和可回放日志。高影响操作（发送邮件、转账、删除、写库）应默认要求人工确认。</p>
 <p>第六，防御间接提示词注入。攻击者把恶意指令藏在网页、邮件、文档、工单里，模型读取这些不可信内容时误把攻击文本当成指令。处理外部知识源时应做内容隔离、提示词净化、行为监控和策略拦截，并假设注入迟早会发生——核心是缩小爆炸半径，而不是指望模型免疫。</p>
-<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://img2024.cnblogs.com/blog/2435483/202607/2435483-20260728071849763-956721569.png" class="lozad post-image"src="https://img2024.cnblogs.com/blog/2435483/202607/2435483-20260728071849763-956721569.png"></p>
+<p><img src="https://pic1.zhimg.com/v2-92e343733420cafecdc1b35ab8c88ed2_r.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-92e343733420cafecdc1b35ab8c88ed2_r.jpg" class="lozad post-image"></p>
 <p>行业里有一个更系统的参考框架：OWASP 发布的《LLM 应用 Top 10 风险清单（2025 版）》，把大模型应用的主要风险编号为 LLM01–LLM10，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://genai.owasp.org/llm-top-10/">官方页面</a>可查。其中与本文直接相关的有：提示词注入（LLM01，位列第一）、敏感信息泄露（LLM02）、过度权限（LLM06，Agent 拿了超出任务所需的权限）、系统提示词泄露（LLM07，密钥和权限规则不应写在提示词里）、向量库弱点（LLM08，RAG 场景专属）和无限消耗（LLM10，Token 成本失控）。做安全评审时可以直接拿这份清单逐项对照。</p>
 <h2 id="什么数据能进公有云：数据分级与部署方式选型"><a href="#什么数据能进公有云：数据分级与部署方式选型" class="headerlink" title="什么数据能进公有云：数据分级与部署方式选型"></a>什么数据能进公有云：数据分级与部署方式选型</h2><table>
 <thead>
@@ -704,12 +704,12 @@ var _hmt = _hmt || [];
 <div class="nav">
   
   <div class="nav-item-prev">
-    <a href="/科学上网之VPN篇/" class="nav-link">
+    <a href="/clash-custom-rules/" class="nav-link">
       <i class="iconfont icon-left nav-prev-icon"></i>
       <div>
         <div class="nav-label">上一篇</div>
         
-        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        <div class="nav-title">Clash / Mihomo 自定义规则完全指南：规则写法、分流配置与规则集（2026） </div>
         
       </div>
     </a>
@@ -778,7 +778,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>380</span>
+    <span>381</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -786,7 +786,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>170</span>
+    <span>175</span>
     <span>标签</span>
   </a>
 </div>
@@ -862,7 +862,7 @@ var _hmt = _hmt || [];
       <a href="/categories/科学上网">
         <div class="categories-list-item">
           科学上网
-          <span class="categories-list-item-badge">56</span>
+          <span class="categories-list-item-badge">57</span>
         </div>
       </a>
     
@@ -966,37 +966,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
-    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
     <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
-    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
-    
-    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
-    
-    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
-    
-    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
-    
-    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
     
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
     <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
     
     <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
     
-    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
     
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
     
     <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
     
   </div>
 </div>
@@ -1070,17 +1070,17 @@ var _hmt = _hmt || [];
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-08-06</div>
+        <a href="/clash-custom-rules/"><div class="recent-posts-item-content">Clash / Mihomo 自定义规则完全指南：规则写法、分流配置与规则集（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-06</div>
         <a href="/ai-model-security/"><div class="recent-posts-item-content">企业使用 AI 大模型如何保障数据安全？六大风险环节与落地清单（2026）</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-08-05</div>
         <a href="/mihomo-clash-difference/"><div class="recent-posts-item-content">Mihomo 是什么？Mihomo 和 Clash 有什么区别？（2026 最新版）</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-08-04</div>
-        <a href="/clash-tun-mode/"><div class="recent-posts-item-content">Clash TUN 模式是什么？怎么开启？游戏/软件不走代理的终极解法（2026）</div></a>
       </div>
     
   </div>
