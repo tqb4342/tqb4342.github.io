@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-12T01:50:00.000Z",
+  "dateModified": "2026-08-12T01:50:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/cfw-migration/"
+  },
+  "image": "/images/banners/cfw-migration-banner.png",
+  "description": "Clash for Windows（CFW）停更了怎么办？CFW 2023 年已停止维护，不支持 Reality、Hysteria2 等新协议。本文讲清楚 CFW 为什么不能再用了、迁移前如何备份，以及 4 步迁移到内置 Mihomo 内核的 Clash Verge Rev（订阅导入、机场订阅迁移、配置注意事项），帮你无缝过渡。",
+  "keywords": "clash for windows停更,cfw停更,cfw迁移,clash for windows替代,clash for windows迁移到verge,clash verge rev 迁移,cfw 换 verge,clash for windows 不能用,cfw 备份配置,clash for windows 转 verge,clash verge rev 教程,mihomo 客户端,clash for windows 停止维护"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Clash for Windows 停更了吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "是的。Clash for Windows（CFW）的原作者 Fndroid 在 2023 年宣布停止维护，GitHub 仓库随后被删除。CFW 用的是旧版 Clash 内核，不支持 Reality、Hysteria2 等新协议，也无法适配机场新增节点，且长期没有安全更新，不建议继续使用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash for Windows 用什么替代？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "推荐迁移到 Clash Verge Rev。它是目前最活跃的 Clash 客户端，内置 Mihomo 内核（原 Clash Meta），支持 Reality、Hysteria2 等新协议，Windows/macOS/Linux 三端可用，且支持订阅合并、全局扩展配置等功能。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "迁移到 Clash Verge Rev 要重新买机场订阅吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不用。CFW 和 Verge Rev 用的是相同的订阅机制，你在机场买的订阅链接可以直接复制粘贴到 Verge Rev 里导入，节点、配置、规则都能无缝带过来。只需要在 Verge Rev 里重新导入一次订阅即可。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "迁移前需要备份 CFW 的配置吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "建议先备份。如果你在 CFW 里改过自定义规则或策略组，可以把这些手动加到 Verge Rev 的全局扩展配置（Merge）里。如果只是用机场默认配置，那直接换新客户端导入订阅就行，不用额外备份。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "CFW 的订阅链接能直接在 Verge Rev 用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。Verge Rev 兼容 Clash 的订阅链接格式，把你在 CFW 里用的那个订阅链接直接粘贴到 Verge Rev 的\"订阅\"页面导入即可。导入后记得开启自动更新，保持节点和规则同步。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "迁到 Verge Rev 后旧节点还能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "只要机场还提供那个节点就能用。Verge Rev 完全导入订阅后，旧 CFW 里能连的节点都能正常连接，而且因为 Verge Rev 支持新协议，部分在 CFW 上连不上的新节点反而能用了。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Verge Rev 的节点比 CFW 少怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不太可能。完全导入订阅后节点数量和 CFW 一致。如果发现差了一些，多半是订阅更新了，在 Verge Rev 里重新点一下更新即可。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Verge Rev 比 CFW 更耗内存吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不会反而更省。Verge Rev 新版本基于 Tauri 重写，内存占用比 CFW 的 Electron 架构低不少，老电脑也能流畅跑。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "换了客户端会影响我的分流规则吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CFW 里手写的规则不会自动带过来，需要手动加到 Verge Rev 的全局扩展配置（Merge）里。如果用的是机场默认规则，导入订阅后规则自动就有了，不用额外处理。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）</title>
+  
+  
+  <meta property="title" content="Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/cfw-migration/index.html">
+  
+  
+  <meta property="og:img" content="/images/banners/cfw-migration-banner.png">
+  
+  
+  <meta property="description" content="Clash for Windows（CFW）停更了怎么办？CFW 2023 年已停止维护，不支持 Reality、Hysteria2 等新协议。本文讲清楚 CFW 为什么不能再用了、迁移前如何备份，以及 4 步迁移到内置 Mihomo 内核的 Clash Verge Rev（订阅导入、机场订阅迁移、配置注意事项），帮你无缝过渡。">
+  
+  <meta property="keywords" content="clash for windows停更,cfw停更,cfw迁移,clash for windows替代,clash for windows迁移到verge,clash verge rev 迁移,cfw 换 verge,clash for windows 不能用,cfw 备份配置,clash for windows 转 verge,clash verge rev 教程,mihomo 客户端,clash for windows 停止维护">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-12">
+  <meta property="og:article:modified_time" content="2026-08-12">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="Clash for Windows">
+  
+  <meta property="og:article:tag" content="CFW">
+  
+  <meta property="og:article:tag" content="Clash Verge Rev">
+  
+  <meta property="og:article:tag" content="Mihomo">
+  
+  <meta property="og:article:tag" content="迁移">
+  
+  <meta property="og:article:tag" content="代理客户端">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/cfw-migration/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/images/banners/cfw-migration-banner.png" data-src="/images/banners/cfw-migration-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-12T01:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-12</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/cfw-migration/" class="leancloud_visitors" data-flag-title="Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash-for-Windows/" class="post-meta-link">Clash for Windows</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/CFW/" class="post-meta-link">CFW</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash-Verge-Rev/" class="post-meta-link">Clash Verge Rev</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Mihomo/" class="post-meta-link">Mihomo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/迁移/" class="post-meta-link">迁移</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/代理客户端/" class="post-meta-link">代理客户端</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Clash for Windows（CFW）停更了怎么办？CFW 2023 年已停止维护，不支持 Reality、Hysteria2 等新协议。本文讲清楚 CFW 为什么不能再用了、迁移前如何备份，以及 4 步迁移到内置 Mihomo 内核的 Clash Verge Rev（订阅导入、机场订阅迁移、配置注意事项），帮你无缝过渡。">
+  
+  <meta name="keywords" content="clash for windows停更,cfw停更,cfw迁移,clash for windows替代,clash for windows迁移到verge,clash verge rev 迁移,cfw 换 verge,clash for windows 不能用,cfw 备份配置,clash for windows 转 verge,clash verge rev 教程,mihomo 客户端,clash for windows 停止维护">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一，聊的是一个很多老用户都遇到的问题：用了好多年的 Clash for Windows 停更了，要不要换、怎么换。不知道 Clash 和 Mihomo 什么关系的，先看 <a href="https://tanqingbo.cn/mihomo-clash-difference/">Clash for Windows 停更后 Mihomo 接管内核是怎么回事</a>。</p>
+</blockquote>
+<h2 id="一、CFW-真的停更了吗？为什么必须换"><a href="#一、CFW-真的停更了吗？为什么必须换" class="headerlink" title="一、CFW 真的停更了吗？为什么必须换"></a>一、CFW 真的停更了吗？为什么必须换</h2><p>CFW 停更已经好几年了。原作者 Fndroid 在 2023 年宣布停止维护，GitHub 仓库随后被删除。这带来几个实际问题：</p>
+<ul>
+<li><strong>不支持新协议</strong>。Reality、Hysteria2 这些 2024 年之后普及的协议，CFW 的旧内核一个都不认。机场开始推新协议节点时，你在 CFW 里根本连不上。</li>
+<li><strong>无法适配新增节点</strong>。机场的订阅会更新，但 CFW 的旧内核解析不了新格式的节点配置。</li>
+<li><strong>没有安全更新</strong>。长期不维护的软件存在潜在安全风险，尤其是要处理真实流量的代理客户端，这个更不能将就。</li>
+</ul>
+<p>所以 CFW 趁早迁到 Clash Verge Rev，别拖。</p>
+<h2 id="二、换到哪里：为什么是-Clash-Verge-Rev"><a href="#二、换到哪里：为什么是-Clash-Verge-Rev" class="headerlink" title="二、换到哪里：为什么是 Clash Verge Rev"></a>二、换到哪里：为什么是 Clash Verge Rev</h2><p>替代 CFW 最顺手的，是 <strong>Clash Verge Rev</strong>。选它的理由很实在：</p>
+<ul>
+<li><strong>内置 Mihomo 内核</strong>。Mihomo 是原版 Clash 停更后由社区接棒维护的活跃内核（官方文档：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.metacubex.one/">wiki.metacubex.one</a>），Reality、Hysteria2 新协议都支持，也就是你现在用的”Clash”其实底层跑的都是它。</li>
+<li><strong>三端通用</strong>。Windows / macOS / Linux 都用同一套，换机不折腾。</li>
+<li><strong>功能更全面</strong>。支持订阅合并、全局扩展配置（Merge）、脚本规则，比 CFW 的老旧界面强不少。</li>
+<li><strong>还在持续更新</strong>。社区活跃，新功能跟进快。</li>
+</ul>
+<p>想从零了解 Verge Rev 怎么装的，看站内的 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程</a>。这篇只讲从 CFW 迁移这一步。</p>
+<h2 id="三、迁移前：先备份你的配置"><a href="#三、迁移前：先备份你的配置" class="headerlink" title="三、迁移前：先备份你的配置"></a>三、迁移前：先备份你的配置</h2><p>如果是纯小白，用的全是机场默认配置，那这一步可以跳过，直接看第四节导入订阅就行。</p>
+<p>如果你在 CFW 里自己改过配置（自定义规则、策略组、分流逻辑），建议先记下来，迁到 Verge Rev 后用它的「全局扩展配置」加成 Merge 的形式补回去。CFW 的配置文件在它的安装目录或配置文件里能找到，把 rules 和 proxy-groups 段复制出来备用。</p>
+<h2 id="四、迁移四步走"><a href="#四、迁移四步走" class="headerlink" title="四、迁移四步走"></a>四、迁移四步走</h2><p><strong>第一步：下载安装 Clash Verge Rev</strong></p>
+<p>到 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/clash-verge-rev/clash-verge-rev/releases">Clash Verge Rev 的 GitHub Releases 页面</a> 下载对应系统的最新版安装包。Windows 选 <code>x64</code> 版，装好后打开，界面和 CFW 完全不同——更现代，也更好用。</p>
+<p><strong>第二步：复制机场订阅链接</strong></p>
+<p>去你的机场官网，找到订阅链接（通常在”我的订阅”或”个人中心”）。<strong>复制下来</strong>——这一步很重要，CFW 的配置文件和 Verge Rev 不通用，但订阅链接是通用的。</p>
+<p><strong>第三步：在 Verge Rev 里导入订阅</strong></p>
+<p>打开 Verge Rev，进入「订阅」页面，点「新建」，把刚复制的订阅链接粘贴进去，保存。Verge Rev 会自动拉取节点。导入后打开「订阅」旁边的开关，启用这条订阅。</p>
+<p><strong>第四步：开启系统代理，试连一个节点</strong></p>
+<p>顶部切换到「代理」页面，选一个节点或节点组，打开系统代理（或 TUN 模式，如果个别 App 不走代理）。测试一下能不能正常访问外网，能上就说明迁移成功。</p>
+<h2 id="五、迁移后：几个要改的小设置"><a href="#五、迁移后：几个要改的小设置" class="headerlink" title="五、迁移后：几个要改的小设置"></a>五、迁移后：几个要改的小设置</h2><ul>
+<li><strong>开启订阅自动更新</strong>。在订阅页面打开”自动更新”，Verge Rev 会定期拉取机场最新节点和规则，不用手动管。</li>
+<li><strong>用 TUN 模式接管全局流量</strong>。如果之前在 CFW 上因为 TUN 功能受限而没折腾，Verge Rev 的 TUN 更好用，游戏、命令行、Docker 都能接管。教程见 <a href="https://tanqingbo.cn/clash-tun-mode/">Clash TUN 模式完全指南</a>。</li>
+<li><strong>把自定义规则补回去</strong>。备份的规则和策略组，用 Verge Rev 的「全局扩展配置」Merge 功能加进去，具体写法见 <a href="https://tanqingbo.cn/clash-custom-rules/">Clash / Mihomo 自定义规则完全指南</a>。</li>
+</ul>
+<h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><p><strong>Clash for Windows 真的停更了吗？</strong></p>
+<p>是的。原作者 Fndroid 在 2023 年宣布停止维护，GitHub 仓库随后被删除，现在用 CFW 连新协议节点只会越来越难。</p>
+<p><strong>用什么替代 CFW 最合适？</strong></p>
+<p>Clash Verge Rev。内置 Mihomo 内核，支持 Reality、Hysteria2 等新协议，三端通用，还能做订阅合并和全局扩展配置。</p>
+<p><strong>迁移到 Verge Rev 要重新买机场订阅吗？</strong></p>
+<p>不用。CFW 和 Verge Rev 用的是同一套订阅机制，把你在机场的订阅链接复制粘贴到 Verge Rev 导入就行，账号和节点都不变。</p>
+<p><strong>迁移前需要备份 CFW 的配置吗？</strong></p>
+<p>看你改没改过。纯机场默认配置直接换新客户端导入订阅即可，不用备份；如果自己改过自定义规则或策略组，把这些段复制出来，迁过去用全局扩展配置补回去。</p>
+<p><strong>CFW 的订阅链接能直接在 Verge Rev 里用吗？</strong></p>
+<p>能。Verge Rev 兼容 Clash 订阅格式，把 CFW 里那个链接粘贴到「订阅」页面导入即可，导入后记得开自动更新。</p>
+<p><strong>迁到 Verge Rev 后旧节点还能用吗？</strong></p>
+<p>只要机场还提供那个节点就能用。而且 Verge Rev 支持新协议，部分在 CFW 上连不上的新节点反而能连了。</p>
+<p><strong>Verge Rev 的节点比 CFW 少怎么办？</strong></p>
+<p>不太可能。完全导入订阅后节点数量和 CFW 一致。发现差了一些多半是订阅更新了，重新点一下「更新」即可。</p>
+<p><strong>Verge Rev 比 CFW 更耗内存吗？</strong></p>
+<p>不会，反而更省。Verge Rev 基于 Tauri 重写，内存占用比 CFW 的 Electron 架构低不少，老电脑也跑得动。</p>
+<p><strong>换了客户端会影响我的分流规则吗？</strong></p>
+<p>CFW 手写的规则不会自动带过来，需要手动加到 Verge Rev 的全局扩展配置（Merge）里；用机场默认规则的话，导入订阅后规则自动就有了。</p>
+<h2 id="七、还想再等等？劝一句"><a href="#七、还想再等等？劝一句" class="headerlink" title="七、还想再等等？劝一句"></a>七、还想再等等？劝一句</h2><p>有的用户觉得”CFW 用着还行，先不换了”。现实是：机场节点和协议在持续升级，CFW 的旧内核会越来越难连新节点，等你真碰上连不上再临时换，反而更慌。早换早省事，把订阅导过来一次也就十几分钟。</p>
+<p>Clash 和 Mihomo 的关系、为什么现在主流客户端都是 Mihomo 内核，见 <a href="https://tanqingbo.cn/mihomo-clash-difference/">Mihomo 是什么？Mihomo 和 Clash 有什么区别</a>。从零学习 Verge Rev 的完整操作，看 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/cfw-migration/">https://tanqingbo.cn/cfw-migration/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-Open-Internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026梯子翻墙教程：科学上网工具选择与使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-clash-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026科学上网教程：电脑手机翻墙最稳定方案
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-12</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-best-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026年VPN推荐：支持全平台的高速稳定科学上网工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Android如何用外网/安卓手机搭梯子-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-26</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-open-internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        安卓/Android系统手机实现科学上网教程-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-12</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/clash-custom-rules/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Clash / Mihomo 自定义规则完全指南：规则写法、分流配置与规则集（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81CFW-%E7%9C%9F%E7%9A%84%E5%81%9C%E6%9B%B4%E4%BA%86%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">一、CFW 真的停更了吗？为什么必须换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8D%A2%E5%88%B0%E5%93%AA%E9%87%8C%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Verge-Rev"><span class="toc-number">2.</span> <span class="toc-text">二、换到哪里：为什么是 Clash Verge Rev</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%BF%81%E7%A7%BB%E5%89%8D%EF%BC%9A%E5%85%88%E5%A4%87%E4%BB%BD%E4%BD%A0%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">三、迁移前：先备份你的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%81%E7%A7%BB%E5%9B%9B%E6%AD%A5%E8%B5%B0"><span class="toc-number">4.</span> <span class="toc-text">四、迁移四步走</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%81%E7%A7%BB%E5%90%8E%EF%BC%9A%E5%87%A0%E4%B8%AA%E8%A6%81%E6%94%B9%E7%9A%84%E5%B0%8F%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">五、迁移后：几个要改的小设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">六、常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%BF%98%E6%83%B3%E5%86%8D%E7%AD%89%E7%AD%89%EF%BC%9F%E5%8A%9D%E4%B8%80%E5%8F%A5"><span class="toc-number">7.</span> <span class="toc-text">七、还想再等等？劝一句</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>382</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>179</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81CFW-%E7%9C%9F%E7%9A%84%E5%81%9C%E6%9B%B4%E4%BA%86%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">一、CFW 真的停更了吗？为什么必须换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8D%A2%E5%88%B0%E5%93%AA%E9%87%8C%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Verge-Rev"><span class="toc-number">2.</span> <span class="toc-text">二、换到哪里：为什么是 Clash Verge Rev</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%BF%81%E7%A7%BB%E5%89%8D%EF%BC%9A%E5%85%88%E5%A4%87%E4%BB%BD%E4%BD%A0%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">三、迁移前：先备份你的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%81%E7%A7%BB%E5%9B%9B%E6%AD%A5%E8%B5%B0"><span class="toc-number">4.</span> <span class="toc-text">四、迁移四步走</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%81%E7%A7%BB%E5%90%8E%EF%BC%9A%E5%87%A0%E4%B8%AA%E8%A6%81%E6%94%B9%E7%9A%84%E5%B0%8F%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">五、迁移后：几个要改的小设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">六、常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%BF%98%E6%83%B3%E5%86%8D%E7%AD%89%E7%AD%89%EF%BC%9F%E5%8A%9D%E4%B8%80%E5%8F%A5"><span class="toc-number">7.</span> <span class="toc-text">七、还想再等等？劝一句</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">21</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">58</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81CFW-%E7%9C%9F%E7%9A%84%E5%81%9C%E6%9B%B4%E4%BA%86%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E6%8D%A2"><span class="toc-number">1.</span> <span class="toc-text">一、CFW 真的停更了吗？为什么必须换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8D%A2%E5%88%B0%E5%93%AA%E9%87%8C%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Verge-Rev"><span class="toc-number">2.</span> <span class="toc-text">二、换到哪里：为什么是 Clash Verge Rev</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%BF%81%E7%A7%BB%E5%89%8D%EF%BC%9A%E5%85%88%E5%A4%87%E4%BB%BD%E4%BD%A0%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">三、迁移前：先备份你的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%81%E7%A7%BB%E5%9B%9B%E6%AD%A5%E8%B5%B0"><span class="toc-number">4.</span> <span class="toc-text">四、迁移四步走</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%81%E7%A7%BB%E5%90%8E%EF%BC%9A%E5%87%A0%E4%B8%AA%E8%A6%81%E6%94%B9%E7%9A%84%E5%B0%8F%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">五、迁移后：几个要改的小设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">六、常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%BF%98%E6%83%B3%E5%86%8D%E7%AD%89%E7%AD%89%EF%BC%9F%E5%8A%9D%E4%B8%80%E5%8F%A5"><span class="toc-number">7.</span> <span class="toc-text">七、还想再等等？劝一句</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-12</div>
+        <a href="/cfw-migration/"><div class="recent-posts-item-content">Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-06</div>
+        <a href="/clash-custom-rules/"><div class="recent-posts-item-content">Clash / Mihomo 自定义规则完全指南：规则写法、分流配置与规则集（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-06</div>
+        <a href="/ai-model-security/"><div class="recent-posts-item-content">企业使用 AI 大模型如何保障数据安全？六大风险环节与落地清单（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
