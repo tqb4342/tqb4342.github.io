@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-13T01:50:00.000Z",
+  "dateModified": "2026-08-13T02:01:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/clash-node-testing/"
+  },
+  "image": "/images/banners/clash-node-testing-banner.png",
+  "description": "Clash 节点怎么测速、怎么看延迟、怎么按延迟选节点？本文讲延迟和带宽的区别、客户端内置测速、url-test 自动测速、测速地址选择，以及测速失败（错误码 443/超时）和延迟过高、测速数字与体感不符的排查方法，附可抄的分组配置。",
+  "keywords": "clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Clash 怎么测速节点延迟？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "打开客户端「代理」页面，选中节点组后点「测速」按钮，客户端会向每个节点发一个测速请求并显示延迟（毫秒）。也可以右键节点组或勾选多个节点后批量测速。延迟越低通常越快，但延迟低不等于带宽高，走流量大的场景还要看实际下载速度。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 节点的延迟是什么？怎么才算好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "延迟（Delay）是一个测速请求从发出到收到响应的往返时间，单位毫秒。100ms 以内体验很好，100-200ms 日常可用，300ms 以上会有明显卡顿。它反映的是到节点的网络时延，不是节点流量入口的带宽，两者要分开看：打游戏、开会看重延迟，下载大文件更看重带宽。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 测速失败、报错误码 443 或超时怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先分清是单个节点失败还是全部失败。单个节点失败多半是该节点本身挂了或入口被墙，换一个节点即可；全部失败检查：1) 系统代理、TUN 模式是否正常开启；2) 测速用的 URL 是否被阻断（换测速 URL 或节点）；3) 订阅是否过期、节点信息是否已失效（重新拉订阅）；4) DNS 是否异常。443 错误码常和 HTTPS 测速目标不可达有关，换个测速地址通常能解决。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么测速显示延迟很低，实际却很慢？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是延迟与带宽的天花板效应。测速只发一个小请求，不代表大流量下的带宽；延迟低但节点出口带宽被占满或限速、或链路丢包严重时，下载依旧慢。反过来延迟高也未必不能下得快。要判断真实速度，用测速站跑一次下载（如 speedtest），或开个大文件下载实测，不要只看那个毫秒数。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么很多节点测速都失败，但我其实能连上网？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "大概率是测速请求被拒，而不是网络真断了。两个高发原因：一是测速用的 User-Agent 为空或默认值，部分节点会拒掉，给测速配置加一个正常的浏览器 UA 即可；二是当前开的是规则模式，测速域名恰好命中了直连规则，数字失真或请求走错了路由。先确认模式和测速地址，再补 UA 试试。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 怎么让节点自动选最快的（url-test）？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "用 url-test 类型的策略组。它会周期性地测组内所有节点的延迟，自动切到延迟最低的那个，适合不在乎落地地区、只想稳快的场景。配置里 type 填 url-test，并设置 url（测速地址）和 interval（测速间隔，比如 300 秒）。注意 url-test 会频繁发送测速请求，节点多时频率高，按需使用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "哪个测速地址（URL）比较准？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "推荐用稳定的境外 HTTP(S) 服务，比如 Google 的生成器地址 gstatic.com/generate_204（返回 204，不会加载大内容）、Cloudflare 的 cp.cloudflare.com，或机场自己提供的测速地址。别用依赖大文件下载的地址做分组自动测速，会浪费流量。国内直连节点则用国内可达地址如 connect.rom.miui.com/generate_204。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "节点延迟一直很高怎么排查？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按顺序：1) 确认你选的是落地离你近的节点（本地到节点入口的时延占大头）；2) 换协议（Reality、Hysteria2 在弱网下表现常优于老协议）；3) 检查是否开了多重代理或系统代理叠加；4) 用 ping 或 tracert 看是本地网络问题还是节点问题；5) 联系机场换线路。记住延迟高低主要由物理距离和线路质量决定，不是你本地配置能硬调下来的。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）</title>
+  
+  
+  <meta property="title" content="Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/clash-node-testing/index.html">
+  
+  
+  <meta property="og:img" content="/images/banners/clash-node-testing-banner.png">
+  
+  
+  <meta property="description" content="Clash 节点怎么测速、怎么看延迟、怎么按延迟选节点？本文讲延迟和带宽的区别、客户端内置测速、url-test 自动测速、测速地址选择，以及测速失败（错误码 443/超时）和延迟过高、测速数字与体感不符的排查方法，附可抄的分组配置。">
+  
+  <meta property="keywords" content="clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-13">
+  <meta property="og:article:modified_time" content="2026-08-13">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="Mihomo">
+  
+  <meta property="og:article:tag" content="代理">
+  
+  <meta property="og:article:tag" content="测速">
+  
+  <meta property="og:article:tag" content="节点测速">
+  
+  <meta property="og:article:tag" content="延迟">
+  
+  <meta property="og:article:tag" content="节点延迟">
+  
+  <meta property="og:article:tag" content="url-test">
+  
+  <meta property="og:article:tag" content="故障排查">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/clash-node-testing/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/images/banners/clash-node-testing-banner.png" data-src="/images/banners/clash-node-testing-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-13T01:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-13</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/clash-node-testing/" class="leancloud_visitors" data-flag-title="Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Mihomo/" class="post-meta-link">Mihomo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/代理/" class="post-meta-link">代理</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/测速/" class="post-meta-link">测速</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/节点测速/" class="post-meta-link">节点测速</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/延迟/" class="post-meta-link">延迟</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/节点延迟/" class="post-meta-link">节点延迟</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/url-test/" class="post-meta-link">url-test</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/故障排查/" class="post-meta-link">故障排查</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Clash 节点怎么测速、怎么看延迟、怎么按延迟选节点？本文讲延迟和带宽的区别、客户端内置测速、url-test 自动测速、测速地址选择，以及测速失败（错误码 443/超时）和延迟过高、测速数字与体感不符的排查方法，附可抄的分组配置。">
+  
+  <meta name="keywords" content="clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。客户端的选型、订阅导入、规则分流先看总览页，这篇只聚焦一个高频动作——<strong>测速</strong>：延迟到底怎么看、怎么测、测速失败和”延迟高却难排查”这些问题怎么解决。</p>
+</blockquote>
+<p>先泼一盆冷水：<strong>你在 Clash 里点「测速」看到的那个毫秒数，根本不是”这个节点有多快”。</strong> 它测的是时延，不是带宽——一个延迟只有 30ms 的节点，下载可能比延迟 200ms 的还慢。</p>
+<p>很多人拿到机场订阅，第一件事就是一顿狂点「测速」，然后照着数字从低到高挑节点，结果还是卡、还是慢。问题就出在没搞懂测速到底在测什么。这篇把延迟是怎么来的、怎么测才对、测速失败和”数字好看但体感拉胯”该怎么排查，一次性说透。</p>
+<h2 id="一、先搞清楚：测速测的到底是什么"><a href="#一、先搞清楚：测速测的到底是什么" class="headerlink" title="一、先搞清楚：测速测的到底是什么"></a>一、先搞清楚：测速测的到底是什么</h2><p>Clash 里的「测速」，本质是向节点发出一个<strong>小小的 HTTP 请求</strong>，然后记录从发出到收到响应的时间，也就是<strong>延迟（Delay / Latency）</strong>，单位毫秒（ms）。</p>
+<p>它有两个关键特点，直接决定你怎么用这个数字：</p>
+<ul>
+<li>**它测的是”路通不通 + 路有多远”，不是”路有多宽”**。一个测速请求可能只有几 KB，延迟低只能说明这条链路时延小，不代表传大文件时带宽高。</li>
+<li><strong>延迟和带宽是两个维度</strong>。打游戏、视频会议看重延迟（越低越跟手）；下大文件、看高清视频看重带宽（越大越快）。两者经常不同步——延迟 50ms 的节点，下载可能比延迟 200ms 的还慢，因为它的出口带宽被限了。</li>
+</ul>
+<p>所以别把那个延迟数字当「快慢」的唯一标准。下面先讲怎么正确测，再讲测不准怎么排查。</p>
+<h2 id="二、怎么测：客户端内置测速"><a href="#二、怎么测：客户端内置测速" class="headerlink" title="二、怎么测：客户端内置测速"></a>二、怎么测：客户端内置测速</h2><p>以 Clash Verge Rev 为例，最常用的测速方式在「代理」页面：</p>
+<ol>
+<li>打开 Clash 客户端，进入「代理」（Proxies）页。</li>
+<li>找到你要测的节点组（策略组），点组名右侧的「测速」按钮。</li>
+<li>客户端会向组内每个节点发测速请求，几秒后每个节点后面会显示延迟数字，<strong>数字越小表示时延越低</strong>。</li>
+</ol>
+<p>也可以<strong>勾选多个节点后批量测速</strong>，或右键单个节点单独测。Android（ClashMetaForAndroid / CMFA）、iOS（Stash）等客户端的操作大同小异，都是在节点列表里找「测速 / 全部测速」。</p>
+<p>只看单个数字还不够时，可以结合两个信息一起判断：</p>
+<ul>
+<li><strong>延迟数值</strong>：100ms 以内体验很好，100–200ms 日常可接受，300ms 以上卡顿明显。</li>
+<li><strong>波动</strong>：同一个节点多测几次，如果数字忽高忽低（比如一会 80ms 一会 400ms），说明线路不稳，比一直 200ms 更难受。</li>
+</ul>
+<h2 id="三、让节点自动选最快：url-test-自动测速"><a href="#三、让节点自动选最快：url-test-自动测速" class="headerlink" title="三、让节点自动选最快：url-test 自动测速"></a>三、让节点自动选最快：url-test 自动测速</h2><p>手动一个个点太麻烦，尤其是机场有几十个节点时。Clash 支持 <code>url-test</code> 策略组，让它<strong>自动测速、自动切到延迟最低的节点</strong>：</p>
+<pre class="highlight"><span class="line"><span class="attr">proxy-groups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"🚀 自动选择"</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">url-test</span></span><br><span class="line">    <span class="attr">proxies:</span> [<span class="string">节点A</span>, <span class="string">节点B</span>, <span class="string">节点C</span>, <span class="string">...</span>]</span><br><span class="line">    <span class="attr">url:</span> <span class="string">"https://www.gstatic.com/generate_204"</span></span><br><span class="line">    <span class="attr">interval:</span> <span class="number">300</span>   <span class="comment"># 每 300 秒测一次并切换</span></span><br></pre>
+
+<p>配置说明：</p>
+<ul>
+<li><code>type: url-test</code> 让组内周期测速，自动选延迟最低的节点。</li>
+<li><code>url</code> 是测速用的地址，选一个稳定、不消耗太大流量的目标（见下节）。</li>
+<li><code>interval</code> 是测速间隔（秒）。设太短会频繁发测速请求，节点多时流量和后台开销都不小，<strong>300 秒（5 分钟）是常见平衡点</strong>。</li>
+</ul>
+<p><code>url-test</code> 适合「我只想稳、不在乎落地在哪个地区」的场景。如果你需要固定地区（比如看奈飞要锁定某个区），那还是用 <code>select</code> 手动选固定节点更合适——测速只是帮你判断哪个顺，不是越自动越好。</p>
+<h2 id="四、测速地址（URL）怎么选"><a href="#四、测速地址（URL）怎么选" class="headerlink" title="四、测速地址（URL）怎么选"></a>四、测速地址（URL）怎么选</h2><p>测速用哪个地址，直接决定测出来的数字可不可信。几个原则：</p>
+<ul>
+<li><p><strong>用「返回即走」的轻地址</strong>：比如 Google 的 <code>gstatic.com/generate_204</code>（返回 204 空响应）、Cloudflare 的 <code>cp.cloudflare.com</code>。这些地址不会加载大内容，测速快、不费流量。</p>
+</li>
+<li><p><strong>别用大文件页</strong>：拿 speedtest 那种要下几 MB 的地址做分组自动测速，每 5 分钟测一次，几十个节点一起跑，流量哗哗的。</p>
+</li>
+<li><p><strong>国内直连节点用国内地址</strong>：如果你想测国内直连的节点，用境外地址会失真，换 <code>connect.rom.miui.com/generate_204</code> 这类国内可达地址。</p>
+</li>
+<li><p><strong>机场自带测速地址</strong>：很多机场订阅自带 <code>url</code> 配置，直接用就行，通常是针对它们自己的线路优化的。</p>
+<p>有个细节值得留意：Mihomo 的测速请求可以用 <code>headers</code> 指定一个 <code>User-Agent</code>，部分节点对空 UA 或默认 UA 会返回异常（导致本可用的节点被判”超时”）。如果发现大批节点测速失败但实际能连，试着给测速配置加一个正常的浏览器 UA。这是排查”全灭但网络其实通”时很容易被忽略的一环。</p>
+</li>
+</ul>
+<h2 id="五、测速失败-延迟高怎么排查（重头戏）"><a href="#五、测速失败-延迟高怎么排查（重头戏）" class="headerlink" title="五、测速失败 / 延迟高怎么排查（重头戏）"></a>五、测速失败 / 延迟高怎么排查（重头戏）</h2><p>这里有两个最常见的坑，分开排查：一个是「测速根本测不出来」（失败、报错），一个是「测速数字看着没问题，但用起来卡」（延迟高，或者数字与体感不符）。</p>
+<h3 id="5-1-测速失败、报错误码或超时"><a href="#5-1-测速失败、报错误码或超时" class="headerlink" title="5.1 测速失败、报错误码或超时"></a>5.1 测速失败、报错误码或超时</h3><p>先判断是「单个失败」还是「全灭」：</p>
+<p><strong>单个节点失败</strong>——多半是节点自身问题：挂了、入口被墙、或者机场临时下线。直接换一个节点，别纠结。</p>
+<p><strong>全部节点都失败 / 报 443 之类错误码</strong>——按顺序查：</p>
+<ol>
+<li><strong>代理是不是真在生效</strong>。确认系统代理开关是开的，或 TUN 模式已开启。有时候关了代理却去测速，当然全失败。</li>
+<li><strong>测速 URL 被阻断</strong>。某些网络环境会针对测速地址做干扰，换一个测速地址（比如换成 <code>cp.cloudflare.com</code>）再试。</li>
+<li><strong>订阅过期 / 节点信息失效</strong>。机场节点会定期更换地址和密码，订阅没更新时，拿到的可能是一堆失效节点。重新拉一次订阅。</li>
+<li><strong>DNS 异常</strong>。DNS 解析失败也会让测速请求发不出去。检查客户端 DNS 配置，或重启客户端清缓存。</li>
+<li><strong>测速请求的 UA 被拒</strong>。见上一节：给测速配置加一个正常的浏览器 <code>User-Agent</code>，很多”全灭但实际能连”就是栽在这。</li>
+<li><strong>错误码 443</strong>。443 通常和 HTTPS 测速目标不可达有关（节点能连但握手失败，或目标被 RST）。换个测速 URL、换个节点基本能绕开。这正是知乎上被问得最多的「Clash 测速报 443」的典型场景。</li>
+</ol>
+<h3 id="5-2-延迟很高，或数字好看但实际卡"><a href="#5-2-延迟很高，或数字好看但实际卡" class="headerlink" title="5.2 延迟很高，或数字好看但实际卡"></a>5.2 延迟很高，或数字好看但实际卡</h3><p>延迟高，先分清是「真高」还是「其实不慢」：</p>
+<p><strong>延迟确实高</strong>（300ms+，且体感也卡）——大概率是链路问题：</p>
+<ul>
+<li><strong>本地到节点入口的距离</strong>占了时延大头，落地离你越远延迟越高，先换一个离你近的节点。</li>
+<li><strong>协议不合适</strong>：Reality、Hysteria2 在弱网、跨网场景下通常比老协议（SS、老 VMess）表现好，可以切协议试试。</li>
+<li><strong>多重代理叠加</strong>：系统级代理 + Clash 又开一层，等于绕了两趟，延迟直接翻倍。检查是不是叠了。</li>
+</ul>
+<p><strong>延迟很低但实际卡</strong>（数字好看，体感拉胯）——这是延迟和带宽脱节了：</p>
+<ul>
+<li><strong>出口带宽被限</strong>：节点延迟 50ms，但出口给你限到 2 Mbps，看视频当然卡。</li>
+<li><strong>链路丢包</strong>：延迟低但丢包严重，TCP 来回重传，感受比高延迟还差。</li>
+<li><strong>高峰期拥堵</strong>：白天测速时线路空闲，晚上高峰出口塞满，延迟没变但带宽塌了。</li>
+</ul>
+<p>怎么判断真实速度？<strong>跑一次真实下载</strong>比看延迟靠谱：用 speedtest 测一次、或者开个大文件下载看实际速度。延迟是”路况”，下载速度才是”车能跑多快”。</p>
+<h2 id="六、怎么按延迟挑节点（实操建议）"><a href="#六、怎么按延迟挑节点（实操建议）" class="headerlink" title="六、怎么按延迟挑节点（实操建议）"></a>六、怎么按延迟挑节点（实操建议）</h2><p>把上面的串起来，选节点可以按这个顺序：</p>
+<ol>
+<li><strong>先看延迟过滤掉离谱的</strong>：直接排除 300ms 以上、或者测速一直失败的节点。</li>
+<li><strong>再看波动</strong>：多个低延迟节点里，挑那个数字稳的（同测几次差距小）。</li>
+<li><strong>按用途定策略</strong>：<ul>
+<li>打游戏、开会 → 用 <code>url-test</code>，自动选低延迟，关注稳定性。</li>
+<li>看流媒体、下大文件 → 手动选固定节点，重点看实际下载速度而非延迟。</li>
+<li>有地区要求（奈飞某区）→ 锁定该区节点，测速只用来挑该区内最稳的那个。</li>
+</ul>
+</li>
+<li><strong>别迷信最低那个</strong>：延迟 30ms 的节点若出口限速，不如 80ms 但带宽充足的。真实体感才是唯一标准。</li>
+</ol>
+<p>一个容易被忽略的点：<strong>测速结果还受当前模式影响</strong>。如果客户端开的是「全局模式」，所有流量都走代理，测速数字反映的是节点真实链路；如果开「规则模式」，而测速用的域名恰好命中直连规则（比如你用了国内测速地址却测境外节点），数字就会失真。所以测速前先确认好模式，别在规则模式下用错了测速地址。</p>
+<h2 id="七、常见问题"><a href="#七、常见问题" class="headerlink" title="七、常见问题"></a>七、常见问题</h2><p><strong>Clash 怎么测速节点延迟？</strong></p>
+<p>打开客户端「代理」页面，选中节点组后点「测速」按钮，客户端会向每个节点发一个测速请求并显示延迟（毫秒）。也可以右键节点组或勾选多个节点后批量测速。延迟越低通常越快，但延迟低不等于带宽高，走流量大的场景还要看实际下载速度。</p>
+<p><strong>Clash 节点的延迟是什么？怎么才算好？</strong></p>
+<p>延迟（Delay）是一个测速请求从发出到收到响应的往返时间，单位毫秒。100ms 以内体验很好，100-200ms 日常可用，300ms 以上会有明显卡顿。它反映的是到节点的网络时延，不是节点流量入口的带宽，两者要分开看：打游戏、开会看重延迟，下载大文件更看重带宽。</p>
+<p><strong>Clash 测速失败、报错误码 443 或超时怎么办？</strong></p>
+<p>先分清是单个节点失败还是全部失败。单个节点失败多半是该节点本身挂了或入口被墙，换一个节点即可；全部失败检查：系统代理、TUN 模式是否正常开启；测速用的 URL 是否被阻断（换测速 URL 或节点）；订阅是否过期、节点信息是否已失效（重新拉订阅）；DNS 是否异常。443 错误码常和 HTTPS 测速目标不可达有关，换个测速地址通常能解决。</p>
+<p><strong>为什么测速显示延迟很低，实际却很慢？</strong></p>
+<p>这是延迟与带宽的天花板效应。测速只发一个小请求，不代表大流量下的带宽；延迟低但节点出口带宽被占满或限速、或链路丢包严重时，下载依旧慢。反过来延迟高也未必不能下得快。要判断真实速度，用测速站跑一次下载，或开个大文件下载实测，不要只看那个毫秒数。</p>
+<p><strong>为什么很多节点测速都失败，但我其实能连上网？</strong></p>
+<p>大概率是测速请求被拒，而不是网络真断了。两个高发原因：一是测速用的 User-Agent 为空或默认值，部分节点会拒掉，给测速配置加一个正常的浏览器 UA 即可；二是当前开的是规则模式，测速域名恰好命中了直连规则，数字失真或请求走错了路由。先确认模式和测速地址，再补 UA 试试。</p>
+<p><strong>Clash 怎么让节点自动选最快的（url-test）？</strong></p>
+<p>用 url-test 类型的策略组。它会周期性地测组内所有节点的延迟，自动切到延迟最低的那个，适合不在乎落地地区、只想稳快的场景。配置里 type 填 url-test，并设置 url（测速地址）和 interval（测速间隔，比如 300 秒）。注意 url-test 会频繁发送测速请求，节点多时频率高，按需使用。</p>
+<p><strong>哪个测速地址（URL）比较准？</strong></p>
+<p>推荐用稳定的境外 HTTP(S) 服务，比如 Google 的生成器地址 <code>gstatic.com/generate_204</code>（返回 204，不会加载大内容）、Cloudflare 的 <code>cp.cloudflare.com</code>，或机场自己提供的测速地址。别用依赖大文件下载的地址做分组自动测速，会浪费流量。国内直连节点则用国内可达地址如 <code>connect.rom.miui.com/generate_204</code>。</p>
+<p><strong>节点延迟一直很高怎么排查？</strong></p>
+<p>按顺序：确认你选的是落地离你近的节点（本地到节点入口的时延占大头）；换协议（Reality、Hysteria2 在弱网下表现常优于老协议）；检查是否开了多重代理或系统代理叠加；用 ping 或 tracert 看是本地网络问题还是节点问题；联系机场换线路。延迟高低主要由物理距离和线路质量决定，不是你本地配置能硬调下来的。</p>
+<hr>
+<p>想在「选哪个客户端」上少踩坑，看 <a href="https://tanqingbo.cn/clash-verge/">Clash 怎么办客户端选哪个：Clash Verge、Stash、CMFA 等对比</a>；节点延迟再低，规则分流不对体验也打折，见 <a href="https://tanqingbo.cn/clash-custom-rules/">Clash / Mihomo 自定义规则完全指南</a>。机场订阅、协议、TUN 模式这些前置概念都在 <a href="https://tanqingbo.cn/clash-guide/">Clash 教程总览页</a> 和 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a> 里，一次看全。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/clash-node-testing/">https://tanqingbo.cn/clash-node-testing/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-Open-Internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026梯子翻墙教程：科学上网工具选择与使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-clash-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026科学上网教程：电脑手机翻墙最稳定方案
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-12</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-best-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026年VPN推荐：支持全平台的高速稳定科学上网工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Android如何用外网/安卓手机搭梯子-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-26</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-open-internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        安卓/Android系统手机实现科学上网教程-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-12</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/cfw-migration/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%EF%BC%9A%E6%B5%8B%E9%80%9F%E6%B5%8B%E7%9A%84%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、先搞清楚：测速测的到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E6%B5%8B%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%86%85%E7%BD%AE%E6%B5%8B%E9%80%9F"><span class="toc-number">2.</span> <span class="toc-text">二、怎么测：客户端内置测速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A9%E8%8A%82%E7%82%B9%E8%87%AA%E5%8A%A8%E9%80%89%E6%9C%80%E5%BF%AB%EF%BC%9Aurl-test-%E8%87%AA%E5%8A%A8%E6%B5%8B%E9%80%9F"><span class="toc-number">3.</span> <span class="toc-text">三、让节点自动选最快：url-test 自动测速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E9%80%9F%E5%9C%B0%E5%9D%80%EF%BC%88URL%EF%BC%89%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">4.</span> <span class="toc-text">四、测速地址（URL）怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B5%8B%E9%80%9F%E5%A4%B1%E8%B4%A5-%E5%BB%B6%E8%BF%9F%E9%AB%98%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5%EF%BC%88%E9%87%8D%E5%A4%B4%E6%88%8F%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五、测速失败 &#x2F; 延迟高怎么排查（重头戏）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%B5%8B%E9%80%9F%E5%A4%B1%E8%B4%A5%E3%80%81%E6%8A%A5%E9%94%99%E8%AF%AF%E7%A0%81%E6%88%96%E8%B6%85%E6%97%B6"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 测速失败、报错误码或超时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%BB%B6%E8%BF%9F%E5%BE%88%E9%AB%98%EF%BC%8C%E6%88%96%E6%95%B0%E5%AD%97%E5%A5%BD%E7%9C%8B%E4%BD%86%E5%AE%9E%E9%99%85%E5%8D%A1"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 延迟很高，或数字好看但实际卡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E6%8C%89%E5%BB%B6%E8%BF%9F%E6%8C%91%E8%8A%82%E7%82%B9%EF%BC%88%E5%AE%9E%E6%93%8D%E5%BB%BA%E8%AE%AE%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、怎么按延迟挑节点（实操建议）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>383</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>185</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%EF%BC%9A%E6%B5%8B%E9%80%9F%E6%B5%8B%E7%9A%84%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、先搞清楚：测速测的到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E6%B5%8B%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%86%85%E7%BD%AE%E6%B5%8B%E9%80%9F"><span class="toc-number">2.</span> <span class="toc-text">二、怎么测：客户端内置测速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A9%E8%8A%82%E7%82%B9%E8%87%AA%E5%8A%A8%E9%80%89%E6%9C%80%E5%BF%AB%EF%BC%9Aurl-test-%E8%87%AA%E5%8A%A8%E6%B5%8B%E9%80%9F"><span class="toc-number">3.</span> <span class="toc-text">三、让节点自动选最快：url-test 自动测速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E9%80%9F%E5%9C%B0%E5%9D%80%EF%BC%88URL%EF%BC%89%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">4.</span> <span class="toc-text">四、测速地址（URL）怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B5%8B%E9%80%9F%E5%A4%B1%E8%B4%A5-%E5%BB%B6%E8%BF%9F%E9%AB%98%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5%EF%BC%88%E9%87%8D%E5%A4%B4%E6%88%8F%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五、测速失败 &#x2F; 延迟高怎么排查（重头戏）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%B5%8B%E9%80%9F%E5%A4%B1%E8%B4%A5%E3%80%81%E6%8A%A5%E9%94%99%E8%AF%AF%E7%A0%81%E6%88%96%E8%B6%85%E6%97%B6"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 测速失败、报错误码或超时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%BB%B6%E8%BF%9F%E5%BE%88%E9%AB%98%EF%BC%8C%E6%88%96%E6%95%B0%E5%AD%97%E5%A5%BD%E7%9C%8B%E4%BD%86%E5%AE%9E%E9%99%85%E5%8D%A1"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 延迟很高，或数字好看但实际卡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E6%8C%89%E5%BB%B6%E8%BF%9F%E6%8C%91%E8%8A%82%E7%82%B9%EF%BC%88%E5%AE%9E%E6%93%8D%E5%BB%BA%E8%AE%AE%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、怎么按延迟挑节点（实操建议）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">21</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+    <a href="\tags\操作系统" title="操作系统"><div class="tags-list-item">操作系统</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%EF%BC%9A%E6%B5%8B%E9%80%9F%E6%B5%8B%E7%9A%84%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、先搞清楚：测速测的到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E6%B5%8B%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%86%85%E7%BD%AE%E6%B5%8B%E9%80%9F"><span class="toc-number">2.</span> <span class="toc-text">二、怎么测：客户端内置测速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A9%E8%8A%82%E7%82%B9%E8%87%AA%E5%8A%A8%E9%80%89%E6%9C%80%E5%BF%AB%EF%BC%9Aurl-test-%E8%87%AA%E5%8A%A8%E6%B5%8B%E9%80%9F"><span class="toc-number">3.</span> <span class="toc-text">三、让节点自动选最快：url-test 自动测速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E9%80%9F%E5%9C%B0%E5%9D%80%EF%BC%88URL%EF%BC%89%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">4.</span> <span class="toc-text">四、测速地址（URL）怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B5%8B%E9%80%9F%E5%A4%B1%E8%B4%A5-%E5%BB%B6%E8%BF%9F%E9%AB%98%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5%EF%BC%88%E9%87%8D%E5%A4%B4%E6%88%8F%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五、测速失败 &#x2F; 延迟高怎么排查（重头戏）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%B5%8B%E9%80%9F%E5%A4%B1%E8%B4%A5%E3%80%81%E6%8A%A5%E9%94%99%E8%AF%AF%E7%A0%81%E6%88%96%E8%B6%85%E6%97%B6"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 测速失败、报错误码或超时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%BB%B6%E8%BF%9F%E5%BE%88%E9%AB%98%EF%BC%8C%E6%88%96%E6%95%B0%E5%AD%97%E5%A5%BD%E7%9C%8B%E4%BD%86%E5%AE%9E%E9%99%85%E5%8D%A1"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 延迟很高，或数字好看但实际卡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E6%8C%89%E5%BB%B6%E8%BF%9F%E6%8C%91%E8%8A%82%E7%82%B9%EF%BC%88%E5%AE%9E%E6%93%8D%E5%BB%BA%E8%AE%AE%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、怎么按延迟挑节点（实操建议）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-13</div>
+        <a href="/clash-node-testing/"><div class="recent-posts-item-content">Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-12</div>
+        <a href="/cfw-migration/"><div class="recent-posts-item-content">Clash for Windows（CFW）停更了怎么办？迁移到 Clash Verge Rev 完整教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-06</div>
+        <a href="/clash-custom-rules/"><div class="recent-posts-item-content">Clash / Mihomo 自定义规则完全指南：规则写法、分流配置与规则集（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
