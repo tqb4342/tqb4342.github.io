@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-17T14:20:00.000Z",
+  "dateModified": "2026-08-17T14:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/airport-rate-guide/"
+  },
+  "image": "/images/banners/airport-rate-guide-banner.png",
+  "description": "机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。",
+  "keywords": "机场倍率,节点倍率,倍率是什么意思,机场流量怎么算,节点x0.5,节点x2,x3倍率,流量消耗速度,机场流量刺客,订阅流量计算,倍数节点,低倍率节点,机场计费规则,倍率1.0,倍率0.5,专线倍率,流量用完怎么办,套餐流量重置,机场限速,倍率怎么看,倍率是限速吗,不限量套餐倍率,倍率和速度的关系,机场流量偷跑,流量重置多少钱"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "倍率是限速的意思吗？x3 是 3 倍速度吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "都不是。倍率只影响套餐流量的扣除速度，和网速、限速没有任何关系。x3 的意思是你用 1GB 流量扣 3GB 套餐额度，不是说这个节点快 3 倍。节点的速度和延迟由线路质量决定（专线、中转、直连），要判断快不快得靠测速，而不是看倍率数字。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "不限量套餐还要看倍率吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "要留意。部分机场的「不限量」套餐只对 1.0 倍率节点不限量，高倍率节点（专线、流媒体专用）照样按倍率扣费或单独限制；还有的不限量但限速，超出公平使用策略后降速。买之前看清套餐页的小字，不确定就问客服：哪些节点不限量、有没有公平使用条款。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机场节点后面的倍率（x0.5、x2、x3）是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "倍率是节点消耗套餐流量的加权系数。倍率 1.0 表示你用 1GB 就扣 1GB；倍率 2 表示你用 1GB 扣 2GB；倍率 0.5 表示你用 1GB 只扣 0.5GB。它和节点速度快慢没有直接关系，只决定套餐流量消耗得多快。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机场流量到底怎么算？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "公式很简单：扣除流量 = 实际传输流量 × 节点倍率。比如你看了一部 2GB 的视频，用倍率 1.0 的节点扣 2GB，用倍率 3.0 的专线节点就扣 6GB。上传和下载都算，一般按双向合计或下载为主，具体以机场后台为准。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么同样的用法，流量消耗速度差这么多？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "主要原因就是倍率不同。你可能一直连着标了 x2、x3 的高倍率专线节点，看个视频、下个文件，流量瞬间就没了。这不是机场偷流量，而是你用了高倍率节点。日常浏览切回 1.0 倍率的普通节点，能省一大半。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "高倍率节点一定更快更稳吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "通常是，但不是绝对。高倍率节点一般对应专线（IEPL/IPLC）、高质量中转，延迟低、丢包少，适合 4K 视频、游戏、视频会议。但倍率和速度没有必然关系，判断性价比应该自己测延迟（ping、测速），而不是只看倍率数字。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么在客户端看到节点的倍率？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Clash 系客户端一般会在节点名称里标注（如「香港专线 x2」「新加坡 x0.5」），部分机场在节点名后直接写倍率。看不到的话，去机场官网的「节点状态」或「我的订阅」页面查，那里会列出每个节点的倍率。切换节点前先确认倍率，能避开不少「流量刺客」。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "低倍率（<1.0）节点有坑吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "低倍率节点（如 0.5、0.2）流量消耗慢、性价比高，但通常对应普通中转或共享线路，晚高峰可能拥堵、延迟偏高。适合日常浏览、异步下载；对延迟敏感的场景（游戏、实时会议）还是建议用 1.0 以上的节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "套餐流量用完了怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一般有两个选择：在机场后台「重置流量」重新获得当月额度（需额外付费），或者单独购买流量包。有些机场还支持更换套餐。选节点前先查剩余流量，避免半夜看完剧发现流量归零。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "买机场时怎么看倍率才不会被坑？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看三点：1) 倍率是否透明，靠谱机场会在订阅页或节点状态里明确标出每个节点的倍率；2) 有没有 1.0 或更低倍率的基础节点可选；3) 警惕「全节点高倍率且无对应质量提升」的机场。倍率不透明、只在流量耗尽后才告知规则的，尽量避开。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）</title>
+  
+  
+  <meta property="title" content="机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/airport-rate-guide/index.html">
+  
+  
+  <meta property="og:img" content="/images/banners/airport-rate-guide-banner.png">
+  
+  
+  <meta property="description" content="机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。">
+  
+  <meta property="keywords" content="机场倍率,节点倍率,倍率是什么意思,机场流量怎么算,节点x0.5,节点x2,x3倍率,流量消耗速度,机场流量刺客,订阅流量计算,倍数节点,低倍率节点,机场计费规则,倍率1.0,倍率0.5,专线倍率,流量用完怎么办,套餐流量重置,机场限速,倍率怎么看,倍率是限速吗,不限量套餐倍率,倍率和速度的关系,机场流量偷跑,流量重置多少钱">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-17">
+  <meta property="og:article:modified_time" content="2026-08-17">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="机场">
+  
+  <meta property="og:article:tag" content="倍率">
+  
+  <meta property="og:article:tag" content="流量">
+  
+  <meta property="og:article:tag" content="计费">
+  
+  <meta property="og:article:tag" content="订阅">
+  
+  <meta property="og:article:tag" content="节点">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/airport-rate-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/images/banners/airport-rate-guide-banner.png" data-src="/images/banners/airport-rate-guide-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-17T14:20:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/airport-rate-guide/" class="leancloud_visitors" data-flag-title="机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机场/" class="post-meta-link">机场</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/倍率/" class="post-meta-link">倍率</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/流量/" class="post-meta-link">流量</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/计费/" class="post-meta-link">计费</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/订阅/" class="post-meta-link">订阅</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/节点/" class="post-meta-link">节点</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。">
+  
+  <meta name="keywords" content="机场倍率,节点倍率,倍率是什么意思,机场流量怎么算,节点x0.5,节点x2,x3倍率,流量消耗速度,机场流量刺客,订阅流量计算,倍数节点,低倍率节点,机场计费规则,倍率1.0,倍率0.5,专线倍率,流量用完怎么办,套餐流量重置,机场限速,倍率怎么看,倍率是限速吗,不限量套餐倍率,倍率和速度的关系,机场流量偷跑,流量重置多少钱">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。机场怎么选、节点怎么测先看总览页，这篇只聊一个新手几乎都会踩、却很少有人讲透的坑：<strong>节点倍率</strong>——那个跟在节点名字后面的 x0.5、x2、x3 到底是什么意思，为什么你的流量总是莫名其妙就用完了。</p>
+</blockquote>
+<blockquote>
+<p>📚 本文也是 <strong><a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程（2026）：客户端、订阅与规则分流</a></strong> 的配套教程。订阅链接怎么导入见 <a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接完全指南</a>，各种名词的速查释义见 <a href="https://tanqingbo.cn/mingci/">Clash 机场专用名词解释字典</a>。</p>
+</blockquote>
+<p>很多人刚买机场时都遇到过这种困惑：明明没看多少视频，套餐流量却很快见底；或者换了几个节点，同样的用法，流量消耗速度天差地别。不是机场偷你流量，八成是<strong>节点倍率</strong>在起作用。这东西藏得深，机场又很少主动解释，今天一次说清。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li>倍率是什么：节点消耗套餐流量的加权系数。x1 用 1G 扣 1G，x2 用 1G 扣 2G，x0.5 用 1G 只扣 0.5G。</li>
+<li>怎么算：扣除流量 = 实际流量 × 倍率。看 2G 视频，x3 节点扣 6G。</li>
+<li>倍率不是限速也不是加速：它只管流量扣多快，速度快慢要靠测速判断。</li>
+<li>流量刺客的元凶：一直连着高倍率专线节点。日常浏览切 1.0 倍率节点能省一大半。</li>
+<li>怎么看倍率：客户端节点名里（如「香港专线 x2」），或机场后台「节点状态/我的订阅」页。</li>
+</ul>
+<h2 id="一、倍率到底是什么"><a href="#一、倍率到底是什么" class="headerlink" title="一、倍率到底是什么"></a>一、倍率到底是什么</h2><p>把机场想成一个流量批发商。你买 100GB 套餐，实际就是买了 100GB 的「消耗额度」。但不同节点的成本不一样——专线（IEPL/IPLC）成本高，普通中转成本低。机场为了平衡成本，就给不同节点标了不同的<strong>倍率</strong>。</p>
+<p>倍率就是一个倍数：<strong>你在这个节点上实际用了多少流量，机场就按多少倍来扣你的套餐额度。</strong></p>
+<ul>
+<li>倍率 1.0：用 1GB 扣 1GB，滴水不漏，最标准</li>
+<li>倍率 2.0：用 1GB 扣 2GB，专线节点常见</li>
+<li>倍率 0.5：用 1GB 只扣 0.5GB，共享线路或促销节点常见</li>
+</ul>
+<p>关键要记住：<strong>倍率只决定流量消耗快慢，和节点速度快慢没有直接关系。</strong> 很多人把「高倍率」误当成「高速」，这是两个概念。</p>
+<h2 id="二、先排除一个最常见的误解：倍率不是限速"><a href="#二、先排除一个最常见的误解：倍率不是限速" class="headerlink" title="二、先排除一个最常见的误解：倍率不是限速"></a>二、先排除一个最常见的误解：倍率不是限速</h2><p>新手看到节点名里的「x3」，第一反应往往是「3 倍速度」或者「限速 3M」。都不对。把三个容易混的概念拆开：</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>管什么</th>
+<th>在哪看</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>倍率（x0.5 / x1 / x3）</td>
+<td>套餐流量扣多快</td>
+<td>节点名、机场后台</td>
+</tr>
+<tr>
+<td>带宽 / 速度</td>
+<td>下载上传多快</td>
+<td>测速（speedtest、客户端测速）</td>
+</tr>
+<tr>
+<td>限速</td>
+<td>机场给节点设的速度上限</td>
+<td>套餐说明（如「100Mbps 限速」）</td>
+</tr>
+</tbody></table>
+<p>一个 x3 的专线节点可能又快又稳，一个 x0.5 的共享节点可能晚高峰卡成 PPT——反过来也一样。判断节点快不快，唯一可靠的办法是测速，见 <a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速完全指南</a>；倍率只回答一个问题：用它，你的套餐流量掉多快。</p>
+<h2 id="三、流量到底怎么算"><a href="#三、流量到底怎么算" class="headerlink" title="三、流量到底怎么算"></a>三、流量到底怎么算</h2><p>公式就一条：</p>
+<pre class="highlight"><span class="line">扣除流量 = 实际传输流量 × 节点倍率</span><br></pre>
+
+<p>举个例子。你今晚看了一部 2GB 的电影：</p>
+<table>
+<thead>
+<tr>
+<th>节点</th>
+<th>倍率</th>
+<th>实际传输</th>
+<th>扣除流量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通中转</td>
+<td>x1.0</td>
+<td>2GB</td>
+<td>2GB</td>
+</tr>
+<tr>
+<td>便宜共享节点</td>
+<td>x0.5</td>
+<td>2GB</td>
+<td>1GB</td>
+</tr>
+<tr>
+<td>IEPL 专线</td>
+<td>x3.0</td>
+<td>2GB</td>
+<td>6GB</td>
+</tr>
+</tbody></table>
+<p>同样一部电影，用专线节点扣的流量是普通节点的 3 倍。这就是为什么你连着几天用「高速专线」节点，100GB 套餐一周就见底了。</p>
+<p>几个容易忽略的细节：</p>
+<ul>
+<li><strong>上传也计</strong>：大部分机场上传下载都算流量，双向合计。下载大文件时上传流量很少，但直播、视频通话、BT 上传场景就会明显增加扣费。</li>
+<li><strong>TUN 模式更「费」</strong>：开了 TUN 模式，所有应用（包括系统更新、后台服务）的流量都会过节点，被统计进去。系统代理模式下只有遵循代理设置的应用才计。</li>
+<li><strong>DNS 和心跳不算大头</strong>：挂机时客户端的心跳包、DNS 查询流量很小，不是流量消失的主因，真正的大头是视频和下载。</li>
+</ul>
+<p>想搞清楚自己流量花在哪，先看 <a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速完全指南</a> 里怎么看每个节点的实时速率。</p>
+<h2 id="四、为什么你的流量「莫名其妙」用完"><a href="#四、为什么你的流量「莫名其妙」用完" class="headerlink" title="四、为什么你的流量「莫名其妙」用完"></a>四、为什么你的流量「莫名其妙」用完</h2><p>九成是这两个原因：</p>
+<p><strong>1. 一直连着高倍率节点。</strong> 很多人图省事，把「自动选择」或默认节点设成了专线，然后日常刷网页、看视频全走这条高倍率线路。倍率 3 的节点看一晚上视频，等于普通节点用三倍流量。</p>
+<p><strong>2. 倍率不透明，被「流量刺客」偷袭。</strong> 有些机场不在节点名里标倍率，只在后台某个角落写。你以为用的是 1.0 倍率，实际是 3.0，等流量见底了才发现。</p>
+<p>自查方法：去机场后台「节点状态」或「我的订阅」页面，把每个节点的倍率拉出来看一眼。有倍率标注的，看清楚再用；不标的，换机场。</p>
+<h2 id="五、高倍率节点到底值不值"><a href="#五、高倍率节点到底值不值" class="headerlink" title="五、高倍率节点到底值不值"></a>五、高倍率节点到底值不值</h2><p>高倍率节点的存在是有道理的——专线成本高、质量也高。评判值不值，看场景：</p>
+<p><strong>适合高倍率节点（x2 以上）的场景：</strong></p>
+<ul>
+<li>4K 流媒体、需要高码率稳定传输</li>
+<li>实时游戏，对延迟和丢包极度敏感</li>
+<li>视频会议、跨境直播</li>
+<li>看行情、下单等对稳定性要求高的操作</li>
+</ul>
+<p><strong>没必要用高倍率节点的场景：</strong></p>
+<ul>
+<li>日常刷网页、查资料</li>
+<li>异步下载（白天挂着慢慢下）</li>
+<li>刷社交媒体、收发邮件</li>
+</ul>
+<p>结论：<strong>高倍率节点是「应急高速道」，不是「日常通勤路」。</strong> 日常挂 1.0 倍率节点，需要高稳定时才切专线，流量能省一大半。</p>
+<h2 id="六、怎么在客户端看清倍率"><a href="#六、怎么在客户端看清倍率" class="headerlink" title="六、怎么在客户端看清倍率"></a>六、怎么在客户端看清倍率</h2><p>不同客户端显示方式略有差别，但都藏在两个地方：</p>
+<p><strong>Clash Verge Rev / CMFA / Spectre</strong>：节点列表里，节点名称后面常带倍率标注，比如「香港 01 x1」「美国 IEPL x3」。这是机场写进订阅配置里的，客户端原样显示。</p>
+<p><strong>机场后台</strong>：登录机场官网，找「节点状态」「我的订阅」「节点列表」这类页面，通常有专门的「倍率」列。有些机场还在订阅链接里用 name 字段标注。</p>
+<p>如果你用的机场完全看不到倍率信息，两个可能：一是倍率统一为 1.0 无需标注；二是故意隐藏。前者正常，后者建议谨慎。判断机场靠不靠谱，倍率是否透明是个重要指标，相关的选机场标准可以看 <a href="https://tanqingbo.cn/best-vpn/">机场选择与评测</a>。</p>
+<h2 id="七、日常怎么选节点最省流量"><a href="#七、日常怎么选节点最省流量" class="headerlink" title="七、日常怎么选节点最省流量"></a>七、日常怎么选节点最省流量</h2><p>记住一个原则：<strong>按用途分层，别一条节点走到底。</strong></p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>推荐倍率</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>刷网页、查资料</td>
+<td>x0.5 ~ x1.0</td>
+<td>低倍率节点足够，延迟略高也没事</td>
+</tr>
+<tr>
+<td>看普通视频</td>
+<td>x1.0</td>
+<td>标准节点，性价比最优</td>
+</tr>
+<tr>
+<td>4K 视频、游戏</td>
+<td>x2.0 ~ x3.0</td>
+<td>专线，码率稳、延迟低</td>
+</tr>
+<tr>
+<td>大文件下载</td>
+<td>x0.5 低倍率</td>
+<td>挂机异步下载，慢慢来</td>
+</tr>
+</tbody></table>
+<p>实操建议：在 Clash 里建两个策略组——「日常」组放 1.0 倍率节点，「高速」组放高倍率专线。默认走「日常」，需要时手动切「高速」。这样既保证了体感，又不会让流量偷偷跑光。</p>
+<h2 id="八、不限量套餐就没有倍率坑了吗"><a href="#八、不限量套餐就没有倍率坑了吗" class="headerlink" title="八、不限量套餐就没有倍率坑了吗"></a>八、不限量套餐就没有倍率坑了吗</h2><p>「我买的是不限量套餐，总不用管倍率了吧？」不一定，这里藏着第三种坑：</p>
+<ul>
+<li><strong>「不限量」有范围</strong>：不少机场的不限量只覆盖 1.0 倍率的普通节点，专线、流媒体专用这类高倍率节点照样按倍率扣流量，或者干脆不让不限量套餐用。看剧时随手切了个 x3 的节点，月底账单多扣一笔流量包的钱，就是这个原因。</li>
+<li><strong>公平使用条款（FUP）</strong>：不限量不等于不限速。当月用量超过一个阈值（比如 500GB、1TB）后触发降速，从 100Mbps 掉到 10Mbps 甚至更低。重度用户尤其要留意套餐页的小字。</li>
+<li><strong>设备数限制</strong>：不限量套餐通常仍限制同时在线设备数（按公网 IP 计）。跟室友合租一个账号可以，但两个人不在同一个网络下就算两台设备，超了会被踢下线。</li>
+</ul>
+<p>买之前直接问客服三个问题：哪些节点不限量？有没有公平使用阈值？限几台设备？把答案截图留底，比事后扯皮省心。</p>
+<h2 id="九、常见问题"><a href="#九、常见问题" class="headerlink" title="九、常见问题"></a>九、常见问题</h2><p><strong>倍率是限速的意思吗？x3 是 3 倍速度吗？</strong></p>
+<p>都不是。倍率只影响套餐流量的扣除速度，和网速、限速没有任何关系。x3 表示用 1GB 扣 3GB 套餐额度，不是说节点快 3 倍。节点快慢由线路质量决定，要靠测速判断，而不是看倍率数字。</p>
+<p><strong>不限量套餐还要看倍率吗？</strong></p>
+<p>要留意。部分机场的不限量只覆盖 1.0 倍率节点，高倍率节点照样按倍率扣费或单独限制；还有的不限量但超过公平使用阈值后降速。买之前问清客服：哪些节点不限量、有没有阈值、限几台设备。</p>
+<p><strong>机场节点后面的倍率（x0.5、x2、x3）是什么意思？</strong></p>
+<p>倍率是节点消耗套餐流量的加权系数。1.0 表示用 1GB 扣 1GB，2 表示用 1GB 扣 2GB，0.5 表示用 1GB 只扣 0.5GB。它只决定流量消耗快慢，和速度无关。</p>
+<p><strong>机场流量到底怎么算？</strong></p>
+<p>扣除流量 = 实际传输流量 × 节点倍率。看 2GB 视频，x1 节点扣 2GB，x3 节点扣 6GB。上传下载一般双向都算，以机场后台为准。</p>
+<p><strong>为什么同样的用法，流量消耗速度差这么多？</strong></p>
+<p>主要是倍率不同。一直连着 x2、x3 的高倍率专线节点，看视频下文件流量瞬间见底。日常切回 1.0 倍率普通节点能省一大半。</p>
+<p><strong>高倍率节点一定更快更稳吗？</strong></p>
+<p>通常更稳，但不绝对。高倍率对应专线、质量高，适合 4K、游戏、会议。判断性价比应自己测延迟，而非只看倍率数字。</p>
+<p><strong>怎么在客户端看到节点的倍率？</strong></p>
+<p>节点名称里常带标注（如「香港专线 x2」），没有就去机场后台「节点状态/我的订阅」页查。看不清楚倍率就切节点，能避开流量刺客。</p>
+<p><strong>套餐流量用完了怎么办？</strong></p>
+<p>机场后台「重置流量」重新获得当月额度，或单独购买流量包。选节点前先查剩余流量，避免半夜看完剧发现流量归零。</p>
+<hr>
+<p>倍率搞懂了，接下来容易踩的坑还有两类：一是节点本身怎么选、怎么测速，见 <a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速完全指南</a>；二是线路类型（直连/中转/专线）到底差在哪，见 <a href="https://tanqingbo.cn/route/">Clash 机场线路类型详解</a>。想从头系统了解机场和订阅，回到 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a> 总览页。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/airport-rate-guide/">https://tanqingbo.cn/airport-rate-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-Open-Internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026梯子翻墙教程：科学上网工具选择与使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-clash-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026科学上网教程：电脑手机翻墙最稳定方案
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-12</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-best-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026年VPN推荐：支持全平台的高速稳定科学上网工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Android如何用外网/安卓手机搭梯子-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-26</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-open-internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        安卓/Android系统手机实现科学上网教程-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-12</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/clash-subscribe-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%80%8D%E7%8E%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、倍率到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E6%8E%92%E9%99%A4%E4%B8%80%E4%B8%AA%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AF%AF%E8%A7%A3%EF%BC%9A%E5%80%8D%E7%8E%87%E4%B8%8D%E6%98%AF%E9%99%90%E9%80%9F"><span class="toc-number">3.</span> <span class="toc-text">二、先排除一个最常见的误解：倍率不是限速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%81%E9%87%8F%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">三、流量到底怎么算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%E6%B5%81%E9%87%8F%E3%80%8C%E8%8E%AB%E5%90%8D%E5%85%B6%E5%A6%99%E3%80%8D%E7%94%A8%E5%AE%8C"><span class="toc-number">5.</span> <span class="toc-text">四、为什么你的流量「莫名其妙」用完</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%AB%98%E5%80%8D%E7%8E%87%E8%8A%82%E7%82%B9%E5%88%B0%E5%BA%95%E5%80%BC%E4%B8%8D%E5%80%BC"><span class="toc-number">6.</span> <span class="toc-text">五、高倍率节点到底值不值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%8B%E6%B8%85%E5%80%8D%E7%8E%87"><span class="toc-number">7.</span> <span class="toc-text">六、怎么在客户端看清倍率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%97%A5%E5%B8%B8%E6%80%8E%E4%B9%88%E9%80%89%E8%8A%82%E7%82%B9%E6%9C%80%E7%9C%81%E6%B5%81%E9%87%8F"><span class="toc-number">8.</span> <span class="toc-text">七、日常怎么选节点最省流量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%8D%E9%99%90%E9%87%8F%E5%A5%97%E9%A4%90%E5%B0%B1%E6%B2%A1%E6%9C%89%E5%80%8D%E7%8E%87%E5%9D%91%E4%BA%86%E5%90%97"><span class="toc-number">9.</span> <span class="toc-text">八、不限量套餐就没有倍率坑了吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">九、常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>389</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>210</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%80%8D%E7%8E%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、倍率到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E6%8E%92%E9%99%A4%E4%B8%80%E4%B8%AA%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AF%AF%E8%A7%A3%EF%BC%9A%E5%80%8D%E7%8E%87%E4%B8%8D%E6%98%AF%E9%99%90%E9%80%9F"><span class="toc-number">3.</span> <span class="toc-text">二、先排除一个最常见的误解：倍率不是限速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%81%E9%87%8F%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">三、流量到底怎么算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%E6%B5%81%E9%87%8F%E3%80%8C%E8%8E%AB%E5%90%8D%E5%85%B6%E5%A6%99%E3%80%8D%E7%94%A8%E5%AE%8C"><span class="toc-number">5.</span> <span class="toc-text">四、为什么你的流量「莫名其妙」用完</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%AB%98%E5%80%8D%E7%8E%87%E8%8A%82%E7%82%B9%E5%88%B0%E5%BA%95%E5%80%BC%E4%B8%8D%E5%80%BC"><span class="toc-number">6.</span> <span class="toc-text">五、高倍率节点到底值不值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%8B%E6%B8%85%E5%80%8D%E7%8E%87"><span class="toc-number">7.</span> <span class="toc-text">六、怎么在客户端看清倍率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%97%A5%E5%B8%B8%E6%80%8E%E4%B9%88%E9%80%89%E8%8A%82%E7%82%B9%E6%9C%80%E7%9C%81%E6%B5%81%E9%87%8F"><span class="toc-number">8.</span> <span class="toc-text">七、日常怎么选节点最省流量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%8D%E9%99%90%E9%87%8F%E5%A5%97%E9%A4%90%E5%B0%B1%E6%B2%A1%E6%9C%89%E5%80%8D%E7%8E%87%E5%9D%91%E4%BA%86%E5%90%97"><span class="toc-number">9.</span> <span class="toc-text">八、不限量套餐就没有倍率坑了吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">九、常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">64</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%80%8D%E7%8E%87%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、倍率到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E6%8E%92%E9%99%A4%E4%B8%80%E4%B8%AA%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AF%AF%E8%A7%A3%EF%BC%9A%E5%80%8D%E7%8E%87%E4%B8%8D%E6%98%AF%E9%99%90%E9%80%9F"><span class="toc-number">3.</span> <span class="toc-text">二、先排除一个最常见的误解：倍率不是限速</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B5%81%E9%87%8F%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">三、流量到底怎么算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E7%9A%84%E6%B5%81%E9%87%8F%E3%80%8C%E8%8E%AB%E5%90%8D%E5%85%B6%E5%A6%99%E3%80%8D%E7%94%A8%E5%AE%8C"><span class="toc-number">5.</span> <span class="toc-text">四、为什么你的流量「莫名其妙」用完</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%AB%98%E5%80%8D%E7%8E%87%E8%8A%82%E7%82%B9%E5%88%B0%E5%BA%95%E5%80%BC%E4%B8%8D%E5%80%BC"><span class="toc-number">6.</span> <span class="toc-text">五、高倍率节点到底值不值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%80%8E%E4%B9%88%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9C%8B%E6%B8%85%E5%80%8D%E7%8E%87"><span class="toc-number">7.</span> <span class="toc-text">六、怎么在客户端看清倍率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%97%A5%E5%B8%B8%E6%80%8E%E4%B9%88%E9%80%89%E8%8A%82%E7%82%B9%E6%9C%80%E7%9C%81%E6%B5%81%E9%87%8F"><span class="toc-number">8.</span> <span class="toc-text">七、日常怎么选节点最省流量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%8D%E9%99%90%E9%87%8F%E5%A5%97%E9%A4%90%E5%B0%B1%E6%B2%A1%E6%9C%89%E5%80%8D%E7%8E%87%E5%9D%91%E4%BA%86%E5%90%97"><span class="toc-number">9.</span> <span class="toc-text">八、不限量套餐就没有倍率坑了吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">九、常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/airport-rate-guide/"><div class="recent-posts-item-content">机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/clash-subscribe-guide/"><div class="recent-posts-item-content">Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/opencode-guide/"><div class="recent-posts-item-content">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-17T13:50:00.000Z",
+  "dateModified": "2026-08-17T14:36:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/clash-subscribe-guide/"
+  },
+  "image": "/images/banners/clash-subscribe-guide-banner.png",
+  "description": "Clash 订阅链接是什么？本文讲清订阅链接的本质（一个远程配置文件 URL）、怎么在 Clash Verge / CMFA / Spectre 中导入订阅、订阅更新失败（Failed to fetch / 超时）和导入失败怎么排查、订阅转换工具怎么用、订阅链接泄露了怎么重置，以及手机电脑能不能共用一个订阅。",
+  "keywords": "clash订阅链接,clash订阅怎么导入,clash订阅是什么,clash订阅更新失败,clash订阅转换,clash订阅过期,clash订阅导入失败,clash subscription,clash订阅地址,clash怎么用订阅,clash订阅链接格式,clash订阅文件,clash本地订阅,clash订阅自动更新,clash订阅不更新,机场订阅链接,clash config url,clash订阅url是什么,clash导入订阅链接,clash verge导入订阅,clash订阅链接在哪,手机电脑同一个订阅,clash订阅链接泄露,重置订阅链接,clash订阅failed to fetch,clash订阅在哪复制"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "手机和电脑能用同一个订阅链接吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能，订阅链接本身不限设备，导入多少台都行。但机场套餐通常限制同时在线设备数（一般按公网 IP 算，2-5 台常见）：手机电脑连同一个 Wi-Fi 通常算 1 台，不在同一网络下就各算各的。超了会被顶下线或提示设备数超限，需要去机场后台解绑设备或升级套餐。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "订阅链接泄露了怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "去机场后台找「重置订阅链接 / 重置 URL」按钮（基本每个机场都有），点一下生成新链接，旧链接立刻作废，然后把新链接重新导入客户端。泄露的常见途径：截图没打码发群里、把订阅转换生成的链接发给别人、用了不可信的第三方转换服务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 的订阅链接是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "订阅链接是一个 URL，访问后返回一段 Clash 配置文件内容（YAML 格式），里面包含机场给你的节点信息和分流规则。把这个 URL 填进 Clash 客户端，客户端会自动下载配置并加载节点。它不是什么特殊的东西，就是一个定期更新的远程配置文件地址。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 订阅链接怎么导入？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Clash Verge Rev：打开客户端 → 配置（Profiles）→ 粘贴订阅 URL → 点导入。ClashMetaForAndroid：配置 → 新建配置 → 从 URL 导入。Spectre（iOS）：首页点 + → 粘贴 URL → 下载。导入后选中该配置，到代理页面选节点即可。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 订阅更新失败怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "常见原因：1) 订阅链接域名被墙，需要先用其他代理下载或换机场提供的备用域名；2) 机场服务器宕机或你的账号过期；3) 客户端版本太旧不支持新配置格式。排查顺序：浏览器直接打开订阅 URL 看能否返回内容、检查机场官网公告、更新客户端。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 订阅链接格式长什么样？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "通常是一串 https 开头的 URL，类似 https://xxx.com/api/v1/client/subscribe?token=xxxx。有些机场会在后面加 &flag=clash 指定格式。直接把整个 URL 粘贴到客户端的订阅导入框里就行，不用手动下载。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "什么是订阅转换？什么时候需要用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "订阅转换工具把一种格式的订阅（如 V2Ray 的 base64 节点列表）转成 Clash 能识别的 YAML 格式。当你的机场只给了通用订阅链接（不指定 Clash 格式），或者你想自定义规则集、合并多个机场的节点时，就需要用订阅转换。常用工具有 subconverter。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 本地订阅和远程订阅有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "远程订阅指向一个 URL，客户端定期自动拉取更新，机场换节点你不用管。本地订阅是你手动导入的 .yaml 配置文件，不会自动更新，适合自建节点或想完全自己控制配置的用户。日常用机场服务选远程订阅就行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 订阅链接会过期吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "链接本身不会过期，但链接背后的机场账号会。账号到期后续费就恢复，不续费节点就全失效。有些机场会定期更换订阅 token（安全策略），这时官网会同步更新你的订阅链接，重新复制粘贴一次就行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "多个机场的订阅能同时用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。Clash 支持同时加载多个配置文件，但同一时间只能激活一个。想合并节点的话，用订阅转换工具把多个订阅合并成一个配置文件，或者在 Clash Verge Rev 里用全局扩展配置叠加。更省心的做法是选一个靠谱的机场，别贪多。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）</title>
+  
+  
+  <meta property="title" content="Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/clash-subscribe-guide/index.html">
+  
+  
+  <meta property="og:img" content="/images/banners/clash-subscribe-guide-banner.png">
+  
+  
+  <meta property="description" content="Clash 订阅链接是什么？本文讲清订阅链接的本质（一个远程配置文件 URL）、怎么在 Clash Verge / CMFA / Spectre 中导入订阅、订阅更新失败（Failed to fetch / 超时）和导入失败怎么排查、订阅转换工具怎么用、订阅链接泄露了怎么重置，以及手机电脑能不能共用一个订阅。">
+  
+  <meta property="keywords" content="clash订阅链接,clash订阅怎么导入,clash订阅是什么,clash订阅更新失败,clash订阅转换,clash订阅过期,clash订阅导入失败,clash subscription,clash订阅地址,clash怎么用订阅,clash订阅链接格式,clash订阅文件,clash本地订阅,clash订阅自动更新,clash订阅不更新,机场订阅链接,clash config url,clash订阅url是什么,clash导入订阅链接,clash verge导入订阅,clash订阅链接在哪,手机电脑同一个订阅,clash订阅链接泄露,重置订阅链接,clash订阅failed to fetch,clash订阅在哪复制">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-17">
+  <meta property="og:article:modified_time" content="2026-08-17">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="机场">
+  
+  <meta property="og:article:tag" content="Mihomo">
+  
+  <meta property="og:article:tag" content="订阅链接">
+  
+  <meta property="og:article:tag" content="订阅转换">
+  
+  <meta property="og:article:tag" content="Clash Verge">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/clash-subscribe-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="/images/banners/clash-subscribe-guide-banner.png" data-src="/images/banners/clash-subscribe-guide-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-17T13:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/clash-subscribe-guide/" class="leancloud_visitors" data-flag-title="Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机场/" class="post-meta-link">机场</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Mihomo/" class="post-meta-link">Mihomo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/订阅链接/" class="post-meta-link">订阅链接</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/订阅转换/" class="post-meta-link">订阅转换</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash-Verge/" class="post-meta-link">Clash Verge</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Clash 订阅链接是什么？本文讲清订阅链接的本质（一个远程配置文件 URL）、怎么在 Clash Verge / CMFA / Spectre 中导入订阅、订阅更新失败（Failed to fetch / 超时）和导入失败怎么排查、订阅转换工具怎么用、订阅链接泄露了怎么重置，以及手机电脑能不能共用一个订阅。">
+  
+  <meta name="keywords" content="clash订阅链接,clash订阅怎么导入,clash订阅是什么,clash订阅更新失败,clash订阅转换,clash订阅过期,clash订阅导入失败,clash subscription,clash订阅地址,clash怎么用订阅,clash订阅链接格式,clash订阅文件,clash本地订阅,clash订阅自动更新,clash订阅不更新,机场订阅链接,clash config url,clash订阅url是什么,clash导入订阅链接,clash verge导入订阅,clash订阅链接在哪,手机电脑同一个订阅,clash订阅链接泄露,重置订阅链接,clash订阅failed to fetch,clash订阅在哪复制">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。想系统了解 VPN、Clash 机场、VPS 三大方案与全平台配置，欢迎访问总览页。</p>
+</blockquote>
+<blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程（2026）：客户端、订阅与规则分流</a></strong> 的配套教程。客户端选型、规则分流、排障先看总览页，这篇只聊一个新手最常卡住的环节：<strong>订阅链接</strong>——它到底是什么、怎么导入、导入失败或更新失败怎么解决。</p>
+</blockquote>
+<p>很多新手下载了 Clash 客户端，打开一脸懵：界面有了，节点呢？然后到处找”Clash 节点从哪来”。答案就一个：<strong>订阅链接</strong>。但就是这个东西，卡住了不少人——链接粘贴进去报错、更新失败不知道怎么办、换了机场不知道旧链接怎么处理。这篇就把这些问题一次说透。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li>订阅链接是什么：一个 URL，访问后返回 Clash 配置文件（YAML），里面有节点和规则。不是什么神秘东西。</li>
+<li>怎么导入：客户端的配置页面粘贴 URL → 点导入 → 选中配置 → 去代理页面选节点。</li>
+<li>更新失败：先浏览器直接打开订阅 URL 看能不能返回内容。能返回就是客户端问题（版本旧、缓存坏）；不能返回就是网络问题（域名被墙）或账号问题（过期了）。</li>
+<li>订阅转换：机场只给了通用链接、或者想合并多个机场节点时才需要。日常直接用机场给的 Clash 订阅链接就行。</li>
+</ul>
+<h2 id="一、订阅链接到底是什么"><a href="#一、订阅链接到底是什么" class="headerlink" title="一、订阅链接到底是什么"></a>一、订阅链接到底是什么</h2><p>理解订阅链接，先理清三个东西的关系：</p>
+<p><strong>客户端</strong>（Clash Verge Rev / CMFA / Spectre）是播放器，<strong>节点</strong>是节目源，<strong>订阅链接</strong>就是把这俩连起来的那根线。</p>
+<p>具体说，订阅链接就是一个普通的 HTTPS URL。你在浏览器里打开它，返回的不是网页，而是一段 YAML 格式的文本——这就是 Clash 的配置文件。里面包含了：</p>
+<ul>
+<li>节点列表（你的机场给了哪些服务器、什么协议、什么端口）</li>
+<li>策略组（按地区或用途分组，比如「香港」「美国」「自动选择」）</li>
+<li>分流规则（哪些域名走代理、哪些直连、哪些拦截）</li>
+</ul>
+<p>客户端拿到这个 URL 后，自动下载配置、加载节点，你就能在代理页面看到所有节点了。之后客户端会定期（通常每隔几小时）自动重新拉取这个 URL，机场新增了节点你不用手动操作，自动就更新了。</p>
+<p>所以订阅链接不是什么特殊协议，它就是一个<strong>远程配置文件的下载地址</strong>。理解了这点，后面的问题都好排查。</p>
+<h2 id="二、怎么导入订阅链接"><a href="#二、怎么导入订阅链接" class="headerlink" title="二、怎么导入订阅链接"></a>二、怎么导入订阅链接</h2><p>不同客户端的操作略有差异，但核心流程一样：找到配置管理页面 → 粘贴 URL → 导入 → 选中。</p>
+<h3 id="Clash-Verge-Rev（Windows-macOS-Linux）"><a href="#Clash-Verge-Rev（Windows-macOS-Linux）" class="headerlink" title="Clash Verge Rev（Windows / macOS / Linux）"></a>Clash Verge Rev（Windows / macOS / Linux）</h3><ol>
+<li>打开客户端，左侧点「配置」（Profiles）</li>
+<li>顶部输入框粘贴订阅链接</li>
+<li>点「导入」（Import）</li>
+<li>导入成功后，配置列表里会出现一条，点击选中它</li>
+<li>左侧切到「代理」（Proxies）页面，就能看到节点了</li>
+<li>选一个节点，回到主页打开「系统代理」开关</li>
+</ol>
+<h3 id="ClashMetaForAndroid（安卓）"><a href="#ClashMetaForAndroid（安卓）" class="headerlink" title="ClashMetaForAndroid（安卓）"></a>ClashMetaForAndroid（安卓）</h3><ol>
+<li>打开 APP，点「配置」</li>
+<li>点右上角「+」→「从 URL 导入」</li>
+<li>粘贴订阅链接，点确定</li>
+<li>选中刚导入的配置</li>
+<li>回到主页选节点，点启动</li>
+</ol>
+<h3 id="Spectre（iOS）"><a href="#Spectre（iOS）" class="headerlink" title="Spectre（iOS）"></a>Spectre（iOS）</h3><ol>
+<li>打开 APP，首页点右上角「+」</li>
+<li>粘贴订阅 URL</li>
+<li>点「下载」</li>
+<li>下载完成后选中配置</li>
+<li>选节点，打开 VPN 开关</li>
+</ol>
+<p>导入成功的标志：代理页面能看到节点列表，数量和机场官网显示的一致。如果列表是空的或者只有一两个节点，大概率是配置没选中，或者订阅链接格式不对（往下看排查）。</p>
+<h2 id="三、订阅更新失败-导入失败怎么排查"><a href="#三、订阅更新失败-导入失败怎么排查" class="headerlink" title="三、订阅更新失败 / 导入失败怎么排查"></a>三、订阅更新失败 / 导入失败怎么排查</h2><p>这是最高频的问题。先分清两种情况：</p>
+<ul>
+<li><strong>导入失败</strong>：第一次粘贴 URL 就报错，根本没下载下来</li>
+<li><strong>更新失败</strong>：之前能用，突然某天更新不了了</li>
+</ul>
+<p>排查思路一样，核心就一招：<strong>浏览器直接打开订阅 URL，看能不能返回内容。</strong></p>
+<p>先对号入座几个常见报错：</p>
+<ul>
+<li><strong>Failed to fetch / context deadline exceeded</strong>：下载订阅超时，多半是订阅域名被墙或网络不通，看下面情况 1</li>
+<li><strong>404 / Not Found</strong>：链接错了或机场已重置 token，重新从官网复制，看情况 1</li>
+<li><strong>返回了内容但客户端不认 / yaml 解析报错</strong>：格式不兼容或客户端太旧，看情况 2</li>
+</ul>
+<h3 id="情况-1：浏览器打不开，或返回错误页面"><a href="#情况-1：浏览器打不开，或返回错误页面" class="headerlink" title="情况 1：浏览器打不开，或返回错误页面"></a>情况 1：浏览器打不开，或返回错误页面</h3><p>说明问题在链接本身或网络：</p>
+<ul>
+<li><strong>订阅链接域名被墙</strong>：有些机场的订阅域名和官网域名不同，官网能打开但订阅域名被墙了。解决：找机场要备用订阅域名，或者先用其他代理工具下载配置文件再本地导入</li>
+<li><strong>账号过期</strong>：续费前订阅 URL 会返回空内容或错误提示。去机场官网登录看账号状态</li>
+<li><strong>链接失效</strong>：有些机场会定期更换 token，旧链接就废了。重新从机场官网复制最新的订阅链接</li>
+<li><strong>机场维护 / 跑路</strong>：官网打不开、客服没回复，这种情况换机场吧</li>
+</ul>
+<h3 id="情况-2：浏览器能返回-YAML-内容，但客户端导入-更新失败"><a href="#情况-2：浏览器能返回-YAML-内容，但客户端导入-更新失败" class="headerlink" title="情况 2：浏览器能返回 YAML 内容，但客户端导入/更新失败"></a>情况 2：浏览器能返回 YAML 内容，但客户端导入/更新失败</h3><p>说明链接没问题，问题在客户端：</p>
+<ul>
+<li><strong>客户端版本太旧</strong>：老版本不认识新配置格式（比如新版 Mihomo 的 <code>respect-rules</code> 字段）。更新到最新版 Clash Verge Rev</li>
+<li><strong>配置缓存损坏</strong>：删掉旧配置重新导入。Clash Verge Rev 里右键配置 → 删除 → 重新粘贴 URL 导入</li>
+<li><strong>磁盘权限</strong>：macOS 上客户端没有文件写入权限，去系统设置 → 隐私与安全 → 文件权限里授权</li>
+<li><strong>URL 里有特殊字符</strong>：复制链接时多了空格或换行。重新复制，确保粘贴的是纯 URL</li>
+</ul>
+<h3 id="情况-3：导入成功但节点数为-0"><a href="#情况-3：导入成功但节点数为-0" class="headerlink" title="情况 3：导入成功但节点数为 0"></a>情况 3：导入成功但节点数为 0</h3><p>配置文件下载下来了但里面没有节点：</p>
+<ul>
+<li>机场还没给你分配节点（新注册账号可能需要等）</li>
+<li>订阅链接选错了格式（有些机场一个链接支持多种客户端，URL 后面的参数选错了）</li>
+<li>配置文件格式不兼容（机场给的是 V2Ray 格式的订阅，Clash 认不了，需要用订阅转换）</li>
+</ul>
+<h2 id="四、订阅转换是什么，什么时候需要"><a href="#四、订阅转换是什么，什么时候需要" class="headerlink" title="四、订阅转换是什么，什么时候需要"></a>四、订阅转换是什么，什么时候需要</h2><p>正常情况下，机场给的订阅链接已经是 Clash 格式的，直接导入就行。但有些场景需要用<strong>订阅转换工具</strong>：</p>
+<p><strong>场景 1：机场只给了通用订阅链接</strong></p>
+<p>有些机场不区分客户端，给一个通用链接，返回的是 base64 编码的节点列表（V2Ray 格式）。Clash 认不了，需要转成 YAML 格式。</p>
+<p><strong>场景 2：想自定义规则</strong></p>
+<p>机场自带的规则可能不够用，你想换成 Loyalsoldier 的规则集、加广告拦截、或者把某些特定网站强制走某个节点。订阅转换工具可以让你选规则模板。</p>
+<p><strong>场景 3：合并多个机场</strong></p>
+<p>你有两个机场的订阅，想在同一个 Clash 里同时用所有节点。订阅转换工具可以把多个 URL 合并成一个配置。</p>
+<p>常用工具是 <strong>subconverter</strong>，有在线版也有自部署版。在线版搜索”订阅转换”就能找到，粘贴订阅 URL、选 Clash 格式、选规则模板、生成新链接，把新链接填进客户端就行。</p>
+<p>注意一点：用第三方在线订阅转换，意味着你的订阅链接（包含你的账号 token）会经过第三方服务器。介意隐私的话，自己部署 subconverter，或者只在机场官方提供的转换服务上用。</p>
+<h2 id="五、本地订阅-vs-远程订阅"><a href="#五、本地订阅-vs-远程订阅" class="headerlink" title="五、本地订阅 vs 远程订阅"></a>五、本地订阅 vs 远程订阅</h2><p>Clash 的配置来源有两种：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>远程订阅</th>
+<th>本地订阅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>来源</td>
+<td>一个 URL</td>
+<td>本地 .yaml 文件</td>
+</tr>
+<tr>
+<td>更新</td>
+<td>客户端自动定期拉取</td>
+<td>手动替换文件</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>用机场服务的用户</td>
+<td>自建节点 / 完全自定义配置</td>
+</tr>
+<tr>
+<td>节点更新</td>
+<td>机场改了你不用管</td>
+<td>节点变了得自己改文件</td>
+</tr>
+</tbody></table>
+<p>日常用机场服务，远程订阅就够了。如果你是自己 VPS 搭的节点（比如用 <a href="https://tanqingbo.cn/best-vps/">VPS 自建科学上网</a> 的方案），把配置文件下载到本地，在 Clash Verge Rev 里用「本地文件」方式导入就行。</p>
+<h2 id="六、几个实用技巧"><a href="#六、几个实用技巧" class="headerlink" title="六、几个实用技巧"></a>六、几个实用技巧</h2><p><strong>查看当前订阅的到期时间</strong>：有些机场会在配置文件的注释里写到期时间和流量用量。Clash Verge Rev 在配置页面点开配置详情能看到。看不到的话直接去机场官网后台看。</p>
+<p><strong>手动强制更新</strong>：节点列表不新鲜了？Clash Verge Rev 配置页面点「更新」按钮强制重新拉取。CMFA 在配置页面下拉刷新。</p>
+<p><strong>备份配置</strong>：好用的配置别只存在客户端里。定期把配置文件导出一份存到本地，万一机场突然关站，手里还有一份节点信息能临时过渡。</p>
+<p><strong>别在公共平台晒订阅链接</strong>：订阅链接里有你的账号 token，谁拿到都能用你的流量。截图分享配置时记得把 URL 打码。真泄露了也别慌，机场后台基本都有「重置订阅链接」按钮，点一下旧链接作废、生成新的，重新导入一遍就干净了。</p>
+<p>顺带说一句流量：套餐流量为什么有时掉得飞快，多半是节点倍率在起作用，怎么算、怎么省见 <a href="https://tanqingbo.cn/airport-rate-guide/">机场倍率与流量计费完全指南</a>。</p>
+<h2 id="七、常见问题"><a href="#七、常见问题" class="headerlink" title="七、常见问题"></a>七、常见问题</h2><p><strong>手机和电脑能用同一个订阅链接吗？</strong></p>
+<p>能，订阅链接本身不限设备。但机场套餐通常限同时在线设备数（按公网 IP 算，2-5 台常见）：同一 Wi-Fi 下通常算 1 台，不在同一网络就各算各的。超了会被顶下线，去机场后台解绑设备即可。</p>
+<p><strong>订阅链接泄露了怎么办？</strong></p>
+<p>机场后台点「重置订阅链接」，旧链接立刻作废，把新链接重新导入客户端。泄露常见途径：截图没打码、把转换后的链接发给别人、用了不可信的第三方转换服务。</p>
+<p><strong>Clash 的订阅链接是什么？</strong></p>
+<p>订阅链接是一个 URL，访问后返回 Clash 配置文件（YAML 格式），包含节点和规则。客户端拿到后自动加载。它就是一个远程配置文件的下载地址。</p>
+<p><strong>Clash 订阅链接怎么导入？</strong></p>
+<p>客户端的配置页面粘贴 URL → 点导入 → 选中配置 → 去代理页面选节点。Clash Verge Rev 在「配置」页面操作，CMFA 在「配置」→「从 URL 导入」，Spectre 点「+」粘贴 URL。</p>
+<p><strong>Clash 订阅更新失败怎么办？</strong></p>
+<p>先用浏览器直接打开订阅 URL，看能不能返回 YAML 内容。能返回就是客户端问题（版本旧、缓存坏，更新客户端或删配置重导）；不能返回就是网络问题（域名被墙、账号过期）或机场问题。</p>
+<p><strong>什么是订阅转换？什么时候需要用？</strong></p>
+<p>把一种格式的订阅转成 Clash 能识别的 YAML 格式。机场只给通用链接、想自定义规则集、或合并多个机场节点时才需要。常用工具是 subconverter。注意第三方转换服务会接触你的账号 token。</p>
+<p><strong>Clash 本地订阅和远程订阅有什么区别？</strong></p>
+<p>远程订阅是 URL，客户端自动定期更新，适合机场用户。本地订阅是手动导入的 .yaml 文件，不会自动更新，适合自建节点用户。日常用机场选远程就行。</p>
+<p><strong>Clash 订阅链接会过期吗？</strong></p>
+<p>链接本身不会过期，但机场账号会。账号到期节点全失效，续费恢复。有些机场定期更换 token，旧链接失效后从官网重新复制新的。</p>
+<p><strong>多个机场的订阅能同时用吗？</strong></p>
+<p>能，但同一时间只能激活一个配置。想合并节点用订阅转换工具把多个 URL 合成一个配置。更省心的做法是选一个靠谱机场别贪多。</p>
+<hr>
+<p>订阅这块通了，接下来大概率会遇到两个问题：一是节点怎么选、怎么测速，见 <a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速完全指南</a>；二是规则怎么配、分流怎么搞，见 <a href="https://tanqingbo.cn/clash-custom-rules/">Clash 自定义规则完全指南</a>。遇到「能连上但打不开网页」看 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 配置指南</a>，系统排障看 <a href="https://tanqingbo.cn/troubleshooting/">Clash 排障指南</a>。想从头系统学，回到 <a href="https://tanqingbo.cn/clash-guide/">Clash 教程总览页</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/clash-subscribe-guide/">https://tanqingbo.cn/clash-subscribe-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-Open-Internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026梯子翻墙教程：科学上网工具选择与使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-clash-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026科学上网教程：电脑手机翻墙最稳定方案
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-12</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/2026-best-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026年VPN推荐：支持全平台的高速稳定科学上网工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Android如何用外网/安卓手机搭梯子-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-26</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Android-open-internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        安卓/Android系统手机实现科学上网教程-翻墙VPN软件工具
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-12</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/airport-rate-guide/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/opencode-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、订阅链接到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E5%AF%BC%E5%85%A5%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">二、怎么导入订阅链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88Windows-macOS-Linux%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Clash Verge Rev（Windows &#x2F; macOS &#x2F; Linux）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClashMetaForAndroid%EF%BC%88%E5%AE%89%E5%8D%93%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">ClashMetaForAndroid（安卓）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectre%EF%BC%88iOS%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">Spectre（iOS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A2%E9%98%85%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5-%E5%AF%BC%E5%85%A5%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5"><span class="toc-number">4.</span> <span class="toc-text">三、订阅更新失败 &#x2F; 导入失败怎么排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-1%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%EF%BC%8C%E6%88%96%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">情况 1：浏览器打不开，或返回错误页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-2%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E8%83%BD%E8%BF%94%E5%9B%9E-YAML-%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BD%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%BC%E5%85%A5-%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5"><span class="toc-number">4.2.</span> <span class="toc-text">情况 2：浏览器能返回 YAML 内容，但客户端导入&#x2F;更新失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-3%EF%BC%9A%E5%AF%BC%E5%85%A5%E6%88%90%E5%8A%9F%E4%BD%86%E8%8A%82%E7%82%B9%E6%95%B0%E4%B8%BA-0"><span class="toc-number">4.3.</span> <span class="toc-text">情况 3：导入成功但节点数为 0</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81"><span class="toc-number">5.</span> <span class="toc-text">四、订阅转换是什么，什么时候需要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E8%AE%A2%E9%98%85-vs-%E8%BF%9C%E7%A8%8B%E8%AE%A2%E9%98%85"><span class="toc-number">6.</span> <span class="toc-text">五、本地订阅 vs 远程订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%87%A0%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-number">7.</span> <span class="toc-text">六、几个实用技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>389</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>210</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、订阅链接到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E5%AF%BC%E5%85%A5%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">二、怎么导入订阅链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88Windows-macOS-Linux%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Clash Verge Rev（Windows &#x2F; macOS &#x2F; Linux）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClashMetaForAndroid%EF%BC%88%E5%AE%89%E5%8D%93%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">ClashMetaForAndroid（安卓）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectre%EF%BC%88iOS%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">Spectre（iOS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A2%E9%98%85%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5-%E5%AF%BC%E5%85%A5%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5"><span class="toc-number">4.</span> <span class="toc-text">三、订阅更新失败 &#x2F; 导入失败怎么排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-1%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%EF%BC%8C%E6%88%96%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">情况 1：浏览器打不开，或返回错误页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-2%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E8%83%BD%E8%BF%94%E5%9B%9E-YAML-%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BD%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%BC%E5%85%A5-%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5"><span class="toc-number">4.2.</span> <span class="toc-text">情况 2：浏览器能返回 YAML 内容，但客户端导入&#x2F;更新失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-3%EF%BC%9A%E5%AF%BC%E5%85%A5%E6%88%90%E5%8A%9F%E4%BD%86%E8%8A%82%E7%82%B9%E6%95%B0%E4%B8%BA-0"><span class="toc-number">4.3.</span> <span class="toc-text">情况 3：导入成功但节点数为 0</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81"><span class="toc-number">5.</span> <span class="toc-text">四、订阅转换是什么，什么时候需要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E8%AE%A2%E9%98%85-vs-%E8%BF%9C%E7%A8%8B%E8%AE%A2%E9%98%85"><span class="toc-number">6.</span> <span class="toc-text">五、本地订阅 vs 远程订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%87%A0%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-number">7.</span> <span class="toc-text">六、几个实用技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">64</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、订阅链接到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%80%8E%E4%B9%88%E5%AF%BC%E5%85%A5%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">二、怎么导入订阅链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88Windows-macOS-Linux%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Clash Verge Rev（Windows &#x2F; macOS &#x2F; Linux）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClashMetaForAndroid%EF%BC%88%E5%AE%89%E5%8D%93%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">ClashMetaForAndroid（安卓）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectre%EF%BC%88iOS%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">Spectre（iOS）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A2%E9%98%85%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5-%E5%AF%BC%E5%85%A5%E5%A4%B1%E8%B4%A5%E6%80%8E%E4%B9%88%E6%8E%92%E6%9F%A5"><span class="toc-number">4.</span> <span class="toc-text">三、订阅更新失败 &#x2F; 导入失败怎么排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-1%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%EF%BC%8C%E6%88%96%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2"><span class="toc-number">4.1.</span> <span class="toc-text">情况 1：浏览器打不开，或返回错误页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-2%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E8%83%BD%E8%BF%94%E5%9B%9E-YAML-%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BD%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%BC%E5%85%A5-%E6%9B%B4%E6%96%B0%E5%A4%B1%E8%B4%A5"><span class="toc-number">4.2.</span> <span class="toc-text">情况 2：浏览器能返回 YAML 内容，但客户端导入&#x2F;更新失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%85%E5%86%B5-3%EF%BC%9A%E5%AF%BC%E5%85%A5%E6%88%90%E5%8A%9F%E4%BD%86%E8%8A%82%E7%82%B9%E6%95%B0%E4%B8%BA-0"><span class="toc-number">4.3.</span> <span class="toc-text">情况 3：导入成功但节点数为 0</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%A2%E9%98%85%E8%BD%AC%E6%8D%A2%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81"><span class="toc-number">5.</span> <span class="toc-text">四、订阅转换是什么，什么时候需要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E8%AE%A2%E9%98%85-vs-%E8%BF%9C%E7%A8%8B%E8%AE%A2%E9%98%85"><span class="toc-number">6.</span> <span class="toc-text">五、本地订阅 vs 远程订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%87%A0%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-number">7.</span> <span class="toc-text">六、几个实用技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/airport-rate-guide/"><div class="recent-posts-item-content">机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/clash-subscribe-guide/"><div class="recent-posts-item-content">Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/opencode-guide/"><div class="recent-posts-item-content">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
