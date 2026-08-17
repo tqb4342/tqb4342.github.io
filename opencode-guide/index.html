@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-17T08:47:00.000Z",
+  "dateModified": "2026-08-17T08:56:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/opencode-guide/"
+  },
+  "image": "https://pic3.zhimg.com/v2-e97124c72e47d4aa819bfcf69dbd67e4_1440w.jpg",
+  "description": "OpenCode 安装与配置全流程：从下载安装、接入自定义 API/KEY、Copilot 账号登录，到 VS Code / Cursor 集成，附 baseURL、模型名、配置分层三个高频坑的避坑清单。",
+  "keywords": "opencode安装,opencode教程,opencode配置,opencode接入api,opencode copilot,opencode vs code,opencode cursor,opencode Claude Code,ai编程工具,免费ai编程"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）</title>
+  
+  
+  <meta property="title" content="OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/opencode-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://pic3.zhimg.com/v2-e97124c72e47d4aa819bfcf69dbd67e4_1440w.jpg">
+  
+  
+  <meta property="description" content="OpenCode 安装与配置全流程：从下载安装、接入自定义 API/KEY、Copilot 账号登录，到 VS Code / Cursor 集成，附 baseURL、模型名、配置分层三个高频坑的避坑清单。">
+  
+  <meta property="keywords" content="opencode安装,opencode教程,opencode配置,opencode接入api,opencode copilot,opencode vs code,opencode cursor,opencode Claude Code,ai编程工具,免费ai编程">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-17">
+  <meta property="og:article:modified_time" content="2026-08-17">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="AI Agent">
+  
+  <meta property="og:article:tag" content="OpenCode">
+  
+  <meta property="og:article:tag" content="AI编程">
+  
+  <meta property="og:article:tag" content="Claude Code">
+  
+  <meta property="og:article:tag" content="Copilot">
+  
+  <meta property="og:article:tag" content="VS Code">
+  
+  <meta property="og:article:tag" content="Cursor">
+  
+  <meta property="og:article:tag" content="开发工具">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/opencode-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic3.zhimg.com/v2-e97124c72e47d4aa819bfcf69dbd67e4_1440w.jpg" data-src="https://pic3.zhimg.com/v2-e97124c72e47d4aa819bfcf69dbd67e4_1440w.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-17T08:47:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-17</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/opencode-guide/" class="leancloud_visitors" data-flag-title="OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-Agent/" class="post-meta-link">AI Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/OpenCode/" class="post-meta-link">OpenCode</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI编程/" class="post-meta-link">AI编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Claude-Code/" class="post-meta-link">Claude Code</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Copilot/" class="post-meta-link">Copilot</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/VS-Code/" class="post-meta-link">VS Code</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Cursor/" class="post-meta-link">Cursor</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/开发工具/" class="post-meta-link">开发工具</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="OpenCode 安装与配置全流程：从下载安装、接入自定义 API/KEY、Copilot 账号登录，到 VS Code / Cursor 集成，附 baseURL、模型名、配置分层三个高频坑的避坑清单。">
+  
+  <meta name="keywords" content="opencode安装,opencode教程,opencode配置,opencode接入api,opencode copilot,opencode vs code,opencode cursor,opencode Claude Code,ai编程工具,免费ai编程">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h1 id="OpenCode-安装配置教程：接入-API、Copilot-与-VS-Code-Cursor-的避坑指南"><a href="#OpenCode-安装配置教程：接入-API、Copilot-与-VS-Code-Cursor-的避坑指南" class="headerlink" title="OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南"></a>OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南</h1><blockquote>
+<p>📚 本文隶属于 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a> 系列，聚焦 AI 编程工具这一支。想系统了解 ChatGPT / Gemini / Kimi 等主流大模型怎么选，先看总览页。</p>
+</blockquote>
+<p>Claude Code 配置太麻烦？来试试 OpenCode。</p>
+<p>如果你最近在折腾 <a href="https://tanqingbo.cn/claude-code/">Claude Code</a>，大概率已经发现一个很现实的问题：</p>
+<p>它本身不送模型，想真正用起来，前面还得先把 provider、API Key、模型这些东西配明白。</p>
+<p>对老手来说，这不算什么。</p>
+<p>但对大部分刚上手的人来说，真正劝退的，往往不是能力不够，而是还没开始写代码，就先被一堆配置劝退了。</p>
+<p>OpenCode 在这点上会友好很多。</p>
+<p>它官方首页直接写了 <code>Free models included</code>，你可以先把工具跑起来，再决定后面是继续用它推荐的接入方案，还是切到 Copilot、第三方 API、中转站这些更灵活的配置。</p>
+<p>也就是说，OpenCode 更像是那种“先上手、再折腾”的工具，而不是一开始就逼你把所有配置都研究明白。</p>
+<p><img src="https://pic3.zhimg.com/v2-e97124c72e47d4aa819bfcf69dbd67e4_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-e97124c72e47d4aa819bfcf69dbd67e4_1440w.jpg" class="lozad post-image"></p>
+<p>当然，真到实际安装的时候，坑还是有，而且大多都集中在后半段：</p>
+<ul>
+<li>装完以后不知道怎么接模型</li>
+<li>配了 API 和 KEY，结果一直报错</li>
+<li>VS Code 里能搜到插件，但就是跑不起来</li>
+<li>明明教程照着抄了，命令、配置路径、接入方式却和现在版本对不上</li>
+</ul>
+<p>我这两天重新把 OpenCode 走了一遍，顺手把旧教程里最容易过时的地方都对了一遍。你如果只想用 10 分钟把 OpenCode 配到能正常开工，这篇直接照着做就行。</p>
+<p>这篇文章重点讲 4 件事：</p>
+<ol>
+<li>OpenCode 怎么安装</li>
+<li>怎么接入你自己的 API 和 KEY</li>
+<li>怎么用 Copilot 账号直接登录</li>
+<li>VS Code / Cursor 里怎么接起来，以及哪些地方最容易踩坑</li>
+</ol>
+<h2 id="一、先说结论：现在最稳的配置顺序"><a href="#一、先说结论：现在最稳的配置顺序" class="headerlink" title="一、先说结论：现在最稳的配置顺序"></a>一、先说结论：现在最稳的配置顺序</h2><p>别一上来就手改一堆配置文件，最稳的顺序其实是：</p>
+<ol>
+<li>先安装 OpenCode</li>
+<li>终端里先跑起来</li>
+<li>优先用 <code>/connect</code> 接入账号或提供商</li>
+<li>需要自定义中转站时，再补 <code>opencode.json</code></li>
+<li>最后再接 VS Code / Cursor</li>
+</ol>
+<p>这样做的好处是：你能先确认到底是安装问题、账号问题，还是配置文件问题，不会一上来全混在一起。</p>
+<h2 id="二、OpenCode-下载与安装"><a href="#二、OpenCode-下载与安装" class="headerlink" title="二、OpenCode 下载与安装"></a>二、OpenCode 下载与安装</h2><p>官方安装命令：</p>
+<pre class="highlight"><span class="line">curl -fsSL https://opencode.ai/install | bash</span><br></pre>
+
+<p>如果你本机已经有 Node / npm，也可以直接全局安装：</p>
+<pre class="highlight"><span class="line">npm i -g opencode-ai</span><br></pre>
+
+<p>装完后，在终端执行：</p>
+<pre class="highlight"><span class="line">opencode</span><br></pre>
+
+<p>只要能正常进入界面，说明第一步已经过了。</p>
+<p>如果这里就进不去，先别继续折腾配置。优先检查两件事：</p>
+<ul>
+<li><code>opencode</code> 命令有没有进环境变量</li>
+<li>你的终端是不是刚装完还没重开</li>
+</ul>
+<p>跑免费模型测试一下：输入 <code>/models</code> 进行选择</p>
+<p><img src="https://pic3.zhimg.com/v2-6f5aa8f7de4711ff5af57cafce880162_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-6f5aa8f7de4711ff5af57cafce880162_1440w.jpg" class="lozad post-image"></p>
+<p>打招呼：</p>
+<p><img src="https://pic2.zhimg.com/v2-a3f6a1acf49b8001d5b7a9d6969ff475_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-a3f6a1acf49b8001d5b7a9d6969ff475_1440w.jpg" class="lozad post-image"></p>
+<h2 id="三、现在最推荐的接入方式：先用-connect"><a href="#三、现在最推荐的接入方式：先用-connect" class="headerlink" title="三、现在最推荐的接入方式：先用 /connect"></a>三、现在最推荐的接入方式：先用 <code>/connect</code></h2><p>这一步是很多老教程最容易过时的地方。</p>
+<p>现在官方文档更推荐你先在 OpenCode 里直接输入：</p>
+<pre class="highlight"><span class="line">/connect</span><br></pre>
+
+<p>然后按照界面提示去选择接入方式。常见有两类：</p>
+<ul>
+<li>直接登录账号，比如用 Copilot 这类现成账号体系</li>
+<li>接入自定义 provider，也就是你自己的 API / 中转站</li>
+</ul>
+<p>为什么我建议你先走 <code>/connect</code>？</p>
+<p>因为它能先把“有没有接上”这件事验证掉。很多人一开始就打开 JSON 手搓，最后其实错的是 KEY、Base URL，甚至只是模型名写错了。</p>
+<p>接好以后，再输入：</p>
+<pre class="highlight"><span class="line">/models</span><br></pre>
+
+<p>切换到你刚刚接入的模型，随便打一段招呼测试一下。只要能正常回复，这条链路就已经通了。</p>
+<p><img src="https://pica.zhimg.com/v2-29b889a55261b9430651fe5d33002e5a_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-29b889a55261b9430651fe5d33002e5a_1440w.jpg" class="lozad post-image"></p>
+<h2 id="四、如果你用-CC-Switch-或其他中转站，配置文件这样写"><a href="#四、如果你用-CC-Switch-或其他中转站，配置文件这样写" class="headerlink" title="四、如果你用 CC Switch 或其他中转站，配置文件这样写"></a>四、如果你用 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhida.zhihu.com/search?content_id=280900454&amp;content_type=Article&amp;match_order=1&amp;q=CC+Switch&amp;zhida_source=entity">CC Switch</a> 或其他中转站，配置文件这样写</h2><p>如果你已经习惯用 CC Switch 管理 API 和 KEY，那也完全没问题。</p>
+<p>打开 CC Switch，找到 OpenCode 相关配置，新增一个 provider</p>
+<p><img src="https://pic2.zhimg.com/v2-a28ee988f3d7fc9dda27bf764a58f9d7_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-a28ee988f3d7fc9dda27bf764a58f9d7_1440w.jpg" class="lozad post-image"></p>
+<p>把你的 API、KEY 和可用模型填进去。如下图所示：</p>
+<p><img src="https://pic4.zhimg.com/v2-6b9ba056bdb6ac1d23691193fa664869_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-6b9ba056bdb6ac1d23691193fa664869_1440w.jpg" class="lozad post-image"></p>
+<p>这里有 3 个非常高频的坑，我建议你直接记住：</p>
+<h3 id="4-1-baseURL-很多时候要带-v1"><a href="#4-1-baseURL-很多时候要带-v1" class="headerlink" title="4.1 baseURL 很多时候要带 /v1"></a>4.1 <code>baseURL</code> 很多时候要带 <code>/v1</code></h3><p>如果你接的是 OpenAI 兼容接口，中转站一般不是填到域名根路径，而是要写到 <code>/v1</code> 这一层。</p>
+<p>这就是为什么很多人 API 和 KEY 都没错，但还是一直报错。</p>
+<h3 id="4-2-模型名不要想当然"><a href="#4-2-模型名不要想当然" class="headerlink" title="4.2 模型名不要想当然"></a>4.2 模型名不要想当然</h3><p>配置里写的模型名，必须和你中转站真实暴露出来的模型名一致。</p>
+<p>不是你觉得它叫 <code>gpt-5.4</code> 就一定能用，有些站点会改名、映射，甚至同一个模型会带不同后缀。最稳的方法不是猜，是直接看你后台里给的实际名字。</p>
+<h3 id="4-3-先验证终端，再接编辑器"><a href="#4-3-先验证终端，再接编辑器" class="headerlink" title="4.3 先验证终端，再接编辑器"></a>4.3 先验证终端，再接编辑器</h3><p>很多人喜欢先装扩展，再回头查 CLI 为什么不通。顺序反了。</p>
+<p>正确做法是：先确认终端里 <code>opencode</code> 能正常对话，再去接 VS Code / Cursor。这样出了问题也能很快定位。</p>
+<p>测试自定义的供应商模型：/modes 选择对应供应商模型</p>
+<p><img src="https://pic1.zhimg.com/v2-8b66c4c52cddeeb145461d327051896c_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-8b66c4c52cddeeb145461d327051896c_1440w.jpg" class="lozad post-image"></p>
+<p>打招呼：</p>
+<p><img src="https://pic1.zhimg.com/v2-33097d08a0d9fac02a79bbcd1aaff0a2_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-33097d08a0d9fac02a79bbcd1aaff0a2_1440w.jpg" class="lozad post-image"></p>
+<h2 id="五、Copilot-集成：有账号的话，真的是最快方案"><a href="#五、Copilot-集成：有账号的话，真的是最快方案" class="headerlink" title="五、Copilot 集成：有账号的话，真的是最快方案"></a>五、Copilot 集成：有账号的话，真的是最快方案</h2><p>如果你手上本来就有 Copilot 账号，那它其实是 OpenCode 非常省事的一条路。</p>
+<p>在 OpenCode 里直接走登录流程，接入以后，你就可以直接调用这个账号下可用的模型，不用自己折腾单独的 API 分发。</p>
+<p>这一套最大的优点就两个字：省心。</p>
+<p>尤其你只是想先体验一下 OpenCode 的工作流，而不是立刻把自定义 provider 打磨到完美，那 Copilot 登录通常是最快能跑起来的方案。</p>
+<p><img src="https://pic2.zhimg.com/v2-07c5e631d166b40067099fa480e61eaf_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-07c5e631d166b40067099fa480e61eaf_1440w.jpg" class="lozad post-image"></p>
+<h2 id="六、VS-Code-Cursor-配置：先跑通-CLI，再谈插件"><a href="#六、VS-Code-Cursor-配置：先跑通-CLI，再谈插件" class="headerlink" title="六、VS Code / Cursor 配置：先跑通 CLI，再谈插件"></a>六、VS Code / Cursor 配置：先跑通 CLI，再谈插件</h2><p>这一段也是最容易踩坑的。</p>
+<p>很多人以为去插件市场搜一下 <code>OpenCode</code>，点安装，就万事大吉了。实际上不是。</p>
+<p>更稳的做法是：</p>
+<ol>
+<li>先在插件中心搜索并安装 <code>OpenCode</code></li>
+<li>打开编辑器的集成终端</li>
+<li>在终端里直接执行 <code>opencode</code></li>
+<li>如果提示安装配套扩展或依赖，按提示完成</li>
+<li>再回到编辑器里测试快捷调用</li>
+</ol>
+<p>配置文件会不会自动读取？</p>
+<p>会。并且是分层合并读取。</p>
+<p>常见配置路径：<code>~/.config/opencode/opencode.json</code></p>
+<p>你配置了 CC Switch 或 opencode.json 后，OpenCode 会按优先级自动加载（全局配置 + 项目配置），不需要手动“再导入一次配置”。</p>
+<p>最小可用配置示例（opencode.json）</p>
+<pre class="highlight"><span class="line">{</span><br><span class="line">  "$schema": "https://opencode.ai/config.json",</span><br><span class="line">  "provider": {</span><br><span class="line">    "ccs": {</span><br><span class="line">      "npm": "@ai-sdk/openai",</span><br><span class="line">      "options": {</span><br><span class="line">        "apiKey": "你的_KEY",</span><br><span class="line">        "baseURL": "https://你的中转站地址/v1"</span><br><span class="line">      },</span><br><span class="line">      "models": {</span><br><span class="line">        "gpt-5.4": {</span><br><span class="line">          "name": "gpt-5.4"</span><br><span class="line">        },</span><br><span class="line">        "claude-sonnet-4": {</span><br><span class="line">          "name": "claude-sonnet-4"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  },</span><br><span class="line">  "keybinds": {</span><br><span class="line">    "input_paste": "alt+v"</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre>
+
+<p>图片粘贴快捷键，建议放到 tui.json</p>
+<p>很多旧教程把 keybinds 写在 opencode.json。</p>
+<p>新版本更推荐写在：<code>~/.config/opencode/tui.json</code>，示例：</p>
+<pre class="highlight"><span class="line">{</span><br><span class="line">  "$schema": "https://opencode.ai/tui.json",</span><br><span class="line">  "keybinds": {</span><br><span class="line">    "input_paste": "alt+v"</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre>
+
+<p>这样你在实际写提示词、贴截图的时候会顺手很多。</p>
+<p><img src="https://pica.zhimg.com/v2-ecc7c7b00664763f3f442009598b1a96_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-ecc7c7b00664763f3f442009598b1a96_1440w.jpg" class="lozad post-image"></p>
+<h2 id="七、10-分钟避坑清单"><a href="#七、10-分钟避坑清单" class="headerlink" title="七、10 分钟避坑清单"></a>七、10 分钟避坑清单</h2><p>如果你没时间看完整篇，至少把下面这份清单过一遍：</p>
+<ul>
+<li>安装完先在终端执行 <code>opencode</code></li>
+<li>优先用 <code>/connect</code> 做第一次接入</li>
+<li>接好以后立刻用 <code>/models</code> 切换并测试</li>
+<li>自定义中转站时，先检查 <code>baseURL</code> 是否写了 <code>/v1</code></li>
+<li>模型名必须按实际提供名称填写</li>
+<li>发现配置不生效时，优先怀疑“被其他层级配置覆盖”</li>
+<li>VS Code / Cursor 只装插件不够，还要在集成终端里真正跑一次</li>
+<li>先让 CLI 正常，再折腾编辑器集成</li>
+</ul>
+<h2 id="八、我更推荐哪种方案？"><a href="#八、我更推荐哪种方案？" class="headerlink" title="八、我更推荐哪种方案？"></a>八、我更推荐哪种方案？</h2><p>如果你是第一次上手，我建议你按这个优先级选：</p>
+<h3 id="方案-A：先用-Copilot-登录"><a href="#方案-A：先用-Copilot-登录" class="headerlink" title="方案 A：先用 Copilot 登录"></a>方案 A：先用 Copilot 登录</h3><p>适合：</p>
+<ul>
+<li>你想最快跑起来</li>
+<li>你不想现在就折腾 API</li>
+<li>你主要是先体验 OpenCode 工作流</li>
+</ul>
+<h3 id="方案-B：用-CC-Switch-中转站统一管理"><a href="#方案-B：用-CC-Switch-中转站统一管理" class="headerlink" title="方案 B：用 CC Switch / 中转站统一管理"></a>方案 B：用 CC Switch / 中转站统一管理</h3><p>适合：</p>
+<ul>
+<li>你手里有多个模型源</li>
+<li>你想把 API、KEY、模型列表统一收口</li>
+<li>你后面还会接别的工具，不只 OpenCode</li>
+</ul>
+<h2 id="九、最后总结"><a href="#九、最后总结" class="headerlink" title="九、最后总结"></a>九、最后总结</h2><p>OpenCode 真正难的，从来不是安装，而是“到底该先配哪一步”。</p>
+<p>你只要记住一句话：<strong>先跑通，再美化；先验证 CLI，再接编辑器；先 <code>/connect</code>，再改 JSON。</strong></p>
+<p>这样基本就能避开 99% 的坑。</p>
+<p>觉得这篇有用，可以先收藏着，真要配置的时候照着一步一步做，基本不会翻车。</p>
+<hr>
+<h2 id="补充阅读"><a href="#补充阅读" class="headerlink" title="补充阅读"></a>补充阅读</h2><ul>
+<li>还在 <a href="https://tanqingbo.cn/claude-code/">Claude Code</a> 和 OpenCode 之间犹豫？先看那篇的完整对比，它更适合想深入折腾配置的人</li>
+<li>想系统了解 AI 编程工具、ChatGPT / Gemini / Kimi 怎么选，回 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a> 总览页</li>
+<li>用中转站之前先确认 <code>baseURL</code> 要不要带 <code>/v1</code>、模型名对不对，这两点是绝大多数报错的根源</li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/opencode-guide/">https://tanqingbo.cn/opencode-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Gemini-pro/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        深度体验：为什么我推荐你认真用一次 Gemini？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/AI-PPT/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        测了 20 款 AI PPT，最后汇报保命的，居然只有「办公小浣熊」？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Best-AI-tools/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2025最佳AI工具：国外最新人工智能工具一览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-10-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        如何在国内注册ChatGPT？ChatGPT怎么用？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT！王炸级更新！！！/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT！王炸级更新！！！
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2023-04-08</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/clash-dns-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Clash DNS 配置完全指南：fake-ip 是什么、DNS 泄露与「能连上却打不开网页」怎么解决（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenCode-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%EF%BC%9A%E6%8E%A5%E5%85%A5-API%E3%80%81Copilot-%E4%B8%8E-VS-Code-Cursor-%E7%9A%84%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code&#x2F;Cursor 的避坑指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9A%E7%8E%B0%E5%9C%A8%E6%9C%80%E7%A8%B3%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">一、先说结论：现在最稳的配置顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81OpenCode-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">二、OpenCode 下载与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%8E%B0%E5%9C%A8%E6%9C%80%E6%8E%A8%E8%8D%90%E7%9A%84%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%EF%BC%9A%E5%85%88%E7%94%A8-connect"><span class="toc-number">1.3.</span> <span class="toc-text">三、现在最推荐的接入方式：先用 &#x2F;connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%94%A8-CC-Switch-%E6%88%96%E5%85%B6%E4%BB%96%E4%B8%AD%E8%BD%AC%E7%AB%99%EF%BC%8C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%BF%99%E6%A0%B7%E5%86%99"><span class="toc-number">1.4.</span> <span class="toc-text">四、如果你用 CC Switch 或其他中转站，配置文件这样写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-baseURL-%E5%BE%88%E5%A4%9A%E6%97%B6%E5%80%99%E8%A6%81%E5%B8%A6-v1"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 baseURL 很多时候要带 &#x2F;v1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A8%A1%E5%9E%8B%E5%90%8D%E4%B8%8D%E8%A6%81%E6%83%B3%E5%BD%93%E7%84%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 模型名不要想当然</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%85%88%E9%AA%8C%E8%AF%81%E7%BB%88%E7%AB%AF%EF%BC%8C%E5%86%8D%E6%8E%A5%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 先验证终端，再接编辑器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Copilot-%E9%9B%86%E6%88%90%EF%BC%9A%E6%9C%89%E8%B4%A6%E5%8F%B7%E7%9A%84%E8%AF%9D%EF%BC%8C%E7%9C%9F%E7%9A%84%E6%98%AF%E6%9C%80%E5%BF%AB%E6%96%B9%E6%A1%88"><span class="toc-number">1.5.</span> <span class="toc-text">五、Copilot 集成：有账号的话，真的是最快方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81VS-Code-Cursor-%E9%85%8D%E7%BD%AE%EF%BC%9A%E5%85%88%E8%B7%91%E9%80%9A-CLI%EF%BC%8C%E5%86%8D%E8%B0%88%E6%8F%92%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">六、VS Code &#x2F; Cursor 配置：先跑通 CLI，再谈插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%8110-%E5%88%86%E9%92%9F%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、10 分钟避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%88%91%E6%9B%B4%E6%8E%A8%E8%8D%90%E5%93%AA%E7%A7%8D%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">八、我更推荐哪种方案？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-A%EF%BC%9A%E5%85%88%E7%94%A8-Copilot-%E7%99%BB%E5%BD%95"><span class="toc-number">1.8.1.</span> <span class="toc-text">方案 A：先用 Copilot 登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-B%EF%BC%9A%E7%94%A8-CC-Switch-%E4%B8%AD%E8%BD%AC%E7%AB%99%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86"><span class="toc-number">1.8.2.</span> <span class="toc-text">方案 B：用 CC Switch &#x2F; 中转站统一管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%9C%80%E5%90%8E%E6%80%BB%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">九、最后总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E9%98%85%E8%AF%BB"><span class="toc-number">1.10.</span> <span class="toc-text">补充阅读</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>387</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>203</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenCode-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%EF%BC%9A%E6%8E%A5%E5%85%A5-API%E3%80%81Copilot-%E4%B8%8E-VS-Code-Cursor-%E7%9A%84%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code&#x2F;Cursor 的避坑指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9A%E7%8E%B0%E5%9C%A8%E6%9C%80%E7%A8%B3%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">一、先说结论：现在最稳的配置顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81OpenCode-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">二、OpenCode 下载与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%8E%B0%E5%9C%A8%E6%9C%80%E6%8E%A8%E8%8D%90%E7%9A%84%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%EF%BC%9A%E5%85%88%E7%94%A8-connect"><span class="toc-number">1.3.</span> <span class="toc-text">三、现在最推荐的接入方式：先用 &#x2F;connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%94%A8-CC-Switch-%E6%88%96%E5%85%B6%E4%BB%96%E4%B8%AD%E8%BD%AC%E7%AB%99%EF%BC%8C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%BF%99%E6%A0%B7%E5%86%99"><span class="toc-number">1.4.</span> <span class="toc-text">四、如果你用 CC Switch 或其他中转站，配置文件这样写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-baseURL-%E5%BE%88%E5%A4%9A%E6%97%B6%E5%80%99%E8%A6%81%E5%B8%A6-v1"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 baseURL 很多时候要带 &#x2F;v1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A8%A1%E5%9E%8B%E5%90%8D%E4%B8%8D%E8%A6%81%E6%83%B3%E5%BD%93%E7%84%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 模型名不要想当然</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%85%88%E9%AA%8C%E8%AF%81%E7%BB%88%E7%AB%AF%EF%BC%8C%E5%86%8D%E6%8E%A5%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 先验证终端，再接编辑器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Copilot-%E9%9B%86%E6%88%90%EF%BC%9A%E6%9C%89%E8%B4%A6%E5%8F%B7%E7%9A%84%E8%AF%9D%EF%BC%8C%E7%9C%9F%E7%9A%84%E6%98%AF%E6%9C%80%E5%BF%AB%E6%96%B9%E6%A1%88"><span class="toc-number">1.5.</span> <span class="toc-text">五、Copilot 集成：有账号的话，真的是最快方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81VS-Code-Cursor-%E9%85%8D%E7%BD%AE%EF%BC%9A%E5%85%88%E8%B7%91%E9%80%9A-CLI%EF%BC%8C%E5%86%8D%E8%B0%88%E6%8F%92%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">六、VS Code &#x2F; Cursor 配置：先跑通 CLI，再谈插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%8110-%E5%88%86%E9%92%9F%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、10 分钟避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%88%91%E6%9B%B4%E6%8E%A8%E8%8D%90%E5%93%AA%E7%A7%8D%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">八、我更推荐哪种方案？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-A%EF%BC%9A%E5%85%88%E7%94%A8-Copilot-%E7%99%BB%E5%BD%95"><span class="toc-number">1.8.1.</span> <span class="toc-text">方案 A：先用 Copilot 登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-B%EF%BC%9A%E7%94%A8-CC-Switch-%E4%B8%AD%E8%BD%AC%E7%AB%99%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86"><span class="toc-number">1.8.2.</span> <span class="toc-text">方案 B：用 CC Switch &#x2F; 中转站统一管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%9C%80%E5%90%8E%E6%80%BB%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">九、最后总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E9%98%85%E8%AF%BB"><span class="toc-number">1.10.</span> <span class="toc-text">补充阅读</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">62</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\VTK" title="VTK"><div class="tags-list-item">VTK</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenCode-%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B%EF%BC%9A%E6%8E%A5%E5%85%A5-API%E3%80%81Copilot-%E4%B8%8E-VS-Code-Cursor-%E7%9A%84%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="toc-number">1.</span> <span class="toc-text">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code&#x2F;Cursor 的避坑指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9A%E7%8E%B0%E5%9C%A8%E6%9C%80%E7%A8%B3%E7%9A%84%E9%85%8D%E7%BD%AE%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">一、先说结论：现在最稳的配置顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81OpenCode-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">二、OpenCode 下载与安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%8E%B0%E5%9C%A8%E6%9C%80%E6%8E%A8%E8%8D%90%E7%9A%84%E6%8E%A5%E5%85%A5%E6%96%B9%E5%BC%8F%EF%BC%9A%E5%85%88%E7%94%A8-connect"><span class="toc-number">1.3.</span> <span class="toc-text">三、现在最推荐的接入方式：先用 &#x2F;connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%94%A8-CC-Switch-%E6%88%96%E5%85%B6%E4%BB%96%E4%B8%AD%E8%BD%AC%E7%AB%99%EF%BC%8C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%BF%99%E6%A0%B7%E5%86%99"><span class="toc-number">1.4.</span> <span class="toc-text">四、如果你用 CC Switch 或其他中转站，配置文件这样写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-baseURL-%E5%BE%88%E5%A4%9A%E6%97%B6%E5%80%99%E8%A6%81%E5%B8%A6-v1"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 baseURL 很多时候要带 &#x2F;v1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A8%A1%E5%9E%8B%E5%90%8D%E4%B8%8D%E8%A6%81%E6%83%B3%E5%BD%93%E7%84%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 模型名不要想当然</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%85%88%E9%AA%8C%E8%AF%81%E7%BB%88%E7%AB%AF%EF%BC%8C%E5%86%8D%E6%8E%A5%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 先验证终端，再接编辑器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81Copilot-%E9%9B%86%E6%88%90%EF%BC%9A%E6%9C%89%E8%B4%A6%E5%8F%B7%E7%9A%84%E8%AF%9D%EF%BC%8C%E7%9C%9F%E7%9A%84%E6%98%AF%E6%9C%80%E5%BF%AB%E6%96%B9%E6%A1%88"><span class="toc-number">1.5.</span> <span class="toc-text">五、Copilot 集成：有账号的话，真的是最快方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81VS-Code-Cursor-%E9%85%8D%E7%BD%AE%EF%BC%9A%E5%85%88%E8%B7%91%E9%80%9A-CLI%EF%BC%8C%E5%86%8D%E8%B0%88%E6%8F%92%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">六、VS Code &#x2F; Cursor 配置：先跑通 CLI，再谈插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%8110-%E5%88%86%E9%92%9F%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、10 分钟避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%88%91%E6%9B%B4%E6%8E%A8%E8%8D%90%E5%93%AA%E7%A7%8D%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">八、我更推荐哪种方案？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-A%EF%BC%9A%E5%85%88%E7%94%A8-Copilot-%E7%99%BB%E5%BD%95"><span class="toc-number">1.8.1.</span> <span class="toc-text">方案 A：先用 Copilot 登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-B%EF%BC%9A%E7%94%A8-CC-Switch-%E4%B8%AD%E8%BD%AC%E7%AB%99%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86"><span class="toc-number">1.8.2.</span> <span class="toc-text">方案 B：用 CC Switch &#x2F; 中转站统一管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%9C%80%E5%90%8E%E6%80%BB%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">九、最后总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E9%98%85%E8%AF%BB"><span class="toc-number">1.10.</span> <span class="toc-text">补充阅读</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/opencode-guide/"><div class="recent-posts-item-content">OpenCode 安装配置教程：接入 API、Copilot 与 VS Code/Cursor 的避坑指南（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-16</div>
+        <a href="/clash-dns-guide/"><div class="recent-posts-item-content">Clash DNS 配置完全指南：fake-ip 是什么、DNS 泄露与「能连上却打不开网页」怎么解决（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-15</div>
+        <a href="/win-kuaili/"><div class="recent-posts-item-content">Windows 翻墙全流程：快狸机场注册、订阅、客户端配置一步到位（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
