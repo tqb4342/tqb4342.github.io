@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-18T06:23:18.000Z",
+  "dateModified": "2026-08-18T06:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/deepseek-harness/"
+  },
+  "image": "https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg",
+  "description": "DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。",
+  "keywords": "deepseek harness,deepseek harness是什么,deepseek harness教程,deepseek harness安装,dsh是什么,deepseek agent框架,deepseek harness插件,deepseek harness怎么用,cordis,一切皆插件,deepseek harness web ui,deepseek harness模式,deepseek harness api key,agent harness,开源agent框架,deepseek agent组装,deepseek harness 中文,deepseek harness vs claude code"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DeepSeek Harness（简称 dsh）是 DeepSeek 开源的一个 AI Agent 运行时/框架，核心理念是「一切皆插件」。它把模型、工具、界面、会话、沙箱、任务循环等所有能力都做成可替换的插件，由 Cordis 内核负责插件的加载和依赖管理。一句话理解：Agent = 大模型 + Harness，模型负责思考，Harness 决定它能看什么、能调什么工具。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 怎么安装？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "最省事的方式是官方一条命令：先装好 Node.js 和 DeepSeek API Key，然后在终端运行 npx @deepseek-ai/dsh web。第一次会下载依赖，启动后终端会打印 Web UI 地址（默认 http://127.0.0.1:3080），复制到浏览器打开即可。想开发插件的人可从源码运行（git clone + pnpm install + pnpm run build + pnpm dsh web）。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 和 Claude Code、Codex 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Claude Code、Codex、WorkBuddy 是已经配好的固定 Agent，厂商替你选好工具、设好权限和任务循环，开箱即用。DeepSeek Harness 把这些组件全部开放出来，让你自己组装、替换、扩展——想加工具、换模型、改权限、写插件都可以。所以它更像一个组装 Agent 的模块化框架，不是一个开箱即用的聊天工具。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 的四种模式怎么选？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "标准模式适合日常任务（整理文件、改文档、分析资料、写代码）；PTC 模式适合步骤多、需要批量执行的任务；极简模式只保留 Shell 和文件编辑两个工具，适合开发者测试模型；创造模式开放插件组合能力，可以装社区插件或让 Agent 自制插件。日常用标准模式就够，遇到默认能力做不了的再进创造模式。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 装社区插件安全吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "要谨慎。社区插件（如 DSH 1024Store 汇总的数千个）收录多不等于都安全。安装时官方 CLI 会提示：从 GitHub 装的插件可能在安装阶段执行 prepare 构建脚本，pnpm 默认会拦住，只有把插件加入 allowBuilds 才继续。建议只装来源可信、最好锁定具体 commit 的插件，来路不明的别急着运行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 适合谁用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果你只想装好就用、不想折腾 Node.js 和插件，WorkBuddy、Codex、Claude Code 这类成熟产品更省事。如果你有明确需求、现成 Agent 又缺某项能力，Harness 更有意思——你可以装别人写好的插件，或让 Agent 按官方文档替你做一个。它当前处于开发者预览阶段，界面和配置可能变化，适合愿意折腾的人。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）</title>
+  
+  
+  <meta property="title" content="DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/deepseek-harness/index.html">
+  
+  
+  <meta property="og:img" content="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg">
+  
+  
+  <meta property="description" content="DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。">
+  
+  <meta property="keywords" content="deepseek harness,deepseek harness是什么,deepseek harness教程,deepseek harness安装,dsh是什么,deepseek agent框架,deepseek harness插件,deepseek harness怎么用,cordis,一切皆插件,deepseek harness web ui,deepseek harness模式,deepseek harness api key,agent harness,开源agent框架,deepseek agent组装,deepseek harness 中文,deepseek harness vs claude code">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-18">
+  <meta property="og:article:modified_time" content="2026-08-18">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="AI Agent">
+  
+  <meta property="og:article:tag" content="DeepSeek">
+  
+  <meta property="og:article:tag" content="DeepSeek Harness">
+  
+  <meta property="og:article:tag" content="开源">
+  
+  <meta property="og:article:tag" content="插件">
+  
+  <meta property="og:article:tag" content="Cordis">
+  
+  <meta property="og:article:tag" content="AI编程">
+  
+  <meta property="og:article:tag" content="开发工具">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/deepseek-harness/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg" data-src="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-18T06:23:18.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/deepseek-harness/" class="leancloud_visitors" data-flag-title="DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-Agent/" class="post-meta-link">AI Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DeepSeek/" class="post-meta-link">DeepSeek</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DeepSeek-Harness/" class="post-meta-link">DeepSeek Harness</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/开源/" class="post-meta-link">开源</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/插件/" class="post-meta-link">插件</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Cordis/" class="post-meta-link">Cordis</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI编程/" class="post-meta-link">AI编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/开发工具/" class="post-meta-link">开发工具</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。">
+  
+  <meta name="keywords" content="deepseek harness,deepseek harness是什么,deepseek harness教程,deepseek harness安装,dsh是什么,deepseek agent框架,deepseek harness插件,deepseek harness怎么用,cordis,一切皆插件,deepseek harness web ui,deepseek harness模式,deepseek harness api key,agent harness,开源agent框架,deepseek agent组装,deepseek harness 中文,deepseek harness vs claude code">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想系统了解 ChatGPT、Gemini、Kimi、DeepSeek 等主流模型怎么选，以及 AI 编程 / Agent 工具怎么入门，先看总览页。</p>
+</blockquote>
+<h1 id="DeepSeek-Harness-是什么，怎么装，怎么用"><a href="#DeepSeek-Harness-是什么，怎么装，怎么用" class="headerlink" title="DeepSeek Harness 是什么，怎么装，怎么用"></a>DeepSeek Harness 是什么，怎么装，怎么用</h1><p>DeepSeek 最近开源了一个很有意思的项目，DeepSeek Harness（简称 dsh）。</p>
+<p>很多人第一次看到 Harness 这个词，会下意识把它当成另一个聊天客户端——就像之前的 <a href="https://tanqingbo.cn/claude-code/">Claude Code</a>。</p>
+<p>打开以后才发现，它允许用户拆开 Agent 的组成部分，换模型、加工具、改权限，也可以装插件，甚至自己写一个新插件。</p>
+<p>这件事值得好好聊聊。</p>
+<p>平时使用 Codex、Claude Code 或 WorkBuddy，我们拿到的通常是一套已经配好的 Agent。</p>
+<p>厂商替你选好工具，安排好任务怎样循环，也设好了权限边界。你输入要求，它沿着已有流程完成工作。</p>
+<p>DeepSeek Harness 把这些组件开放了出来。</p>
+<p>普通用户可以先使用默认配置，愿意继续折腾的人，还可以按照自己的任务组装一套 Agent。</p>
+<p>这篇文章从安装开始，带你走一遍界面配置、模式选择、社区插件来源和自制插件。</p>
+<p>没有编程经验也能跟着操作。</p>
+<p><img src="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg" class="lozad post-image"></p>
+<h2 id="Harness-到底是什么：模型之外的那一层"><a href="#Harness-到底是什么：模型之外的那一层" class="headerlink" title="Harness 到底是什么：模型之外的那一层"></a>Harness 到底是什么：模型之外的那一层</h2><p>简单来说，可以把 Agent 理解成一个能干活的 AI 员工，它大致由两部分组成。</p>
+<pre class="highlight"><span class="line">Agent = 大模型 + Harness</span><br></pre>
+
+<p>大模型负责理解、推理和生成。Harness 负责把模型放进一个可以工作的环境里，给它工具、文件权限、上下文、任务循环、插件和执行记录。</p>
+<p>同一个模型放进不同的 Harness，最终表现可能差很多。区别常常出在模型能看到哪些信息，可以调用什么工具，失败以后怎样重试，以及每一步有没有受到权限限制。</p>
+<p>所以 DeepSeek Harness 的重点落在怎样组装和管理 Agent。官方给出的概括很直接，Everything is a Plugin，一切皆插件。模型接入、工具、界面和运行能力，都可以通过插件体系组合。</p>
+<p><img src="https://pic1.zhimg.com/v2-3087a689e96fcf23a4d60edb7bc390c6_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-3087a689e96fcf23a4d60edb7bc390c6_1440w.jpg" class="lozad post-image"></p>
+<p>驱动这套插件体系的内核叫 Cordis。这个名字后面还会出现很多次，先记住就好。接下来先把 DeepSeek Harness 跑起来。</p>
+<h2 id="安装前准备：Node-js-和-API-Key"><a href="#安装前准备：Node-js-和-API-Key" class="headerlink" title="安装前准备：Node.js 和 API Key"></a>安装前准备：Node.js 和 API Key</h2><p>最省事的官方安装方式需要准备 Node.js 和 DeepSeek API Key。</p>
+<p>Node.js 用来运行 DeepSeek Harness。</p>
+<p>打开 Node.js 官网，下载适合自己电脑的长期支持版本，按照安装向导完成安装。</p>
+<p><img src="https://picx.zhimg.com/v2-c75b3205affeaa026dd399036a573073_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-c75b3205affeaa026dd399036a573073_1440w.jpg" class="lozad post-image"></p>
+<p>API Key 可以到 DeepSeek 开放平台创建。</p>
+<p>它相当于模型调用凭证，后续请求会产生 API 费用。</p>
+<p>不要把 Key 发进群聊、截图或公开文档，也不要写进准备上传到 GitHub 的文件。</p>
+<p><img src="https://picx.zhimg.com/v2-83c092edb856347dfb98f782cfb8bb11_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-83c092edb856347dfb98f782cfb8bb11_1440w.jpg" class="lozad post-image"></p>
+<p>准备完成后，打开终端。</p>
+<p>macOS 用户按下 <code>Command + 空格</code>，搜索终端。Windows 用户可以打开 PowerShell 或命令提示符。</p>
+<p>输入下面这条官方命令。</p>
+<pre class="highlight"><span class="line">npx @deepseek-ai/dsh web</span><br></pre>
+
+<p>第一次运行会下载依赖，需要等一会儿。启动成功后，终端会打印 Web UI 地址。官方默认地址如下。</p>
+<pre class="highlight"><span class="line">http://127.0.0.1:3080</span><br></pre>
+
+<p>把地址复制到浏览器打开，就能进入 DeepSeek Harness。</p>
+<p><img src="https://picx.zhimg.com/v2-5b015a4f586cfd4d5a1bc2e0f40e0a0b_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-5b015a4f586cfd4d5a1bc2e0f40e0a0b_1440w.jpg" class="lozad post-image"></p>
+<p>如果你已经在用 Codex、Claude Code 或 WorkBuddy，也可以把 DeepSeek Harness 的官方仓库地址发给它，请它检查 Node.js 环境并执行官方启动命令。</p>
+<p>这个办法省去了手动输入，安装过程没有发生变化，最后仍然要看到终端给出的本地地址。</p>
+<p>官方也提供了从源码运行的方法。</p>
+<p>它适合准备开发插件的人，普通用户暂时用不到。按照下面的命令操作前，还需要先安装 pnpm。</p>
+<pre class="highlight"><span class="line">git clone https://github.com/deepseek-ai/deepseek-harness.git</span><br><span class="line">cd deepseek-harness</span><br><span class="line">pnpm install</span><br><span class="line">pnpm run build</span><br><span class="line">pnpm dsh web</span><br></pre>
+
+<h2 id="第一次打开：先配置模型和-API-Key"><a href="#第一次打开：先配置模型和-API-Key" class="headerlink" title="第一次打开：先配置模型和 API Key"></a>第一次打开：先配置模型和 API Key</h2><p>进入 Web UI 后，打开设置里的 Models 页面，找到 DeepSeek，填入 API Key 并保存。</p>
+<p><img src="https://pica.zhimg.com/v2-e15bb1395463669b198e0ed4b385e7fe_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-e15bb1395463669b198e0ed4b385e7fe_1440w.jpg" class="lozad post-image"></p>
+<p>官方文档显示，模型配置保存后会在下一次请求生效，不需要重启服务。</p>
+<p>接着选择一个本地文件夹作为工作区。</p>
+<p>Agent 后续读取和修改的文件都放在这里。</p>
+<p>第一次体验时，建议新建一个空文件夹，不要直接选择桌面、文档目录或正在使用的重要项目。</p>
+<p><img src="https://pica.zhimg.com/v2-a8eb238fb8c47a6d83ed9eadbd346264_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-a8eb238fb8c47a6d83ed9eadbd346264_1440w.jpg" class="lozad post-image"></p>
+<p>工作区选好以后，再看权限设置。</p>
+<p>DeepSeek Harness 会按照当前权限策略决定哪些操作可以直接执行，哪些操作需要先征得同意。</p>
+<p>刚上手时，保留审批提示更稳妥。等你看懂它会调用哪些工具，再逐步调整权限。</p>
+<p><img src="https://pic2.zhimg.com/v2-cd6e3db6b061b1b83a9323103ee63c8b_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-cd6e3db6b061b1b83a9323103ee63c8b_1440w.jpg" class="lozad post-image"></p>
+<p>现在可以发出第一个任务。</p>
+<pre class="highlight"><span class="line">请在当前工作区新建一个名为 deepseek-harness.txt 的文档，并在文档中写入 DeepSeek Harness。完成后告诉我文件的保存位置。</span><br></pre>
+
+<p>如果它能创建这个文档并写入指定内容，模型、工作区和基础写入能力就已经接通了。</p>
+<p><img src="https://pic1.zhimg.com/v2-d6f77c25337429f6fdf6fe8a70a6b9b2_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-d6f77c25337429f6fdf6fe8a70a6b9b2_1440w.jpg" class="lozad post-image"></p>
+<h2 id="四种运行模式怎么选：标准-PTC-极简-创造"><a href="#四种运行模式怎么选：标准-PTC-极简-创造" class="headerlink" title="四种运行模式怎么选：标准 / PTC / 极简 / 创造"></a>四种运行模式怎么选：标准 / PTC / 极简 / 创造</h2><p>标准模式适合普通任务。整理文件、改文档、分析资料和处理代码，都可以先从这里开始。</p>
+<p>PTC 模式适合步骤较多、需要批量执行的任务。批量读取文件、按同一规则处理数据、连续完成一组标准动作，这类任务更适合交给它。</p>
+<p>极简模式保留的预设更少，更接近直接观察模型怎样处理任务。它更适合开发者测试，一般用户很少需要。</p>
+<p>创造模式把插件组合能力开放出来。你可以添加社区插件，也可以让 Agent 按照开发文档制作新插件。</p>
+<p>如果你的目的只是完成日常任务，先用标准模式。等你确实遇到默认能力做不了的事情，再进入创造模式。</p>
+<p><img src="https://pic3.zhimg.com/v2-d02f3601deec102f4a60d9b8d7de0072_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-d02f3601deec102f4a60d9b8d7de0072_1440w.jpg" class="lozad post-image"></p>
+<h2 id="Cordis-内核：插件怎样加载、依赖和清理"><a href="#Cordis-内核：插件怎样加载、依赖和清理" class="headerlink" title="Cordis 内核：插件怎样加载、依赖和清理"></a>Cordis 内核：插件怎样加载、依赖和清理</h2><p>DeepSeek Harness 把插件看得很重。按照官方架构文档，插件可以注册工具、事件监听和其他服务。</p>
+<p>插件卸载时，通过上下文注册的这些内容会自动清理。插件依赖的服务还没准备好，框架会等依赖就绪后再加载它。</p>
+<p><img src="https://pic1.zhimg.com/v2-7c5d23d7d0c006f77d4c48ceec880d96_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-7c5d23d7d0c006f77d4c48ceec880d96_1440w.jpg" class="lozad post-image"></p>
+<p>这些规则听起来有点抽象，放到图片翻译案例里就容易理解了。</p>
+<p>假设我们要做一个图片翻译 Agent。</p>
+<p>用户上传一张带有外语文字的图片，Agent 先识别图片里的文字，再把内容翻译成中文，最后将译文保存成文档。</p>
+<p><img src="https://pica.zhimg.com/v2-b5aeef6d154930533f0f40e278232be4_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-b5aeef6d154930533f0f40e278232be4_1440w.jpg" class="lozad post-image"></p>
+<p>开始制作后，DeepSeek Harness 会先确认最终的交付形式。这里明确告诉它，要做成一个可以安装和复用的插件。</p>
+<p><img src="https://picx.zhimg.com/v2-595ad2cfd9d522ac4e74403f55888aed_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-595ad2cfd9d522ac4e74403f55888aed_1440w.jpg" class="lozad post-image"></p>
+<p>DeepSeek Harness 的官方模型配置文档写得很清楚，DeepSeek 自己的 Chat Completions 路由按文本模型处理，附带图片的请求会在发送前被拒绝。</p>
+<p>要完成这个任务，需要接入一个支持图片的模型或视觉插件。</p>
+<p>视觉插件负责识别图片里的文字，翻译插件把识别结果翻译成中文，导出插件再将译文保存成文档。</p>
+<p><img src="https://pic3.zhimg.com/v2-22c1e2297a742ab9d7fa922b8c3ed116_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-22c1e2297a742ab9d7fa922b8c3ed116_1440w.jpg" class="lozad post-image"></p>
+<p>Cordis 处理这些插件的加载、依赖和清理，让它们可以在同一个 Agent 里按顺序工作。</p>
+<p>如果翻译插件声明自己依赖视觉识别服务，视觉插件还没有准备好时，翻译插件会等待，导出环节也不会提前执行。</p>
+<p>这样一来，增加和移除功能不会每次都要求重做整个 Agent。</p>
+<p>这次先搭建完整的插件骨架，暂时跳过 OCR 所需的模型配置。</p>
+<p>Agent 完成插件骨架后，对话框上方会出现插件的操作界面，这里就是它的使用入口。</p>
+<p><img src="https://pic1.zhimg.com/v2-41e0b2f0ec9d3a96d00fedd8e1e4ada8_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-41e0b2f0ec9d3a96d00fedd8e1e4ada8_1440w.jpg" class="lozad post-image"></p>
+<p>DeepSeek Harness 还保留会话和工具执行记录。</p>
+<p>用户说了什么、模型怎样响应、调用了哪个工具、工具返回什么结果，都可以顺着记录检查。</p>
+<p>插件出错以后，开发者可以从具体步骤开始排查，不必只看最后那句失败提示。</p>
+<p><img src="https://pic3.zhimg.com/v2-86d66533e48505ec5465d8f6acc2bd1e_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-86d66533e48505ec5465d8f6acc2bd1e_1440w.jpg" class="lozad post-image"></p>
+<h2 id="社区插件去哪找，安装前注意什么"><a href="#社区插件去哪找，安装前注意什么" class="headerlink" title="社区插件去哪找，安装前注意什么"></a>社区插件去哪找，安装前注意什么</h2><p>开源项目的一大好处，是别人做好的能力可以直接复用。</p>
+<p>社区已经有人把散落在 GitHub 上的插件整理成了 DSH 1024Store。</p>
+<p>项目页面显示，截至 2026 年 8 月 17 日，它共汇总了 4120 个插件，其中既有开发者通过 PR 主动提交的项目，也有从 GitHub <code>dsh-plugin</code> 话题中自动发现的仓库。</p>
+<p>除了列出插件，项目还提供在线市场、搜索入口、公开查询 API 和定期更新目录的流程。</p>
+<p>想给 Agent 增加主题、通知、文件处理或外部服务连接时，可以先按插件名称、作者或功能搜索，看看社区里有没有接近的方案，再决定直接安装，还是参考现有代码做一份自己的插件。</p>
+<p>这类目录能省下到处翻仓库的时间，也让插件的用途、来源和更新情况更容易比较。</p>
+<p>不过，收录数量只能说明选择很多，不能代表每个项目都经过了安全审核。</p>
+<p><img src="https://pic3.zhimg.com/v2-ee3791fc395ef248d37a760c07794454_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-ee3791fc395ef248d37a760c07794454_1440w.jpg" class="lozad post-image"></p>
+<p>安装社区插件前要多做一步安全检查。</p>
+<p>官方 CLI 对此有专门提示。从 GitHub 安装的插件可能在安装阶段执行 <code>prepare</code> 构建脚本，这一步由 pnpm 在插件所在的 profile 目录中完成，不属于 Agent 任务的沙箱执行流程。</p>
+<p>pnpm 默认会拦住这类构建脚本，只有把对应插件明确加入 <code>allowBuilds</code> 后才会继续。</p>
+<p>只安装来源可信的插件，最好锁定具体 commit。</p>
+<p>来路不明的仓库，即使截图做得很好看，也别急着运行。</p>
+<h2 id="DeepSeek-Harness-适合谁，值不值得上手"><a href="#DeepSeek-Harness-适合谁，值不值得上手" class="headerlink" title="DeepSeek Harness 适合谁，值不值得上手"></a>DeepSeek Harness 适合谁，值不值得上手</h2><p>如果你只想装好就用，不愿意处理 Node.js、API Key、插件来源和版本变化，WorkBuddy、Codex 这类成熟的 Agent 产品会省事很多。</p>
+<p>如果你已经有一个明确需求，现成 Agent 又缺少某项能力，DeepSeek Harness 会更有意思。你可以安装别人写好的插件，也可以让 Agent 根据官方开发文档替你做一个。模型、工具和界面都能继续调整，做出来的东西也更贴近自己的工作。</p>
+<p>它当前的短板同样明显。项目处在开发者预览阶段，界面和配置可能变化。社区插件质量参差不齐，安装外部代码还会带来安全风险。自制插件能生成出来，也需要测试和维护。</p>
+<p>所以第一次上手，不要急着组装一个万能 Agent。先完成一个小任务。</p>
+<p>安装 DeepSeek Harness，选一个空工作区，跑通模型配置。</p>
+<p>随后装一个来源可信的插件，观察它增加了哪些能力。</p>
+<p>等这两步稳定，再做一个只解决单一问题的插件。</p>
+<p>走完这一遍，你就掌握了 DeepSeek Harness 最基本的使用路径。</p>
+<hr>
+<p>想继续了解 AI 编程 / Agent 工具，站内还有这几篇可对照读：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/claude-code/">Claude Code 教程：从入门到进阶</a> —— 固定配好的编程 Agent，开箱即用，和 Harness 是两种路线</li>
+<li><a href="https://tanqingbo.cn/opencode-guide/">OpenCode 安装配置教程</a> —— 想换一个更轻量、可接自己 API 的 AI 编程工具，从这篇起手</li>
+<li><a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a> —— 回到总览页，按场景选模型和工具</li>
+</ul>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/deepseek-harness/">https://tanqingbo.cn/deepseek-harness/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Gemini-pro/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        深度体验：为什么我推荐你认真用一次 Gemini？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/AI-PPT/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        测了 20 款 AI PPT，最后汇报保命的，居然只有「办公小浣熊」？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Best-AI-tools/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2025最佳AI工具：国外最新人工智能工具一览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-10-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        如何在国内注册ChatGPT？ChatGPT怎么用？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT！王炸级更新！！！/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT！王炸级更新！！！
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2023-04-08</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/airport-rate-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">1.2.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">1.3.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">1.4.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">1.7.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>390</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>214</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">1.2.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">1.3.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">1.4.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">1.7.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">64</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\内推" title="内推"><div class="tags-list-item">内推</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">1.2.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">1.3.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">1.4.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">1.7.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-18</div>
+        <a href="/deepseek-harness/"><div class="recent-posts-item-content">DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/airport-rate-guide/"><div class="recent-posts-item-content">机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-17</div>
+        <a href="/clash-subscribe-guide/"><div class="recent-posts-item-content">Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
