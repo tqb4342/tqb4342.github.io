@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2025-11-27T04:06:18.000Z",
-  "dateModified": "2025-11-27T03:26:20.866Z",
+  "dateModified": "2026-08-18T06:50:10.276Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -86,7 +86,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2025-11-27">
-  <meta property="og:article:modified_time" content="2025-11-27">
+  <meta property="og:article:modified_time" content="2026-08-18">
   <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
   
   
@@ -436,7 +436,7 @@ var _hmt = _hmt || [];
 <li><strong>事务完成</strong>：TC协调所有分支事务的提交或回滚，确保事务的原子性。</li>
 </ol>
 <p>具体工作流程如下：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/image-20251127105155068.png" alt="image-20251127105155068" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://cdn.jsdelivr.net/gh/tqb4342/BlogPhoto/image-20251127105155068.png" class="lozad post-image"></p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20251127105155068.png" alt="image-20251127105155068" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20251127105155068.png" class="lozad post-image"></p>
 <h3 id="实际案例"><a href="#实际案例" class="headerlink" title="实际案例"></a>实际案例</h3><p>假设我们有一个电商系统，用户下单时需要同时扣减库存和生成订单。这两个操作分别由库存服务和订单服务处理，属于不同的微服务。我们可以使用Seata来确保这两个操作的原子性。</p>
 <h3 id="4-1-代码示例"><a href="#4-1-代码示例" class="headerlink" title="4.1 代码示例"></a>4.1 代码示例</h3><pre class="highlight"><span class="line"><span class="comment">// 库存服务</span></span><br><span class="line"><span class="meta">@GlobalTransactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduceStock</span><span class="params">(String productId, <span class="keyword">int</span> quantity)</span> </span>{</span><br><span class="line">    <span class="comment">// 扣减库存</span></span><br><span class="line">    stockService.reduce(productId, quantity);</span><br><span class="line">    <span class="comment">// 生成订单</span></span><br><span class="line">    orderService.createOrder(productId, quantity);</span><br><span class="line">}</span><br></pre>
 
@@ -479,10 +479,24 @@ var _hmt = _hmt || [];
   <ul style="list-style: none; padding: 0; margin: 0;">
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
-      <a href="/EditPlus软件的安装、激活和配置过程分享/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        EditPlus软件的安装、激活和配置过程分享
+      <a href="/Java-learning-route-map/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Java 学习线路图是怎样的？
       </a>
-      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2024-02-20</span>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2020-11-28</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Spring-integrates-hibernate-Struts/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Spring整合hibernate和Struts
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2020-11-28</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Spring-basics/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        JavaEE框架学习之Sping入门
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2020-11-28</span>
     </li>
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
@@ -493,24 +507,10 @@ var _hmt = _hmt || [];
     </li>
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
-      <a href="/Java-array-and-collection-sorting/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        Java的数组与集合排序问题
-      </a>
-      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2020-11-29</span>
-    </li>
-    
-    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
-      <a href="/Java-Servlet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        由浅入深，解析Java Servlet开发以及工作的过程
+      <a href="/java-Set-Map/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        深入理解Java中的List、Set与Map集合
       </a>
       <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2020-11-22</span>
-    </li>
-    
-    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
-      <a href="/Java-eight-data-types/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        Java八大基本数据类型详解
-      </a>
-      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2020-11-20</span>
     </li>
     
   </ul>
@@ -601,7 +601,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>214</span>
+    <span>227</span>
     <span>标签</span>
   </a>
 </div>
@@ -653,17 +653,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/工具">
-        <div class="categories-list-item">
-          工具
-          <span class="categories-list-item-badge">26</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据结构与算法">
         <div class="categories-list-item">
           数据结构与算法
           <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">26</span>
         </div>
       </a>
     
@@ -674,17 +674,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/AI大模型">
-        <div class="categories-list-item">
-          AI大模型
-          <span class="categories-list-item-badge">23</span>
-        </div>
-      </a>
-    
       <a href="/categories/科学上网">
         <div class="categories-list-item">
           科学上网
           <span class="categories-list-item-badge">64</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">23</span>
         </div>
       </a>
     
@@ -781,37 +781,37 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
-    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
-    
-    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
-    
     <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
-    
-    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
-    
-    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
-    
-    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
-    
-    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
-    
-    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
-    
-    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
-    
-    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
-    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
-    
-    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
-    
-    <a href="\tags\内推" title="内推"><div class="tags-list-item">内推</div></a>
     
     <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
     
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
     <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\代理" title="代理"><div class="tags-list-item">代理</div></a>
     
   </div>
 </div>
@@ -1024,6 +1024,4 @@ var _hmt = _hmt || [];
   </script>
   <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
   
-</body>
-
-</html>
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
