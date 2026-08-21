@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-21T15:00:00.000Z",
+  "dateModified": "2026-08-21T15:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/clash-adblock-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-dns-guide-banner.png",
+  "description": "Clash 真能去广告吗？本文讲透原理（为什么规则层能拦截广告）、Loyalsoldier/clash-rules 的 reject 规则集怎么配、和 AdGuard 等专业工具的区别、副作用（误杀/网页打不开）怎么排查，附可抄的完整配置。",
+  "keywords": "clash去广告,clash屏蔽广告,clash广告拦截,clash reject规则,clash loyalsoldier,clash规则集去广告,clash去广告规则,clash屏蔽追踪,clash adblock,mihomo去广告,clash geosite ads,clash rule-provider reject,clash广告拦截副作用,clash规则不生效"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Clash 真能去广告吗？原理是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。原理是 Clash 的规则分流——每条流量先过规则表，命中「广告域名」就 REJECT（直接丢弃），广告请求压根发不出去。和 AdGuard 等专业工具不同：Clash 去广告是「规则层拦截」，只挡域名不挡元素（视频广告位、App 内广告不一定能挡），但对网页弹窗、追踪器、第三方广告 SDK 效果明显。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 去广告规则怎么配？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "最省事的方法：用 rule-provider 引用 Loyalsoldier/clash-rules 的 reject 规则集，自动更新广告域名名单。配置 4 行：rule-providers 段声明 reject 规则集的 URL 和 behavior，rules 段加 RULE-SET,reject,REJECT。完成后广告域名请求会被直接丢弃，不用手动维护名单。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 去广告和 AdGuard Home 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Clash 是规则层拦截，只挡域名级广告；AdGuard Home 是 DNS 层拦截，能挡更深但需要单独部署。日常用 Clash 去广告足够，重度去广告需求建议 Clash + AdGuard 组合，前者管分流后者管 DNS 层过滤。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "配置去广告后某些网站打不开了怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "多半是规则误杀——某个非广告域名被收进了 reject 名单。排查方法：临时关掉 reject 规则测试，能打开就是误杀；再细分把该域名加进 DIRECT 规则前面（rules 是先命中先赢）。常见误杀对象：某些 CDN 域名、登录验证码服务、统计类分析服务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Loyalsoldier 的 reject 规则集会不会漏拦广告？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "会，没有规则集能覆盖所有广告域名。Loyalsoldier 是社区维护的、收录较全的之一，但新广告域名每天出现。好处是它会自动更新，比手动维护省心。漏拦的兜底方法：浏览器再装个 uBlock Origin 扩展，Clash 挡域名级、uBlock 挡元素级，组合覆盖率最高。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）</title>
+  
+  
+  <meta property="title" content="Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/clash-adblock-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-dns-guide-banner.png">
+  
+  
+  <meta property="description" content="Clash 真能去广告吗？本文讲透原理（为什么规则层能拦截广告）、Loyalsoldier/clash-rules 的 reject 规则集怎么配、和 AdGuard 等专业工具的区别、副作用（误杀/网页打不开）怎么排查，附可抄的完整配置。">
+  
+  <meta property="keywords" content="clash去广告,clash屏蔽广告,clash广告拦截,clash reject规则,clash loyalsoldier,clash规则集去广告,clash去广告规则,clash屏蔽追踪,clash adblock,mihomo去广告,clash geosite ads,clash rule-provider reject,clash广告拦截副作用,clash规则不生效">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-21">
+  <meta property="og:article:modified_time" content="2026-08-21">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="Mihomo">
+  
+  <meta property="og:article:tag" content="rule-provider">
+  
+  <meta property="og:article:tag" content="去广告">
+  
+  <meta property="og:article:tag" content="广告拦截">
+  
+  <meta property="og:article:tag" content="Loyalsoldier">
+  
+  <meta property="og:article:tag" content="REJECT">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/clash-adblock-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-dns-guide-banner.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-dns-guide-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-21T15:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-21</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/clash-adblock-guide/" class="leancloud_visitors" data-flag-title="Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Mihomo/" class="post-meta-link">Mihomo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/rule-provider/" class="post-meta-link">rule-provider</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/去广告/" class="post-meta-link">去广告</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/广告拦截/" class="post-meta-link">广告拦截</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Loyalsoldier/" class="post-meta-link">Loyalsoldier</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/REJECT/" class="post-meta-link">REJECT</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Clash 真能去广告吗？本文讲透原理（为什么规则层能拦截广告）、Loyalsoldier/clash-rules 的 reject 规则集怎么配、和 AdGuard 等专业工具的区别、副作用（误杀/网页打不开）怎么排查，附可抄的完整配置。">
+  
+  <meta name="keywords" content="clash去广告,clash屏蔽广告,clash广告拦截,clash reject规则,clash loyalsoldier,clash规则集去广告,clash去广告规则,clash屏蔽追踪,clash adblock,mihomo去广告,clash geosite ads,clash rule-provider reject,clash广告拦截副作用,clash规则不生效">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。想系统了解 VPN、Clash 机场、VPS 三大方案与全平台配置，欢迎访问总览页。</p>
+</blockquote>
+<blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程（2026）：客户端、订阅与规则分流</a></strong> 的配套教程。想系统搞懂 Clash 客户端、订阅导入、规则分流与排障，先看总览页；这篇只聊一个具体场景——<strong>用 Clash 的规则系统去广告</strong>。</p>
+</blockquote>
+<p>很多人装 Clash 是为了翻墙，但装完发现一个意外惊喜：网页上的弹窗、追踪器、第三方广告 SDK 全消失了。这不是错觉——<strong>Clash 的规则系统天然就能去广告</strong>，而且比不少专门做去广告的工具更省心。</p>
+<p>这篇讲清原理、配置方法、和专业去广告工具的定位差异、以及副作用怎么避。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>原理</strong>：Clash 规则分流，命中广告域名就 REJECT 丢弃请求，广告根本发不出去。</li>
+<li><strong>怎么配</strong>：用 <code>rule-provider</code> 引用 Loyalsoldier/clash-rules 的 <code>reject</code> 规则集，自动更新。</li>
+<li><strong>效果边界</strong>：只挡域名级广告（弹窗、追踪、SDK），不挡元素级广告（视频片头、App 内广告）。</li>
+<li><strong>副作用</strong>：可能误杀 CDN/统计/验证码服务，导致网页打不开——排查方法见第五节。</li>
+<li><strong>最强组合</strong>：Clash 挡域名 + uBlock Origin 挡元素，组合覆盖率最高。</li>
+</ul>
+<h2 id="一、为什么-Clash-能去广告：规则层拦截的原理"><a href="#一、为什么-Clash-能去广告：规则层拦截的原理" class="headerlink" title="一、为什么 Clash 能去广告：规则层拦截的原理"></a>一、为什么 Clash 能去广告：规则层拦截的原理</h2><p>Clash 区别于”一键 VPN”的核心能力是<strong>规则分流</strong>：每条网络流量先过一遍规则表，命中哪条就按哪条走。规则有 17 种类型，其中最关键的去广告去向是 <code>REJECT</code>——<strong>直接丢弃请求，不发出任何数据</strong>。</p>
+<p>整个流程是这样的：</p>
+<ol>
+<li>你打开一个网页，浏览器除了加载正文，还会请求 <code>doubleclick.net</code>、<code>googlesyndication.com</code> 这类广告/追踪域名</li>
+<li>这些请求经过 Clash 时，规则表里如果写了 <code>DOMAIN-SUFFIX,doubleclick.net,REJECT</code>，请求就被丢弃</li>
+<li>广告位加载不出来——要么显示空白，要么显示网页主自己的占位图</li>
+<li>原本要追踪你的 Cookie、指纹、行为数据的请求根本发不出去</li>
+</ol>
+<p>和 AdGuard 这种专业工具不同，<strong>Clash 的去广告是”规则层拦截”，只看域名</strong>。它不知道页面上的哪个 <code>&lt;div&gt;</code> 是广告位（这是元素级拦截，需要浏览器扩展如 uBlock Origin 干），但它能在域名请求发出前就把它掐断，效率高、对系统资源消耗低。</p>
+<h2 id="二、Clash-去广告-vs-AdGuard-uBlock-Origin：定位差异"><a href="#二、Clash-去广告-vs-AdGuard-uBlock-Origin：定位差异" class="headerlink" title="二、Clash 去广告 vs AdGuard / uBlock Origin：定位差异"></a>二、Clash 去广告 vs AdGuard / uBlock Origin：定位差异</h2><p>很多人会问：既然有专门的去广告工具，为什么还要用 Clash 去广告？答案是<strong>定位不同、层次不同</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Clash 去广告</th>
+<th>AdGuard Home</th>
+<th>uBlock Origin</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>拦截层次</td>
+<td>规则层（域名）</td>
+<td>DNS 层（域名）</td>
+<td>元素层（页面元素）</td>
+</tr>
+<tr>
+<td>部署难度</td>
+<td>已装 Clash 就免费可用</td>
+<td>需要单独部署服务</td>
+<td>浏览器装扩展即可</td>
+</tr>
+<tr>
+<td>拦截范围</td>
+<td>全设备所有流量</td>
+<td>全设备所有 DNS 请求</td>
+<td>仅浏览器内</td>
+</tr>
+<tr>
+<td>挡视频片头广告</td>
+<td>不能</td>
+<td>不能</td>
+<td>部分能</td>
+</tr>
+<tr>
+<td>挡 App 内广告</td>
+<td>能（App 走 Clash 时）</td>
+<td>能</td>
+<td>不能</td>
+</tr>
+<tr>
+<td>挡网页弹窗/追踪</td>
+<td>能</td>
+<td>能</td>
+<td>能</td>
+</tr>
+<tr>
+<td>误杀风险</td>
+<td>中（规则集可能误收）</td>
+<td>中</td>
+<td>低（元素级精确）</td>
+</tr>
+</tbody></table>
+<p><strong>结论</strong>：</p>
+<ul>
+<li>日常上网、想清爽网页：<strong>Clash 去广告就够</strong>，全设备生效、零额外部署。</li>
+<li>想覆盖更深、不怕折腾：<strong>Clash + AdGuard Home</strong> 组合，前者管分流后者管 DNS 层。</li>
+<li>想挡视频片头广告、App 内的元素广告：<strong>Clash + uBlock Origin 浏览器扩展</strong>，前者挡域名后者挡元素。</li>
+</ul>
+<h2 id="三、Loyalsoldier-reject-规则集：最省心的配置"><a href="#三、Loyalsoldier-reject-规则集：最省心的配置" class="headerlink" title="三、Loyalsoldier reject 规则集：最省心的配置"></a>三、Loyalsoldier reject 规则集：最省心的配置</h2><p>去广告的规则手动写不现实——广告域名每天新增，靠自己维护一份黑名单要累死。最省心的方式是引用社区维护的规则集，<strong>自动更新、永不落后</strong>。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Loyalsoldier/clash-rules">Loyalsoldier/clash-rules</a> 是 Clash 圈里最主流的去广告规则集之一，基于 AdGuard’s Chinese filter + EasyList + 各种社区贡献整理，收录了常见广告、追踪、统计类域名。</p>
+<p>完整配置抄作业：</p>
+<pre class="highlight"><span class="line"><span class="attr">rule-providers:</span></span><br><span class="line">  <span class="attr">reject:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">    <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">"https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">./ruleset/reject.txt</span></span><br><span class="line">    <span class="attr">interval:</span> <span class="number">86400</span>  <span class="comment"># 24 小时自动更新一次</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">RULE-SET,reject,REJECT</span></span><br><span class="line">  <span class="comment"># ... 你原有的其他规则继续写在后面</span></span><br></pre>
+
+<p>注意 <strong>rules 段的顺序很重要</strong>——Clash 是「先命中先赢」，reject 规则应该放在比较靠前的位置（但要在 <code>DOMAIN-SUFFIX,local,DIRECT</code> 这类直连规则之后，避免误杀局域网）。</p>
+<h2 id="四、其他去广告规则源"><a href="#四、其他去广告规则源" class="headerlink" title="四、其他去广告规则源"></a>四、其他去广告规则源</h2><p>Loyalsoldier 不是唯一选择，可以多源组合提升覆盖率：</p>
+<ul>
+<li><strong>anti-AD</strong>（<code>https://anti-ad.net/clash.yaml</code>）：国内维护，广告+追踪+隐私域名合集，覆盖偏国内</li>
+<li><strong>EasyList China</strong>（通过 anti-AD 等聚合项目间接引用）：经典广告过滤规则</li>
+<li><strong>AdGuard DNS filter</strong>：AdGuard 官方维护，国际广告覆盖更全</li>
+</ul>
+<p>组合配置示例：</p>
+<pre class="highlight"><span class="line"><span class="attr">rule-providers:</span></span><br><span class="line">  <span class="attr">reject-loyalsoldier:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">    <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">"https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">./ruleset/loyalsoldier-reject.txt</span></span><br><span class="line">    <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line">  <span class="attr">reject-antiad:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">http</span></span><br><span class="line">    <span class="attr">behavior:</span> <span class="string">domain</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">"https://anti-ad.net/clash.yaml"</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">./ruleset/anti-ad.yaml</span></span><br><span class="line">    <span class="attr">interval:</span> <span class="number">86400</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">RULE-SET,reject-loyalsoldier,REJECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">RULE-SET,reject-antiad,REJECT</span></span><br><span class="line">  <span class="comment"># ... 其他规则</span></span><br></pre>
+
+<p>多源组合的代价是规则集体积变大、内存占用略增，但 Clash 对此处理得很轻松，普通设备无感。</p>
+<h2 id="五、副作用排查：误杀与网页打不开"><a href="#五、副作用排查：误杀与网页打不开" class="headerlink" title="五、副作用排查：误杀与网页打不开"></a>五、副作用排查：误杀与网页打不开</h2><p>去广告规则最大的副作用是<strong>误杀</strong>——某个非广告域名被收进了 reject 名单，导致网站功能异常。</p>
+<p><strong>典型误杀场景</strong>：</p>
+<ul>
+<li><strong>CDN 域名</strong>：某些 CDN 同时托管广告和正常资源，被规则一刀切</li>
+<li><strong>统计/分析服务</strong>：网站用来统计访问量的服务（如 cnzz、百度统计）被当追踪拦掉，导致页面 JS 报错</li>
+<li><strong>登录验证码服务</strong>：极验、geetest 等「滑块验证」服务被误杀，登录页面卡住</li>
+</ul>
+<p><strong>排查方法</strong>（按症状定位）：</p>
+<ol>
+<li><strong>网页打不开 / 加载不全</strong>：临时把 <code>RULE-SET,reject,REJECT</code> 这条注释掉，重新加载页面。能正常打开 = 确认是 reject 误杀。</li>
+<li><strong>找出具体误杀域名</strong>：打开浏览器开发者工具（F12）→ Network 面板 → 看哪些请求显示 “blocked” 或超时——这些就是被 REJECT 的域名。</li>
+<li><strong>加白名单</strong>：把误杀域名写到 reject 规则<strong>前面</strong>（rules 是先命中先赢），例如：<pre class="highlight"><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,gmwu.com,DIRECT</span>     <span class="comment"># 先放行</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">RULE-SET,reject,REJECT</span>             <span class="comment"># 再拦截</span></span><br></pre>
+
+</li>
+</ol>
+<p><strong>常见白名单域名</strong>（统计/验证码类容易误杀）：</p>
+<pre class="highlight"><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,cnzz.com,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,umeng.com,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,geetest.com,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">DOMAIN-SUFFIX,baidu.com,DIRECT</span>      <span class="comment"># 百度统计/统计类</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">RULE-SET,reject,REJECT</span></span><br></pre>
+
+<h2 id="六、和-DNS-层去广告的协同"><a href="#六、和-DNS-层去广告的协同" class="headerlink" title="六、和 DNS 层去广告的协同"></a>六、和 DNS 层去广告的协同</h2><p>如果你装了 Clash 之后还想要更深层的去广告，可以在 <code>dns</code> 段配上 AdGuard DNS 作为 fallback：</p>
+<pre class="highlight"><span class="line"><span class="attr">dns:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">enhanced-mode:</span> <span class="string">fake-ip</span></span><br><span class="line">  <span class="attr">nameserver:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://dns.google/dns-query</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://cloudflare-dns.com/dns-query</span></span><br><span class="line">  <span class="attr">fallback:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://dns.adguard.com/dns-query</span>   <span class="comment"># AdGuard 的去广告 DNS</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">https://doh.pub/dns-query</span></span><br></pre>
+
+<p>这样的好处是：<strong>域名解析阶段就过滤一遍广告</strong>，连规则层都不用走到——广告域名 DNS 查询直接返回空。代价是 DNS 解析可能稍慢（多了一层过滤判断），但对体感影响不大。</p>
+<p>更深的 DNS 层去广告、和 AdGuard Home 的本地部署对比，看 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 配置完全指南</a>，那里讲了 fake-ip、fallback、DNS 泄露等机制的完整逻辑。</p>
+<h2 id="七、FAQ"><a href="#七、FAQ" class="headerlink" title="七、FAQ"></a>七、FAQ</h2><p><strong>Q：配置完 reject 规则，广告还是没少？</strong><br>A：可能是规则没生效。检查三点：①客户端有没有重新加载配置；②rules 段顺序里 reject 是否被前面的 <code>MATCH</code> 或 <code>GEOIP,CN,DIRECT</code> 等大范围规则抢了命中（reject 要靠前）；③rule-provider 的 url 能不能访问（jsdelivr 偶尔抽风，可换 github raw 地址）。</p>
+<p><strong>Q：去广告规则会让 Clash 变慢吗？</strong><br>A：不会。规则匹配是内存查表操作，纳秒级，几十万条规则也感受不到。真正影响速度的是规则<strong>顺序</strong>——把高频命中的规则放前面。</p>
+<p><strong>Q：能在 Clash Verge Rev 里直接开启去广告吗？</strong><br>A：能。Clash Verge Rev 自带的「规则模式」就内置了去广告规则，开启即用。想自定义就用本文的 rule-provider 方式。</p>
+<p><strong>Q：去广告规则集会自动更新吗？</strong><br>A：会，<code>interval: 86400</code> 表示 24 小时更新一次。嫌慢可以改成 <code>3600</code>（1 小时），但太频繁会增加网络请求，24 小时是合理默认。</p>
+<p><strong>Q：为什么 Clash 挡不了抖音/微博的 App 内广告？</strong><br>A：因为这些广告走的是 App 自有 CDN 域名（不是第三方广告域名），和正文内容混在一起，规则层无法区分。要挡 App 内广告得用 DNS 层过滤 + 元素级工具（如 AdGuard 移动端 App）。</p>
+<hr>
+<p>想搞懂 Clash 规则系统的完整机制（17 种规则类型、rule-provider 行为、规则集 behavior 详解），看 <a href="https://tanqingbo.cn/clash-custom-rules/">Clash 自定义规则完全指南</a>；想理解 fake-ip、DNS 泄露与 fallback 的深层逻辑，看 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 配置完全指南</a>；新手从零开始接触 Clash，看 <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/clash-adblock-guide/">https://tanqingbo.cn/clash-adblock-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全教程：客户端、订阅与规则分流
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-custom-rules/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 自定义规则与分流配置完整指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-06</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-dns-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash DNS 配置：fake-ip 与 DNS 泄露排查
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-subscribe-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 订阅链接怎么导入、更新失败怎么排查
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-17</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/sing-box-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        sing-box 和 Clash 有什么区别？值得换吗？怎么用（2026 详解）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-14</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/telegram-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Telegram 完全指南：下载注册、设置中文、玩法到排障的保姆级教程（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Clash-%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%EF%BC%9A%E8%A7%84%E5%88%99%E5%B1%82%E6%8B%A6%E6%88%AA%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">一、为什么 Clash 能去广告：规则层拦截的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Clash-%E5%8E%BB%E5%B9%BF%E5%91%8A-vs-AdGuard-uBlock-Origin%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B7%AE%E5%BC%82"><span class="toc-number">3.</span> <span class="toc-text">二、Clash 去广告 vs AdGuard &#x2F; uBlock Origin：定位差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Loyalsoldier-reject-%E8%A7%84%E5%88%99%E9%9B%86%EF%BC%9A%E6%9C%80%E7%9C%81%E5%BF%83%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">三、Loyalsoldier reject 规则集：最省心的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E4%BB%96%E5%8E%BB%E5%B9%BF%E5%91%8A%E8%A7%84%E5%88%99%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">四、其他去广告规则源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%89%AF%E4%BD%9C%E7%94%A8%E6%8E%92%E6%9F%A5%EF%BC%9A%E8%AF%AF%E6%9D%80%E4%B8%8E%E7%BD%91%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80"><span class="toc-number">6.</span> <span class="toc-text">五、副作用排查：误杀与网页打不开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%92%8C-DNS-%E5%B1%82%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%9A%84%E5%8D%8F%E5%90%8C"><span class="toc-number">7.</span> <span class="toc-text">六、和 DNS 层去广告的协同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81FAQ"><span class="toc-number">8.</span> <span class="toc-text">七、FAQ</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>396</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>260</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Clash-%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%EF%BC%9A%E8%A7%84%E5%88%99%E5%B1%82%E6%8B%A6%E6%88%AA%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">一、为什么 Clash 能去广告：规则层拦截的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Clash-%E5%8E%BB%E5%B9%BF%E5%91%8A-vs-AdGuard-uBlock-Origin%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B7%AE%E5%BC%82"><span class="toc-number">3.</span> <span class="toc-text">二、Clash 去广告 vs AdGuard &#x2F; uBlock Origin：定位差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Loyalsoldier-reject-%E8%A7%84%E5%88%99%E9%9B%86%EF%BC%9A%E6%9C%80%E7%9C%81%E5%BF%83%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">三、Loyalsoldier reject 规则集：最省心的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E4%BB%96%E5%8E%BB%E5%B9%BF%E5%91%8A%E8%A7%84%E5%88%99%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">四、其他去广告规则源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%89%AF%E4%BD%9C%E7%94%A8%E6%8E%92%E6%9F%A5%EF%BC%9A%E8%AF%AF%E6%9D%80%E4%B8%8E%E7%BD%91%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80"><span class="toc-number">6.</span> <span class="toc-text">五、副作用排查：误杀与网页打不开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%92%8C-DNS-%E5%B1%82%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%9A%84%E5%8D%8F%E5%90%8C"><span class="toc-number">7.</span> <span class="toc-text">六、和 DNS 层去广告的协同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81FAQ"><span class="toc-number">8.</span> <span class="toc-text">七、FAQ</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">66</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\代理" title="代理"><div class="tags-list-item">代理</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Clash-%E8%83%BD%E5%8E%BB%E5%B9%BF%E5%91%8A%EF%BC%9A%E8%A7%84%E5%88%99%E5%B1%82%E6%8B%A6%E6%88%AA%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">一、为什么 Clash 能去广告：规则层拦截的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Clash-%E5%8E%BB%E5%B9%BF%E5%91%8A-vs-AdGuard-uBlock-Origin%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%B7%AE%E5%BC%82"><span class="toc-number">3.</span> <span class="toc-text">二、Clash 去广告 vs AdGuard &#x2F; uBlock Origin：定位差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Loyalsoldier-reject-%E8%A7%84%E5%88%99%E9%9B%86%EF%BC%9A%E6%9C%80%E7%9C%81%E5%BF%83%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">三、Loyalsoldier reject 规则集：最省心的配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%85%B6%E4%BB%96%E5%8E%BB%E5%B9%BF%E5%91%8A%E8%A7%84%E5%88%99%E6%BA%90"><span class="toc-number">5.</span> <span class="toc-text">四、其他去广告规则源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%89%AF%E4%BD%9C%E7%94%A8%E6%8E%92%E6%9F%A5%EF%BC%9A%E8%AF%AF%E6%9D%80%E4%B8%8E%E7%BD%91%E9%A1%B5%E6%89%93%E4%B8%8D%E5%BC%80"><span class="toc-number">6.</span> <span class="toc-text">五、副作用排查：误杀与网页打不开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%92%8C-DNS-%E5%B1%82%E5%8E%BB%E5%B9%BF%E5%91%8A%E7%9A%84%E5%8D%8F%E5%90%8C"><span class="toc-number">7.</span> <span class="toc-text">六、和 DNS 层去广告的协同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81FAQ"><span class="toc-number">8.</span> <span class="toc-text">七、FAQ</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/clash-adblock-guide/"><div class="recent-posts-item-content">Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/telegram-guide/"><div class="recent-posts-item-content">Telegram 完全指南：下载注册、设置中文、玩法到排障的保姆级教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/telegram-set-chinese/"><div class="recent-posts-item-content">Telegram 怎么设置中文？电报汉化 3 步搞定，附搜索引导与翻译设置（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

@@ -433,7 +433,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>3.4k 字</span>
+    <span>3.6k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -516,6 +516,14 @@ var _hmt = _hmt || [];
 <p>💡 <strong>怎么用本页</strong>：先在第一、二节搞懂原理与客户端选型，再按你的平台跳到对应配置教程。所有链接均为站内文章，可放心跳转。如果你还不确定”科学上网”整体怎么选，先看 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a>。</p>
 <p>⚠️ <strong>合规提示</strong>：本站内容仅作技术原理与工具使用分享。请务必遵守所在国家/地区的法律法规，仅将相关技术用于合法用途。</p>
 </blockquote>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>Clash 是什么</strong>：规则型代理客户端，管「怎么用节点」；机场管「提供节点」。两者搭配才能科学上网。</li>
+<li><strong>客户端选哪个</strong>：Windows/Mac 选 Clash Verge Rev，安卓选 CMFA，iOS 选 Stash/Shadowrocket。</li>
+<li><strong>订阅怎么导入</strong>：机场后台复制订阅链接 → 客户端「订阅管理」粘贴 → 更新即可。</li>
+<li><strong>不想折腾 Clash</strong>：直接看 <a href="https://tanqingbo.cn/vpn-freego/">2026 免费VPN推荐与科学上网攻略</a>，VPN 方案更省心。</li>
+<li><strong>想顺便去广告</strong>：Clash 规则自带 REJECT 能挡广告域名，看 <a href="https://tanqingbo.cn/clash-adblock-guide/">Clash 去广告完全指南</a>。</li>
+<li><strong>遇到问题</strong>：连不上先查 <a href="https://tanqingbo.cn/troubleshooting/">排障指南</a>，打不开网页多查 <a href="https://tanqingbo.cn/clash-dns-guide/">DNS 配置</a>。</li>
+</ul>
 <h2 id="一、什么是-Clash-Mihomo？"><a href="#一、什么是-Clash-Mihomo？" class="headerlink" title="一、什么是 Clash / Mihomo？"></a>一、什么是 Clash / Mihomo？</h2><p><strong>Clash 是什么？</strong> 一句话：Clash 是一款开源、跨平台的规则型代理客户端，负责把机场订阅里的节点按规则分流、统一管理——机场负责”提供节点”，Clash 负责”如何使用节点”。</p>
 <p>Clash 最初由开发者 Dreamacro 开源，2023 年后原作者停止维护，<strong>社区分支 Mihomo（Clash.Meta）</strong> 接棒，新增了对 Reality、Hysteria2 等新协议的支持，目前绝大多数在用客户端都基于 Mihomo 内核。想搞清楚 Mihomo 和 Clash 到底是什么关系、为什么你下载的”Clash”其实是 Mihomo，可以看 <a href="https://tanqingbo.cn/mihomo-clash-difference/">Mihomo 是什么？Mihomo 和 Clash 的区别</a>。</p>
 <p>它的工作原理可以概括为四步：</p>
@@ -587,12 +595,13 @@ var _hmt = _hmt || [];
 <li>打开客户端 → 订阅管理 → 粘贴链接 → 点击「更新/Update」；</li>
 <li>节点列表出现后，选一个节点，开启「系统代理」或「TUN 模式」即可上网。</li>
 </ol>
-<p>免费机场普遍不稳定且存在隐私风险，长期使用建议选有口碑的付费服务。</p>
+<p>免费机场普遍不稳定且存在隐私风险，长期使用建议选有口碑的付费服务。嫌机场挑选麻烦的，也可以直接看 <a href="https://tanqingbo.cn/vpn-freego/">2026 免费 VPN 推荐与评测</a>，VPN 方案省心但灵活性不如 Clash。</p>
 <ul>
 <li><a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接完全指南：订阅是什么、怎么导入、更新失败怎么办</a></li>
 <li><a href="https://tanqingbo.cn/choose2/">如何挑选 Clash 机场服务</a></li>
 <li><a href="https://tanqingbo.cn/clash-free/">科学上网实用攻略：2026 翻墙 VPN 推荐与入门指南</a></li>
 <li><a href="https://tanqingbo.cn/Clash-VPS/">手机电脑翻墙教程：2026 科学上网保姆级指南</a></li>
+<li><a href="https://tanqingbo.cn/win-kuaili/">Windows 翻墙全流程：快狸机场图文教程</a></li>
 </ul>
 <h2 id="五、核心机制：规则分流-TUN-模式"><a href="#五、核心机制：规则分流-TUN-模式" class="headerlink" title="五、核心机制：规则分流 + TUN 模式"></a>五、核心机制：规则分流 + TUN 模式</h2><p>这是 Clash 区别于”一键 VPN”的核心能力。</p>
 <p><strong>规则分流（Rule）</strong> 按匹配条件决定每条流量的去向，常见规则类型：</p>
@@ -871,7 +880,7 @@ var _hmt = _hmt || [];
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Mihomo%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 Clash &#x2F; Mihomo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">二、主流 Clash 客户端对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%AF%BC%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">四、机场订阅：获取与导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%EF%BC%9A%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81-TUN-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">五、核心机制：规则分流 + TUN 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%EF%BC%88Mihomo-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">六、代理协议（Mihomo 支持哪些）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E-Profile"><span class="toc-number">6.</span> <span class="toc-text">七、配置文件与 Profile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">八、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">7.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">7.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">7.3.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">7.4.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E6%8C%87%E5%8D%97"><span class="toc-number">8.</span> <span class="toc-text">九、排障指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">十、合规与下载安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十一、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十二、FAQ 常见问题</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Mihomo%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">一、什么是 Clash &#x2F; Mihomo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">3.</span> <span class="toc-text">二、主流 Clash 客户端对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%AF%BC%E5%85%A5"><span class="toc-number">4.</span> <span class="toc-text">四、机场订阅：获取与导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%EF%BC%9A%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81-TUN-%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">五、核心机制：规则分流 + TUN 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%EF%BC%88Mihomo-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、代理协议（Mihomo 支持哪些）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E-Profile"><span class="toc-number">7.</span> <span class="toc-text">七、配置文件与 Profile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">8.</span> <span class="toc-text">八、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">8.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">8.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">8.3.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">8.4.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E6%8C%87%E5%8D%97"><span class="toc-number">9.</span> <span class="toc-text">九、排障指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">10.</span> <span class="toc-text">十、合规与下载安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">11.</span> <span class="toc-text">十一、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">12.</span> <span class="toc-text">十二、FAQ 常见问题</span></a></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -883,7 +892,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>391</span>
+    <span>396</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -891,7 +900,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>229</span>
+    <span>260</span>
     <span>标签</span>
   </a>
 </div>
@@ -926,7 +935,7 @@ var _hmt = _hmt || [];
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Mihomo%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 Clash &#x2F; Mihomo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">二、主流 Clash 客户端对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%AF%BC%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">四、机场订阅：获取与导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%EF%BC%9A%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81-TUN-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">五、核心机制：规则分流 + TUN 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%EF%BC%88Mihomo-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">六、代理协议（Mihomo 支持哪些）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E-Profile"><span class="toc-number">6.</span> <span class="toc-text">七、配置文件与 Profile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">八、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">7.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">7.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">7.3.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">7.4.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E6%8C%87%E5%8D%97"><span class="toc-number">8.</span> <span class="toc-text">九、排障指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">十、合规与下载安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十一、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十二、FAQ 常见问题</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Mihomo%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">一、什么是 Clash &#x2F; Mihomo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">3.</span> <span class="toc-text">二、主流 Clash 客户端对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%AF%BC%E5%85%A5"><span class="toc-number">4.</span> <span class="toc-text">四、机场订阅：获取与导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%EF%BC%9A%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81-TUN-%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">五、核心机制：规则分流 + TUN 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%EF%BC%88Mihomo-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、代理协议（Mihomo 支持哪些）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E-Profile"><span class="toc-number">7.</span> <span class="toc-text">七、配置文件与 Profile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">8.</span> <span class="toc-text">八、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">8.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">8.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">8.3.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">8.4.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E6%8C%87%E5%8D%97"><span class="toc-number">9.</span> <span class="toc-text">九、排障指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">10.</span> <span class="toc-text">十、合规与下载安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">11.</span> <span class="toc-text">十一、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">12.</span> <span class="toc-text">十二、FAQ 常见问题</span></a></li></ol>
     </div>
   </article>
   
@@ -936,10 +945,10 @@ var _hmt = _hmt || [];
   <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
   <div class="categories-list">
     
-      <a href="/categories/技术以外">
+      <a href="/categories/工具">
         <div class="categories-list-item">
-          技术以外
-          <span class="categories-list-item-badge">84</span>
+          工具
+          <span class="categories-list-item-badge">30</span>
         </div>
       </a>
     
@@ -950,10 +959,10 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/工具">
+      <a href="/categories/技术以外">
         <div class="categories-list-item">
-          工具
-          <span class="categories-list-item-badge">26</span>
+          技术以外
+          <span class="categories-list-item-badge">84</span>
         </div>
       </a>
     
@@ -964,17 +973,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">66</span>
+        </div>
+      </a>
+    
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
           <span class="categories-list-item-badge">23</span>
-        </div>
-      </a>
-    
-      <a href="/categories/科学上网">
-        <div class="categories-list-item">
-          科学上网
-          <span class="categories-list-item-badge">65</span>
         </div>
       </a>
     
@@ -1027,17 +1036,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/ITK与VTK">
-        <div class="categories-list-item">
-          ITK与VTK
-          <span class="categories-list-item-badge">7</span>
-        </div>
-      </a>
-    
       <a href="/categories/编程经验">
         <div class="categories-list-item">
           编程经验
           <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
         </div>
       </a>
     
@@ -1081,13 +1090,13 @@ var _hmt = _hmt || [];
     
     <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
-    
-    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
-    
     <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
     
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
     <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
     
     <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
     
@@ -1159,7 +1168,7 @@ var _hmt = _hmt || [];
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Mihomo%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、什么是 Clash &#x2F; Mihomo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">二、主流 Clash 客户端对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%AF%BC%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">四、机场订阅：获取与导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%EF%BC%9A%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81-TUN-%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">五、核心机制：规则分流 + TUN 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%EF%BC%88Mihomo-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">六、代理协议（Mihomo 支持哪些）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E-Profile"><span class="toc-number">6.</span> <span class="toc-text">七、配置文件与 Profile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">八、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">7.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">7.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">7.3.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">7.4.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E6%8C%87%E5%8D%97"><span class="toc-number">8.</span> <span class="toc-text">九、排障指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">十、合规与下载安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">10.</span> <span class="toc-text">十一、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">11.</span> <span class="toc-text">十二、FAQ 常见问题</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Clash-Mihomo%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">一、什么是 Clash &#x2F; Mihomo？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E6%B5%81-Clash-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%B9%E6%AF%94"><span class="toc-number">3.</span> <span class="toc-text">二、主流 Clash 客户端对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%AF%BC%E5%85%A5"><span class="toc-number">4.</span> <span class="toc-text">四、机场订阅：获取与导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6%EF%BC%9A%E8%A7%84%E5%88%99%E5%88%86%E6%B5%81-TUN-%E6%A8%A1%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">五、核心机制：规则分流 + TUN 模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%EF%BC%88Mihomo-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">六、代理协议（Mihomo 支持哪些）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E-Profile"><span class="toc-number">7.</span> <span class="toc-text">七、配置文件与 Profile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%90%84%E5%B9%B3%E5%8F%B0%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B"><span class="toc-number">8.</span> <span class="toc-text">八、各平台配置教程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">8.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">8.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Android"><span class="toc-number">8.3.</span> <span class="toc-text">Android</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS%EF%BC%88iPhone-iPad%EF%BC%89"><span class="toc-number">8.4.</span> <span class="toc-text">iOS（iPhone &#x2F; iPad）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%8E%92%E9%9A%9C%E6%8C%87%E5%8D%97"><span class="toc-number">9.</span> <span class="toc-text">九、排障指南</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%90%88%E8%A7%84%E4%B8%8E%E4%B8%8B%E8%BD%BD%E5%AE%89%E5%85%A8%E6%8F%90%E7%A4%BA"><span class="toc-number">10.</span> <span class="toc-text">十、合规与下载安全提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%9B%B4%E5%A4%9A%E6%80%BB%E8%A7%88%E4%B8%8E%E5%AF%BC%E8%88%AA"><span class="toc-number">11.</span> <span class="toc-text">十一、更多总览与导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">12.</span> <span class="toc-text">十二、FAQ 常见问题</span></a></li></ol>
   </article>
   
   
@@ -1174,18 +1183,18 @@ var _hmt = _hmt || [];
       </div>
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-08-19</div>
-        <a href="/kuaili-airport-review/"><div class="recent-posts-item-content">2026 翻墙机场推荐：新手怎么选、怎么订阅、怎么用（自用款实测）</div></a>
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/clash-adblock-guide/"><div class="recent-posts-item-content">Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）</div></a>
       </div>
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-08-18</div>
-        <a href="/deepseek-harness/"><div class="recent-posts-item-content">DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）</div></a>
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/telegram-guide/"><div class="recent-posts-item-content">Telegram 完全指南：下载注册、设置中文、玩法到排障的保姆级教程（2026）</div></a>
       </div>
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-08-17</div>
-        <a href="/airport-rate-guide/"><div class="recent-posts-item-content">机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）</div></a>
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/telegram-set-chinese/"><div class="recent-posts-item-content">Telegram 怎么设置中文？电报汉化 3 步搞定，附搜索引导与翻译设置（2026）</div></a>
       </div>
     
   </div>
@@ -1314,6 +1323,4 @@ var _hmt = _hmt || [];
   </script>
   <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
   
-</body>
-
-</html>
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

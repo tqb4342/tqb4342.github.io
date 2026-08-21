@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与 4 种解封方法（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-21T10:31:00.000Z",
+  "dateModified": "2026-08-21T10:31:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/telegram-two-way-restriction/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-restriction-banner.png",
+  "description": "Telegram 发消息提示「只能给双向联系人发送消息」？这是触发了官方的双向限制风控。本文讲清双向限制是什么、触发的 5 大原因（行为风控/账号权重低/共享 IP 连坐/IP 跳变/被举报）、怎么用 @SpamBot 自查，以及实测有效的 4 种解封方法。",
+  "keywords": "telegram双向限制,telegram只能给双向联系人发消息,telegram无法主动发起私聊,telegram私聊限制,telegram账号被限制,telegram解封方法,telegram spambot申诉,telegram双向限制解除,telegram无法在群组发布消息,telegram被限制多久解除,telegram群组发不了消息,telegram私聊发不出去,telegram被限制怎么解,telegram限制解除,telegram解除私聊限制"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "工具",
+      "item": "https://tanqingbo.cn/categories/工具/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与 4 种解封方法（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Telegram 提示「只能给双向联系人发消息」是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是触发了 Telegram 的「双向限制」风控，你的账号被限制无法主动发起私聊，只能被动等待别人联系你（在群组里也只能看、不能发）。它是官方为防止垃圾信息泛滥设置的机制，分临时限制（一般 3 天到 1 周自动解除）和永久限制两种。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Telegram 双向限制是什么原因造成的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "主要有 5 类：高频群发/频繁加人触发行为风控、新号或虚拟号注册导致账号权重低、共享 IP 连坐（机场节点被大量用户共用、有人发广告整个 IP 段被打标记）、IP 频繁跳变、以及被多人举报。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Telegram 双向限制是永久的吗？多久能解除？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不一定。临时限制通常持续 3 天到 1 周，到期自动解除；只有违规严重或多次触犯才会面临永久限制。判断方法：用 @SpamBot 自查，回复里带具体日期的就是临时限制，带「Permanent」字样的是永久限制。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Telegram 双向限制怎么解除？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "首选通过官方机器人 @SpamBot 申诉（成功率最高，适合被误判的账号），其次是发邮件给 spam@telegram.org 人工申诉，还可以换绑手机号重置风控权重。开会员这种方法不推荐。详细步骤看正文。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么用了干净的机场节点还是被 Telegram 限制？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为多数机场节点是成千上万用户共享的，一旦有人用同一个 IP 发垃圾广告，整个 IP 段都可能被标记为 Spam IP，你「连坐」受罚。降低风险的方法：选用户量适中的机场、固定用冷门地区节点、别频繁切换地区、避免用被标记过的节点登录。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与 4 种解封方法（2026）</title>
+  
+  
+  <meta property="title" content="Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与 4 种解封方法（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/telegram-two-way-restriction/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-restriction-banner.png">
+  
+  
+  <meta property="description" content="Telegram 发消息提示「只能给双向联系人发送消息」？这是触发了官方的双向限制风控。本文讲清双向限制是什么、触发的 5 大原因（行为风控/账号权重低/共享 IP 连坐/IP 跳变/被举报）、怎么用 @SpamBot 自查，以及实测有效的 4 种解封方法。">
+  
+  <meta property="keywords" content="telegram双向限制,telegram只能给双向联系人发消息,telegram无法主动发起私聊,telegram私聊限制,telegram账号被限制,telegram解封方法,telegram spambot申诉,telegram双向限制解除,telegram无法在群组发布消息,telegram被限制多久解除,telegram群组发不了消息,telegram私聊发不出去,telegram被限制怎么解,telegram限制解除,telegram解除私聊限制">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-21">
+  <meta property="og:article:modified_time" content="2026-08-21">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="Telegram">
+  
+  <meta property="og:article:tag" content="电报">
+  
+  <meta property="og:article:tag" content="即时通讯">
+  
+  <meta property="og:article:tag" content="双向限制">
+  
+  <meta property="og:article:tag" content="风控">
+  
+  <meta property="og:article:tag" content="解封">
+  
+  <meta property="og:article:tag" content="SpamBot">
+  
+  <meta property="og:article:tag" content="账号限制">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/telegram-two-way-restriction/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-restriction-banner.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-restriction-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与 4 种解封方法（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-21T10:31:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-21</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/工具/" class="post-meta-link">工具</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/telegram-two-way-restriction/" class="leancloud_visitors" data-flag-title="Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与 4 种解封方法（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Telegram/" class="post-meta-link">Telegram</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/电报/" class="post-meta-link">电报</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/即时通讯/" class="post-meta-link">即时通讯</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/双向限制/" class="post-meta-link">双向限制</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/风控/" class="post-meta-link">风控</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/解封/" class="post-meta-link">解封</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/SpamBot/" class="post-meta-link">SpamBot</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/账号限制/" class="post-meta-link">账号限制</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Telegram 发消息提示「只能给双向联系人发送消息」？这是触发了官方的双向限制风控。本文讲清双向限制是什么、触发的 5 大原因（行为风控/账号权重低/共享 IP 连坐/IP 跳变/被举报）、怎么用 @SpamBot 自查，以及实测有效的 4 种解封方法。">
+  
+  <meta name="keywords" content="telegram双向限制,telegram只能给双向联系人发消息,telegram无法主动发起私聊,telegram私聊限制,telegram账号被限制,telegram解封方法,telegram spambot申诉,telegram双向限制解除,telegram无法在群组发布消息,telegram被限制多久解除,telegram群组发不了消息,telegram私聊发不出去,telegram被限制怎么解,telegram限制解除,telegram解除私聊限制">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <h1 id="Telegram-双向限制是什么？「只能给双向联系人发消息」的原因与解封方法"><a href="#Telegram-双向限制是什么？「只能给双向联系人发消息」的原因与解封方法" class="headerlink" title="Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与解封方法"></a>Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与解封方法</h1><h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li>双向限制是什么：Telegram 官方为防止垃圾信息设置的风控，限制你主动发起私聊（群组里也只能看不能发）。</li>
+<li>是不是永久的：多半不是。临时限制 3 天到 1 周自动解除，用 @SpamBot 自查能看出类型。</li>
+<li>最快解封方法：通过官方机器人 @SpamBot 申诉，成功率最高。实在不行换绑手机号。</li>
+<li>关键避坑：共享机场 IP 连坐是主因之一，选冷门地区节点、别频繁切地区。</li>
+</ul>
+<p>在 Telegram 电报中发消息时提示「抱歉，目前您只能给双向联系人发送消息」，有的是提示「抱歉，目前您被限制无法主动发起私聊信息」。</p>
+<p>这就是典型的触发了「Telegram 双向限制」，如图所示：</p>
+<p><img src="https://pic1.zhimg.com/v2-12dbc3894dbfd4767d0399742252ac00_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-12dbc3894dbfd4767d0399742252ac00_1440w.jpg" class="lozad post-image"></p>
+<p>意味着你的 Telegram 被限制无法主动发起私聊，只能被动等待别人联系你。</p>
+<p>这种私聊提示的双向限制，在「群组」中也发不了消息，会提示“抱歉，您目前无法在此群组中发布消息。”，如图所示：</p>
+<p><img src="https://pica.zhimg.com/v2-e846ef60e014c0df3c9ab8d180030a36_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-e846ef60e014c0df3c9ab8d180030a36_1440w.jpg" class="lozad post-image"></p>
+<p><strong>为了解决这种「只能给双向联系人发送消息」的限制，给大家推荐实测有效的4种方法：</strong></p>
+<ul>
+<li>通过官方机器人 @SpamBot 申诉</li>
+<li>发送官方邮件人工解封</li>
+<li>开会员</li>
+<li>换绑手机号</li>
+</ul>
+<h2 id="1、什么是Telegram双向限制？"><a href="#1、什么是Telegram双向限制？" class="headerlink" title="1、什么是Telegram双向限制？"></a>1、什么是Telegram双向限制？</h2><p>所谓“双向限制”，是 Telegram 官方为了防止垃圾信息泛滥而设置的一种风控机制。</p>
+<p><img src="https://pic1.zhimg.com/v2-60367d7e3624c9b16d0cdbe2aae011d0_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-60367d7e3624c9b16d0cdbe2aae011d0_1440w.jpg" class="lozad post-image"></p>
+<p><strong>具体表现</strong></p>
+<p>当您的账号处于此状态时，您会发现以下功能受阻：</p>
+<ul>
+<li><strong>无法主动私聊陌生人：</strong>给非通讯录好友发送消息时，消息发不出去，并提示红色感叹号或错误信息。</li>
+<li><strong>只能被动回复：</strong>如果陌生人主动给您发消息，您可以正常回复。</li>
+<li><strong>只能联系“互存好友”：</strong>只有当您和对方都将彼此的手机号存入通讯录时，才能正常通信。</li>
+<li><strong>群聊：</strong> 在「群组」中只能看，不能发。</li>
+</ul>
+<p><strong>双向限制是永久的吗？</strong></p>
+<p>不一定。</p>
+<p>Telegram 的限制分为临时限制和永久限制。</p>
+<p>临时限制：通常持续 3 天到 1 周，到期自动解除。</p>
+<p>永久限制：如果违规严重或多次触犯规则，账号可能面临永久无法主动私聊的结果。</p>
+<h2 id="2、为什么会出现Telegram双向限制？"><a href="#2、为什么会出现Telegram双向限制？" class="headerlink" title="2、为什么会出现Telegram双向限制？"></a>2、为什么会出现Telegram双向限制？</h2><p>很多用户感到委屈：“我只是正常发个问候，为什么就被限制了？”</p>
+<p>甚至还有用户看到别人发广告、骂人、发垃圾信息，自己一发就被限制了。</p>
+<p>其实，Telegram 限制发消息的触发机制非常灵敏，主要源于以下3大因素：</p>
+<p><strong>1、 行为触发风控</strong></p>
+<p>这是最直接的原因，Telegram 的算法会监控您的操作频率：</p>
+<p>高频群发：短时间内向大量陌生用户发送相同或类似的内容（如广告文案）。</p>
+<p>频繁加好友/拉群：在没有双向关系的情况下，强行将大量陌生人拉入群组。</p>
+<p><strong>2、 账号权重过低</strong></p>
+<p>新注册的账号处于“考察期”，权重极低。</p>
+<p><strong>虚拟号码注册：</strong>使用廉价接码平台的虚拟号注册，天生自带“高风险”标签。</p>
+<p><strong>资料不完善：</strong>没有设置头像、用户名，简介包含敏感关键词等。</p>
+<p><strong>3、网络环境不干净</strong></p>
+<p>这是如何解决telegram无法主动发起私聊私聊限制的办法中，最容易被忽视却最关键的一点。</p>
+<p><strong>共享 IP 连坐：</strong>如果您使用的是市面上普通的 “机场”节点，这些 IP 是成千上万个用户共享的。一旦其中有人利用这个 IP 大量发送垃圾广告，Telegram 会将标记为“Spam IP”。</p>
+<p><strong>IP 频繁跳变：</strong>上一秒在洛杉矶，下一秒在新加坡。</p>
+<p>这种非正常人类的移动轨迹，会直接触发安全风控，从而直接实施双向限制。</p>
+<p><strong>4、使用非官方工具或脚本</strong></p>
+<p>使用第三方自动化软件执行操作（如自动加群、自动发消息），容易被系统检测到异常接口请求。Telegram官方只认可自家客户端，任何“批量行为”都可能触发封号。</p>
+<p><strong>5、被多次举报</strong></p>
+<p>其他用户举报是Telegram风控系统的重要信号。如果账号因发广告、发链接、频繁私信而被多人举报，即使没有违规内容，也可能被暂时封锁等待人工审核。</p>
+<h2 id="3、如何检测自己的Telegrram账号是否被限制？"><a href="#3、如何检测自己的Telegrram账号是否被限制？" class="headerlink" title="3、如何检测自己的Telegrram账号是否被限制？"></a>3、如何检测自己的Telegrram账号是否被限制？</h2><p>1、在尝试解除之前，建议先通过官方渠道确认账号状态。</p>
+<p>2、在 Telegram 搜索框输入 @SpamBot，请认准带蓝色认证标的机器人，这是官方认证的表示。</p>
+<p>3、点击底部的 Start。</p>
+<p>4、然后点击「check your accou’s status」</p>
+<p><strong>3种解读回复：</strong></p>
+<p>情况 A（正常）：机器人回复 “Good news, no limits are currently applied to your account.” 说明账号无限制。</p>
+<p>情况 B（受限）：机器人回复 “Unfortunately, some limited are applied…” 并给出一个时间，说明是临时限制。</p>
+<p>情况 C（永久）：如果回复中包含 “Permanent” 字样，说明是永久限制。</p>
+<h2 id="4、解除限制的4种方法"><a href="#4、解除限制的4种方法" class="headerlink" title="4、解除限制的4种方法"></a>4、解除限制的4种方法</h2><p>从解决问题的角度，推荐以下4种解除双向限制的方法。</p>
+<h3 id="1、通过官方机器人-SpamBot-申诉"><a href="#1、通过官方机器人-SpamBot-申诉" class="headerlink" title="1、通过官方机器人 @SpamBot 申诉"></a>1、通过官方机器人 @SpamBot 申诉</h3><p>这是目前 <strong>Telegram 解除私聊限制</strong>成功率最高的方法，适用于被误判的账号。</p>
+<p>1、找到机器人「spambot」</p>
+<p>搜索spambot，官方认证的带蓝V的那个才是</p>
+<p><a href="https://link.zhihu.com/?target=https://t.me/spambot" rel="external nofollow noreferrer">https://t.me/spambot</a></p>
+<p><img src="https://pic1.zhimg.com/v2-be79bc7ebb15fb94e91070446e90019e_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-be79bc7ebb15fb94e91070446e90019e_1440w.jpg" class="lozad post-image"></p>
+<p>2、点击左下角「菜单」 中的 check your account’s status。</p>
+<p><img src="https://pic1.zhimg.com/v2-602e6f100f4ccf3865507f9c99e078a8_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-602e6f100f4ccf3865507f9c99e078a8_1440w.jpg" class="lozad post-image"></p>
+<p>如果你想看懂英文，也可以搜索一下「翻译机器人」。</p>
+<p><img src="https://picx.zhimg.com/v2-9b12bfb69c90d741e1eacd9d29810e05_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-9b12bfb69c90d741e1eacd9d29810e05_1440w.jpg" class="lozad post-image"></p>
+<p>3、点击选项「This is a mistake」</p>
+<p><img src="https://pic1.zhimg.com/v2-f6baea3f292dacd83b6339dd50fd0c02_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-f6baea3f292dacd83b6339dd50fd0c02_1440w.jpg" class="lozad post-image"></p>
+<p>4、然后在下方弹出的选项中点“Yes”。</p>
+<p><img src="https://picx.zhimg.com/v2-005fedf614cc50933e1052bcf94829af_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-005fedf614cc50933e1052bcf94829af_1440w.jpg" class="lozad post-image"></p>
+<p>5、然后在下方弹出的选项中点「No! Never did that!」</p>
+<p><img src="https://pica.zhimg.com/v2-e11f7adc2bb686c38f496354791fe176_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pica.zhimg.com/v2-e11f7adc2bb686c38f496354791fe176_1440w.jpg" class="lozad post-image"></p>
+<p>6、接下来就是验证你是否是「真人」</p>
+<p>会弹出打开链接的提示，我们点击右下角的“Open”这时会跳到电报官网。</p>
+<p><img src="https://pic4.zhimg.com/v2-e9558f15ba88431cc40e78b1a6bb3b7d_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic4.zhimg.com/v2-e9558f15ba88431cc40e78b1a6bb3b7d_1440w.jpg" class="lozad post-image"></p>
+<p>勾起“确认您是真人”左边的框，显示成功后点下方的“Go back to Spam Bot”。</p>
+<p>这时如果点了跳不回电报垃圾邮件机器人界面，没关系，不要点左上角的X，手机直接操作返回上一个界面。</p>
+<p><img src="https://pic1.zhimg.com/v2-76a718cf8a89346e3897cd13283348f0_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-76a718cf8a89346e3897cd13283348f0_1440w.jpg" class="lozad post-image"></p>
+<p>然后下方菜单图标点一下，再点Done。</p>
+<p><img src="https://pic1.zhimg.com/v2-de55d69a239a99dbae3e1ba3b56e9412_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-de55d69a239a99dbae3e1ba3b56e9412_1440w.jpg" class="lozad post-image"></p>
+<p>7、接下来会让你输入内容，官方的提问是：</p>
+<blockquote>
+<p>如果您的帐户被错误限制，我们深感抱歉。 请详细说明您的情况，我会将其转发给管理员。您认为您的帐户为何被限制？出了什么问题？</p>
+</blockquote>
+<p>我已编好一段文字，大家直接复制粘贴进对话框并发送即可：</p>
+<pre class="highlight"><span class="line">Hello, I believe my account was wrongfully restricted from accessing public groups. I have always adhered to Telegram's rules and have never participated in any activity that violates these guidelines. I kindly request a review of my case to lift the ban as I value being part of the Telegram community and engaging in constructive discussions. Thank you for considering my appeal.</span><br></pre>
+
+<p><img src="https://pic3.zhimg.com/v2-91a7b6c6b64aeb1b8f95128aac67473e_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-91a7b6c6b64aeb1b8f95128aac67473e_1440w.jpg" class="lozad post-image"></p>
+<p>这样提交成功后就等待官方的解封，快的话10-20分钟，慢的话一般不超过24小时解禁。</p>
+<p>也有可能超过24小时，有人等了不止2天，如图所示：</p>
+<p><img src="https://pic2.zhimg.com/v2-ba04850cd7df0cb81ff9f7f1f8c397f3_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic2.zhimg.com/v2-ba04850cd7df0cb81ff9f7f1f8c397f3_1440w.jpg" class="lozad post-image"></p>
+<p>也有十几分钟就解除的：</p>
+<p><img src="https://pic1.zhimg.com/v2-b0b5f3e5e81db3c29c1cf83291ca7958_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-b0b5f3e5e81db3c29c1cf83291ca7958_1440w.jpg" class="lozad post-image"></p>
+<h3 id="2、发送官方邮件人工解封"><a href="#2、发送官方邮件人工解封" class="headerlink" title="2、发送官方邮件人工解封"></a>2、发送官方邮件人工解封</h3><p>如果机器人申诉失败，可以尝试人工通道。</p>
+<p>收件人：<a href="mailto:spam@telegram.org" rel="external nofollow noreferrer">spam@telegram.org</a></p>
+<p>主题：Spam restriction appeal</p>
+<p>内容：诚恳说明情况，并附上无法发送消息的截图，还有你的电话号码、注册邮箱等关键信息。</p>
+<h3 id="3、开会员"><a href="#3、开会员" class="headerlink" title="3、开会员"></a>3、开会员</h3><p>您可以通过开通飞机的官方会员来避免这个问题，有需要可以联系客服开通。</p>
+<p>这个我没试过，也是看别人说的，并不推荐这种做法。</p>
+<h3 id="4、换绑手机号"><a href="#4、换绑手机号" class="headerlink" title="4、换绑手机号"></a>4、换绑手机号</h3><p>如果您急需使用且申诉无果，直接换绑 Telegram 的手机号是最快的“复活”手段。</p>
+<p>路径：Settings &gt; 点击手机号 &gt; Change Number。</p>
+<p>注意：这会继承原有的聊天记录，但能重置一部分风控权重。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>最有效的还是第一种解决方法，如果提交了申诉，只能多等等了。</p>
+<p>对于显示了具体解封日期的临时限制，最好的办法就是什么都不要做。在此期间停止一切加好友操作，养号为主。</p>
+<hr>
+<p>顺带说一句，双向限制里「共享 IP 连坐」这一条，根源往往在于机场节点 IP 被大量用户共用、一旦有人发广告整个 IP 段被打标记。想避开脏 IP、选个相对干净的节点，可以看 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a> 里关于节点 IP 质量的部分；Telegram 还没装或想系统了解用法，看 <a href="https://tanqingbo.cn/Telegram-VPN/">电报(Telegram)下载注册教程</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/telegram-two-way-restriction/">https://tanqingbo.cn/telegram-two-way-restriction/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/telegram-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Telegram 完全指南：从下载到玩法总览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-21</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/science-internet-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        科学上网方案怎么选：VPN / 机场 / VPS 对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-23</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Telegram-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        电报(Telegram)下载注册教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-node-testing/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 节点测速与选节点指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/telegram-set-chinese/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Telegram 怎么设置中文？电报汉化 3 步搞定，附搜索引导与翻译设置（2026）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-21</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/telegram-useful-features/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">Telegram 实用功能合集：定时消息、双向删除、私密对话等 9 个隐藏技巧（2026） </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/kuaili-airport-review/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2026 翻墙机场推荐：新手怎么选、怎么订阅、怎么用（自用款实测） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Telegram-%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%8C%E5%8F%AA%E8%83%BD%E7%BB%99%E5%8F%8C%E5%90%91%E8%81%94%E7%B3%BB%E4%BA%BA%E5%8F%91%E6%B6%88%E6%81%AF%E3%80%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%B8%8E%E8%A7%A3%E5%B0%81%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与解封方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFTelegram%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">1、什么是Telegram双向限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0Telegram%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">2、为什么会出现Telegram双向限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E8%87%AA%E5%B7%B1%E7%9A%84Telegrram%E8%B4%A6%E5%8F%B7%E6%98%AF%E5%90%A6%E8%A2%AB%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">3、如何检测自己的Telegrram账号是否被限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E8%A7%A3%E9%99%A4%E9%99%90%E5%88%B6%E7%9A%844%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">4、解除限制的4种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87%E5%AE%98%E6%96%B9%E6%9C%BA%E5%99%A8%E4%BA%BA-SpamBot-%E7%94%B3%E8%AF%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">1、通过官方机器人 @SpamBot 申诉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%8F%91%E9%80%81%E5%AE%98%E6%96%B9%E9%82%AE%E4%BB%B6%E4%BA%BA%E5%B7%A5%E8%A7%A3%E5%B0%81"><span class="toc-number">1.5.2.</span> <span class="toc-text">2、发送官方邮件人工解封</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%BC%80%E4%BC%9A%E5%91%98"><span class="toc-number">1.5.3.</span> <span class="toc-text">3、开会员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%8D%A2%E7%BB%91%E6%89%8B%E6%9C%BA%E5%8F%B7"><span class="toc-number">1.5.4.</span> <span class="toc-text">4、换绑手机号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.6.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>396</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>260</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Telegram-%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%8C%E5%8F%AA%E8%83%BD%E7%BB%99%E5%8F%8C%E5%90%91%E8%81%94%E7%B3%BB%E4%BA%BA%E5%8F%91%E6%B6%88%E6%81%AF%E3%80%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%B8%8E%E8%A7%A3%E5%B0%81%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与解封方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFTelegram%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">1、什么是Telegram双向限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0Telegram%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">2、为什么会出现Telegram双向限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E8%87%AA%E5%B7%B1%E7%9A%84Telegrram%E8%B4%A6%E5%8F%B7%E6%98%AF%E5%90%A6%E8%A2%AB%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">3、如何检测自己的Telegrram账号是否被限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E8%A7%A3%E9%99%A4%E9%99%90%E5%88%B6%E7%9A%844%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">4、解除限制的4种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87%E5%AE%98%E6%96%B9%E6%9C%BA%E5%99%A8%E4%BA%BA-SpamBot-%E7%94%B3%E8%AF%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">1、通过官方机器人 @SpamBot 申诉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%8F%91%E9%80%81%E5%AE%98%E6%96%B9%E9%82%AE%E4%BB%B6%E4%BA%BA%E5%B7%A5%E8%A7%A3%E5%B0%81"><span class="toc-number">1.5.2.</span> <span class="toc-text">2、发送官方邮件人工解封</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%BC%80%E4%BC%9A%E5%91%98"><span class="toc-number">1.5.3.</span> <span class="toc-text">3、开会员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%8D%A2%E7%BB%91%E6%89%8B%E6%9C%BA%E5%8F%B7"><span class="toc-number">1.5.4.</span> <span class="toc-text">4、换绑手机号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.6.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">66</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\代理" title="代理"><div class="tags-list-item">代理</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Telegram-%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E3%80%8C%E5%8F%AA%E8%83%BD%E7%BB%99%E5%8F%8C%E5%90%91%E8%81%94%E7%B3%BB%E4%BA%BA%E5%8F%91%E6%B6%88%E6%81%AF%E3%80%8D%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%B8%8E%E8%A7%A3%E5%B0%81%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Telegram 双向限制是什么？「只能给双向联系人发消息」的原因与解封方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AFTelegram%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">1、什么是Telegram双向限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0Telegram%E5%8F%8C%E5%90%91%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">2、为什么会出现Telegram双向限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E8%87%AA%E5%B7%B1%E7%9A%84Telegrram%E8%B4%A6%E5%8F%B7%E6%98%AF%E5%90%A6%E8%A2%AB%E9%99%90%E5%88%B6%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">3、如何检测自己的Telegrram账号是否被限制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E8%A7%A3%E9%99%A4%E9%99%90%E5%88%B6%E7%9A%844%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">4、解除限制的4种方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87%E5%AE%98%E6%96%B9%E6%9C%BA%E5%99%A8%E4%BA%BA-SpamBot-%E7%94%B3%E8%AF%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">1、通过官方机器人 @SpamBot 申诉</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%8F%91%E9%80%81%E5%AE%98%E6%96%B9%E9%82%AE%E4%BB%B6%E4%BA%BA%E5%B7%A5%E8%A7%A3%E5%B0%81"><span class="toc-number">1.5.2.</span> <span class="toc-text">2、发送官方邮件人工解封</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%BC%80%E4%BC%9A%E5%91%98"><span class="toc-number">1.5.3.</span> <span class="toc-text">3、开会员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E6%8D%A2%E7%BB%91%E6%89%8B%E6%9C%BA%E5%8F%B7"><span class="toc-number">1.5.4.</span> <span class="toc-text">4、换绑手机号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">1.6.</span> <span class="toc-text">最后</span></a></li></ol></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/clash-adblock-guide/"><div class="recent-posts-item-content">Clash 去广告完全指南：为什么规则能去广告、Loyalsoldier 怎么用、副作用怎么避（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/telegram-guide/"><div class="recent-posts-item-content">Telegram 完全指南：下载注册、设置中文、玩法到排障的保姆级教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-21</div>
+        <a href="/telegram-set-chinese/"><div class="recent-posts-item-content">Telegram 怎么设置中文？电报汉化 3 步搞定，附搜索引导与翻译设置（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
