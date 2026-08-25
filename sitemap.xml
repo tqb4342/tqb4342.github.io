@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/llm-wiki-guide/</loc>
+    
+    <lastmod>2026-08-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/Win-Internet/</loc>
+    
+    <lastmod>2026-08-25</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/yzhx-vpn/</loc>
     
     <lastmod>2026-08-25</lastmod>
@@ -612,13 +626,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/Win-Open-Internet/</loc>
-    
-    <lastmod>2026-07-27</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/Win-Internet/</loc>
     
     <lastmod>2026-07-27</lastmod>
     
@@ -3582,6 +3589,41 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E5%9B%BE%E8%B0%B1%E5%88%86%E5%89%B2/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/LLM-Wiki/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E5%8F%8C%E9%93%BE%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

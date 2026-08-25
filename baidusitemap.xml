@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/llm-wiki-guide/</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/Win-Internet/</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/yzhx-vpn/</loc>
     <lastmod>2026-08-25</lastmod>
   </url>
@@ -350,10 +358,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Win-Open-Internet/</loc>
-    <lastmod>2026-07-27</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/Win-Internet/</loc>
     <lastmod>2026-07-27</lastmod>
   </url>
   <url>
