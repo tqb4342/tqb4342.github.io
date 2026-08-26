@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-26T01:30:00.000Z",
+  "dateModified": "2026-08-26T01:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/clash-split-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png",
+  "description": "Clash 分流到底是怎么回事？这篇用大白话讲清「为什么开了代理国内网站会变慢」「三种模式（全局/规则/Direct 直连）到底怎么选」，并给出国内直连、国外走代理的最小配置方案，以及分流失效时的排查思路。新手看完就能自己搞定分流。",
+  "keywords": "Clash分流,clash规则分流,clash国内直连,开了代理国内网站打不开,clash全局模式和规则模式区别,clash direct规则,clash路由模式,走代理国内变慢,clash白名单,机场分流,clash策略组怎么选,clash模式切换,科学上网分流,代理直连配置,clash怎么让国内不走代理"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Clash 的全局模式、规则模式、Direct 直连有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "全局模式（Global）所有流量都走代理节点，简单但国内网站也会绕远、变慢，还浪费流量；规则模式（Rule）按规则分流——国外网站走代理、国内网站直连，日常首选；Direct（直连）完全不走代理，适合临时让某个网站/软件直连。新手默认用 Rule 就好。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么开了代理后，国内网站变慢甚至打不开？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为你可能开在了全局模式，或者规则里没把国内网站配成直连，导致访问百度、淘宝这些国内站也绕道海外节点走了一圈，自然又慢又可能被打不开。解决办法：切到规则模式，并确认规则里有国内直连的分流规则。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么让国内流量直连、国外流量走代理？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "核心靠两条规则：GEOIP,CN 走直连（国内 IP 不代理）、GEOSITE 或域名列表里把 google、youtube、twitter、chatgpt 等境外域名走代理。绝大多数机场订阅自带这套规则，默认的规则模式就能做到；只有规则不全时才需要自己补。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash 策略组怎么选？节点排序影响速度吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "策略组（Proxy Group）决定一组流量走哪个节点。日常用自动测速（url-test）组，它会自动选延迟最低的节点；需要固定地区（比如看美区 Netflix）时，手选对应地区的节点组。节点在列表里的顺序对 url-test 无影响，但对手动选的组有影响——它会优先走列表第一个可用的节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么判断某个网站现在走的是代理还是直连？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三个方法：看 Clash 的连接日志（Connections），会显示每个连接的规则命中情况（DIRECT 还是 PROXY）；访问查 IP 的网站，看返回的是国内还是境外 IP；临时把模式切到 Direct，如果网站能打开说明它本来就该直连，如果打不开说明它需要代理。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "分流失效了怎么办（应该直连的走了代理，或反之）？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "优先更新订阅——机场的规则集经常更新，失效多半是规则集过期。其次检查自己的自定义规则有没有写错顺序（Clash 自上而下匹配，先命中先赢，宽泛规则放后面）。还不行就查 DNS，很多「分流看着不对」其实是 DNS 泄露导致。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）</title>
+  
+  
+  <meta property="title" content="Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/clash-split-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png">
+  
+  
+  <meta property="description" content="Clash 分流到底是怎么回事？这篇用大白话讲清「为什么开了代理国内网站会变慢」「三种模式（全局/规则/Direct 直连）到底怎么选」，并给出国内直连、国外走代理的最小配置方案，以及分流失效时的排查思路。新手看完就能自己搞定分流。">
+  
+  <meta property="keywords" content="Clash分流,clash规则分流,clash国内直连,开了代理国内网站打不开,clash全局模式和规则模式区别,clash direct规则,clash路由模式,走代理国内变慢,clash白名单,机场分流,clash策略组怎么选,clash模式切换,科学上网分流,代理直连配置,clash怎么让国内不走代理">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-26">
+  <meta property="og:article:modified_time" content="2026-08-26">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="机场">
+  
+  <meta property="og:article:tag" content="Mihomo">
+  
+  <meta property="og:article:tag" content="规则">
+  
+  <meta property="og:article:tag" content="分流">
+  
+  <meta property="og:article:tag" content="代理">
+  
+  <meta property="og:article:tag" content="直连">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/clash-split-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-26T01:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-26</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/clash-split-guide/" class="leancloud_visitors" data-flag-title="Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机场/" class="post-meta-link">机场</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Mihomo/" class="post-meta-link">Mihomo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/规则/" class="post-meta-link">规则</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/分流/" class="post-meta-link">分流</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/代理/" class="post-meta-link">代理</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/直连/" class="post-meta-link">直连</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="Clash 分流到底是怎么回事？这篇用大白话讲清「为什么开了代理国内网站会变慢」「三种模式（全局/规则/Direct 直连）到底怎么选」，并给出国内直连、国外走代理的最小配置方案，以及分流失效时的排查思路。新手看完就能自己搞定分流。">
+  
+  <meta name="keywords" content="Clash分流,clash规则分流,clash国内直连,开了代理国内网站打不开,clash全局模式和规则模式区别,clash direct规则,clash路由模式,走代理国内变慢,clash白名单,机场分流,clash策略组怎么选,clash模式切换,科学上网分流,代理直连配置,clash怎么让国内不走代理">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。想系统了解 VPN、Clash 机场、VPS 三大方案与全平台配置，欢迎访问总览页。</p>
+</blockquote>
+<blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程（2026）</a></strong> 系列之一。规则怎么写的细节看 <a href="https://tanqingbo.cn/clash-custom-rules/">自定义规则指南</a>，这里只讲一件最容易劝退新手的事——<strong>「分流」到底是什么、三种模式怎么选、怎么让国内国外各走各的道</strong>。</p>
+</blockquote>
+<p>很多人的科学上网第一课，不是「怎么连上」，而是连上之后冒出的一堆怪问题：<strong>为什么开了代理，百度、淘宝这些国内网站反而变慢了？为什么有的软件明明开着代理还是连不上外网？</strong></p>
+<p>这些问题的答案，都指向同一个词——<strong>分流</strong>。它才是 Clash 区别于「一键 VPN」的灵魂。搞懂它，你才算真正会用 Clash。</p>
+<h2 id="一、什么是分流：一句话讲清"><a href="#一、什么是分流：一句话讲清" class="headerlink" title="一、什么是分流：一句话讲清"></a>一、什么是分流：一句话讲清</h2><p>分流，就是<strong>给流量指路</strong>：哪些流量走代理（出国），哪些流量走直连（留在国内），哪些流量干脆屏蔽（去广告）。</p>
+<p>VPN 是「一刀切」——要么全走、要么全不走。Clash 不一样，它能针对每条连接单独决定走哪条路，这靠的就是<strong>规则分流</strong>。</p>
+<p>为什么需要分流？因为现实中，你的流量天生分成两类：</p>
+<table>
+<thead>
+<tr>
+<th>流量类型</th>
+<th>举例</th>
+<th>该走的路</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>境外服务</td>
+<td>Google、YouTube、ChatGPT</td>
+<td><strong>代理</strong>（绕出去）</td>
+</tr>
+<tr>
+<td>国内服务</td>
+<td>百度、淘宝、B站、微信</td>
+<td><strong>直连</strong>（别绕远）</td>
+</tr>
+</tbody></table>
+<p>如果不分流，把国内网站也塞进代理节点，等于<strong>从北京出发去上海，非要先绕道美国</strong>——又慢、又容易出问题、还白白烧掉套餐流量。</p>
+<p>分流的直接好处，主要有三个：</p>
+<ol>
+<li><strong>速度更快</strong>：国内网站走直连，秒开；国外网站走优质节点，不掉速。两头都快。</li>
+<li><strong>流量不浪费</strong>：机场套餐流量是按代理流量算的，国内网站也走代理等于白白烧流量。分流后，一个月能省下一半以上的流量。</li>
+<li><strong>隐私更合理</strong>：访问国内网站时不需要把浏览记录交给海外节点中转，既快又少一层暴露。</li>
+</ol>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-modes.png" alt="Clash 三种路由模式对比示意" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-modes.png" class="lozad post-image"></p>
+<h2 id="二、三种模式：全局、规则、直连，到底怎么选"><a href="#二、三种模式：全局、规则、直连，到底怎么选" class="headerlink" title="二、三种模式：全局、规则、直连，到底怎么选"></a>二、三种模式：全局、规则、直连，到底怎么选</h2><p>Clash 有三大路由模式，很多新手搞不清。用一句话记住：</p>
+<ul>
+<li><strong>Global（全局）</strong>：所有流量都走代理。简单粗暴，但国内网站也绕远，日常别用。</li>
+<li><strong>Rule（规则）</strong>：按规则分流，国外走代理、国内直连。<strong>日常默认选这个。</strong></li>
+<li><strong>Direct（直连）</strong>：所有流量都不走代理，等于临时「关掉梯子」，适合排查问题时用。</li>
+</ul>
+<p>具体什么时候用哪个：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>该选的模式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>日常使用（查资料、刷视频、用 AI）</td>
+<td><strong>Rule 规则模式</strong></td>
+</tr>
+<tr>
+<td>临时想让某个国内软件「正常」</td>
+<td>切 Rule，检查规则</td>
+</tr>
+<tr>
+<td>怀疑某个网站被代理搞坏了，验证一下</td>
+<td>切 <strong>Direct</strong> 试试</td>
+</tr>
+<tr>
+<td>所有流量都要走同一个节点（不推荐）</td>
+<td>Global</td>
+</tr>
+</tbody></table>
+<p>一个常见的坑：<strong>很多人默认留在 Global，用着用着发现国内网站卡</strong>。其实只要切到 Rule，问题大概率当场消失。</p>
+<p>顺带说一下「模式在哪切」：不同客户端位置略有差异，但都在首页/主界面的显眼位置——</p>
+<ul>
+<li><strong>Clash Verge Rev</strong>：首页顶部就有「规则 / 全局 / 直连」三个按钮，点一下即切。</li>
+<li><strong>Clash for Windows（已停更）</strong>：侧边栏「Proxies」上方有「Rule / Global / Direct」三个选项。</li>
+<li><strong>移动端（CMFA / Shadowrocket 等）</strong>：首页或设置里的「模式 / 路由」选项。</li>
+</ul>
+<h2 id="三、分流的底层：两条规则搞定「国内直连」"><a href="#三、分流的底层：两条规则搞定「国内直连」" class="headerlink" title="三、分流的底层：两条规则搞定「国内直连」"></a>三、分流的底层：两条规则搞定「国内直连」</h2><p>分流的本质，就是靠规则把「国内」和「国外」区分开。核心就两条：</p>
+<p><strong>1. 国内 IP 走直连 —— 靠 <code>GEOIP,CN</code></strong></p>
+<p><code>GEOIP,CN</code> 的意思是：凡是目标 IP 属于中国大陆的，一律直连。这一条就把百度、淘宝、B站这些国内站全拦下来了，不用一个个写域名。</p>
+<p><strong>2. 境外域名走代理 —— 靠 <code>GEOSITE</code> 或域名列表</strong></p>
+<p><code>GEOSITE,google</code>、<code>GEOSITE,youtube</code> 这类规则，把谷歌、YouTube 的域名指向代理。或者更简单，用一条 <code>MATCH</code> 兜底——<strong>前面规则都没命中的流量，最后统一走代理</strong>。</p>
+<p>一个典型的规则骨架长这样（从精简到宽泛，顺序很重要）：</p>
+<pre class="highlight"><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOIP,CN,DIRECT</span>          <span class="comment"># 国内 IP 直连</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,google,PROXY</span>     <span class="comment"># 谷歌系走代理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,youtube,PROXY</span>    <span class="comment"># 油管走代理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,facebook,PROXY</span>   <span class="comment"># 脸书走代理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">MATCH,PROXY</span>              <span class="comment"># 剩下的全部走代理</span></span><br></pre>
+
+<p>规则是<strong>自上而下匹配、先命中先赢</strong>的。所以：具体规则放前面，兜底规则（MATCH 走代理）放最后。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-rules-flow.png" alt="Clash 规则匹配流程：自上而下、先命中先赢" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-rules-flow.png" class="lozad post-image"></p>
+<p><strong>「机场自带规则」还是「自己写」？</strong> 这是新手最该搞清的问题：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>适用情况</th>
+<th>优缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>机场订阅自带规则</td>
+<td>绝大多数人</td>
+<td>开箱即用，规则全且会自动更新；缺点是规则由机场定，少数特殊情况覆盖不到</td>
+</tr>
+<tr>
+<td>自己叠加/改写规则</td>
+<td>有特殊需求的人</td>
+<td>灵活可控，能强行指定某域名走某节点；缺点是维护成本高、容易写错</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>好消息：<strong>绝大多数机场订阅已经把这套规则配好了</strong>。你导入订阅选择「规则模式」时，分流默认就是对的，基本不用自己写。只有当你发现某个网站分流错了，才需要自己补规则（具体写法看 <a href="https://tanqingbo.cn/clash-custom-rules/">自定义规则指南</a>）。</p>
+<p>还没选好机场的话，可以先看这篇 <a href="https://tanqingbo.cn/yzhx-vpn/">老牌机场推荐：Trojan 实测，套餐怎么选、订阅怎么导入</a>——它用的订阅自带完整分流规则，导入后直接就是「国内直连、国外代理」的默认状态，不用自己折腾这里讲的每一条规则。</p>
+</blockquote>
+<h2 id="四、策略组：分流之后，走哪个节点"><a href="#四、策略组：分流之后，走哪个节点" class="headerlink" title="四、策略组：分流之后，走哪个节点"></a>四、策略组：分流之后，走哪个节点</h2><p>分流决定了「走代理还是走直连」；策略组（Proxy Group）进一步决定「走代理时，走哪个节点」。</p>
+<p>常见策略组类型：</p>
+<ul>
+<li><strong>url-test（自动测速）</strong>：自动挑延迟最低的节点，日常最省心，选它就行。</li>
+<li><strong>fallback（故障转移）</strong>：优先走第一个，挂了自动切下一个。</li>
+<li><strong>select（手动选择）</strong>：固定用某个节点，适合需要稳定地区 IP 的场景（比如看美区 Netflix 必须用美区节点）。</li>
+</ul>
+<p>新手建议：<strong>日常选 url-test 自动测速</strong>，遇到「必须固定地区」的需求（看特定地区流媒体、养号）再手动选对应地区的节点组。</p>
+<h3 id="几个用得上的分流技巧"><a href="#几个用得上的分流技巧" class="headerlink" title="几个用得上的分流技巧"></a>几个用得上的分流技巧</h3><p>搞懂基础之后，这几个技巧能把分流用出花来：</p>
+<ol>
+<li><strong>「临时直连」某网站</strong>：某个国内网站打不开、怀疑被代理搞坏了？不用改规则，直接开「连接」面板找到那条连接，右键/长按选「直连」即可临时放行。</li>
+<li><strong>「临时代理」某网站</strong>：反过来，某个境外网站没走代理，在连接面板里手动把它指向代理节点即可。</li>
+<li><strong>给某个域名强制指定节点</strong>：比如想让「奈飞必须走美区节点」，在规则里加一条 <code>DOMAIN-SUFFIX,netflix.com,美区组名</code>，就锁死了地区。</li>
+<li><strong>分应用分流（TUN 模式下）</strong>：开 TUN 模式后，能针对「进程」写规则（比如只让浏览器走代理、游戏走直连），这是普通模式做不到的，具体看 <a href="https://tanqingbo.cn/clash-tun-mode/">TUN 模式指南</a>。</li>
+</ol>
+<h2 id="五、怎么判断某条流量走了哪条路"><a href="#五、怎么判断某条流量走了哪条路" class="headerlink" title="五、怎么判断某条流量走了哪条路"></a>五、怎么判断某条流量走了哪条路</h2><p>想知道眼前这个网站到底走的代理还是直连，三个办法：</p>
+<ol>
+<li><strong>看连接日志</strong>：Clash 的 Connections 面板会实时显示每条连接命中的规则（<code>DIRECT</code> 还是 <code>PROXY</code>），最直观。</li>
+<li><strong>查 IP</strong>：访问查 IP 的网站，看返回的是国内还是境外 IP。</li>
+<li><strong>切 Direct 验证</strong>：临时切到直连模式，网站能打开说明它本来就该直连；打不开说明它需要代理，规则配错了。</li>
+</ol>
+<h2 id="六、乱套了怎么办：分流失效排查"><a href="#六、乱套了怎么办：分流失效排查" class="headerlink" title="六、乱套了怎么办：分流失效排查"></a>六、乱套了怎么办：分流失效排查</h2><p>如果发现「该直连的走了代理」「该代理的却直连了」，按这个顺序查：</p>
+<ol>
+<li><strong>先更新订阅</strong>。机场规则集更新频繁，「分流失效」十有八九是规则集过期，点一下更新订阅就能解决。</li>
+<li><strong>检查自定义规则顺序</strong>。如果你自己加过规则，确认具体规则在前、宽泛规则（MATCH）在后。</li>
+<li><strong>查 DNS</strong>。很多「分流看着不对」其实是 DNS 泄露——域名解析用了国内 DNS，导致走了直连。看 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 配置指南</a>。</li>
+<li><strong>确认模式没错</strong>。检查你是不是误切到了 Global 或 Direct。</li>
+</ol>
+<h2 id="七、总结：一套直接照抄的配置"><a href="#七、总结：一套直接照抄的配置" class="headerlink" title="七、总结：一套直接照抄的配置"></a>七、总结：一套直接照抄的配置</h2><p>把整件事拎成一条线：</p>
+<ol>
+<li><strong>模式选 Rule（规则）</strong>，别留在 Global；</li>
+<li>**确认规则里有 <code>GEOIP,CN</code> → <code>DIRECT</code> 和 <code>MATCH</code> → <code>PROXY</code>**（机场订阅一般已配好）；</li>
+<li><strong>策略组选 url-test 自动测速</strong>，需要固定地区再手选；</li>
+<li><strong>分流不准时，先更新订阅，再查规则顺序，最后查 DNS</strong>。</li>
+</ol>
+<p>搞定这四步，你的 Clash 就既「分得清」又「跑得快」了——国内网站秒开、国外服务稳定、流量不浪费。</p>
+<hr>
+<p>想彻底搞懂规则怎么写、怎么叠加自己的规则，看 <a href="https://tanqingbo.cn/clash-custom-rules/">Clash 自定义规则完全指南</a>；「能连上却打不开网页」这类疑难杂症，按症状排查看 <a href="https://tanqingbo.cn/troubleshooting/">Clash 独立排障指南</a>；对分流背后的 DNS 机制感兴趣，看 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 配置指南</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/clash-split-guide/">https://tanqingbo.cn/clash-split-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全教程：客户端、订阅与规则分流
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-custom-rules/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 自定义规则完全指南：规则写法与规则集
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-06</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-dns-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash DNS 配置完全指南：fake-ip 与 DNS 泄露
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/troubleshooting/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 独立排障指南：按症状排查
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-04-14</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/science-internet-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        科学上网方案怎么选：VPN / 机场 / VPS 对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-23</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/llm-wiki-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">LLM Wiki 自生长知识库搭建教程：用 WorkBuddy / Codex + Obsidian 搭一套会进化的知识大脑 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E6%B5%81%EF%BC%9A%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%AE%B2%E6%B8%85"><span class="toc-number">1.</span> <span class="toc-text">一、什么是分流：一句话讲清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%85%A8%E5%B1%80%E3%80%81%E8%A7%84%E5%88%99%E3%80%81%E7%9B%B4%E8%BF%9E%EF%BC%8C%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">2.</span> <span class="toc-text">二、三种模式：全局、规则、直连，到底怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%B5%81%E7%9A%84%E5%BA%95%E5%B1%82%EF%BC%9A%E4%B8%A4%E6%9D%A1%E8%A7%84%E5%88%99%E6%90%9E%E5%AE%9A%E3%80%8C%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">三、分流的底层：两条规则搞定「国内直连」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AD%96%E7%95%A5%E7%BB%84%EF%BC%9A%E5%88%86%E6%B5%81%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%B5%B0%E5%93%AA%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">四、策略组：分流之后，走哪个节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E7%94%A8%E5%BE%97%E4%B8%8A%E7%9A%84%E5%88%86%E6%B5%81%E6%8A%80%E5%B7%A7"><span class="toc-number">4.1.</span> <span class="toc-text">几个用得上的分流技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E6%9F%90%E6%9D%A1%E6%B5%81%E9%87%8F%E8%B5%B0%E4%BA%86%E5%93%AA%E6%9D%A1%E8%B7%AF"><span class="toc-number">5.</span> <span class="toc-text">五、怎么判断某条流量走了哪条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B9%B1%E5%A5%97%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9A%E5%88%86%E6%B5%81%E5%A4%B1%E6%95%88%E6%8E%92%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">六、乱套了怎么办：分流失效排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%80%E5%A5%97%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">七、总结：一套直接照抄的配置</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>398</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>268</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E6%B5%81%EF%BC%9A%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%AE%B2%E6%B8%85"><span class="toc-number">1.</span> <span class="toc-text">一、什么是分流：一句话讲清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%85%A8%E5%B1%80%E3%80%81%E8%A7%84%E5%88%99%E3%80%81%E7%9B%B4%E8%BF%9E%EF%BC%8C%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">2.</span> <span class="toc-text">二、三种模式：全局、规则、直连，到底怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%B5%81%E7%9A%84%E5%BA%95%E5%B1%82%EF%BC%9A%E4%B8%A4%E6%9D%A1%E8%A7%84%E5%88%99%E6%90%9E%E5%AE%9A%E3%80%8C%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">三、分流的底层：两条规则搞定「国内直连」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AD%96%E7%95%A5%E7%BB%84%EF%BC%9A%E5%88%86%E6%B5%81%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%B5%B0%E5%93%AA%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">四、策略组：分流之后，走哪个节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E7%94%A8%E5%BE%97%E4%B8%8A%E7%9A%84%E5%88%86%E6%B5%81%E6%8A%80%E5%B7%A7"><span class="toc-number">4.1.</span> <span class="toc-text">几个用得上的分流技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E6%9F%90%E6%9D%A1%E6%B5%81%E9%87%8F%E8%B5%B0%E4%BA%86%E5%93%AA%E6%9D%A1%E8%B7%AF"><span class="toc-number">5.</span> <span class="toc-text">五、怎么判断某条流量走了哪条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B9%B1%E5%A5%97%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9A%E5%88%86%E6%B5%81%E5%A4%B1%E6%95%88%E6%8E%92%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">六、乱套了怎么办：分流失效排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%80%E5%A5%97%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">七、总结：一套直接照抄的配置</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">16</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">67</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">59</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">24</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="\tags\内推" title="内推"><div class="tags-list-item">内推</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E6%B5%81%EF%BC%9A%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%AE%B2%E6%B8%85"><span class="toc-number">1.</span> <span class="toc-text">一、什么是分流：一句话讲清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%85%A8%E5%B1%80%E3%80%81%E8%A7%84%E5%88%99%E3%80%81%E7%9B%B4%E8%BF%9E%EF%BC%8C%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">2.</span> <span class="toc-text">二、三种模式：全局、规则、直连，到底怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%B5%81%E7%9A%84%E5%BA%95%E5%B1%82%EF%BC%9A%E4%B8%A4%E6%9D%A1%E8%A7%84%E5%88%99%E6%90%9E%E5%AE%9A%E3%80%8C%E5%9B%BD%E5%86%85%E7%9B%B4%E8%BF%9E%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">三、分流的底层：两条规则搞定「国内直连」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AD%96%E7%95%A5%E7%BB%84%EF%BC%9A%E5%88%86%E6%B5%81%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%B5%B0%E5%93%AA%E4%B8%AA%E8%8A%82%E7%82%B9"><span class="toc-number">4.</span> <span class="toc-text">四、策略组：分流之后，走哪个节点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E7%94%A8%E5%BE%97%E4%B8%8A%E7%9A%84%E5%88%86%E6%B5%81%E6%8A%80%E5%B7%A7"><span class="toc-number">4.1.</span> <span class="toc-text">几个用得上的分流技巧</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E6%9F%90%E6%9D%A1%E6%B5%81%E9%87%8F%E8%B5%B0%E4%BA%86%E5%93%AA%E6%9D%A1%E8%B7%AF"><span class="toc-number">5.</span> <span class="toc-text">五、怎么判断某条流量走了哪条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B9%B1%E5%A5%97%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9A%E5%88%86%E6%B5%81%E5%A4%B1%E6%95%88%E6%8E%92%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">六、乱套了怎么办：分流失效排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93%EF%BC%9A%E4%B8%80%E5%A5%97%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%8A%84%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">七、总结：一套直接照抄的配置</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-26</div>
+        <a href="/clash-split-guide/"><div class="recent-posts-item-content">Clash 分流详解：开了代理国内网站变慢？怎么让国内流量直连、国外走代理（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-25</div>
+        <a href="/llm-wiki-guide/"><div class="recent-posts-item-content">LLM Wiki 自生长知识库搭建教程：用 WorkBuddy / Codex + Obsidian 搭一套会进化的知识大脑</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-25</div>
+        <a href="/yzhx-vpn/"><div class="recent-posts-item-content">2026 老牌机场推荐：Trojan 实测，套餐怎么选、订阅怎么导入</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
