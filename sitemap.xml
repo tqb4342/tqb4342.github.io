@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://tanqingbo.cn/GPT-4o/</loc>
-    
-    <lastmod>2026-08-27</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/Google-Gemini/</loc>
     
     <lastmod>2026-08-27</lastmod>
@@ -16,14 +9,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/how-to-use-Gemini/</loc>
-    
-    <lastmod>2026-08-27</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/choose/</loc>
+    <loc>https://tanqingbo.cn/GPT-4o/</loc>
     
     <lastmod>2026-08-27</lastmod>
     
@@ -44,6 +30,13 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/how-to-use-Gemini/</loc>
+    
+    <lastmod>2026-08-27</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/Clash-VPS/</loc>
     
     <lastmod>2026-08-27</lastmod>
@@ -51,7 +44,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/freego/</loc>
+    <loc>https://tanqingbo.cn/choose/</loc>
     
     <lastmod>2026-08-27</lastmod>
     
@@ -59,6 +52,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/computer-censorship/</loc>
+    
+    <lastmod>2026-08-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/freego/</loc>
     
     <lastmod>2026-08-27</lastmod>
     
@@ -79,7 +79,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/clash-pro/</loc>
+    <loc>https://tanqingbo.cn/Clash-Party/</loc>
     
     <lastmod>2026-08-27</lastmod>
     
@@ -93,7 +93,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/Clash-Party/</loc>
+    <loc>https://tanqingbo.cn/clash-pro/</loc>
+    
+    <lastmod>2026-08-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/2026-best-vpn/</loc>
     
     <lastmod>2026-08-27</lastmod>
     
@@ -115,13 +122,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/best-vps/</loc>
-    
-    <lastmod>2026-08-27</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/2026-best-vpn/</loc>
     
     <lastmod>2026-08-27</lastmod>
     
@@ -1789,6 +1789,13 @@
 
   
   <url>
+    <loc>https://tanqingbo.cn/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/tags/%E7%BD%91%E7%AB%99/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -1797,13 +1804,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -2867,41 +2867,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/tags/%E8%A7%84%E5%88%99/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/rule-set/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/geosite/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E5%88%86%E6%B5%81/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E4%BB%A3%E7%90%86/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/tags/DNS/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -2930,7 +2895,42 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/tags/%E4%BB%A3%E7%90%86/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/tags/%E6%8E%92%E9%9A%9C/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E8%A7%84%E5%88%99/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/rule-set/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/geosite/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E5%88%86%E6%B5%81/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3140,34 +3140,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/tags/Hermes-Agent/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/OpenRouter/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/config-yaml/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/tags/iCloud/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3231,6 +3203,34 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/tags/Hermes-Agent/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/OpenRouter/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/config-yaml/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/tags/OpenClaw/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3253,13 +3253,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/kmp/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3302,6 +3295,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E5%8F%8C%E9%93%BE%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3462,6 +3462,13 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/tags/%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/tags/%E5%8D%8F%E8%AE%AE/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3477,13 +3484,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/Hysteria2/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3539,20 +3539,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/tags/VPS/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/tags/Google/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3581,6 +3567,34 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/tags/VPS/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E6%90%9C%E6%90%9C/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E6%89%BE%E7%BE%A4%E7%BB%84/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/tags/%E4%B8%AD%E6%96%87%E6%B1%89%E5%8C%96/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3596,20 +3610,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E6%90%9C%E6%90%9C/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/tags/%E6%89%BE%E7%BE%A4%E7%BB%84/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3735,13 +3735,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/tags/%E4%B8%80%E6%9E%9D%E7%BA%A2%E6%9D%8F/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3750,6 +3743,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/tags/%E9%80%9A%E7%94%A8%E8%AE%A2%E9%98%85/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -3765,6 +3765,13 @@
 
   
   <url>
+    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/categories/%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
@@ -3773,13 +3780,6 @@
   
   <url>
     <loc>https://tanqingbo.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-08-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
