@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-29T11:30:00.000Z",
+  "dateModified": "2026-08-29T11:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/ip-purity-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_banne_2026-08-29T11-36-08.png",
+  "description": "节点能连上但 ChatGPT 提示异常、Netflix 打不开、Claude 直接拒绝访问？多半不是机场的问题，是节点 IP 纯净度太差。这篇用大白话讲清 IP 纯净度是什么、原生 IP 和广播 IP 的区别、怎么用工具检测 IP 质量与流媒体解锁，以及怎么选到不翻车的节点。",
+  "keywords": "ip纯净度,ip纯净度查询,ip纯净度检测,原生ip,原生ip是什么,流媒体解锁,netflix解锁检测,chatgpt节点,chatgpt提示unusual activity,claude无法访问,节点ip质量,住宅ip,广播ip,机场节点选择,专线节点,流媒体节点,chatgpt风控,换节点还是不行,机场原生ip,ip黑名单"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "IP 纯净度到底是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "大白话讲就是「这个 IP 在各家网站风控系统里的口碑」。一个 IP 被越多人共用、被越多人拿来注册小号和薅羊毛，它的口碑就越差，风险评分就越高。你用这种 IP 访问 ChatGPT、Netflix 这类风控严格的网站，就容易被弹验证码、提示异常甚至拒绝服务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "原生 IP 和广播 IP 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "原生 IP（原生家宽/本地 IP）指 IP 的注册地和机房实际所在地一致，比如日本机房配日本注册的 IP 段；广播 IP 是 IP 注册地和使用地不一致，常见于用美国 IP 段广播到亚洲机房。看流媒体和风控严格的网站普遍更认原生 IP，广播 IP 的地区识别经常出错。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ChatGPT 提示 unusual activity 是 IP 的问题吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "大概率是。ChatGPT 对节点 IP 的风控非常严格，如果你用的 IP 段被大量用户共用、或已被 OpenAI 标记，登录时就会弹「Unusual activity」并要求手机验证。先换个节点/地区试试，能登录就说明是 IP 问题；多个节点都弹，说明这家机场的 IP 池整体质量堪忧，考虑换专线或原生 IP 节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么检测 Netflix / Disney+ 等流媒体解锁？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "最简单的是用流媒体解锁检测页面：切到要测试的节点，浏览器访问检测站，等几十秒会列出当前 IP 对 Netflix、Disney+、YouTube Premium 等各平台的解锁状态。也可以直接打开 Netflix 测试——能正常播放就是已解锁，提示「内容在你的地区不可用」就是未解锁。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "换了好几个节点还是打不开目标网站，怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按三步排查：一确认节点本身能上网（访问 Google 试试）；二查 IP 信息，看是不是广播 IP 或高风险评分；三查目标网站是否单独风控你的 IP 段。如果换节点、换地区都无效，可能是机场整个 IP 池被标记，换机场或选它的专线/原生节点是唯一解。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "住宅 IP 一定比机房 IP 好吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "对风控严格的网站（ChatGPT 注册、支付、账号登录）来说，住宅 IP 的通过率确实更高，因为它们看起来像真实家庭用户。但机场提供的绝大多数是机房 IP（IDC），稳定性好、带宽大，日常看视频、查资料完全够用。只有注册账号、过风控这类场景才需要刻意追求住宅 IP。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）</title>
+  
+  
+  <meta property="title" content="IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/ip-purity-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_banne_2026-08-29T11-36-08.png">
+  
+  
+  <meta property="description" content="节点能连上但 ChatGPT 提示异常、Netflix 打不开、Claude 直接拒绝访问？多半不是机场的问题，是节点 IP 纯净度太差。这篇用大白话讲清 IP 纯净度是什么、原生 IP 和广播 IP 的区别、怎么用工具检测 IP 质量与流媒体解锁，以及怎么选到不翻车的节点。">
+  
+  <meta property="keywords" content="ip纯净度,ip纯净度查询,ip纯净度检测,原生ip,原生ip是什么,流媒体解锁,netflix解锁检测,chatgpt节点,chatgpt提示unusual activity,claude无法访问,节点ip质量,住宅ip,广播ip,机场节点选择,专线节点,流媒体节点,chatgpt风控,换节点还是不行,机场原生ip,ip黑名单">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-29">
+  <meta property="og:article:modified_time" content="2026-08-29">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="ChatGPT">
+  
+  <meta property="og:article:tag" content="机场">
+  
+  <meta property="og:article:tag" content="节点">
+  
+  <meta property="og:article:tag" content="Netflix">
+  
+  <meta property="og:article:tag" content="IP纯净度">
+  
+  <meta property="og:article:tag" content="原生IP">
+  
+  <meta property="og:article:tag" content="流媒体解锁">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/ip-purity-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_banne_2026-08-29T11-36-08.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_banne_2026-08-29T11-36-08.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-29T11:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-29</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.6k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/ip-purity-guide/" class="leancloud_visitors" data-flag-title="IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/ChatGPT/" class="post-meta-link">ChatGPT</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机场/" class="post-meta-link">机场</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/节点/" class="post-meta-link">节点</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Netflix/" class="post-meta-link">Netflix</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/IP纯净度/" class="post-meta-link">IP纯净度</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/原生IP/" class="post-meta-link">原生IP</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/流媒体解锁/" class="post-meta-link">流媒体解锁</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="节点能连上但 ChatGPT 提示异常、Netflix 打不开、Claude 直接拒绝访问？多半不是机场的问题，是节点 IP 纯净度太差。这篇用大白话讲清 IP 纯净度是什么、原生 IP 和广播 IP 的区别、怎么用工具检测 IP 质量与流媒体解锁，以及怎么选到不翻车的节点。">
+  
+  <meta name="keywords" content="ip纯净度,ip纯净度查询,ip纯净度检测,原生ip,原生ip是什么,流媒体解锁,netflix解锁检测,chatgpt节点,chatgpt提示unusual activity,claude无法访问,节点ip质量,住宅ip,广播ip,机场节点选择,专线节点,流媒体节点,chatgpt风控,换节点还是不行,机场原生ip,ip黑名单">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。节点测速看 <a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速指南</a>，这篇讲一个更隐蔽的问题——<strong>节点明明连得上，目标网站却把你拒之门外</strong>。</p>
+</blockquote>
+<p>很多人的科学上网会遇到这么一幕：节点测速延迟 50ms，YouTube 4K 丝滑，一切看起来都很完美。然后登录 ChatGPT，「Unusual activity detected」；打开 Netflix，「此内容在你的地区不可用」；访问 Claude，直接一个 access denied。</p>
+<p>换节点。还是不行。再换，还是不行。</p>
+<p>到这一步，多数人会怀疑机场跑路了或者自己被针对了。其实大概率都不是——<strong>问题出在你这个节点的 IP 纯净度上</strong>。节点速度和 IP 质量是两回事，测速再快，IP 脏了照样进不去这些风控严格的网站。</p>
+<p>这篇讲清楚：IP 纯净度是什么、怎么检测、以及怎么选到干净不翻车的节点。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>能看视频但 ChatGPT/Netflix 进不去</strong> → IP 被风控，换节点/换地区</li>
+<li><strong>多个节点都进不去</strong> → 机场 IP 池整体质量差，换专线或原生 IP 节点</li>
+<li><strong>想提前知道 IP 干不干净</strong> → 浏览器访问 IP 检测站查风险评分和原生/广播状态</li>
+<li><strong>想检测流媒体解锁</strong> → 切节点后访问解锁检测页，一键看全平台状态</li>
+</ul>
+<h2 id="一、IP-纯净度到底是什么"><a href="#一、IP-纯净度到底是什么" class="headerlink" title="一、IP 纯净度到底是什么"></a>一、IP 纯净度到底是什么</h2><p>先打个比方。</p>
+<p>节点 IP 就像合租房。一套房子（一个 IP）住的人越多、住户行为越乱，这套房子在中介和片警那里的「口碑」就越差。等你搬进去（连上这个节点），小区门禁系统（网站风控）看到的是这套房子的整体记录——前住户干过什么，账都算在门牌号上。</p>
+<p>所以 IP 纯净度不是玄学，它由这几件事决定：</p>
+<table>
+<thead>
+<tr>
+<th>影响因素</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>共用人数</td>
+<td>一个 IP 同时挂几十上百个翻墙用户，行为模式一看就不正常</td>
+</tr>
+<tr>
+<td>历史记录</td>
+<td>这个 IP 段是否被拿来批量注册小号、薅羊毛、发垃圾信息</td>
+</tr>
+<tr>
+<td>是否进黑名单</td>
+<td>Cloudflare、MaxMind、Spamhaus 等风控数据库的标记状态</td>
+</tr>
+<tr>
+<td>IP 类型</td>
+<td>机房 IP（IDC）天然比住宅 IP 风险评分高</td>
+</tr>
+</tbody></table>
+<p>机场的普通节点为了压成本，一个 IP 上挤的用户越多越便宜——这就是为什么同一个机场，「普通线路进不去 ChatGPT，专线线路能进」的现象如此普遍。</p>
+<p>顺便说一句：如果你刚在 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">环球巴士买了 ChatGPT 或 Claude 账号</a>，登录一直被弹验证，别急着找客服，先按这篇查节点——十有八九是 IP 的问题，不是账号的问题。</p>
+<h2 id="二、原生-IP、广播-IP、住宅-IP：一张表分清"><a href="#二、原生-IP、广播-IP、住宅-IP：一张表分清" class="headerlink" title="二、原生 IP、广播 IP、住宅 IP：一张表分清"></a>二、原生 IP、广播 IP、住宅 IP：一张表分清</h2><p>检测工具里会频繁出现这几个词，先分清楚：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>通俗解释</th>
+<th>风控表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原生 IP</td>
+<td>IP 注册地和机房实际位置一致（日本机房 + 日本注册的 IP 段）</td>
+<td>地区识别准确，流媒体和风控普遍友好</td>
+</tr>
+<tr>
+<td>广播 IP</td>
+<td>IP 注册地和使用地不一致（美国注册的段广播到亚洲机房）</td>
+<td>地区识别经常错乱，Netflix 判区容易翻车</td>
+</tr>
+<tr>
+<td>住宅 IP</td>
+<td>分配给家庭宽带用户的 IP</td>
+<td>看起来像真实用户，风控通过率最高</td>
+</tr>
+<tr>
+<td>机房 IP（IDC）</td>
+<td>数据中心服务器用的 IP</td>
+<td>机场节点的主流类型，风控评分天然偏高</td>
+</tr>
+</tbody></table>
+<p>要记住的结论就一条：<strong>看 Netflix、Disney+ 这类按地区授权的平台，原生 IP 的解锁率远高于广播 IP；过 ChatGPT/Claude 的风控，住宅 IP 最稳，原生机房 IP 次之，广播 IP 看运气。</strong></p>
+<h2 id="三、怎么检测你节点的-IP-质量"><a href="#三、怎么检测你节点的-IP-质量" class="headerlink" title="三、怎么检测你节点的 IP 质量"></a>三、怎么检测你节点的 IP 质量</h2><p>这一步全是浏览器操作，不用装任何东西。<strong>先把 Clash 切到你要测的节点</strong>，然后：</p>
+<h3 id="1-查-IP-基本信息"><a href="#1-查-IP-基本信息" class="headerlink" title="1. 查 IP 基本信息"></a>1. 查 IP 基本信息</h3><p>浏览器访问 IP 信息查询站（比如 ip.sb），会看到当前出口 IP、所属国家、ASN 运营商。重点看两个信息：</p>
+<ul>
+<li><strong>Country / Region</strong>：显示的地区是不是节点标称的地区——标着「日本」查出「美国」，就是广播 IP 实锤</li>
+<li><strong>ASN</strong>：查一下这个 ASN 是数据中心（IDC）还是家宽运营商</li>
+</ul>
+<h3 id="2-查风险评分"><a href="#2-查风险评分" class="headerlink" title="2. 查风险评分"></a>2. 查风险评分</h3><p>访问 IP 风险评分网站（如 Scamalytics），它会给出这个 IP 的欺诈风险分（0~100，越低越干净）和「是否被标记为代理/数据中心」。</p>
+<p>经验参考：<strong>风险分 25 以下比较干净，25~50 凑合能用，50 以上进 ChatGPT 基本看运气。</strong></p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260829192655402.png" alt="image-20260829192655402" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260829192655402.png" class="lozad post-image"></p>
+<h3 id="3-检测流媒体解锁"><a href="#3-检测流媒体解锁" class="headerlink" title="3. 检测流媒体解锁"></a>3. 检测流媒体解锁</h3><p>切到目标节点后访问流媒体解锁检测页（搜索「流媒体解锁检测」能找到现成的检测站），等几十秒，它会直接列出当前 IP 对 Netflix、Disney+、YouTube Premium、ChatGPT 可用性等一串平台的解锁状态，全绿就是好 IP。</p>
+<p>懒得用检测站的话，土办法也行：直接打开 Netflix，能进能播就是解锁了；提示地区限制就是没解锁。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260829193331088.png" alt="image-20260829193331088" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260829193331088.png" class="lozad post-image"></p>
+<p>PS：我用的这家机场欺诈风险风测出来是0分，各种流媒体也都能正常访问，推荐给大家：<a href="https://tanqingbo.cn/Win-OpenInternet/">Windows 翻墙教程：从零开始科学上网（最稳定的科学上网方案）</a></p>
+<h2 id="四、ChatGPT-Claude-风控专项排查"><a href="#四、ChatGPT-Claude-风控专项排查" class="headerlink" title="四、ChatGPT / Claude 风控专项排查"></a>四、ChatGPT / Claude 风控专项排查</h2><p>这两家的风控是所有网站里最严的一档，单独说。</p>
+<p><strong>症状对照：</strong></p>
+<table>
+<thead>
+<tr>
+<th>症状</th>
+<th>大概率原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>登录弹 Unusual activity，要手机验证</td>
+<td>IP 段被 OpenAI 标记</td>
+</tr>
+<tr>
+<td>能登录但回复到一半被掐断</td>
+<td>节点不稳定 + IP 风险分高</td>
+</tr>
+<tr>
+<td>Claude 提示 access denied / 不可用</td>
+<td>出口地区不受支持或 IP 被拒</td>
+</tr>
+<tr>
+<td>注册时收不到验证码 / 卡在人机验证</td>
+<td>IP 风险分太高，人机验证死循环</td>
+</tr>
+</tbody></table>
+<p><strong>排查顺序（从省事到费事）：</strong></p>
+<ol>
+<li>换节点地区：优先换用户少的冷门地区（别死磕美西，那是重灾区）</li>
+<li>换线路类型：普通线路不行换专线/IEPL，专线不行考虑原生 IP 节点</li>
+<li>查风险评分确认：按上面第三节的工具查一下，低于 25 再登录</li>
+<li>账号注册这种关键操作：住宅 IP 或手机流量 + 漫游组合拳，成功率最高</li>
+</ol>
+<p>说个真事：有次帮朋友排查登录不上的 ChatGPT，Unusual activity 弹了一整晚，账号、密码、手机号挨个排查全没问题，最后把美西节点换成韩国节点，一次过。美西的 IP 池是真的卷。</p>
+<p>如果是刚注册的新号就翻车，多半是注册时 IP 就脏了——新号 + 高风险 IP 是风控的最爱。注册环节的完整注意事项在 <a href="https://tanqingbo.cn/ChatGPT-VPN/">ChatGPT 注册教程</a> 里单独写过。</p>
+<h2 id="五、怎么选到不翻车的节点"><a href="#五、怎么选到不翻车的节点" class="headerlink" title="五、怎么选到不翻车的节点"></a>五、怎么选到不翻车的节点</h2><p>说了这么多检测，回到根本问题：怎么一开始就选到干净 IP？</p>
+<p><strong>看机场的线路类型。</strong> 普通线路（BGP 直连）便宜但 IP 池共用严重；专线（IEPL/IPLC）用户少、IP 相对干净；原生 IP 线路对流媒体和解锁场景就是降维打击。计费上这几类线路的区别在 <a href="https://tanqingbo.cn/airport-rate-guide/">机场倍率指南</a> 里讲过，别只盯着倍率看，IP 质量才是解锁场景的胜负手。</p>
+<p><strong>冷门地区 &gt; 热门地区。</strong> 美西、香港是被用烂的 IP 池，日本、新加坡次之；像韩国、土耳其、马来西亚这些冷门地区，用户少，IP 池干净得多。当然前提是你的用途不受地区限制。</p>
+<p><strong>别贪一个节点用到死。</strong> 风控是动态的，今天干净的 IP 明天可能就脏了。养成习惯：进 ChatGPT、看 Netflix 之前顺手看一眼连接状态，不对就换，别跟一个节点较劲。</p>
+<p><strong>流媒体党直接选对流媒体友好的机场。</strong> 想看 Netflix 的话，节点解锁能力比延迟数字重要得多——16 元/月起合租 Netflix 的方案在 <a href="https://tanqingbo.cn/netflix-16yuan/">Netflix 合租指南</a> 里写过，不想折腾解锁检测的直接走合租更省心。</p>
+<h2 id="六、三个避坑点"><a href="#六、三个避坑点" class="headerlink" title="六、三个避坑点"></a>六、三个避坑点</h2><p><strong>1. 测速能力 ≠ IP 质量。</strong> 延迟 50ms 和能不能进 ChatGPT 没有任何关系。选节点先明确用途：看视频重速度，进 AI 和流媒体重 IP 质量，两套标准别混用。</p>
+<p><strong>2. 别迷信「专属 IP」。</strong> 有些机场卖「独享 IP」，IP 独享了，但如果这个 IP 段本身就是广播段或有历史黑记录，独享一样翻车。专属 IP 的真正价值在于行为可控——你不用背别人的锅。买之前先用检测工具验一下。</p>
+<p><strong>3. 检测结果会过期。</strong> 今天全绿的 IP，下个月可能就被标记了。流媒体解锁检测建议每次追剧前顺手跑一遍，别拿三个月前的检测结果当免死金牌。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><p><strong>Q：为什么同一个机场，有的节点能解锁 Netflix 有的不能？</strong><br>正常现象。机场不同节点用的出口 IP 池不一样，甚至有的节点是落地原生 IP、有的是广播 IP。解锁党的日常就是：切节点 → 跑检测 → 挑全绿的用。</p>
+<p><strong>Q：风险评分多少算安全？</strong><br>没有绝对安全线，经验上 25 以下日常够用，25~50 看运气，50 以上建议只拿来当备用。注册 ChatGPT 这类关键操作，越低越好，最好配住宅 IP。</p>
+<p><strong>Q：自己的 VPS 自建节点，IP 一定干净吗？</strong><br>自建的优势是 IP 独享、没人跟你抢，但机房 IP 的身份没变，风险评分取决于云厂商的 IP 段口碑。VPS 怎么选看 <a href="https://tanqingbo.cn/best-vps/">VPS 选购指南</a>，选大厂新开的机房区域，IP 段相对干净。</p>
+<p><strong>Q：DNS 泄露会影响解锁吗？</strong><br>会。DNS 解析出的地区和出口 IP 不一致时，部分流媒体会判定异常。如果你遇到「IP 是日本的，Netflix 却认成别的区」，先查 DNS——排查方法在 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 指南</a> 里有完整流程。</p>
+<hr>
+<p>节点 IP 纯净度这事，说白了就是「选房前先看看小区口碑」。测速能力决定你走得多快，IP 纯净度决定你进不进得去门。两套都过一遍，你用的节点才真正算「好节点」。</p>
+<p>相关阅读：<a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速指南</a>（测延迟）、<a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a>（入门配置）、<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a>（机场/VPS/VPN 对比）。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/ip-purity-guide/">https://tanqingbo.cn/ip-purity-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-node-testing/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 节点测速完全指南：延迟怎么测、怎么选节点
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        国外 AI 大模型充值教程：合租、代充怎么买便宜
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        如何在国内注册 ChatGPT？ChatGPT 怎么用？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Netflix-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        奈飞 Netflix 全教程：如何注册观看奈飞？
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/airport-rate-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        机场倍率与流量计费完全指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-17</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/ai-llm-buy-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">ChatGPT/Claude/Gemini/Grok 怎么买便宜：国外 AI 大模型充值教程（2026 附 9 折优惠码） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81IP-%E7%BA%AF%E5%87%80%E5%BA%A6%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、IP 纯净度到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8E%9F%E7%94%9F-IP%E3%80%81%E5%B9%BF%E6%92%AD-IP%E3%80%81%E4%BD%8F%E5%AE%85-IP%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%88%86%E6%B8%85"><span class="toc-number">3.</span> <span class="toc-text">二、原生 IP、广播 IP、住宅 IP：一张表分清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%80%8E%E4%B9%88%E6%A3%80%E6%B5%8B%E4%BD%A0%E8%8A%82%E7%82%B9%E7%9A%84-IP-%E8%B4%A8%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">三、怎么检测你节点的 IP 质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9F%A5-IP-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">4.1.</span> <span class="toc-text">1. 查 IP 基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9F%A5%E9%A3%8E%E9%99%A9%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">2. 查风险评分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A3%80%E6%B5%8B%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%A3%E9%94%81"><span class="toc-number">4.3.</span> <span class="toc-text">3. 检测流媒体解锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81ChatGPT-Claude-%E9%A3%8E%E6%8E%A7%E4%B8%93%E9%A1%B9%E6%8E%92%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">四、ChatGPT &#x2F; Claude 风控专项排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%E5%88%B0%E4%B8%8D%E7%BF%BB%E8%BD%A6%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">6.</span> <span class="toc-text">五、怎么选到不翻车的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%89%E4%B8%AA%E9%81%BF%E5%9D%91%E7%82%B9"><span class="toc-number">7.</span> <span class="toc-text">六、三个避坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">FAQ</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>402</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>288</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81IP-%E7%BA%AF%E5%87%80%E5%BA%A6%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、IP 纯净度到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8E%9F%E7%94%9F-IP%E3%80%81%E5%B9%BF%E6%92%AD-IP%E3%80%81%E4%BD%8F%E5%AE%85-IP%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%88%86%E6%B8%85"><span class="toc-number">3.</span> <span class="toc-text">二、原生 IP、广播 IP、住宅 IP：一张表分清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%80%8E%E4%B9%88%E6%A3%80%E6%B5%8B%E4%BD%A0%E8%8A%82%E7%82%B9%E7%9A%84-IP-%E8%B4%A8%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">三、怎么检测你节点的 IP 质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9F%A5-IP-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">4.1.</span> <span class="toc-text">1. 查 IP 基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9F%A5%E9%A3%8E%E9%99%A9%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">2. 查风险评分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A3%80%E6%B5%8B%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%A3%E9%94%81"><span class="toc-number">4.3.</span> <span class="toc-text">3. 检测流媒体解锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81ChatGPT-Claude-%E9%A3%8E%E6%8E%A7%E4%B8%93%E9%A1%B9%E6%8E%92%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">四、ChatGPT &#x2F; Claude 风控专项排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%E5%88%B0%E4%B8%8D%E7%BF%BB%E8%BD%A6%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">6.</span> <span class="toc-text">五、怎么选到不翻车的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%89%E4%B8%AA%E9%81%BF%E5%9D%91%E7%82%B9"><span class="toc-number">7.</span> <span class="toc-text">六、三个避坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">FAQ</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">58</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">24</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81IP-%E7%BA%AF%E5%87%80%E5%BA%A6%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">一、IP 纯净度到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8E%9F%E7%94%9F-IP%E3%80%81%E5%B9%BF%E6%92%AD-IP%E3%80%81%E4%BD%8F%E5%AE%85-IP%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E5%88%86%E6%B8%85"><span class="toc-number">3.</span> <span class="toc-text">二、原生 IP、广播 IP、住宅 IP：一张表分清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%80%8E%E4%B9%88%E6%A3%80%E6%B5%8B%E4%BD%A0%E8%8A%82%E7%82%B9%E7%9A%84-IP-%E8%B4%A8%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">三、怎么检测你节点的 IP 质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9F%A5-IP-%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">4.1.</span> <span class="toc-text">1. 查 IP 基本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9F%A5%E9%A3%8E%E9%99%A9%E8%AF%84%E5%88%86"><span class="toc-number">4.2.</span> <span class="toc-text">2. 查风险评分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A3%80%E6%B5%8B%E6%B5%81%E5%AA%92%E4%BD%93%E8%A7%A3%E9%94%81"><span class="toc-number">4.3.</span> <span class="toc-text">3. 检测流媒体解锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81ChatGPT-Claude-%E9%A3%8E%E6%8E%A7%E4%B8%93%E9%A1%B9%E6%8E%92%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">四、ChatGPT &#x2F; Claude 风控专项排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E9%80%89%E5%88%B0%E4%B8%8D%E7%BF%BB%E8%BD%A6%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">6.</span> <span class="toc-text">五、怎么选到不翻车的节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%89%E4%B8%AA%E9%81%BF%E5%9D%91%E7%82%B9"><span class="toc-number">7.</span> <span class="toc-text">六、三个避坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">FAQ</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-29</div>
+        <a href="/ip-purity-guide/"><div class="recent-posts-item-content">IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-29</div>
+        <a href="/ai-llm-buy-guide/"><div class="recent-posts-item-content">ChatGPT/Claude/Gemini/Grok 怎么买便宜：国外 AI 大模型充值教程（2026 附 9 折优惠码）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-27</div>
+        <a href="/netflix-16yuan/"><div class="recent-posts-item-content">奈飞 Netflix 合租最低 16 元/月：环球巴士奈飞账号怎么买便宜、可靠吗（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
