@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-08-30T08:50:00.000Z",
+  "dateModified": "2026-08-30T08:50:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/deepseek-vision-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png",
+  "description": "DeepSeek 终于支持多模态了！deepseek-v4-flash-vision-exp 实测：网页复刻、报错截图定位、发票识别三个真实案例，加上改一个模型 ID 就能用的接入教程、价格和避坑点，想给 DeepSeek 补上「眼睛」的看完这篇就能上手。",
+  "keywords": "deepseek多模态,deepseek vision,deepseek看图,deepseek-v4-flash-vision-exp,deepseek接入教程,deepseek价格,deepseek图像识别,deepseek识图,DeepSeek API,大模型多模态"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "DeepSeek 多模态模型叫什么？怎么接入？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "模型名是 deepseek-v4-flash-vision-exp，实验性多模态模型。接入不需要重新搭环境：以前接过 DeepSeek API 的话，把模型 ID 直接改成 deepseek-v4-flash-vision-exp 就能调用图片能力，Codex、Claude Code、WorkBuddy 等 Agent 里都能接。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "deepseek-v4-flash-vision-exp 支持哪些图片格式？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方支持 JPEG、PNG、GIF、WebP。有个细节：它是按文件的实际内容判断格式，不是看文件名后缀，你把 PNG 改名成 .txt 丢给它照样认得出。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek 多模态价格贵吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按 token 计费，图片会换算成 token 和文字一起算。实测数据：输入（缓存命中）每百万 tokens 空闲时段约 0.05 元、高峰约 0.1 元；输出每百万 tokens 空闲约 4.5 元、高峰约 9 元。日常识图、分析截图这个量，一个月花不了一杯奶茶钱。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "它能做什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方口径三条：描述图片、识别截图里的文字、分析图表。实测中它还能照着网页截图复刻页面、给报错截图定位代码行并顺手修复、把发票核心字段整理成结构化表格。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "和 Kimi、豆包的多模态比怎么样？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kimi K3、豆包 Doubao-Seed-Evolving 支持多模态比 DeepSeek 更早，网页复刻这类细节还原上 Kimi K3 仍略胜一筹。DeepSeek 这版的价值不是「国产唯一」，而是补上了自己在 Agent 生态里最缺的一环——官方下场支持图像输入，社区不用再靠插件和第三方方案绕路了。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）</title>
+  
+  
+  <meta property="title" content="DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/deepseek-vision-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png">
+  
+  
+  <meta property="description" content="DeepSeek 终于支持多模态了！deepseek-v4-flash-vision-exp 实测：网页复刻、报错截图定位、发票识别三个真实案例，加上改一个模型 ID 就能用的接入教程、价格和避坑点，想给 DeepSeek 补上「眼睛」的看完这篇就能上手。">
+  
+  <meta property="keywords" content="deepseek多模态,deepseek vision,deepseek看图,deepseek-v4-flash-vision-exp,deepseek接入教程,deepseek价格,deepseek图像识别,deepseek识图,DeepSeek API,大模型多模态">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-08-30">
+  <meta property="og:article:modified_time" content="2026-08-30">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="API">
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="AI工具">
+  
+  <meta property="og:article:tag" content="DeepSeek">
+  
+  <meta property="og:article:tag" content="多模态">
+  
+  <meta property="og:article:tag" content="Vision">
+  
+  <meta property="og:article:tag" content="图像识别">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/deepseek-vision-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-08-30T08:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-08-30</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>1.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/deepseek-vision-guide/" class="leancloud_visitors" data-flag-title="DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/API/" class="post-meta-link">API</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI工具/" class="post-meta-link">AI工具</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DeepSeek/" class="post-meta-link">DeepSeek</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/多模态/" class="post-meta-link">多模态</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Vision/" class="post-meta-link">Vision</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/图像识别/" class="post-meta-link">图像识别</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="DeepSeek 终于支持多模态了！deepseek-v4-flash-vision-exp 实测：网页复刻、报错截图定位、发票识别三个真实案例，加上改一个模型 ID 就能用的接入教程、价格和避坑点，想给 DeepSeek 补上「眼睛」的看完这篇就能上手。">
+  
+  <meta name="keywords" content="deepseek多模态,deepseek vision,deepseek看图,deepseek-v4-flash-vision-exp,deepseek接入教程,deepseek价格,deepseek图像识别,deepseek识图,DeepSeek API,大模型多模态">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想系统了解 ChatGPT、Gemini、Kimi、DeepSeek 等主流模型怎么选，以及 AI 编程 / Agent 工具怎么入门，先看总览页。</p>
+</blockquote>
+<p>用 DeepSeek 的朋友多少都遇到过这种尴尬：想让它看一眼截图里的报错，它回你「我无法查看图片」；想让它认张发票，它说「请提供文字」。说白了，过去很长一段时间它就是个纯文本模型，<strong>「能看图」这件事一直是空白</strong>。</p>
+<p>这个空白，八月下旬补上了——DeepSeek 发了个实验性多模态模型，<strong>deepseek-v4-flash-vision-exp</strong>。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>它是什么</strong>：DeepSeek 首个支持图像输入的模型，能描述图片、识别截图文字、分析图表</li>
+<li><strong>怎么接入</strong>：改模型 ID 就行，<code>deepseek-v4-flash-vision-exp</code>，不需要重新搭环境</li>
+<li><strong>支持格式</strong>：JPEG、PNG、GIF、WebP（按文件实际内容识别，不看后缀名）</li>
+<li><strong>价格</strong>：输入（缓存命中）约 0.05<del>0.1 元/百万 tokens，输出约 4.5</del>9 元/百万 tokens</li>
+<li><strong>实测能力</strong>：网页复刻、报错定位、发票识别三个场景都能干</li>
+</ul>
+<h2 id="deepseek-v4-flash-vision-exp-是什么"><a href="#deepseek-v4-flash-vision-exp-是什么" class="headerlink" title="deepseek-v4-flash-vision-exp 是什么"></a>deepseek-v4-flash-vision-exp 是什么</h2><p>名字里有两个关键信息：<strong>v4</strong>，说明它是 V4 系列；<strong>vision</strong>，说明它终于能「看」了。</p>
+<p>最省事的是接入方式——不需要重新搭环境，只要把 API 里的模型名换成 <code>deepseek-v4-flash-vision-exp</code>，就能直接调用图片能力。以前接过 DeepSeek 的人，<strong>改一个模型 ID 就能用</strong>。</p>
+<p>官方支持三种能力：描述图片、识别截图里的文字、分析图表。格式支持 JPEG、PNG、GIF、WebP。有个细节值得单独提：它是按文件的<strong>实际内容</strong>判断格式，而不是看文件名后缀——你把一个 PNG 改名成 .txt 丢给它，它照样认得出来。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_10.png" alt="DeepSeek v4 flash vision exp 能力价格对比表" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_10.png" class="lozad post-image"></p>
+<p>这张图是官方文档给出的能力/价格总表。横向对比 deepseek-v4-flash、deepseek-v4-pro 和 deepseek-v4-flash-vision-exp：上下文长度都是 1M，输出最大 384K，Json Output、Tool Calls、Responses API、Anthropic API 都支持；v4-flash-vision-exp 的输入价和 v4-flash 一致（缓存命中 0.05 / 0.1 元），输出价（4.5 / 9 元）也差不多，相当于<strong>多模态能力基本是加量不加价</strong>。</p>
+<h2 id="价格：一杯奶茶钱"><a href="#价格：一杯奶茶钱" class="headerlink" title="价格：一杯奶茶钱"></a>价格：一杯奶茶钱</h2><p>价格按 token 计费，图片会被换算成 token，和文字一起算。</p>
+<p>实测口径（每百万 tokens）：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>空闲时段</th>
+<th>高峰时段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>输入（缓存命中）</td>
+<td>0.05 元</td>
+<td>0.1 元</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>4.5 元</td>
+<td>9 元</td>
+</tr>
+</tbody></table>
+<p>什么概念？普通用户日常跑点识图、分析截图的量，一个月下来可能花不了一杯奶茶钱。便宜，一直是 DeepSeek 最大的标签之一。</p>
+<blockquote>
+<p>注：以上为「缓存命中」口径的输入价，未命中价以官方定价页为准。</p>
+</blockquote>
+<h2 id="三个实测：它到底「看」得怎么样"><a href="#三个实测：它到底「看」得怎么样" class="headerlink" title="三个实测：它到底「看」得怎么样"></a>三个实测：它到底「看」得怎么样</h2><p>光说不练假把式。实测挑了三个最能说明问题的场景，逐个看。</p>
+<p><strong>第一个，网页复刻。</strong> 把 GitHub 一个前端页面的截图直接丢给模型，让它照着复刻。结果模型把整个页面的基础信息结构都读懂了，还原度还不错。但放大对比之后，和 Kimi 的 K3 比还是差一些——K3 连头像这种细节都能还原得更好。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png" alt="DeepSeek 网页复刻 GitHub Dashboard 效果" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png" class="lozad post-image"></p>
+<p>上图是复刻后的页面效果，左侧仓库列表、中间 Home Feed、右侧 changelog 的基本结构都还原出来了。细看头像、阴影这些细节还不够精致，但作为一个「只看图就搭页面」的 demo，已经能省掉大量手写布局的时间。</p>
+<p><strong>第二个，报错截图。</strong> 把一段报错代码的截图丢过去，模型直接定位到 <code>github-dashboard.html</code> 的 682 行，指出问题出在一个空对象还被继续读取 user 属性，报错类型是 <code>TypeError: Cannot read properties of null</code>。定位完原因还不算完，它顺手把空值保护逻辑补上、把代码改了。从看图、定位到修复，一条龙。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_05.png" alt="DeepSeek 识别报错截图并定位修复代码" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_05.png" class="lozad post-image"></p>
+<p>从截图里能看到：它先说「已解决」，再列出出错位置、错误类型、触发点，最后把第 680–687 行的修复代码贴出来。这个流程对前端排查 bug 特别友好——以前得把报错文字复制给 AI，现在直接丢截图就行。</p>
+<p><strong>第三个，发票识别。</strong> 一张发票截图丢进去，模型很快把发票类型、号码、开票日期这些核心字段都抽了出来，还按基础信息、购买方、销售方几个维度自动整理成了结构化表格。对日常报销、财务录入、票据归档这些场景来说，已经相当实用了。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_01.png" alt="DeepSeek 识别发票并整理成结构化表格" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_01.png" class="lozad post-image"></p>
+<p>发票类型、发票号码、开票日期、购买方、销售方等字段都按表格列了出来。这种「截图 → 结构化数据」的能力，自动化做报销、票据归档基本够用了。</p>
+<p>说实话，前两个案例确实惊艳，但发票识别这种，其实是合格的图像理解模型本该有的基本功——做到是应该的，做不到才奇怪。</p>
+<h2 id="怎么接入"><a href="#怎么接入" class="headerlink" title="怎么接入"></a>怎么接入</h2><p>除了官方 API，几个主流 Agent 都能直接接：Codex 里能用，WorkBuddy 里能用，<a href="https://tanqingbo.cn/claude-code/">Claude Code</a> 也能接。甚至 Obsidian 的 WeSight 插件接入之后也能直接识图——比如让模型数一数图片里有几个人，它也能答上来。</p>
+<p>接入步骤就一步：**把模型 ID 改成 <code>deepseek-v4-flash-vision-exp</code>**。不管是官方 API 还是各家 Agent，认准这个 ID 就行。想用 DeepSeek 搭一套自己的 Agent 干活的话，可以看下 <a href="https://tanqingbo.cn/deepseek-harness/">DeepSeek Harness 教程</a>，这个「一切皆插件」的框架和视觉模型配合起来挺顺手。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_08.png" alt="DeepSeek API 文档 model 列表" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_08.png" class="lozad post-image"></p>
+<p>官方文档里的 model 参数表把 v4-flash、v4-pro、v4-flash-vision-exp 列在一起，只需要把 model 字段替换成 <code>deepseek-v4-flash-vision-exp</code>，图片输入接口就通了。这也是这次更新最省心的一点：不改动调用方式，只改一个名字。</p>
+<p>一句话总结：以前 DeepSeek 只长了嘴，现在终于睁开了眼。</p>
+<h2 id="这件事为什么值得关注"><a href="#这件事为什么值得关注" class="headerlink" title="这件事为什么值得关注"></a>这件事为什么值得关注</h2><p>因为它补上了 DeepSeek 在 Agent 应用生态里最关键的一环。</p>
+<p>过去半年，DeepSeek 靠文本能力圈了一大波开发者，但很多人做 Agent、做工具的时候，一遇到图片输入就卡住。社区为了绕开这个限制，搞出了一堆插件和第三方方案——麻烦不说，还多一层数据风险。现在官方下场，问题从根上解决了。</p>
+<p>当然，国产模型里做多模态的不只 DeepSeek 一家，像 Kimi 的 K3、豆包的 Doubao-Seed-Evolving，支持得都比它早。所以这篇文章的主角不是「国产唯一」，而是「DeepSeek 终于跟上」。</p>
+<p>想摸清各模型能力差异再下手，可以先看 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南</a>；想深入理解大模型原理的，<a href="https://tanqingbo.cn/llm-wiki-guide/">LLM Wiki 搭建教程</a> 里有不少底层对比。预算敏感的话，<a href="https://tanqingbo.cn/ai-llm-buy-guide/">国外 AI 大模型充值教程</a> 也把合租、镜像、代充的路子捋了一遍。</p>
+<h2 id="想试的话，三步"><a href="#想试的话，三步" class="headerlink" title="想试的话，三步"></a>想试的话，三步</h2><ol>
+<li>去官方接口，把模型名改成 <code>deepseek-v4-flash-vision-exp</code></li>
+<li>在你常用的 Agent 里，丢一张图试试（截图报错、发票、网页都行）</li>
+<li>效果好，回来评论区聊聊你拿它干了什么</li>
+</ol>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/deepseek-vision-guide/">https://tanqingbo.cn/deepseek-vision-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/deepseek-harness/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-18</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具完全指南：ChatGPT / Gemini / Kimi 怎么选怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/llm-wiki-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        LLM Wiki 自生长知识库搭建教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-25</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/claude-code/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Claude Code 教程：从入门到进阶的完整使用指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-06-11</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT / Claude / Gemini / Grok 怎么买便宜：国外 AI 大模型充值教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/ip-purity-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#deepseek-v4-flash-vision-exp-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">deepseek-v4-flash-vision-exp 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%B7%E6%A0%BC%EF%BC%9A%E4%B8%80%E6%9D%AF%E5%A5%B6%E8%8C%B6%E9%92%B1"><span class="toc-number">3.</span> <span class="toc-text">价格：一杯奶茶钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%AE%9E%E6%B5%8B%EF%BC%9A%E5%AE%83%E5%88%B0%E5%BA%95%E3%80%8C%E7%9C%8B%E3%80%8D%E5%BE%97%E6%80%8E%E4%B9%88%E6%A0%B7"><span class="toc-number">4.</span> <span class="toc-text">三个实测：它到底「看」得怎么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%8E%A5%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text">怎么接入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%BB%B6%E4%BA%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">这件事为什么值得关注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E8%AF%95%E7%9A%84%E8%AF%9D%EF%BC%8C%E4%B8%89%E6%AD%A5"><span class="toc-number">7.</span> <span class="toc-text">想试的话，三步</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>403</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>291</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#deepseek-v4-flash-vision-exp-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">deepseek-v4-flash-vision-exp 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%B7%E6%A0%BC%EF%BC%9A%E4%B8%80%E6%9D%AF%E5%A5%B6%E8%8C%B6%E9%92%B1"><span class="toc-number">3.</span> <span class="toc-text">价格：一杯奶茶钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%AE%9E%E6%B5%8B%EF%BC%9A%E5%AE%83%E5%88%B0%E5%BA%95%E3%80%8C%E7%9C%8B%E3%80%8D%E5%BE%97%E6%80%8E%E4%B9%88%E6%A0%B7"><span class="toc-number">4.</span> <span class="toc-text">三个实测：它到底「看」得怎么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%8E%A5%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text">怎么接入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%BB%B6%E4%BA%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">这件事为什么值得关注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E8%AF%95%E7%9A%84%E8%AF%9D%EF%BC%8C%E4%B8%89%E6%AD%A5"><span class="toc-number">7.</span> <span class="toc-text">想试的话，三步</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">58</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">25</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\ECCV" title="ECCV"><div class="tags-list-item">ECCV</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\CNN" title="CNN"><div class="tags-list-item">CNN</div></a>
+    
+    <a href="\tags\DSN" title="DSN"><div class="tags-list-item">DSN</div></a>
+    
+    <a href="\tags\肝脏分割" title="肝脏分割"><div class="tags-list-item">肝脏分割</div></a>
+    
+    <a href="\tags\医疗图像" title="医疗图像"><div class="tags-list-item">医疗图像</div></a>
+    
+    <a href="\tags\Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="\tags\编程" title="编程"><div class="tags-list-item">编程</div></a>
+    
+    <a href="\tags\设计模式" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#deepseek-v4-flash-vision-exp-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">deepseek-v4-flash-vision-exp 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%B7%E6%A0%BC%EF%BC%9A%E4%B8%80%E6%9D%AF%E5%A5%B6%E8%8C%B6%E9%92%B1"><span class="toc-number">3.</span> <span class="toc-text">价格：一杯奶茶钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%AE%9E%E6%B5%8B%EF%BC%9A%E5%AE%83%E5%88%B0%E5%BA%95%E3%80%8C%E7%9C%8B%E3%80%8D%E5%BE%97%E6%80%8E%E4%B9%88%E6%A0%B7"><span class="toc-number">4.</span> <span class="toc-text">三个实测：它到底「看」得怎么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%8E%A5%E5%85%A5"><span class="toc-number">5.</span> <span class="toc-text">怎么接入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%BB%B6%E4%BA%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">这件事为什么值得关注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%83%B3%E8%AF%95%E7%9A%84%E8%AF%9D%EF%BC%8C%E4%B8%89%E6%AD%A5"><span class="toc-number">7.</span> <span class="toc-text">想试的话，三步</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-30</div>
+        <a href="/deepseek-vision-guide/"><div class="recent-posts-item-content">DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-29</div>
+        <a href="/ip-purity-guide/"><div class="recent-posts-item-content">IP 纯净度怎么看：ChatGPT 报异常、Netflix 不解锁的节点问题怎么排查（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-29</div>
+        <a href="/ai-llm-buy-guide/"><div class="recent-posts-item-content">ChatGPT/Claude/Gemini/Grok 怎么买便宜：国外 AI 大模型充值教程（2026 附 9 折优惠码）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
