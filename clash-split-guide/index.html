@@ -33,7 +33,7 @@
     "@type": "WebPage",
     "@id": "https://tanqingbo.cn/clash-split-guide/"
   },
-  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png",
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.webp",
   "description": "Clash 分流到底是怎么回事？这篇用大白话讲清「为什么开了代理国内网站会变慢」「三种模式（全局/规则/Direct 直连）到底怎么选」，并给出国内直连、国外走代理的最小配置方案，以及分流失效时的排查思路。新手看完就能自己搞定分流。",
   "keywords": "Clash分流,clash规则分流,clash国内直连,开了代理国内网站打不开,clash全局模式和规则模式区别,clash direct规则,clash路由模式,走代理国内变慢,clash白名单,机场分流,clash策略组怎么选,clash模式切换,科学上网分流,代理直连配置,clash怎么让国内不走代理"
 }
@@ -134,7 +134,7 @@
   <meta property="url" content="https://tanqingbo.cn/clash-split-guide/index.html">
   
   
-  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png">
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.webp">
   
   
   <meta property="description" content="Clash 分流到底是怎么回事？这篇用大白话讲清「为什么开了代理国内网站会变慢」「三种模式（全局/规则/Direct 直连）到底怎么选」，并给出国内直连、国外走代理的最小配置方案，以及分流失效时的排查思路。新手看完就能自己搞定分流。">
@@ -394,7 +394,7 @@ var _hmt = _hmt || [];
         <div class="columns">
           <main class="main-column">
 <div class="image-wrapper">
-  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.png"
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-banner.webp"
     srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
     class="image lozad">
 </div>
@@ -536,7 +536,7 @@ var _hmt = _hmt || [];
 <li><strong>流量不浪费</strong>：机场套餐流量是按代理流量算的，国内网站也走代理等于白白烧流量。分流后，一个月能省下一半以上的流量。</li>
 <li><strong>隐私更合理</strong>：访问国内网站时不需要把浏览记录交给海外节点中转，既快又少一层暴露。</li>
 </ol>
-<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-modes.png" alt="Clash 三种路由模式对比示意" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-modes.png" class="lozad post-image"></p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-modes.webp" alt="Clash 三种路由模式对比示意" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-modes.webp" class="lozad post-image"></p>
 <h2 id="二、三种模式：全局、规则、直连，到底怎么选"><a href="#二、三种模式：全局、规则、直连，到底怎么选" class="headerlink" title="二、三种模式：全局、规则、直连，到底怎么选"></a>二、三种模式：全局、规则、直连，到底怎么选</h2><p>Clash 有三大路由模式，很多新手搞不清。用一句话记住：</p>
 <ul>
 <li><strong>Global（全局）</strong>：所有流量都走代理。简单粗暴，但国内网站也绕远，日常别用。</li>
@@ -584,7 +584,7 @@ var _hmt = _hmt || [];
 <pre class="highlight"><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOIP,CN,DIRECT</span>          <span class="comment"># 国内 IP 直连</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,google,PROXY</span>     <span class="comment"># 谷歌系走代理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,youtube,PROXY</span>    <span class="comment"># 油管走代理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,facebook,PROXY</span>   <span class="comment"># 脸书走代理</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">MATCH,PROXY</span>              <span class="comment"># 剩下的全部走代理</span></span><br></pre>
 
 <p>规则是<strong>自上而下匹配、先命中先赢</strong>的。所以：具体规则放前面，兜底规则（MATCH 走代理）放最后。</p>
-<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-rules-flow.png" alt="Clash 规则匹配流程：自上而下、先命中先赢" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-rules-flow.png" class="lozad post-image"></p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-rules-flow.webp" alt="Clash 规则匹配流程：自上而下、先命中先赢" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-split-rules-flow.webp" class="lozad post-image"></p>
 <p><strong>「机场自带规则」还是「自己写」？</strong> 这是新手最该搞清的问题：</p>
 <table>
 <thead>
@@ -799,7 +799,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>405</span>
+    <span>400</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -807,7 +807,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>300</span>
+    <span>309</span>
     <span>标签</span>
   </a>
 </div>
@@ -859,17 +859,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/工具">
-        <div class="categories-list-item">
-          工具
-          <span class="categories-list-item-badge">33</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据结构与算法">
         <div class="categories-list-item">
           数据结构与算法
           <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
@@ -890,14 +890,7 @@ var _hmt = _hmt || [];
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
-          <span class="categories-list-item-badge">26</span>
-        </div>
-      </a>
-    
-      <a href="/categories/编程资料">
-        <div class="categories-list-item">
-          编程资料
-          <span class="categories-list-item-badge">33</span>
+          <span class="categories-list-item-badge">21</span>
         </div>
       </a>
     
@@ -905,6 +898,13 @@ var _hmt = _hmt || [];
         <div class="categories-list-item">
           设计模式
           <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
@@ -1085,8 +1085,8 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2028-02-28</div>
-        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+        <div class="recent-posts-item-title">2026-09-02</div>
+        <a href="/ai-assistant-guide/"><div class="recent-posts-item-content">AI 助手哪个好用（2026）：豆包/Kimi/DeepSeek/ChatGPT/Gemini 实测对比，3 分钟选对你的 AI</div></a>
       </div>
     
       <div class="recent-posts-item">

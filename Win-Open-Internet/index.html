@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-01-20T02:14:18.000Z",
-  "dateModified": "2026-07-27T02:53:58.823Z",
+  "dateModified": "2026-09-02T14:06:30.052Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -67,6 +67,55 @@
   </script>
   
   
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Windows 电脑怎么科学上网？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两步：装一个客户端（如 Clash Verge，免费开源），再导入机场订阅链接开启系统代理。工具负责分流转发，机场提供节点服务器，两者缺一不可。完整步骤见本文图文教程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Windows 翻墙用什么软件好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "首选 Clash Verge（Rev）：开源免费、持续更新、支持订阅导入和规则分流。经典客户端 Clash for Windows 已停更不推荐。进阶玩家可用 v2rayN 或 sing-box。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "电脑翻墙需要买机场吗？有免费的吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "客户端软件本身免费，但节点（机场）大多收费，几元到几十元一个月。有公共免费节点可应急，但速度慢、不稳定，长期使用建议选个口碑机场。免费方案与付费对比见免费科学上网攻略。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Windows 开了代理还是上不了 Google 怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按顺序排查：客户端里是否选中了节点、系统代理是否开启、节点是否延迟超时（换个节点）、订阅是否过期（更新订阅）。仍不行就重启客户端再试，常见故障逐项排查见 Clash 排障指南。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "手机和电脑能用同一个机场订阅吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。机场订阅链接通用，电脑端用 Clash Verge，安卓用 ClashMetaForAndroid，iOS 用 Shadowrocket，导入同一条订阅即可多端共用流量套餐。"
+      }
+    }
+  ]
+}
+  </script>
+  
   <link rel="icon" href="/img/logo.webp">
   <title>Windows 翻墙教程：从零开始科学上网（最稳定的科学上网方案）</title>
   
@@ -86,7 +135,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-01-20">
-  <meta property="og:article:modified_time" content="2026-07-27">
+  <meta property="og:article:modified_time" content="2026-09-02">
   <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
   
   
@@ -545,7 +594,7 @@ var _hmt = _hmt || [];
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
       <a href="/yzhx-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        2026 老牌机场推荐：Trojan 实测，套餐怎么选、订阅怎么导入
+        一枝红杏机场怎么样（2026）：7 年老牌 Trojan 机场实测，套餐怎么选、订阅怎么导入
       </a>
       <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-25</span>
     </li>
@@ -658,7 +707,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>405</span>
+    <span>400</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -666,7 +715,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>300</span>
+    <span>309</span>
     <span>标签</span>
   </a>
 </div>
@@ -718,17 +767,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/工具">
-        <div class="categories-list-item">
-          工具
-          <span class="categories-list-item-badge">33</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据结构与算法">
         <div class="categories-list-item">
           数据结构与算法
           <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
@@ -749,14 +798,7 @@ var _hmt = _hmt || [];
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
-          <span class="categories-list-item-badge">26</span>
-        </div>
-      </a>
-    
-      <a href="/categories/编程资料">
-        <div class="categories-list-item">
-          编程资料
-          <span class="categories-list-item-badge">33</span>
+          <span class="categories-list-item-badge">21</span>
         </div>
       </a>
     
@@ -764,6 +806,13 @@ var _hmt = _hmt || [];
         <div class="categories-list-item">
           设计模式
           <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
@@ -944,8 +993,8 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2028-02-28</div>
-        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+        <div class="recent-posts-item-title">2026-09-02</div>
+        <a href="/ai-assistant-guide/"><div class="recent-posts-item-content">AI 助手哪个好用（2026）：豆包/Kimi/DeepSeek/ChatGPT/Gemini 实测对比，3 分钟选对你的 AI</div></a>
       </div>
     
       <div class="recent-posts-item">
