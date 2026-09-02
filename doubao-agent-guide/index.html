@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-02T03:20:00.000Z",
+  "dateModified": "2026-09-02T05:59:37.024Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/doubao-agent-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_wide__2026-09-02T05-59-19.png",
+  "description": "豆包的工作任务模式已经能让你在手机上动动嘴，遥控电脑完成做表格、剪视频、采集热榜这些活。本文实测全流程：怎么开启 Agent 模式、WPS 表单怎么生成、视频怎么自动剪、云电脑怎么并行，以及 Mac 限制等避坑点。",
+  "keywords": "豆包agent,豆包遥控电脑,豆包手机控制电脑,豆包工作任务模式,豆包云电脑,豆包剪视频,豆包自动化办公,豆包电脑版,豆包agent怎么用,豆包多设备同步,豆包定时任务,手机遥控电脑办公"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "豆包怎么用手机遥控电脑？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "在电脑版豆包左下角切换到「工作任务」模式，登录同一个豆包账号的手机 App 会自动发现这台电脑。之后在手机上发任务，豆包就在电脑上执行：点按钮、填表格、开软件、导出文件都可以，执行过程全程可视。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "豆包 Agent 模式免费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "工作任务模式本身可以直接用，但任务执行会消耗模型额度。Pro 模式（Turbo）额度消耗更快，日常轻度任务用默认模式就够，复杂长任务再考虑 Pro。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Mac 能用豆包遥控电脑吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能用但有限制。目前 GUI 操控在 Windows 上是全量的，Mac 只能操控浏览器层面，其他本地软件暂时不行。Mac 用户想完整体验，可以用豆包的云电脑（远程虚拟桌面）来跑。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "豆包能同时执行多个电脑任务吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "同一台电脑上不行，GUI 操作同时开多个任务会错乱，一次只跑一个。但本地电脑和云电脑可以同时各跑一个任务，相当于两条流水线并行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "豆包剪视频靠谱吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "实测可用。它自己打开剪映、导入素材、识别高光片段、加转场、导出到指定目录，全程不用手动干预。而且剪完的流程可以沉淀成 Skill，下次一句话直接复用。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）</title>
+  
+  
+  <meta property="title" content="豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/doubao-agent-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_wide__2026-09-02T05-59-19.png">
+  
+  
+  <meta property="description" content="豆包的工作任务模式已经能让你在手机上动动嘴，遥控电脑完成做表格、剪视频、采集热榜这些活。本文实测全流程：怎么开启 Agent 模式、WPS 表单怎么生成、视频怎么自动剪、云电脑怎么并行，以及 Mac 限制等避坑点。">
+  
+  <meta property="keywords" content="豆包agent,豆包遥控电脑,豆包手机控制电脑,豆包工作任务模式,豆包云电脑,豆包剪视频,豆包自动化办公,豆包电脑版,豆包agent怎么用,豆包多设备同步,豆包定时任务,手机遥控电脑办公">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-02">
+  <meta property="og:article:modified_time" content="2026-09-02">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="豆包">
+  
+  <meta property="og:article:tag" content="Agent">
+  
+  <meta property="og:article:tag" content="AI办公">
+  
+  <meta property="og:article:tag" content="自动化办公">
+  
+  <meta property="og:article:tag" content="豆包Agent">
+  
+  <meta property="og:article:tag" content="云电脑">
+  
+  <meta property="og:article:tag" content="剪映">
+  
+  <meta property="og:article:tag" content="WPS">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/doubao-agent-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_wide__2026-09-02T05-59-19.png" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/Modern_flat_illustration_wide__2026-09-02T05-59-19.png"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-02T03:20:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-02</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/doubao-agent-guide/" class="leancloud_visitors" data-flag-title="豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/豆包/" class="post-meta-link">豆包</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Agent/" class="post-meta-link">Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI办公/" class="post-meta-link">AI办公</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/自动化办公/" class="post-meta-link">自动化办公</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/豆包Agent/" class="post-meta-link">豆包Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/云电脑/" class="post-meta-link">云电脑</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/剪映/" class="post-meta-link">剪映</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/WPS/" class="post-meta-link">WPS</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="豆包的工作任务模式已经能让你在手机上动动嘴，遥控电脑完成做表格、剪视频、采集热榜这些活。本文实测全流程：怎么开启 Agent 模式、WPS 表单怎么生成、视频怎么自动剪、云电脑怎么并行，以及 Mac 限制等避坑点。">
+  
+  <meta name="keywords" content="豆包agent,豆包遥控电脑,豆包手机控制电脑,豆包工作任务模式,豆包云电脑,豆包剪视频,豆包自动化办公,豆包电脑版,豆包agent怎么用,豆包多设备同步,豆包定时任务,手机遥控电脑办公">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>📚 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想系统了解 ChatGPT、Gemini、Kimi、DeepSeek 等主流模型怎么选，以及 AI 编程 / Agent 工具怎么入门，先看总览页。</p>
+</blockquote>
+<p>OpenAI 把 Codex 和 ChatGPT App 融合那会儿，大家的反应是「Agent 办公真的来了」——但说实话，那基本是开发者的事。</p>
+<p>国内月活最大的 AI App 豆包，显然不想放过这个赛道。现在的豆包，已经进化到可以<strong>用手机遥控电脑干活</strong>：你在地铁上动动嘴，它在你家电脑上点按钮、填表格、做 PPT、剪视频。</p>
+<p>如果说 Codex 是开发者的工作 Agent，那豆包想做的，可能是几亿普通人的 Codex。</p>
+<p>这篇就把这套玩法完整走一遍，包括几个实测场景和一些没人提的坑。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>想体验</strong>：电脑版豆包 → 左下角切「工作任务」模式 → 手机登录同一账号 → 直接发任务</li>
+<li><strong>要额度</strong>：任务执行消耗模型额度，Pro 模式（Turbo）消耗更快，轻度任务默认模式够用</li>
+<li><strong>Windows 全量可用，Mac 只能操控浏览器</strong>，Mac 用户走云电脑方案</li>
+<li><strong>一次只能跑一个 GUI 任务</strong>，本地 + 云电脑可以并行两条线</li>
+</ul>
+<h2 id="怎么开启：三步搞定"><a href="#怎么开启：三步搞定" class="headerlink" title="怎么开启：三步搞定"></a>怎么开启：三步搞定</h2><p>整套 setup 不复杂：</p>
+<ol>
+<li><strong>电脑端</strong>：打开豆包 PC 版，左下角切换到「工作任务」模式。这里有个选择：普通模式省额度，Pro 模式（Turbo）更强但额度消耗快</li>
+<li><strong>配置权限</strong>：选择项目、权限、技能、连接器（决定它能碰你电脑里的哪些东西）</li>
+<li><strong>手机端</strong>：登录同一个豆包账号，App 会自动发现你的电脑</li>
+</ol>
+<p>配完之后，手机、电脑的任务进度和聊天记录三端同步，体验相当丝滑。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_01.png" class="lozad post-image"src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_01.png"></p>
+<p>我同时登了 Mac 和 Windows 两台设备测试，多设备同时在线没问题。</p>
+<h2 id="实测一：在外面让电脑做收集表"><a href="#实测一：在外面让电脑做收集表" class="headerlink" title="实测一：在外面让电脑做收集表"></a>实测一：在外面让电脑做收集表</h2><p>场景很真实：人在外面，突然要发一份需求收集表，电脑不在身边。</p>
+<p>直接在手机上让豆包打开电脑里的 WPS，做一个需求调查收集表。任务丢出去之后<strong>你完全不用盯着</strong>，它干完会直接把结果给你——最后返回的是一份在线 WPS 收集表单的链接。</p>
+<p>打开看效果：需求描述、优先级、提出人这些字段都齐了，手机上就能直接转发给目标用户。</p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_02.png" class="lozad post-image"src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_02.png"></p>
+<p>整个过程有两个细节值得说：</p>
+<ul>
+<li><strong>全程可视</strong>。从打开电脑软件到分享链接，每一步它做了什么你都看得到，不是黑盒</li>
+<li><strong>会自己排错</strong>。中间有个地方出了小问题，豆包自己发现了、自己修了，没要我出手</li>
+</ul>
+<h2 id="实测二：让它自己剪视频"><a href="#实测二：让它自己剪视频" class="headerlink" title="实测二：让它自己剪视频"></a>实测二：让它自己剪视频</h2><p>这个场景对做内容的人是刚需。我之前录了一个一分多钟的演示视频，感觉太长，自己又懒得剪，这活拖了很久。</p>
+<p>直接丢给豆包：告诉它视频目录，让它自动识别高光片段，剪一段 30 秒左右的版本。</p>
+<p>它自己打开剪映、导入素材、读取视频内容、识别亮点时间段、开剪，中间还自己加了转场。剪完自动导出到我指定的目录，全程零手动干预。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_15.png" alt="剪映智能剪辑执行过程与导出结果" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_15.png" class="lozad post-image"></p>
+<p>更舒服的是<strong>它干活的时候不耽误你用电脑</strong>——任务跑在小窗里，它干它的，你干你的。</p>
+<h3 id="把流程沉淀成-Skill"><a href="#把流程沉淀成-Skill" class="headerlink" title="把流程沉淀成 Skill"></a>把流程沉淀成 Skill</h3><p>这套剪辑流程我直接让豆包沉淀成了一个 Skill。之后每次要剪视频，一句话调起，不用重新描述一遍流程。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_11.png" alt="剪辑流程沉淀成 Skill 的文档" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_11.png" class="lozad post-image"></p>
+<p>说实话，这个体验比很多用 Codex 做视频剪辑的方案还顺手——毕竟豆包和剪映都是字节系产品，配合是原生级的。</p>
+<h2 id="多设备与云电脑：两条流水线并行"><a href="#多设备与云电脑：两条流水线并行" class="headerlink" title="多设备与云电脑：两条流水线并行"></a>多设备与云电脑：两条流水线并行</h2><p>这里有个进阶玩法：<strong>本地电脑和云电脑可以同时开</strong>。</p>
+<p>云电脑是一台远程虚拟桌面，相当于云端给你一台永远在线的机器，不占本地资源。于是可以这样组合：</p>
+<ul>
+<li>本地电脑：挂着视频剪辑任务，小窗跑着</li>
+<li>云电脑：登着账号帮你干轻量杂活（比如签到、抽奖这类日常任务）</li>
+</ul>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_16.png" alt="多设备列表：本地电脑与云电脑同时在线" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_16.png" class="lozad post-image"></p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_12.png" alt="本地剪辑与云电脑任务并行实拍" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_12.png" class="lozad post-image"></p>
+<p>一个注意点：<strong>同一台电脑上不能同时开多个 GUI 任务，会错乱</strong>。想并行只能靠本地 + 云电脑这条组合。</p>
+<h2 id="实测三：自动盯热榜-定时推送"><a href="#实测三：自动盯热榜-定时推送" class="headerlink" title="实测三：自动盯热榜 + 定时推送"></a>实测三：自动盯热榜 + 定时推送</h2><p>豆包内置了字节系的产品热点搜索，这个能力可以拿来干正经事。</p>
+<p>我让它采集当天各个平台的热榜，整理输出到飞书文档。过一会儿它返回一个飞书链接，打开一看：标题、来源、领域、热度，一个不落，而且<strong>每个热点都给了适合的内容形式和三个选题方向</strong>。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_03.png" alt="热榜采集任务的执行步骤拆解" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_03.png" class="lozad post-image"></p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png" alt="飞书多维表格里的热榜整理结果" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_06.png" class="lozad post-image"></p>
+<p>我又追加了两个要求：把科技热点单独分类、多加几个平台。同一热点不同平台它会自动聚合成一条，一眼就能看出今天什么最火。</p>
+<p>最后一步：设置成<strong>定时任务</strong>。现在每天早上，豆包自动采集最新热榜推送过来——选题这活基本不用自己盯了。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_05.png" alt="定时任务设置成功的界面" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_05.png" class="lozad post-image"></p>
+<h2 id="彩蛋：文生视频也顺手试了"><a href="#彩蛋：文生视频也顺手试了" class="headerlink" title="彩蛋：文生视频也顺手试了"></a>彩蛋：文生视频也顺手试了</h2><p>豆包内置了 Seedance 2.5 和 Seedream 模型，随手让它生成了一段夏天的视频：西瓜、空调、可乐，老三样全齐。做自媒体配素材的时候挺方便，属于附赠能力，不是本文重点，不展开。</p>
+<h2 id="避坑点"><a href="#避坑点" class="headerlink" title="避坑点"></a>避坑点</h2><table>
+<thead>
+<tr>
+<th>坑</th>
+<th>说明</th>
+<th>应对</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GUI 任务不能并行</td>
+<td>同一台电脑同时开多个任务会错乱</td>
+<td>一次一个；要并行上云电脑</td>
+</tr>
+<tr>
+<td>Mac 支持不完整</td>
+<td>目前 Mac 只能操控浏览器层面</td>
+<td>Mac 用户走云电脑方案</td>
+</tr>
+<tr>
+<td>Pro 模式吃额度</td>
+<td>Turbo 模式额度消耗明显更快</td>
+<td>日常任务用默认模式，复杂任务再开 Pro</td>
+</tr>
+<tr>
+<td>首次配置别跳过</td>
+<td>权限、连接器配置决定它能干什么</td>
+<td>按需勾选，别全开</td>
+</tr>
+</tbody></table>
+<h2 id="和开发者-Agent-的区别"><a href="#和开发者-Agent-的区别" class="headerlink" title="和开发者 Agent 的区别"></a>和开发者 Agent 的区别</h2><p>看到这你可能想问：这和 Claude Code、Codex 那类工具有什么区别？</p>
+<p>一句话：<strong>面向的人群不一样</strong>。<a href="https://tanqingbo.cn/claude-code/">Claude Code</a>、Codex 这类是给开发者的——你要懂终端、懂代码、懂怎么描述技术任务。豆包这套是给普通人的：你说人话，它干人事，做表格、剪视频、盯热报这些「办公室的活」而不是「写代码的活」。</p>
+<p>想横向了解各家 Agent 和 AI 工具怎么选的，看这篇：<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>。想先补补大模型基础知识的，可以翻 <a href="https://tanqingbo.cn/llm-wiki-guide/">大模型知识手册</a>。</p>
+<h2 id="适合什么人"><a href="#适合什么人" class="headerlink" title="适合什么人"></a>适合什么人</h2><ul>
+<li>经常在外面跑、电脑不在身边的办公族</li>
+<li>每天有重复性电脑操作（做表、剪视频、盯热点）的人</li>
+<li>不想折腾技术、只想说句话就把活干了的人</li>
+<li>做自媒体需要每天追热点选题的人</li>
+</ul>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><p><strong>Q：豆包遥控电脑安全吗？会不会乱动我文件？</strong><br>执行全程可视，每一步做了什么都有记录，而且权限、连接器在配置阶段就划定了范围。建议首次配置按需勾选权限，别一键全开。</p>
+<p><strong>Q：任务执行到一半电脑关机了怎么办？</strong><br>本地任务依赖电脑在线。如果担心这种情况，把重要任务放到云电脑上跑——云电脑永远在线，不依赖你的本地设备。</p>
+<p><strong>Q：和手机版豆包直接对话有什么区别？</strong><br>手机直接对话只能生成文本、图片这类「内容」；工作任务模式能操作你电脑上的软件，「干活」和「聊天」是两个层面的能力。</p>
+<p><strong>Q：额度消耗快不快？</strong><br>轻度任务（做表单、查热点）消耗很慢；重度 GUI 操作（剪长视频、连续多步骤任务）消耗明显。Pro 模式整体消耗比默认模式快不少，按需选择。</p>
+<p><strong>Q：需要科学上网吗？</strong><br>不需要。豆包是国产应用，国内网络直连，这也是它对普通用户友好的地方之一。想用海外 AI 但嫌官方贵的，可以看这篇：<a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型合租充值教程</a>。</p>
+<hr>
+<p>豆包刚出来那会儿，还只是手机里陪你聊天的树洞。现在它直接坐上了工位：做表格、剪视频、盯热点，你不想干的活都能甩给它。</p>
+<p>大多数人不关心模型参数，只希望少做点重复劳动，早点把活干完。当 AI 真能替普通人分担这些琐碎工作时，它才算真正走进了生活。有拿它干活的新玩法，评论区聊聊。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/doubao-agent-guide/">https://tanqingbo.cn/doubao-agent-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/claude-code/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Claude Code教程：从入门到进阶的完整使用指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-06-11</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/llm-wiki-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        LLM Wiki 自生长知识库搭建教程：用 WorkBuddy / Codex + Obsidian 搭一套会进化的知识大脑
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-25</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/deepseek-vision-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT/Claude/Gemini/Grok 怎么买便宜：国外 AI 大模型充值教程（2026 附 9 折优惠码）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/科学上网之VPN篇/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">科学上网（翻墙）软件之---VPN篇 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/android-kuaili/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">安卓手机翻墙全流程：机场注册、订阅、Android 客户端一键连接（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%90%AF%EF%BC%9A%E4%B8%89%E6%AD%A5%E6%90%9E%E5%AE%9A"><span class="toc-number">2.</span> <span class="toc-text">怎么开启：三步搞定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%80%EF%BC%9A%E5%9C%A8%E5%A4%96%E9%9D%A2%E8%AE%A9%E7%94%B5%E8%84%91%E5%81%9A%E6%94%B6%E9%9B%86%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">实测一：在外面让电脑做收集表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%BA%8C%EF%BC%9A%E8%AE%A9%E5%AE%83%E8%87%AA%E5%B7%B1%E5%89%AA%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">实测二：让它自己剪视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E6%B5%81%E7%A8%8B%E6%B2%89%E6%B7%80%E6%88%90-Skill"><span class="toc-number">4.1.</span> <span class="toc-text">把流程沉淀成 Skill</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%AE%BE%E5%A4%87%E4%B8%8E%E4%BA%91%E7%94%B5%E8%84%91%EF%BC%9A%E4%B8%A4%E6%9D%A1%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number">5.</span> <span class="toc-text">多设备与云电脑：两条流水线并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%89%EF%BC%9A%E8%87%AA%E5%8A%A8%E7%9B%AF%E7%83%AD%E6%A6%9C-%E5%AE%9A%E6%97%B6%E6%8E%A8%E9%80%81"><span class="toc-number">6.</span> <span class="toc-text">实测三：自动盯热榜 + 定时推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%A9%E8%9B%8B%EF%BC%9A%E6%96%87%E7%94%9F%E8%A7%86%E9%A2%91%E4%B9%9F%E9%A1%BA%E6%89%8B%E8%AF%95%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">彩蛋：文生视频也顺手试了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E7%82%B9"><span class="toc-number">8.</span> <span class="toc-text">避坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E5%BC%80%E5%8F%91%E8%80%85-Agent-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">9.</span> <span class="toc-text">和开发者 Agent 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E4%BA%BA"><span class="toc-number">10.</span> <span class="toc-text">适合什么人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">11.</span> <span class="toc-text">FAQ</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>405</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>300</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%90%AF%EF%BC%9A%E4%B8%89%E6%AD%A5%E6%90%9E%E5%AE%9A"><span class="toc-number">2.</span> <span class="toc-text">怎么开启：三步搞定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%80%EF%BC%9A%E5%9C%A8%E5%A4%96%E9%9D%A2%E8%AE%A9%E7%94%B5%E8%84%91%E5%81%9A%E6%94%B6%E9%9B%86%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">实测一：在外面让电脑做收集表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%BA%8C%EF%BC%9A%E8%AE%A9%E5%AE%83%E8%87%AA%E5%B7%B1%E5%89%AA%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">实测二：让它自己剪视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E6%B5%81%E7%A8%8B%E6%B2%89%E6%B7%80%E6%88%90-Skill"><span class="toc-number">4.1.</span> <span class="toc-text">把流程沉淀成 Skill</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%AE%BE%E5%A4%87%E4%B8%8E%E4%BA%91%E7%94%B5%E8%84%91%EF%BC%9A%E4%B8%A4%E6%9D%A1%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number">5.</span> <span class="toc-text">多设备与云电脑：两条流水线并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%89%EF%BC%9A%E8%87%AA%E5%8A%A8%E7%9B%AF%E7%83%AD%E6%A6%9C-%E5%AE%9A%E6%97%B6%E6%8E%A8%E9%80%81"><span class="toc-number">6.</span> <span class="toc-text">实测三：自动盯热榜 + 定时推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%A9%E8%9B%8B%EF%BC%9A%E6%96%87%E7%94%9F%E8%A7%86%E9%A2%91%E4%B9%9F%E9%A1%BA%E6%89%8B%E8%AF%95%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">彩蛋：文生视频也顺手试了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E7%82%B9"><span class="toc-number">8.</span> <span class="toc-text">避坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E5%BC%80%E5%8F%91%E8%80%85-Agent-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">9.</span> <span class="toc-text">和开发者 Agent 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E4%BA%BA"><span class="toc-number">10.</span> <span class="toc-text">适合什么人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">11.</span> <span class="toc-text">FAQ</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">58</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">69</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\机场" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="\tags\代理" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E5%BC%80%E5%90%AF%EF%BC%9A%E4%B8%89%E6%AD%A5%E6%90%9E%E5%AE%9A"><span class="toc-number">2.</span> <span class="toc-text">怎么开启：三步搞定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%80%EF%BC%9A%E5%9C%A8%E5%A4%96%E9%9D%A2%E8%AE%A9%E7%94%B5%E8%84%91%E5%81%9A%E6%94%B6%E9%9B%86%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">实测一：在外面让电脑做收集表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%BA%8C%EF%BC%9A%E8%AE%A9%E5%AE%83%E8%87%AA%E5%B7%B1%E5%89%AA%E8%A7%86%E9%A2%91"><span class="toc-number">4.</span> <span class="toc-text">实测二：让它自己剪视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%8A%E6%B5%81%E7%A8%8B%E6%B2%89%E6%B7%80%E6%88%90-Skill"><span class="toc-number">4.1.</span> <span class="toc-text">把流程沉淀成 Skill</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E8%AE%BE%E5%A4%87%E4%B8%8E%E4%BA%91%E7%94%B5%E8%84%91%EF%BC%9A%E4%B8%A4%E6%9D%A1%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%B9%B6%E8%A1%8C"><span class="toc-number">5.</span> <span class="toc-text">多设备与云电脑：两条流水线并行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%89%EF%BC%9A%E8%87%AA%E5%8A%A8%E7%9B%AF%E7%83%AD%E6%A6%9C-%E5%AE%9A%E6%97%B6%E6%8E%A8%E9%80%81"><span class="toc-number">6.</span> <span class="toc-text">实测三：自动盯热榜 + 定时推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%A9%E8%9B%8B%EF%BC%9A%E6%96%87%E7%94%9F%E8%A7%86%E9%A2%91%E4%B9%9F%E9%A1%BA%E6%89%8B%E8%AF%95%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">彩蛋：文生视频也顺手试了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E7%82%B9"><span class="toc-number">8.</span> <span class="toc-text">避坑点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%92%8C%E5%BC%80%E5%8F%91%E8%80%85-Agent-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">9.</span> <span class="toc-text">和开发者 Agent 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E4%BA%BA"><span class="toc-number">10.</span> <span class="toc-text">适合什么人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">11.</span> <span class="toc-text">FAQ</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2028-02-28</div>
+        <a href="/科学上网之VPN篇/"><div class="recent-posts-item-content">科学上网（翻墙）软件之---VPN篇</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-02</div>
+        <a href="/doubao-agent-guide/"><div class="recent-posts-item-content">豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-01</div>
+        <a href="/android-kuaili/"><div class="recent-posts-item-content">安卓手机翻墙全流程：机场注册、订阅、Android 客户端一键连接（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-08-30</div>
+        <a href="/deepseek-vision-guide/"><div class="recent-posts-item-content">DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
