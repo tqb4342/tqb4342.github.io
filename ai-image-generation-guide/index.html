@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html>
+<meta  lang="zh-CN" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-03T01:40:00.000Z",
+  "dateModified": "2026-09-03T02:23:17.745Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/ai-image-generation-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kling-interface-2026-09-03.webp",
+  "description": "AI 画图工具这么多，到底用哪个？本文把即梦、豆包、可灵、Midjourney、GPT-4o 五个主力放在一起实测对比：画质上限、中文理解、改图能力、免费额度逐项过，最后按自媒体配图/专业设计/电商人像/白嫖党给出明确选择，3 分钟选对你的 AI 绘图工具。",
+  "keywords": "ai画图,ai绘画,ai图片生成,ai生图,ai绘图工具,ai绘画哪个好用,即梦,豆包ai绘画,midjourney,ai画图免费,ai生成图片,文生图,ai作图,免费ai绘画,ai画图软件"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 画图哪个好用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按需求选：中文海报、自媒体配图选即梦（国内第一梯队，带字图最强）；零基础日常出图选豆包（免费、能抠图）；写实人像、组图选可灵；艺术质感天花板选 Midjourney（需科学上网）；要精准改图、图内文字选 ChatGPT 的 GPT-4o 图像。只选一个国内工具的话，选即梦。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "有完全免费的 AI 绘画工具吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有。豆包生图完全免费；秒画（商汤出品）完全免费；混元图像每月免费 100 张；即梦每天有免费额度。想无限量又不怕折腾的，本地部署 Fooocus + 开源模型，装一次永久免费，还能商用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 生成的图片能商用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看平台协议。开源模型（Stable Diffusion、Flux）本地生成的图商用最安全；Midjourney 免费版禁止商用，付费版有商用授权；国内平台（即梦、豆包等）个人使用没问题，商用要留意会员条款。量产前务必读一遍用户协议。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Midjourney 国内能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能直连，需要科学上网环境，订阅 10 美元/月起，对提示词也有学习成本。如果只是日常配图，即梦和豆包免翻墙、写中文就能出图，没必要为这个折腾。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 画图提示词怎么写才出好图？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "国内工具（即梦、豆包）直接写人话，把画面主体、风格、场景说清楚就行。Midjourney 需要学提示词写法（主体+风格+光线+构图+参数），有学习成本。通用技巧：一次只描述一个主体，风格给参考词（如\"国风水墨\"\"电影感\"），别堆一大段形容词。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "电脑配置不好能用 AI 绘画吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。即梦、豆包、可灵都是云端出图，浏览器打开就能用，对电脑零要求。只有本地部署 Stable Diffusion、Flux 才吃显卡（建议 NVIDIA 独显），普通用户完全不需要碰。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具</title>
+  
+  
+  <meta property="title" content="AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具">
+  
+  
+  <meta property="url" content="https://tanqingbo.cn/ai-image-generation-guide/index.html">
+  
+  
+  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kling-interface-2026-09-03.webp">
+  
+  
+  <meta property="description" content="AI 画图工具这么多，到底用哪个？本文把即梦、豆包、可灵、Midjourney、GPT-4o 五个主力放在一起实测对比：画质上限、中文理解、改图能力、免费额度逐项过，最后按自媒体配图/专业设计/电商人像/白嫖党给出明确选择，3 分钟选对你的 AI 绘图工具。">
+  
+  <meta property="keywords" content="ai画图,ai绘画,ai图片生成,ai生图,ai绘图工具,ai绘画哪个好用,即梦,豆包ai绘画,midjourney,ai画图免费,ai生成图片,文生图,ai作图,免费ai绘画,ai画图软件">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-03">
+  <meta property="og:article:modified_time" content="2026-09-03">
+  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  
+  
+  <meta property="og:article:tag" content="ChatGPT">
+  
+  <meta property="og:article:tag" content="AI工具">
+  
+  <meta property="og:article:tag" content="豆包">
+  
+  <meta property="og:article:tag" content="AI绘画">
+  
+  <meta property="og:article:tag" content="AI画图">
+  
+  <meta property="og:article:tag" content="即梦">
+  
+  <meta property="og:article:tag" content="可灵">
+  
+  <meta property="og:article:tag" content="Midjourney">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/ai-image-generation-guide/index.html" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kling-interface-2026-09-03.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kling-interface-2026-09-03.webp"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-03T01:40:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-03</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/ai-image-generation-guide/" class="leancloud_visitors" data-flag-title="AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/ChatGPT/" class="post-meta-link">ChatGPT</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI工具/" class="post-meta-link">AI工具</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/豆包/" class="post-meta-link">豆包</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI绘画/" class="post-meta-link">AI绘画</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI画图/" class="post-meta-link">AI画图</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/即梦/" class="post-meta-link">即梦</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/可灵/" class="post-meta-link">可灵</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Midjourney/" class="post-meta-link">Midjourney</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  
+  <meta name="description" content="AI 画图工具这么多，到底用哪个？本文把即梦、豆包、可灵、Midjourney、GPT-4o 五个主力放在一起实测对比：画质上限、中文理解、改图能力、免费额度逐项过，最后按自媒体配图/专业设计/电商人像/白嫖党给出明确选择，3 分钟选对你的 AI 绘图工具。">
+  
+  <meta name="keywords" content="ai画图,ai绘画,ai图片生成,ai生图,ai绘图工具,ai绘画哪个好用,即梦,豆包ai绘画,midjourney,ai画图免费,ai生成图片,文生图,ai作图,免费ai绘画,ai画图软件">
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+	<!--
+		<p>最近整理了一些计算专业必读的经典专业书，可以点击下面的链接查看和下载高清pdf电子版：</p>
+		<ul>
+		<li><a href="https://tanqingbo.cn/computer-book/">计算机专业几本必看的几本经典书籍！</a></li>
+		</ul>
+	-->
+    <blockquote>
+<p>🎨 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想看 AI 工具全景图（对话助手、画图、编程、办公），先看总览页；本文只解决一个问题：<strong>AI 画图，用哪个。</strong></p>
+</blockquote>
+<p>做自媒体的都懂配图有多折磨人：自己拍，没设备没时间；网上找，版权雷区到处都是。AI 生图本来是解药，结果打开应用商店一看——即梦、豆包、可灵、文心一格、通义万相……又是一长串，长得还都差不多。</p>
+<p>说实话，去年这时候国产生图还只是「能看」，今年即梦的 Seedream 已经把中文海报做到能直接交付的水准了。但工具多≠都值得装，大部分人的需求，一个工具就能覆盖。</p>
+<p>这篇把五个真正值得用的主力放在一起比一比，都是我高频用过的，不是云评测。另外这篇只聊「画图」，要选对话助手的看姊妹篇：<a href="https://tanqingbo.cn/ai-assistant-guide/">AI 助手哪个好用（2026）</a>。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><p>赶时间的直接看结论：</p>
+<ul>
+<li><strong>中文海报、自媒体配图</strong>：即梦，国内第一梯队，带字图和智能画布最能打</li>
+<li><strong>零基础、白嫖党</strong>：豆包，生图完全免费，抠图擦除顺手</li>
+<li><strong>写实人像、组图一致性</strong>：可灵图片，电商和写真场景稳</li>
+<li><strong>艺术质感天花板</strong>：Midjourney，专业设计的信仰，但要翻墙</li>
+<li><strong>精准改图、图内文字</strong>：ChatGPT 的 GPT-4o 图像，对话式改图独一档</li>
+</ul>
+<p>国内三个全部免费直连，海外两个要科学上网——跟 AI 助手那篇的分水岭一样，先想清楚自己愿不愿意折腾网络。</p>
+<h2 id="一、先分清：文生图、图生图、AI-修图"><a href="#一、先分清：文生图、图生图、AI-修图" class="headerlink" title="一、先分清：文生图、图生图、AI 修图"></a>一、先分清：文生图、图生图、AI 修图</h2><p>很多人搜「AI 画图」，其实要的东西不一样，先对号：</p>
+<p><strong>文生图</strong>：打一段字，凭空出图。「画一只戴墨镜的橘猫」——大部分人要的是这个。</p>
+<p><strong>图生图</strong>：上传参考图，换风格、改构图。给一张照片变动漫风、旧照片修复，属于这类。</p>
+<p><strong>AI 修图</strong>：在已有图上干活——抠图、消除路人、扩图、局部重绘。这类需求别去下专业设计软件，豆包和即梦内置的修图功能就能干掉 PS 的大部分日常场景。</p>
+<p>五个主力工具基本是「三样全包」，但侧重点差很多，下面逐个说。</p>
+<h2 id="二、五大主力逐个点评"><a href="#二、五大主力逐个点评" class="headerlink" title="二、五大主力逐个点评"></a>二、五大主力逐个点评</h2><h3 id="即梦：国内第一梯队"><a href="#即梦：国内第一梯队" class="headerlink" title="即梦：国内第一梯队"></a>即梦：国内第一梯队</h3><p>字节出品，底层是 Seedream 模型，也是豆包的同门师兄。强项很明确：<strong>中文语义理解 + 带字图</strong>。你让它出一张「双十一全场五折」的促销海报，画面里的中文文字是能看的——就这一条，大部分海外工具至今做不到，Midjourney 画中文基本等于抽象艺术。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/jimeng-interface-2026-09-03.webp" alt="即梦 AI 画图工具界面" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/jimeng-interface-2026-09-03.webp" class="lozad post-image"></p>
+<p>智能画布是它的第二个杀手锏：多图融合、局部重绘、一键扩图、消除路人、抠图，出完第一稿不用导出，直接在画布里改成可用稿。做自媒体封面、电商活动图、IP 形象快稿，这是目前国内效率最高的路径。</p>
+<p>短板：免费额度每天有但不算多，量产要开会员（79 元档能画几千张，自媒体重度用户回本很快）。</p>
+<p>适合谁：自媒体配图、中文海报、电商素材，全都要的。</p>
+<p>官网直达：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://jimeng.jianying.com/ai-tool/home">jimeng.jianying.com</a></p>
+<h3 id="豆包：免费抠图王者"><a href="#豆包：免费抠图王者" class="headerlink" title="豆包：免费抠图王者"></a>豆包：免费抠图王者</h3><p>还是字节，定位比即梦更「小白」。生图质量比即梦略逊一档——复杂画面偶尔抽象，但<strong>完全免费</strong>，出图速度还快。真正的隐藏实力是修图：抠图、擦除、背景替换，顺手程度可以替代 PS 的大部分日常需求。零基础用户的入门首选，爸妈辈都能用。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/doubao-interface-2026-09-03.webp" alt="豆包对话界面底部有图像生成入口" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/doubao-interface-2026-09-03.webp" class="lozad post-image"></p>
+<p>短板：画面精细度和审美上限不如即梦，商用素材建议过一遍即梦。另外豆包的画图只是它能力的一角，用手机遥控电脑干活的 Agent 玩法我单独写过实测：<a href="https://tanqingbo.cn/doubao-agent-guide/">豆包 Agent 办公实测</a>。</p>
+<p>适合谁：零基础、日常出图、抠图需求多、一分钱不想花的。</p>
+<p>官网直达：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.doubao.com/">doubao.com</a></p>
+<h3 id="可灵图片：写实人像专家"><a href="#可灵图片：写实人像专家" class="headerlink" title="可灵图片：写实人像专家"></a>可灵图片：写实人像专家</h3><p>快手出品，视频生成才是它的主场，但图片 3.0 有两个独门绝活：<strong>写实人像</strong>和<strong>组图一致性</strong>。一次生成一组风格、光影、细节高度统一的图，做电商详情页、写真模板、系列封面特别稳。带精准文字排版的商业图，文字准确率也是国内前列。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kling-interface-2026-09-03.webp" alt="可灵 AI 创作面板与作品墙" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kling-interface-2026-09-03.webp" class="lozad post-image"></p>
+<p>短板：创意和艺术向不如即梦灵活，偏「稳」不偏「野」。</p>
+<p>适合谁：电商、影楼、需要批量统一风格素材的。</p>
+<p>官网直达：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://klingai.com/">klingai.com</a></p>
+<h3 id="Midjourney：艺术天花板，但有门槛"><a href="#Midjourney：艺术天花板，但有门槛" class="headerlink" title="Midjourney：艺术天花板，但有门槛"></a>Midjourney：艺术天花板，但有门槛</h3><p>专业设计圈的信仰。同样的提示词，Midjourney 出来的画面在光影、构图、质感上还是断层式的领先，写实摄影风、电影感、概念设计，几乎没有对手。2026 年的 V8.1 模型标准模式 4 秒出图，网页版已经很好用了，不再必须泡在 Discord 里。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/midjourney-interface-2026-09-03.webp" alt="Midjourney 网页版创作界面" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/midjourney-interface-2026-09-03.webp" class="lozad post-image"></p>
+<p>短板就两条，但对普通人是组合拳：<strong>国内无法直连</strong>（网络问题怎么解决后面说），订阅 10 美元/月起；中文理解弱，提示词要按它的语法写，有实打实的学习成本。</p>
+<p>适合谁：设计师、插画师、追求画面质感上限的。</p>
+<p>官网直达：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.midjourney.com/">midjourney.com</a>（需科学上网）</p>
+<h3 id="ChatGPT-图像：改图独一档"><a href="#ChatGPT-图像：改图独一档" class="headerlink" title="ChatGPT 图像：改图独一档"></a>ChatGPT 图像：改图独一档</h3><p>GPT-4o 的原生图像生成，强项不是「画得最美」，而是<strong>最听话</strong>。对话式改图是它独一份的体验：「把左边那个人删掉」「标题换成红色」「整体改成圣诞氛围」——像跟设计师沟通一样改图，不用学任何参数。图内文字（包括英文海报）准确率也是第一梯队。</p>
+<p><img src="https://picx.zhimg.com/80/v2-2224ed53f37816d739b81b2c05155750_720w.png" alt="ChatGPT简介" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/80/v2-2224ed53f37816d739b81b2c05155750_720w.png" class="lozad post-image"></p>
+<p>短板：艺术性不如 Midjourney，免费用户额度有限，主力体验需要 Plus（20 美元/月）。</p>
+<p>适合谁：要反复改图的、做英文物料的、已经在用 ChatGPT 的。</p>
+<p>官网直达：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://chatgpt.com/">chatgpt.com</a>（需科学上网）</p>
+<blockquote>
+<p>至于开头点过名的<strong>文心一格、通义万相</strong>：能力都在线，但相较上面五个说不出「非它不可」的理由——文心一格出图质量稳定但排在即梦之后，通义万相更多作为通义生态的一环存在。零成本党可以关注第五节的秒画和混元图像；主力名单，只留给出差异化最硬理由的。</p>
+</blockquote>
+<h2 id="三、横向对比：一张表看懂"><a href="#三、横向对比：一张表看懂" class="headerlink" title="三、横向对比：一张表看懂"></a>三、横向对比：一张表看懂</h2><table>
+<thead>
+<tr>
+<th align="left">维度</th>
+<th align="center">即梦</th>
+<th align="center">豆包</th>
+<th align="center">可灵</th>
+<th align="center">Midjourney</th>
+<th align="center">GPT-4o</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">画质上限</td>
+<td align="center">★★★★</td>
+<td align="center">★★★</td>
+<td align="center">★★★★</td>
+<td align="center">★★★★★</td>
+<td align="center">★★★★</td>
+</tr>
+<tr>
+<td align="left">中文理解</td>
+<td align="center">★★★★★</td>
+<td align="center">★★★★</td>
+<td align="center">★★★★</td>
+<td align="center">★★</td>
+<td align="center">★★★★</td>
+</tr>
+<tr>
+<td align="left">图内文字</td>
+<td align="center">★★★★★</td>
+<td align="center">★★★</td>
+<td align="center">★★★★</td>
+<td align="center">★</td>
+<td align="center">★★★★★</td>
+</tr>
+<tr>
+<td align="left">改图能力</td>
+<td align="center">★★★★★</td>
+<td align="center">★★★★</td>
+<td align="center">★★★</td>
+<td align="center">★★★</td>
+<td align="center">★★★★★</td>
+</tr>
+<tr>
+<td align="left">免费可用</td>
+<td align="center">每日额度</td>
+<td align="center">完全免费</td>
+<td align="center">有免费额度</td>
+<td align="center">❌</td>
+<td align="center">有限额度</td>
+</tr>
+<tr>
+<td align="left">上手难度</td>
+<td align="center">低</td>
+<td align="center">极低</td>
+<td align="center">低</td>
+<td align="center">中</td>
+<td align="center">低</td>
+</tr>
+<tr>
+<td align="left">国内直连</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">❌ 需科学上网</td>
+<td align="center">❌ 需科学上网</td>
+</tr>
+</tbody></table>
+<p>老规矩说明：星级是五个里面的相对水位，不是绝对分。<strong>没有任何一个全面落后</strong>，Midjourney 的两星中文是相对即梦说的——翻译成英文提示词它照样起飞。选型看下一节。</p>
+<h2 id="四、按人群选：对号入座"><a href="#四、按人群选：对号入座" class="headerlink" title="四、按人群选：对号入座"></a>四、按人群选：对号入座</h2><p><strong>自媒体 / 公众号</strong> → 即梦为主，豆包为辅。封面、配图、带字海报是刚需，即梦的中文文字能力就是为这个场景生的；抠图擦图的小活丢给豆包。</p>
+<p><strong>设计师 / 专业向</strong> → Midjourney 为核心，即梦补中文物料。概念图、风格探索用 MJ，落到交付层的中文海报切即梦。</p>
+<p><strong>电商 / 写真</strong> → 可灵图片。组图一致性和写实人像是这个场景的硬需求，别的工具替代不了。</p>
+<p><strong>零基础 / 白嫖党</strong> → 豆包 + 即梦免费额度，一个字都不用打英文，一分钱不用花。</p>
+<p><strong>程序员 / 折腾党</strong> → 本地部署 Flux 或 Fooocus，开源模型零订阅费、生成无限量、商用无版权风险。有 NVIDIA 显卡再考虑，没有就老老实实用云端。</p>
+<h2 id="五、海外工具的两道坎，和零成本方案"><a href="#五、海外工具的两道坎，和零成本方案" class="headerlink" title="五、海外工具的两道坎，和零成本方案"></a>五、海外工具的两道坎，和零成本方案</h2><p>Midjourney 和 GPT-4o 确实强，但两道坎摆在那：网络 + 支付。</p>
+<p><strong>网络</strong>：国内无法直连，需要先解决科学上网，这块站内讲得很全了，入门看<a href="https://tanqingbo.cn/science-internet-guide/">科学上网教程</a>。<strong>支付</strong>：ChatGPT 注册和订阅的完整流程我写过保姆级教程：<a href="https://tanqingbo.cn/how-to-signup-chatgpt/">ChatGPT 注册教程</a>；不想自己折腾海外订阅的，走低价充值渠道更省事：<a href="https://tanqingbo.cn/ai-llm-buy-guide/">国外 AI 大模型低价充值教程</a>。</p>
+<p>再说个实测的零成本组合，一分钱不花覆盖日常需求：<strong>即梦每日免费额度</strong>（正式出图）+ <strong>豆包</strong>（抠图修图）+ <strong>混元图像</strong>（每月免费 100 张）+ <strong>秒画</strong>（完全免费）。个人使用这个组合基本用不完，确定需求量上来了再考虑会员，别一上来就买年费。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Q1：AI 画图哪个好用？</strong><br>按需求：中文海报选即梦，白嫖选豆包，写实人像选可灵，艺术上限选 Midjourney，改图选 GPT-4o。只选一个国内工具：即梦。详见上文逐个点评。</p>
+<p><strong>Q2：有完全免费的 AI 绘画工具吗？</strong><br>豆包、秒画完全免费，混元图像每月 100 张，即梦每天有额度。想无限的，本地部署 Fooocus，装一次永久免费还能商用。</p>
+<p><strong>Q3：AI 生成的图片能商用吗？</strong><br>看协议：开源模型本地生成最安全；Midjourney 免费版禁商用；国内平台个人使用没问题，商用看会员条款。量产前读一遍用户协议。</p>
+<p><strong>Q4：Midjourney 国内能用吗？</strong><br>不能直连，需科学上网，10 美元/月起。日常配图用即梦、豆包就能满足，别为这个硬折腾。</p>
+<p><strong>Q5：AI 画图提示词怎么写才出好图？</strong><br>国内工具直接写人话，主体+风格+场景说清楚就行。Midjourney 要学提示词语法。技巧：一次一个主体，风格给具体参考词，别堆形容词。</p>
+<p><strong>Q6：电脑配置不好能用 AI 绘画吗？</strong><br>能。即梦、豆包、可灵全是云端出图，浏览器就能用。只有本地部署才吃显卡，普通用户不用碰。</p>
+<hr>
+<p>选 AI 画图工具，说到底跟选 AI 助手一个逻辑：<strong>先用免费直连的把需求跑起来，撞到天花板了再升级</strong>。即梦和豆包能解决 80% 人的 80% 需求，剩下的 20%，留给 Midjourney 和 GPT-4o——但那是网络和预算解决之后的事了。</p>
+<p>更多 AI 工具的教程和实测，总览在这里：<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>。</p>
+		
+  </div>	
+<!--
+<div>
+  	  <br>
+	<div style="height:20px;border:none;border-top:1px solid #000;"></div>  
+	
+<section data-role="paragraph" style="outline: 0px;">
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">
+你好，我是作者谭庆波，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久&nbsp;。</span></section>
+<section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;letter-spacing: 0.544px;color: rgb(136, 136, 136);font-size: 15px;">相遇一场不容易，如果你愿意的话，我们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行。</span></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><br style="outline: 0px;"></section><section style="margin-right: 8px;margin-left: 8px;outline: 0px;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(136, 136, 136);font-size: 15px;letter-spacing: 0.544px;">我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></section>
+
+<pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(62, 62, 62);font-weight: 700;widows: 1;word-spacing: 1px;caret-color: rgb(255, 0, 0);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><pre data-darkmode-bgcolor-15930955728172="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15930955728172="rgb(255, 255, 255)" data-darkmode-color-15930955728172="rgb(184, 150, 174)" data-darkmode-original-color-15930955728172="rgb(38, 17, 32)" data-darkmode-bgcolor-15955958789103="rgb(25, 25, 25)" data-darkmode-original-bgcolor-15955958789103="rgb(255, 255, 255)" data-darkmode-color-15955958789103="rgb(184, 150, 174)" data-darkmode-original-color-15955958789103="rgb(38, 17, 32)" data-darkmode-bgcolor-16014256058207="rgb(25, 25, 25)" data-darkmode-original-bgcolor-16014256058207="rgb(255, 255, 255)" data-darkmode-color-16014256058207="rgb(184, 150, 174)" data-darkmode-original-color-16014256058207="rgb(38, 17, 32)" style="outline: 0px;letter-spacing: 0.544px;color: rgb(38, 17, 32);"><section data-mpa-template-id="1951" data-mpa-color="#ffffff" data-mpa-category="分隔" style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><section style="outline: 0px;"><hr style="outline: 0px;border-style: solid;border-right-width: 0px;border-bottom-width: 0px;border-left-width: 0px;border-color: rgba(0, 0, 0, 0.1);transform-origin: 0px 0px;transform: scale(1, 0.5);"><section style="margin-right: 8px;margin-left: 8px;outline: 0px;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;text-align: justify;"><span style="outline: 0px;color: rgb(69, 69, 69);font-size: 15px;letter-spacing: 1px;orphans: 4;white-space: pre-wrap;">你好，感谢阅读，非常荣幸您能阅读我的文章，这个博客网站陆续更新六七年了，上面沉淀了程序员的学习笔记、学习资料，以及我的一些学习生活感悟，因为大家的阅读，我才坚持这么久。相遇一场不容易，如果你愿意的话，咱们可以加个微信，有什么问题可以在微信上和我说，或者不聊天，单纯做个朋友圈点赞之交也行，我会在朋友圈发一些碎碎念，比如读书心得、技术、日常生活等，期待和你在微信上相遇！</span></p>
+
+<br/>
+<section style="outline: 0px;font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif;white-space: normal;color: rgb(62, 62, 62);letter-spacing: 1.5px;word-spacing: 0.8px;min-height: 1em;text-align: justify;"><br style="outline: 0px;"></section><p style="margin-right: 8px;margin-left: 8px;outline: 0px;white-space: normal;color: rgb(63, 63, 63);font-size: 14px;letter-spacing: 1.5px;word-spacing: 0.8px;font-family: 微软雅黑;text-align: center;"><img class="rich_pages wxw-img" data-cropselx1="0" data-cropselx2="342" data-cropsely1="0" data-cropsely2="437" data-fileid="100013999" data-galleryid="" data-ratio="1.2740740740740741" data-s="300,640" data-src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" data-type="jpeg" data-w="1080" style="outline: 0px; font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; box-shadow: rgb(180, 180, 180) 0em 0em 0.5em 0px; border-radius: 6px; box-sizing: border-box !important; visibility: visible !important; width: 42% !important; height: auto !important;" _width="62%" src="https://picx.zhimg.com/80/v2-e438e4d6c390c086c9cccdf0d3344ea4_720w.jpeg" crossorigin="anonymous" alt="图片" data-fail="0"></p></section></section></section></section></section></pre></section></section></section></section></section></pre></section>
+
+  	<p align="center" style="margin-top: 15px; font-size: 16px;color: #337ab7;">
+       <strong><a href="https://tanqingbo.cn/Win-OpenInternet/" target="_blank" style="unicode-bidi: isolate;font-variant-numeric: tabular-nums;text-transform: none;text-decoration-line: underline;">科学上网最全指南，含VPN软件工具</a></strong>
+    </p>
+-->
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/ai-image-generation-guide/">https://tanqingbo.cn/ai-image-generation-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具完全指南（2026）：ChatGPT、Gemini、Kimi 与生产力工具怎么选怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-assistant-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 助手哪个好用（2026）：豆包/Kimi/DeepSeek/ChatGPT/Gemini 实测对比，3 分钟选对你的 AI
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT/Claude/Gemini/Grok 怎么买便宜：国外 AI 大模型充值教程（2026 附 9 折优惠码）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/how-to-signup-chatgpt/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT注册教程2026：国内用户详细注册指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-09-17</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/doubao-agent-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/ai-assistant-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">AI 助手哪个好用（2026）：豆包/Kimi/DeepSeek/ChatGPT/Gemini 实测对比，3 分钟选对你的 AI </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%88%86%E6%B8%85%EF%BC%9A%E6%96%87%E7%94%9F%E5%9B%BE%E3%80%81%E5%9B%BE%E7%94%9F%E5%9B%BE%E3%80%81AI-%E4%BF%AE%E5%9B%BE"><span class="toc-number">2.</span> <span class="toc-text">一、先分清：文生图、图生图、AI 修图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%94%E5%A4%A7%E4%B8%BB%E5%8A%9B%E9%80%90%E4%B8%AA%E7%82%B9%E8%AF%84"><span class="toc-number">3.</span> <span class="toc-text">二、五大主力逐个点评</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B3%E6%A2%A6%EF%BC%9A%E5%9B%BD%E5%86%85%E7%AC%AC%E4%B8%80%E6%A2%AF%E9%98%9F"><span class="toc-number">3.1.</span> <span class="toc-text">即梦：国内第一梯队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B1%86%E5%8C%85%EF%BC%9A%E5%85%8D%E8%B4%B9%E6%8A%A0%E5%9B%BE%E7%8E%8B%E8%80%85"><span class="toc-number">3.2.</span> <span class="toc-text">豆包：免费抠图王者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%81%B5%E5%9B%BE%E7%89%87%EF%BC%9A%E5%86%99%E5%AE%9E%E4%BA%BA%E5%83%8F%E4%B8%93%E5%AE%B6"><span class="toc-number">3.3.</span> <span class="toc-text">可灵图片：写实人像专家</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Midjourney%EF%BC%9A%E8%89%BA%E6%9C%AF%E5%A4%A9%E8%8A%B1%E6%9D%BF%EF%BC%8C%E4%BD%86%E6%9C%89%E9%97%A8%E6%A7%9B"><span class="toc-number">3.4.</span> <span class="toc-text">Midjourney：艺术天花板，但有门槛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ChatGPT-%E5%9B%BE%E5%83%8F%EF%BC%9A%E6%94%B9%E5%9B%BE%E7%8B%AC%E4%B8%80%E6%A1%A3"><span class="toc-number">3.5.</span> <span class="toc-text">ChatGPT 图像：改图独一档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E7%9C%8B%E6%87%82"><span class="toc-number">4.</span> <span class="toc-text">三、横向对比：一张表看懂</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8C%89%E4%BA%BA%E7%BE%A4%E9%80%89%EF%BC%9A%E5%AF%B9%E5%8F%B7%E5%85%A5%E5%BA%A7"><span class="toc-number">5.</span> <span class="toc-text">四、按人群选：对号入座</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B5%B7%E5%A4%96%E5%B7%A5%E5%85%B7%E7%9A%84%E4%B8%A4%E9%81%93%E5%9D%8E%EF%BC%8C%E5%92%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%96%B9%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text">五、海外工具的两道坎，和零成本方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>401</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>314</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%88%86%E6%B8%85%EF%BC%9A%E6%96%87%E7%94%9F%E5%9B%BE%E3%80%81%E5%9B%BE%E7%94%9F%E5%9B%BE%E3%80%81AI-%E4%BF%AE%E5%9B%BE"><span class="toc-number">2.</span> <span class="toc-text">一、先分清：文生图、图生图、AI 修图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%94%E5%A4%A7%E4%B8%BB%E5%8A%9B%E9%80%90%E4%B8%AA%E7%82%B9%E8%AF%84"><span class="toc-number">3.</span> <span class="toc-text">二、五大主力逐个点评</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B3%E6%A2%A6%EF%BC%9A%E5%9B%BD%E5%86%85%E7%AC%AC%E4%B8%80%E6%A2%AF%E9%98%9F"><span class="toc-number">3.1.</span> <span class="toc-text">即梦：国内第一梯队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B1%86%E5%8C%85%EF%BC%9A%E5%85%8D%E8%B4%B9%E6%8A%A0%E5%9B%BE%E7%8E%8B%E8%80%85"><span class="toc-number">3.2.</span> <span class="toc-text">豆包：免费抠图王者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%81%B5%E5%9B%BE%E7%89%87%EF%BC%9A%E5%86%99%E5%AE%9E%E4%BA%BA%E5%83%8F%E4%B8%93%E5%AE%B6"><span class="toc-number">3.3.</span> <span class="toc-text">可灵图片：写实人像专家</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Midjourney%EF%BC%9A%E8%89%BA%E6%9C%AF%E5%A4%A9%E8%8A%B1%E6%9D%BF%EF%BC%8C%E4%BD%86%E6%9C%89%E9%97%A8%E6%A7%9B"><span class="toc-number">3.4.</span> <span class="toc-text">Midjourney：艺术天花板，但有门槛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ChatGPT-%E5%9B%BE%E5%83%8F%EF%BC%9A%E6%94%B9%E5%9B%BE%E7%8B%AC%E4%B8%80%E6%A1%A3"><span class="toc-number">3.5.</span> <span class="toc-text">ChatGPT 图像：改图独一档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E7%9C%8B%E6%87%82"><span class="toc-number">4.</span> <span class="toc-text">三、横向对比：一张表看懂</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8C%89%E4%BA%BA%E7%BE%A4%E9%80%89%EF%BC%9A%E5%AF%B9%E5%8F%B7%E5%85%A5%E5%BA%A7"><span class="toc-number">5.</span> <span class="toc-text">四、按人群选：对号入座</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B5%B7%E5%A4%96%E5%B7%A5%E5%85%B7%E7%9A%84%E4%B8%A4%E9%81%93%E5%9D%8E%EF%BC%8C%E5%92%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%96%B9%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text">五、海外工具的两道坎，和零成本方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">58</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">69</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\机场" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="\tags\代理" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%88%86%E6%B8%85%EF%BC%9A%E6%96%87%E7%94%9F%E5%9B%BE%E3%80%81%E5%9B%BE%E7%94%9F%E5%9B%BE%E3%80%81AI-%E4%BF%AE%E5%9B%BE"><span class="toc-number">2.</span> <span class="toc-text">一、先分清：文生图、图生图、AI 修图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%94%E5%A4%A7%E4%B8%BB%E5%8A%9B%E9%80%90%E4%B8%AA%E7%82%B9%E8%AF%84"><span class="toc-number">3.</span> <span class="toc-text">二、五大主力逐个点评</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B3%E6%A2%A6%EF%BC%9A%E5%9B%BD%E5%86%85%E7%AC%AC%E4%B8%80%E6%A2%AF%E9%98%9F"><span class="toc-number">3.1.</span> <span class="toc-text">即梦：国内第一梯队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B1%86%E5%8C%85%EF%BC%9A%E5%85%8D%E8%B4%B9%E6%8A%A0%E5%9B%BE%E7%8E%8B%E8%80%85"><span class="toc-number">3.2.</span> <span class="toc-text">豆包：免费抠图王者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E7%81%B5%E5%9B%BE%E7%89%87%EF%BC%9A%E5%86%99%E5%AE%9E%E4%BA%BA%E5%83%8F%E4%B8%93%E5%AE%B6"><span class="toc-number">3.3.</span> <span class="toc-text">可灵图片：写实人像专家</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Midjourney%EF%BC%9A%E8%89%BA%E6%9C%AF%E5%A4%A9%E8%8A%B1%E6%9D%BF%EF%BC%8C%E4%BD%86%E6%9C%89%E9%97%A8%E6%A7%9B"><span class="toc-number">3.4.</span> <span class="toc-text">Midjourney：艺术天花板，但有门槛</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ChatGPT-%E5%9B%BE%E5%83%8F%EF%BC%9A%E6%94%B9%E5%9B%BE%E7%8B%AC%E4%B8%80%E6%A1%A3"><span class="toc-number">3.5.</span> <span class="toc-text">ChatGPT 图像：改图独一档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A8%AA%E5%90%91%E5%AF%B9%E6%AF%94%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E7%9C%8B%E6%87%82"><span class="toc-number">4.</span> <span class="toc-text">三、横向对比：一张表看懂</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8C%89%E4%BA%BA%E7%BE%A4%E9%80%89%EF%BC%9A%E5%AF%B9%E5%8F%B7%E5%85%A5%E5%BA%A7"><span class="toc-number">5.</span> <span class="toc-text">四、按人群选：对号入座</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%B5%B7%E5%A4%96%E5%B7%A5%E5%85%B7%E7%9A%84%E4%B8%A4%E9%81%93%E5%9D%8E%EF%BC%8C%E5%92%8C%E9%9B%B6%E6%88%90%E6%9C%AC%E6%96%B9%E6%A1%88"><span class="toc-number">6.</span> <span class="toc-text">五、海外工具的两道坎，和零成本方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-03</div>
+        <a href="/ai-image-generation-guide/"><div class="recent-posts-item-content">AI 画图哪个好用（2026）：即梦/豆包/可灵/Midjourney/GPT-4o 实测对比，3 分钟选对你的 AI 绘图工具</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-02</div>
+        <a href="/ai-assistant-guide/"><div class="recent-posts-item-content">AI 助手哪个好用（2026）：豆包/Kimi/DeepSeek/ChatGPT/Gemini 实测对比，3 分钟选对你的 AI</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-02</div>
+        <a href="/doubao-agent-guide/"><div class="recent-posts-item-content">豆包 Agent 办公实测：手机遥控电脑做表格、剪视频、盯热榜（2026 上手教程）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-01</div>
+        <a href="/android-kuaili/"><div class="recent-posts-item-content">安卓手机翻墙全流程：机场注册、订阅、Android 客户端一键连接（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
