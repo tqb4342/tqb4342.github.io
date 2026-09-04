@@ -127,24 +127,24 @@
   <link rel="icon" href="/img/logo.webp">
   <title>DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）</title>
   
-  
-  <meta property="title" content="DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026）">
-  
-  
-  <meta property="url" content="https://tanqingbo.cn/deepseek-harness/index.html">
+  <meta name="description" content="DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。">
+  <meta name="keywords" content="deepseek harness,deepseek harness是什么,deepseek harness教程,deepseek harness安装,dsh是什么,deepseek agent框架,deepseek harness插件,deepseek harness怎么用,cordis,一切皆插件,deepseek harness web ui,deepseek harness模式,deepseek harness api key,agent harness,开源agent框架,deepseek agent组装,deepseek harness 中文,deepseek harness vs claude code">
   
   
-  <meta property="og:img" content="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg">
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/deepseek-harness/">
+  
+  <meta property="og:image" content="https://pic4.zhimg.com/v2-cc165e52d05dcd519a0ded75569a4db1_1440w.jpg">
   
   
-  <meta property="description" content="DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。">
+  <meta property="og:description" content="DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。">
   
-  <meta property="keywords" content="deepseek harness,deepseek harness是什么,deepseek harness教程,deepseek harness安装,dsh是什么,deepseek agent框架,deepseek harness插件,deepseek harness怎么用,cordis,一切皆插件,deepseek harness web ui,deepseek harness模式,deepseek harness api key,agent harness,开源agent框架,deepseek agent组装,deepseek harness 中文,deepseek harness vs claude code">
   
   <meta property="og:type" content="article">
-  <meta property="og:article:published_time" content="2026-08-18">
-  <meta property="og:article:modified_time" content="2026-08-18">
-  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  <meta property="og:article:published_time" content="2026-08-18T06:23:18.000Z">
+  <meta property="og:article:modified_time" content="2026-08-18T06:30:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
   
   
   <meta property="og:article:tag" content="大模型">
@@ -338,7 +338,7 @@ var _hmt = _hmt || [];
   <div class="navbar-logo">
     <span class="navbar-logo-main">
       
-      <img class="navbar-logo-img" src="/img/logo.webp">
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 庆波的技术博客 logo">
       
       <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
     </span>
@@ -491,10 +491,6 @@ var _hmt = _hmt || [];
 
 
 		
-  
-  <meta name="description" content="DeepSeek Harness（简称 dsh）是什么？它是 DeepSeek 开源的 AI Agent 运行时，核心理念是「一切皆插件」——模型、工具、界面、任务循环全都能替换。本文从安装（npx 一条命令）讲起，带你走通模型配置、四种模式怎么选、社区插件来源和自制插件，没有编程经验也能跟着操作。">
-  
-  <meta name="keywords" content="deepseek harness,deepseek harness是什么,deepseek harness教程,deepseek harness安装,dsh是什么,deepseek agent框架,deepseek harness插件,deepseek harness怎么用,cordis,一切皆插件,deepseek harness web ui,deepseek harness模式,deepseek harness api key,agent harness,开源agent框架,deepseek agent组装,deepseek harness 中文,deepseek harness vs claude code">
   </header>
   
 
@@ -509,7 +505,7 @@ var _hmt = _hmt || [];
     <blockquote>
 <p>📚 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想系统了解 ChatGPT、Gemini、Kimi、DeepSeek 等主流模型怎么选，以及 AI 编程 / Agent 工具怎么入门，先看总览页。</p>
 </blockquote>
-<h1 id="DeepSeek-Harness-是什么，怎么装，怎么用"><a href="#DeepSeek-Harness-是什么，怎么装，怎么用" class="headerlink" title="DeepSeek Harness 是什么，怎么装，怎么用"></a>DeepSeek Harness 是什么，怎么装，怎么用</h1><p>DeepSeek 最近开源了一个很有意思的项目，DeepSeek Harness（简称 dsh）。</p>
+<h2 id="DeepSeek-Harness-是什么，怎么装，怎么用"><a href="#DeepSeek-Harness-是什么，怎么装，怎么用" class="headerlink" title="DeepSeek Harness 是什么，怎么装，怎么用"></a>DeepSeek Harness 是什么，怎么装，怎么用</h2><p>DeepSeek 最近开源了一个很有意思的项目，DeepSeek Harness（简称 dsh）。</p>
 <p>很多人第一次看到 Harness 这个词，会下意识把它当成另一个聊天客户端——就像之前的 <a href="https://tanqingbo.cn/claude-code/">Claude Code</a>。</p>
 <p>打开以后才发现，它允许用户拆开 Agent 的组成部分，换模型、加工具、改权限，也可以装插件，甚至自己写一个新插件。</p>
 <p>这件事值得好好聊聊。</p>
@@ -768,13 +764,13 @@ var _hmt = _hmt || [];
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">1.2.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">1.3.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">1.4.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">1.7.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">2.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">3.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">4.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">5.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">7.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">8.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol>
 </div></main>
           <aside class="left-column">
             
             <div class="card card-author">
               
-<img src="/img/logo.webp" class="author-img">
+<img src="/img/logo.webp" class="author-img" alt="庆波 - tanqingbo.cn 博客作者头像">
 
 <p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
 <p class="author-description">专注于AI教程与科学上网</p>
@@ -823,7 +819,7 @@ var _hmt = _hmt || [];
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">1.2.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">1.3.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">1.4.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">1.7.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">2.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">3.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">4.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">5.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">7.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">8.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol>
     </div>
   </article>
   
@@ -840,17 +836,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/工具">
-        <div class="categories-list-item">
-          工具
-          <span class="categories-list-item-badge">33</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据结构与算法">
         <div class="categories-list-item">
           数据结构与算法
           <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
@@ -968,11 +964,11 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
     <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
     
     <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
@@ -1014,7 +1010,7 @@ var _hmt = _hmt || [];
 <article class="card card-content toc-card">
 <div style="">
     <div style="float: left; width: 130px; height: 136px;">
-        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
     </div>
     <div style="float: left; margin-left: 17px; margin-top: 12px;">
         <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
@@ -1036,7 +1032,7 @@ var _hmt = _hmt || [];
 
 
 <article class="card card-content toc-card">
-<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 庆波的互联网导航"></a></div>
 <!--
 <div style="clear: both;"></div>
 <div style="font-size: 0.8em; margin: 15px 0 10px 0;">
@@ -1056,7 +1052,7 @@ var _hmt = _hmt || [];
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">1.2.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">1.3.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">1.4.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">1.6.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">1.7.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A3%85%EF%BC%8C%E6%80%8E%E4%B9%88%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">DeepSeek Harness 是什么，怎么装，怎么用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Harness-%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%B9%8B%E5%A4%96%E7%9A%84%E9%82%A3%E4%B8%80%E5%B1%82"><span class="toc-number">2.</span> <span class="toc-text">Harness 到底是什么：模型之外的那一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87%EF%BC%9ANode-js-%E5%92%8C-API-Key"><span class="toc-number">3.</span> <span class="toc-text">安装前准备：Node.js 和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%89%93%E5%BC%80%EF%BC%9A%E5%85%88%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%92%8C-API-Key"><span class="toc-number">4.</span> <span class="toc-text">第一次打开：先配置模型和 API Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E6%A0%87%E5%87%86-PTC-%E6%9E%81%E7%AE%80-%E5%88%9B%E9%80%A0"><span class="toc-number">5.</span> <span class="toc-text">四种运行模式怎么选：标准 &#x2F; PTC &#x2F; 极简 &#x2F; 创造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cordis-%E5%86%85%E6%A0%B8%EF%BC%9A%E6%8F%92%E4%BB%B6%E6%80%8E%E6%A0%B7%E5%8A%A0%E8%BD%BD%E3%80%81%E4%BE%9D%E8%B5%96%E5%92%8C%E6%B8%85%E7%90%86"><span class="toc-number">6.</span> <span class="toc-text">Cordis 内核：插件怎样加载、依赖和清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BE%E5%8C%BA%E6%8F%92%E4%BB%B6%E5%8E%BB%E5%93%AA%E6%89%BE%EF%BC%8C%E5%AE%89%E8%A3%85%E5%89%8D%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">7.</span> <span class="toc-text">社区插件去哪找，安装前注意什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DeepSeek-Harness-%E9%80%82%E5%90%88%E8%B0%81%EF%BC%8C%E5%80%BC%E4%B8%8D%E5%80%BC%E5%BE%97%E4%B8%8A%E6%89%8B"><span class="toc-number">8.</span> <span class="toc-text">DeepSeek Harness 适合谁，值不值得上手</span></a></li></ol>
   </article>
   
   
@@ -1211,4 +1207,6 @@ var _hmt = _hmt || [];
   </script>
   <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
   
-<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+</body>
+
+</html>

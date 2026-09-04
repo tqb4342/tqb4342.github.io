@@ -159,24 +159,24 @@
   <link rel="icon" href="/img/logo.webp">
   <title>机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）</title>
   
-  
-  <meta property="title" content="机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026）">
-  
-  
-  <meta property="url" content="https://tanqingbo.cn/airport-rate-guide/index.html">
+  <meta name="description" content="机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。">
+  <meta name="keywords" content="机场倍率,节点倍率,倍率是什么意思,机场流量怎么算,节点x0.5,节点x2,x3倍率,流量消耗速度,机场流量刺客,订阅流量计算,倍数节点,低倍率节点,机场计费规则,倍率1.0,倍率0.5,专线倍率,流量用完怎么办,套餐流量重置,机场限速,倍率怎么看,倍率是限速吗,不限量套餐倍率,倍率和速度的关系,机场流量偷跑,流量重置多少钱">
   
   
-  <meta property="og:img" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/airport-rate-guide-banner.webp">
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="机场倍率与流量计费完全指南：节点后面的 x0.5、x2、x3 到底什么意思（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/airport-rate-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/airport-rate-guide-banner.webp">
   
   
-  <meta property="description" content="机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。">
+  <meta property="og:description" content="机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。">
   
-  <meta property="keywords" content="机场倍率,节点倍率,倍率是什么意思,机场流量怎么算,节点x0.5,节点x2,x3倍率,流量消耗速度,机场流量刺客,订阅流量计算,倍数节点,低倍率节点,机场计费规则,倍率1.0,倍率0.5,专线倍率,流量用完怎么办,套餐流量重置,机场限速,倍率怎么看,倍率是限速吗,不限量套餐倍率,倍率和速度的关系,机场流量偷跑,流量重置多少钱">
   
   <meta property="og:type" content="article">
-  <meta property="og:article:published_time" content="2026-08-17">
-  <meta property="og:article:modified_time" content="2026-08-17">
-  <meta property="og:article:author" content="科&amp;nbsp;学&amp;nbsp;上&amp;nbsp;网">
+  <meta property="og:article:published_time" content="2026-08-17T14:20:00.000Z">
+  <meta property="og:article:modified_time" content="2026-08-17T14:30:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
   
   
   <meta property="og:article:tag" content="科学上网">
@@ -368,7 +368,7 @@ var _hmt = _hmt || [];
   <div class="navbar-logo">
     <span class="navbar-logo-main">
       
-      <img class="navbar-logo-img" src="/img/logo.webp">
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 庆波的技术博客 logo">
       
       <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
     </span>
@@ -516,10 +516,6 @@ var _hmt = _hmt || [];
 
 
 		
-  
-  <meta name="description" content="机场节点后面的 x0.5、x1、x3 到底是什么意思？本文讲清「倍率」的本质（节点消耗流量的加权系数）、计算方法（实际流量 × 倍率 = 扣除流量）、倍率和限速的区别、不限量套餐的倍率坑、为什么高倍率节点容易「流量刺客」、怎么在 Clash 和机场后台看清倍率，以及日常怎么选节点把流量用在刀刃上。">
-  
-  <meta name="keywords" content="机场倍率,节点倍率,倍率是什么意思,机场流量怎么算,节点x0.5,节点x2,x3倍率,流量消耗速度,机场流量刺客,订阅流量计算,倍数节点,低倍率节点,机场计费规则,倍率1.0,倍率0.5,专线倍率,流量用完怎么办,套餐流量重置,机场限速,倍率怎么看,倍率是限速吗,不限量套餐倍率,倍率和速度的关系,机场流量偷跑,流量重置多少钱">
   </header>
   
 
@@ -844,7 +840,7 @@ var _hmt = _hmt || [];
             
             <div class="card card-author">
               
-<img src="/img/logo.webp" class="author-img">
+<img src="/img/logo.webp" class="author-img" alt="庆波 - tanqingbo.cn 博客作者头像">
 
 <p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
 <p class="author-description">专注于AI教程与科学上网</p>
@@ -910,17 +906,17 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/工具">
-        <div class="categories-list-item">
-          工具
-          <span class="categories-list-item-badge">33</span>
-        </div>
-      </a>
-    
       <a href="/categories/数据结构与算法">
         <div class="categories-list-item">
           数据结构与算法
           <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
@@ -1038,11 +1034,11 @@ var _hmt = _hmt || [];
   <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
   <div class="tags-list">
     
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
     <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
     
     <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
-    
-    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
     
     <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
     
@@ -1084,7 +1080,7 @@ var _hmt = _hmt || [];
 <article class="card card-content toc-card">
 <div style="">
     <div style="float: left; width: 130px; height: 136px;">
-        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
     </div>
     <div style="float: left; margin-left: 17px; margin-top: 12px;">
         <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
@@ -1106,7 +1102,7 @@ var _hmt = _hmt || [];
 
 
 <article class="card card-content toc-card">
-<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp"></a></div>
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 庆波的互联网导航"></a></div>
 <!--
 <div style="clear: both;"></div>
 <div style="font-size: 0.8em; margin: 15px 0 10px 0;">
@@ -1281,4 +1277,6 @@ var _hmt = _hmt || [];
   </script>
   <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
   
-<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+</body>
+
+</html>
