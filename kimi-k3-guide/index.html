@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-09T06:00:00.000Z",
+  "dateModified": "2026-09-09T06:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/kimi-k3-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kimi-k3-guide-banner.webp",
+  "description": "Kimi K3 是月之暗面 2.8 万亿参数的开源旗舰模型，本文讲清楚它到底怎么用：kimi.com、手机 App、Kimi Work 三种入口注册上手与免费额度说明，Kimi Code 编程 Agent 安装配置全流程，附 Cursor 复刻四模型编程横评实测，以及 Qwen3.8-Max、GLM-5.3 选型对比——国产旗舰怎么选，一篇说透。",
+  "keywords": "Kimi K3,Kimi K3怎么用,Kimi K3使用教程,Kimi K3注册,Kimi K3免费吗,Kimi K3编程能力,Kimi Code,Kimi Work,月之暗面,国产大模型,Qwen3.8-Max,GLM-5.3,通义千问,智谱清言,国产大模型对比,AI编程工具,免费AI大模型"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kimi K3 免费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "免费。网页版 kimi.com、手机 App、Kimi Work 桌面客户端的基础聊天、文件上传、联网搜索都在免费层（Adagio）内，不限制基础对话次数，注册也无需绑卡。只有开发者调 API 才需要充值：输入 ¥20/百万 tokens、输出 ¥100/百万 tokens，缓存命中的输入降到 ¥2。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kimi K3 和 Qwen3.8-Max 哪个好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看场景。长程工程任务（多文件重构、完整代码库分析）K3 占优，DeepSWE 和 SWE-Marathon 两个长程基准都领先；前端开发和日常全能型选 Qwen3.8-Max，它 9 月的 0902 版在 Code Arena WebDev 榜以 1691 分登顶，是首个登顶该榜的中国模型。两者基准差距在 2 分以内，按你手头的任务类型选就行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kimi K3 和 GLM-5.3 哪个强？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Terminal-Bench 2.1 基本打平（88.3 vs 88.2），但侧重点不同：K3 强在长上下文和长程工程（1M token 上下文、SWE-Marathon 领先）；GLM-5.3 强在工程攻坚，更难的 Terminal-Bench 3.0 上 28.3 vs K3 的 17.4，网络安全类基准也明显领先。要读大代码库选 K3，要死磕难 Bug 和重构选 GLM-5.3。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Kimi Code 怎么安装？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "macOS/Linux 一行命令：curl -LsSf https://code.kimi.com/install.sh | bash；Windows 用 PowerShell：Invoke-RestMethod https://code.kimi.com/install.ps1 | Invoke-Expression（需先装 Git for Windows）。装完重启终端，输入 kimi 启动，/login 用 Kimi 账号登录，/model 选 K3，建议先进 /plan 模式让它读仓库出计划，确认后再执行改动。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "旧会话能直接切换到 K3 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不建议。K3 对历史上下文比较敏感，如果在旧模型的长会话里直接切 K3，效果会打折。官方的建议也是开新会话——每个独立任务新开一个对话，既有干净上下文，也省额度。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "普通电脑能把 K3 下载到本地跑吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能。K3 总参数 2.8 万亿，即使官方用了 MXFP4 量化训练，权重文件也要约 1.4TB 显存才能加载，企业级集群才装得下。普通用户用网页版和 App 就是完整体验，\"开源权重\"指的是研究机构可以申请部署，和个人电脑本地跑是两回事。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比</title>
+  
+  <meta name="description" content="Kimi K3 是月之暗面 2.8 万亿参数的开源旗舰模型，本文讲清楚它到底怎么用：kimi.com、手机 App、Kimi Work 三种入口注册上手与免费额度说明，Kimi Code 编程 Agent 安装配置全流程，附 Cursor 复刻四模型编程横评实测，以及 Qwen3.8-Max、GL...">
+  <meta name="keywords" content="Kimi K3,Kimi K3怎么用,Kimi K3使用教程,Kimi K3注册,Kimi K3免费吗,Kimi K3编程能力,Kimi Code,Kimi Work,月之暗面,国产大模型,Qwen3.8-Max,GLM-5.3,通义千问,智谱清言,国产大模型对比,AI编程工具,免费AI大模型">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/kimi-k3-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kimi-k3-guide-banner.webp">
+  
+  
+  <meta property="og:description" content="Kimi K3 是月之暗面 2.8 万亿参数的开源旗舰模型，本文讲清楚它到底怎么用：kimi.com、手机 App、Kimi Work 三种入口注册上手与免费额度说明，Kimi Code 编程 Agent 安装配置全流程，附 Cursor 复刻四模型编程横评实测，以及 Qwen3.8-Max、GL...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-09T06:00:00.000Z">
+  <meta property="og:article:modified_time" content="2026-09-09T06:00:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="AI编程">
+  
+  <meta property="og:article:tag" content="Kimi">
+  
+  <meta property="og:article:tag" content="Kimi K3">
+  
+  <meta property="og:article:tag" content="月之暗面">
+  
+  <meta property="og:article:tag" content="国产大模型">
+  
+  <meta property="og:article:tag" content="Kimi Code">
+  
+  <meta property="og:article:tag" content="Kimi Work">
+  
+  <meta property="og:article:tag" content="Qwen3.8">
+  
+  <meta property="og:article:tag" content="GLM-5.3">
+  
+  <meta property="og:article:tag" content="通义千问">
+  
+  <meta property="og:article:tag" content="智谱清言">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/kimi-k3-guide/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 庆波的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kimi-k3-guide-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kimi-k3-guide-banner.webp"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-09T06:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-09</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.6k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/kimi-k3-guide/" class="leancloud_visitors" data-flag-title="Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/AI编程/" class="post-meta-link">AI编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Kimi/" class="post-meta-link">Kimi</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Kimi-K3/" class="post-meta-link">Kimi K3</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/月之暗面/" class="post-meta-link">月之暗面</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/国产大模型/" class="post-meta-link">国产大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Kimi-Code/" class="post-meta-link">Kimi Code</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Kimi-Work/" class="post-meta-link">Kimi Work</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Qwen3-8/" class="post-meta-link">Qwen3.8</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/GLM-5-3/" class="post-meta-link">GLM-5.3</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/通义千问/" class="post-meta-link">通义千问</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/智谱清言/" class="post-meta-link">智谱清言</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>📚 本文是 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南</a> 系列之一。想看 K3 和 GPT-6 Astra 正面刚编程的，看这篇 <a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">四模型 Cursor 复刻横评</a>；想看国产 AI 助手日常怎么选的，看 <a href="https://tanqingbo.cn/ai-assistant-guide/">豆包/Kimi/DeepSeek 实测</a>。</p>
+</blockquote>
+<p>7 月底 Kimi K3 开源那天，Hugging Face 趋势榜半小时就被顶到第一——<strong>2.8 万亿参数，迄今最大的开源模型</strong>。但参数是参数，大多数人更关心的问题是：这东西我怎么用上？写代码到底行不行？和 Qwen3.8、GLM-5.3 这些同期旗舰比怎么选？</p>
+<p>这篇文章就讲这三件事：注册上手、编程实测、横向选型。全程不需要翻墙，不需要海外信用卡。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>怎么用</strong>：打开 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://kimi.com/">kimi.com</a> 注册登录，模型选 K3，基础聊天/文件上传/联网搜索全免费</li>
+<li><strong>编程强在哪</strong>：1M token 上下文吃整个代码库；Terminal-Bench 2.1 88.3 分，开源第一梯队；长程工程任务（SWE-Marathon）领先 GLM-5.3 和 Qwen3.8</li>
+<li><strong>短板</strong>：免费层高峰期可能排队；编程实测里前端审美不如 GPT-6 Astra；2.8 万亿参数注定与个人本地部署无缘</li>
+<li><strong>和同行比</strong>：长程工程选 K3，前端选 Qwen3.8-Max，攻坚 debug 选 GLM-5.3</li>
+<li><strong>想对比海外旗舰</strong>：GPT-6 Astra 国内上手走 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://universalbus.cn/?s=wX0haoloon">环球巴士</a> 镜像版 28.88 元/月起，优惠码 <code>Tanqingbo</code> 再 9 折</li>
+</ul>
+<h2 id="一、Kimi-K3-是什么：把-2-8-万亿参数翻译成人话"><a href="#一、Kimi-K3-是什么：把-2-8-万亿参数翻译成人话" class="headerlink" title="一、Kimi K3 是什么：把 2.8 万亿参数翻译成人话"></a>一、Kimi K3 是什么：把 2.8 万亿参数翻译成人话</h2><p>先泼盆冷水：<strong>「2.8 万亿参数」不等于它比谁都强</strong>，参数规模和实际体验不是一回事。K3 真正值得关心的三个点：</p>
+<ol>
+<li><strong>1M token 上下文</strong>。这是 K2 系列 256K 的 4 倍，意味着你能把一整个软件项目、几十份 PDF 报告一次性丢给它，让它交叉分析。这是 K3 最实在的能力，后面实测会用到。</li>
+<li><strong>编程是主战场</strong>。K3 的训练方向就是软件工程和长周期任务，编程基准稳居开源第一梯队。</li>
+<li><strong>免费就能用</strong>。不是试用陷阱，是正经的免费层。</li>
+</ol>
+<p>架构上稍微展开一句（不耐烦可跳过）：K3 用的是 Stable LatentMoE 设计——896 个专家里每个 token 只激活 16 个，约 104B 激活参数。<strong>总参数决定它「知道多少」，激活参数决定它「跑多快」</strong>，这就是它能同时做到超大和可用的原因。</p>
+<h2 id="二、注册上手：三种入口，全免费"><a href="#二、注册上手：三种入口，全免费" class="headerlink" title="二、注册上手：三种入口，全免费"></a>二、注册上手：三种入口，全免费</h2><h3 id="入口一：网页版-kimi-com（最快）"><a href="#入口一：网页版-kimi-com（最快）" class="headerlink" title="入口一：网页版 kimi.com（最快）"></a>入口一：网页版 kimi.com（最快）</h3><p>打开 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://kimi.com/">kimi.com</a>，手机号或微信登录，新建会话后在模型选择处选 <strong>K3</strong>——新建会话默认就是它。</p>
+<p>第一次用建议拿个小任务试水：上传一份十页 PDF，让它列结构、关键数字和三个疑点。感受一下 1M 上下文处理长文档的体感。</p>
+<h3 id="入口二：手机-App"><a href="#入口二：手机-App" class="headerlink" title="入口二：手机 App"></a>入口二：手机 App</h3><p>iOS/Android/鸿蒙应用商店搜「Kimi」，认准月之暗面官方出品。手机端适合拍照提问、传图传文件，复杂任务再转电脑。</p>
+<h3 id="入口三：Kimi-Work-桌面客户端（非程序员最值得装）"><a href="#入口三：Kimi-Work-桌面客户端（非程序员最值得装）" class="headerlink" title="入口三：Kimi Work 桌面客户端（非程序员最值得装）"></a>入口三：Kimi Work 桌面客户端（非程序员最值得装）</h3><p>这是月之暗面 2026 年 6 月推出的桌面 Agent，最新版已接入 K3，Windows 和 Mac 都有。它和网页版的本质区别：<strong>能直接读写你电脑上的本地文件</strong>、控制浏览器、定时执行任务、一键生成 Word/Excel/PPT——对标的是 Codex 和 Claude Desktop 这类桌面 Agent。</p>
+<p>不写代码的人，Kimi Work 是最能感受到 K3 提升的地方：不用手动上传下载，交代一个目标它自己推进并产出成品文件。</p>
+<h3 id="免费额度说清楚"><a href="#免费额度说清楚" class="headerlink" title="免费额度说清楚"></a>免费额度说清楚</h3><p>免费层（官方叫 Adagio）包含：<strong>基础聊天不限次、文件上传、联网搜索</strong>，注册全程不需要绑卡。这个覆盖面日常用完全够。</p>
+<p>需要注意的两点：一是免费层在高峰期可能排队或限流，重度使用可以考虑会员；二是<strong>会员和 API 是两套独立体系</strong>，充了 API 不会解锁会员功能，别搞混。</p>
+<h2 id="三、编程实测：K3-vs-三个海外旗舰"><a href="#三、编程实测：K3-vs-三个海外旗舰" class="headerlink" title="三、编程实测：K3 vs 三个海外旗舰"></a>三、编程实测：K3 vs 三个海外旗舰</h2><p>这是我固定的测试题：<strong>克隆 VS Code 开源代码，做一个支持 Editor/Agents 双窗口切换的 Web AI 编程工具</strong>。同一句提示词，先后喂给四个模型：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>复刻结果</th>
+<th>用时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Kimi K3</strong></td>
+<td>跑通核心功能，界面比较简陋</td>
+<td>半个多小时</td>
+</tr>
+<tr>
+<td>Claude Opus 5</td>
+<td>还原度高，但跟 VS Code 太像，没自己想法</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Claude Fable 5.1</td>
+<td>完成度最高，逐文件审阅改动都做了</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GPT-6 Astra</td>
+<td>有自己的产品想法（自创 orbit 品牌），视觉最好</td>
+<td>约 23 分钟</td>
+</tr>
+</tbody></table>
+<p>K3 的表现一句话概括：<strong>工程能力在线，审美差口气</strong>。核心功能它是真跑通了——文件树、编辑器、双窗口切换都能用，但界面确实糙，和 Astra 那种自带品牌设计的成品有肉眼可见的差距。</p>
+<p>这和基准成绩是自洽的：K3 在 Terminal-Bench 2.1 拿 88.3（开源第一，仅次 GPT-5.6 Sol 的 88.8），DeepSWE 67.5、SWE-Marathon 48.1 都是同档领先——<strong>解决工程问题的硬实力没问题，缺的是前端审美这种「软实力」</strong>。前端视觉要求高的项目，目前还是 Astra 或 Qwen3.8-Max 更合适。</p>
+<p>四个模型的完整实测过程和成品截图，看这篇：<a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测</a>。想在国内上手 Astra 对比着用的，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://universalbus.cn/?s=wX0haoloon">环球巴士</a> 镜像版 28.88 元/月起是最省事的入口，支付宝付完就能用，新用户首单 9 折，**优惠码 <code>Tanqingbo</code>**。</p>
+<h2 id="四、Kimi-Code：程序员该怎么用-K3"><a href="#四、Kimi-Code：程序员该怎么用-K3" class="headerlink" title="四、Kimi Code：程序员该怎么用 K3"></a>四、Kimi Code：程序员该怎么用 K3</h2><p>上面是「网页里聊着写」，K3 还有专门给开发者的形态——<strong>Kimi Code</strong>，一个编程 Agent，有 CLI 和 VS Code 插件两种形态，直接对标 Claude Code。我另一篇 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a> 里也提过，国产平替里最像样的就是它。</p>
+<p>安装三步：</p>
+<pre class="highlight"><span class="line"><span class="comment"># macOS / Linux</span></span><br><span class="line">curl -LsSf https://code.kimi.com/install.sh | bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows（PowerShell，需先装 Git for Windows）</span></span><br><span class="line">Invoke-RestMethod https://code.kimi.com/install.ps1 | Invoke-Expression</span><br></pre>
+
+<p>装完重启终端，<code>kimi</code> 启动，然后：</p>
+<ol>
+<li><code>/login</code> 用 Kimi 账号 OAuth 登录</li>
+<li><code>/model</code> 选 K3（日常补全不必开最高档，大型重构再上 High/Max）</li>
+<li>**先 <code>/plan</code>**：让它先读仓库、列出要改哪些文件、风险在哪、怎么验证——确认计划后再放它动手</li>
+</ol>
+<p>几个高频命令：<code>@文件名</code> 引用项目文件、<code>!命令</code> 执行 Shell、<code>/compact</code> 压缩长会话、<code>/usage</code> 看额度消耗。</p>
+<p>安全提醒：<strong>别对生产仓库直接开 YOLO 模式</strong>（自动批准所有操作）。先在分支或副本里验证，K3 的改动质量总体可靠，但回滚成本永远高于确认成本。</p>
+<h2 id="五、K3-vs-Qwen3-8-Max-vs-GLM-5-3：国产三旗舰怎么选"><a href="#五、K3-vs-Qwen3-8-Max-vs-GLM-5-3：国产三旗舰怎么选" class="headerlink" title="五、K3 vs Qwen3.8-Max vs GLM-5.3：国产三旗舰怎么选"></a>五、K3 vs Qwen3.8-Max vs GLM-5.3：国产三旗舰怎么选</h2><p>这三个模型正好代表了国产旗舰的三种路线，放一起看最清楚：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Kimi K3（月之暗面）</th>
+<th>Qwen3.8-Max（阿里）</th>
+<th>GLM-5.3（智谱）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发布</td>
+<td>7 月，2.8 万亿参数</td>
+<td>8 月，2.4 万亿参数</td>
+<td>8 月，7530 亿（同 5.2 基座后训练）</td>
+</tr>
+<tr>
+<td>上下文</td>
+<td><strong>1M token</strong></td>
+<td>1M token</td>
+<td>256K</td>
+</tr>
+<tr>
+<td>Terminal-Bench 2.1</td>
+<td>88.3</td>
+<td>86.6</td>
+<td>88.2</td>
+</tr>
+<tr>
+<td>Terminal-Bench 3.0（更难）</td>
+<td>17.4</td>
+<td>29.0（0902 版）</td>
+<td><strong>28.3</strong></td>
+</tr>
+<tr>
+<td>最强项</td>
+<td>长程工程、大上下文</td>
+<td><strong>前端（WebDev 榜 1691 登顶）</strong>、Agentic Index 全球第一</td>
+<td>工程攻坚、网络安全</td>
+</tr>
+<tr>
+<td>免费使用</td>
+<td>kimi.com 免费层</td>
+<td>通义千问 App/网页</td>
+<td>智谱清言 App/网页</td>
+</tr>
+<tr>
+<td>API 价格</td>
+<td>¥20/¥100 每百万 tokens</td>
+<td>$2/$6 每百万 tokens</td>
+<td>Flash 版 $0.15/$0.50</td>
+</tr>
+</tbody></table>
+<p>几个说明：</p>
+<ul>
+<li><strong>Qwen3.8-Max 的 0902 版</strong>（9 月 2 日刷新）在 Code Arena WebDev 盲测榜以 1691 分登顶，是首个登顶该榜的中国模型，前端能力目前国产最强。</li>
+<li><strong>GLM-5.3 是「同基座纯后训练」的典范</strong>：和 5.2 用同一个底座，只靠后训练把智能指数从 53 拉到 60，编程提升 50%——智谱管它叫「专为编程而生」，攻坚 debug 和多模块重构是它的主场。</li>
+<li>基准分数不同实验室口径不一，<strong>表格看趋势别抠小数点</strong>，三个模型的差距远小于它们和第二梯队的差距。</li>
+</ul>
+<p><strong>选型建议直接抄</strong>：</p>
+<ul>
+<li>要读大代码库、跑长任务、批量分析文档 → <strong>K3</strong>（1M 上下文 + 长程工程最强）</li>
+<li>前端开发、要好看的成品 → <strong>Qwen3.8-Max</strong></li>
+<li>死磕难 Bug、大型重构、安全相关 → <strong>GLM-5.3</strong></li>
+<li>日常问答办公 → 三个都行，哪个顺手用哪个，反正都免费</li>
+</ul>
+<h2 id="六、避坑清单"><a href="#六、避坑清单" class="headerlink" title="六、避坑清单"></a>六、避坑清单</h2><ol>
+<li><strong>旧会话别直接切 K3</strong>。历史上下文会污染效果，官方也建议开新会话。每个独立任务新开对话，上下文干净还省额度。</li>
+<li><strong>思考档位别无脑拉满</strong>。K3 始终运行思考模式，分 low/high/max 三档，短问题开 Max 纯属浪费时间和额度。日常 Low、跨文件任务再提高。</li>
+<li><strong>1M 上下文不是「全倒进去」</strong>。几十个不相关文件一锅炖，再大的窗口也白搭。给清楚范围和优先级，让它知道找什么。</li>
+<li><strong>API 和会员是两套账</strong>。充 API 不解锁会员，订会员不给 API 折扣，按需选一边。</li>
+<li><strong>「开源」和「本地跑」是两回事</strong>。2.8 万亿参数 MXFP4 也要约 1.4TB 显存，普通用户网页/App 就是完整体验，别琢磨本地部署了。</li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>国产旗舰这一波的实感：<strong>基准分数上，K3、GLM-5.3 已经和 GPT-5.6 Sol 贴身，Qwen3.8-Max 在前端反超</strong>；工程能力的长板（K3 的长程任务、GLM 的攻坚）甚至能压海外同档一头。真正的差距剩在前端审美、Agent 生态和极端场景的稳定性上——而这些恰恰是迭代最快的部分。</p>
+<p>对普通用户的建议就一句：<strong>都免费，都试试，让任务选模型</strong>。想横向体验海外旗舰做对比的，GPT-6 Astra 的上手指南在这里：<a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 国内使用与购买指南</a>。</p>
+<hr>
+<blockquote>
+<p>相关阅读：</p>
+<ul>
+<li><a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测：3D 城市、全栈应用、复刻 Cursor</a></li>
+<li><a href="https://tanqingbo.cn/ai-assistant-guide/">AI 助手哪个好用（2026）：豆包/Kimi/DeepSeek/ChatGPT/Gemini 实测</a></li>
+<li><a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a></li>
+<li><a href="https://tanqingbo.cn/claude-code/">Claude Code 教程：安装配置、接入国产大模型与实战技巧</a></li>
+<li><a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型充值教程：合租/独享/镜像/代充</a></li>
+</ul>
+</blockquote>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/kimi-k3-guide/">https://tanqingbo.cn/kimi-k3-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra-Codex-Test/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 写代码实测：四模型横评
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-08</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026 好用的 AI 工具全指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-assistant-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 助手哪个好用：豆包/Kimi/DeepSeek 实测
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/claude-code/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Claude Code 使用教程（Kimi Code 的对标产品）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-06-11</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 国内使用与购买指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-05</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/iphone-kuaili/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">苹果手机翻墙全流程：快狸机场注册、订阅、iOS 客户端一键连接（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Kimi-K3-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%8A%8A-2-8-%E4%B8%87%E4%BA%BF%E5%8F%82%E6%95%B0%E7%BF%BB%E8%AF%91%E6%88%90%E4%BA%BA%E8%AF%9D"><span class="toc-number">2.</span> <span class="toc-text">一、Kimi K3 是什么：把 2.8 万亿参数翻译成人话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B3%A8%E5%86%8C%E4%B8%8A%E6%89%8B%EF%BC%9A%E4%B8%89%E7%A7%8D%E5%85%A5%E5%8F%A3%EF%BC%8C%E5%85%A8%E5%85%8D%E8%B4%B9"><span class="toc-number">3.</span> <span class="toc-text">二、注册上手：三种入口，全免费</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%80%EF%BC%9A%E7%BD%91%E9%A1%B5%E7%89%88-kimi-com%EF%BC%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">入口一：网页版 kimi.com（最快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%BA%8C%EF%BC%9A%E6%89%8B%E6%9C%BA-App"><span class="toc-number">3.2.</span> <span class="toc-text">入口二：手机 App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%89%EF%BC%9AKimi-Work-%E6%A1%8C%E9%9D%A2%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%88%E9%9D%9E%E7%A8%8B%E5%BA%8F%E5%91%98%E6%9C%80%E5%80%BC%E5%BE%97%E8%A3%85%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">入口三：Kimi Work 桌面客户端（非程序员最值得装）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E9%A2%9D%E5%BA%A6%E8%AF%B4%E6%B8%85%E6%A5%9A"><span class="toc-number">3.4.</span> <span class="toc-text">免费额度说清楚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%B5%8B%EF%BC%9AK3-vs-%E4%B8%89%E4%B8%AA%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0"><span class="toc-number">4.</span> <span class="toc-text">三、编程实测：K3 vs 三个海外旗舰</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Kimi-Code%EF%BC%9A%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8-K3"><span class="toc-number">5.</span> <span class="toc-text">四、Kimi Code：程序员该怎么用 K3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81K3-vs-Qwen3-8-Max-vs-GLM-5-3%EF%BC%9A%E5%9B%BD%E4%BA%A7%E4%B8%89%E6%97%97%E8%88%B0%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text">五、K3 vs Qwen3.8-Max vs GLM-5.3：国产三旗舰怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">六、避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">8.</span> <span class="toc-text">写在最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="庆波 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>406</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>18</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>335</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Kimi-K3-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%8A%8A-2-8-%E4%B8%87%E4%BA%BF%E5%8F%82%E6%95%B0%E7%BF%BB%E8%AF%91%E6%88%90%E4%BA%BA%E8%AF%9D"><span class="toc-number">2.</span> <span class="toc-text">一、Kimi K3 是什么：把 2.8 万亿参数翻译成人话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B3%A8%E5%86%8C%E4%B8%8A%E6%89%8B%EF%BC%9A%E4%B8%89%E7%A7%8D%E5%85%A5%E5%8F%A3%EF%BC%8C%E5%85%A8%E5%85%8D%E8%B4%B9"><span class="toc-number">3.</span> <span class="toc-text">二、注册上手：三种入口，全免费</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%80%EF%BC%9A%E7%BD%91%E9%A1%B5%E7%89%88-kimi-com%EF%BC%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">入口一：网页版 kimi.com（最快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%BA%8C%EF%BC%9A%E6%89%8B%E6%9C%BA-App"><span class="toc-number">3.2.</span> <span class="toc-text">入口二：手机 App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%89%EF%BC%9AKimi-Work-%E6%A1%8C%E9%9D%A2%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%88%E9%9D%9E%E7%A8%8B%E5%BA%8F%E5%91%98%E6%9C%80%E5%80%BC%E5%BE%97%E8%A3%85%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">入口三：Kimi Work 桌面客户端（非程序员最值得装）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E9%A2%9D%E5%BA%A6%E8%AF%B4%E6%B8%85%E6%A5%9A"><span class="toc-number">3.4.</span> <span class="toc-text">免费额度说清楚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%B5%8B%EF%BC%9AK3-vs-%E4%B8%89%E4%B8%AA%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0"><span class="toc-number">4.</span> <span class="toc-text">三、编程实测：K3 vs 三个海外旗舰</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Kimi-Code%EF%BC%9A%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8-K3"><span class="toc-number">5.</span> <span class="toc-text">四、Kimi Code：程序员该怎么用 K3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81K3-vs-Qwen3-8-Max-vs-GLM-5-3%EF%BC%9A%E5%9B%BD%E4%BA%A7%E4%B8%89%E6%97%97%E8%88%B0%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text">五、K3 vs Qwen3.8-Max vs GLM-5.3：国产三旗舰怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">六、避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">8.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+      <a href="/categories/技术以外">
+        <div class="categories-list-item">
+          技术以外
+          <span class="categories-list-item-badge">84</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">36</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">70</span>
+        </div>
+      </a>
+    
+      <a href="/categories/图像处理与机器学习">
+        <div class="categories-list-item">
+          图像处理与机器学习
+          <span class="categories-list-item-badge">58</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">23</span>
+        </div>
+      </a>
+    
+      <a href="/categories/设计模式">
+        <div class="categories-list-item">
+          设计模式
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/C与C✙✙">
+        <div class="categories-list-item">
+          C与C✙✙
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/计算机基础知识">
+        <div class="categories-list-item">
+          计算机基础知识
+          <span class="categories-list-item-badge">12</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Java">
+        <div class="categories-list-item">
+          Java
+          <span class="categories-list-item-badge">30</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Go语言">
+        <div class="categories-list-item">
+          Go语言
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Python">
+        <div class="categories-list-item">
+          Python
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">8</span>
+        </div>
+      </a>
+    
+      <a href="/categories/ITK与VTK">
+        <div class="categories-list-item">
+          ITK与VTK
+          <span class="categories-list-item-badge">7</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Linux">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">5</span>
+        </div>
+      </a>
+    
+      <a href="/categories/SEO教程">
+        <div class="categories-list-item">
+          SEO教程
+          <span class="categories-list-item-badge">3</span>
+        </div>
+      </a>
+    
+      <a href="/categories/PLC">
+        <div class="categories-list-item">
+          PLC
+          <span class="categories-list-item-badge">2</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="\tags\机器学习" title="机器学习"><div class="tags-list-item">机器学习</div></a>
+    
+    <a href="\tags\科学上网" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="\tags\算法" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="\tags\深度学习" title="深度学习"><div class="tags-list-item">深度学习</div></a>
+    
+    <a href="\tags\Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="\tags\Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="\tags\翻墙" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="\tags\VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="\tags\工具" title="工具"><div class="tags-list-item">工具</div></a>
+    
+    <a href="\tags\电子书下载" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="\tags\网站" title="网站"><div class="tags-list-item">网站</div></a>
+    
+    <a href="\tags\Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="\tags\机场" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="\tags\代理" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="\tags\ITK" title="ITK"><div class="tags-list-item">ITK</div></a>
+    
+    <a href="\tags\ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 庆波的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Kimi-K3-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E6%8A%8A-2-8-%E4%B8%87%E4%BA%BF%E5%8F%82%E6%95%B0%E7%BF%BB%E8%AF%91%E6%88%90%E4%BA%BA%E8%AF%9D"><span class="toc-number">2.</span> <span class="toc-text">一、Kimi K3 是什么：把 2.8 万亿参数翻译成人话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B3%A8%E5%86%8C%E4%B8%8A%E6%89%8B%EF%BC%9A%E4%B8%89%E7%A7%8D%E5%85%A5%E5%8F%A3%EF%BC%8C%E5%85%A8%E5%85%8D%E8%B4%B9"><span class="toc-number">3.</span> <span class="toc-text">二、注册上手：三种入口，全免费</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%80%EF%BC%9A%E7%BD%91%E9%A1%B5%E7%89%88-kimi-com%EF%BC%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">入口一：网页版 kimi.com（最快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%BA%8C%EF%BC%9A%E6%89%8B%E6%9C%BA-App"><span class="toc-number">3.2.</span> <span class="toc-text">入口二：手机 App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%89%EF%BC%9AKimi-Work-%E6%A1%8C%E9%9D%A2%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%88%E9%9D%9E%E7%A8%8B%E5%BA%8F%E5%91%98%E6%9C%80%E5%80%BC%E5%BE%97%E8%A3%85%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">入口三：Kimi Work 桌面客户端（非程序员最值得装）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E9%A2%9D%E5%BA%A6%E8%AF%B4%E6%B8%85%E6%A5%9A"><span class="toc-number">3.4.</span> <span class="toc-text">免费额度说清楚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%B5%8B%EF%BC%9AK3-vs-%E4%B8%89%E4%B8%AA%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0"><span class="toc-number">4.</span> <span class="toc-text">三、编程实测：K3 vs 三个海外旗舰</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Kimi-Code%EF%BC%9A%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8-K3"><span class="toc-number">5.</span> <span class="toc-text">四、Kimi Code：程序员该怎么用 K3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81K3-vs-Qwen3-8-Max-vs-GLM-5-3%EF%BC%9A%E5%9B%BD%E4%BA%A7%E4%B8%89%E6%97%97%E8%88%B0%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text">五、K3 vs Qwen3.8-Max vs GLM-5.3：国产三旗舰怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">六、避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">8.</span> <span class="toc-text">写在最后</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-09</div>
+        <a href="/kimi-k3-guide/"><div class="recent-posts-item-content">Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-08</div>
+        <a href="/iphone-kuaili/"><div class="recent-posts-item-content">苹果手机翻墙全流程：快狸机场注册、订阅、iOS 客户端一键连接（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-08</div>
+        <a href="/GPT-6-Astra-Codex-Test/"><div class="recent-posts-item-content">GPT-6 Astra 写代码实测：3D 城市、全栈应用、复刻 Cursor，Codex 到底强在哪（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-06</div>
+        <a href="/GPT-6-Astra-Computer-Use/"><div class="recent-posts-item-content">GPT-6 Astra Computer Use 怎么玩？AI 操作电脑的 10 个实战场景（2026国内上手指南）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
