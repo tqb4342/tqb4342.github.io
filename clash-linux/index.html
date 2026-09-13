@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-13T12:50:00.000Z",
+  "dateModified": "2026-09-13T12:50:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/clash-linux/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-linux-banner.webp",
+  "description": "Linux 怎么科学上网？2026 年正确姿势是 mihomo 命令行客户端：机场订阅怎么选怎么拿、订阅一键导入、mihomo 安装、systemd 开机自启、终端/git/docker 走代理全流程，附报错排查，服务器、WSL、无桌面环境通用。",
+  "keywords": "Linux科学上网, Linux翻墙, Linux代理, clash linux, mihomo linux, linux 科学上网 教程, ubuntu 翻墙, linux 挂代理, linux 终端 代理, clash 订阅导入, mihomo 安装, linux 机场订阅, systemd clash, linux clash 客户端, 服务器 科学上网, wsl 翻墙, linux 开机自启 代理, mihomo 命令行, clash meta linux, linux git 代理"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Linux 上还能装原版 Clash 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能也不该。原版 Clash 的 GitHub 仓库在 2023 年 11 月已删除、作者删库停更，网上老教程给的下载链接全是死链。现在应该用它社区维护的继任内核 mihomo（原 Clash Meta），命令和配置文件完全兼容，功能还更全（支持 VLESS、Hysteria2 等新协议）。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "没有图形界面的服务器能用机场订阅吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。机场的 Clash 订阅本质是一个配置文件下载地址，用 curl 或 wget 拉下来就是完整的 config.yaml，mihomo 直接加载就能跑，全程不需要浏览器和图形界面。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "mihomo 下载哪个版本？报错 cannot execute binary file 怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先执行 uname -m 看架构：x86_64 选 mihomo-linux-amd64，aarch64 选 mihomo-linux-arm64，armv7 的开发板选 mihomo-linux-armv7。cannot execute binary file 九成是架构选错了，比如在 arm 机器上下了 amd64 版本。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么 curl 走了代理还是打不开 Google？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "分两步排查：先执行 curl -I http://127.0.0.1:7890 确认 mihomo 活着（能返回响应说明端口在监听），再执行 echo $http_proxy 确认环境变量真的生效了。常见坑是环境变量只在当前终端生效，新开一个终端就丢了——要么每次 source ~/.bashrc，要么把 export 写进配置文件。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "GitHub 下载 mihomo 太慢或直接超时怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三个办法按顺序试：一是把下载链接里的 github.com 换成镜像加速域名（如 ghproxy 类加速服务）；二是在已有代理的设备上下载后 scp 传过去；三是 apt 系发行版可先用 gh 或包管理器里的代理工具应急。服务器新装没有任何代理时，镜像加速是最快解法。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么让 mihomo 开机自启、断线自动拉起？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "用 systemd 托管：写一个 mihomo.service 单元文件（本文第四节有完整模板），执行 systemctl enable --now mihomo 即可。systemd 会开机自启、进程崩了自动重启，比 nohup 靠谱得多，服务器场景必配。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "终端走代理了，但 docker pull / apt 还是拉不动？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "正常。docker 和 apt 不读 http_proxy 环境变量（apt 部分版本读）。docker 要给 daemon 配代理（/etc/systemd/system/docker.service.d/http-proxy.conf），apt 要写 /etc/apt/apt.conf.d/proxy.conf。这两种场景本质上是让服务进程走代理，不是用户终端。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）</title>
+  
+  <meta name="description" content="Linux 怎么科学上网？2026 年正确姿势是 mihomo 命令行客户端：机场订阅怎么选怎么拿、订阅一键导入、mihomo 安装、systemd 开机自启、终端/git/docker 走代理全流程，附报错排查，服务器、WSL、无桌面环境通用。">
+  <meta name="keywords" content="Linux科学上网, Linux翻墙, Linux代理, clash linux, mihomo linux, linux 科学上网 教程, ubuntu 翻墙, linux 挂代理, linux 终端 代理, clash 订阅导入, mihomo 安装, linux 机场订阅, systemd clash, linux clash 客户端, 服务器 科学上网, wsl 翻墙, linux 开机自启 代理, mihomo 命令行, clash meta linux, linux git 代理">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/clash-linux/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-linux-banner.webp">
+  
+  
+  <meta property="og:description" content="Linux 怎么科学上网？2026 年正确姿势是 mihomo 命令行客户端：机场订阅怎么选怎么拿、订阅一键导入、mihomo 安装、systemd 开机自启、终端/git/docker 走代理全流程，附报错排查，服务器、WSL、无桌面环境通用。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-13T12:50:00.000Z">
+  <meta property="og:article:modified_time" content="2026-09-13T12:50:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="翻墙">
+  
+  <meta property="og:article:tag" content="VPN">
+  
+  <meta property="og:article:tag" content="Linux">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="代理">
+  
+  <meta property="og:article:tag" content="mihomo">
+  
+  <meta property="og:article:tag" content="systemd">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/clash-linux/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 庆波的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-linux-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-linux-banner.webp"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-13T12:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-13</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/clash-linux/" class="leancloud_visitors" data-flag-title="Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/翻墙/" class="post-meta-link">翻墙</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/VPN/" class="post-meta-link">VPN</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Linux/" class="post-meta-link">Linux</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/代理/" class="post-meta-link">代理</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/mihomo/" class="post-meta-link">mihomo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/systemd/" class="post-meta-link">systemd</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一，也是 Clash 教程矩阵的 Linux 平台篇。Windows/macOS 桌面端看 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程</a>，安卓端看 <a href="https://tanqingbo.cn/Android-open-internet/">安卓科学上网教程</a>，iPhone 端看 <a href="https://tanqingbo.cn/ios-open-internet/">iOS 科学上网教程</a>。</p>
+</blockquote>
+<p>ssh 连上服务器，敲下 <code>git clone</code>，进度条纹丝不动；<code>docker pull</code> 转了半分钟，回来一看 <code>timeout</code>；想装个依赖，<code>pip install</code> 直接红色 <code>connection refused</code>。</p>
+<p>如果你在 Linux 上遇到过这些，这篇文章就是写给你的。</p>
+<p>Linux 没有图形界面，大部分翻墙客户端装不上，网上搜「Linux Clash 教程」，前排文章还在教你去一个 <strong>2023 年 11 月就已经删库跑路的 GitHub 仓库</strong>下载原版 Clash——照着做只会得到一堆死链。</p>
+<p>说白了，2026 年在 Linux 上科学上网，正确姿势就一条：<strong>mihomo 命令行内核 + 机场订阅</strong>。装好之后 <code>git</code>、<code>docker</code>、<code>pip</code>、<code>curl</code> 全都能跑满，还能挂成系统服务开机自启。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>要花钱吗</strong>：要。机场是付费订阅，主流一年几十到一两百元，免费的没法稳定跑服务器</li>
+<li><strong>装什么</strong>：mihomo（原 Clash Meta 内核，原版 Clash 的继任者，命令和配置全兼容）</li>
+<li><strong>怎么装</strong>：<code>uname -m</code> 判架构 → GitHub Releases 下载对应版本 → 解压赋权</li>
+<li><strong>订阅怎么来</strong>：机场后台一键复制 Clash 订阅链接（第二节有 99 元/年入门版示例）</li>
+<li><strong>怎么跑</strong>：先前台测试，跑通后用 systemd 挂成服务，开机自启</li>
+<li><strong>怎么让命令走代理</strong>：<code>export http_proxy=http://127.0.0.1:7890</code> 三件套</li>
+<li><strong>适合谁</strong>：Linux 服务器、WSL、树莓派等 arm 开发板、无桌面 VPS——所有没有图形界面的环境</li>
+</ul>
+<h2 id="一、先搞清楚装什么：Clash-已死，mihomo-才是正统"><a href="#一、先搞清楚装什么：Clash-已死，mihomo-才是正统" class="headerlink" title="一、先搞清楚装什么：Clash 已死，mihomo 才是正统"></a>一、先搞清楚装什么：Clash 已死，mihomo 才是正统</h2><p>这一节必须放在最前面，因为它能帮你避开 90% 的坑。</p>
+<p><strong>原版 Clash（Dreamacro/clash）在 2023 年 11 月作者删库停更</strong>，GitHub 仓库整个消失，所有教程里的 <code>https://github.com/Dreamacro/clash/releases</code> 全是死链。你现在搜到的 Linux 教程，十篇里有八篇还在教这个。</p>
+<p>它有两个继任者：</p>
+<table>
+<thead>
+<tr>
+<th>内核</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Clash Premium</td>
+<td>已停更</td>
+<td>官方闭源版，一并凉了</td>
+</tr>
+<tr>
+<td><strong>mihomo（原 Clash Meta）</strong></td>
+<td><strong>活跃维护</strong></td>
+<td>社区主 fork，配置文件、命令行参数与原版完全兼容，还新增了 VLESS、Hysteria2、Reality 等新协议支持</td>
+</tr>
+</tbody></table>
+<p>所以结论很简单：<strong>在 Linux 上，装 mihomo</strong>。配置文件还是那个 <code>config.yaml</code>，机场订阅还是照常导入，你以前学的 Clash 知识全部能用。</p>
+<p>想深入了解这两个内核的前世今生，看这篇：<a href="https://tanqingbo.cn/mihomo-clash-difference/">Mihomo 和 Clash 是什么关系</a>。想直接动手，往下走。</p>
+<h2 id="二、机场订阅：怎么选、怎么拿订阅链接"><a href="#二、机场订阅：怎么选、怎么拿订阅链接" class="headerlink" title="二、机场订阅：怎么选、怎么拿订阅链接"></a>二、机场订阅：怎么选、怎么拿订阅链接</h2><p>命令行内核只是个「播放器」，节点才是「片源」。你得先有一个机场订阅，后面的导入才有意义。</p>
+<h3 id="怎么选机场"><a href="#怎么选机场" class="headerlink" title="怎么选机场"></a>怎么选机场</h3><p>Linux 场景对机场的要求其实更挑剔：服务器 24 小时挂着，<strong>稳定性比什么都重要</strong>；拉镜像、下依赖这类操作对延迟不敏感，但对<strong>断流很敏感</strong>（下载到一半节点抽风，pip 就废了）。所以选机场重点看三点：</p>
+<ol>
+<li><strong>在线率和口碑</strong>：节点三天两头炸的，配 Linux 服务器就是灾难</li>
+<li><strong>原生 Clash 订阅支持</strong>：后台能直接给 Clash 订阅链接的，省去手动转换</li>
+<li><strong>多协议支持</strong>：至少有 Trojan 起步，机场全用老协议的可以直接pass</li>
+</ol>
+<p>我自己主力用的是 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>，它后台对 Clash 系客户端适配比较好，订阅链接拿来即用，下面第三节的导入流程就是以它的后台为例。别的机场只要提供 Clash 订阅，操作完全一样。</p>
+<h3 id="怎么拿订阅链接"><a href="#怎么拿订阅链接" class="headerlink" title="怎么拿订阅链接"></a>怎么拿订阅链接</h3><p>以一枝红杏为例，从注册到拿到订阅链接一共四步：</p>
+<ol>
+<li><p>打开官网：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">https://order.yizhihongxing.org/aff.php?aff=4818</a>，点击主页的「<strong>购买服务</strong>」按钮跳转到服务购买页面。个人用选 <strong>99/年的入门版</strong>就够了，一个月 100G、支持 5 台设备同时在线。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211406809.png" alt="科学上网/翻墙VPN" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211406809.png" class="lozad post-image"></p>
+</li>
+<li><p>跳转到订购页面后，先在右上角点击 <code>用户登录</code>，再点击 <code>新建账户</code> 注册一个新账号，然后根据提示购买产品。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211459287.png" alt="image-20260704211459287" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211459287.png" class="lozad post-image"></p>
+</li>
+<li><p>购买之后依次点击上方导航栏中的 <strong>产品服务 → 查看详情</strong>，就能看到你购买的节点信息。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211615752.png" alt="image-20260704211615752" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211615752.png" class="lozad post-image"></p>
+</li>
+<li><p>打开产品详情页面，向下滑动，点击 <strong>Clash/mihomo 配置</strong>右侧的「获取地址」，在弹出的窗口中选择 <code>复制</code>——这就是你的订阅链接。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211719782.png" alt="image-20260704211719782" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260704211719782.png" class="lozad post-image"></p>
+</li>
+</ol>
+<p>别的机场只要提供 Clash 订阅，操作大同小异，都是在后台「我的订阅/产品详情」里找 Clash 配置的获取入口。</p>
+<p>拿到的那串链接长这样（示意）：</p>
+<pre class="highlight"><span class="line">https://example.com/api/v1/client/subscribe?token=xxxxxxxx</span><br></pre>
+
+<p><strong>订阅链接等同于你的账号凭证，不要发给别人。</strong> 想关掉某次泄露的风险，去后台点「重置订阅链接」就能让旧链接失效、新链接生效。</p>
+<h2 id="三、订阅导入：拉取-Clash-配置文件"><a href="#三、订阅导入：拉取-Clash-配置文件" class="headerlink" title="三、订阅导入：拉取 Clash 配置文件"></a>三、订阅导入：拉取 Clash 配置文件</h2><p>mihomo 不像桌面客户端那样点点鼠标就导入订阅，你要做的是把订阅链接变成一个 <code>config.yaml</code>——其实就一条命令的事。</p>
+<p>先建个工作目录（后面所有配置都放这里）：</p>
+<pre class="highlight"><span class="line">mkdir -p /etc/mihomo &amp;&amp; <span class="built_in">cd</span> /etc/mihomo</span><br></pre>
+
+<p>用 curl 把订阅拉下来存成配置文件：</p>
+<pre class="highlight"><span class="line">curl -L <span class="string">'你的订阅链接'</span> -o /etc/mihomo/config.yaml</span><br></pre>
+
+<p>看到进度条走完、没报错，配置就到手了。检查一下内容对不对：</p>
+<pre class="highlight"><span class="line">head -20 /etc/mihomo/config.yaml</span><br></pre>
+
+<p>正常的 Clash 订阅配置开头是 <code>mixed-port: 7890</code>、<code>proxies:</code> 这些字段。<strong>如果看到的却是一串看不懂的 Base64 乱码</strong>（<code>dm1lc3M6Ly</code> 开头之类的），说明你的机场只给了通用订阅（v2ray 格式），需要先转换——去 subconverter 类在线转换工具把订阅转成 Clash 格式再拉取，或者直接找机场客服要 Clash 专用订阅。这一步的完整细节看这篇：<a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接使用指南：导入、更新与转换</a>。</p>
+<p>顺带说一句订阅更新：机场节点列表会变，配置文件要定期重新拉。重新执行一遍上面的 curl 命令、然后 <code>systemctl restart mihomo</code> 就完成了一次更新。懒得手动的，可以写个 cron 定时任务。</p>
+<h2 id="四、安装-mihomo：从判架构到跑起来"><a href="#四、安装-mihomo：从判架构到跑起来" class="headerlink" title="四、安装 mihomo：从判架构到跑起来"></a>四、安装 mihomo：从判架构到跑起来</h2><h3 id="第一步：确认你的-CPU-架构"><a href="#第一步：确认你的-CPU-架构" class="headerlink" title="第一步：确认你的 CPU 架构"></a>第一步：确认你的 CPU 架构</h3><p>这步是 Linux 特有的坑——下错版本，运行时报 <code>cannot execute binary file</code>，很多人在这里卡半小时。</p>
+<pre class="highlight"><span class="line">uname -m</span><br></pre>
+
+<p>对照下表选版本：</p>
+<table>
+<thead>
+<tr>
+<th>输出</th>
+<th>架构</th>
+<th>下载文件名里的关键词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x86_64</code></td>
+<td>64 位 Intel/AMD（绝大多数服务器和 PC）</td>
+<td><code>amd64</code></td>
+</tr>
+<tr>
+<td><code>aarch64</code></td>
+<td>64 位 arm（树莓派 4/5、新开发板、arm 服务器）</td>
+<td><code>arm64</code></td>
+</tr>
+<tr>
+<td><code>armv7l</code></td>
+<td>32 位 arm（老开发板）</td>
+<td><code>armv7</code></td>
+</tr>
+</tbody></table>
+<h3 id="第二步：下载"><a href="#第二步：下载" class="headerlink" title="第二步：下载"></a>第二步：下载</h3><p>去 mihomo 的 GitHub Releases（<code>github.com/MetaCubeX/mihomo/releases</code>）找最新版本，按架构下载。以最常见的 amd64 为例：</p>
+<pre class="highlight"><span class="line">curl -LO https://github.com/MetaCubeX/mihomo/releases/download/v1.19.x/mihomo-linux-amd64-v1.19.x.gz</span><br></pre>
+
+<p>（版本号以 Releases 页面最新为准，把 URL 里的 <code>v1.19.x</code> 换成实际版本。）</p>
+<p><strong>国内服务器直连 GitHub 很慢甚至超时</strong>，两个应急办法：一是 URL 里加镜像加速前缀（ghproxy 类服务），二是先在有网的设备上下载，再 <code>scp</code> 传上服务器。</p>
+<h3 id="第三步：解压、赋权、装到位"><a href="#第三步：解压、赋权、装到位" class="headerlink" title="第三步：解压、赋权、装到位"></a>第三步：解压、赋权、装到位</h3><pre class="highlight"><span class="line"><span class="comment"># 解压（mihomo 发布的是 gzip 包）</span></span><br><span class="line">gzip -d mihomo-linux-amd64-*.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挪到系统目录并赋予执行权限</span></span><br><span class="line">sudo mv mihomo-linux-amd64-* /usr/<span class="built_in">local</span>/bin/mihomo</span><br><span class="line">sudo chmod +x /usr/<span class="built_in">local</span>/bin/mihomo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装</span></span><br><span class="line">mihomo -v</span><br></pre>
+
+<p>看到版本号输出（<code>Mihomo Meta v1.19.x ...</code>）就说明装好了。</p>
+<h2 id="五、运行：前台测试-→-systemd-开机自启"><a href="#五、运行：前台测试-→-systemd-开机自启" class="headerlink" title="五、运行：前台测试 → systemd 开机自启"></a>五、运行：前台测试 → systemd 开机自启</h2><h3 id="先前台跑一次，确认能用"><a href="#先前台跑一次，确认能用" class="headerlink" title="先前台跑一次，确认能用"></a>先前台跑一次，确认能用</h3><p>别急着挂后台，先手动跑一次看日志：</p>
+<pre class="highlight"><span class="line">mihomo -d /etc/mihomo</span><br></pre>
+
+<p><code>-d</code> 指定配置目录。正常启动会看到 <code>Mixed(http+socks) proxy listening at: :7890</code> 这样的日志行，说明代理端口起来了。另开一个终端窗口测试：</p>
+<pre class="highlight"><span class="line">curl -I -x http://127.0.0.1:7890 https://www.google.com</span><br></pre>
+
+<p>只要能返回 HTTP 响应（<code>200</code>、<code>301</code>、<code>302</code> 都算），就说明代理通了——Google 会做跳转，重点是「有响应」而不是具体状态码。确认没问题，<code>Ctrl+C</code> 停掉前台进程。</p>
+<h3 id="挂成-systemd-服务（服务器必配）"><a href="#挂成-systemd-服务（服务器必配）" class="headerlink" title="挂成 systemd 服务（服务器必配）"></a>挂成 systemd 服务（服务器必配）</h3><p>nohup 挂后台是能跑，但服务器重启就没了、进程崩了没人管。正确姿势是 systemd 托管：</p>
+<pre class="highlight"><span class="line">sudo tee /etc/systemd/system/mihomo.service &gt; /dev/null &lt;&lt;EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=mihomo proxy service</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/bin/mihomo -d /etc/mihomo</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre>
+
+<p>这个单元文件干了三件事：开机自启（<code>WantedBy</code>）、崩溃自动拉起（<code>Restart=on-failure</code>）、失败后等 5 秒再拉（<code>RestartSec=5</code>，防止疯狂重启）。</p>
+<p>启用并启动：</p>
+<pre class="highlight"><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now mihomo</span><br></pre>
+
+<p><code>enable --now</code> 是「设置开机自启 + 立即启动」的合体命令。看一眼状态：</p>
+<pre class="highlight"><span class="line">systemctl status mihomo</span><br></pre>
+
+<p>看到绿色的 <code>active (running)</code> 就齐活了。</p>
+<p>常用管理命令速记：</p>
+<pre class="highlight"><span class="line">sudo systemctl restart mihomo   <span class="comment"># 重启（更新订阅后执行）</span></span><br><span class="line">sudo systemctl stop mihomo      <span class="comment"># 停止</span></span><br><span class="line">journalctl -u mihomo -f         <span class="comment"># 实时看日志</span></span><br></pre>
+
+<h2 id="六、让终端命令走代理：环境变量三件套"><a href="#六、让终端命令走代理：环境变量三件套" class="headerlink" title="六、让终端命令走代理：环境变量三件套"></a>六、让终端命令走代理：环境变量三件套</h2><p>mihomo 跑起来只是「代理端口开了」，你的终端命令默认还是直连。让 <code>curl</code>、<code>git</code>、<code>pip</code> 这些走代理，靠的是环境变量。</p>
+<p>当前终端临时生效（关掉终端就失效）：</p>
+<pre class="highlight"><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> all_proxy=socks5://127.0.0.1:7890</span><br></pre>
+
+<p>验证：</p>
+<pre class="highlight"><span class="line">curl -I https://www.google.com   <span class="comment"># 不用 -x 参数，直接通</span></span><br></pre>
+
+<p>想永久生效，写进 <code>~/.bashrc</code>（Debian/Ubuntu 系）：</p>
+<pre class="highlight"><span class="line"><span class="built_in">echo</span> <span class="string">'export http_proxy=http://127.0.0.1:7890</span></span><br><span class="line"><span class="string">export https_proxy=http://127.0.0.1:7890</span></span><br><span class="line"><span class="string">export all_proxy=socks5://127.0.0.1:7890'</span> &gt;&gt; ~/.bashrc</span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre>
+
+<p>用 zsh 的写进 <code>~/.zshrc</code>，一样的。</p>
+<h3 id="git-和-docker-的特殊处理"><a href="#git-和-docker-的特殊处理" class="headerlink" title="git 和 docker 的特殊处理"></a>git 和 docker 的特殊处理</h3><p>两个高频坑，单独说：</p>
+<p><strong>git</strong> 大部分时候读环境变量就能走代理，但 <code>git clone git@github.com:...</code> 这种 SSH 协议的<strong>不走 http_proxy</strong>，要单独给 SSH 配 ProxyCommand。省事的办法是统一用 https 地址 clone。</p>
+<p><strong>docker</strong> 的 <code>docker pull</code> 是 daemon 进程去拉的，不读你终端的环境变量。要给 daemon 配代理：</p>
+<pre class="highlight"><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line">sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf &gt; /dev/null &lt;&lt;EOF</span><br><span class="line">[Service]</span><br><span class="line">Environment=<span class="string">"HTTP_PROXY=http://127.0.0.1:7890"</span></span><br><span class="line">Environment=<span class="string">"HTTPS_PROXY=http://127.0.0.1:7890"</span></span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre>
+
+<p><strong>apt</strong> 同理不读环境变量，要写 <code>/etc/apt/apt.conf.d/proxy.conf</code>。这仨「服务进程不读环境变量」的坑是 Linux 翻墙最常见的翻车点，记住这个规律：<strong>用户终端的代理管不了系统服务</strong>。</p>
+<h2 id="七、进阶：TUN-模式（全局透明代理）"><a href="#七、进阶：TUN-模式（全局透明代理）" class="headerlink" title="七、进阶：TUN 模式（全局透明代理）"></a>七、进阶：TUN 模式（全局透明代理）</h2><p>环境变量方式的局限：只对「听话」的命令生效，某些程序不读代理变量。想让整台机器所有流量自动走代理，用 TUN 模式。</p>
+<p>编辑你第三节拉下来的配置文件（<code>/etc/mihomo/config.yaml</code>），在里面加一段：</p>
+<pre class="highlight"><span class="line"><span class="attr">tun:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">stack:</span> <span class="string">system</span></span><br><span class="line">  <span class="attr">auto-route:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">auto-detect-interface:</span> <span class="literal">true</span></span><br></pre>
+
+<p>然后重启服务：<code>sudo systemctl restart mihomo</code>。</p>
+<p>TUN 模式需要 root 权限或给 mihomo 二进制加网络权限（<code>sudo setcap cap_net_admin,cap_net_bind_service=+ep /usr/local/bin/mihomo</code>），不然启动报 <code>operation not permitted</code>。开启后不再需要设任何环境变量，<code>ping</code>、<code>docker</code>、一切流量自动分流。</p>
+<p>代价是多了一层虚拟网卡，排障时网络链路更复杂。<strong>个人建议：先用环境变量方式跑稳，确实有全局需求再上 TUN。</strong></p>
+<h2 id="常见问题排查"><a href="#常见问题排查" class="headerlink" title="常见问题排查"></a>常见问题排查</h2><p><strong>Q：启动报 <code>cannot execute binary file</code>？</strong><br>架构选错了。回第四节 <code>uname -m</code> 重新对照，arm 机器下了 amd64 包是最常见原因。</p>
+<p><strong>Q：<code>bind: address already in use</code>？</strong><br>7890 端口被占。<code>ss -lntp | grep 7890</code> 看是谁占的，杀掉旧进程或改配置里的 <code>mixed-port</code>。</p>
+<p><strong>Q：节点连不上、订阅拉了没节点？</strong><br>先 <code>journalctl -u mihomo -f</code> 看实时日志，<code>proxy</code> 相关报错基本是节点问题。机场节点大面积超时的，考虑换稳定些的机场——服务器场景对机场稳定性的要求比手机刷推高得多，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a> 这类老牌机场在线率相对稳，24 小时挂着不容易断流。</p>
+<p><strong>Q：环境变量设了，新开终端又不走代理了？</strong><br>环境变量只对当前会话生效。确认 export 写进了 <code>~/.bashrc</code> 且执行过 <code>source ~/.bashrc</code>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Linux 科学上网的核心链路就四步：<strong>选机场拿订阅 → curl 拉成 config.yaml → mihomo 装好挂 systemd → 环境变量让命令走代理</strong>。跑通之后，服务器、WSL、开发板都是一个套路，唯一的变量就是架构选对。</p>
+<p>桌面环境的 Linux 用户（Ubuntu 桌面、Deepin 这些）其实可以更省事，直接用 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge Rev 图形客户端</a>，导入订阅点几下鼠标的事。手上有 VPS、想顺便自建节点的，看这篇：<a href="https://tanqingbo.cn/Clash-VPS/">VPS 自建翻墙节点完全教程</a>。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li><a href="https://tanqingbo.cn/clash-guide/">Clash 完全指南：从下载到配置总览</a></li>
+<li><a href="https://tanqingbo.cn/mihomo-clash-difference/">Mihomo 和 Clash 是什么关系：内核区别详解</a></li>
+<li><a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接使用指南：导入、更新与转换</a></li>
+<li><a href="https://tanqingbo.cn/clash-node-testing/">Clash 节点测速与选节点指南</a></li>
+<li><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></li>
+</ul>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/clash-linux/">https://tanqingbo.cn/clash-linux/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全指南：从下载到配置总览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/mihomo-clash-difference/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Mihomo 和 Clash 是什么关系：内核区别详解
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-subscribe-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 订阅链接使用指南：导入、更新与转换
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-17</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-verge/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash Verge Rev 桌面客户端教程（Win/macOS/Linux 桌面）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Clash-VPS/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        VPS 自建节点教程：从买服务器到跑起节点
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-05-04</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/telegram-banned/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Telegram账号被封怎么办：四种限制状态自查与@SpamBot申诉教程（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%E8%A3%85%E4%BB%80%E4%B9%88%EF%BC%9AClash-%E5%B7%B2%E6%AD%BB%EF%BC%8Cmihomo-%E6%89%8D%E6%98%AF%E6%AD%A3%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">一、先搞清楚装什么：Clash 已死，mihomo 才是正统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E6%80%8E%E4%B9%88%E9%80%89%E3%80%81%E6%80%8E%E4%B9%88%E6%8B%BF%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">二、机场订阅：怎么选、怎么拿订阅链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%80%89%E6%9C%BA%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">怎么选机场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%8B%BF%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.2.</span> <span class="toc-text">怎么拿订阅链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A2%E9%98%85%E5%AF%BC%E5%85%A5%EF%BC%9A%E6%8B%89%E5%8F%96-Clash-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">三、订阅导入：拉取 Clash 配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85-mihomo%EF%BC%9A%E4%BB%8E%E5%88%A4%E6%9E%B6%E6%9E%84%E5%88%B0%E8%B7%91%E8%B5%B7%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">四、安装 mihomo：从判架构到跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E4%BD%A0%E7%9A%84-CPU-%E6%9E%B6%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">第一步：确认你的 CPU 架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E4%B8%8B%E8%BD%BD"><span class="toc-number">5.2.</span> <span class="toc-text">第二步：下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E8%A7%A3%E5%8E%8B%E3%80%81%E8%B5%8B%E6%9D%83%E3%80%81%E8%A3%85%E5%88%B0%E4%BD%8D"><span class="toc-number">5.3.</span> <span class="toc-text">第三步：解压、赋权、装到位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%9A%E5%89%8D%E5%8F%B0%E6%B5%8B%E8%AF%95-%E2%86%92-systemd-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-number">6.</span> <span class="toc-text">五、运行：前台测试 → systemd 开机自启</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E5%89%8D%E5%8F%B0%E8%B7%91%E4%B8%80%E6%AC%A1%EF%BC%8C%E7%A1%AE%E8%AE%A4%E8%83%BD%E7%94%A8"><span class="toc-number">6.1.</span> <span class="toc-text">先前台跑一次，确认能用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E6%88%90-systemd-%E6%9C%8D%E5%8A%A1%EF%BC%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BF%85%E9%85%8D%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">挂成 systemd 服务（服务器必配）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%AE%A9%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%B5%B0%E4%BB%A3%E7%90%86%EF%BC%9A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%89%E4%BB%B6%E5%A5%97"><span class="toc-number">7.</span> <span class="toc-text">六、让终端命令走代理：环境变量三件套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%92%8C-docker-%E7%9A%84%E7%89%B9%E6%AE%8A%E5%A4%84%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text">git 和 docker 的特殊处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%BF%9B%E9%98%B6%EF%BC%9ATUN-%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%A8%E5%B1%80%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">七、进阶：TUN 模式（全局透明代理）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">11.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="庆波 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>408</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>11</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>340</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%E8%A3%85%E4%BB%80%E4%B9%88%EF%BC%9AClash-%E5%B7%B2%E6%AD%BB%EF%BC%8Cmihomo-%E6%89%8D%E6%98%AF%E6%AD%A3%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">一、先搞清楚装什么：Clash 已死，mihomo 才是正统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E6%80%8E%E4%B9%88%E9%80%89%E3%80%81%E6%80%8E%E4%B9%88%E6%8B%BF%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">二、机场订阅：怎么选、怎么拿订阅链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%80%89%E6%9C%BA%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">怎么选机场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%8B%BF%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.2.</span> <span class="toc-text">怎么拿订阅链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A2%E9%98%85%E5%AF%BC%E5%85%A5%EF%BC%9A%E6%8B%89%E5%8F%96-Clash-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">三、订阅导入：拉取 Clash 配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85-mihomo%EF%BC%9A%E4%BB%8E%E5%88%A4%E6%9E%B6%E6%9E%84%E5%88%B0%E8%B7%91%E8%B5%B7%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">四、安装 mihomo：从判架构到跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E4%BD%A0%E7%9A%84-CPU-%E6%9E%B6%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">第一步：确认你的 CPU 架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E4%B8%8B%E8%BD%BD"><span class="toc-number">5.2.</span> <span class="toc-text">第二步：下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E8%A7%A3%E5%8E%8B%E3%80%81%E8%B5%8B%E6%9D%83%E3%80%81%E8%A3%85%E5%88%B0%E4%BD%8D"><span class="toc-number">5.3.</span> <span class="toc-text">第三步：解压、赋权、装到位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%9A%E5%89%8D%E5%8F%B0%E6%B5%8B%E8%AF%95-%E2%86%92-systemd-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-number">6.</span> <span class="toc-text">五、运行：前台测试 → systemd 开机自启</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E5%89%8D%E5%8F%B0%E8%B7%91%E4%B8%80%E6%AC%A1%EF%BC%8C%E7%A1%AE%E8%AE%A4%E8%83%BD%E7%94%A8"><span class="toc-number">6.1.</span> <span class="toc-text">先前台跑一次，确认能用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E6%88%90-systemd-%E6%9C%8D%E5%8A%A1%EF%BC%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BF%85%E9%85%8D%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">挂成 systemd 服务（服务器必配）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%AE%A9%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%B5%B0%E4%BB%A3%E7%90%86%EF%BC%9A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%89%E4%BB%B6%E5%A5%97"><span class="toc-number">7.</span> <span class="toc-text">六、让终端命令走代理：环境变量三件套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%92%8C-docker-%E7%9A%84%E7%89%B9%E6%AE%8A%E5%A4%84%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text">git 和 docker 的特殊处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%BF%9B%E9%98%B6%EF%BC%9ATUN-%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%A8%E5%B1%80%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">七、进阶：TUN 模式（全局透明代理）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">11.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">71</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程语言">
+        <div class="categories-list-item">
+          编程语言
+          <span class="categories-list-item-badge">41</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">27</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 庆波的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%E8%A3%85%E4%BB%80%E4%B9%88%EF%BC%9AClash-%E5%B7%B2%E6%AD%BB%EF%BC%8Cmihomo-%E6%89%8D%E6%98%AF%E6%AD%A3%E7%BB%9F"><span class="toc-number">2.</span> <span class="toc-text">一、先搞清楚装什么：Clash 已死，mihomo 才是正统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%EF%BC%9A%E6%80%8E%E4%B9%88%E9%80%89%E3%80%81%E6%80%8E%E4%B9%88%E6%8B%BF%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">二、机场订阅：怎么选、怎么拿订阅链接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%80%89%E6%9C%BA%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">怎么选机场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E6%8B%BF%E8%AE%A2%E9%98%85%E9%93%BE%E6%8E%A5"><span class="toc-number">3.2.</span> <span class="toc-text">怎么拿订阅链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%AE%A2%E9%98%85%E5%AF%BC%E5%85%A5%EF%BC%9A%E6%8B%89%E5%8F%96-Clash-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">三、订阅导入：拉取 Clash 配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85-mihomo%EF%BC%9A%E4%BB%8E%E5%88%A4%E6%9E%B6%E6%9E%84%E5%88%B0%E8%B7%91%E8%B5%B7%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">四、安装 mihomo：从判架构到跑起来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%A1%AE%E8%AE%A4%E4%BD%A0%E7%9A%84-CPU-%E6%9E%B6%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">第一步：确认你的 CPU 架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E4%B8%8B%E8%BD%BD"><span class="toc-number">5.2.</span> <span class="toc-text">第二步：下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E8%A7%A3%E5%8E%8B%E3%80%81%E8%B5%8B%E6%9D%83%E3%80%81%E8%A3%85%E5%88%B0%E4%BD%8D"><span class="toc-number">5.3.</span> <span class="toc-text">第三步：解压、赋权、装到位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%90%E8%A1%8C%EF%BC%9A%E5%89%8D%E5%8F%B0%E6%B5%8B%E8%AF%95-%E2%86%92-systemd-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="toc-number">6.</span> <span class="toc-text">五、运行：前台测试 → systemd 开机自启</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E5%89%8D%E5%8F%B0%E8%B7%91%E4%B8%80%E6%AC%A1%EF%BC%8C%E7%A1%AE%E8%AE%A4%E8%83%BD%E7%94%A8"><span class="toc-number">6.1.</span> <span class="toc-text">先前台跑一次，确认能用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E6%88%90-systemd-%E6%9C%8D%E5%8A%A1%EF%BC%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BF%85%E9%85%8D%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">挂成 systemd 服务（服务器必配）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%AE%A9%E7%BB%88%E7%AB%AF%E5%91%BD%E4%BB%A4%E8%B5%B0%E4%BB%A3%E7%90%86%EF%BC%9A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%B8%89%E4%BB%B6%E5%A5%97"><span class="toc-number">7.</span> <span class="toc-text">六、让终端命令走代理：环境变量三件套</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%92%8C-docker-%E7%9A%84%E7%89%B9%E6%AE%8A%E5%A4%84%E7%90%86"><span class="toc-number">7.1.</span> <span class="toc-text">git 和 docker 的特殊处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%BF%9B%E9%98%B6%EF%BC%9ATUN-%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%A8%E5%B1%80%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">七、进阶：TUN 模式（全局透明代理）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">11.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-13</div>
+        <a href="/clash-linux/"><div class="recent-posts-item-content">Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-11</div>
+        <a href="/telegram-banned/"><div class="recent-posts-item-content">Telegram账号被封怎么办：四种限制状态自查与@SpamBot申诉教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-09</div>
+        <a href="/kimi-k3-guide/"><div class="recent-posts-item-content">Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-08</div>
+        <a href="/iphone-kuaili/"><div class="recent-posts-item-content">苹果手机翻墙全流程：快狸机场注册、订阅、iOS 客户端一键连接（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

@@ -1,3 +1,7 @@
+https://tanqingbo.cn/magic-internet/
+https://tanqingbo.cn/openinternet/
+https://tanqingbo.cn/Clash-VPS/
+https://tanqingbo.cn/clash-linux/
 https://tanqingbo.cn/Java-memory-area/
 https://tanqingbo.cn/Java-eight-data-types/
 https://tanqingbo.cn/Golang-learning/
@@ -14,7 +18,3 @@ https://tanqingbo.cn/TCPIP-detailed/
 https://tanqingbo.cn/Spring-integrates-hibernate-Struts/
 https://tanqingbo.cn/Spring-basics/
 https://tanqingbo.cn/SEO02/
-https://tanqingbo.cn/SEO01/
-https://tanqingbo.cn/Seata/
-https://tanqingbo.cn/search-help/
-https://tanqingbo.cn/python%E7%88%AC%E8%99%AB%E6%95%99%E7%A8%8B/
