@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-14T12:50:00.000Z",
+  "dateModified": "2026-09-14T14:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/telegram-bot-dev/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-bot-dev-banner.webp",
+  "description": "Telegram 机器人开发零基础教程：BotFather 建 bot 拿 token，Python 用 python-telegram-bot 写出第一个自动回复机器人，再到定时提醒、按钮菜单和 systemd 部署常驻，附完整代码与避坑清单。",
+  "keywords": "telegram机器人开发,telegram bot开发,telegram机器人教程,botfather教程,python-telegram-bot,telegram bot api,telegram机器人怎么建,电报机器人开发,telegram机器人制作,telegram自动回复机器人,python telegram机器人,telegram bot python,telegram机器人零基础,botfather建bot,telegram机器人token,电报bot开发,telegram机器人实战,telegram机器人部署"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "工具",
+      "item": "https://tanqingbo.cn/categories/工具/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "开发 Telegram 机器人需要会编程吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "本文走 Python + python-telegram-bot 路线，需要一点点 Python 基础（装环境、跑脚本）。完全零编程也有办法——用 Manybot 这类无代码机器人搭建工具，搜「Telegram 无代码机器人」能找到入口，但功能受限，做不了复杂的自动回复逻辑。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "BotFather 是什么？和我要写的机器人什么关系？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BotFather 是 Telegram 官方的「机器人管理机器人」，负责创建和管理你的所有 bot。你在 BotFather 里发 /newbot 给它取名，它会返回一个 token（一长串密钥），这个 token 就是你的 bot 的身份凭证，写代码时填进去，你的程序就「接管」了这个机器人。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "python-telegram-bot 用哪个版本？老教程的 Updater 怎么没了？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "现在用 22.x 版本（Python 3.10+）。注意 2023 年 v20.0 是个大版本：旧的 Updater 类被删了，改成 Application + asyncio（async/await）写法。网上大量老教程还在用 Updater，照着抄会报错——认准 Application.builder() 这个新入口就行，本文的代码就是新写法。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机器人 token 泄露了怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "回 BotFather 找你的 bot，发 /token 再选「Revoke」（撤销）就能作废旧 token 生成新的。token 等于你的机器人账号密码，不要提交到公开的 GitHub 仓库、不要截图发群里。写代码时用环境变量读（本文代码就是这么做的），别硬编码在脚本里。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "本地跑通了，怎么让机器人 24 小时在线？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "本地脚本一关电脑就没。要让机器人常驻，得部署到一台一直开着的服务器（云服务器、VPS）上，用 systemd 或 supervisord 托管进程。本文第五节给了 systemd 的完整配置，含 token 环境变量写法。服务器访问 Telegram API 需要能连外网，这一步还顺带涉及科学上网——见文章末尾。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机器人收不到群消息？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "默认情况下 bot 的隐私模式（Privacy Mode）是开启的，它只能收到以 / 开头或 @ 提及它的消息，收不到群里所有人的闲聊。要去 BotFather 发 /setprivacy 关掉隐私模式（Disable），bot 才能看到群里的所有消息。改完后把 bot 移出群再重新拉进来才生效。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "定时提醒为什么会在错误的时间发？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "JobQueue 的 run_daily 不传时区时按 UTC 计算。你写 time=datetime.time(8, 0) 想让它早上 8 点发，实际上会在北京时间下午 4 点发（UTC+8）。正确做法是给 time 传 tzinfo=ZoneInfo(\"Asia/Shanghai\")，本文第四节代码已处理。Windows 上用 zoneinfo 需要先 pip install tzdata。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）</title>
+  
+  <meta name="description" content="Telegram 机器人开发零基础教程：BotFather 建 bot 拿 token，Python 用 python-telegram-bot 写出第一个自动回复机器人，再到定时提醒、按钮菜单和 systemd 部署常驻，附完整代码与避坑清单。">
+  <meta name="keywords" content="telegram机器人开发,telegram bot开发,telegram机器人教程,botfather教程,python-telegram-bot,telegram bot api,telegram机器人怎么建,电报机器人开发,telegram机器人制作,telegram自动回复机器人,python telegram机器人,telegram bot python,telegram机器人零基础,botfather建bot,telegram机器人token,电报bot开发,telegram机器人实战,telegram机器人部署">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Telegram机器人开发教程：BotFather建bot到Python自动回复（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/telegram-bot-dev/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-bot-dev-banner.webp">
+  
+  
+  <meta property="og:description" content="Telegram 机器人开发零基础教程：BotFather 建 bot 拿 token，Python 用 python-telegram-bot 写出第一个自动回复机器人，再到定时提醒、按钮菜单和 systemd 部署常驻，附完整代码与避坑清单。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-14T12:50:00.000Z">
+  <meta property="og:article:modified_time" content="2026-09-14T14:30:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="编程">
+  
+  <meta property="og:article:tag" content="Python">
+  
+  <meta property="og:article:tag" content="Telegram">
+  
+  <meta property="og:article:tag" content="电报">
+  
+  <meta property="og:article:tag" content="机器人开发">
+  
+  <meta property="og:article:tag" content="BotFather">
+  
+  <meta property="og:article:tag" content="python-telegram-bot">
+  
+  <meta property="og:article:tag" content="Bot API">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/telegram-bot-dev/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 庆波的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-bot-dev-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/telegram-bot-dev-banner.webp"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-14T12:50:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-14</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/工具/" class="post-meta-link">工具</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/telegram-bot-dev/" class="leancloud_visitors" data-flag-title="Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/编程/" class="post-meta-link">编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Python/" class="post-meta-link">Python</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Telegram/" class="post-meta-link">Telegram</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/电报/" class="post-meta-link">电报</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机器人开发/" class="post-meta-link">机器人开发</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/BotFather/" class="post-meta-link">BotFather</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/python-telegram-bot/" class="post-meta-link">python-telegram-bot</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Bot-API/" class="post-meta-link">Bot API</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>📚 本文是 Telegram 专题的开发者向教程。还不会用 Telegram 的，先看 <a href="https://tanqingbo.cn/telegram-guide/">Telegram 完全指南</a> 把下载、汉化、加机器人搞明白了再回来。</p>
+</blockquote>
+<p>你会用 Telegram，但你有没有想过——<strong>那些@搜资源、@翻译、@定时提醒的机器人，其实你自己也能写一个</strong>？</p>
+<p>Telegram 的机器人生态能长成今天这样，靠的就是 Bot API 完全免费开放：注册一个 bot 不花一分钱，接口文档齐全，用 Python 几十行代码就能让一个机器人跑起来。比接微信个人号、比做个网页后台都省事，也没有那些乱七八糟的审核。</p>
+<p>这篇就带你从零写一个：<strong>先用 BotFather 建 bot 拿 token，再用 python-telegram-bot 写出第一个自动回复机器人，最后部署到服务器常驻</strong>。全程真实代码，跟着敲就能跑通。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>要花钱吗</strong>：不用。BotFather 建 bot 免费，python-telegram-bot 是开源库（LGPLv3）</li>
+<li><strong>需要什么基础</strong>：一点点 Python（装环境、跑脚本），没有就走无代码路线</li>
+<li><strong>核心三步</strong>：BotFather 建 bot 拿 token → pip 装 python-telegram-bot 写代码 → run_polling 跑起来</li>
+<li><strong>怎么常驻</strong>：本地跑通后，部署到服务器用 systemd 托管</li>
+<li><strong>能做什么</strong>：自动回复、定时提醒、按钮菜单、接大模型 API 做问答，思路都是同一套</li>
+</ul>
+<h2 id="一、先建机器人：BotFather-拿-token"><a href="#一、先建机器人：BotFather-拿-token" class="headerlink" title="一、先建机器人：BotFather 拿 token"></a>一、先建机器人：BotFather 拿 token</h2><p>所有 Telegram bot 都绕不开 <strong>BotFather</strong>——它是官方用来管理机器人的「机器人之父」。</p>
+<ol>
+<li>在 Telegram 搜索框搜 <code>@BotFather</code>（带蓝色对勾认证的那个），点进去</li>
+<li>发 <code>/newbot</code></li>
+<li>按提示先给机器人起个<strong>显示名</strong>（随便起，会显示在聊天里），再起个<strong>用户名</strong>（必须 <code>xxx_bot</code> 结尾，别人@它就用这个）</li>
+<li>成功后会返回一大段消息，里面有一行：</li>
+</ol>
+<pre class="highlight"><span class="line">Use this token to access the HTTP API:</span><br><span class="line">1234567890:AAFxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><br></pre>
+
+<p><strong>这串 token 就是你的机器人的身份密钥</strong>，后面写代码要填它。复制下来先存好。</p>
+<!-- 截图位：BotFather 创建机器人返回 token 的界面，文件名 telegram-bot-token.webp -->
+
+<p>到手后可以顺手给机器人设个头像、描述、命令列表（<code>/setcommands</code>），这些都能在 BotFather 里发对应命令完成，不影响先跑起来。具体的命令菜单怎么配，看第六节。</p>
+<h2 id="二、装环境，写第一个自动回复机器人"><a href="#二、装环境，写第一个自动回复机器人" class="headerlink" title="二、装环境，写第一个自动回复机器人"></a>二、装环境，写第一个自动回复机器人</h2><h3 id="装库"><a href="#装库" class="headerlink" title="装库"></a>装库</h3><p>Python 3.10+，一行命令：</p>
+<pre class="highlight"><span class="line">pip install <span class="string">"python-telegram-bot[job-queue]"</span></span><br></pre>
+
+<p><code>[job-queue]</code> 是把定时任务的依赖（APScheduler）一起装上，第四节用得上。只写最基础的自动回复，裸 <code>pip install python-telegram-bot</code> 也行。</p>
+<h3 id="第一个-bot：回显机器人"><a href="#第一个-bot：回显机器人" class="headerlink" title="第一个 bot：回显机器人"></a>第一个 bot：回显机器人</h3><p>新建 <code>bot.py</code>：</p>
+<pre class="highlight"><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> telegram <span class="keyword">import</span> Update</span><br><span class="line"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, CommandHandler, MessageHandler, filters, ContextTypes</span><br><span class="line"></span><br><span class="line">TOKEN = os.environ[<span class="string">"BOT_TOKEN"</span>]   <span class="comment"># 从环境变量读，别硬编码</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">start</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(<span class="string">"你好！我是你写的第一个机器人，随便发点什么我复读给你。"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">echo</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(update.message.text)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    app = Application.builder().token(TOKEN).build()</span><br><span class="line">    app.add_handler(CommandHandler(<span class="string">"start"</span>, start))                        <span class="comment"># /start 命令</span></span><br><span class="line">    app.add_handler(MessageHandler(filters.TEXT &amp; ~filters.COMMAND, echo)) <span class="comment"># 普通文字消息</span></span><br><span class="line">    app.run_polling()   <span class="comment"># 会一直阻塞，按 Ctrl+C 才停</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre>
+
+<p>token 别直接写在代码里，用环境变量塞进去：</p>
+<pre class="highlight"><span class="line"><span class="comment"># Linux / macOS</span></span><br><span class="line"><span class="built_in">export</span> BOT_TOKEN=<span class="string">"1234567890:AAFxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span></span><br><span class="line">python bot.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows PowerShell</span></span><br><span class="line"><span class="variable">$env</span>:BOT_TOKEN=<span class="string">"1234567890:AAFxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span></span><br><span class="line">python bot.py</span><br></pre>
+
+<p>终端不报错、挂着不动就说明连上了。回到 Telegram 找到你的机器人，发 <code>/start</code>，再随便发一句话，它就会复读给你。</p>
+<h3 id="这段代码到底在干嘛（三句讲清）"><a href="#这段代码到底在干嘛（三句讲清）" class="headerlink" title="这段代码到底在干嘛（三句讲清）"></a>这段代码到底在干嘛（三句讲清）</h3><ol>
+<li><code>Application.builder().token(...)</code> 是 v20 以后的新写法，替代了老教程里已经删掉的 <code>Updater</code>，你搜到的旧文章认这个就行</li>
+<li><code>add_handler</code> 是「注册事件」：<code>CommandHandler("start", start)</code> 意思是用户发 <code>/start</code> 就调用 <code>start</code> 函数；<code>MessageHandler(filters.TEXT...)</code> 是普通文字消息走 <code>echo</code></li>
+<li><code>run_polling()</code> 是「轮询」：程序不断问 Telegram 服务器「有没有新消息」，有就拿回来交给对应的 handler 处理。它会自己起事件循环，所以 <code>main()</code> 不用写成 async</li>
+</ol>
+<p>这里有个新手最常踩的坑：**处理函数都要加 <code>async</code>、调用 Telegram 的地方要加 <code>await</code>**。v20 改成 asyncio 之后，老教程里不带 async/await 的同步写法会直接报错。</p>
+<h2 id="三、加一点真实功能：关键词问答"><a href="#三、加一点真实功能：关键词问答" class="headerlink" title="三、加一点真实功能：关键词问答"></a>三、加一点真实功能：关键词问答</h2><p>光复读没意思，我们让它能干点活——做一个按关键词回复的小 bot：</p>
+<pre class="highlight"><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> telegram <span class="keyword">import</span> Update</span><br><span class="line"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, CommandHandler, MessageHandler, filters, ContextTypes</span><br><span class="line"></span><br><span class="line">TOKEN = os.environ[<span class="string">"BOT_TOKEN"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键词规则表，key 是触发词，value 是回复内容</span></span><br><span class="line">REPLY_MAP = {</span><br><span class="line">    <span class="string">"价格"</span>: <span class="string">"我们月付 19.9 元，年付 199 元，随时退。"</span>,</span><br><span class="line">    <span class="string">"帮助"</span>: <span class="string">"发 /help 看命令，或者输入「价格」了解套餐。"</span>,</span><br><span class="line">    <span class="string">"客服"</span>: <span class="string">"人工客服工作日 9:00-18:00 在线，稍后会有真人接上。"</span>,</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">start</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(</span><br><span class="line">        <span class="string">"您好！输入「价格」查套餐，「帮助」看说明，「客服」转人工。"</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">keyword_reply</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    text = update.message.text</span><br><span class="line">    <span class="keyword">for</span> key, reply <span class="keyword">in</span> REPLY_MAP.items():</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">in</span> text:</span><br><span class="line">            <span class="keyword">await</span> update.message.reply_text(reply)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(<span class="string">"没听懂，输入「帮助」看看我能做什么。"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    app = Application.builder().token(TOKEN).build()</span><br><span class="line">    app.add_handler(CommandHandler(<span class="string">"start"</span>, start))</span><br><span class="line">    app.add_handler(MessageHandler(filters.TEXT &amp; ~filters.COMMAND, keyword_reply))</span><br><span class="line">    app.run_polling()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre>
+
+<p>逻辑很简单：收到文字 → 在 <code>REPLY_MAP</code> 里找有没有命中关键词 → 命中就回对应的、没命中就回「没听懂」。这就是绝大多数「机器人客服」「机器人查询」的底层原理——<strong>别觉得神奇，就一个字典查找</strong>。</p>
+<!-- 截图位：机器人关键词问答的效果图，文件名 telegram-bot-keyword.webp -->
+
+<p>想让它更聪明，把 <code>REPLY_MAP</code> 换成一次大模型 API 调用就行，判断逻辑不用动。</p>
+<h2 id="四、进阶：定时提醒-按钮菜单"><a href="#四、进阶：定时提醒-按钮菜单" class="headerlink" title="四、进阶：定时提醒 + 按钮菜单"></a>四、进阶：定时提醒 + 按钮菜单</h2><h3 id="定时提醒（JobQueue）"><a href="#定时提醒（JobQueue）" class="headerlink" title="定时提醒（JobQueue）"></a>定时提醒（JobQueue）</h3><p>想让机器人每天固定时间给你发消息（比如每天早上 8 点提醒打卡），用内置的 JobQueue：</p>
+<pre class="highlight"><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> zoneinfo <span class="keyword">import</span> ZoneInfo</span><br><span class="line"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, ContextTypes</span><br><span class="line"></span><br><span class="line">TOKEN = os.environ[<span class="string">"BOT_TOKEN"</span>]</span><br><span class="line">CHAT_ID = <span class="number">123456789</span>          <span class="comment"># 换成你自己的数字 id，@userinfobot 能查</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">daily_reminder</span>(<span class="params">context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    <span class="keyword">await</span> context.bot.send_message(chat_id=CHAT_ID, text=<span class="string">"早上好，今天也要加油！"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    app = Application.builder().token(TOKEN).build()</span><br><span class="line">    <span class="comment"># 坑点：time 不传 tzinfo 会按 UTC 算，早上 8 点会变成北京时间下午 4 点</span></span><br><span class="line">    app.job_queue.run_daily(</span><br><span class="line">        daily_reminder,</span><br><span class="line">        time=datetime.time(hour=<span class="number">8</span>, minute=<span class="number">0</span>, tzinfo=ZoneInfo(<span class="string">"Asia/Shanghai"</span>)),</span><br><span class="line">    )</span><br><span class="line">    app.run_polling()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre>
+
+<p>三个说明：</p>
+<ul>
+<li><strong>时区</strong>：<code>run_daily</code> 的时间不传 <code>tzinfo</code> 就按 UTC 走，这是定时 bot 最常见的翻车点，必须传 <code>tzinfo</code></li>
+<li><strong>Windows 用户</strong>：<code>zoneinfo</code> 在 Windows 上需要时区数据，先 <code>pip install tzdata</code></li>
+<li><strong>chat_id 怎么拿</strong>：Telegram 里找 <code>@userinfobot</code> 发一条消息，它会告诉你数字 ID；群 ID 就把它拉进群再问一次</li>
+</ul>
+<h3 id="按钮菜单（InlineKeyboard）"><a href="#按钮菜单（InlineKeyboard）" class="headerlink" title="按钮菜单（InlineKeyboard）"></a>按钮菜单（InlineKeyboard）</h3><p>想做个点按钮的交互菜单（很多 bot 都是这种），用 InlineKeyboardButton：</p>
+<pre class="highlight"><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> telegram <span class="keyword">import</span> Update, InlineKeyboardButton, InlineKeyboardMarkup</span><br><span class="line"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, CommandHandler, CallbackQueryHandler, ContextTypes</span><br><span class="line"></span><br><span class="line">TOKEN = os.environ[<span class="string">"BOT_TOKEN"</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">menu</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    keyboard = [</span><br><span class="line">        [InlineKeyboardButton(<span class="string">"查价格"</span>, callback_data=<span class="string">"price"</span>)],</span><br><span class="line">        [InlineKeyboardButton(<span class="string">"转人工"</span>, callback_data=<span class="string">"human"</span>)],</span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(</span><br><span class="line">        <span class="string">"请选择："</span>,</span><br><span class="line">        reply_markup=InlineKeyboardMarkup(keyboard),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">button_click</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    query = update.callback_query</span><br><span class="line">    <span class="keyword">await</span> query.answer()          <span class="comment"># 必须先 answer，否则客户端按钮一直转圈</span></span><br><span class="line">    <span class="keyword">if</span> query.data == <span class="string">"price"</span>:</span><br><span class="line">        <span class="keyword">await</span> query.edit_message_text(<span class="string">"月付 19.9 元，年付 199 元。"</span>)</span><br><span class="line">    <span class="keyword">elif</span> query.data == <span class="string">"human"</span>:</span><br><span class="line">        <span class="keyword">await</span> query.edit_message_text(<span class="string">"已为你转接人工客服。"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    app = Application.builder().token(TOKEN).build()</span><br><span class="line">    app.add_handler(CommandHandler(<span class="string">"start"</span>, menu))</span><br><span class="line">    app.add_handler(CallbackQueryHandler(button_click))</span><br><span class="line">    app.run_polling()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre>
+
+<p>按钮点下去会触发 <code>callback_query</code>，<code>query.data</code> 就是你在 callback_data 里填的值。点按钮 + 判断 data 做分支，这就是那些「菜单型机器人」的完整骨架。</p>
+<h2 id="五、部署：让机器人-24-小时在线"><a href="#五、部署：让机器人-24-小时在线" class="headerlink" title="五、部署：让机器人 24 小时在线"></a>五、部署：让机器人 24 小时在线</h2><p>前面都是在你电脑的终端里跑，关掉终端机器人就”死”了。要让机器人常驻，得部署到一台一直开着的服务器（云服务器 / VPS）。</p>
+<p>先说清楚连接方式：本文用的 <code>run_polling()</code> 是机器人主动去 Telegram 拉消息，<strong>不需要公网 IP、不需要域名、不需要备案</strong>，丢在一台能上网的小机器上就能跑。只有用户量很大、对响应速度有要求时才需要换 webhook（那需要域名 + HTTPS 证书），个人用的 bot 基本用不上。</p>
+<p>最简单的是 systemd 托管。把代码传到服务器后，写一个服务单元文件：</p>
+<pre class="highlight"><span class="line">sudo tee /etc/systemd/system/mybot.service &gt; /dev/null &lt;&lt;EOF</span><br><span class="line">[Unit]</span><br><span class="line">Description=my telegram bot</span><br><span class="line">After=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">WorkingDirectory=/home/you/bot</span><br><span class="line">Environment=<span class="string">"BOT_TOKEN=1234567890:AAFxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span></span><br><span class="line">ExecStart=/usr/bin/python3 /home/you/bot/bot.py</span><br><span class="line">Restart=on-failure</span><br><span class="line">RestartSec=5</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre>
+
+<p>启用并启动：</p>
+<pre class="highlight"><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> --now mybot</span><br><span class="line">systemctl status mybot   <span class="comment"># 看到 active (running) 就说明机器人常驻了</span></span><br></pre>
+
+<p>进程崩了 systemd 会自动拉起（<code>Restart=on-failure</code>），服务器重启也会自动启动（<code>enable</code>）。看日志用 <code>journalctl -u mybot -f</code>。</p>
+<h2 id="六、上线后必做：命令菜单、进群、隐私模式"><a href="#六、上线后必做：命令菜单、进群、隐私模式" class="headerlink" title="六、上线后必做：命令菜单、进群、隐私模式"></a>六、上线后必做：命令菜单、进群、隐私模式</h2><p>机器人能跑之后，还有三件事做了才算像个正经 bot。</p>
+<p><strong>1. 设置命令菜单</strong></p>
+<p>在 BotFather 里发 <code>/setcommands</code>，选你的 bot，然后按格式一次性发：</p>
+<pre class="highlight"><span class="line">start - 开始使用</span><br><span class="line">help - 查看帮助</span><br><span class="line">price - 查询价格</span><br></pre>
+
+<p>发完回到聊天界面，点输入框左边的「/」就能看到这个菜单列表，用户不用猜你支持什么命令。</p>
+<p><strong>2. 把机器人拉进群</strong></p>
+<p>群设置 → 添加成员 → 搜你的 bot 用户名（<code>xxx_bot</code>）加进去。刚加进去时它可能是「没有权限」状态，把群里的「机器人权限」打开，或者干脆设成管理员。</p>
+<p><strong>3. 关掉隐私模式（否则收不到群消息）</strong></p>
+<p>默认 bot 开着隐私模式，只能收到 <code>/</code> 开头和 @ 提及它的消息，群里的闲聊它一条都看不见。去 BotFather 发 <code>/setprivacy</code> → 选你的 bot → 选 <strong>Disable</strong>。</p>
+<p>改完这一步，<strong>把 bot 移出群再重新拉进来</strong>才生效，很多人卡在这里以为没改成功。</p>
+<h2 id="常见问题排查"><a href="#常见问题排查" class="headerlink" title="常见问题排查"></a>常见问题排查</h2><p><strong>Q：运行报 <code>NameError: name 'Updater' is not defined</code>？</strong><br>你在抄老教程。Updater 在 v20 已经删了，改用 <code>Application.builder().token(...).build()</code>，处理函数加 async/await，见第二节。</p>
+<p><strong>Q：运行报 <code>KeyError: 'BOT_TOKEN'</code>？</strong><br>环境变量没设上。确认你 <code>export</code>/<code>$env:</code> 的命令和跑 <code>python bot.py</code> 用的是<strong>同一个终端窗口</strong>，换窗口就没了。长期用建议写进 <code>.env</code> 或 systemd 的 <code>Environment</code>。</p>
+<p><strong>Q：机器人跑起来了，但发消息没反应？</strong><br>先看终端有没有报错。常见原因：token 复制错了（多了空格或少了字符）、网络连不上 Telegram 服务器（见下一条）。</p>
+<p><strong>Q：连接超时、<code>ConnectionError</code> 报错？</strong><br>Telegram API 在国内无法直连，跑机器人的服务器/电脑需要能访问外网。这个和本文前面的部署是同一个前提——如果服务器还没配科学上网，先解决访问通道，参考 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a>，或者直接用已经能连外网的机器先跑通本地逻辑。</p>
+<p><strong>Q：token 泄露了 / 想重置？</strong><br>去 BotFather 对你的 bot 发 <code>/token</code> → 选「Revoke」即可作废旧 token 换新的。日常用环境变量存 token，别硬编码、别提交到公开仓库。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>走完这一篇，你已经掌握了 Telegram 机器人开发的全套骨架：<strong>BotFather 建 bot → python-telegram-bot 写 handler → run_polling 跑起来 → systemd 部署常驻</strong>。回显、关键词问答、定时提醒、按钮菜单这四个例子，拼一拼就能做出一个能用的机器人。</p>
+<p>再往上是接大模型 API——用 ChatGPT、Kimi、DeepSeek 这些 API 替代 <code>REPLY_MAP</code> 的写死回复，你的机器人就从「字典查找」升级成「真·AI 问答」。这块的思路和选型，看这篇：<a href="https://tanqingbo.cn/ai-assistant-guide/">AI 助手工具指南</a>（想直接体验现成的 AI 问答，也别错过里面提到的那些现成大模型）。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li><a href="https://tanqingbo.cn/telegram-guide/">Telegram 完全指南：从下载到玩法总览</a></li>
+<li><a href="https://tanqingbo.cn/telegram-search/">Telegram 高效搜索资源指南</a></li>
+<li><a href="https://tanqingbo.cn/telegram-useful-features/">Telegram 实用功能合集：9 个隐藏技巧</a></li>
+<li><a href="https://tanqingbo.cn/telegram-banned/">Telegram 账号被封怎么办：四种限制状态与申诉</a></li>
+<li><a href="https://tanqingbo.cn/ai-assistant-guide/">AI 助手与工具指南：大模型怎么选怎么用</a></li>
+</ul>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/telegram-bot-dev/">https://tanqingbo.cn/telegram-bot-dev/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/telegram-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Telegram 完全指南：从下载到玩法总览
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-21</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Telegram-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        电报(Telegram)下载注册教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/telegram-search/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Telegram 高效搜索资源指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-01</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/telegram-useful-features/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Telegram 实用功能合集：9 个隐藏技巧
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-21</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-assistant-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 助手与工具指南：大模型怎么选怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/clash-linux/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%BB%BA%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%9ABotFather-%E6%8B%BF-token"><span class="toc-number">2.</span> <span class="toc-text">一、先建机器人：BotFather 拿 token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A3%85%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E5%9B%9E%E5%A4%8D%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">3.</span> <span class="toc-text">二、装环境，写第一个自动回复机器人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%85%E5%BA%93"><span class="toc-number">3.1.</span> <span class="toc-text">装库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-bot%EF%BC%9A%E5%9B%9E%E6%98%BE%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">3.2.</span> <span class="toc-text">第一个 bot：回显机器人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%AE%B5%E4%BB%A3%E7%A0%81%E5%88%B0%E5%BA%95%E5%9C%A8%E5%B9%B2%E5%98%9B%EF%BC%88%E4%B8%89%E5%8F%A5%E8%AE%B2%E6%B8%85%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">这段代码到底在干嘛（三句讲清）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8A%A0%E4%B8%80%E7%82%B9%E7%9C%9F%E5%AE%9E%E5%8A%9F%E8%83%BD%EF%BC%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E9%97%AE%E7%AD%94"><span class="toc-number">4.</span> <span class="toc-text">三、加一点真实功能：关键词问答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%AE%9A%E6%97%B6%E6%8F%90%E9%86%92-%E6%8C%89%E9%92%AE%E8%8F%9C%E5%8D%95"><span class="toc-number">5.</span> <span class="toc-text">四、进阶：定时提醒 + 按钮菜单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E6%8F%90%E9%86%92%EF%BC%88JobQueue%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">定时提醒（JobQueue）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%92%AE%E8%8F%9C%E5%8D%95%EF%BC%88InlineKeyboard%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">按钮菜单（InlineKeyboard）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2%EF%BC%9A%E8%AE%A9%E6%9C%BA%E5%99%A8%E4%BA%BA-24-%E5%B0%8F%E6%97%B6%E5%9C%A8%E7%BA%BF"><span class="toc-number">6.</span> <span class="toc-text">五、部署：让机器人 24 小时在线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%8A%E7%BA%BF%E5%90%8E%E5%BF%85%E5%81%9A%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%8F%9C%E5%8D%95%E3%80%81%E8%BF%9B%E7%BE%A4%E3%80%81%E9%9A%90%E7%A7%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">六、上线后必做：命令菜单、进群、隐私模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">8.</span> <span class="toc-text">常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">10.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="庆波 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>409</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>11</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>344</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%BB%BA%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%9ABotFather-%E6%8B%BF-token"><span class="toc-number">2.</span> <span class="toc-text">一、先建机器人：BotFather 拿 token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A3%85%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E5%9B%9E%E5%A4%8D%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">3.</span> <span class="toc-text">二、装环境，写第一个自动回复机器人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%85%E5%BA%93"><span class="toc-number">3.1.</span> <span class="toc-text">装库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-bot%EF%BC%9A%E5%9B%9E%E6%98%BE%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">3.2.</span> <span class="toc-text">第一个 bot：回显机器人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%AE%B5%E4%BB%A3%E7%A0%81%E5%88%B0%E5%BA%95%E5%9C%A8%E5%B9%B2%E5%98%9B%EF%BC%88%E4%B8%89%E5%8F%A5%E8%AE%B2%E6%B8%85%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">这段代码到底在干嘛（三句讲清）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8A%A0%E4%B8%80%E7%82%B9%E7%9C%9F%E5%AE%9E%E5%8A%9F%E8%83%BD%EF%BC%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E9%97%AE%E7%AD%94"><span class="toc-number">4.</span> <span class="toc-text">三、加一点真实功能：关键词问答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%AE%9A%E6%97%B6%E6%8F%90%E9%86%92-%E6%8C%89%E9%92%AE%E8%8F%9C%E5%8D%95"><span class="toc-number">5.</span> <span class="toc-text">四、进阶：定时提醒 + 按钮菜单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E6%8F%90%E9%86%92%EF%BC%88JobQueue%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">定时提醒（JobQueue）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%92%AE%E8%8F%9C%E5%8D%95%EF%BC%88InlineKeyboard%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">按钮菜单（InlineKeyboard）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2%EF%BC%9A%E8%AE%A9%E6%9C%BA%E5%99%A8%E4%BA%BA-24-%E5%B0%8F%E6%97%B6%E5%9C%A8%E7%BA%BF"><span class="toc-number">6.</span> <span class="toc-text">五、部署：让机器人 24 小时在线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%8A%E7%BA%BF%E5%90%8E%E5%BF%85%E5%81%9A%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%8F%9C%E5%8D%95%E3%80%81%E8%BF%9B%E7%BE%A4%E3%80%81%E9%9A%90%E7%A7%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">六、上线后必做：命令菜单、进群、隐私模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">8.</span> <span class="toc-text">常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">10.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">71</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程语言">
+        <div class="categories-list-item">
+          编程语言
+          <span class="categories-list-item-badge">41</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">34</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">27</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 庆波的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E5%BB%BA%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%9ABotFather-%E6%8B%BF-token"><span class="toc-number">2.</span> <span class="toc-text">一、先建机器人：BotFather 拿 token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A3%85%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E5%9B%9E%E5%A4%8D%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">3.</span> <span class="toc-text">二、装环境，写第一个自动回复机器人</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A3%85%E5%BA%93"><span class="toc-number">3.1.</span> <span class="toc-text">装库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-bot%EF%BC%9A%E5%9B%9E%E6%98%BE%E6%9C%BA%E5%99%A8%E4%BA%BA"><span class="toc-number">3.2.</span> <span class="toc-text">第一个 bot：回显机器人</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E6%AE%B5%E4%BB%A3%E7%A0%81%E5%88%B0%E5%BA%95%E5%9C%A8%E5%B9%B2%E5%98%9B%EF%BC%88%E4%B8%89%E5%8F%A5%E8%AE%B2%E6%B8%85%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">这段代码到底在干嘛（三句讲清）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8A%A0%E4%B8%80%E7%82%B9%E7%9C%9F%E5%AE%9E%E5%8A%9F%E8%83%BD%EF%BC%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E9%97%AE%E7%AD%94"><span class="toc-number">4.</span> <span class="toc-text">三、加一点真实功能：关键词问答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%9B%E9%98%B6%EF%BC%9A%E5%AE%9A%E6%97%B6%E6%8F%90%E9%86%92-%E6%8C%89%E9%92%AE%E8%8F%9C%E5%8D%95"><span class="toc-number">5.</span> <span class="toc-text">四、进阶：定时提醒 + 按钮菜单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E6%8F%90%E9%86%92%EF%BC%88JobQueue%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">定时提醒（JobQueue）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%92%AE%E8%8F%9C%E5%8D%95%EF%BC%88InlineKeyboard%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">按钮菜单（InlineKeyboard）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2%EF%BC%9A%E8%AE%A9%E6%9C%BA%E5%99%A8%E4%BA%BA-24-%E5%B0%8F%E6%97%B6%E5%9C%A8%E7%BA%BF"><span class="toc-number">6.</span> <span class="toc-text">五、部署：让机器人 24 小时在线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%8A%E7%BA%BF%E5%90%8E%E5%BF%85%E5%81%9A%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%8F%9C%E5%8D%95%E3%80%81%E8%BF%9B%E7%BE%A4%E3%80%81%E9%9A%90%E7%A7%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">六、上线后必做：命令菜单、进群、隐私模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">8.</span> <span class="toc-text">常见问题排查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="toc-number">10.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-14</div>
+        <a href="/telegram-bot-dev/"><div class="recent-posts-item-content">Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-13</div>
+        <a href="/clash-linux/"><div class="recent-posts-item-content">Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-11</div>
+        <a href="/telegram-banned/"><div class="recent-posts-item-content">Telegram账号被封怎么办：四种限制状态自查与@SpamBot申诉教程（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-09</div>
+        <a href="/kimi-k3-guide/"><div class="recent-posts-item-content">Kimi K3 怎么用2026：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
