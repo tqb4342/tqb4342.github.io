@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-15T03:30:00.000Z",
+  "dateModified": "2026-09-15T03:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/gpt-image-2.5-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-official-announce.webp",
+  "description": "GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景、多轮编辑一致性等新功能逐个拆解，配 10 个可复现玩法与完整提示词，用 ChatGPT 做封面、室内设计、漫画、表情包、商品图。",
+  "keywords": "gpt images 2.5,gpt图像生成,chatgpt生图,gpt-images-2.5教程,chatgpt画图,sketch草图生成,comment改图,gpt images 2.5怎么用,chatgpt图片生成,ai生图工具,chatgpt图像编辑,透明背景生成,gpt生图教程,chatgpt画草图,chatgpt改图,openai图像模型"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "GPT Images 2.5 是什么？和 GPT-4o 图像有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GPT Images 2.5 是 OpenAI 在 2026 年 9 月发布的图像生成模型，是 GPT-4o 图像能力的升级版，现在打开 ChatGPT 生图默认就是它。相比上一代，画质更高、生成速度快约 50%、多轮编辑一致性更强，并新增了 Sketch 草图参考、Comment 标注改图、Templates 模板、透明背景、Prompt 共享等能力。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "普通人能用 GPT Images 2.5 吗？要花钱吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能用，官方已向所有用户开放。免费用户有额度限制，主力体验需要 ChatGPT Plus（约 20 美元/月）。国内需要科学上网才能访问 chatgpt.com。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sketch 草图功能怎么用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "在 ChatGPT 对话框输入 @Sketch 就能打开画板，随手画出构图草稿（标题位置、人物位置、背景元素等），配合文字提示词，AI 会照着你的草图生成完整图片。不需要绘画基础，画得越简单越能看出效果。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment 改图是怎么操作的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "生成图片后点击图片进入编辑模式，点上方工具栏的「评论（Comment）」按钮，然后在图上任意位置放一条标注、写上修改要求（比如\"标题换成金色\"\"左眼改成轮回眼\"），AI 会只改你标注的位置，其他区域保持不变。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么生成透明背景的图片？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "在提示词里直接写「输出透明背景 PNG」即可，Images 2.5 支持直接生成透明通道图片，不用再靠第三方工具抠图。做 LOGO、表情包、贴纸素材时特别实用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "多轮编辑会跑偏吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是 2.5 的重点升级之一。官方改进后，连续编辑每一轮都会在上一次基础上稳定叠加，人物五官、构图、光线不会像 2.0 那样越改越崩。实测同一张人脸连续换 5 种风格、迪士尼城堡四季轮转，主体都能保持一致。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）</title>
+  
+  <meta name="description" content="GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景、多轮编辑一致性等新功能逐个拆解，配 10 个可复现玩法与完整提示词，用 ChatGPT 做封面、室内设计、漫画、表情包、商品图。">
+  <meta name="keywords" content="gpt images 2.5,gpt图像生成,chatgpt生图,gpt-images-2.5教程,chatgpt画图,sketch草图生成,comment改图,gpt images 2.5怎么用,chatgpt图片生成,ai生图工具,chatgpt图像编辑,透明背景生成,gpt生图教程,chatgpt画草图,chatgpt改图,openai图像模型">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/gpt-image-2.5-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-official-announce.webp">
+  
+  
+  <meta property="og:description" content="GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景、多轮编辑一致性等新功能逐个拆解，配 10 个可复现玩法与完整提示词，用 ChatGPT 做封面、室内设计、漫画、表情包、商品图。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-15T03:30:00.000Z">
+  <meta property="og:article:modified_time" content="2026-09-15T03:30:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="ChatGPT">
+  
+  <meta property="og:article:tag" content="AI工具">
+  
+  <meta property="og:article:tag" content="AI画图">
+  
+  <meta property="og:article:tag" content="GPT Images">
+  
+  <meta property="og:article:tag" content="AI生图">
+  
+  <meta property="og:article:tag" content="Sketch">
+  
+  <meta property="og:article:tag" content="文生图">
+  
+  <meta property="og:article:tag" content="图像生成">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/gpt-image-2.5-guide/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 庆波的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-official-announce.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-official-announce.webp"
+    alt="GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-15T03:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-15</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/gpt-image-2.5-guide/" class="leancloud_visitors" data-flag-title="GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/ChatGPT/" class="post-meta-link">ChatGPT</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI工具/" class="post-meta-link">AI工具</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI画图/" class="post-meta-link">AI画图</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/GPT-Images/" class="post-meta-link">GPT Images</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI生图/" class="post-meta-link">AI生图</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Sketch/" class="post-meta-link">Sketch</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/文生图/" class="post-meta-link">文生图</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/图像生成/" class="post-meta-link">图像生成</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>🎨 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想系统比较 AI 画图工具（即梦/豆包/可灵/Midjourney/GPT-4o），先看这篇：<a href="https://tanqingbo.cn/ai-image-generation-guide/">AI 画图哪个好用（2026）</a>；本文只讲一件事：<strong>ChatGPT 最新上线的 GPT Images 2.5，到底能干什么、怎么用。</strong></p>
+</blockquote>
+<p>先交代个背景。半年前 GPT Image 2 出来的时候，那个真实感就把不少人震到了——生成的微信聊天记录截图，跟真的一个样。</p>
+<p>结果没让人喘口气，OpenAI 又放了个大招：<strong>GPT Images 2.5 正式发布</strong>了。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-official-announce.webp" alt="GPT Images 2.5 官方发布" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-official-announce.webp" class="lozad post-image"></p>
+<p>这次的升级，不只是画质又高了一档、生成速度提升了约 50%、多轮编辑一致性更强，更关键的是——<strong>它把 AI 生图的「玩法」给改了</strong>。</p>
+<p>以前让 AI 出图，你只能靠打字描述「左边放什么、右边放什么」，构图对不对全凭运气。现在可以画画了：新增了 <strong>Sketch 草图参考</strong>（在 ChatGPT 里画草稿让 AI 生成完整图）、<strong>Comment 标注改图</strong>（在图上一指一个位置、精准改局部）、<strong>Templates 模板</strong>、<strong>Prompt 共享</strong>，还有<strong>透明背景生成</strong>。</p>
+<p>这六个新能力，我挨个都测了一遍，整理出 10 个最实用的玩法，每个都附上完整提示词和操作流程，照着做就能复现。下面是官方放出的成品效果，可以先感受一下 2.5 的出图水准：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-features-overview.webp" alt="GPT Images 2.5 官方成品效果图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gpt-image-2.5-features-overview.webp" class="lozad post-image"></p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>这是什么</strong>：ChatGPT 最新的图像模型，打开生图默认就是它，所有用户都能用</li>
+<li><strong>六大新功能</strong>：Sketch 草图、Comment 精准改图、Templates 模板、多轮编辑一致性、透明背景、Prompt 共享</li>
+<li><strong>最惊艳两个</strong>：Sketch（画草稿变成品图）+ Comment（图上标位置精准改局部）</li>
+<li><strong>要花钱吗</strong>：免费用户有额度，主力用要 Plus（约 20 美元/月），国内需<a href="https://tanqingbo.cn/clash-guide/">科学上网</a></li>
+<li><strong>一句话结论</strong>：上手门槛低到你完全不用会画画，就能做封面、海报、漫画、表情包、商品图</li>
+</ul>
+<h2 id="一、Sketch-草图：画给-AI-看"><a href="#一、Sketch-草图：画给-AI-看" class="headerlink" title="一、Sketch 草图：画给 AI 看"></a>一、Sketch 草图：画给 AI 看</h2><p>这次最让我兴奋的就是 <strong>Sketch</strong>。</p>
+<p>以前想让 AI 生成特定构图的图，只能靠文字生憋「左边放标题、右边放人物」这类描述，来来回回调半天，出来的图还经常不是你脑子里那张。</p>
+<p>现在不一样了：在 ChatGPT 对话框里输入 **<code>@Sketch</code>**，就能打开一个画板，随手画个草稿当构图参考。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-drawboard-interface.webp" alt="Sketch 画板界面" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-drawboard-interface.webp" class="lozad post-image"></p>
+<p>重点是——<strong>你完全不需要有任何绘画基础，画得越「灵魂」，反差越大、效果越惊艳。</strong></p>
+<p>下面三个场景，都是我亲测的。</p>
+<h3 id="1-草图变文章封面"><a href="#1-草图变文章封面" class="headerlink" title="1. 草图变文章封面"></a>1. 草图变文章封面</h3><p>做自媒体的人最头疼的就是封面图。以前要么用设计软件自己拼，要么纯靠文字让 AI 反复试，构图经常不对。</p>
+<p>有了 Sketch，可以先用草图把封面的布局画出来：标题放哪、文字写什么、人物在哪个位置、背景有哪些元素。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-cover-draft.webp" alt="手绘封面草图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-cover-draft.webp" class="lozad post-image"></p>
+<p>再把自己的真人照片也上传当参考，AI 就能理解你到底要什么效果。</p>
+<p><strong>提示词：</strong></p>
+<blockquote>
+<p>制作 16:9 的封面图，画面为写实风格，标题醒目，构图和人物参考我提供的图片</p>
+</blockquote>
+<p>不到一分钟就出图了。整体构图几乎照着我画的草稿来，人物位置、标题区域全对上了。这个流程比纯文字描述高效太多——以前得花好几轮对话才能让 AI 理解我要的构图，现在花几十秒画个草稿就搞定。以后做封面能省不少时间。</p>
+<h3 id="2-草图秒变室内设计"><a href="#2-草图秒变室内设计" class="headerlink" title="2. 草图秒变室内设计"></a>2. 草图秒变室内设计</h3><p>另一个实用场景是室内设计。你不需要会任何 3D 建模软件，只要能画出房间的大致布局——沙发在哪、桌子在哪、窗户朝哪——AI 就能帮你生成一张像模像样的室内效果图。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-interior-draft.webp" alt="手绘房间布局草图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-interior-draft.webp" class="lozad post-image"></p>
+<p><strong>提示词：</strong></p>
+<blockquote>
+<p>根据房间布局草图生成现代简约风格的实拍房间图，暖色调灯光，北欧风家具，窗外是城市夜景</p>
+</blockquote>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-interior-result.webp" alt="草图生成的室内设计效果图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-interior-result.webp" class="lozad post-image"></p>
+<p>如果你正在装修、或者搞出租屋改造，完全可以用这个功能先快速出效果图，看看自己的想法落地是什么感觉，满意了再动手。省下的是找设计师的几千块预算。</p>
+<h3 id="3-草图变漫画分镜"><a href="#3-草图变漫画分镜" class="headerlink" title="3. 草图变漫画分镜"></a>3. 草图变漫画分镜</h3><p>这个玩法特别适合有故事、但不会画画的人。</p>
+<p>用 Sketch 画出四格漫画的分镜草图，每一格只需要画个火柴人和简单的场景轮廓，再用文字描述每格的内容和对话，AI 就能生成一张完整的漫画页面。</p>
+<p>下面这张就是我画的原稿——<strong>每一格就一个火柴人加几根线条，潦草到这种程度，AI 照样能看懂。</strong> 这就是 Sketch 最狠的地方：不需要你画得好，只需要你把意图画出来。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/comic-storyboard-sketch.webp" alt="手绘四格漫画分镜草图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/comic-storyboard-sketch.webp" class="lozad post-image"></p>
+<p>草图之外还可以加参考。我把一张 cosplay「老年程序员」的照片也传了上去，让 AI 照着这个形象画主角：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-comic-reference-photo.webp" alt="上传的 cosplay 形象参考照片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-comic-reference-photo.webp" class="lozad post-image"></p>
+<p><strong>提示词：</strong></p>
+<blockquote>
+<p>根据四格漫画分镜草图，生成一页完整的彩色漫画。风格是日系轻松搞笑风，主角是一个程序员，参考我上传的照片中的人物形象。</p>
+</blockquote>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-comic-result.webp" alt="AI 生成的完整漫画页成品" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sketch-comic-result.webp" class="lozad post-image"></p>
+<p>以前想做个漫画，要么自己学画画、要么花钱请人，成本都不低。现在有了 Sketch，别说打草稿了，直接可发布的成品都能给你整出来。</p>
+<h2 id="二、Comment-评论编辑：改图之王"><a href="#二、Comment-评论编辑：改图之王" class="headerlink" title="二、Comment 评论编辑：改图之王"></a>二、Comment 评论编辑：改图之王</h2><p>Comment 是这个版本里最实用的新功能，没有之一。</p>
+<p>生成图片之后，你可以<strong>直接在图上点击某个位置、放一条评论、写上修改指令</strong>。操作逻辑和 Figma 里给设计稿打标注几乎一样——AI 会只改你标注的位置，其他地方纹丝不动。</p>
+<p>除了 Comment，图片编辑工具栏里还有 Markup 标记、Remove BG 去背景、Erase 擦除、Resize 调整尺寸等工具，编辑能力比 2.0 丰富了一个量级。</p>
+<h3 id="4-修改微小细节（连瞳孔都能单独改）"><a href="#4-修改微小细节（连瞳孔都能单独改）" class="headerlink" title="4. 修改微小细节（连瞳孔都能单独改）"></a>4. 修改微小细节（连瞳孔都能单独改）</h3><p>既然 Comment 主打精准，那就测它的极限——改一个最细微的地方：<strong>眼睛</strong>。</p>
+<p>先让 AI 生成一张《火影忍者》佐助的半身像，注意这时候双眼是<strong>万花筒写轮眼</strong>：</p>
+<p><strong>提示词：</strong></p>
+<blockquote>
+<p>生成一张宇智波佐助的动漫风格半身像，黑色头发，穿着经典的鹰小队白色开襟上衣，双眼为永恒万花筒写轮眼（六芒星图案，红色瞳孔），表情冷峻，背景为暗色调</p>
+</blockquote>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sasuke-before-original.webp" alt="改图前的佐助原图，双眼为万花筒写轮眼" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/sasuke-before-original.webp" class="lozad post-image"></p>
+<p>接着我在<strong>左眼</strong>那个位置上精准加了一条 Comment：「把左眼的万花筒写轮眼改为轮回眼」。改完之后是这样的：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/comment-sasuke-edited.webp" alt="Comment 只修改了佐助左眼后的效果" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/comment-sasuke-edited.webp" class="lozad post-image"></p>
+<p>放大看细节——<strong>只有左眼的瞳孔变了，右眼的万花筒纹路原样保留</strong>：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/comment-sasuke-closeup.webp" alt="佐助双眼细节放大对比" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/comment-sasuke-closeup.webp" class="lozad post-image"></p>
+<p>要知道，眼睛在整张图里就那么指甲盖大的一块。AI 做到了<strong>只改瞳孔图案和颜色，佐助的发型、表情、衣服、背景全都纹丝不动</strong>。</p>
+<p>这个精准度已经是能用在正式创作里的水平了。以前「改个局部、动全身」的老毛病，这次算是治好了。</p>
+<h2 id="三、Templates-模板：快速复刻"><a href="#三、Templates-模板：快速复刻" class="headerlink" title="三、Templates 模板：快速复刻"></a>三、Templates 模板：快速复刻</h2><p>Templates 是给不想写提示词的人准备的。</p>
+<p>ChatGPT 内置了一批高频创作模板——Poster 海报、Merch 周边、Product Photo 商品图、Logo 等等，打开就能看到：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/templates-gallery.webp" alt="ChatGPT 内置的 Templates 模板库" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/templates-gallery.webp" class="lozad post-image"></p>
+<p>选一个模板、按提示填信息和风格偏好，就能生成对应图片，省掉从零构思提示词的过程。</p>
+<h3 id="5-一键商品大片"><a href="#5-一键商品大片" class="headerlink" title="5. 一键商品大片"></a>5. 一键商品大片</h3><p>试试 Product Photo 商品图模板。随便拿个日常物品，看看模板能不能拍出「高级感」的电商产品图。</p>
+<p>先随手拍一张原图——光线一般、背景杂乱，就是真实生活中的随手拍：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/product-photo-source.webp" alt="随手拍的原始商品照片" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/product-photo-source.webp" class="lozad post-image"></p>
+<p>选 Product Photo 模板上传这张图，AI 会反过来问你几个问题——产品照的用途、摄影风格、背景和灯光——你答完它再出图。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/template-product-photo.webp" alt="Templates 商品图模板效果" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/template-product-photo.webp" class="lozad post-image"></p>
+<p>对比一下原图，效果提升明显，<strong>而且是能直接上架的成片水准</strong>。</p>
+<p>对做电商、小红书带货的人来说，这个功能太实用了。以前拍一张像样的产品图，要么请摄影师、要么自己搭灯光布景折腾半天；现在手机随手拍一张、选个模板，就能出一张能直接上架的商品图。</p>
+<h2 id="四、多轮编辑-精准局部编辑"><a href="#四、多轮编辑-精准局部编辑" class="headerlink" title="四、多轮编辑 + 精准局部编辑"></a>四、多轮编辑 + 精准局部编辑</h2><p>多轮编辑一致性，是这次的一个重要升级。</p>
+<p>以前用 2.0 连续编辑几轮，画面质量会越来越差、人物五官也会慢慢跑偏。这次官方明确说：多轮编辑时，之前的修改结果会更稳定地保留下来，每一轮都是在上一轮基础上叠加，而不是重新生成。</p>
+<p>精准局部编辑也提升了——AI 在改指定区域时，能更好地保持其他区域的构图、光线、细节不变。</p>
+<h3 id="6-上海迪士尼四季轮转"><a href="#6-上海迪士尼四季轮转" class="headerlink" title="6. 上海迪士尼四季轮转"></a>6. 上海迪士尼四季轮转</h3><p>上传一张上海迪士尼城堡的照片，只靠文字描述，让 AI 连续变出春夏秋冬四个版本：</p>
+<ul>
+<li><strong>春</strong>：城堡前的花坛换成盛开的粉色樱花，草地嫩绿，天空晴朗</li>
+<li><strong>夏</strong>：植被变成深绿色，加强阳光感，天空湛蓝配几朵白云</li>
+<li><strong>秋</strong>：树叶变成金黄和橙红色，地面铺满落叶，天空变成暖色调黄昏</li>
+<li><strong>冬</strong>：树木变成光秃秃的枝干，城堡屋顶和地面覆盖一层雪，天空变成灰白色</li>
+</ul>
+<p>注意——我甚至没在提示词里写「要和原图保持一致」，它自己就守住了。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/disney-four-seasons.webp" alt="迪士尼城堡春夏秋冬四季" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/disney-four-seasons.webp" class="lozad post-image"></p>
+<p>这个测试的关键，是看城堡造型、尖塔位置、广场布局这些元素，在四轮里是不是始终不变。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/disney-season-consistency.webp" alt="四季轮转的局部一致性对比" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/disney-season-consistency.webp" class="lozad post-image"></p>
+<p>结果是：主体纹丝不动，只有季节元素在变。GPT Images 2.5 的局部编辑和一致性，确实靠谱。</p>
+<h2 id="五、透明背景：直接生成可用素材"><a href="#五、透明背景：直接生成可用素材" class="headerlink" title="五、透明背景：直接生成可用素材"></a>五、透明背景：直接生成可用素材</h2><p>透明背景是 2.5 新增的能力。</p>
+<p>以前想弄一张透明背景素材，得先生成完整图片，再用第三方工具抠图——还经常抠得边缘发毛。现在直接在提示词里要求「输出透明背景 PNG」，生成出来就能直接贴进别的设计里用。</p>
+<h3 id="7-一套表情包贴纸"><a href="#7-一套表情包贴纸" class="headerlink" title="7. 一套表情包贴纸"></a>7. 一套表情包贴纸</h3><p>拿 DeepSeek 的「鲸鱼娘」形象试手：蓝色渐变长发、鲸鱼鳍耳朵、女仆装，爱吃白饭、嘴硬心软。让 AI 生成一套透明背景的表情包贴纸。</p>
+<p><strong>提示词（完整版，直接抄）：</strong></p>
+<blockquote>
+<p>参考上传的 DeepSeek 鲸鱼娘素材图片（蓝色渐变长发、鲸鱼鳍耳朵、鲸鱼尾巴、女仆装），生成一套 9 张透明背景的表情包贴纸。角色形象必须和参考素材保持一致，卡通 Q 版风格，表情夸张可爱，必须输出透明通道背景 PNG。9 个表情分别是：<br>① 开心大笑，手举「开源大法好！」小牌子<br>② 无语翻白眼，旁边飘着「又在深度求索了…」文字<br>③ 加油打气，握拳冲刺姿势，配文字「低成本冲冲冲！」<br>④ 哭泣委屈，抱着空碗，配文字「白饭吃完了…」<br>⑤ 比心，配文字「满血版上线！」<br>⑥ 疑惑挠头，头上冒出「思考中…」气泡<br>⑦ 生气鼓腮，配文字「谁说我在摸鱼！」<br>⑧ 困了打哈欠，趴在键盘上，配文字「推理好累…」<br>⑨ 竖大拇指，配文字「大肥鱼认证 👍」</p>
+</blockquote>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/deepseek-whale-stickers.webp" alt="透明背景鲸鱼娘表情包贴纸" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/deepseek-whale-stickers.webp" class="lozad post-image"></p>
+<p>一口气生成 9 张高清无背景大图，每张风格一致、背景干净透明。以后做品牌 IP 周边素材就方便多了，不用再一张张手动抠图。</p>
+<h2 id="10-个玩法速查表"><a href="#10-个玩法速查表" class="headerlink" title="10 个玩法速查表"></a>10 个玩法速查表</h2><p>一路看下来内容不少，最后汇总成一张表，方便你按需求回查：</p>
+<table>
+<thead>
+<tr>
+<th align="left">#</th>
+<th align="left">玩法</th>
+<th align="left">用到的功能</th>
+<th align="left">产出效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">草图变文章封面</td>
+<td align="left">Sketch</td>
+<td align="left">照着草稿出的 16:9 封面图</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">草图变室内设计</td>
+<td align="left">Sketch</td>
+<td align="left">房间布局效果图</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">草图变漫画分镜</td>
+<td align="left">Sketch + 参考图</td>
+<td align="left">四格漫画成品页</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">Comment 精修海报</td>
+<td align="left">Comment</td>
+<td align="left">改标题/换配色/加特效</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">只改角色的瞳孔</td>
+<td align="left">Comment</td>
+<td align="left">微小局部精准重绘</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">一键商品大片</td>
+<td align="left">Templates</td>
+<td align="left">电商级产品图</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">同一人物七十二变</td>
+<td align="left">多轮编辑</td>
+<td align="left">5 种风格、五官不变</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">迪士尼四季轮转</td>
+<td align="left">多轮编辑</td>
+<td align="left">春夏秋冬四个版本</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">鲸鱼娘表情包</td>
+<td align="left">透明背景</td>
+<td align="left">9 张去背贴纸</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">80 年代复古照</td>
+<td align="left">Prompt 共享</td>
+<td align="left">复古风写真</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>测完这一轮 Images 2.5，最触动的其实是「门槛」两个字：</p>
+<p>我用几十秒画的草稿，变成了一张能直接用的文章封面；随手画的房间布局，变成了精美的室内设计图；甚至做出了一套完整的鲸鱼娘表情包。</p>
+<p>而我，<strong>完全没有任何美术技能</strong>。</p>
+<p>放在以前，这些事要么找专业设计师、要么自己折腾 PS，现在「画给 AI 看、指给 AI 看」，随随便便就能生成图片大作。</p>
+<p>最想让你记住的三个新能力：<strong>Sketch 草图</strong>（不会画画也能构图）、<strong>Comment 标注</strong>（想改哪指哪）、<strong>透明背景</strong>（素材直接落地）。剩下的多轮一致性、Templates、Prompt 共享，都是在这三个基础上的加分项。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Q：GPT Images 2.5 怎么开始用？</strong><br>打开 ChatGPT 生图，默认就是 Images 2.5，所有用户都能用。想用 Sketch 就输入 @Sketch，想精准改图就点图片进编辑模式用 Comment。国内需要科学上网，注册教程看这篇：<a href="https://tanqingbo.cn/how-to-signup-chatgpt/">ChatGPT 注册教程</a>。</p>
+<p><strong>Q：免费额度够用吗？</strong><br>轻度玩玩够用；要拿它做主力生产力（做封面、做素材），Plus（约 20 美元/月）体验会顺很多。不想折腾海外订阅，走低价充值渠道更省事，见 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">国外 AI 大模型低价充值教程</a>。</p>
+<p><strong>Q：和国内的即梦、豆包比，GPT Images 2.5 强在哪？</strong><br>强在「听话」和「改图」。Sketch 草图、Comment 精准改局部、多轮一致性，这几个是当前独一份的。但国内工具即梦、豆包免翻墙、写中文即可、还带免费额度，日常配图完全够用。两者怎么选，看这篇完整对比：<a href="https://tanqingbo.cn/ai-image-generation-guide/">AI 画图哪个好用（2026）</a>。</p>
+<p><strong>Q：生成的图能商用吗？</strong><br>OpenAI 的商用政策允许 Plus/付费用户商用生成结果，但量产前建议读一遍最新的用户协议确认边界。</p>
+<hr>
+<p>更多 AI 工具的教程和实测，总览在这里：<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/gpt-image-2.5-guide/">https://tanqingbo.cn/gpt-image-2.5-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-image-generation-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 画图哪个好用：五大主力实测对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-03</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-assistant-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 助手哪个好用（2026）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具完全指南（2026）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        国外 AI 大模型低价充值教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/how-to-signup-chatgpt/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT 注册教程（2026）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-09-17</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/telegram-bot-dev/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Telegram机器人开发教程：BotFather建bot到Python自动回复（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Sketch-%E8%8D%89%E5%9B%BE%EF%BC%9A%E7%94%BB%E7%BB%99-AI-%E7%9C%8B"><span class="toc-number">2.</span> <span class="toc-text">一、Sketch 草图：画给 AI 看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%8D%89%E5%9B%BE%E5%8F%98%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">1. 草图变文章封面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8D%89%E5%9B%BE%E7%A7%92%E5%8F%98%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">2. 草图秒变室内设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%8D%89%E5%9B%BE%E5%8F%98%E6%BC%AB%E7%94%BB%E5%88%86%E9%95%9C"><span class="toc-number">2.3.</span> <span class="toc-text">3. 草图变漫画分镜</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Comment-%E8%AF%84%E8%AE%BA%E7%BC%96%E8%BE%91%EF%BC%9A%E6%94%B9%E5%9B%BE%E4%B9%8B%E7%8E%8B"><span class="toc-number">3.</span> <span class="toc-text">二、Comment 评论编辑：改图之王</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BF%AE%E6%94%B9%E5%BE%AE%E5%B0%8F%E7%BB%86%E8%8A%82%EF%BC%88%E8%BF%9E%E7%9E%B3%E5%AD%94%E9%83%BD%E8%83%BD%E5%8D%95%E7%8B%AC%E6%94%B9%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">4. 修改微小细节（连瞳孔都能单独改）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Templates-%E6%A8%A1%E6%9D%BF%EF%BC%9A%E5%BF%AB%E9%80%9F%E5%A4%8D%E5%88%BB"><span class="toc-number">4.</span> <span class="toc-text">三、Templates 模板：快速复刻</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%B8%80%E9%94%AE%E5%95%86%E5%93%81%E5%A4%A7%E7%89%87"><span class="toc-number">4.1.</span> <span class="toc-text">5. 一键商品大片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E8%BD%AE%E7%BC%96%E8%BE%91-%E7%B2%BE%E5%87%86%E5%B1%80%E9%83%A8%E7%BC%96%E8%BE%91"><span class="toc-number">5.</span> <span class="toc-text">四、多轮编辑 + 精准局部编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%B8%8A%E6%B5%B7%E8%BF%AA%E5%A3%AB%E5%B0%BC%E5%9B%9B%E5%AD%A3%E8%BD%AE%E8%BD%AC"><span class="toc-number">5.1.</span> <span class="toc-text">6. 上海迪士尼四季轮转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%80%8F%E6%98%8E%E8%83%8C%E6%99%AF%EF%BC%9A%E7%9B%B4%E6%8E%A5%E7%94%9F%E6%88%90%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90"><span class="toc-number">6.</span> <span class="toc-text">五、透明背景：直接生成可用素材</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%B8%80%E5%A5%97%E8%A1%A8%E6%83%85%E5%8C%85%E8%B4%B4%E7%BA%B8"><span class="toc-number">6.1.</span> <span class="toc-text">7. 一套表情包贴纸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%AA%E7%8E%A9%E6%B3%95%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">10 个玩法速查表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="庆波 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>410</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>11</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>349</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Sketch-%E8%8D%89%E5%9B%BE%EF%BC%9A%E7%94%BB%E7%BB%99-AI-%E7%9C%8B"><span class="toc-number">2.</span> <span class="toc-text">一、Sketch 草图：画给 AI 看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%8D%89%E5%9B%BE%E5%8F%98%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">1. 草图变文章封面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8D%89%E5%9B%BE%E7%A7%92%E5%8F%98%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">2. 草图秒变室内设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%8D%89%E5%9B%BE%E5%8F%98%E6%BC%AB%E7%94%BB%E5%88%86%E9%95%9C"><span class="toc-number">2.3.</span> <span class="toc-text">3. 草图变漫画分镜</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Comment-%E8%AF%84%E8%AE%BA%E7%BC%96%E8%BE%91%EF%BC%9A%E6%94%B9%E5%9B%BE%E4%B9%8B%E7%8E%8B"><span class="toc-number">3.</span> <span class="toc-text">二、Comment 评论编辑：改图之王</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BF%AE%E6%94%B9%E5%BE%AE%E5%B0%8F%E7%BB%86%E8%8A%82%EF%BC%88%E8%BF%9E%E7%9E%B3%E5%AD%94%E9%83%BD%E8%83%BD%E5%8D%95%E7%8B%AC%E6%94%B9%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">4. 修改微小细节（连瞳孔都能单独改）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Templates-%E6%A8%A1%E6%9D%BF%EF%BC%9A%E5%BF%AB%E9%80%9F%E5%A4%8D%E5%88%BB"><span class="toc-number">4.</span> <span class="toc-text">三、Templates 模板：快速复刻</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%B8%80%E9%94%AE%E5%95%86%E5%93%81%E5%A4%A7%E7%89%87"><span class="toc-number">4.1.</span> <span class="toc-text">5. 一键商品大片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E8%BD%AE%E7%BC%96%E8%BE%91-%E7%B2%BE%E5%87%86%E5%B1%80%E9%83%A8%E7%BC%96%E8%BE%91"><span class="toc-number">5.</span> <span class="toc-text">四、多轮编辑 + 精准局部编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%B8%8A%E6%B5%B7%E8%BF%AA%E5%A3%AB%E5%B0%BC%E5%9B%9B%E5%AD%A3%E8%BD%AE%E8%BD%AC"><span class="toc-number">5.1.</span> <span class="toc-text">6. 上海迪士尼四季轮转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%80%8F%E6%98%8E%E8%83%8C%E6%99%AF%EF%BC%9A%E7%9B%B4%E6%8E%A5%E7%94%9F%E6%88%90%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90"><span class="toc-number">6.</span> <span class="toc-text">五、透明背景：直接生成可用素材</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%B8%80%E5%A5%97%E8%A1%A8%E6%83%85%E5%8C%85%E8%B4%B4%E7%BA%B8"><span class="toc-number">6.1.</span> <span class="toc-text">7. 一套表情包贴纸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%AA%E7%8E%A9%E6%B3%95%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">10 个玩法速查表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">71</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程语言">
+        <div class="categories-list-item">
+          编程语言
+          <span class="categories-list-item-badge">41</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">34</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 庆波的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Sketch-%E8%8D%89%E5%9B%BE%EF%BC%9A%E7%94%BB%E7%BB%99-AI-%E7%9C%8B"><span class="toc-number">2.</span> <span class="toc-text">一、Sketch 草图：画给 AI 看</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%8D%89%E5%9B%BE%E5%8F%98%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">1. 草图变文章封面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%8D%89%E5%9B%BE%E7%A7%92%E5%8F%98%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.2.</span> <span class="toc-text">2. 草图秒变室内设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%8D%89%E5%9B%BE%E5%8F%98%E6%BC%AB%E7%94%BB%E5%88%86%E9%95%9C"><span class="toc-number">2.3.</span> <span class="toc-text">3. 草图变漫画分镜</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Comment-%E8%AF%84%E8%AE%BA%E7%BC%96%E8%BE%91%EF%BC%9A%E6%94%B9%E5%9B%BE%E4%B9%8B%E7%8E%8B"><span class="toc-number">3.</span> <span class="toc-text">二、Comment 评论编辑：改图之王</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BF%AE%E6%94%B9%E5%BE%AE%E5%B0%8F%E7%BB%86%E8%8A%82%EF%BC%88%E8%BF%9E%E7%9E%B3%E5%AD%94%E9%83%BD%E8%83%BD%E5%8D%95%E7%8B%AC%E6%94%B9%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">4. 修改微小细节（连瞳孔都能单独改）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Templates-%E6%A8%A1%E6%9D%BF%EF%BC%9A%E5%BF%AB%E9%80%9F%E5%A4%8D%E5%88%BB"><span class="toc-number">4.</span> <span class="toc-text">三、Templates 模板：快速复刻</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%B8%80%E9%94%AE%E5%95%86%E5%93%81%E5%A4%A7%E7%89%87"><span class="toc-number">4.1.</span> <span class="toc-text">5. 一键商品大片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%9A%E8%BD%AE%E7%BC%96%E8%BE%91-%E7%B2%BE%E5%87%86%E5%B1%80%E9%83%A8%E7%BC%96%E8%BE%91"><span class="toc-number">5.</span> <span class="toc-text">四、多轮编辑 + 精准局部编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E4%B8%8A%E6%B5%B7%E8%BF%AA%E5%A3%AB%E5%B0%BC%E5%9B%9B%E5%AD%A3%E8%BD%AE%E8%BD%AC"><span class="toc-number">5.1.</span> <span class="toc-text">6. 上海迪士尼四季轮转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%80%8F%E6%98%8E%E8%83%8C%E6%99%AF%EF%BC%9A%E7%9B%B4%E6%8E%A5%E7%94%9F%E6%88%90%E5%8F%AF%E7%94%A8%E7%B4%A0%E6%9D%90"><span class="toc-number">6.</span> <span class="toc-text">五、透明背景：直接生成可用素材</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E4%B8%80%E5%A5%97%E8%A1%A8%E6%83%85%E5%8C%85%E8%B4%B4%E7%BA%B8"><span class="toc-number">6.1.</span> <span class="toc-text">7. 一套表情包贴纸</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%B8%AA%E7%8E%A9%E6%B3%95%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">10 个玩法速查表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.</span> <span class="toc-text">常见问题</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-15</div>
+        <a href="/gpt-image-2.5-guide/"><div class="recent-posts-item-content">GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-14</div>
+        <a href="/telegram-bot-dev/"><div class="recent-posts-item-content">Telegram机器人开发教程：BotFather建bot到Python自动回复（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-13</div>
+        <a href="/clash-linux/"><div class="recent-posts-item-content">Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-11</div>
+        <a href="/telegram-banned/"><div class="recent-posts-item-content">Telegram账号被封怎么办：四种限制状态自查与@SpamBot申诉教程（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

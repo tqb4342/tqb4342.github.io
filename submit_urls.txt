@@ -1,3 +1,6 @@
+https://tanqingbo.cn/gpt-image-2.5-guide/
+https://tanqingbo.cn/ai-image-generation-guide/
+https://tanqingbo.cn/ai-assistant-guide/
 https://tanqingbo.cn/telegram-bot-dev/
 https://tanqingbo.cn/GPT-4o/
 https://tanqingbo.cn/Gemini-pro/
@@ -15,6 +18,3 @@ https://tanqingbo.cn/%E5%8D%A7%E6%A7%BD%EF%BC%8C%E4%B8%8A%E7%9F%A5%E4%B9%8E%E7%8
 https://tanqingbo.cn/Zero-copy/
 https://tanqingbo.cn/xshell-connect-Linux/
 https://tanqingbo.cn/What-is-crawler/
-https://tanqingbo.cn/Vertx-Java/
-https://tanqingbo.cn/Ubuntu-install-sougou/
-https://tanqingbo.cn/TCPIP-detailed/
