@@ -22,7 +22,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2020-12-20T04:13:18.000Z",
-  "dateModified": "2026-07-27T07:59:38.308Z",
+  "dateModified": "2026-09-16T06:09:11.359Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -87,7 +87,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2020-12-20T04:13:18.000Z">
-  <meta property="og:article:modified_time" content="2026-07-27T07:59:38.308Z">
+  <meta property="og:article:modified_time" content="2026-09-16T06:09:11.359Z">
   <meta property="og:article:author" content="科 学 上 网">
   
   
@@ -354,7 +354,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>751 字</span>
+    <span>822 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -427,8 +427,15 @@ var _hmt = _hmt || [];
 <li><p>部分代码如下：</p>
 <pre class="highlight"><span class="line"> ANNpointArray borderPts2 = annAllocPts( numBorderPts2, <span class="number">3</span> );</span><br><span class="line"> numBorderPts2 = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> ( it2.GoToBegin(); !it2.IsAtEnd(); ++it2 ) {</span><br><span class="line"><span class="keyword">if</span> (it2.Get() != <span class="number">0</span>) {</span><br><span class="line">  validationImage-&gt;TransformIndexToPhysicalPoint( it2.GetIndex(), pnt );   <span class="comment">//将像素数组中的Index转换为物理空间中的坐标。</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> d=<span class="number">0</span>; d&lt;<span class="number">3</span>; d++) borderPts2[numBorderPts2][d] = pnt[d];</span><br><span class="line">  numBorderPts2++;</span><br><span class="line"> }</span><br><span class="line"> }</span><br><span class="line"> ANNkd_tree *borderTree2 = <span class="keyword">new</span> ANNkd_tree( borderPts2, numBorderPts2, <span class="number">3</span> );</span><br><span class="line"> ANNidxArray  nnIdx = <span class="keyword">new</span> ANNidx[<span class="number">1</span>];</span><br><span class="line"> ANNdistArray dists = <span class="keyword">new</span> ANNdist[<span class="number">1</span>];</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">unsigned</span> <span class="keyword">int</span> idx1=<span class="number">0</span>; idx1&lt;numBorderPts1; idx1++) {</span><br><span class="line">borderTree2-&gt;annkSearch( borderPts1[idx1], <span class="number">1</span>, nnIdx, dists);</span><br><span class="line">avgSqrDistance += dists[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">double</span> d = <span class="built_in">sqrt</span>( dists[<span class="number">0</span>] ); <span class="comment">//分割结果到金标准的最小欧式距离</span></span><br><span class="line">avgDistance += d;</span><br><span class="line"> <span class="keyword">if</span> (d&gt;maxDistance) maxDistance = d;</span><br><span class="line"> }</span><br></pre>
 
+
+
+
 </li>
 </ul>
+<hr>
+<blockquote>
+<p><strong>说明</strong>：本文为早期存档内容，不再更新。本站仍在持续输出新内容——如果你在做图像/视觉方向，AI 视觉模型的新玩法看 <a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek 视觉指南</a>；各类 AI 工具的选型与使用看 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南</a>。</p>
+</blockquote>
 		
   </div>	
 

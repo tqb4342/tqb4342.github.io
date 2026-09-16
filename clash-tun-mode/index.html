@@ -125,7 +125,7 @@
       "name": "开 TUN 模式后国内网站打不开了怎么办？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "通常是 TUN 接管了全部流量但规则没把国内流量正确分流。确认使用\"规则模式（Rule）\"而不是全局模式，且规则里包含 GEOSITE/CN 或 GEOIP,CN,DIRECT 让国内直连。也可以检查 DNS 设置，改用系统 DNS 或配置国内 DNS 分流。"
+        "text": "通常是 TUN 接管了全部流量但规则没把国内流量正确分流。确认使用\"规则模式（Rule）\"而不是全局模式，且规则里包含 GEOSITE/CN 或 GEOIP,CN,DIRECT 让国内直连。也可以检查 DNS 设置，改用系统 DNS 或配置国内 DNS 分流。国内直连规则具体怎么配，看 [Clash 分流详解](https://tanqingbo.cn/clash-split-guide/)。"
       }
     },
     {
