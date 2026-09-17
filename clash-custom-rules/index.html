@@ -179,8 +179,6 @@
   
   <meta property="og:article:tag" content="rule-provider">
   
-  <meta property="og:article:tag" content="代理">
-  
   <meta property="og:article:tag" content="规则">
   
   <meta property="og:article:tag" content="rule-set">
@@ -188,6 +186,8 @@
   <meta property="og:article:tag" content="geosite">
   
   <meta property="og:article:tag" content="分流">
+  
+  <meta property="og:article:tag" content="代理">
   
   
   
@@ -487,11 +487,6 @@ var _hmt = _hmt || [];
       
       <span class="dot"></span>
       
-        <a href="/tags/代理/" class="post-meta-link">代理</a>
-      
-      
-      <span class="dot"></span>
-      
         <a href="/tags/规则/" class="post-meta-link">规则</a>
       
       
@@ -509,6 +504,11 @@ var _hmt = _hmt || [];
       
         <a href="/tags/分流/" class="post-meta-link">分流</a>
       
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/代理/" class="post-meta-link">代理</a>
+      
     </div>
   </div>
   
@@ -523,10 +523,10 @@ var _hmt = _hmt || [];
   <div id="section" class="post-content">
 
     <blockquote>
-<p>📚 本文也是 <strong><a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程（2026）：客户端、订阅与规则分流</a></strong> 的配套教程。想系统了解 Clash 客户端选择、机场订阅导入、规则分流与排障，欢迎访问总览页。</p>
+<p>📚 本文也是 <a href="https://tanqingbo.cn/clash-guide/"><strong>Clash 完全教程（2026）：客户端、订阅与规则分流</strong></a> 的配套教程。想系统了解 Clash 客户端选择、机场订阅导入、规则分流与排障，欢迎访问总览页。</p>
 </blockquote>
 <blockquote>
-<p>📚 本文是 <strong><a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南（2026最新版）</a></strong> 系列教程之一。Clash 的完整入门（客户端选择、订阅导入、TUN 模式）见总览页。这篇只聊「规则」：怎么理解它的工作机制、怎么写自己的分流、怎么用现成规则集，最后有一份可以直接抄的模板。</p>
+<p>📚 本文是 <a href="https://tanqingbo.cn/science-internet-guide/"><strong>科学上网完全指南（2026最新版）</strong></a> 系列教程之一。Clash 的完整入门（客户端选择、订阅导入、TUN 模式）见总览页。这篇只聊「规则」：怎么理解它的工作机制、怎么写自己的分流、怎么用现成规则集，最后有一份可以直接抄的模板。</p>
 </blockquote>
 <p>Clash 和 VPN 最大的区别就是<strong>规则分流（自定义规则）</strong>：每条流量先过一遍规则表，命中哪条就按哪条走。同样开一个网页，国内站点直连不占代理带宽，海外站点自动走代理，广告域名在规则层就被扔掉了。规则写得好不好，日常上网体感差别不小。</p>
 <h2 id="一、规则怎么工作：自上而下，先命中先赢"><a href="#一、规则怎么工作：自上而下，先命中先赢" class="headerlink" title="一、规则怎么工作：自上而下，先命中先赢"></a>一、规则怎么工作：自上而下，先命中先赢</h2><p>Clash 的 <code>rules</code> 是一个数组，内核从第一条开始逐条比对，<strong>第一条命中的规则生效，后面的不再看</strong>。所以规则顺序非常关键：</p>
@@ -971,9 +971,9 @@ var _hmt = _hmt || [];
     
     <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
     
-    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
-    
     <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" title="设计模式"><div class="tags-list-item">设计模式</div></a>
+    
+    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
     
   </div>
 </div>
