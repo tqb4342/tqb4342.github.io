@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/about/</loc>
+    
+    <lastmod>2026-09-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/goingbus/</loc>
     
     <lastmod>2026-09-17</lastmod>
@@ -44,14 +51,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/CSBook007/</loc>
+    <loc>https://tanqingbo.cn/CSBook008/</loc>
     
     <lastmod>2026-09-16</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/CSBook008/</loc>
+    <loc>https://tanqingbo.cn/CSBook007/</loc>
     
     <lastmod>2026-09-16</lastmod>
     
@@ -1493,13 +1500,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/about/</loc>
-    
-    <lastmod>2026-07-24</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/archived/</loc>
     
     <lastmod>2026-07-23</lastmod>
@@ -1847,14 +1847,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://tanqingbo.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
