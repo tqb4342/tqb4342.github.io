@@ -478,7 +478,7 @@ var _hmt = _hmt || [];
 <p>📚 想先了解 ChatGPT/Claude/Gemini/Grok 各自定位的，看 <a href="https://tanqingbo.cn/ai-tools-guide/">2026 好用的 AI 工具全指南</a>；想直接对比合租/独享/镜像价格表的，看 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型充值教程</a>。本文只讲 GPT-6 Astra + 国内怎么上车。</p>
 </blockquote>
 <h2 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h2><p>OpenAI 在 2026-09-03 正式发布 GPT-6 Astra。Greg Brockman 在媒体简报会上直接说「Welcome to the AGI era」下台——行业当天炸锅，倒不是因为分数又刷高（这两年每代都在刷），而是 <strong>Computer Use 第一次让模型能自己干完整件事</strong>：填表单、更新 CRM、整理日历、生成图表、跑前端 QA，从头到尾不喊人。</p>
-<p>国内最稳的上车路径是 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>：ChatGPT 镜像版 28.88 元/月起，Plus 合租 69.88 元/月，独享/代充 218.88 元/月起。新用户首单 9 折，**优惠码 <code>Tanqingbo</code>**，下单时填上即可。</p>
+<p>国内最稳的上车路径是 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>：ChatGPT 镜像版 28.88 元/月起，Plus 合租 69.88 元/月，独享/代充 218.88 元/月起。新用户首单 9 折，<strong>优惠码 Tanqingbo</strong>，下单时填上即可。</p>
 <p>下面分两段：先讲 Astra 本身的能力变化与争议，再讲国内具体怎么搞。</p>
 <h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
 <li><strong>是什么</strong>：OpenAI 2026-09-03 发布的旗舰模型，官方定位「世界上最智能、最对齐的模型」</li>
@@ -521,7 +521,7 @@ var _hmt = _hmt || [];
 <td>87.3%</td>
 </tr>
 </tbody></table>
-<p>ScreenSpot-Pro 那项是<strong>纯视觉识别</strong>——不能调工具，只能看屏幕认按钮和图标，Astra 比 Sol 高 15.8 个百分点。OSWorld 2.0 完成时间从 75 分钟压到 40 分钟（**-47%**），Token 消耗比 Claude Opus 5 **少 65%**。</p>
+<p>ScreenSpot-Pro 那项是<strong>纯视觉识别</strong>——不能调工具，只能看屏幕认按钮和图标，Astra 比 Sol 高 15.8 个百分点。OSWorld 2.0 完成时间<strong>从 75 分钟压到 40 分钟</strong>（快 47%），Token 消耗<strong>只有 Claude Opus 5 的约三分之一</strong>（少 65%）。</p>
 <p>这已经不是会点鼠标的问题——其他模型还在找按钮，Astra 已经准备交付了。</p>
 <p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kicad-official.webp" alt="Computer Use 演示：Astra 自动设计 PCB 电路板" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kicad-official.webp" class="lozad post-image"></p>
 <p><em>OpenAI 发布会演示：Astra 在 KiCad 中通过放置元器件和布线，把原理图转成可制造的 PCB（来源：OpenAI）</em></p>
@@ -565,7 +565,7 @@ var _hmt = _hmt || [];
 <p>能力越强限制越严。普通用户拿到的 Astra <strong>不能用于 PoC 漏洞利用</strong>，只能做安全代码审查和漏洞修复。更强的网络安全能力通过名为 Daybreak 的框架<strong>逐步开放</strong>。</p>
 <h2 id="但有几个反直觉值得拎出来"><a href="#但有几个反直觉值得拎出来" class="headerlink" title="但有几个反直觉值得拎出来"></a>但有几个反直觉值得拎出来</h2><p>比 benchmark 数字更值得细想的，是这三个反直觉：</p>
 <p><strong>能力更强，但书面推理更难监控</strong>。OpenAI 承认 Astra 的「可监控性」下降——它用更少文字完成推理，也更能控制自己写出来的内容。「看 CoT 判断模型在想什么」这种老办法在 Astra 上会失效，OpenAI 改用<strong>同时监控推理和行动</strong>，通过分类器识别异常行为。</p>
-<p><strong>能力更强，行为反而更克制</strong>。借鉴 Hugging Face 事件设计的 ExploitGym honeypot 测试里，GPT-5.6 Sol 无防护时 48% 越界攻击范围外的诱饵目标，Astra 是 **0%**。电脑操作不当行为率 2.4% 对 Sol 22.0%，能力幻觉率 2.0% 对 Sol 9.4%。</p>
+<p><strong>能力更强，行为反而更克制</strong>。借鉴 Hugging Face 事件设计的 ExploitGym honeypot 测试里，GPT-5.6 Sol 无防护时 48% 越界攻击范围外的诱饵目标，Astra 是 <strong>0% 越界</strong>。电脑操作不当行为率 2.4% 对 Sol 22.0%，能力幻觉率 2.0% 对 Sol 9.4%。</p>
 <p><strong>能用循环深度，但官方不承认</strong>。The Information 报道的 recurrent depth（输出前多做内部计算、少说多想）OpenAI 在发布博客里<strong>没提</strong>，但承认「书面推理比 Sol 更难监控」恰好印证了 recurrent depth 的存在——具体架构仍是黑盒。</p>
 <h2 id="国内怎么上车"><a href="#国内怎么上车" class="headerlink" title="国内怎么上车"></a>国内怎么上车</h2><p>不管模型多强，国内用户的两道门槛是<strong>节点</strong>和<strong>账号</strong>。节点的事看 <a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a> 和 <a href="https://tanqingbo.cn/ip-purity-guide/">IP 纯净度检测指南</a>，本文只讲账号。</p>
 <p>最稳的路径是 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>：</p>
@@ -761,7 +761,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>413</span>
+    <span>414</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -769,7 +769,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>356</span>
+    <span>360</span>
     <span>标签</span>
   </a>
 </div>
@@ -839,7 +839,7 @@ var _hmt = _hmt || [];
       <a href="/categories/工具">
         <div class="categories-list-item">
           工具
-          <span class="categories-list-item-badge">35</span>
+          <span class="categories-list-item-badge">36</span>
         </div>
       </a>
     
@@ -973,23 +973,23 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-21</div>
+        <a href="/steam-guide/"><div class="recent-posts-item-content">Steam 国内使用指南（2026）：社区打不开怎么办、跨区买游戏与外服联机</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
         <a href="/kuaili-review/"><div class="recent-posts-item-content">快狸机场怎么样（2026 实测）：翻墙梯子速度、解锁、套餐价格与缺点，老用户说真话</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
-        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 实测（2026）：小米版 Codex 建模、做 PPT、写网页全流程，邀测上手指南</div></a>
+        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 怎么样（2026 实测）：小米版 Codex 免费邀测，申请入口与上手指南</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-17</div>
         <a href="/goingbus/"><div class="recent-posts-item-content">环球巴士怎么样（2026）：奈飞/ChatGPT/iCloud 合租实测，优惠码与避坑指南</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-09-15</div>
-        <a href="/gpt-image-2.5-guide/"><div class="recent-posts-item-content">GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）</div></a>
       </div>
     
   </div>

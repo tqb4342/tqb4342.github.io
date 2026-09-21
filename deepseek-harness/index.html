@@ -589,7 +589,7 @@ var _hmt = _hmt || [];
 <p><img src="https://picx.zhimg.com/v2-595ad2cfd9d522ac4e74403f55888aed_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://picx.zhimg.com/v2-595ad2cfd9d522ac4e74403f55888aed_1440w.jpg" class="lozad post-image"></p>
 <p>DeepSeek Harness 的官方模型配置文档写得很清楚，DeepSeek 自己的 Chat Completions 路由按文本模型处理，附带图片的请求会在发送前被拒绝。</p>
 <p>要完成这个任务，需要接入一个支持图片的模型或视觉插件。</p>
-<p>好消息是，这个限制最近被官方补上了——DeepSeek 发布了多模态模型 deepseek-v4-flash-vision-exp，直接在 Harness 里把模型 ID 改成它就能接收图片输入，比挂第三方视觉插件省事，还少一层数据中转。实测效果（网页复刻、报错定位、发票识别）可以看 <a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek 多模态实测与接入教程</a>。</p>
+<p>好消息是，这个限制已经被官方补上了——9 月发布的 V4.1 Flash 原生支持多模态，直接在 Harness 里把模型 ID 改成 <code>deepseek-flash</code>（旧的 <code>deepseek-v4-flash-vision-exp</code> 仍兼容）就能接收图片输入，比挂第三方视觉插件省事，还少一层数据中转。实测效果（网页复刻、报错定位、发票识别）可以看 <a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek 多模态实测与接入教程</a>。</p>
 <p>视觉插件负责识别图片里的文字，翻译插件把识别结果翻译成中文，导出插件再将译文保存成文档。</p>
 <p><img src="https://pic3.zhimg.com/v2-22c1e2297a742ab9d7fa922b8c3ed116_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-22c1e2297a742ab9d7fa922b8c3ed116_1440w.jpg" class="lozad post-image"></p>
 <p>Cordis 处理这些插件的加载、依赖和清理，让它们可以在同一个 Agent 里按顺序工作。</p>
@@ -629,7 +629,7 @@ var _hmt = _hmt || [];
 <li><a href="https://tanqingbo.cn/claude-code/">Claude Code 教程：从入门到进阶</a> —— 固定配好的编程 Agent，开箱即用，和 Harness 是两种路线</li>
 <li><a href="https://tanqingbo.cn/opencode-guide/">OpenCode 安装配置教程</a> —— 想换一个更轻量、可接自己 API 的 AI 编程工具，从这篇起手</li>
 <li><a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a> —— 回到总览页，按场景选模型和工具</li>
-<li><a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek 多模态实测与接入教程</a> —— 想给 Harness 接上「眼睛」，官方视觉模型 deepseek-v4-flash-vision-exp 的实测与接入</li>
+<li><a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek V4.1 Flash 多模态实测</a> —— 想给 Harness 接上「眼睛」，V4.1 原生多模态（deepseek-flash）的实测与接入</li>
 <li><a href="https://tanqingbo.cn/ai-model-security/">企业使用 AI 大模型如何保障数据安全</a> —— 插件化 Agent 调用密钥多、调用链复杂，团队接入前必看的安全清单</li>
 </ul>
 		
@@ -681,7 +681,7 @@ var _hmt = _hmt || [];
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
       <a href="/deepseek-vision-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        DeepSeek 多模态终于来了：deepseek-v4-flash-vision-exp 实测与接入教程（2026）
+        DeepSeek V4.1 Flash 多模态实测：看图、接入教程与价格（2026）
       </a>
       <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-30</span>
     </li>
@@ -766,7 +766,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>413</span>
+    <span>414</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -774,7 +774,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>356</span>
+    <span>360</span>
     <span>标签</span>
   </a>
 </div>
@@ -844,7 +844,7 @@ var _hmt = _hmt || [];
       <a href="/categories/工具">
         <div class="categories-list-item">
           工具
-          <span class="categories-list-item-badge">35</span>
+          <span class="categories-list-item-badge">36</span>
         </div>
       </a>
     
@@ -978,23 +978,23 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-21</div>
+        <a href="/steam-guide/"><div class="recent-posts-item-content">Steam 国内使用指南（2026）：社区打不开怎么办、跨区买游戏与外服联机</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
         <a href="/kuaili-review/"><div class="recent-posts-item-content">快狸机场怎么样（2026 实测）：翻墙梯子速度、解锁、套餐价格与缺点，老用户说真话</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
-        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 实测（2026）：小米版 Codex 建模、做 PPT、写网页全流程，邀测上手指南</div></a>
+        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 怎么样（2026 实测）：小米版 Codex 免费邀测，申请入口与上手指南</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-17</div>
         <a href="/goingbus/"><div class="recent-posts-item-content">环球巴士怎么样（2026）：奈飞/ChatGPT/iCloud 合租实测，优惠码与避坑指南</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-09-15</div>
-        <a href="/gpt-image-2.5-guide/"><div class="recent-posts-item-content">GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）</div></a>
       </div>
     
   </div>

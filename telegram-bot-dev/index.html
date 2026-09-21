@@ -553,7 +553,7 @@ var _hmt = _hmt || [];
 <li><code>add_handler</code> 是「注册事件」：<code>CommandHandler("start", start)</code> 意思是用户发 <code>/start</code> 就调用 <code>start</code> 函数；<code>MessageHandler(filters.TEXT...)</code> 是普通文字消息走 <code>echo</code></li>
 <li><code>run_polling()</code> 是「轮询」：程序不断问 Telegram 服务器「有没有新消息」，有就拿回来交给对应的 handler 处理。它会自己起事件循环，所以 <code>main()</code> 不用写成 async</li>
 </ol>
-<p>这里有个新手最常踩的坑：**处理函数都要加 <code>async</code>、调用 Telegram 的地方要加 <code>await</code>**。v20 改成 asyncio 之后，老教程里不带 async/await 的同步写法会直接报错。</p>
+<p>这里有个新手最常踩的坑：处理函数都要加 <code>async</code>、调用 Telegram 的地方要加 <code>await</code>。v20 改成 asyncio 之后，老教程里不带 async/await 的同步写法会直接报错。</p>
 <h2 id="三、加一点真实功能：关键词问答"><a href="#三、加一点真实功能：关键词问答" class="headerlink" title="三、加一点真实功能：关键词问答"></a>三、加一点真实功能：关键词问答</h2><p>光复读没意思，我们让它能干点活——做一个按关键词回复的小 bot：</p>
 <pre class="highlight"><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> telegram <span class="keyword">import</span> Update</span><br><span class="line"><span class="keyword">from</span> telegram.ext <span class="keyword">import</span> Application, CommandHandler, MessageHandler, filters, ContextTypes</span><br><span class="line"></span><br><span class="line">TOKEN = os.environ[<span class="string">"BOT_TOKEN"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键词规则表，key 是触发词，value 是回复内容</span></span><br><span class="line">REPLY_MAP = {</span><br><span class="line">    <span class="string">"价格"</span>: <span class="string">"我们月付 19.9 元，年付 199 元，随时退。"</span>,</span><br><span class="line">    <span class="string">"帮助"</span>: <span class="string">"发 /help 看命令，或者输入「价格」了解套餐。"</span>,</span><br><span class="line">    <span class="string">"客服"</span>: <span class="string">"人工客服工作日 9:00-18:00 在线，稍后会有真人接上。"</span>,</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">start</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(</span><br><span class="line">        <span class="string">"您好！输入「价格」查套餐，「帮助」看说明，「客服」转人工。"</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">keyword_reply</span>(<span class="params">update: Update, context: ContextTypes.DEFAULT_TYPE</span>):</span></span><br><span class="line">    text = update.message.text</span><br><span class="line">    <span class="keyword">for</span> key, reply <span class="keyword">in</span> REPLY_MAP.items():</span><br><span class="line">        <span class="keyword">if</span> key <span class="keyword">in</span> text:</span><br><span class="line">            <span class="keyword">await</span> update.message.reply_text(reply)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">await</span> update.message.reply_text(<span class="string">"没听懂，输入「帮助」看看我能做什么。"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    app = Application.builder().token(TOKEN).build()</span><br><span class="line">    app.add_handler(CommandHandler(<span class="string">"start"</span>, start))</span><br><span class="line">    app.add_handler(MessageHandler(filters.TEXT &amp; ~filters.COMMAND, keyword_reply))</span><br><span class="line">    app.run_polling()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    main()</span><br></pre>
 
@@ -742,7 +742,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>413</span>
+    <span>414</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -750,7 +750,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>356</span>
+    <span>360</span>
     <span>标签</span>
   </a>
 </div>
@@ -820,7 +820,7 @@ var _hmt = _hmt || [];
       <a href="/categories/工具">
         <div class="categories-list-item">
           工具
-          <span class="categories-list-item-badge">35</span>
+          <span class="categories-list-item-badge">36</span>
         </div>
       </a>
     
@@ -954,23 +954,23 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-21</div>
+        <a href="/steam-guide/"><div class="recent-posts-item-content">Steam 国内使用指南（2026）：社区打不开怎么办、跨区买游戏与外服联机</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
         <a href="/kuaili-review/"><div class="recent-posts-item-content">快狸机场怎么样（2026 实测）：翻墙梯子速度、解锁、套餐价格与缺点，老用户说真话</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
-        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 实测（2026）：小米版 Codex 建模、做 PPT、写网页全流程，邀测上手指南</div></a>
+        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 怎么样（2026 实测）：小米版 Codex 免费邀测，申请入口与上手指南</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-17</div>
         <a href="/goingbus/"><div class="recent-posts-item-content">环球巴士怎么样（2026）：奈飞/ChatGPT/iCloud 合租实测，优惠码与避坑指南</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-09-15</div>
-        <a href="/gpt-image-2.5-guide/"><div class="recent-posts-item-content">GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）</div></a>
       </div>
     
   </div>

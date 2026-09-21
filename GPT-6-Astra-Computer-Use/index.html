@@ -486,7 +486,7 @@ var _hmt = _hmt || [];
 </blockquote>
 <h2 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h2><p>GPT-6 Astra 发布会上一堆 benchmark 里，真正改变工作方式的是 Computer Use：<strong>AI 自己看屏幕、动鼠标、敲键盘，把一件事从头干到尾</strong>——不是给你一段「操作步骤」让你照着做，是它自己干。</p>
 <p>官方演示里最狠的一个画面：Astra 打开 KiCad（电路设计软件），自己放元器件、自己布线，把一张原理图变成了可制造的 PCB 电路板。设计软件没有 API、没有插件，它就是靠「看屏幕 + 点鼠标」完成的。</p>
-<p>想在国内上手，最稳的路径还是 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>：ChatGPT 镜像版 28.88 元/月起，强度下拉里直接选 GPT-6 Astra。新用户首单 9 折，**优惠码 <code>Tanqingbo</code>**。</p>
+<p>想在国内上手，最稳的路径还是 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>：ChatGPT 镜像版 28.88 元/月起，强度下拉里直接选 GPT-6 Astra。新用户首单 9 折，<strong>优惠码 Tanqingbo</strong>。</p>
 <h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
 <li><strong>是什么</strong>：让 AI 像人一样操作电脑——看屏幕、点鼠标、敲键盘，独立完成完整任务</li>
 <li><strong>有多强</strong>：OSWorld 2.0 拿 72.6%（第一），完成时间比上代快 47%，误操作率 2.4%（上代 22.0%）</li>
@@ -535,8 +535,8 @@ var _hmt = _hmt || [];
 </tbody></table>
 <p>比分数更要命的是两个「副指标」：</p>
 <ul>
-<li><strong>快</strong>：OSWorld 2.0 任务完成时间从 75 分钟压到 40 分钟（**-47%<strong>），Mind2Web 速度是上代的 **1.9 倍</strong></li>
-<li><strong>省</strong>：Token 消耗比 Claude Opus 5 **少 65%**——同样的活，跑一遍的成本只有对手三分之一</li>
+<li><strong>快</strong>：OSWorld 2.0 任务完成时间<strong>从 75 分钟压到 40 分钟</strong>（快 47%），Mind2Web 速度是上代的 <strong>1.9 倍</strong></li>
+<li><strong>省</strong>：Token 消耗比 Claude Opus 5 少 65%——同样的活，跑一遍的成本只有对手三分之一</li>
 </ul>
 <p>一句话总结：其他模型还在找按钮，Astra 已经准备交付了。</p>
 <h2 id="三、10-个实战场景"><a href="#三、10-个实战场景" class="headerlink" title="三、10 个实战场景"></a>三、10 个实战场景</h2><p>以下场景全部来自 OpenAI 官方演示与发布说明，按「明天上班就能用」的顺序排列。</p>
@@ -551,7 +551,7 @@ var _hmt = _hmt || [];
 <p><em>发布会实拍：Astra 打开 KiCad，自己放元器件、自己布线，把原理图转成可制造的 PCB（来源：OpenAI）</em></p>
 <p>这是全场最炸的演示。KiCad 没有任何 API，Astra 纯靠看屏幕操作专业设计软件——这件事的技术含义远超「办公自动化」：<strong>专业工具的门槛正在被 AI 拆掉</strong>。</p>
 <p>官方演示看着完美，民间实测是什么水平？用 Astra 实际复现这个 KiCad 任务，DRC 报了 12 项违规——翻车全过程和另外三个项目（3D 城市生成器、全栈应用、复刻 Cursor）的实测，见 <a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测：Codex 到底强在哪</a>。</p>
-<h3 id="9-3D-CAD-几何重构（BenchCAD）"><a href="#9-3D-CAD-几何重构（BenchCAD）" class="headerlink" title="9. 3D CAD 几何重构（BenchCAD）"></a>9. 3D CAD 几何重构（BenchCAD）</h3><p>给它几张不同角度的渲染图，它能反推出 3D CAD 代码，几何重合度 **95.9%**，API 成本比上代低 43%。逆向工程、旧图纸数字化，这类以前按人天计费的活，成本曲线直接被改写。</p>
+<h3 id="9-3D-CAD-几何重构（BenchCAD）"><a href="#9-3D-CAD-几何重构（BenchCAD）" class="headerlink" title="9. 3D CAD 几何重构（BenchCAD）"></a>9. 3D CAD 几何重构（BenchCAD）</h3><p>给它几张不同角度的渲染图，它能反推出 3D CAD 代码，几何重合度 95.9%，API 成本比上代低 43%。逆向工程、旧图纸数字化，这类以前按人天计费的活，成本曲线直接被改写。</p>
 <h3 id="10-长任务异步跑"><a href="#10-长任务异步跑" class="headerlink" title="10. 长任务异步跑"></a>10. 长任务异步跑</h3><p>Computer Use 配套的机制升级：遇到无关紧要的缺失信息它自己补，只有<strong>关键信息缺失才来问你</strong>；你不在的时候它先干别的，你回复了它接着做。这意味着「几小时级别的任务」可以真正放手——你去开会，它在家里干活。</p>
 <h2 id="四、主动追问还是自动补全？"><a href="#四、主动追问还是自动补全？" class="headerlink" title="四、主动追问还是自动补全？"></a>四、主动追问还是自动补全？</h2><p>这是 Astra 在产品层面最值得琢磨的一个设计：<strong>它知道什么时候该问，什么时候不该问</strong>。</p>
 <p>以前的 Agent 两种极端：要么事事都问（烦死），要么全靠猜（错死）。Astra 的策略是按「信息的关键程度」分诊——</p>
@@ -613,7 +613,7 @@ var _hmt = _hmt || [];
 <td>重度用户、要求数据沉淀在自己账号</td>
 </tr>
 </tbody></table>
-<p>流程就三步：打开 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a> → 选套餐（镜像版就够体验 Computer Use）→ 支付宝付款，强度下拉里选 GPT-6 Astra 直接用。新用户首单 9 折，**优惠码 <code>Tanqingbo</code>**，下单时填上。</p>
+<p>流程就三步：打开 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a> → 选套餐（镜像版就够体验 Computer Use）→ 支付宝付款，强度下拉里选 GPT-6 Astra 直接用。新用户首单 9 折，<strong>优惠码 Tanqingbo</strong>，下单时填上。</p>
 <p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner.webp" alt="环球巴士界面：选择强度已挂上 GPT-6 Astra" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner.webp" class="lozad post-image"></p>
 <blockquote>
 <p>界面长这样：选择强度下拉里直接挂的就是 GPT-6 Astra，支付宝付款后即时开通。</p>
@@ -783,7 +783,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>413</span>
+    <span>414</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -791,7 +791,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>356</span>
+    <span>360</span>
     <span>标签</span>
   </a>
 </div>
@@ -861,7 +861,7 @@ var _hmt = _hmt || [];
       <a href="/categories/工具">
         <div class="categories-list-item">
           工具
-          <span class="categories-list-item-badge">35</span>
+          <span class="categories-list-item-badge">36</span>
         </div>
       </a>
     
@@ -995,23 +995,23 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-21</div>
+        <a href="/steam-guide/"><div class="recent-posts-item-content">Steam 国内使用指南（2026）：社区打不开怎么办、跨区买游戏与外服联机</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
         <a href="/kuaili-review/"><div class="recent-posts-item-content">快狸机场怎么样（2026 实测）：翻墙梯子速度、解锁、套餐价格与缺点，老用户说真话</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-19</div>
-        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 实测（2026）：小米版 Codex 建模、做 PPT、写网页全流程，邀测上手指南</div></a>
+        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 怎么样（2026 实测）：小米版 Codex 免费邀测，申请入口与上手指南</div></a>
       </div>
     
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-17</div>
         <a href="/goingbus/"><div class="recent-posts-item-content">环球巴士怎么样（2026）：奈飞/ChatGPT/iCloud 合租实测，优惠码与避坑指南</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-09-15</div>
-        <a href="/gpt-image-2.5-guide/"><div class="recent-posts-item-content">GPT Images 2.5 教程：Sketch 草图生成、Comment 精准改图、透明背景等 10 种玩法实测（2026）</div></a>
       </div>
     
   </div>
