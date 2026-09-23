@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-23T03:20:00.000Z",
+  "dateModified": "2026-09-23T03:25:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/national-day-vpn-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/science-internet-overview.webp",
+  "description": "国庆长假是全年翻墙需求最高峰，也是机场最容易卡的时候。本文按场景给科学上网准备清单：在家追剧、用 AI 怎么提前配置；出游只带手机怎么办、酒店公共 WiFi 怎么避坑；机场高峰降速怎么应对、节点怎么选，附应急预案。长假前花十分钟读完，假期不掉链子。",
+  "keywords": "国庆翻墙,国庆科学上网,国庆机场优惠,国庆梯子,长假翻墙,十一科学上网,节假日翻墙,国庆出游翻墙,机场高峰期,机场限速,翻墙教程,科学上网教程,梯子怎么用,手机翻墙,酒店wifi翻墙"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "国庆期间机场会限速吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "大概率会。国庆是全国流量高峰，机场的出口带宽是有限的，人一多分到每个人的速度就下降，这是行业普遍现象，不是你家网络坏了。应对办法：错峰使用（后半夜和清晨最快）、优先选专线节点（IEPL/IPLC 类）、把重活（下载、追剧）安排在早上。极端情况是高峰期直接连不上，备用机场就是为这个准备的。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "出游只带手机，怎么提前准备好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "出发前在家做完三件事：装好客户端（安卓装 ClashMetaForAndroid，iPhone 需要外区 Apple ID 装 Spectre）、导入订阅并测一次速、记下订阅链接（存在备忘录里）。到酒店连上 WiFi 直接开用，不用现场折腾。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "订阅刚好在国庆假期到期怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "提前续费。别卡着到期日——国庆期间机场官网、客服响应都可能变慢，续费到账有延迟风险，真断在假期中间最难受。出发前一两天检查订阅剩余天数，不够就直接续上。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "酒店的公共 WiFi 能挂梯子吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能用，客户端走的是加密隧道，公共 WiFi 上裸奔的风险（被同网络的人嗅探）反而因为代理的存在降低了。真正的问题是酒店网络本身质量差、或者对代理端口有限制，遇到连不上的情况换手机热点试试。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "高峰期所有节点都卡，怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按顺序排查：先更新订阅（节点列表可能变了），再测速换节点（换地区，别死磕一个），然后换客户端（Verge 不行试试手机端），最后才考虑是机场整体过载——这时候备用机场的价值就出来了。站内的订阅指南里有专门的排查章节。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "国庆期间机场有优惠活动吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "多数有。国庆是机场拉新的节点，不少机场会做年付折扣、加流量或者送时长的活动，力度比平时大。但两点提醒：一是优惠不改变高峰期表现本身，别因为便宜就冲动换一家没经过高峰考验的机场；二是续费前先看一眼你要买那家的活动页，同样的套餐活动价和原价能差出不少。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑</title>
+  
+  <meta name="description" content="国庆长假是全年翻墙需求最高峰，也是机场最容易卡的时候。本文按场景给科学上网准备清单：在家追剧、用 AI 怎么提前配置；出游只带手机怎么办、酒店公共 WiFi 怎么避坑；机场高峰降速怎么应对、节点怎么选，附应急预案。长假前花十分钟读完，假期不掉链子。">
+  <meta name="keywords" content="国庆翻墙,国庆科学上网,国庆机场优惠,国庆梯子,长假翻墙,十一科学上网,节假日翻墙,国庆出游翻墙,机场高峰期,机场限速,翻墙教程,科学上网教程,梯子怎么用,手机翻墙,酒店wifi翻墙">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/national-day-vpn-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/science-internet-overview.webp">
+  
+  
+  <meta property="og:description" content="国庆长假是全年翻墙需求最高峰，也是机场最容易卡的时候。本文按场景给科学上网准备清单：在家追剧、用 AI 怎么提前配置；出游只带手机怎么办、酒店公共 WiFi 怎么避坑；机场高峰降速怎么应对、节点怎么选，附应急预案。长假前花十分钟读完，假期不掉链子。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-23T03:20:00.000Z">
+  <meta property="og:article:modified_time" content="2026-09-23T03:25:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="梯子">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="机场">
+  
+  <meta property="og:article:tag" content="国庆翻墙">
+  
+  <meta property="og:article:tag" content="翻墙教程">
+  
+  <meta property="og:article:tag" content="长假出行">
+  
+  <meta property="og:article:tag" content="节点选择">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/national-day-vpn-guide/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 小胖穷的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/science-internet-overview.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/science-internet-overview.webp"
+    alt="2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-23T03:20:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-23</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.1k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/national-day-vpn-guide/" class="leancloud_visitors" data-flag-title="2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/梯子/" class="post-meta-link">梯子</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/机场/" class="post-meta-link">机场</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/国庆翻墙/" class="post-meta-link">国庆翻墙</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/翻墙教程/" class="post-meta-link">翻墙教程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/长假出行/" class="post-meta-link">长假出行</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/节点选择/" class="post-meta-link">节点选择</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>每年国庆，都是机场一年里最大的一场压力测试。所有人同时放假、同时在线，晚高峰的流量能比平时翻几倍。也是每年这个时候，我都会收到同款提问：为什么梯子突然卡了、节点怎么连不上了、为什么出门三天回来订阅过期了。</p>
+<p>这些问题的解法其实是同一件事：<strong>假期前花十分钟做准备</strong>。这篇按在家、出游、全家共享三个场景，把准备清单和高峰应对一次讲完。还没搞定科学上网本身的，先看<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a>，这篇默认你已经能正常翻出去。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>在家过节的</strong>：检查订阅剩余天数（不够现在续）、更新客户端、测一遍速摸清哪些节点能打。</li>
+<li><strong>出游在外的</strong>：出发前把手机客户端装好、订阅导入、测速，到酒店直接开用。</li>
+<li><strong>高峰卡顿</strong>：错峰使用、换专线节点、别死磕一个地区，后半夜和清晨最快。</li>
+<li><strong>怕翻车的</strong>：准备一个备用机场，主备分离，长假期间这就是保险。</li>
+</ul>
+<h2 id="为什么国庆要提前准备"><a href="#为什么国庆要提前准备" class="headerlink" title="为什么国庆要提前准备"></a>为什么国庆要提前准备</h2><p>两个原因。</p>
+<p>一是流量洪峰。机场带宽是共享资源，全国用户同时在线，晚高峰 8 点到 11 点尤其挤。速度掉一半都算正常，跟你买的套餐档位关系不大，纯粹是分蛋糕的人变多了。</p>
+<p>二是假期没售后。机场客服、官网、支付渠道在假期都可能响应变慢，平时当天能解决的问题，假期中间可能要硬扛两三天。所以原则就一条：<strong>能前置的动作，全部放假前做完</strong>。</p>
+<h2 id="在家过节：提前做三件事"><a href="#在家过节：提前做三件事" class="headerlink" title="在家过节：提前做三件事"></a>在家过节：提前做三件事</h2><h3 id="第一件：检查订阅，该续就续"><a href="#第一件：检查订阅，该续就续" class="headerlink" title="第一件：检查订阅，该续就续"></a>第一件：检查订阅，该续就续</h3><p>打开你的机场面板看两样东西：剩余天数和剩余流量。天数撑不到假期结束的，现在就续上，别赌假期到账速度。</p>
+<p>还没买机场、或者想趁假期前换一家的，选型方法在 <a href="https://tanqingbo.cn/choose2/">Clash 机场怎么选</a> 里讲过了（重点看专线占比和高峰期口碑）。我自己在用的是<a target="_blank" rel="noopener external nofollow noreferrer" href="https://yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>（7 年老牌机场，<a href="https://tanqingbo.cn/yzhx-vpn/">详细实测在这</a>），Lite 档 99 元一年，国庆这种高峰期的表现我连着用几个假期了，日常追剧和 AI 工具够用：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260825141445624.png" alt="一枝红杏购买订阅套餐页面" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260825141445624.png" class="lozad post-image"></p>
+<h3 id="第二件：更新客户端"><a href="#第二件：更新客户端" class="headerlink" title="第二件：更新客户端"></a>第二件：更新客户端</h3><p>Clash Verge Rev 这类客户端假期前后常发版，旧版本遇到订阅格式变化会莫名报错。现在就升级到最新版，重启一次确认能正常代理。<a href="https://tanqingbo.cn/clash-verge/">Clash Verge 下载安装到导入订阅的流程</a>有完整教程，卡在任何一步都能对上。</p>
+<h3 id="第三件：测速摸底"><a href="#第三件：测速摸底" class="headerlink" title="第三件：测速摸底"></a>第三件：测速摸底</h3><p>别等假期晚上要看剧了才发现主力节点已经拉胯。现在跑一遍<a href="https://tanqingbo.cn/clash-node-testing/">节点测速</a>，把「哪些地区、哪些节点在你的网络环境下能用」记下来。摸底之后你手里就有一张自己的节点地图，高峰期照着换就行：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/yzhx-trojan-node.webp" alt="节点列表与测速结果示例" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/yzhx-trojan-node.webp" class="lozad post-image"></p>
+<p>摸底的时候顺带做一件事：把你必用的平台挨个打开验证。Netflix 能不能播非自制剧、ChatGPT 能不能正常对话，每个平台可用的节点地区不一样，这些信息假期里都是救命的。</p>
+<h2 id="出游在外：手机翻墙怎么准备"><a href="#出游在外：手机翻墙怎么准备" class="headerlink" title="出游在外：手机翻墙怎么准备"></a>出游在外：手机翻墙怎么准备</h2><p>出门玩的人越来越多，这类需求的核心就一句话：<strong>在家做完所有配置，出门只负责用</strong>。</p>
+<p>出发前在家做完三步：</p>
+<ol>
+<li><strong>装客户端</strong>。安卓直接装 ClashMetaForAndroid；iPhone 麻烦一点，Spectre 不在国内区，需要先搞定外区 Apple ID，流程在 <a href="https://tanqingbo.cn/ios-open-internet/">iPhone 科学上网教程</a>里有，第一次弄大概半小时。</li>
+<li><strong>导入订阅并测速</strong>。跟电脑用的是同一条订阅链接，导入方法照着 <a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接指南</a>走。</li>
+<li><strong>备份订阅链接</strong>。存在手机备忘录里。客户端万一抽风要重装，没有订阅链接你就抓瞎了。</li>
+</ol>
+<p>到了酒店，公共 WiFi 能直接挂梯子，客户端走加密隧道，被同网络嗅探的风险反而比裸奔低。真正的问题通常是酒店网络本身质量差，或者对端口有限制，连不上就切手机热点验证一下，能定位是酒店的问题还是配置的问题。</p>
+<p>流量账也提一嘴：手机热点挂梯子挺费流量的，一小时 1080p 视频大约 2-3G。如果你的机场套餐流量不富裕，出门这些天要么升级套餐，要么把画质降下来。快狸这类按量灵活的可以作为出游补充，<a href="https://tanqingbo.cn/android-kuaili/">安卓端配置教程</a>在这。</p>
+<h2 id="全家都要用：一个账号怎么共享"><a href="#全家都要用：一个账号怎么共享" class="headerlink" title="全家都要用：一个账号怎么共享"></a>全家都要用：一个账号怎么共享</h2><p>假期在家，多半会碰上「爸妈/对象也要用」的需求。两个方案。</p>
+<p>省事的是手机开热点：你的手机开代理再开热点，连上热点的设备直接走你的代理。零配置，缺点是手机得一直当路由器，电量消耗可观。</p>
+<p>正经一点是电脑开 <a href="https://tanqingbo.cn/clash-tun-mode/">TUN 模式</a>：家里有一台常开的电脑，开了 TUN 整台机器的流量全局接管，再配合系统热点共享给全家。一次配置，整个假期不用管。</p>
+<p>进阶玩法是软路由/路由器级代理，全家无感，但配置门槛高，不适合假期前一天临时上车，有兴趣的平时再研究。</p>
+<h2 id="机场高峰期卡顿怎么办"><a href="#机场高峰期卡顿怎么办" class="headerlink" title="机场高峰期卡顿怎么办"></a>机场高峰期卡顿怎么办</h2><p>假期里真卡起来了，按这个顺序处理。</p>
+<ol>
+<li><strong>先换节点，再怀疑人生</strong>。高峰期各节点负载差异很大，测速换一个，优先换地区。规律有点反直觉：港日节点离得近、用的人最多，晚高峰最先挤满；美区延迟高一点，但余量往往更足。追剧、下载这类不挑延迟的活挪到美区，打游戏再挑近的。</li>
+<li><strong>错峰</strong>。后半夜和清晨的体验跟白天是两个世界。下载、囤片的活挪到早上做，晚上留给实时性要求高的场景。</li>
+<li><strong>认准专线</strong>。节点列表里带 IEPL、IPLC 字样的专线，高峰期通常比中转和直连稳得多。注意专线流量倍率也高，重度使用前看清楚计费规则。</li>
+<li><strong>更新订阅</strong>。机场假期常临时加节点、调线路，本地列表是旧的就会错过。碰上订阅更新失败，<a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅指南</a>里有专门排查章节。</li>
+</ol>
+<h2 id="应急预案：万一全挂了"><a href="#应急预案：万一全挂了" class="headerlink" title="应急预案：万一全挂了"></a>应急预案：万一全挂了</h2><p>概率不大，但长假八天什么都有可能。按顺序自救：</p>
+<ol>
+<li>更新订阅，看节点列表有没有变化；</li>
+<li>换客户端试试（电脑 Verge 不行换手机端，排除客户端问题）；</li>
+<li>检查机场官网公告，确认不是你家机场在维护；</li>
+<li>切备用机场。</li>
+</ol>
+<p>第 4 步就是我一直说主备分离的原因：两个不同上游的机场，一个挂了另一个顶上，长假期间这就是保险。没备用的临时救急可以看<a href="https://tanqingbo.cn/clash-free/">免费方案</a>那篇，能用，但免费方案在国庆高峰期基本只剩聊胜于无，别指望体验。</p>
+<h2 id="假期在家还能干嘛"><a href="#假期在家还能干嘛" class="headerlink" title="假期在家还能干嘛"></a>假期在家还能干嘛</h2><p>网络通了之后的事，才是长假的重头戏。</p>
+<p>追剧是刚需的话，Netflix、Disney+ 合租比单开省得多，<a href="https://tanqingbo.cn/popcorn/">爆米花合租</a>五平台一年 314 元，假期高强度追剧最划算。想趁假期折腾 AI 的，ChatGPT、Claude、Gemini 的账号与接入问题，<a href="https://tanqingbo.cn/ai-llm-buy-guide/">海外大模型购买指南</a>里按预算分好了路径。找资源、追频道的另一半网络生活在 Telegram，<a href="https://tanqingbo.cn/telegram-guide/">完全指南</a>从注册到搜索一条龙。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>国庆翻墙这件事，本质是个考前复习问题：所有动作放假前做完，假期里就只剩享受。清单再压缩一下：续订阅、更新客户端、测速摸底、备一条订阅链接、有条件加个备用机场。五件事，十分钟。</p>
+<p>真在假期卡在半路的，回来把这篇翻出来对着排查，基本都能救回来。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/national-day-vpn-guide/">https://tanqingbo.cn/national-day-vpn-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/science-internet-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        科学上网方案怎么选：VPN / Clash 机场 / VPS 自建对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-23</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/choose2/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 机场推荐：怎么选靠谱机场、避坑清单与挑选标准
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全教程：客户端、订阅与规则分流
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-node-testing/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 节点测速与选择：怎么挑到最快的节点
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-13</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/popcorn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        假期追剧：爆米花合租怎么样，五平台一年 314 元
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-11</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/steam-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Steam 国内使用指南（2026）：社区打不开怎么办、跨区买游戏与外服联机 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9B%BD%E5%BA%86%E8%A6%81%E6%8F%90%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">为什么国庆要提前准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%AE%B6%E8%BF%87%E8%8A%82%EF%BC%9A%E6%8F%90%E5%89%8D%E5%81%9A%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-number">3.</span> <span class="toc-text">在家过节：提前做三件事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%BB%B6%EF%BC%9A%E6%A3%80%E6%9F%A5%E8%AE%A2%E9%98%85%EF%BC%8C%E8%AF%A5%E7%BB%AD%E5%B0%B1%E7%BB%AD"><span class="toc-number">3.1.</span> <span class="toc-text">第一件：检查订阅，该续就续</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%BB%B6%EF%BC%9A%E6%9B%B4%E6%96%B0%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.2.</span> <span class="toc-text">第二件：更新客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%BB%B6%EF%BC%9A%E6%B5%8B%E9%80%9F%E6%91%B8%E5%BA%95"><span class="toc-number">3.3.</span> <span class="toc-text">第三件：测速摸底</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E6%B8%B8%E5%9C%A8%E5%A4%96%EF%BC%9A%E6%89%8B%E6%9C%BA%E7%BF%BB%E5%A2%99%E6%80%8E%E4%B9%88%E5%87%86%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">出游在外：手机翻墙怎么准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%AE%B6%E9%83%BD%E8%A6%81%E7%94%A8%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%B4%A6%E5%8F%B7%E6%80%8E%E4%B9%88%E5%85%B1%E4%BA%AB"><span class="toc-number">5.</span> <span class="toc-text">全家都要用：一个账号怎么共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%9C%BA%E9%AB%98%E5%B3%B0%E6%9C%9F%E5%8D%A1%E9%A1%BF%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">6.</span> <span class="toc-text">机场高峰期卡顿怎么办</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E6%80%A5%E9%A2%84%E6%A1%88%EF%BC%9A%E4%B8%87%E4%B8%80%E5%85%A8%E6%8C%82%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">应急预案：万一全挂了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%87%E6%9C%9F%E5%9C%A8%E5%AE%B6%E8%BF%98%E8%83%BD%E5%B9%B2%E5%98%9B"><span class="toc-number">8.</span> <span class="toc-text">假期在家还能干嘛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="小胖穷 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>415</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>11</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>364</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9B%BD%E5%BA%86%E8%A6%81%E6%8F%90%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">为什么国庆要提前准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%AE%B6%E8%BF%87%E8%8A%82%EF%BC%9A%E6%8F%90%E5%89%8D%E5%81%9A%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-number">3.</span> <span class="toc-text">在家过节：提前做三件事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%BB%B6%EF%BC%9A%E6%A3%80%E6%9F%A5%E8%AE%A2%E9%98%85%EF%BC%8C%E8%AF%A5%E7%BB%AD%E5%B0%B1%E7%BB%AD"><span class="toc-number">3.1.</span> <span class="toc-text">第一件：检查订阅，该续就续</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%BB%B6%EF%BC%9A%E6%9B%B4%E6%96%B0%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.2.</span> <span class="toc-text">第二件：更新客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%BB%B6%EF%BC%9A%E6%B5%8B%E9%80%9F%E6%91%B8%E5%BA%95"><span class="toc-number">3.3.</span> <span class="toc-text">第三件：测速摸底</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E6%B8%B8%E5%9C%A8%E5%A4%96%EF%BC%9A%E6%89%8B%E6%9C%BA%E7%BF%BB%E5%A2%99%E6%80%8E%E4%B9%88%E5%87%86%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">出游在外：手机翻墙怎么准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%AE%B6%E9%83%BD%E8%A6%81%E7%94%A8%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%B4%A6%E5%8F%B7%E6%80%8E%E4%B9%88%E5%85%B1%E4%BA%AB"><span class="toc-number">5.</span> <span class="toc-text">全家都要用：一个账号怎么共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%9C%BA%E9%AB%98%E5%B3%B0%E6%9C%9F%E5%8D%A1%E9%A1%BF%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">6.</span> <span class="toc-text">机场高峰期卡顿怎么办</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E6%80%A5%E9%A2%84%E6%A1%88%EF%BC%9A%E4%B8%87%E4%B8%80%E5%85%A8%E6%8C%82%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">应急预案：万一全挂了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%87%E6%9C%9F%E5%9C%A8%E5%AE%B6%E8%BF%98%E8%83%BD%E5%B9%B2%E5%98%9B"><span class="toc-number">8.</span> <span class="toc-text">假期在家还能干嘛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">73</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程语言">
+        <div class="categories-list-item">
+          编程语言
+          <span class="categories-list-item-badge">41</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">36</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">29</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 小胖穷的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%9B%BD%E5%BA%86%E8%A6%81%E6%8F%90%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">为什么国庆要提前准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%AE%B6%E8%BF%87%E8%8A%82%EF%BC%9A%E6%8F%90%E5%89%8D%E5%81%9A%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-number">3.</span> <span class="toc-text">在家过节：提前做三件事</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%BB%B6%EF%BC%9A%E6%A3%80%E6%9F%A5%E8%AE%A2%E9%98%85%EF%BC%8C%E8%AF%A5%E7%BB%AD%E5%B0%B1%E7%BB%AD"><span class="toc-number">3.1.</span> <span class="toc-text">第一件：检查订阅，该续就续</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%BB%B6%EF%BC%9A%E6%9B%B4%E6%96%B0%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.2.</span> <span class="toc-text">第二件：更新客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E4%BB%B6%EF%BC%9A%E6%B5%8B%E9%80%9F%E6%91%B8%E5%BA%95"><span class="toc-number">3.3.</span> <span class="toc-text">第三件：测速摸底</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E6%B8%B8%E5%9C%A8%E5%A4%96%EF%BC%9A%E6%89%8B%E6%9C%BA%E7%BF%BB%E5%A2%99%E6%80%8E%E4%B9%88%E5%87%86%E5%A4%87"><span class="toc-number">4.</span> <span class="toc-text">出游在外：手机翻墙怎么准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%AE%B6%E9%83%BD%E8%A6%81%E7%94%A8%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%B4%A6%E5%8F%B7%E6%80%8E%E4%B9%88%E5%85%B1%E4%BA%AB"><span class="toc-number">5.</span> <span class="toc-text">全家都要用：一个账号怎么共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%9C%BA%E9%AB%98%E5%B3%B0%E6%9C%9F%E5%8D%A1%E9%A1%BF%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">6.</span> <span class="toc-text">机场高峰期卡顿怎么办</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E6%80%A5%E9%A2%84%E6%A1%88%EF%BC%9A%E4%B8%87%E4%B8%80%E5%85%A8%E6%8C%82%E4%BA%86"><span class="toc-number">7.</span> <span class="toc-text">应急预案：万一全挂了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%87%E6%9C%9F%E5%9C%A8%E5%AE%B6%E8%BF%98%E8%83%BD%E5%B9%B2%E5%98%9B"><span class="toc-number">8.</span> <span class="toc-text">假期在家还能干嘛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">最后</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-23</div>
+        <a href="/national-day-vpn-guide/"><div class="recent-posts-item-content">2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-21</div>
+        <a href="/steam-guide/"><div class="recent-posts-item-content">Steam 国内使用指南（2026）：社区打不开怎么办、跨区买游戏与外服联机</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-19</div>
+        <a href="/kuaili-review/"><div class="recent-posts-item-content">快狸机场怎么样（2026 实测）：翻墙梯子速度、解锁、套餐价格与缺点，老用户说真话</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-19</div>
+        <a href="/xiaomi-mimo-desktop-guide/"><div class="recent-posts-item-content">小米 MiMo Desktop 怎么样（2026 实测）：小米版 Codex 免费邀测，申请入口与上手指南</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
