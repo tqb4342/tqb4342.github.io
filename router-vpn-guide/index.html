@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-09-28T14:30:00.000Z",
+  "dateModified": "2026-09-28T14:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/router-vpn-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/router-vpn-guide-banner.webp",
+  "description": "2026 路由器翻墙完整教程：为什么软路由 + OpenWrt + OpenClash 才是中国家庭全家科学上网的正解、TP-Link/小米/华为原厂路由器为什么不行、硬件怎么选与 OpenWrt 刷机流程、OpenClash 订阅导入全步骤、不改主路由的旁路由接法、规则分流与 DNS 防泄漏设置，以及常见翻车点速查表。",
+  "keywords": "路由器翻墙,软路由,openwrt翻墙,openclash,路由器科学上网,旁路由,路由器clash,软路由翻墙,全家翻墙,openwrt科学上网"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "普通的 TP-Link、小米、华为路由器能翻墙吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "原厂固件不能。这些路由器的系统是封闭的，没法安装代理软件，翻墙需要先把路由器刷成 OpenWrt 这类开源固件——而具体型号是否支持刷机，要去 OpenWrt 官网的硬件兼容列表查。嫌刷机麻烦的，直接买一台现成的软路由小主机（N100 机型几百块）是更省事的选择。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "路由器翻墙和在电脑手机上装客户端有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "路由器翻墙是「一次配置、全家生效」：连上这台路由器的所有设备（包括电视盒子、游戏机、智能家居这些装不了客户端的设备）都自动走代理。代价是配置门槛高、路由器要 24 小时挂着、所有设备共享一份节点。设备少、只有一台手机一台电脑的，直接装客户端更省心，看站内的科学上网完全指南选方案就行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "什么是旁路由？必须换掉家里主路由吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不用。旁路由是把刷好 OpenWrt 的设备接在现有路由器旁边，只让需要翻墙的设备把网关指向它，主路由和家里的网络结构完全不动。这是折腾软路由最稳妥的入门方式——翻墙设备出问题，其他设备上网不受影响，把网关改回来就恢复了。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "OpenClash 和 PassWall 装哪个？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两者都是 OpenWrt 上的主流代理插件，吃同一份机场订阅。OpenClash 基于 mihomo（Clash Meta）内核，规则分流和面板功能更强，玩法接近电脑上的 Clash 客户端；PassWall 更轻量、上手更简单。没特殊需求建议 OpenClash——出问题好排查，站内的 Clash 系教程也能直接复用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "软路由 24 小时挂机费电吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "N100 小主机整机功耗大约 6-15 瓦，比一台老台式机待机还低，一年电费几十块钱，24 小时挂着没有负担。反而是早年用二手小主机（J1900 之类）改装的方案，性能弱还未必省电。买的时候认准无风扇被动散热的 N100/N305 机型，安静且皮实。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "iStoreOS 和 OpenWrt 是什么关系？该装哪个？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "iStoreOS 是基于 OpenWrt 深度定制的发行版，内核和插件生态完全兼容，区别是它带图形化应用商店，装 OpenClash 这类插件从「命令行装软件包」变成「商店里点一下」。新手建议直接 iStoreOS，想折腾原版 OpenWrt 的进阶玩法（自定义编译固件）再回头看原版。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "路由器翻墙会让全网变慢吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "加密解密确实消耗性能，慢不慢取决于硬件。老路由器刷机的 CPU 弱，可能只有几十兆的代理速度；N100 级别的软路由跑几百兆到千兆没问题。另外务必开「规则模式」让国内流量直连——否则看个国内视频都绕道海外节点，既慢又浪费流量。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机场订阅从哪里来？怎么选？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "路由器插件只是「吃订阅的工具」，节点本身来自机场订阅。选机场看三点：协议是否抗封锁（Trojan/Reality 优先）、是否有 OpenWrt/软路由使用说明、是否支持支付宝按年付。本站长期自用的是一枝红杏（Trojan 协议，99 元/年起，官方明确支持 OpenWrt），机场怎么横向对比看站内的机场选择指南。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网</title>
+  
+  <meta name="description" content="2026 路由器翻墙完整教程：为什么软路由 + OpenWrt + OpenClash 才是中国家庭全家科学上网的正解、TP-Link/小米/华为原厂路由器为什么不行、硬件怎么选与 OpenWrt 刷机流程、OpenClash 订阅导入全步骤、不改主路由的旁路由接法、规则分流与 DNS 防泄漏设置...">
+  <meta name="keywords" content="路由器翻墙,软路由,openwrt翻墙,openclash,路由器科学上网,旁路由,路由器clash,软路由翻墙,全家翻墙,openwrt科学上网">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/router-vpn-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/router-vpn-guide-banner.webp">
+  
+  
+  <meta property="og:description" content="2026 路由器翻墙完整教程：为什么软路由 + OpenWrt + OpenClash 才是中国家庭全家科学上网的正解、TP-Link/小米/华为原厂路由器为什么不行、硬件怎么选与 OpenWrt 刷机流程、OpenClash 订阅导入全步骤、不改主路由的旁路由接法、规则分流与 DNS 防泄漏设置...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-09-28T14:30:00.000Z">
+  <meta property="og:article:modified_time" content="2026-09-28T14:30:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="路由器翻墙">
+  
+  <meta property="og:article:tag" content="软路由">
+  
+  <meta property="og:article:tag" content="OpenWrt">
+  
+  <meta property="og:article:tag" content="OpenClash">
+  
+  <meta property="og:article:tag" content="旁路由">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/router-vpn-guide/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 小胖穷的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/router-vpn-guide-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/router-vpn-guide-banner.webp"
+    alt="路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-09-28T14:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-09-28</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/router-vpn-guide/" class="leancloud_visitors" data-flag-title="路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/路由器翻墙/" class="post-meta-link">路由器翻墙</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/软路由/" class="post-meta-link">软路由</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/OpenWrt/" class="post-meta-link">OpenWrt</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/OpenClash/" class="post-meta-link">OpenClash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/旁路由/" class="post-meta-link">旁路由</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>📚 本文是 <a href="https://tanqingbo.cn/science-internet-guide/"><strong>科学上网完全指南（2026最新版）</strong></a> 系列教程之一，专注「路由器 / 软路由」这个环节：让全家所有设备不装任何客户端，连上 Wi-Fi 就能科学上网。</p>
+</blockquote>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>路由器翻墙是什么</strong>：把代理软件装进路由器，全家设备（手机、电脑、电视盒子、游戏机、智能家居）连上它就自动翻墙，一台设备都不用装客户端。</li>
+<li><strong>怎么实现</strong>：刷 OpenWrt 固件 + 装 OpenClash 插件 + 导入机场订阅，三步。原厂 TP-Link、小米、华为路由器都刷不了或难刷，最省事是买台 N100 软路由小主机。</li>
+<li><strong>订阅哪来</strong>：路由器只负责跑节点，节点来自机场订阅。本站自用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>（Trojan 协议，99 元/年起，官方支持 OpenWrt）。</li>
+</ul>
+<h2 id="一、路由器翻墙：一次配置，全家生效"><a href="#一、路由器翻墙：一次配置，全家生效" class="headerlink" title="一、路由器翻墙：一次配置，全家生效"></a>一、路由器翻墙：一次配置，全家生效</h2><p>平时在电脑、手机上翻墙，每台设备都要装一个客户端。设备一多就烦：电视盒子装不了客户端、Switch 没地方装 App、家里老人的手机你总不能远程帮他配代理。</p>
+<p>路由器翻墙解决的就是这个：<strong>把代理软件直接装进路由器</strong>。所有连上这台路由器的设备，流量在路由器这一层就被分流——访问国内网站走宽带直连，访问被墙的网站自动走代理。对设备来说完全透明，不需要任何设置。</p>
+<p>它特别适合这几类人：</p>
+<ul>
+<li>家里设备多：手机 + 电脑 + 平板 + 电视盒子 + 游戏机，一台台装客户端不现实</li>
+<li>有装不了客户端的设备：Apple TV、Switch、PS5、Chromecast、智能家居设备</li>
+<li>想让全家（包括不懂技术的家人）无感翻墙的人</li>
+<li>已有机场订阅，想榨干「同时在线设备数」上限的重度用户</li>
+</ul>
+<p>反过来说，如果你只有一台手机一台笔记本，设备上装个客户端就够了，没必要上路由器方案——怎么选客户端看 <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a>。</p>
+<h2 id="二、先说清路线：为什么不是「路由器装-VPN」"><a href="#二、先说清路线：为什么不是「路由器装-VPN」" class="headerlink" title="二、先说清路线：为什么不是「路由器装 VPN」"></a>二、先说清路线：为什么不是「路由器装 VPN」</h2><p>网上很多「路由器翻墙」教程教的是给路由器装 ExpressVPN 这类 VPN 服务——这条路在中国大陆基本走不通：这类 VPN 的服务器本身就长期被墙，路由器上连它的服务器都连不上，翻墙无从谈起。</p>
+<p>还有些教程教你买「出厂自带翻墙功能的路由器」——电商平台上这类商品要么是刷了老版本固件的杂牌货（协议早已被识别，用几天就全红），要么干脆是骗局。2026 年还能长期稳定跑通的家用方案，主流路线只有一条：</p>
+<p><strong>OpenWrt（开源路由器固件）+ OpenClash（Clash 系代理插件）+ 机场订阅</strong></p>
+<p>这条路线的本质，是把电脑上的 Clash 客户端搬进路由器：吃同一份机场订阅（Trojan/VLESS/Reality 等抗封锁协议）、用同一套规则分流（国内直连、国外代理）、同样支持节点切换和测速。你在 <a href="https://tanqingbo.cn/clash-guide/">Clash 教程</a>里学的概念，在路由器上一个不少。</p>
+<h2 id="三、硬件怎么选：三条路与性能对照"><a href="#三、硬件怎么选：三条路与性能对照" class="headerlink" title="三、硬件怎么选：三条路与性能对照"></a>三、硬件怎么选：三条路与性能对照</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>成本</th>
+<th>适合谁</th>
+<th>门槛</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>旧路由器刷 OpenWrt</td>
+<td>0 元（利用旧设备）</td>
+<td>手上有老路由器、爱折腾</td>
+<td>高：要查型号兼容、有变砖风险</td>
+</tr>
+<tr>
+<td>专用软路由小主机（N100）</td>
+<td>500-1000 元</td>
+<td>想一步到位、长期用</td>
+<td>低：买来装好系统就能用</td>
+</tr>
+<tr>
+<td>旁路由（任意 OpenWrt 设备）</td>
+<td>取决于设备</td>
+<td>不想动家里现有网络</td>
+<td>中：改一两处网络设置</td>
+</tr>
+</tbody></table>
+<h3 id="路线一：旧路由器刷机（零成本，折腾向）"><a href="#路线一：旧路由器刷机（零成本，折腾向）" class="headerlink" title="路线一：旧路由器刷机（零成本，折腾向）"></a>路线一：旧路由器刷机（零成本，折腾向）</h3><p>不是所有路由器都能刷。第一步先去 OpenWrt 官网的硬件兼容列表（Table of Hardware）搜自己的型号，查三样东西：有没有对应固件、稳定性评级、FLASH 和内存容量（低于 16MB FLASH / 128MB 内存的型号跑 OpenClash 很勉强）。</p>
+<p>刷机流程大致是：下载对应型号的固件 → 进入原厂系统的刷机界面（或 telnet/SSH）刷入 OpenWrt → 装插件。听起来简单，但每个型号的操作细节都不同，中途断电就是变砖，救砖要拆机接 TTL 线。<strong>动手前务必照着你这个型号的专属教程走，不要凭感觉</strong>。</p>
+<p>另一个现实问题：中低端路由器的 CPU 性能弱，跑代理加密解密可能只有几十兆速度。宽带是 500 兆以上的，刷机路线基本喂不饱。</p>
+<h3 id="路线二：软路由小主机（推荐，一步到位）"><a href="#路线二：软路由小主机（推荐，一步到位）" class="headerlink" title="路线二：软路由小主机（推荐，一步到位）"></a>路线二：软路由小主机（推荐，一步到位）</h3><p>N100 小主机是当下的主流选择，几百块钱，性能足够跑满几百兆到千兆宽带。选购看四点：</p>
+<ul>
+<li><strong>CPU</strong>：Intel N100 或 N305，支持 AES-NI 硬件加密加速，代理速度和 CPU 占用差距巨大</li>
+<li><strong>网卡</strong>：2.5G 双网口起步（一个接光猫、一个接家里路由器或交换机）</li>
+<li><strong>散热</strong>：无风扇被动散热，24 小时挂机不吵、不易积灰</li>
+<li><strong>内存</strong>：8GB 起步，跑 OpenWrt 绰绰有余</li>
+</ul>
+<p>到手一般预装了 OpenWrt 或 iStoreOS（基于 OpenWrt 的易用发行版，带图形化应用商店，装插件从命令行变成点鼠标），新手直接用 iStoreOS 就好，两者插件生态完全通用。</p>
+<h3 id="路线三：旁路由（不是买什么，是怎么接）"><a href="#路线三：旁路由（不是买什么，是怎么接）" class="headerlink" title="路线三：旁路由（不是买什么，是怎么接）"></a>路线三：旁路由（不是买什么，是怎么接）</h3><p>旁路由不是独立的硬件类别，而是「怎么接入家里网络」的方案——任何刷好 OpenWrt 的设备都能当旁路由。它的价值是<strong>不动现有网络结构</strong>，家里主路由、其他设备完全不受影响，最适合作为入门起点，第七节详细讲接法。</p>
+<h3 id="宽带和硬件怎么匹配"><a href="#宽带和硬件怎么匹配" class="headerlink" title="宽带和硬件怎么匹配"></a>宽带和硬件怎么匹配</h3><ul>
+<li>100-300 兆宽带：老路由器刷机勉强够用，N100 轻松</li>
+<li>500 兆-1 千兆：直接上 N100 级别，老路由器刷机跑不满</li>
+<li>家里同时翻墙设备超过 10 台：N100 起步，注意机场订阅的连接数限制</li>
+</ul>
+<h2 id="四、OpenWrt-OpenClash-配置流程"><a href="#四、OpenWrt-OpenClash-配置流程" class="headerlink" title="四、OpenWrt + OpenClash 配置流程"></a>四、OpenWrt + OpenClash 配置流程</h2><p>以软路由小主机（预装 OpenWrt / iStoreOS）为例，从零到全家翻墙四步：</p>
+<p><strong>第一步：准备工作</strong>。软路由接显示器键盘（或直接用网线连电脑进管理后台），默认后台一般是 <code>192.168.1.1</code>，按系统提示把上网方式配好（宽带拨号或上级路由 DHCP），确认本身能正常上网。</p>
+<p><strong>第二步：装 OpenClash</strong>。iStoreOS 用户直接在应用商店搜 OpenClash 一键安装。原版 OpenWrt 走「系统 → 软件包」：先点「刷新列表」，再搜索 <code>luci-app-openclash</code> 安装。如果刷新列表失败（固件源被墙或 DNS 问题），去 OpenClash 的 GitHub Releases 页下载 <code>.ipk</code> 离线包，在软件包页面上传安装。装完在「服务」菜单里就能看到 OpenClash 入口。</p>
+<p><strong>第三步：导入机场订阅</strong>。先得有一份订阅——没有的看下一节的订阅获取。拿到订阅链接后，在 OpenClash 的「配置订阅」里粘贴链接、更新并启用配置。两个细节：一是订阅更新建议设成自动（每天凌晨拉一次，节点失效能自动跟上）；二是首次启动会让选内核，选 mihomo（Clash Meta）内核，和电脑端同一套东西，站内 Clash 教程的规则语法都能直接复用。</p>
+<p><strong>第四步：启动并验证</strong>。启动 OpenClash，等面板状态变绿，把手机连上这台路由器的 Wi-Fi，打开 Google 能通、打开百度也正常，就成了。节点切换、延迟测速、规则覆盖都在 OpenClash 面板（「控制面板」标签）里操作，界面和电脑端 Clash 面板一致。</p>
+<h2 id="五、订阅从哪来：机场是前提"><a href="#五、订阅从哪来：机场是前提" class="headerlink" title="五、订阅从哪来：机场是前提"></a>五、订阅从哪来：机场是前提</h2><p>路由器方案有个前提经常被教程一笔带过：<strong>OpenClash 只是工具，节点来自机场订阅</strong>。没有订阅，路由器刷得再好也翻不了墙。</p>
+<p>选机场给软路由用，重点看三条：</p>
+<ul>
+<li><strong>协议抗封锁</strong>：优先 Trojan、VLESS+Reality 这类难被识别的协议，软路由是 24 小时挂机的，协议稳定性比什么都重要</li>
+<li><strong>官方支持 OpenWrt</strong>：有无软路由使用说明、是否限制设备数（路由器方案下全部设备共享一个连接，机场按连接数计费的话很吃亏）</li>
+<li><strong>支付和售后</strong>：支持支付宝年付、有工单系统</li>
+</ul>
+<p>本站长期自用的是<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>：Trojan 协议（流量伪装成正常 HTTPS），99 元/年的入门版每月 100G 流量，官方明确支持 OpenWrt 系统，路由器翻墙场景完全够用。想横向对比其他机场的，看 <a href="https://tanqingbo.cn/choose2/">Clash 机场选择指南</a>。</p>
+<h2 id="六、两个关键设置：规则模式和-DNS-防泄漏"><a href="#六、两个关键设置：规则模式和-DNS-防泄漏" class="headerlink" title="六、两个关键设置：规则模式和 DNS 防泄漏"></a>六、两个关键设置：规则模式和 DNS 防泄漏</h2><p>路由器是全家的网关，配置错了全家断网。两个设置务必确认：</p>
+<p><strong>用规则模式，不要全局代理</strong>。全局模式会让所有流量都绕道海外节点——看国内视频、玩国服游戏全变慢，还白烧机场流量。OpenClash 默认的规则模式就是「国内直连、国外代理」，保持默认即可；想自定义规则，思路和电脑端 Clash 一致（<code>GEOIP,CN,DIRECT</code> 是底线规则）。</p>
+<p><strong>DNS 别泄漏</strong>。在 OpenClash 里开启「本地 DNS 劫持」，让设备的 DNS 请求也走代理层处理。不开的话会出现两类怪问题：网页能打开但部分 App 提示网络异常（App 检测到国内 DNS 返回的结果不对）、Netflix 这类流媒体判定地区错误。原理展开讲透的是 <a href="https://tanqingbo.cn/clash-dns-guide/">Clash DNS 专题</a>，路由器端照抄里面的思路即可。</p>
+<p><strong>顺手关掉固件的 IPv6</strong>。一部分宽带会下发 IPv6 地址，而不少代理插件默认只处理 IPv4 流量——设备可能「聪明地」走 IPv6 直连出去，造成真实地址泄漏。进 OpenWrt 后台把 LAN 口的 IPv6 分配关掉，是软路由圈的常规操作。</p>
+<p>配好之后如果出现「节点全红连不上」「部分 App 不走代理」，按 <a href="https://tanqingbo.cn/troubleshooting/">Clash 排障指南</a>逐项排查——软路由上的问题九成和客户端是同一类，剩下的一成多半是时间不同步（系统时间差几分钟，Trojan 的 TLS 证书校验就会失败），在后台开启 NTP 时间同步即可。</p>
+<h2 id="七、旁路由：不动主路由的稳妥接法"><a href="#七、旁路由：不动主路由的稳妥接法" class="headerlink" title="七、旁路由：不动主路由的稳妥接法"></a>七、旁路由：不动主路由的稳妥接法</h2><p>直接把软路由当主路由，一旦 OpenClash 抽风，全家断网，家人第一个喊你。更稳妥的接法是旁路由：</p>
+<ol>
+<li>软路由（刷好 OpenWrt + OpenClash）网线接在<strong>主路由的 LAN 口</strong>，软路由这端也用 LAN 口（不用 WAN 口）</li>
+<li>软路由后台：关掉自身的 DHCP 服务，IP 设成和主路由同网段的固定地址（比如主路由是 <code>192.168.1.1</code>，软路由设 <code>192.168.1.2</code>）</li>
+<li>需要翻墙的设备：在 Wi-Fi 设置里把「网关/路由器」手动改成 <code>192.168.1.2</code>——只有这些设备走代理，其他设备照旧走主路由</li>
+</ol>
+<p>好处是隔离故障：软路由挂了，把设备网关改回自动就恢复；家人不懂翻墙的设备完全不受影响。</p>
+<p>用顺了想全家无感翻墙（设备一个都不用手动改）时，把主路由的 DHCP 下发的网关和 DNS 都指向软路由地址即可——这样所有新接入的设备自动走软路由，全家方案和旁路由方案之间可以随时切换，进退都方便。</p>
+<h2 id="八、常见翻车点速查"><a href="#八、常见翻车点速查" class="headerlink" title="八、常见翻车点速查"></a>八、常见翻车点速查</h2><table>
+<thead>
+<tr>
+<th>症状</th>
+<th>多半是</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>节点测速全红</td>
+<td>订阅过期、机场服务器被墙</td>
+<td>先在电脑端 Clash 测同一份订阅定位问题；订阅失效找机场续费或换</td>
+</tr>
+<tr>
+<td>能上 Google，App 提示网络异常</td>
+<td>DNS 泄漏</td>
+<td>开「本地 DNS 劫持」，参考 Clash DNS 专题</td>
+</tr>
+<tr>
+<td>国外网站时通时断</td>
+<td>节点负载高或协议被识别</td>
+<td>换协议（Trojan/Reality），或换机场</td>
+</tr>
+<tr>
+<td>看国内视频变慢</td>
+<td>误开了全局模式</td>
+<td>切回规则模式，确认 <code>GEOIP,CN,DIRECT</code> 在规则里</td>
+</tr>
+<tr>
+<td>Trojan 节点全部握手失败</td>
+<td>软路由系统时间不对</td>
+<td>后台开 NTP 同步，重启 OpenClash</td>
+</tr>
+<tr>
+<td>全家突然断网（软路由当主路由时）</td>
+<td>OpenClash 进程挂了</td>
+<td>进后台重启 OpenClash；长期方案是改旁路由接法</td>
+</tr>
+</tbody></table>
+<h2 id="九、成本总账：全套下来要花多少钱"><a href="#九、成本总账：全套下来要花多少钱" class="headerlink" title="九、成本总账：全套下来要花多少钱"></a>九、成本总账：全套下来要花多少钱</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>花费</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>软路由小主机（N100）</td>
+<td>500-1000 元</td>
+<td>一次性投入，可长期用</td>
+</tr>
+<tr>
+<td>机场订阅</td>
+<td>99 元/年起</td>
+<td>一枝红杏入门版；流量大户选更高档位</td>
+</tr>
+<tr>
+<td>电费</td>
+<td>约 30-60 元/年</td>
+<td>N100 整机 6-15 瓦</td>
+</tr>
+<tr>
+<td>家里现有主路由</td>
+<td>0 元</td>
+<td>旁路由方案完全不动它</td>
+</tr>
+</tbody></table>
+<p>对比一下：手机上装客户端是免费，但电视盒子、游戏机这些设备永远装不了；而路由器方案一次配好，全家所有设备、包括未来新买的设备，连上 Wi-Fi 就生效。设备多的家庭，这是使用体验的天花板。</p>
+<h2 id="十、通了之后：全家设备能干什么"><a href="#十、通了之后：全家设备能干什么" class="headerlink" title="十、通了之后：全家设备能干什么"></a>十、通了之后：全家设备能干什么</h2><p>路由器翻墙最大的红利，是那些平时没法翻墙的设备突然全解锁了：</p>
+<ul>
+<li><strong>电视盒子 / Apple TV</strong>：YouTube、Netflix 大屏看。奈飞账号不用单开，<a href="https://tanqingbo.cn/goingbus/">环球巴士合租</a>一个月十几块；只想要大屏看剧的，<a href="https://tanqingbo.cn/popcorn/">爆米花五平台合租</a>一次覆盖 Netflix、Disney+、HBO Max</li>
+<li><strong>游戏机</strong>：Switch / PS5 直连外服商店和联机，不用再折腾加速器；游戏本体价格外服时常比国服便宜，回本速度比想象中快</li>
+<li><strong>手机</strong>：Telegram、ChatGPT 随手就用，而且不用每台手机挂客户端——Telegram 怎么注册看<a href="https://tanqingbo.cn/telegram-register-guide/">电报下载注册教程</a>（iOS 用户需要先备一个美区 Apple ID，流程看<a href="https://tanqingbo.cn/apple-id-buy-guide/">苹果 ID 购买教程</a>），AI 会员怎么买便宜看 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型充值教程</a></li>
+<li><strong>智能家居</strong>：接 Google、Alexa 生态的设备恢复正常联动</li>
+<li><strong>访客设备</strong>：朋友来家连 Wi-Fi 自动翻墙，不用帮人装 App</li>
+</ul>
+<hr>
+<p><strong>总结</strong>：路由器翻墙 = OpenWrt + OpenClash + 机场订阅，一次配置全家生效。设备少就别折腾（客户端方案更省心），设备多、有电视盒子游戏机的，这是终局方案。上手建议从旁路由接法开始，翻车不影响全家；硬件一步到位选 N100 小主机，旧路由器刷机留给爱折腾的人。订阅选抗封锁协议的机场（本站自用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>），规则模式保持国内直连、DNS 劫持打开、IPv6 关掉，就能长期稳定跑下去。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/router-vpn-guide/">https://tanqingbo.cn/router-vpn-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/science-internet-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        科学上网方案怎么选：VPN / 机场 / VPS 对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-23</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全教程：客户端、订阅与规则分流
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/choose2/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 机场怎么选：订阅购买与避坑
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/magic-vpn/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026 翻墙梯子推荐
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-05-26</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-linux/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Linux 科学上网：mihomo 命令行客户端
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-13</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/apple-id-buy-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">美区苹果ID购买教程（2026）：苹果ID怎么买、安全使用与防封指南 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%B7%AF%E7%94%B1%E5%99%A8%E7%BF%BB%E5%A2%99%EF%BC%9A%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E5%85%A8%E5%AE%B6%E7%94%9F%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text">一、路由器翻墙：一次配置，全家生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E8%AF%B4%E6%B8%85%E8%B7%AF%E7%BA%BF%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E3%80%8C%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A3%85-VPN%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">二、先说清路线：为什么不是「路由器装 VPN」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A1%AC%E4%BB%B6%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E4%B8%89%E6%9D%A1%E8%B7%AF%E4%B8%8E%E6%80%A7%E8%83%BD%E5%AF%B9%E7%85%A7"><span class="toc-number">4.</span> <span class="toc-text">三、硬件怎么选：三条路与性能对照</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%80%EF%BC%9A%E6%97%A7%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E6%9C%BA%EF%BC%88%E9%9B%B6%E6%88%90%E6%9C%AC%EF%BC%8C%E6%8A%98%E8%85%BE%E5%90%91%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">路线一：旧路由器刷机（零成本，折腾向）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%BA%8C%EF%BC%9A%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%B0%8F%E4%B8%BB%E6%9C%BA%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%8C%E4%B8%80%E6%AD%A5%E5%88%B0%E4%BD%8D%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">路线二：软路由小主机（推荐，一步到位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%89%EF%BC%9A%E6%97%81%E8%B7%AF%E7%94%B1%EF%BC%88%E4%B8%8D%E6%98%AF%E4%B9%B0%E4%BB%80%E4%B9%88%EF%BC%8C%E6%98%AF%E6%80%8E%E4%B9%88%E6%8E%A5%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">路线三：旁路由（不是买什么，是怎么接）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%BD%E5%B8%A6%E5%92%8C%E7%A1%AC%E4%BB%B6%E6%80%8E%E4%B9%88%E5%8C%B9%E9%85%8D"><span class="toc-number">4.4.</span> <span class="toc-text">宽带和硬件怎么匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81OpenWrt-OpenClash-%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">四、OpenWrt + OpenClash 配置流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%AE%A2%E9%98%85%E4%BB%8E%E5%93%AA%E6%9D%A5%EF%BC%9A%E6%9C%BA%E5%9C%BA%E6%98%AF%E5%89%8D%E6%8F%90"><span class="toc-number">6.</span> <span class="toc-text">五、订阅从哪来：机场是前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%A4%E4%B8%AA%E5%85%B3%E9%94%AE%E8%AE%BE%E7%BD%AE%EF%BC%9A%E8%A7%84%E5%88%99%E6%A8%A1%E5%BC%8F%E5%92%8C-DNS-%E9%98%B2%E6%B3%84%E6%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">六、两个关键设置：规则模式和 DNS 防泄漏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%97%81%E8%B7%AF%E7%94%B1%EF%BC%9A%E4%B8%8D%E5%8A%A8%E4%B8%BB%E8%B7%AF%E7%94%B1%E7%9A%84%E7%A8%B3%E5%A6%A5%E6%8E%A5%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">七、旁路由：不动主路由的稳妥接法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E8%A7%81%E7%BF%BB%E8%BD%A6%E7%82%B9%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">八、常见翻车点速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%88%90%E6%9C%AC%E6%80%BB%E8%B4%A6%EF%BC%9A%E5%85%A8%E5%A5%97%E4%B8%8B%E6%9D%A5%E8%A6%81%E8%8A%B1%E5%A4%9A%E5%B0%91%E9%92%B1"><span class="toc-number">10.</span> <span class="toc-text">九、成本总账：全套下来要花多少钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E9%80%9A%E4%BA%86%E4%B9%8B%E5%90%8E%EF%BC%9A%E5%85%A8%E5%AE%B6%E8%AE%BE%E5%A4%87%E8%83%BD%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">11.</span> <span class="toc-text">十、通了之后：全家设备能干什么</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="小胖穷 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>417</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>11</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>380</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%B7%AF%E7%94%B1%E5%99%A8%E7%BF%BB%E5%A2%99%EF%BC%9A%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E5%85%A8%E5%AE%B6%E7%94%9F%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text">一、路由器翻墙：一次配置，全家生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E8%AF%B4%E6%B8%85%E8%B7%AF%E7%BA%BF%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E3%80%8C%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A3%85-VPN%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">二、先说清路线：为什么不是「路由器装 VPN」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A1%AC%E4%BB%B6%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E4%B8%89%E6%9D%A1%E8%B7%AF%E4%B8%8E%E6%80%A7%E8%83%BD%E5%AF%B9%E7%85%A7"><span class="toc-number">4.</span> <span class="toc-text">三、硬件怎么选：三条路与性能对照</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%80%EF%BC%9A%E6%97%A7%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E6%9C%BA%EF%BC%88%E9%9B%B6%E6%88%90%E6%9C%AC%EF%BC%8C%E6%8A%98%E8%85%BE%E5%90%91%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">路线一：旧路由器刷机（零成本，折腾向）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%BA%8C%EF%BC%9A%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%B0%8F%E4%B8%BB%E6%9C%BA%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%8C%E4%B8%80%E6%AD%A5%E5%88%B0%E4%BD%8D%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">路线二：软路由小主机（推荐，一步到位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%89%EF%BC%9A%E6%97%81%E8%B7%AF%E7%94%B1%EF%BC%88%E4%B8%8D%E6%98%AF%E4%B9%B0%E4%BB%80%E4%B9%88%EF%BC%8C%E6%98%AF%E6%80%8E%E4%B9%88%E6%8E%A5%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">路线三：旁路由（不是买什么，是怎么接）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%BD%E5%B8%A6%E5%92%8C%E7%A1%AC%E4%BB%B6%E6%80%8E%E4%B9%88%E5%8C%B9%E9%85%8D"><span class="toc-number">4.4.</span> <span class="toc-text">宽带和硬件怎么匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81OpenWrt-OpenClash-%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">四、OpenWrt + OpenClash 配置流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%AE%A2%E9%98%85%E4%BB%8E%E5%93%AA%E6%9D%A5%EF%BC%9A%E6%9C%BA%E5%9C%BA%E6%98%AF%E5%89%8D%E6%8F%90"><span class="toc-number">6.</span> <span class="toc-text">五、订阅从哪来：机场是前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%A4%E4%B8%AA%E5%85%B3%E9%94%AE%E8%AE%BE%E7%BD%AE%EF%BC%9A%E8%A7%84%E5%88%99%E6%A8%A1%E5%BC%8F%E5%92%8C-DNS-%E9%98%B2%E6%B3%84%E6%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">六、两个关键设置：规则模式和 DNS 防泄漏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%97%81%E8%B7%AF%E7%94%B1%EF%BC%9A%E4%B8%8D%E5%8A%A8%E4%B8%BB%E8%B7%AF%E7%94%B1%E7%9A%84%E7%A8%B3%E5%A6%A5%E6%8E%A5%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">七、旁路由：不动主路由的稳妥接法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E8%A7%81%E7%BF%BB%E8%BD%A6%E7%82%B9%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">八、常见翻车点速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%88%90%E6%9C%AC%E6%80%BB%E8%B4%A6%EF%BC%9A%E5%85%A8%E5%A5%97%E4%B8%8B%E6%9D%A5%E8%A6%81%E8%8A%B1%E5%A4%9A%E5%B0%91%E9%92%B1"><span class="toc-number">10.</span> <span class="toc-text">九、成本总账：全套下来要花多少钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E9%80%9A%E4%BA%86%E4%B9%8B%E5%90%8E%EF%BC%9A%E5%85%A8%E5%AE%B6%E8%AE%BE%E5%A4%87%E8%83%BD%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">11.</span> <span class="toc-text">十、通了之后：全家设备能干什么</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">74</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程语言">
+        <div class="categories-list-item">
+          编程语言
+          <span class="categories-list-item-badge">41</span>
+        </div>
+      </a>
+    
+      <a href="/categories/工具">
+        <div class="categories-list-item">
+          工具
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程经验">
+        <div class="categories-list-item">
+          编程经验
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程资料">
+        <div class="categories-list-item">
+          编程资料
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">28</span>
+        </div>
+      </a>
+    
+      <a href="/categories/数据结构与算法">
+        <div class="categories-list-item">
+          数据结构与算法
+          <span class="categories-list-item-badge">17</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Linux" title="Linux"><div class="tags-list-item">Linux</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/Vpn-OpenInternet/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 小胖穷的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%B7%AF%E7%94%B1%E5%99%A8%E7%BF%BB%E5%A2%99%EF%BC%9A%E4%B8%80%E6%AC%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E5%85%A8%E5%AE%B6%E7%94%9F%E6%95%88"><span class="toc-number">2.</span> <span class="toc-text">一、路由器翻墙：一次配置，全家生效</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E8%AF%B4%E6%B8%85%E8%B7%AF%E7%BA%BF%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E3%80%8C%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A3%85-VPN%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">二、先说清路线：为什么不是「路由器装 VPN」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A1%AC%E4%BB%B6%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9A%E4%B8%89%E6%9D%A1%E8%B7%AF%E4%B8%8E%E6%80%A7%E8%83%BD%E5%AF%B9%E7%85%A7"><span class="toc-number">4.</span> <span class="toc-text">三、硬件怎么选：三条路与性能对照</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%80%EF%BC%9A%E6%97%A7%E8%B7%AF%E7%94%B1%E5%99%A8%E5%88%B7%E6%9C%BA%EF%BC%88%E9%9B%B6%E6%88%90%E6%9C%AC%EF%BC%8C%E6%8A%98%E8%85%BE%E5%90%91%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">路线一：旧路由器刷机（零成本，折腾向）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%BA%8C%EF%BC%9A%E8%BD%AF%E8%B7%AF%E7%94%B1%E5%B0%8F%E4%B8%BB%E6%9C%BA%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%8C%E4%B8%80%E6%AD%A5%E5%88%B0%E4%BD%8D%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">路线二：软路由小主机（推荐，一步到位）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%89%EF%BC%9A%E6%97%81%E8%B7%AF%E7%94%B1%EF%BC%88%E4%B8%8D%E6%98%AF%E4%B9%B0%E4%BB%80%E4%B9%88%EF%BC%8C%E6%98%AF%E6%80%8E%E4%B9%88%E6%8E%A5%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">路线三：旁路由（不是买什么，是怎么接）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%BD%E5%B8%A6%E5%92%8C%E7%A1%AC%E4%BB%B6%E6%80%8E%E4%B9%88%E5%8C%B9%E9%85%8D"><span class="toc-number">4.4.</span> <span class="toc-text">宽带和硬件怎么匹配</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81OpenWrt-OpenClash-%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">四、OpenWrt + OpenClash 配置流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%AE%A2%E9%98%85%E4%BB%8E%E5%93%AA%E6%9D%A5%EF%BC%9A%E6%9C%BA%E5%9C%BA%E6%98%AF%E5%89%8D%E6%8F%90"><span class="toc-number">6.</span> <span class="toc-text">五、订阅从哪来：机场是前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%A4%E4%B8%AA%E5%85%B3%E9%94%AE%E8%AE%BE%E7%BD%AE%EF%BC%9A%E8%A7%84%E5%88%99%E6%A8%A1%E5%BC%8F%E5%92%8C-DNS-%E9%98%B2%E6%B3%84%E6%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">六、两个关键设置：规则模式和 DNS 防泄漏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%97%81%E8%B7%AF%E7%94%B1%EF%BC%9A%E4%B8%8D%E5%8A%A8%E4%B8%BB%E8%B7%AF%E7%94%B1%E7%9A%84%E7%A8%B3%E5%A6%A5%E6%8E%A5%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">七、旁路由：不动主路由的稳妥接法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E8%A7%81%E7%BF%BB%E8%BD%A6%E7%82%B9%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">八、常见翻车点速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%88%90%E6%9C%AC%E6%80%BB%E8%B4%A6%EF%BC%9A%E5%85%A8%E5%A5%97%E4%B8%8B%E6%9D%A5%E8%A6%81%E8%8A%B1%E5%A4%9A%E5%B0%91%E9%92%B1"><span class="toc-number">10.</span> <span class="toc-text">九、成本总账：全套下来要花多少钱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E9%80%9A%E4%BA%86%E4%B9%8B%E5%90%8E%EF%BC%9A%E5%85%A8%E5%AE%B6%E8%AE%BE%E5%A4%87%E8%83%BD%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">11.</span> <span class="toc-text">十、通了之后：全家设备能干什么</span></a></li></ol>
+  </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-28</div>
+        <a href="/router-vpn-guide/"><div class="recent-posts-item-content">路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-28</div>
+        <a href="/apple-id-buy-guide/"><div class="recent-posts-item-content">美区苹果ID购买教程（2026）：苹果ID怎么买、安全使用与防封指南</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-25</div>
+        <a href="/telegram-register-guide/"><div class="recent-posts-item-content">电报(Telegram)下载注册教程（2026）：大陆收不到验证码怎么办、加群与使用全解</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-23</div>
+        <a href="/national-day-vpn-guide/"><div class="recent-posts-item-content">2026 国庆翻墙攻略：在家与出游准备清单，机场高峰避坑</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
