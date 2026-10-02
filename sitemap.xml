@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
+    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
     
     <lastmod>2026-09-25</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
+    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
     
     <lastmod>2026-09-25</lastmod>
     
@@ -688,13 +688,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/CSBook003/</loc>
-    
-    <lastmod>2026-09-16</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/CSBook002/</loc>
     
     <lastmod>2026-09-16</lastmod>
@@ -710,6 +703,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/CSBook005/</loc>
+    
+    <lastmod>2026-09-16</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/CSBook003/</loc>
     
     <lastmod>2026-09-16</lastmod>
     
@@ -1882,13 +1882,6 @@
 
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/categories/%E6%8A%80%E6%9C%AF%E4%BB%A5%E5%A4%96/</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>daily</changefreq>
@@ -1897,6 +1890,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/categories/%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
