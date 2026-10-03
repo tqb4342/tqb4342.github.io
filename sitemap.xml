@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/Android-open-internet/</loc>
+    
+    <lastmod>2026-10-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/tiktok-guide/</loc>
+    
+    <lastmod>2026-10-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/chatgpt-plus-buy-guide/</loc>
     
     <lastmod>2026-10-01</lastmod>
@@ -163,7 +177,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/telegram-set-chinese/</loc>
+    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
     
     <lastmod>2026-09-25</lastmod>
     
@@ -177,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
+    <loc>https://tanqingbo.cn/telegram-set-chinese/</loc>
     
     <lastmod>2026-09-25</lastmod>
     
@@ -604,13 +618,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/Android-open-internet/</loc>
-    
-    <lastmod>2026-09-17</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/Android-VPN/</loc>
     
     <lastmod>2026-09-17</lastmod>
@@ -695,14 +702,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/CSBook004/</loc>
+    <loc>https://tanqingbo.cn/CSBook003/</loc>
     
     <lastmod>2026-09-16</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/CSBook003/</loc>
+    <loc>https://tanqingbo.cn/CSBook004/</loc>
     
     <lastmod>2026-09-16</lastmod>
     
@@ -1917,13 +1924,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E7%BC%96%E7%A8%8B%E8%B5%84%E6%96%99/</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/categories/AI%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
@@ -1938,6 +1938,13 @@
   </url>
   
   <url>
+    <loc>https://tanqingbo.cn/categories/%E7%BC%96%E7%A8%8B%E8%B5%84%E6%96%99/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
@@ -1946,6 +1953,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/categories/ITK%E4%B8%8EVTK/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/categories/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
