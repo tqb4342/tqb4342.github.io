@@ -67,6 +67,55 @@
   </script>
   
   
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Windows 科学上网需要准备什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两样东西：Clash 客户端（免费开源，负责接收解析节点）和机场订阅（提供加密节点，解锁 Google、YouTube、ChatGPT 等服务）。工具免费，节点付费，入门套餐一年百元左右。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "订阅导入后无节点怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "检查 Clash 是否更新配置成功（重新点击更新订阅），或联系机场客服确认订阅链接是否正确。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "YouTube 打不开、视频加载慢怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "更换低延迟节点（香港、日本、新加坡通常最快）、开启 TUN 模式、或切换 WiFi 和热点网络再测试。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "科学上网安全吗？会泄露隐私吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "机场基于 Trojan 等加密协议，把代理流量伪装成正常 HTTPS 数据，运营商只能看到加密流量。选运营多年、有公司主体的服务商，不要用来路不明的免费节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "一个订阅能几台设备用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看套餐：基础版一般支持 5 台设备同时在线，升级版不限设备数。Windows、Mac、Android、iOS、路由器可以共用同一个订阅。"
+      }
+    }
+  ]
+}
+  </script>
+  
   <link rel="icon" href="/img/logo.webp">
   <title>Windows 翻墙教程：从零开始科学上网（最稳定的科学上网方案）</title>
   
@@ -253,6 +302,7 @@ var _hmt = _hmt || [];
   
 <meta name="generator" content="Hexo 5.1.1">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
 </head>
 
 
@@ -508,6 +558,13 @@ var _hmt = _hmt || [];
   <ul style="list-style: none; padding: 0; margin: 0;">
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/build-your-own-airport/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-10-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
       <a href="/router-vpn-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
         路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网
       </a>
@@ -533,13 +590,6 @@ var _hmt = _hmt || [];
         Linux科学上网教程：mihomo命令行翻墙与机场订阅导入（2026）
       </a>
       <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-13</span>
-    </li>
-    
-    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
-      <a href="/iphone-kuaili/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        苹果手机翻墙全流程：快狸机场注册、订阅、iOS 客户端一键连接（2026）
-      </a>
-      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-08</span>
     </li>
     
   </ul>
@@ -622,7 +672,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>419</span>
+    <span>420</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -630,7 +680,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>387</span>
+    <span>388</span>
     <span>标签</span>
   </a>
 </div>
@@ -679,7 +729,7 @@ var _hmt = _hmt || [];
       <a href="/categories/科学上网">
         <div class="categories-list-item">
           科学上网
-          <span class="categories-list-item-badge">71</span>
+          <span class="categories-list-item-badge">72</span>
         </div>
       </a>
     
@@ -805,6 +855,11 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-04</div>
+        <a href="/build-your-own-airport/"><div class="recent-posts-item-content">自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-10-03</div>
         <a href="/tiktok-guide/"><div class="recent-posts-item-content">TikTok 国内怎么下载注册（2026）：翻墙也看不了的原因与解法</div></a>
       </div>
@@ -817,11 +872,6 @@ var _hmt = _hmt || [];
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-09-28</div>
         <a href="/router-vpn-guide/"><div class="recent-posts-item-content">路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-09-28</div>
-        <a href="/apple-id-buy-guide/"><div class="recent-posts-item-content">美区苹果ID购买教程（2026）：苹果ID怎么买、安全使用与防封指南</div></a>
       </div>
     
   </div>

@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场",
+  "author": {
+    "@type": "Person",
+    "name": "小胖穷",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-10-04T14:35:00.000Z",
+  "dateModified": "2026-10-04T14:35:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/build-your-own-airport/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/boa_banner_text.webp",
+  "description": "手把手自建机场教程：机场搭建全流程四步走，从 VPS 选购、3X-UI 面板安装、VLESS+Reality 节点创建到导入 Clash 客户端，算清自建与买机场的真实成本账，讲透 IP 被墙、流媒体解锁这些坑，帮你判断该自己搭一台还是直接买机场。",
+  "keywords": [
+    "自建机场",
+    "自建机场教程",
+    "机场搭建",
+    "vps搭建科学上网",
+    "自建梯子",
+    "clash自建节点",
+    "vless reality"
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "自建机场一个月要花多少钱？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "主要是 VPS 的钱：入门线路每月 5 美元左右（约 35 元），CN2 GIA 等优化线路年付折算 15-30 元/月。面板和协议软件全部开源免费，没有其他固定开销。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "自建机场和买机场哪个好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两者解决的不是同一个问题。自建买到的是独享 IP、完全控制和隐私；机场买到的是省心——多地区节点、流媒体解锁、有人替你维护。预算相近的情况下，机场的日常体验通常更好，自建更适合愿意折腾、在意隐私的人。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "自建机场会被封吗？IP 被墙了怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "会被封，这是自建最大的隐性成本。IP 被墙的典型表现是 ping 能通但所有端口连不上。处理办法是换 IP：部分商家销毁重建免费换 IP，有些收几美元换机费。用 VLESS+Reality 协议可以大幅降低被墙概率。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "不会 Linux 命令能自建机场吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能，但会难受。全流程只需要十几条命令，照着教程复制粘贴即可，不需要编程能力。不过出问题时（连不上、面板挂了）需要自己查日志排查，完全没有命令行经验的人建议先从机场开始。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "自建机场用什么协议最稳？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "2026 年首选 VLESS+Reality：不需要域名和证书，伪装成访问正常网站的流量，是目前抗封锁能力最强的方案。老旧的 Shadowsocks 裸协议已经很容易被识别，不建议再用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "自建机场能看 Netflix 和 ChatGPT 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看运气。VPS 的 IP 是机房 IP，部分区域被 Netflix 和 OpenAI 风控拦截。机场通常有专门的流媒体解锁节点，自建想解锁流媒体需要在选购 VPS 时先测试 IP 是否干净。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "一台 VPS 可以几个人一起用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "技术上可以，在面板里给每个人建独立账号即可。但共享意味着 IP 又变成了「多人使用」，一旦其中一个人用量过大触发风控，整台机器的 IP 都会受影响，独享的优势也就没了。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场</title>
+  
+  <meta name="description" content="手把手自建机场教程：机场搭建全流程四步走，从 VPS 选购、3X-UI 面板安装、VLESS+Reality 节点创建到导入 Clash 客户端，算清自建与买机场的真实成本账，讲透 IP 被墙、流媒体解锁这些坑，帮你判断该自己搭一台还是直接买机场。">
+  <meta name="keywords" content="自建机场,自建机场教程,机场搭建,vps搭建科学上网,自建梯子,clash自建节点,vless reality">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/build-your-own-airport/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/boa_banner_text.webp">
+  
+  
+  <meta property="og:description" content="手把手自建机场教程：机场搭建全流程四步走，从 VPS 选购、3X-UI 面板安装、VLESS+Reality 节点创建到导入 Clash 客户端，算清自建与买机场的真实成本账，讲透 IP 被墙、流媒体解锁这些坑，帮你判断该自己搭一台还是直接买机场。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-10-04T14:35:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-04T14:35:00.000Z">
+  <meta property="og:article:author" content="科 学 上 网">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="自建机场">
+  
+  <meta property="og:article:tag" content="VPS">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/build-your-own-airport/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn 小胖穷的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/boa_banner_text.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/boa_banner_text.webp"
+    alt="自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-10-04T14:35:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-10-04</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.5k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/build-your-own-airport/" class="leancloud_visitors" data-flag-title="自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/自建机场/" class="post-meta-link">自建机场</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/VPS/" class="post-meta-link">VPS</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>📚 本文是 <a href="https://tanqingbo.cn/science-internet-guide/"><strong>科学上网完全指南（2026最新版）</strong></a> 系列教程之一。想系统了解 VPN、机场、VPS 三大方案的取舍，欢迎访问总览页。</p>
+</blockquote>
+<p><strong>30 秒速答</strong>：自建机场 = 买一台海外 VPS（每月 5 美元起）→ 装开源面板 3X-UI → 建一个 VLESS+Reality 节点 → 把节点链接导入 <a href="https://tanqingbo.cn/clash-verge/"><strong>Clash Verge</strong></a>。全程十几条命令，一小时以内能跑通。它买到的不是便宜，而是<strong>独享 IP 和完全控制权</strong>；如果你只想省心多设备翻墙，直接拉到文末看结论——大部分人其实更适合买机场。</p>
+<h2 id="一、先说清楚：自建机场到底图什么"><a href="#一、先说清楚：自建机场到底图什么" class="headerlink" title="一、先说清楚：自建机场到底图什么"></a>一、先说清楚：自建机场到底图什么</h2><p>很多人搜「如何搭建自己的机场」，初衷多半是省钱，先把这笔账算明白：一台能用的 VPS 每月 35 元上下，而一个靠谱机场每月十几到三十元。<strong>自建不省钱，甚至更贵</strong>——这还是没算 IP 被墙后换 IP 的时间成本。</p>
+<p>那为什么还有一大批人坚持自建？因为机场给不了这三样东西：</p>
+<ol>
+<li><strong>独享 IP</strong>：机场是几百人共享节点池，IP 信誉被用得很脏；自建节点的 IP 只有你一个人用，注册账号、风控敏感的操作都干净得多</li>
+<li><strong>完全控制</strong>：协议、端口、加密方式、日志策略全是你说了算，不依赖任何第三方服务商的存活</li>
+<li><strong>隐私上限更高</strong>：机场能看到你的流量元数据（访问了哪些网站的时间分布），自建的只有 VPS 商家能看到连接记录，理论暴露面小一截</li>
+</ol>
+<p>说白了，自建和买机场是两种商品：一个买的是<strong>控制权</strong>，一个买的是<strong>省心</strong>。想清楚这一点再往下看。</p>
+<h2 id="二、自建-vs-买机场：一张表算清账"><a href="#二、自建-vs-买机场：一张表算清账" class="headerlink" title="二、自建 vs 买机场：一张表算清账"></a>二、自建 vs 买机场：一张表算清账</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>自建机场</th>
+<th>买机场</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>月成本</td>
+<td>$5 起（约 35 元），优化线路 $10+</td>
+<td>十几到三十元</td>
+</tr>
+<tr>
+<td>IP</td>
+<td>独享，干净度自己负责</td>
+<td>共享节点池，看机场维护水平</td>
+</tr>
+<tr>
+<td>节点地区</td>
+<td>一台 VPS 一个地区，想多地区就多买几台</td>
+<td>动辄几十个地区切换</td>
+</tr>
+<tr>
+<td>流媒体解锁</td>
+<td>看运气，机房 IP 常被 Netflix/ChatGPT 风控</td>
+<td>通常有专门的解锁节点</td>
+</tr>
+<tr>
+<td>速度上限</td>
+<td>独享带宽，晚高峰看线路质量</td>
+<td>共享带宽，高峰期看机场超售程度</td>
+</tr>
+<tr>
+<td>被封锁后</td>
+<td>自己换 IP / 换协议，处理要一小时到几天</td>
+<td>客服或自动系统换节点，几分钟</td>
+</tr>
+<tr>
+<td>维护成本</td>
+<td>面板更新、证书、安全加固都是你的事</td>
+<td>零</td>
+</tr>
+<tr>
+<td>隐私</td>
+<td>只暴露给 VPS 商家</td>
+<td>暴露给机场主</td>
+</tr>
+</tbody></table>
+<p>结论很直白：<strong>如果你翻墙的主要目的是日常上网和流媒体，机场的性价比碾压自建</strong>；自建的价值在独享 IP 和控制权，这是特定需求才用得上的东西。折中方案也常见——主用机场保证日常体验，自建一台留着做敏感操作和备用线路。</p>
+<p>嫌折腾、想直接用上的，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818"><strong>一枝红杏</strong></a>这类老牌机场开箱即用，多地区节点和流媒体解锁都是现成的。决定自己动手的，往下看完整流程。</p>
+<h2 id="三、第一步：选一台合格的-VPS"><a href="#三、第一步：选一台合格的-VPS" class="headerlink" title="三、第一步：选一台合格的 VPS"></a>三、第一步：选一台合格的 VPS</h2><p>VPS 是自建唯一要花钱的地方，也是决定体验的核心。选购时盯四点：</p>
+<p><strong>1. 机房位置与线路。</strong> 延迟和速度主要由「从你家到机房的路」决定，不是机房本身。优先选日本、新加坡、美西的<strong>优化线路</strong>（CN2 GIA、软银），晚高峰不炸；普通线路便宜一半，但晚高峰可能卡成幻灯片。预算有限就选美西普通线路，延迟 150ms 左右，日常网页浏览够用。</p>
+<p><strong>2. IP 是否干净。</strong> 下单前先查这个机房段的口碑，有没有批量被墙的记录。拿到机器后第一件事打开 ping.pe，输入你的 IP，看全国各探测点的结果——绿色为主说明 IP 健康；大面积红色（超时）说明已被墙或线路劣化，趁退款期赶紧换。</p>
+<p><strong>3. 商家口碑。</strong> 搬瓦工（BanwagonHost）、Vultr、DMIT 这几家被国内用户用了多年，稳定性和退款政策有保障。Vultr 按小时计费，测试 IP 干不干净最方便——不满意就销毁重建，换 IP 免费。</p>
+<p><strong>4. 配置下限很低。</strong> 跑代理节点 512MB 内存就够，1 核 1G 绰绰有余，别为配置多花钱，钱应该花在线路上。</p>
+<p><strong>5. 流量配额一人够用。</strong> 主流 VPS 每月给 500GB 到 2TB 流量，一个人日常刷网页、看视频每月消耗大约 50-150GB，完全够；看 4K 流媒体多的话按 300GB 估算。真正要留意的是<strong>流量计费方式</strong>：超了要么限速要么按 GB 另收费，年付前看清套餐细则。</p>
+<p>详细的主流 VPS 商家对比和年付优惠，我在这篇<a href="https://tanqingbo.cn/best-vps/"><strong>翻墙 VPS 与软件推荐</strong></a>里写过，这里不展开。</p>
+<h2 id="四、第二步：安装-3X-UI-面板"><a href="#四、第二步：安装-3X-UI-面板" class="headerlink" title="四、第二步：安装 3X-UI 面板"></a>四、第二步：安装 3X-UI 面板</h2><p>买好 VPS 后，商家会把 IP 和 root 密码发到邮箱或商家控制面板。用 SSH 连上服务器：Windows 10/11 自带终端，按 Win+R 输入 cmd 回车，敲 <code>ssh root@你的IP</code>；第一次连接会问 <code>Are you sure you want to continue connecting</code>，输 yes 回车，再输密码（输入时屏幕不显示任何字符是正常的，敲完直接回车）。连上后三步：</p>
+<p><strong>1. 更新系统并装基础工具：</strong></p>
+<pre class="highlight"><span class="line">apt update &amp;&amp; apt upgrade -y</span><br><span class="line">apt install -y curl socat</span><br></pre>
+
+<p><strong>2. 一键安装 3X-UI 面板</strong>（开源多协议管理面板，老牌 x-ui 的活跃继任者，作者 mhsanaei 在 GitHub 持续维护）：</p>
+<pre class="highlight"><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br></pre>
+
+<p>装完终端会显示面板地址、端口、用户名和密码，<strong>先记下来</strong>。</p>
+<p><strong>3. 开启 BBR 加速</strong>（提升跨境链路速度，内核自带）：</p>
+<pre class="highlight"><span class="line"><span class="built_in">echo</span> <span class="string">"net.core.default_qdisc=fq"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"net.ipv4.tcp_congestion_control=bbr"</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br></pre>
+
+<p><strong>安全加固必做</strong>：浏览器打开面板后第一件事改掉默认端口和登录路径、换强密码。自建圈丢节点最常见的不是被墙，而是面板用默认配置裸奔被人扫出来。更稳妥的做法是在面板设置里只允许特定 IP 访问管理页面，或者套一层 Cloudflare。</p>
+<p>到这里，服务器端已经就绪。想了解这些协议的原理和演进史（为什么 Shadowsocks 老了、Reality 强在哪），看这篇<a href="https://tanqingbo.cn/protocols/"><strong>翻墙协议详解</strong></a>。</p>
+<h2 id="五、第三步：创建节点（VLESS-Reality）"><a href="#五、第三步：创建节点（VLESS-Reality）" class="headerlink" title="五、第三步：创建节点（VLESS + Reality）"></a>五、第三步：创建节点（VLESS + Reality）</h2><p>登录面板 → 入站列表 → 添加入站，关键选项：</p>
+<ul>
+<li><strong>协议</strong>：选 VLESS</li>
+<li><strong>端口</strong>：443（最不容易被针对的端口）</li>
+<li><strong>传输</strong>：TCP，安全性选 Reality</li>
+<li><strong>Dest / SNI</strong>：填一个国内能正常访问的大站域名（面板可自动生成），Reality 会把你的流量伪装成对这个网站的正常访问</li>
+<li><strong>流控</strong>：xtls-rprx-vision</li>
+</ul>
+<p>保存后点节点二维码或分享链接，复制那串 <code>vless://</code> 开头的链接。<strong>不需要域名、不需要买证书</strong>，这是 Reality 相比老方案最大的省心之处。</p>
+<p>先别急着关面板——花十秒验证一遍：本地 ping 一下 VPS 的 IP 能通（机器活着），再用下一节的客户端实际连一次，能打开 google.com 就是全程打通了。</p>
+<h2 id="六、第四步：导入客户端开始用"><a href="#六、第四步：导入客户端开始用" class="headerlink" title="六、第四步：导入客户端开始用"></a>六、第四步：导入客户端开始用</h2><p>桌面端和手机端都走 Clash 系最省事：</p>
+<ol>
+<li>装 <a href="https://tanqingbo.cn/clash-verge/"><strong>Clash Verge</strong></a>（Windows/Mac/Linux 全平台，GitHub Releases 直接下载）</li>
+<li>把 <code>vless://</code> 链接保存为一个本地订阅文件（3X-UI 面板有订阅功能，直接生成订阅链接填进 Verge 更方便）</li>
+<li>开启系统代理，选节点，完成</li>
+</ol>
+<p>手机端 iOS 用 Shadowrocket / Stash，安卓用 Clash Meta for Android，同样支持 VLESS+Reality——复制 <code>vless://</code> 链接后直接打开 App，会自动提示导入，比桌面端还省事。完整的客户端配置细节看<a href="https://tanqingbo.cn/clash-guide/"><strong>Clash 入门指南</strong></a>。</p>
+<h2 id="七、自建之后：维护与翻车处理"><a href="#七、自建之后：维护与翻车处理" class="headerlink" title="七、自建之后：维护与翻车处理"></a>七、自建之后：维护与翻车处理</h2><p>机场搭建完成只是开始，日常维护就三件事：</p>
+<p><strong>IP 被墙（最常见）。</strong> 被墙往往有前兆：晚高峰丢包率从零星几个点涨到百分之十几、白天正常一到晚上就卡，这是 IP 被重点照顾的信号，有条件就提前准备后手。彻底被墙后的症状：ping IP 能通，但所有端口 TCP 连接超时——ICMP 放行而 TCP 全断，基本可以断定 IP 进了黑名单。处理：Vultr 直接销毁重建（免费换 IP）；搬瓦工付几美元换机房迁移。然后你会明白为什么第二节说自建的真实成本里有「时间」这一项。</p>
+<p><strong>端口被封。</strong> 单端口被针对时（IP 还活着只是 443 不通），面板里把入站换到别的端口即可，Reality 用户大概率永远不会遇到这步。</p>
+<p><strong>面板更新。</strong> 3X-UI 每隔一两个月有安全更新，SSH 上去跑一遍安装脚本就是升级，一分钟的事，别拖。</p>
+<h2 id="八、结论：什么人该自建，什么人该买"><a href="#八、结论：什么人该自建，什么人该买" class="headerlink" title="八、结论：什么人该自建，什么人该买"></a>八、结论：什么人该自建，什么人该买</h2><p>看完整个流程，按你的情况对号入座：</p>
+<ul>
+<li><strong>决定自建的</strong>：按第三到六节顺序走。预算给到线路而不是配置，Reality 参数照抄本文的默认值，出问题回第七节对照排查</li>
+<li><strong>决定买机场的</strong>：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818"><strong>一枝红杏</strong></a>在这篇教程的整个链路上都是替代方案——不用 VPS、不用命令行，注册后导入订阅五分钟开始用，可以先看<a href="https://tanqingbo.cn/yzhx-vpn/"><strong>机场测评</strong></a>再决定</li>
+<li><strong>拿不定主意的</strong>：先用机场把日常跑起来，周末闲下来再花一小时试一次自建，两样都体验过自然知道怎么选——老玩家的标配本来就是「机场为主 + 自建一台备用」</li>
+</ul>
+<p>有问题欢迎评论区留言，自建过程中卡在哪一步，贴报错信息我来帮你看。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/build-your-own-airport/">https://tanqingbo.cn/build-your-own-airport/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/best-vps/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        2026 翻墙软件推荐：VPN 工具与 VPS 选购
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-05-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-verge/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash Verge 下载安装与配置教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全入门指南：订阅与使用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/protocols/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        主流翻墙协议详解：谁能扛住封锁
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-04-14</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/science-internet-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        科学上网完全指南（2026 最新版）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-23</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/tiktok-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">TikTok 国内怎么下载注册（2026）：翻墙也看不了的原因与解法 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E6%B8%85%E6%A5%9A%EF%BC%9A%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E5%88%B0%E5%BA%95%E5%9B%BE%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、先说清楚：自建机场到底图什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%87%AA%E5%BB%BA-vs-%E4%B9%B0%E6%9C%BA%E5%9C%BA%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E7%AE%97%E6%B8%85%E8%B4%A6"><span class="toc-number">2.</span> <span class="toc-text">二、自建 vs 买机场：一张表算清账</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E9%80%89%E4%B8%80%E5%8F%B0%E5%90%88%E6%A0%BC%E7%9A%84-VPS"><span class="toc-number">3.</span> <span class="toc-text">三、第一步：选一台合格的 VPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-3X-UI-%E9%9D%A2%E6%9D%BF"><span class="toc-number">4.</span> <span class="toc-text">四、第二步：安装 3X-UI 面板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9%EF%BC%88VLESS-Reality%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五、第三步：创建节点（VLESS + Reality）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AF%BC%E5%85%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%80%E5%A7%8B%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">六、第四步：导入客户端开始用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%87%AA%E5%BB%BA%E4%B9%8B%E5%90%8E%EF%BC%9A%E7%BB%B4%E6%8A%A4%E4%B8%8E%E7%BF%BB%E8%BD%A6%E5%A4%84%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">七、自建之后：维护与翻车处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%BB%93%E8%AE%BA%EF%BC%9A%E4%BB%80%E4%B9%88%E4%BA%BA%E8%AF%A5%E8%87%AA%E5%BB%BA%EF%BC%8C%E4%BB%80%E4%B9%88%E4%BA%BA%E8%AF%A5%E4%B9%B0"><span class="toc-number">8.</span> <span class="toc-text">八、结论：什么人该自建，什么人该买</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="小胖穷 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">科&nbsp;学&nbsp;上&nbsp;网</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>420</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>388</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E6%B8%85%E6%A5%9A%EF%BC%9A%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E5%88%B0%E5%BA%95%E5%9B%BE%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、先说清楚：自建机场到底图什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%87%AA%E5%BB%BA-vs-%E4%B9%B0%E6%9C%BA%E5%9C%BA%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E7%AE%97%E6%B8%85%E8%B4%A6"><span class="toc-number">2.</span> <span class="toc-text">二、自建 vs 买机场：一张表算清账</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E9%80%89%E4%B8%80%E5%8F%B0%E5%90%88%E6%A0%BC%E7%9A%84-VPS"><span class="toc-number">3.</span> <span class="toc-text">三、第一步：选一台合格的 VPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-3X-UI-%E9%9D%A2%E6%9D%BF"><span class="toc-number">4.</span> <span class="toc-text">四、第二步：安装 3X-UI 面板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9%EF%BC%88VLESS-Reality%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五、第三步：创建节点（VLESS + Reality）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AF%BC%E5%85%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%80%E5%A7%8B%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">六、第四步：导入客户端开始用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%87%AA%E5%BB%BA%E4%B9%8B%E5%90%8E%EF%BC%9A%E7%BB%B4%E6%8A%A4%E4%B8%8E%E7%BF%BB%E8%BD%A6%E5%A4%84%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">七、自建之后：维护与翻车处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%BB%93%E8%AE%BA%EF%BC%9A%E4%BB%80%E4%B9%88%E4%BA%BA%E8%AF%A5%E8%87%AA%E5%BB%BA%EF%BC%8C%E4%BB%80%E4%B9%88%E4%BA%BA%E8%AF%A5%E4%B9%B0"><span class="toc-number">8.</span> <span class="toc-text">八、结论：什么人该自建，什么人该买</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">72</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">29</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">19</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - 小胖穷的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-04</div>
+        <a href="/build-your-own-airport/"><div class="recent-posts-item-content">自建机场教程（2026）：VPS 搭建机场全流程与自建还是买机场</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-03</div>
+        <a href="/tiktok-guide/"><div class="recent-posts-item-content">TikTok 国内怎么下载注册（2026）：翻墙也看不了的原因与解法</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-01</div>
+        <a href="/chatgpt-plus-buy-guide/"><div class="recent-posts-item-content">ChatGPT Plus 怎么开通（2026）：国内订阅失败与 9 种解决办法</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-09-28</div>
+        <a href="/router-vpn-guide/"><div class="recent-posts-item-content">路由器翻墙教程（2026）：OpenWrt+Clash 软路由科学上网</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E6%B8%85%E6%A5%9A%EF%BC%9A%E8%87%AA%E5%BB%BA%E6%9C%BA%E5%9C%BA%E5%88%B0%E5%BA%95%E5%9B%BE%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">一、先说清楚：自建机场到底图什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%87%AA%E5%BB%BA-vs-%E4%B9%B0%E6%9C%BA%E5%9C%BA%EF%BC%9A%E4%B8%80%E5%BC%A0%E8%A1%A8%E7%AE%97%E6%B8%85%E8%B4%A6"><span class="toc-number">2.</span> <span class="toc-text">二、自建 vs 买机场：一张表算清账</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E9%80%89%E4%B8%80%E5%8F%B0%E5%90%88%E6%A0%BC%E7%9A%84-VPS"><span class="toc-number">3.</span> <span class="toc-text">三、第一步：选一台合格的 VPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%89%E8%A3%85-3X-UI-%E9%9D%A2%E6%9D%BF"><span class="toc-number">4.</span> <span class="toc-text">四、第二步：安装 3X-UI 面板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%88%9B%E5%BB%BA%E8%8A%82%E7%82%B9%EF%BC%88VLESS-Reality%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">五、第三步：创建节点（VLESS + Reality）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E5%AF%BC%E5%85%A5%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BC%80%E5%A7%8B%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">六、第四步：导入客户端开始用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%87%AA%E5%BB%BA%E4%B9%8B%E5%90%8E%EF%BC%9A%E7%BB%B4%E6%8A%A4%E4%B8%8E%E7%BF%BB%E8%BD%A6%E5%A4%84%E7%90%86"><span class="toc-number">7.</span> <span class="toc-text">七、自建之后：维护与翻车处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%BB%93%E8%AE%BA%EF%BC%9A%E4%BB%80%E4%B9%88%E4%BA%BA%E8%AF%A5%E8%87%AA%E5%BB%BA%EF%BC%8C%E4%BB%80%E4%B9%88%E4%BA%BA%E8%AF%A5%E4%B9%B0"><span class="toc-number">8.</span> <span class="toc-text">八、结论：什么人该自建，什么人该买</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
