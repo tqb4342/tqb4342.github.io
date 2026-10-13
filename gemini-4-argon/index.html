@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-10-13T14:00:00.000Z",
+  "dateModified": "2026-10-13T14:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/gemini-4-argon/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-banner.webp",
+  "description": "谷歌 10 月 1 日凌晨发布 Gemini 4 Argon：18 项基准测试独占 12 项第一，输出上限拉到 100 万 token，API 限时五折每百万 token 2/10 美元。本文讲清它的真实水平（官方屠榜但第三方评测只与 GPT-6 Astra 打平）、三个真实落地案例、开放节奏，以及国内用户现在的三条使用路径。",
+  "keywords": [
+    "gemini 4",
+    "gemini 4 argon",
+    "gemini 4 发布",
+    "gemini 4 跑分",
+    "gemini 4 国内使用",
+    "gemini 4 价格",
+    "gemini 4 api",
+    "gemini 4 什么时候能用",
+    "gemini 4 vs gpt-6 astra",
+    "谷歌 gemini 4",
+    "gemini 4 claude 对比",
+    "gemini 4 免费试用"
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Gemini 4 Argon 是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "谷歌 DeepMind 在 2026 年 10 月 1 日凌晨发布的新旗舰模型，是七个多月以来首款高于 Flash 级别的自研模型。官方公布的 18 项基准测试里独占 12 项第一、并列 1 项，主打长程复杂任务：软件工程、金融法律知识工作、网络安全防御。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini 4 Argon 和 GPT-6 Astra 哪个强？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方自测 Argon 18 项里 12 项第一；但第三方 Artificial Analysis 的智能指数两者同为 53 分打平，且 Claude Opus 5.5（58 分）仍在两者之上。真实水平大概率是同一档，差距没有发布会显得那么大，等实际开放后用真实项目测才有结论。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini 4 Argon 什么时候能用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "分批开放：先给可信网络安全防御者，之后轮到付费 API 和 AI Ultra 订阅用户，普通免费用户要再往后排。谷歌没给明确时间表，参考惯例付费 API 会先落地；Gemini 现役模型（3.8 Flash 等）不受影响照常用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini 4 Argon 的 API 多少钱？限时五折到什么时候？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "标准价每百万输入/输出 token 4/20 美元，目前限时五折 2/10 美元，缓存输入 token 每百万仅 0.10 美元。按第三方测算，跑一个平均任务约 1.99 美元，是 GPT-6 Astra（3.26 美元）的六折、Claude Opus 5.5（5.98 美元）的三分之一。谷歌公告只说限时没给截止日期，大规模用量建议按标准价做预算。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "100 万 token 输出是什么概念？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "此前主流模型的输出上限在 64K token 上下，一次最多写几万字。Argon 拉到 100 万 token，超大代码库重构、整本书级别的内容、几十小时的长任务可以一口气输出不截断，这个指标目前是业界第一。日常问答用不到，长任务场景才直接受益。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "国内现在能用上 Gemini 4 Argon 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "本体还没对普通用户开放，现在用不了。能做的准备：一是把网络环境弄好（Argon 开放后第一波挤爆的就是节点不稳的人）；二是先用上 Gemini 现役模型熟悉生态；三是关注合租平台动态，参考 ChatGPT 镜像的先例，Argon 开放后强度大概率很快挂上。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini 4 Argon 免费能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "发布时不行，首批只面向可信网络安全防御者。按谷歌惯例，后续会随 Gemini 网页版和 App 推给订阅用户，免费档大概率只能用到 Flash 级别的模型。想免费用 AI 的话，现阶段 Gemini 3.8 Flash 的网页版就够日常用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "和 Claude Opus 5.5 怎么选？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看活。法律/金融知识工作、长上下文任务、成本敏感的批量任务选 Argon（等开放）；终端编码、Computer Use、要现在马上用选 Opus 5.5 或 GPT-6 Astra。注意第三方智能指数里 Opus 5.5（58 分）仍高于 Argon 和 Astra（同为 53 分），三个月后这个答案大概率又要重写。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上</title>
+  
+  <meta name="description" content="谷歌 10 月 1 日凌晨发布 Gemini 4 Argon：18 项基准测试独占 12 项第一，输出上限拉到 100 万 token，API 限时五折每百万 token 2/10 美元。本文讲清它的真实水平（官方屠榜但第三方评测只与 GPT-6 Astra 打平）、三个真实落地案例、开放节奏，以...">
+  <meta name="keywords" content="gemini 4,gemini 4 argon,gemini 4 发布,gemini 4 跑分,gemini 4 国内使用,gemini 4 价格,gemini 4 api,gemini 4 什么时候能用,gemini 4 vs gpt-6 astra,谷歌 gemini 4,gemini 4 claude 对比,gemini 4 免费试用">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/gemini-4-argon/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-banner.webp">
+  
+  
+  <meta property="og:description" content="谷歌 10 月 1 日凌晨发布 Gemini 4 Argon：18 项基准测试独占 12 项第一，输出上限拉到 100 万 token，API 限时五折每百万 token 2/10 美元。本文讲清它的真实水平（官方屠榜但第三方评测只与 GPT-6 Astra 打平）、三个真实落地案例、开放节奏，以...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-10-13T14:00:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-13T14:30:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="AI大模型">
+  
+  <meta property="og:article:tag" content="Gemini">
+  
+  <meta property="og:article:tag" content="Gemini 4">
+  
+  <meta property="og:article:tag" content="Argon">
+  
+  <meta property="og:article:tag" content="Google">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/gemini-4-argon/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-banner.webp"
+    alt="Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-10-13T14:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-10-13</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/gemini-4-argon/" class="leancloud_visitors" data-flag-title="Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/AI大模型/" class="post-meta-link">AI大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Gemini/" class="post-meta-link">Gemini</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Gemini-4/" class="post-meta-link">Gemini 4</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Argon/" class="post-meta-link">Argon</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Google/" class="post-meta-link">Google</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <blockquote>
+<p>📚 本文是 Gemini 4 Argon 的发布解读 + 国内使用路径。想对比 OpenAI 那边同一档的对手，看 <a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 国内怎么用</a>；想先弄明白 Gemini 基础用法（注册/登录/免费额度），看 <a href="https://tanqingbo.cn/how-to-use-Gemini/">Gemini 国内怎么用</a>。</p>
+</blockquote>
+<h2 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h2><p>谷歌在 10 月 1 日凌晨放出了 Gemini 4 Argon，DeepMind 七个多月以来第一款高于 Flash 级别的自研模型。官方公布的 18 项基准测试里，它独占 12 项第一、再并列 1 项，多项分数超过 OpenAI 的 GPT-6 Astra 和 Anthropic 的 Claude Opus 5.5——上一次谷歌在跑分榜上这么张扬，还是 Gemini 1 系刚出的时候。</p>
+<p>但先别急着喊「谷歌王座回归」。第三方评测机构 Artificial Analysis 的智能指数里，Argon 53 分，和 GPT-6 Astra 打平，而 Claude Opus 5.5 拿 58 分仍然坐在第一。官方榜单和第三方榜单温差很大，这事第三部分细说。</p>
+<p>对国内用户最实际的一句话：<strong>Argon 本体现在还用不了</strong>（先开放给可信网络安全防御者，之后才是付费 API 和 AI Ultra 用户），但这段时间正好把网络和账号准备好，等它开放了第一时间上车。下面从头讲。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>是什么</strong>：谷歌 DeepMind 2026-10-01 凌晨发布的新旗舰模型，主打软件工程、金融法律、网络安全三类长程任务</li>
+<li><strong>跑分</strong>：官方 18 项测试独占 12 项第一；DeepSWE v1.1（真实软件工程）77.9% 全球第一</li>
+<li><strong>硬指标</strong>：输出上限 100 万 token（此前 64K），业界第一；幻觉率 15%，同档最低</li>
+<li><strong>价格</strong>：API 标准价 $4/$20 每百万 token，限时五折 $2/$10；跑一个平均任务约 $1.99，是对手的三分之一到六折</li>
+<li><strong>现在能用吗</strong>：本体未开放，普通用户要等；<strong>现役 Gemini（3.8 Flash）不受影响照常用</strong></li>
+<li><strong>详细对比</strong>：和 GPT-6 Astra 的正面对决看 <a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+</ul>
+<h2 id="它是谁：Gemini-4-Argon-是什么"><a href="#它是谁：Gemini-4-Argon-是什么" class="headerlink" title="它是谁：Gemini 4 Argon 是什么"></a>它是谁：Gemini 4 Argon 是什么</h2><p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-official.webp" alt="Gemini 4 Argon 官方发布海报" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-official.webp" class="lozad post-image"></p>
+<p>名字里的 Argon 是氩气——谷歌这代开始用元素命名旗舰线，Argon 排元素表第 18 位。它是 DeepMind 七个多月以来推出的首款高于 Flash 级别的自研模型，定位很明确：不跟 Flash 系抢日常问答的活，专攻<strong>长程复杂任务</strong>——软件工程、金融/法律知识工作、网络安全防御这三块。</p>
+<p>输入支持文本、图像、视频和语音，输出文本。两个硬指标先摆出来：</p>
+<ul>
+<li><strong>输出上限 100 万 token</strong>。之前是 64K，直接翻了 15 倍多。什么概念：一个中型代码库的完整重构方案、一整本书级别的长文，理论上可以一口气吐完不截断。目前业界第一，而且断档领先。</li>
+<li><strong>幻觉率 15%，同档最低</strong>。这是 Artificial Analysis 智能指数 45 分以上模型里的最低值。长任务最怕的就是中途编造——幻觉率这一项对干活的模型比跑分重要得多。</li>
+</ul>
+<h2 id="官方跑分：18-项测试，12-项第一"><a href="#官方跑分：18-项测试，12-项第一" class="headerlink" title="官方跑分：18 项测试，12 项第一"></a>官方跑分：18 项测试，12 项第一</h2><p>谷歌这次直接甩了 18 项测试的完整对比表，对手是 GPT-6 Astra 和 Claude 两兄弟（Fable 5.1、Opus 5.5）：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-benchmarks.webp" alt="Gemini 4 Argon 官方 18 项基准测试对比表" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-benchmarks.webp" class="lozad post-image"></p>
+<p><em>谷歌官方 benchmark 全表（来源：Google DeepMind）</em></p>
+<p>战绩：Argon 独占 12 项第一、并列 1 项；GPT-6 Astra 赢 3 项；Opus 5.5 赢 2 项。挑几项最有信息量的说：</p>
+<p><strong>优势项，优势很大</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>测试</th>
+<th>Argon</th>
+<th>GPT-6 Astra</th>
+<th>Opus 5.5</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DeepSWE v1.1（真实软件工程）</td>
+<td><strong>77.9%</strong></td>
+<td>74.1%</td>
+<td>74.2%</td>
+<td>全球第一</td>
+</tr>
+<tr>
+<td>Harvey 法律 Agent</td>
+<td><strong>19.6%</strong></td>
+<td>5.4%</td>
+<td>3.8%</td>
+<td>差距 3.6 倍</td>
+</tr>
+<tr>
+<td>AutomationBench（业务自动化）</td>
+<td><strong>51.3%</strong></td>
+<td>41.4%</td>
+<td>42.5%</td>
+<td>领先近 10 个点</td>
+</tr>
+<tr>
+<td>GraphWalks（百万级长上下文）</td>
+<td><strong>84.2%</strong></td>
+<td>71.8%</td>
+<td>66.8%</td>
+<td>配合 100 万输出</td>
+</tr>
+<tr>
+<td>LABBench 2（实验科学）</td>
+<td><strong>88.8%</strong></td>
+<td>85.4%</td>
+<td>73.1%</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Harvey 法律 Agent 那项值得单独说：金融和法律是传统上最难自动化的知识工作，Argon 拿 19.6% 看着不高，但对手连 6% 都没摸到——这已经不是领先，是换赛道。</p>
+<p><strong>但弱项也很诚实</strong>。同一张表里，Argon 在 FrontierSW v2（55.0%，Astra 65.5%）、Terminal-bench 4.0（57.4%，Opus 66.4%）、Terminal-Bench Science（57.6%，Astra 68.1%）、OSWorld-2.0（69.2%，Astra 72.6%）这四项都输了。智能体编码（Terminal-bench 系）恰恰是 Astra 和 Claude 的主场。所以准确的读法是：<strong>Argon 在知识工作型长任务上换道超车，但在纯编码终端任务上没有全面碾压</strong>。</p>
+<p>另外两项安全相关：CWE-bench v1（修漏洞）68% 与 Astra 并列第一；Gray Swan IPI 提示注入攻击成功率 0.7%，四家里最低（越低越好）——给安全防御定位做了背书。</p>
+<h2 id="第三方视角：官方屠榜，第三方打平"><a href="#第三方视角：官方屠榜，第三方打平" class="headerlink" title="第三方视角：官方屠榜，第三方打平"></a>第三方视角：官方屠榜，第三方打平</h2><p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-artificial-analysis.webp" alt="Artificial Analysis 智能指数排行与成本散点图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-artificial-analysis.webp" class="lozad post-image"></p>
+<p><em>Artificial Analysis 智能指数 v4.3.2（绿箭头处是 Argon，来源：Artificial Analysis）</em></p>
+<p>官方数据自己出自己测，看看第三方怎么说。Artificial Analysis 的智能指数（AII）里，Argon 拿 53 分——与 GPT-6 Astra 持平，比 GPT-6.1 Sol 高 1 分，但 Claude Opus 5.5（58 分）、Claude 5.2 Sonnet（56 分）排在它前面。谷歌在官方材料里说「与 Astra 持平、业界顶尖」，对 Opus 5.5 的存在绝口不提，这个话术艺术你品品。</p>
+<p>成本那一侧倒是真有优势。API 价格对比：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>输入（每百万）</th>
+<th>输出（每百万）</th>
+<th>跑一个平均任务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Gemini 4 Argon（限时五折）</td>
+<td>$2</td>
+<td>$10</td>
+<td><strong>$1.99</strong></td>
+</tr>
+<tr>
+<td>GPT-6 Astra</td>
+<td>$10</td>
+<td>$50</td>
+<td>$3.26</td>
+</tr>
+<tr>
+<td>Claude Opus 5.5</td>
+<td>$4</td>
+<td>$20</td>
+<td>$5.98</td>
+</tr>
+</tbody></table>
+<p>标准价其实是 $4/$20，限时优惠五折后 $2/$10；缓存输入 token 每百万只要 0.10 美元。同样的活，Argon 的单任务成本是 Astra 的六折、Opus 5.5 的三分之一——如果能力真是同档，价格战就是谷歌这轮最实在的杀招。</p>
+<h2 id="三个真实案例：不是跑分，是谷歌自己拿它干活"><a href="#三个真实案例：不是跑分，是谷歌自己拿它干活" class="headerlink" title="三个真实案例：不是跑分，是谷歌自己拿它干活"></a>三个真实案例：不是跑分，是谷歌自己拿它干活</h2><p>谷歌博客放了几组内部使用数据，比跑分有说服力：</p>
+<p><strong>量子计算优化</strong>。帮研究人员优化限制性能的子程序（量子比特 × 量子门），几分钟内把性能提升 40%，超过已发表的基准水平。</p>
+<p><strong>数据中心内存优化</strong>。Argon Agent Team 分析整个集群的遥测数据，自主识别并应用内存优化——光一次落地就释放了 300 TiB 内存，预计总共能省出 500 TiB 到 1 PiB。这种活以前是一个 SRE 团队几个月的排期。</p>
+<p><strong>大规模代码迁移</strong>。把 Google 各部门的 C/C++ 代码库迁到 Rust，规模从 re2、libgav1 这些核心库的数万行，一直到 Fuchsia Zircon 内核的 80 多万行。80 万行级别的迁移，对模型长上下文和长任务稳定性的要求是断档式的——这正好回应了 100 万 token 输出的用途：不是炫技，是真有这种活。</p>
+<h2 id="什么时候能用上-国内怎么准备"><a href="#什么时候能用上-国内怎么准备" class="headerlink" title="什么时候能用上 + 国内怎么准备"></a>什么时候能用上 + 国内怎么准备</h2><p>开放节奏官方说得很清楚：<strong>先可信网络安全防御者 → 付费 API → AI Ultra 订阅用户</strong>，普通免费用户排最后。也就是说你现在注册一个 Gemini 账号，短期内用不到 Argon 本体。</p>
+<p>但这段时间有三件事可以准备：</p>
+<p><strong>第一，把网络环境弄稳</strong>。Argon 开放后第一波挤爆的就是节点——参考 GPT-6 Astra 发布当天的盛况。看 Gemini 本身就需要稳定的网络环境，节点怎么选看<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a>；想省事的话，我自己在用的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>六七年了，99 元/年入门档，新用户有 3 天 IEPL 专线试用，够你把整个 Gemini 生态走一遍。</p>
+<p><strong>第二，先用上现役 Gemini</strong>。Gemini 3.8 Flash 的网页版现在就能免费用，注册登录的完整流程（包括国内打不开的原因和解决办法）在<a href="https://tanqingbo.cn/how-to-use-Gemini/">Gemini 国内怎么用</a>里写得很细。Argon 开放后操作界面和账号体系是一样的，先熟悉生态不吃亏。</p>
+<p><strong>第三，等合租平台挂强度</strong>。参考 ChatGPT 镜像的先例——Astra 官方还在逐步放开时，<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>这类平台的镜像/合租版强度就已经挂上了，国内不用自己折腾账号和支付。Gemini 也在它的 AI 工具类目里（各家模型怎么买便宜的完整对比看<a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型充值教程</a>），Argon 正式开放后大概率很快跟进，新用户首单 9 折（优惠码 <code>Tanqingbo</code>）照常能用。</p>
+<h2 id="冷静看待：跑分与手感"><a href="#冷静看待：跑分与手感" class="headerlink" title="冷静看待：跑分与手感"></a>冷静看待：跑分与手感</h2><p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-meme.webp" alt="三大厂轮流宣布最强模型 meme" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gemini4-argon-meme.webp" class="lozad post-image"></p>
+<p>这篇文章圈子里的经典 meme：OpenAI、Grok、Anthropic 轮流宣布「世界最强模型」，现在轮到 Gemini 站中间。发布还专门挑在国庆第一天凌晨——别人在高速上堵车，圈内人在电脑前看跑分，也是没谁了。</p>
+<p>理性说，这次的成色判断有三条：</p>
+<ul>
+<li><strong>官方屠榜，第三方打平</strong>——Argon 和 Astra 是同一档，谁也没拉开身位，Opus 5.5 还在头顶上。三大厂进入贴身肉搏阶段，这对消费者是好事</li>
+<li><strong>价格是这轮最实在的武器</strong>——能力同档的前提下，$1.99 的单任务成本会实打实改变很多团队的选型</li>
+<li><strong>跑分看看就好，干活还得看手感</strong>——Astra 发布时的结论放这里照样成立，等 Argon 正式开放，拿真实项目测过再下结论</li>
+</ul>
+<h2 id="适合什么人"><a href="#适合什么人" class="headerlink" title="适合什么人"></a>适合什么人</h2><ul>
+<li>想第一时间体验谷歌新旗舰的重度 AI 用户——先把网络和账号准备好，等开放直接上车</li>
+<li>做软件工程、金融、法律方向知识工作的——Argon 的优势区正好在这三块，值得盯紧开放节奏</li>
+<li>关心 API 成本的开发者——五折价加上每百万 0.10 美元的缓存输入，同档成本优势明显</li>
+<li>只是日常用 AI 的——不用等 Argon，现役 Gemini 3.8 Flash 免费版够用，入口看<a href="https://tanqingbo.cn/how-to-use-Gemini/">Gemini 国内怎么用</a></li>
+</ul>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><p><strong>Q：Gemini 4 Argon 是什么？</strong><br>谷歌 DeepMind 在 2026 年 10 月 1 日凌晨发布的新旗舰模型，是七个多月以来首款高于 Flash 级别的自研模型。官方公布的 18 项基准测试里独占 12 项第一、并列 1 项，主打长程复杂任务：软件工程、金融法律知识工作、网络安全防御。</p>
+<p><strong>Q：Gemini 4 Argon 和 GPT-6 Astra 哪个强？</strong><br>官方自测 Argon 18 项里 12 项第一；但第三方 Artificial Analysis 的智能指数两者同为 53 分打平，且 Claude Opus 5.5（58 分）仍在两者之上。真实水平大概率是同一档，差距没有发布会显得那么大，等实际开放后用真实项目测才有结论。正面对比看 <a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a>。</p>
+<p><strong>Q：Gemini 4 Argon 什么时候能用？</strong><br>分批开放：先给可信网络安全防御者，之后轮到付费 API 和 AI Ultra 订阅用户，普通免费用户要再往后排。谷歌没给明确时间表，参考惯例付费 API 会先落地；Gemini 现役模型（3.8 Flash 等）不受影响照常用。</p>
+<p><strong>Q：Gemini 4 Argon 的 API 多少钱？限时五折到什么时候？</strong><br>标准价每百万输入/输出 token 4/20 美元，目前限时五折 2/10 美元，缓存输入 token 每百万仅 0.10 美元。按第三方测算，跑一个平均任务约 1.99 美元，是 GPT-6 Astra（3.26 美元）的六折、Claude Opus 5.5（5.98 美元）的三分之一。谷歌公告只说限时没给截止日期，大规模用量建议按标准价做预算。</p>
+<p><strong>Q：100 万 token 输出是什么概念？</strong><br>此前主流模型的输出上限在 64K token 上下，一次最多写几万字。Argon 拉到 100 万 token，超大代码库重构、整本书级别的内容、几十小时的长任务可以一口气输出不截断，这个指标目前是业界第一。日常问答用不到，长任务场景才直接受益。</p>
+<p><strong>Q：国内现在能用上 Gemini 4 Argon 吗？</strong><br>本体还没对普通用户开放，现在用不了。能做的准备：一是把网络环境弄好（Argon 开放后第一波挤爆的就是节点不稳的人）；二是先用上 <a href="https://tanqingbo.cn/how-to-use-Gemini/">Gemini 现役模型</a>熟悉生态；三是关注<a href="https://tanqingbo.cn/ai-llm-buy-guide/">合租平台</a>动态，参考 ChatGPT 镜像的先例，Argon 开放后强度大概率很快挂上。</p>
+<p><strong>Q：Gemini 4 Argon 免费能用吗？</strong><br>发布时不行，首批只面向可信网络安全防御者。按谷歌惯例，后续会随 Gemini 网页版和 App 推给订阅用户，免费档大概率只能用到 Flash 级别的模型。想免费用 AI 的话，现阶段 Gemini 3.8 Flash 的网页版就够日常用。</p>
+<p><strong>Q：和 Claude Opus 5.5 怎么选？</strong><br>看活。法律/金融知识工作、长上下文任务、成本敏感的批量任务选 Argon（等开放）；终端编码、Computer Use、要现在马上用选 Opus 5.5 或 GPT-6 Astra。注意第三方智能指数里 Opus 5.5（58 分）仍高于 Argon 和 Astra（同为 53 分），三个月后这个答案大概率又要重写，这就是 2026 年。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/gemini-4-argon/">https://tanqingbo.cn/gemini-4-argon/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 国内怎么用：OpenAI 最强模型使用与购买指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/how-to-use-Gemini/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Gemini 国内怎么用：注册登录与免费使用方法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-10-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT/Claude/Gemini 怎么买便宜：AI 大模型充值教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Gemini-pro/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Gemini Advanced 学生免费开通与深度体验
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-01-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具完全指南：ChatGPT、Gemini、Kimi 怎么选怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/youtube-premium-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">YouTube Premium 怎么买便宜（2026）：低价区与家庭组合租攻略 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">先说结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">2.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E8%B0%81%EF%BC%9AGemini-4-Argon-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">它是谁：Gemini 4 Argon 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E8%B7%91%E5%88%86%EF%BC%9A18-%E9%A1%B9%E6%B5%8B%E8%AF%95%EF%BC%8C12-%E9%A1%B9%E7%AC%AC%E4%B8%80"><span class="toc-number">4.</span> <span class="toc-text">官方跑分：18 项测试，12 项第一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E8%A7%86%E8%A7%92%EF%BC%9A%E5%AE%98%E6%96%B9%E5%B1%A0%E6%A6%9C%EF%BC%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%89%93%E5%B9%B3"><span class="toc-number">5.</span> <span class="toc-text">第三方视角：官方屠榜，第三方打平</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B%EF%BC%9A%E4%B8%8D%E6%98%AF%E8%B7%91%E5%88%86%EF%BC%8C%E6%98%AF%E8%B0%B7%E6%AD%8C%E8%87%AA%E5%B7%B1%E6%8B%BF%E5%AE%83%E5%B9%B2%E6%B4%BB"><span class="toc-number">6.</span> <span class="toc-text">三个真实案例：不是跑分，是谷歌自己拿它干活</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%83%BD%E7%94%A8%E4%B8%8A-%E5%9B%BD%E5%86%85%E6%80%8E%E4%B9%88%E5%87%86%E5%A4%87"><span class="toc-number">7.</span> <span class="toc-text">什么时候能用上 + 国内怎么准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B7%E9%9D%99%E7%9C%8B%E5%BE%85%EF%BC%9A%E8%B7%91%E5%88%86%E4%B8%8E%E6%89%8B%E6%84%9F"><span class="toc-number">8.</span> <span class="toc-text">冷静看待：跑分与手感</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E4%BA%BA"><span class="toc-number">9.</span> <span class="toc-text">适合什么人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">10.</span> <span class="toc-text">FAQ</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>426</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>405</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">先说结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">2.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E8%B0%81%EF%BC%9AGemini-4-Argon-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">它是谁：Gemini 4 Argon 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E8%B7%91%E5%88%86%EF%BC%9A18-%E9%A1%B9%E6%B5%8B%E8%AF%95%EF%BC%8C12-%E9%A1%B9%E7%AC%AC%E4%B8%80"><span class="toc-number">4.</span> <span class="toc-text">官方跑分：18 项测试，12 项第一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E8%A7%86%E8%A7%92%EF%BC%9A%E5%AE%98%E6%96%B9%E5%B1%A0%E6%A6%9C%EF%BC%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%89%93%E5%B9%B3"><span class="toc-number">5.</span> <span class="toc-text">第三方视角：官方屠榜，第三方打平</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B%EF%BC%9A%E4%B8%8D%E6%98%AF%E8%B7%91%E5%88%86%EF%BC%8C%E6%98%AF%E8%B0%B7%E6%AD%8C%E8%87%AA%E5%B7%B1%E6%8B%BF%E5%AE%83%E5%B9%B2%E6%B4%BB"><span class="toc-number">6.</span> <span class="toc-text">三个真实案例：不是跑分，是谷歌自己拿它干活</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%83%BD%E7%94%A8%E4%B8%8A-%E5%9B%BD%E5%86%85%E6%80%8E%E4%B9%88%E5%87%86%E5%A4%87"><span class="toc-number">7.</span> <span class="toc-text">什么时候能用上 + 国内怎么准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B7%E9%9D%99%E7%9C%8B%E5%BE%85%EF%BC%9A%E8%B7%91%E5%88%86%E4%B8%8E%E6%89%8B%E6%84%9F"><span class="toc-number">8.</span> <span class="toc-text">冷静看待：跑分与手感</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E4%BA%BA"><span class="toc-number">9.</span> <span class="toc-text">适合什么人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">10.</span> <span class="toc-text">FAQ</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">74</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">31</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">21</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-13</div>
+        <a href="/gemini-4-argon/"><div class="recent-posts-item-content">Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-12</div>
+        <a href="/youtube-premium-guide/"><div class="recent-posts-item-content">YouTube Premium 怎么买便宜（2026）：低价区与家庭组合租攻略</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-10</div>
+        <a href="/discord-guide/"><div class="recent-posts-item-content">Discord 怎么用（2026）：国内下载注册、中文设置与开黑语音教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-09</div>
+        <a href="/overseas-ai-tools/"><div class="recent-posts-item-content">国外 AI 工具大全（2026）：60+ 海外好用 AI 软件与国内使用指南</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">先说结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">2.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E8%B0%81%EF%BC%9AGemini-4-Argon-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">它是谁：Gemini 4 Argon 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E8%B7%91%E5%88%86%EF%BC%9A18-%E9%A1%B9%E6%B5%8B%E8%AF%95%EF%BC%8C12-%E9%A1%B9%E7%AC%AC%E4%B8%80"><span class="toc-number">4.</span> <span class="toc-text">官方跑分：18 项测试，12 项第一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E8%A7%86%E8%A7%92%EF%BC%9A%E5%AE%98%E6%96%B9%E5%B1%A0%E6%A6%9C%EF%BC%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%89%93%E5%B9%B3"><span class="toc-number">5.</span> <span class="toc-text">第三方视角：官方屠榜，第三方打平</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E7%9C%9F%E5%AE%9E%E6%A1%88%E4%BE%8B%EF%BC%9A%E4%B8%8D%E6%98%AF%E8%B7%91%E5%88%86%EF%BC%8C%E6%98%AF%E8%B0%B7%E6%AD%8C%E8%87%AA%E5%B7%B1%E6%8B%BF%E5%AE%83%E5%B9%B2%E6%B4%BB"><span class="toc-number">6.</span> <span class="toc-text">三个真实案例：不是跑分，是谷歌自己拿它干活</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%83%BD%E7%94%A8%E4%B8%8A-%E5%9B%BD%E5%86%85%E6%80%8E%E4%B9%88%E5%87%86%E5%A4%87"><span class="toc-number">7.</span> <span class="toc-text">什么时候能用上 + 国内怎么准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B7%E9%9D%99%E7%9C%8B%E5%BE%85%EF%BC%9A%E8%B7%91%E5%88%86%E4%B8%8E%E6%89%8B%E6%84%9F"><span class="toc-number">8.</span> <span class="toc-text">冷静看待：跑分与手感</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E5%90%88%E4%BB%80%E4%B9%88%E4%BA%BA"><span class="toc-number">9.</span> <span class="toc-text">适合什么人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">10.</span> <span class="toc-text">FAQ</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
