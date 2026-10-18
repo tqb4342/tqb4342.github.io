@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-08-18T06:23:18.000Z",
-  "dateModified": "2026-10-01T14:10:00.000Z",
+  "dateModified": "2026-10-18T10:00:00.000Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -143,7 +143,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-08-18T06:23:18.000Z">
-  <meta property="og:article:modified_time" content="2026-10-01T14:10:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-18T10:00:00.000Z">
   <meta property="og:article:author" content="IT 码 农">
   
   
@@ -435,7 +435,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>3.1k 字</span>
+    <span>3.2k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -591,6 +591,7 @@ var _hmt = _hmt || [];
 <p>DeepSeek Harness 的官方模型配置文档写得很清楚，DeepSeek 自己的 Chat Completions 路由按文本模型处理，附带图片的请求会在发送前被拒绝。</p>
 <p>要完成这个任务，需要接入一个支持图片的模型或视觉插件。</p>
 <p>好消息是，这个限制已经被官方补上了——9 月发布的 V4.1 Flash 原生支持多模态，直接在 Harness 里把模型 ID 改成 <code>deepseek-flash</code>（旧的 <code>deepseek-v4-flash-vision-exp</code> 仍兼容）就能接收图片输入，比挂第三方视觉插件省事，还少一层数据中转。实测效果（网页复刻、报错定位、发票识别）可以看 <a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek 多模态实测与接入教程</a>。</p>
+<p>10 月 17 日这个模型又升级到了 V4.1-Flash-1017：跑分、成本、「许愿式编程」能力全面上涨，Harness 需要 0.2.1-rc.1 以上才能完整适配，详见 <a href="https://tanqingbo.cn/deepseek-v4-1-flash-1017/">DeepSeek 1017 新版解读</a>。</p>
 <p>视觉插件负责识别图片里的文字，翻译插件把识别结果翻译成中文，导出插件再将译文保存成文档。</p>
 <p><img src="https://pic3.zhimg.com/v2-22c1e2297a742ab9d7fa922b8c3ed116_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic3.zhimg.com/v2-22c1e2297a742ab9d7fa922b8c3ed116_1440w.jpg" class="lozad post-image"></p>
 <p>Cordis 处理这些插件的加载、依赖和清理，让它们可以在同一个 Agent 里按顺序工作。</p>
@@ -681,10 +682,10 @@ var _hmt = _hmt || [];
     </li>
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
-      <a href="/deepseek-vision-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        DeepSeek V4.1 Flash 多模态实测：看图、接入教程与价格（2026）
+      <a href="/deepseek-v4-1-flash-1017/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元
       </a>
-      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-30</span>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-10-18</span>
     </li>
     
   </ul>
@@ -767,7 +768,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>427</span>
+    <span>428</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -775,7 +776,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>408</span>
+    <span>412</span>
     <span>标签</span>
   </a>
 </div>
@@ -838,7 +839,7 @@ var _hmt = _hmt || [];
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
-          <span class="categories-list-item-badge">31</span>
+          <span class="categories-list-item-badge">32</span>
         </div>
       </a>
     
@@ -887,9 +888,9 @@ var _hmt = _hmt || [];
     
     <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
     
-    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
-    
     <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
     
   </div>
 </div>
@@ -950,6 +951,11 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-18</div>
+        <a href="/deepseek-v4-1-flash-1017/"><div class="recent-posts-item-content">DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-10-15</div>
         <a href="/spotify-premium-guide/"><div class="recent-posts-item-content">Spotify Premium 怎么买便宜（2026）：低价区现状与合租开通攻略</div></a>
       </div>
@@ -962,11 +968,6 @@ var _hmt = _hmt || [];
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-10-12</div>
         <a href="/youtube-premium-guide/"><div class="recent-posts-item-content">YouTube Premium 怎么买便宜（2026）：低价区与家庭组合租攻略</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-10-10</div>
-        <a href="/discord-guide/"><div class="recent-posts-item-content">Discord 怎么用（2026）：国内下载注册、中文设置与开黑语音教程</div></a>
       </div>
     
   </div>

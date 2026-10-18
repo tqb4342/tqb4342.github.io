@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-10-18T09:30:00.000Z",
+  "dateModified": "2026-10-18T09:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/deepseek-v4-1-flash-1017/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_banner.webp",
+  "description": "DeepSeek 10 月 17 日把 V4.1 Flash 升级到 1017 版本：11 项基准全涨、DeepSWE 77% 六模型最高，单任务成本从 3.3 元降到 1.3 元（Claude Opus 5 同批任务约 79 元，差约 60 倍）。本文讲清「许愿式编程」是什么、博主九项实测里哪些惊艳哪些翻车、DeepSeek Harness 怎么升级上手，以及 11 月 1 日搜索 API 开始计费前所有 Agent 用户要知道的事。",
+  "keywords": [
+    "deepseek",
+    "deepseek v4.1 flash",
+    "deepseek 1017",
+    "deepseek-v4.1-flash-1017",
+    "deepseek flash 1017",
+    "deepseek 新模型",
+    "deepseek 许愿式编程",
+    "deepseek harness",
+    "deepseek 性价比",
+    "deepseek api 价格",
+    "deepseek 开源",
+    "deepseek 对比 claude",
+    "deepseek 一句话生成游戏",
+    "deepseek 3d 建模",
+    "deepseek 搜索 api",
+    "deepseek 怎么用"
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "DeepSeek V4.1-Flash-1017 是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "2026 年 10 月 17 日发布的 V4.1 Flash 版本升级，版本号里的 1017 就是发布日期。网页端、APP 和 API 同步换新，API 调用方式和价格完全不变，模型名仍然是 deepseek-flash，老用户无感升级。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "1017 版比上一版强多少？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "11 项基准全部上涨：Terminal-Bench 4.0 从 31.2 涨到 42.3（涨幅 11.1 个点，最大单项），DeepSWE v1.1 拿下 77.0 是六个模型里最高。但要诚实地说：对比表里 11 项中有 6 项的第一名仍是 Claude Opus 5，1017 的优势集中在 Agent 自动化任务和性价比，纯推理深度（HLE 42.6 对 Opus 5 的 56.3）还有差距。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "单任务 1.3 元是什么概念？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方 DeepSWE v1.1 实测：1017 开到最高 max 档，通过率 77.0%，平均每个任务约 1.3 元；上一版同样任务要 3.3 元，降了六成。对比之下 Claude Opus 5 max 档通过率 73.7%、每任务约 79 元，GPT-6 Astra 约 30 元——同样的钱 1017 能跑约 60 个任务。API 单价一分没降，钱省在输出更短、跑得更快。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "「许愿式编程」是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DeepSeek 对新版本能力的说法：像许愿一样用很少的提示词和参考素材，几轮交互就从零做出能跑的完整项目（游戏、3D 建模这类）。训练上是基于自反馈的强化学习，模型自己评估产出、自己修正。实际体验里一句话生成一匹奔跑的斑马、一句话做马里奥赛车，都是这个能力的体现。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么用上 1017 新版？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三条路：网页端和 APP 已经自动换新，打开就用；API 老用户模型名不变（deepseek-flash），下次调用自动是新版；想体验完整「许愿式编程」的，把 DeepSeek Harness 桌面端升级到 0.2.1-rc.1 以上，模型选带 1017 标记的 DeepSeek-V4.1-Flash（High 档）。官方还针对腾讯 CodeBuddy 和 WorkBuddy 做了优化。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness 首次登录有赠金吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有。符合条件的用户第一次登录 DeepSeek Harness 会发 6 元赠金，不用充值，限量发放，到账后 7 天内有效。Flash 档本来就不贵，6 元足够把许愿式编程的几个案例都试一遍。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek 搜索 API 收费是怎么回事？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这次同步开放了自研搜索引擎的 Search（搜索）和 Fetch（抓取网页）两个接口，定价都是 5 元/千次。在 DeepSeek Harness、Claude Code、Codex 里接 DeepSeek API 的话，服务端工具调用已经在用这两个接口，11 月 1 日 0 点前免费，之后按次计费。Agent 任务里搜索调用很频繁，建议提前统计调用量。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "1017 的权重开源了吗？什么规格？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "开源了，HuggingFace 和魔搭都能下载，仓库名 DeepSeek-V4.1-Flash-1017，MIT 协议。规格：总参数 763B 的 MoE（每 token 激活 8B/16B）、1M token 上下文、最大输出 384K、图文交错输入。763B 的体量决定这是数据中心选项，个人本地部署不现实，普通人用 API 或网页端就好。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "DeepSeek API 怎么用更省钱？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两点：一是分时段，北京时间工作日 9:00-12:00 和 14:00-18:00 是高峰价（双倍），其余时间含周末全天都是半价，批量任务调度到非高峰能省一半；二是分档位，简单任务路由到 low 档（单任务约 0.75 元）、疑难任务才开 max 档（1.3 元），两档通过率只差 4.4 个点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "V4.1-Flash-1017 和 GPT-6 Astra、Claude Opus 5 怎么选？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "看任务类型和预算：批量 Agent 工作流、自动化脚本、代码巡检这类跑量任务，1017 的性价比没有对手；需要极致单点推理（HLE 类深度问题）或终端编码上限，Opus 5 仍是天花板但成本是 60 倍；综合均衡用 GPT-6 Astra 也可以，但单任务 30 元的成本要想清楚。多数个人用户和小团队，1017 够用且几乎无成本压力。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元</title>
+  
+  <meta name="description" content="DeepSeek 10 月 17 日把 V4.1 Flash 升级到 1017 版本：11 项基准全涨、DeepSWE 77% 六模型最高，单任务成本从 3.3 元降到 1.3 元（Claude Opus 5 同批任务约 79 元，差约 60 倍）。本文讲清「许愿式编程」是什么、博主九项实测里哪些...">
+  <meta name="keywords" content="deepseek,deepseek v4.1 flash,deepseek 1017,deepseek-v4.1-flash-1017,deepseek flash 1017,deepseek 新模型,deepseek 许愿式编程,deepseek harness,deepseek 性价比,deepseek api 价格,deepseek 开源,deepseek 对比 claude,deepseek 一句话生成游戏,deepseek 3d 建模,deepseek 搜索 api,deepseek 怎么用">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/deepseek-v4-1-flash-1017/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_banner.webp">
+  
+  
+  <meta property="og:description" content="DeepSeek 10 月 17 日把 V4.1 Flash 升级到 1017 版本：11 项基准全涨、DeepSWE 77% 六模型最高，单任务成本从 3.3 元降到 1.3 元（Claude Opus 5 同批任务约 79 元，差约 60 倍）。本文讲清「许愿式编程」是什么、博主九项实测里哪些...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-10-18T09:30:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-18T09:30:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="AI编程">
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="DeepSeek">
+  
+  <meta property="og:article:tag" content="V4.1 Flash">
+  
+  <meta property="og:article:tag" content="1017">
+  
+  <meta property="og:article:tag" content="许愿式编程">
+  
+  <meta property="og:article:tag" content="Agent">
+  
+  <meta property="og:article:tag" content="性价比">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/deepseek-v4-1-flash-1017/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_banner.webp"
+    alt="DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-10-18T09:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-10-18</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/deepseek-v4-1-flash-1017/" class="leancloud_visitors" data-flag-title="DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/AI编程/" class="post-meta-link">AI编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DeepSeek/" class="post-meta-link">DeepSeek</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/V4-1-Flash/" class="post-meta-link">V4.1 Flash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/1017/" class="post-meta-link">1017</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/许愿式编程/" class="post-meta-link">许愿式编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Agent/" class="post-meta-link">Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/性价比/" class="post-meta-link">性价比</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>DeepSeek 前两天崩了近 5 个小时，随后把过去一周的消耗金额全部返还——这波补偿还没消化完，10 月 17 日下午官方又悄悄发了个新版本：V4.1 Flash 升级到 V4.1-Flash-1017。</p>
+<p>这个名字看起来只是多了个日期（1017 就是 10 月 17 日），但对比上一版，11 项基准测试全部上涨，跑同一批任务的成本还降了六成。API 单价一分没动，调用方式一分没变，模型名还是 deepseek-flash——什么都没变，跑分涨了，账单薄了。</p>
+<p>这篇把这次升级讲透：跑分涨在哪、钱是怎么省下来的、「许愿式编程」实际体验如何（含翻车案例），以及 11 月 1 日一个和所有 Agent 用户有关的计费变化。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>是什么</strong>：V4.1 Flash 的版本升级，10 月 17 日发布，网页端 / APP / API 已全部同步，模型名不变（deepseek-flash），价格不变，老用户无感升级。</li>
+<li><strong>强多少</strong>：11 项基准全涨，DeepSWE v1.1 拿 77.0% 是六个模型最高；但 11 项里有 6 项第一仍是 Claude Opus 5，优势集中在 Agent 任务和性价比。</li>
+<li><strong>省多少</strong>：同一批编程任务，单任务成本从上一版的 3.3 元降到约 1.3 元，Claude Opus 5 跑同样的活约 79 元——约 60 倍差距。</li>
+<li><strong>怎么用</strong>：网页端打开就用；想体验完整「许愿式编程」，把 DeepSeek Harness 桌面端升到 0.2.1-rc.1 以上，选带 1017 标记的模型，新用户首登还有 6 元赠金。</li>
+</ul>
+<h2 id="一、1017-是个什么版本"><a href="#一、1017-是个什么版本" class="headerlink" title="一、1017 是个什么版本"></a>一、1017 是个什么版本</h2><p>先把背景捋清楚。V4.1 Flash 是 DeepSeek 9 月 10 日发布的主力模型（原生多模态那次升级，站内有<a href="https://tanqingbo.cn/deepseek-vision-guide/">多模态实测</a>），一个月后的这次 1017 是它的性能迭代——不是新模型，是同一个模型换了个更强的权重。</p>
+<p>对使用者的变化小到几乎没有：</p>
+<ul>
+<li><strong>网页端和 APP</strong>：已经自动换新，打开就是新版，什么都不用做；</li>
+<li><strong>API</strong>：模型名还是 <code>deepseek-flash</code>，调用方式和价格完全不变，下次请求自动就是新版；</li>
+<li><strong>开源权重</strong>：HuggingFace 和魔搭同步上线，仓库名 <code>DeepSeek-V4.1-Flash-1017</code>，MIT 协议。</li>
+</ul>
+<p>变化的全部内容浓缩在官方公告的一个经济学名词里：<strong>帕累托改进</strong>——性能全面提升的同时，任务运行时间和输出长度双双缩短，没有任何一项指标付出代价。下面分开算这两笔账。</p>
+<h2 id="二、跑分账：11-项全涨，但别只看「屠榜」"><a href="#二、跑分账：11-项全涨，但别只看「屠榜」" class="headerlink" title="二、跑分账：11 项全涨，但别只看「屠榜」"></a>二、跑分账：11 项全涨，但别只看「屠榜」</h2><p>先上官方对比表（1017 对比上一版、Kimi K3、GLM 5.3、GPT-5.6 Sol、Claude Opus 5）：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_bench.webp" alt="DeepSeek V4.1-Flash-1017 官方基准对比表：11 项测试六模型对比" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_bench.webp" class="lozad post-image"></p>
+<p>涨幅最大的一项是 Terminal-Bench 4.0：从 31.2 涨到 42.3，一次提升 11.1 个点。这个测试考的是终端和工具执行能力，上一版在这个坑里摔得不轻，这一版基本填平了——作为参照，GPT-5.6 Sol 是 39.9，Kimi K3 只有 12.6。</p>
+<p>1017 拿下第一的四个项目全是 Agent 类：</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>1017 成绩</th>
+<th>第二名</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DeepSWE v1.1</td>
+<td>77.0</td>
+<td>Opus 5（74.0）</td>
+</tr>
+<tr>
+<td>Automation-Bench</td>
+<td>60.5</td>
+<td>Opus 5（50.3）</td>
+</tr>
+<tr>
+<td>Agents’ Last Exam</td>
+<td>35.4</td>
+<td>Opus 5（28.6）</td>
+</tr>
+<tr>
+<td>Apex Bench v1.1</td>
+<td>72.1</td>
+<td>Opus 5（65.8）</td>
+</tr>
+</tbody></table>
+<p>但要说清楚另一半：<strong>11 项里有 6 项的第一名仍然是 Claude Opus 5</strong>——HLE（56.3 对 42.6）、Terminal-Bench（51.8）、ProgramBench（37.0）、NL2Repo（75.3）、Chartography、BabyVision 都是。纯推理深度的天花板还在 Anthropic 手里。</p>
+<p>另外这些都是 DeepSeek 自报分数，横向对比时各家评测框架未必对齐；不过纵向的版本对比（31.2 涨到 42.3 这种）是同一套框架跑出来的，可信度高得多。</p>
+<p>所以定位很清晰：1017 不是「全面碾压 Opus 5」，而是<strong>把干活这件事做到极致——自动化任务领先，价格砍到脚踝</strong>。纯拼深度推理，Opus 5 依然是天花板。</p>
+<h2 id="三、成本账：单任务-3-3-元降到-1-3-元，60-倍的差距"><a href="#三、成本账：单任务-3-3-元降到-1-3-元，60-倍的差距" class="headerlink" title="三、成本账：单任务 3.3 元降到 1.3 元，60 倍的差距"></a>三、成本账：单任务 3.3 元降到 1.3 元，60 倍的差距</h2><p>这次最狠的数字在官方的「性能-费用」图里。DeepSWE v1.1 同一批任务（mini-swe-v2 框架实测），把通过率和每个任务的平均费用放在一起看：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_cost.webp" alt="DeepSWE v1.1 通过率与每任务费用散点图：1017 左上角断档领先" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_cost.webp" class="lozad post-image"></p>
+<table>
+<thead>
+<tr>
+<th>模型（档位）</th>
+<th>通过率</th>
+<th>每任务费用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>V4.1-Flash-1017 · max</td>
+<td>77.0%</td>
+<td>约 ¥1.3</td>
+</tr>
+<tr>
+<td>GPT-6.1 Sol · high</td>
+<td>75.2%</td>
+<td>约 ¥4.3</td>
+</tr>
+<tr>
+<td>V4.1-Flash 上一版 · max</td>
+<td>74.2%</td>
+<td>约 ¥3.3</td>
+</tr>
+<tr>
+<td>GPT-6 Astra · xhigh</td>
+<td>74.1%</td>
+<td>约 ¥30</td>
+</tr>
+<tr>
+<td>Gemini 3.8 Flash · high</td>
+<td>73.8%</td>
+<td>约 ¥16</td>
+</tr>
+<tr>
+<td>Claude Opus 5 · max</td>
+<td>73.7%</td>
+<td>约 ¥79</td>
+</tr>
+<tr>
+<td>Claude Fable 5 · xhigh</td>
+<td>70.0%</td>
+<td>约 ¥90</td>
+</tr>
+</tbody></table>
+<p>三个信息：</p>
+<ul>
+<li><strong>同版本对比，成本降了六成</strong>：上一版 max 档 3.3 元，这一版 1.3 元，通过率还从 74.2% 涨到 77.0%。API 单价没降，钱是从「输出更短、跑得更快」省出来的——Agent 任务的账单大头从来不是单价，而是输出 token 总量乘以循环轮数，模型少说废话比降价更能省钱；</li>
+<li><strong>low 档和 max 档只差 4.4 个点</strong>：low 档 72.6% 通过率、单任务约 0.75 元，max 档 77.0%、1.3 元。给简单任务路由到 low、疑难任务才开 max，成本还能再砍一刀；</li>
+<li><strong>和 Opus 5 的差距约 60 倍</strong>：当然这有汇率、框架和任务分布的因素，不能直接划等号。但对跑批量的工作流（代码巡检、数据清洗、批量测试）来说，很多「因为太贵不敢自动化」的流程，现在变得可算了。</li>
+</ul>
+<p><strong>API 省钱补充</strong>：DeepSeek API 分时段计费，北京时间工作日 9:00-12:00 和 14:00-18:00 是高峰价（双倍），其余时间含周末全天半价。批量任务调度到非高峰时段，token 成本直接减半。</p>
+<h2 id="四、许愿式编程：惊艳的和翻车的都在这"><a href="#四、许愿式编程：惊艳的和翻车的都在这" class="headerlink" title="四、许愿式编程：惊艳的和翻车的都在这"></a>四、许愿式编程：惊艳的和翻车的都在这</h2><p>「许愿式编程」是这次 DeepSeek 主打的新概念：用很少的提示词和参考素材，几轮交互就从零做出能跑的完整项目。背后的训练方法是<strong>基于自反馈的强化学习</strong>——模型自己评估产出、自己修正，重点强化了游戏开发、3D 建模这类「从零搭项目」的能力。</p>
+<p>官方自己放的 demo 是故宫 3D 建模、网页赛车游戏、用 Godot 引擎复刻的《传送门 2》（V 社至今没数到 3，DeepSeek 先帮玩家圆梦了）和 Valley of Ages（一片 3D 河谷从史前演到现代）。</p>
+<p>真机上什么体验？有博主第一时间用 DeepSeek Harness 桌面端爆肝实测了一天，九个案例几乎全是一句话提示词。挑几个有代表性的（图片来自该博主的实测结果）：</p>
+<p><strong>马里奥卡丁车</strong>是完成度最高的一个。同一句提示词，上一版 V4.1 Flash 做出来的游戏完全玩不了——跑道是歪的，车一动不动，NPC 倒是一发车就冲出去了；1017 吭哧吭哧干了 1 个小时，一次性直出，打开先给角色选择页，8 个角色任挑，能完整跑完三圈，道具都能用，落日赛道的光影也很出片：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_mario.webp" alt="V4.1-Flash-1017 一句话生成的马里奥赛车：8 角色选择页" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_mario.webp" class="lozad post-image"></p>
+<p><strong>3D 清明上河图</strong>跑了 30 分钟，虹桥上挤满了人，河边的街市都建了出来，河面上的船还会自己游动：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_qmh.webp" alt="一句话生成的 3D 清明上河图，船会自己游动" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_qmh.webp" class="lozad post-image"></p>
+<p><strong>iPhone Duo 折叠屏 3D 模型</strong>：折叠和展开都做了，还能一键拆开，里面的零件一个个摆出来——对着真机建模的还原度相当能打：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_iphone.webp" alt="一句话生成的 iPhone Duo 折叠屏 3D 模型与拆解视图" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_iphone.webp" class="lozad post-image"></p>
+<p>对比项也没输：拿它和 GPT-6.1 Sol 比雨夜便利店街角场景，DeepSeek 那版把周围的建筑、马路和斑马线都搭了出来，整个街角比 GPT 版丰富；不过地面的雨水反光，GPT 版确实更胜一筹。</p>
+<p><strong>翻车案例也得说</strong>——平面 2D 锦鲤鱼塘做得像泥鳅，改成 3D 日式锦鲤池后明显好一些，但鱼是倒着游的。这个翻车反而有信息量：这次升级强化的就是 3D 建模方向，平面 2D 场景没有针对性优化，能力边界很清晰：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_koi.webp" alt="3D 日式锦鲤池：效果比平面版好，但鱼是倒着游的" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_koi.webp" class="lozad post-image"></p>
+<h2 id="五、怎么用上：网页端零操作，Harness-要升级"><a href="#五、怎么用上：网页端零操作，Harness-要升级" class="headerlink" title="五、怎么用上：网页端零操作，Harness 要升级"></a>五、怎么用上：网页端零操作，Harness 要升级</h2><p>按使用深度分三条路：</p>
+<p><strong>只聊天</strong>：网页端和 APP 已经是新版了，什么都不用做。</p>
+<p><strong>调 API</strong>：模型名不变（<code>deepseek-flash</code>），代码一行不用改，下次调用自动是新版。</p>
+<p><strong>要完整许愿式编程体验</strong>：用 DeepSeek 官方的 Agent 框架，官方这次专门针对它做了优化。安装和四种模式的详细教程看站内的 <a href="https://tanqingbo.cn/deepseek-harness/">DeepSeek Harness 完全教程</a>，这里只说这次升级要做的两步：</p>
+<ol>
+<li>桌面端升级到 <strong>0.2.1-rc.1 或更高</strong>版本（旧版不适配新模型）；</li>
+<li>模型选带 <strong>1017</strong> 标记的 DeepSeek-V4.1-Flash，推理档位选 High（追求极限任务质量用 max）：</li>
+</ol>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_harness.webp" alt="DeepSeek Harness 桌面端：选择带 1017 标记的新模型" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ds1017_harness.webp" class="lozad post-image"></p>
+<p>另外两点：符合条件的用户<strong>首次登录 Harness 送 6 元赠金</strong>（不用充值，限量，7 天有效）——Flash 档本来就不贵，6 元足够把上面的案例全试一遍；官方这次还点名优化了腾讯 CodeBuddy 和 WorkBuddy，在这两个环境里用 Flash 的用户升级后直接受益。</p>
+<h2 id="六、顺带的一件大事：搜索-API-开放，11-月-1-日开始计费"><a href="#六、顺带的一件大事：搜索-API-开放，11-月-1-日开始计费" class="headerlink" title="六、顺带的一件大事：搜索 API 开放，11 月 1 日开始计费"></a>六、顺带的一件大事：搜索 API 开放，11 月 1 日开始计费</h2><p>这次更新里还有一条容易被忽略、但和所有 Agent 用户有关的：<strong>DeepSeek 把自家的搜索引擎开放成了 API</strong>。</p>
+<p>背景是 DeepSeek 网页端和 API 的联网搜索一直由自研搜索引擎驱动（索引全球千亿级网页，每天处理数亿次请求），这次新增 Search（搜索）和 Fetch（抓取网页）两个接口，定价都是 <strong>5 元/千次</strong>。</p>
+<p>要注意的是计费时间点：如果你在 DeepSeek Harness、Claude Code 或 Codex 里接的是 DeepSeek API，服务端的工具调用其实已经在访问这两个接口了——<strong>现在免费，北京时间 11 月 1 日 0 点起按次计费</strong>。</p>
+<p>单看 0.005 元一次不贵，但 Agent 循环里搜索调用非常频繁（一次会话几十次很正常），一个深研任务循环 50 轮、每轮 2 次搜索就是 0.5 元，和模型 token 费用已经是同一量级。建议提前在代码里埋点统计调用量，别等账单来了才知道自己的搜索密度。</p>
+<h2 id="七、开源规格速查与适合谁"><a href="#七、开源规格速查与适合谁" class="headerlink" title="七、开源规格速查与适合谁"></a>七、开源规格速查与适合谁</h2><p>自托管团队关心的规格（个人用户可以跳过这节）：</p>
+<table>
+<thead>
+<tr>
+<th>规格项</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总参数量（MoE）</td>
+<td>763B（每 token 激活 8B/16B）</td>
+</tr>
+<tr>
+<td>上下文 / 最大输出</td>
+<td>1M / 384K tokens</td>
+</tr>
+<tr>
+<td>输入模态</td>
+<td>图文交错（Vision 原生）</td>
+</tr>
+<tr>
+<td>开源协议</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>权重地址</td>
+<td>HuggingFace / ModelScope</td>
+</tr>
+<tr>
+<td>API 价格（不变，每百万 token）</td>
+<td>非高峰 $0.15/$0.60，缓存命中 $0.003，高峰双倍</td>
+</tr>
+</tbody></table>
+<p>763B 的体量决定了这是数据中心选项，消费级显卡免谈——普通人老实用 API 或网页端。</p>
+<p><strong>怎么选</strong>：</p>
+<ul>
+<li><strong>跑批量 Agent 任务</strong>（自动化脚本、代码巡检、数据清洗）：1017 没有对手，60 倍的成本差足以改变架构决策；</li>
+<li><strong>极致单点推理、终端编码上限</strong>：Opus 5 仍是天花板（HLE 56.3、Terminal-Bench 51.8），但单任务 79 元要想清楚，预算充足再上；</li>
+<li><strong>综合均衡</strong>：GPT-6 Astra 各项都稳，适合不差钱但要全能的场景——Astra 这类海外模型国内开通要网络环境，节点方案看<a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a>，我自己用了六七年的<a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a>新用户有 3 天 IEPL 专线试用；不想自己折腾账号的，<a target="_blank" rel="noopener external nofollow noreferrer" href="http://cn.goingbus.com/?s=wX0haoloon">环球巴士</a>有 Astra 合租车位，新用户首单 9 折（优惠码 <code>Tanqingbo</code>），充值对比细节在<a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 指南</a>和<a href="https://tanqingbo.cn/ai-llm-buy-guide/">海外大模型充值教程</a>里；</li>
+<li><strong>多数个人用户和小团队</strong>：1017 够用，且几乎无成本压力——这是国产模型第一次把「单任务成本」打到这个量级。</li>
+</ul>
+<p>说到底，这次更新没有发布会、没有新名字、没有价格战，但把性价比这个概念往前推了一步：<strong>比拼的不再是单价，而是完成一个任务要多少钱</strong>。跑分涨 11 个点、成本降 60%，Flash 这条产品线正在给 Agent 大规模跑批的经济模型重新定价——压力给到对面几家。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><p><strong>Q：DeepSeek V4.1-Flash-1017 是什么？</strong><br>2026 年 10 月 17 日发布的 V4.1 Flash 版本升级，版本号里的 1017 就是发布日期。网页端、APP 和 API 同步换新，API 调用方式和价格完全不变，模型名仍然是 deepseek-flash，老用户无感升级。</p>
+<p><strong>Q：1017 版比上一版强多少？</strong><br>11 项基准全部上涨：Terminal-Bench 4.0 从 31.2 涨到 42.3（涨幅 11.1 个点，最大单项），DeepSWE v1.1 拿下 77.0 是六个模型里最高。但要诚实地说：对比表里 11 项中有 6 项的第一名仍是 Claude Opus 5，1017 的优势集中在 Agent 自动化任务和性价比，纯推理深度（HLE 42.6 对 Opus 5 的 56.3）还有差距。</p>
+<p><strong>Q：单任务 1.3 元是什么概念？</strong><br>官方 DeepSWE v1.1 实测：1017 开到最高 max 档，通过率 77.0%，平均每个任务约 1.3 元；上一版同样任务要 3.3 元，降了六成。对比之下 Claude Opus 5 max 档通过率 73.7%、每任务约 79 元，GPT-6 Astra 约 30 元——同样的钱 1017 能跑约 60 个任务。API 单价一分没降，钱省在输出更短、跑得更快。</p>
+<p><strong>Q：「许愿式编程」是什么意思？</strong><br>DeepSeek 对新版本能力的说法：像许愿一样用很少的提示词和参考素材，几轮交互就从零做出能跑的完整项目（游戏、3D 建模这类）。训练上是基于自反馈的强化学习，模型自己评估产出、自己修正。实际体验里一句话生成一匹奔跑的斑马、一句话做马里奥赛车，都是这个能力的体现。</p>
+<p><strong>Q：怎么用上 1017 新版？</strong><br>三条路：网页端和 APP 已经自动换新，打开就用；API 老用户模型名不变（deepseek-flash），下次调用自动是新版；想体验完整「许愿式编程」的，把 <a href="https://tanqingbo.cn/deepseek-harness/">DeepSeek Harness</a> 桌面端升级到 0.2.1-rc.1 以上，模型选带 1017 标记的 DeepSeek-V4.1-Flash（High 档）。官方还针对腾讯 CodeBuddy 和 WorkBuddy 做了优化。</p>
+<p><strong>Q：DeepSeek Harness 首次登录有赠金吗？</strong><br>有。符合条件的用户第一次登录 DeepSeek Harness 会发 6 元赠金，不用充值，限量发放，到账后 7 天内有效。Flash 档本来就不贵，6 元足够把许愿式编程的几个案例都试一遍。</p>
+<p><strong>Q：DeepSeek 搜索 API 收费是怎么回事？</strong><br>这次同步开放了自研搜索引擎的 Search（搜索）和 Fetch（抓取网页）两个接口，定价都是 5 元/千次。在 DeepSeek Harness、Claude Code、Codex 里接 DeepSeek API 的话，服务端工具调用已经在用这两个接口，11 月 1 日 0 点前免费，之后按次计费。Agent 任务里搜索调用很频繁，建议提前统计调用量。</p>
+<p><strong>Q：1017 的权重开源了吗？什么规格？</strong><br>开源了，HuggingFace 和魔搭都能下载，仓库名 DeepSeek-V4.1-Flash-1017，MIT 协议。规格：总参数 763B 的 MoE（每 token 激活 8B/16B）、1M token 上下文、最大输出 384K、图文交错输入。763B 的体量决定这是数据中心选项，个人本地部署不现实，普通人用 API 或网页端就好。</p>
+<p><strong>Q：DeepSeek API 怎么用更省钱？</strong><br>两点：一是分时段，北京时间工作日 9:00-12:00 和 14:00-18:00 是高峰价（双倍），其余时间含周末全天都是半价，批量任务调度到非高峰能省一半；二是分档位，简单任务路由到 low 档（单任务约 0.75 元）、疑难任务才开 max 档（1.3 元），两档通过率只差 4.4 个点。</p>
+<p><strong>Q：V4.1-Flash-1017 和 GPT-6 Astra、Claude Opus 5 怎么选？</strong><br>看任务类型和预算：批量 Agent 工作流、自动化脚本、代码巡检这类跑量任务，1017 的性价比没有对手；需要极致单点推理（HLE 类深度问题）或终端编码上限，Opus 5 仍是天花板但成本是 60 倍；综合均衡用 <a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra</a> 也可以，但单任务 30 元的成本要想清楚。多数个人用户和小团队，1017 够用且几乎无成本压力。</p>
+<hr>
+<p><strong>上手顺序</strong>：网页端直接体验（零操作）→ 想玩许愿式编程的升级 Harness 到 0.2.1-rc.1+ 选 1017 标记 → 领 6 元赠金把案例跑一遍 → 有批量任务的，11 月 1 日前统计好 Search/Fetch 调用量、把任务调度到非高峰时段。</p>
+<p>想系统了解各大模型怎么选，回<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南</a>总览页；想给 Harness 接上看图能力的，看<a href="https://tanqingbo.cn/deepseek-vision-guide/">DeepSeek 多模态实测</a>。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/deepseek-v4-1-flash-1017/">https://tanqingbo.cn/deepseek-v4-1-flash-1017/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/deepseek-harness/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        DeepSeek Harness 教程：这个「一切皆插件」的开源 Agent 框架怎么装、怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-18</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/deepseek-vision-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        DeepSeek V4.1 Flash 多模态实测：看图、接入教程与价格
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 国内怎么用：OpenAI 最强模型使用与购买指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-05</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具完全指南：ChatGPT / Gemini / Kimi 怎么选怎么用
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT / Claude / Gemini 怎么买便宜：海外 AI 大模型充值教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/spotify-premium-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Spotify Premium 怎么买便宜（2026）：低价区现状与合租开通攻略 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%811017-%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E7%89%88%E6%9C%AC"><span class="toc-number">2.</span> <span class="toc-text">一、1017 是个什么版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B7%91%E5%88%86%E8%B4%A6%EF%BC%9A11-%E9%A1%B9%E5%85%A8%E6%B6%A8%EF%BC%8C%E4%BD%86%E5%88%AB%E5%8F%AA%E7%9C%8B%E3%80%8C%E5%B1%A0%E6%A6%9C%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">二、跑分账：11 项全涨，但别只看「屠榜」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%90%E6%9C%AC%E8%B4%A6%EF%BC%9A%E5%8D%95%E4%BB%BB%E5%8A%A1-3-3-%E5%85%83%E9%99%8D%E5%88%B0-1-3-%E5%85%83%EF%BC%8C60-%E5%80%8D%E7%9A%84%E5%B7%AE%E8%B7%9D"><span class="toc-number">4.</span> <span class="toc-text">三、成本账：单任务 3.3 元降到 1.3 元，60 倍的差距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%B8%E6%84%BF%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%83%8A%E8%89%B3%E7%9A%84%E5%92%8C%E7%BF%BB%E8%BD%A6%E7%9A%84%E9%83%BD%E5%9C%A8%E8%BF%99"><span class="toc-number">5.</span> <span class="toc-text">四、许愿式编程：惊艳的和翻车的都在这</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%94%A8%E4%B8%8A%EF%BC%9A%E7%BD%91%E9%A1%B5%E7%AB%AF%E9%9B%B6%E6%93%8D%E4%BD%9C%EF%BC%8CHarness-%E8%A6%81%E5%8D%87%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">五、怎么用上：网页端零操作，Harness 要升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%A1%BA%E5%B8%A6%E7%9A%84%E4%B8%80%E4%BB%B6%E5%A4%A7%E4%BA%8B%EF%BC%9A%E6%90%9C%E7%B4%A2-API-%E5%BC%80%E6%94%BE%EF%BC%8C11-%E6%9C%88-1-%E6%97%A5%E5%BC%80%E5%A7%8B%E8%AE%A1%E8%B4%B9"><span class="toc-number">7.</span> <span class="toc-text">六、顺带的一件大事：搜索 API 开放，11 月 1 日开始计费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%BC%80%E6%BA%90%E8%A7%84%E6%A0%BC%E9%80%9F%E6%9F%A5%E4%B8%8E%E9%80%82%E5%90%88%E8%B0%81"><span class="toc-number">8.</span> <span class="toc-text">七、开源规格速查与适合谁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">9.</span> <span class="toc-text">FAQ</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>428</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>412</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%811017-%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E7%89%88%E6%9C%AC"><span class="toc-number">2.</span> <span class="toc-text">一、1017 是个什么版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B7%91%E5%88%86%E8%B4%A6%EF%BC%9A11-%E9%A1%B9%E5%85%A8%E6%B6%A8%EF%BC%8C%E4%BD%86%E5%88%AB%E5%8F%AA%E7%9C%8B%E3%80%8C%E5%B1%A0%E6%A6%9C%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">二、跑分账：11 项全涨，但别只看「屠榜」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%90%E6%9C%AC%E8%B4%A6%EF%BC%9A%E5%8D%95%E4%BB%BB%E5%8A%A1-3-3-%E5%85%83%E9%99%8D%E5%88%B0-1-3-%E5%85%83%EF%BC%8C60-%E5%80%8D%E7%9A%84%E5%B7%AE%E8%B7%9D"><span class="toc-number">4.</span> <span class="toc-text">三、成本账：单任务 3.3 元降到 1.3 元，60 倍的差距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%B8%E6%84%BF%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%83%8A%E8%89%B3%E7%9A%84%E5%92%8C%E7%BF%BB%E8%BD%A6%E7%9A%84%E9%83%BD%E5%9C%A8%E8%BF%99"><span class="toc-number">5.</span> <span class="toc-text">四、许愿式编程：惊艳的和翻车的都在这</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%94%A8%E4%B8%8A%EF%BC%9A%E7%BD%91%E9%A1%B5%E7%AB%AF%E9%9B%B6%E6%93%8D%E4%BD%9C%EF%BC%8CHarness-%E8%A6%81%E5%8D%87%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">五、怎么用上：网页端零操作，Harness 要升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%A1%BA%E5%B8%A6%E7%9A%84%E4%B8%80%E4%BB%B6%E5%A4%A7%E4%BA%8B%EF%BC%9A%E6%90%9C%E7%B4%A2-API-%E5%BC%80%E6%94%BE%EF%BC%8C11-%E6%9C%88-1-%E6%97%A5%E5%BC%80%E5%A7%8B%E8%AE%A1%E8%B4%B9"><span class="toc-number">7.</span> <span class="toc-text">六、顺带的一件大事：搜索 API 开放，11 月 1 日开始计费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%BC%80%E6%BA%90%E8%A7%84%E6%A0%BC%E9%80%9F%E6%9F%A5%E4%B8%8E%E9%80%82%E5%90%88%E8%B0%81"><span class="toc-number">8.</span> <span class="toc-text">七、开源规格速查与适合谁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">9.</span> <span class="toc-text">FAQ</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">74</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">32</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-18</div>
+        <a href="/deepseek-v4-1-flash-1017/"><div class="recent-posts-item-content">DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-15</div>
+        <a href="/spotify-premium-guide/"><div class="recent-posts-item-content">Spotify Premium 怎么买便宜（2026）：低价区现状与合租开通攻略</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-13</div>
+        <a href="/gemini-4-argon/"><div class="recent-posts-item-content">Gemini 4 Argon 发布（2026）：谷歌新模型 12 项屠榜，国内怎么用上</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-12</div>
+        <a href="/youtube-premium-guide/"><div class="recent-posts-item-content">YouTube Premium 怎么买便宜（2026）：低价区与家庭组合租攻略</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%811017-%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E7%89%88%E6%9C%AC"><span class="toc-number">2.</span> <span class="toc-text">一、1017 是个什么版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B7%91%E5%88%86%E8%B4%A6%EF%BC%9A11-%E9%A1%B9%E5%85%A8%E6%B6%A8%EF%BC%8C%E4%BD%86%E5%88%AB%E5%8F%AA%E7%9C%8B%E3%80%8C%E5%B1%A0%E6%A6%9C%E3%80%8D"><span class="toc-number">3.</span> <span class="toc-text">二、跑分账：11 项全涨，但别只看「屠榜」</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%88%90%E6%9C%AC%E8%B4%A6%EF%BC%9A%E5%8D%95%E4%BB%BB%E5%8A%A1-3-3-%E5%85%83%E9%99%8D%E5%88%B0-1-3-%E5%85%83%EF%BC%8C60-%E5%80%8D%E7%9A%84%E5%B7%AE%E8%B7%9D"><span class="toc-number">4.</span> <span class="toc-text">三、成本账：单任务 3.3 元降到 1.3 元，60 倍的差距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AE%B8%E6%84%BF%E5%BC%8F%E7%BC%96%E7%A8%8B%EF%BC%9A%E6%83%8A%E8%89%B3%E7%9A%84%E5%92%8C%E7%BF%BB%E8%BD%A6%E7%9A%84%E9%83%BD%E5%9C%A8%E8%BF%99"><span class="toc-number">5.</span> <span class="toc-text">四、许愿式编程：惊艳的和翻车的都在这</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%94%A8%E4%B8%8A%EF%BC%9A%E7%BD%91%E9%A1%B5%E7%AB%AF%E9%9B%B6%E6%93%8D%E4%BD%9C%EF%BC%8CHarness-%E8%A6%81%E5%8D%87%E7%BA%A7"><span class="toc-number">6.</span> <span class="toc-text">五、怎么用上：网页端零操作，Harness 要升级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%A1%BA%E5%B8%A6%E7%9A%84%E4%B8%80%E4%BB%B6%E5%A4%A7%E4%BA%8B%EF%BC%9A%E6%90%9C%E7%B4%A2-API-%E5%BC%80%E6%94%BE%EF%BC%8C11-%E6%9C%88-1-%E6%97%A5%E5%BC%80%E5%A7%8B%E8%AE%A1%E8%B4%B9"><span class="toc-number">7.</span> <span class="toc-text">六、顺带的一件大事：搜索 API 开放，11 月 1 日开始计费</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%BC%80%E6%BA%90%E8%A7%84%E6%A0%BC%E9%80%9F%E6%9F%A5%E4%B8%8E%E9%80%82%E5%90%88%E8%B0%81"><span class="toc-number">8.</span> <span class="toc-text">七、开源规格速查与适合谁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">9.</span> <span class="toc-text">FAQ</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
