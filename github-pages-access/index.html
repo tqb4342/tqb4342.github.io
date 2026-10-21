@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-10-21T08:40:00.000Z",
+  "dateModified": "2026-10-21T08:40:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/github-pages-access/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gh_pages_banner.webp",
+  "description": "GitHub Pages 网站国内打不开、加载半天白屏？本文用 2026 年 10 月的实测数据讲清原因：不是你的域名被墙，是 185.199 段链路受干扰（TCP 握手直接失败、TLS 拖到 5 秒以上），换 DNS 和补 A 记录都救不了。附 5 分钟自查方法和 5 种解决方案：等待监测、DNS 分流、Cloudflare 代理、迁移 Netlify/Vercel/EdgeOne，以及 Gitee Pages 已停服的避坑提醒。",
+  "keywords": "GitHub Pages 打不开,GitHub Pages 国内访问,GitHub Pages 被墙,GitHub Pages 无法访问,github pages 慢,静态博客托管,Hexo 部署,Cloudflare 加速,Netlify 迁移,EdgeOne Pages,Gitee Pages 停服,网站国内访问慢"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "GitHub Pages 是被墙了吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不是你的域名被单独墙。实测证据：用 pages.github.com 的域名访问同一个 IP 同样失败，说明被干扰的是整个 185.199.108-111.153 IP 段的链路，而不是某个具体网站。这种情况历史上多次出现，通常是间歇性的，几天到几周内会缓解或变化。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "换 DNS 有用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "作用有限。如果干扰是 IP 段级别的（实测四个官方 IP 成功率都在五成上下），换 DNS 解析出来的还是同样的 IP。换 DNS 只在两种情况有用：你的本地 DNS 被污染返回了错误 IP，或者你只配了一条 A 记录、需要补齐官方要求的四条做冗余——但别指望它解决链路干扰本身。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "套 Cloudflare 能解决吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能绕开 185.199 段，这是目前不迁移就生效的最快方案。把域名 NS 改到 Cloudflare，A 记录指向 GitHub Pages 并开启代理（橙色云朵），SSL 模式设为 Full。代价是 CF 免费版在国内的速度一般（实测 TLS 握手 0.47 秒），且偶尔也有波动，但对「打不开」这个量级的问题是降维打击。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gitee Pages 还能当国内镜像吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能。Gitee Pages 已于 2024 年停止服务，现在网上大量旧教程还在推荐它，照着操作只会浪费时间。国内大厂的替代品是腾讯云 EdgeOne Pages（有长期免费版，支持 GitHub 仓库自动构建），但要用国内加速节点需要域名完成 ICP 备案，未备案只能走它的海外节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "会不会是 GitHub 官方故障？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有可能，先排除这个。打开 status.github.com 看 Pages 的状态，绿了再怀疑链路。2026 年 10 月 19 日（北京时间 23:49 到次日 00:56）GitHub Pages 就出过一次约一小时的官方故障。官方故障和链路干扰的表现不一样：前者是全球性打不开，后者是海外访问正常、只有国内不行——用检测工具跑一遍全球节点就能区分。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "迁移到 Netlify 或 Vercel 会影响 SEO 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "域名不变、迁移操作得当的话影响很小。关键三点：迁移前新旧站并行跑几天；确认迁移后所有页面的 URL 与原来完全一致；DNS 切换选在流量低谷，TTL 提前降到 600。搜索引擎认的是域名和 URL 结构，不是托管平台。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "EdgeOne Pages 是免费的吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有长期免费版，静态托管、自动构建、HTTPS 都包含，对个人博客够用。它支持直接关联 GitHub 仓库自动部署，Hexo、Hugo 都有预设模板。限制是：要用国内加速节点，域名必须完成 ICP 备案；未备案只能使用海外节点，速度优势就没了。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "我不是站长，只是想看别人挂在 GitHub Pages 上的网站怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是你本地网络到海外线路的问题，不是网站的问题。能做的：换个网络环境试试（手机流量和宽带的表现经常不一样）、多刷新几次（间歇性干扰下有概率连上）、或者从根本上解决网络环境。网络环境怎么配，科学上网完全指南里有完整路径。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案</title>
+  
+  <meta name="description" content="GitHub Pages 网站国内打不开、加载半天白屏？本文用 2026 年 10 月的实测数据讲清原因：不是你的域名被墙，是 185.199 段链路受干扰（TCP 握手直接失败、TLS 拖到 5 秒以上），换 DNS 和补 A 记录都救不了。附 5 分钟自查方法和 5 种解决方案：等待监测、DN...">
+  <meta name="keywords" content="GitHub Pages 打不开,GitHub Pages 国内访问,GitHub Pages 被墙,GitHub Pages 无法访问,github pages 慢,静态博客托管,Hexo 部署,Cloudflare 加速,Netlify 迁移,EdgeOne Pages,Gitee Pages 停服,网站国内访问慢">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/github-pages-access/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gh_pages_banner.webp">
+  
+  
+  <meta property="og:description" content="GitHub Pages 网站国内打不开、加载半天白屏？本文用 2026 年 10 月的实测数据讲清原因：不是你的域名被墙，是 185.199 段链路受干扰（TCP 握手直接失败、TLS 拖到 5 秒以上），换 DNS 和补 A 记录都救不了。附 5 分钟自查方法和 5 种解决方案：等待监测、DN...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-10-21T08:40:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-21T08:40:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="GitHub Pages">
+  
+  <meta property="og:article:tag" content="网站建设">
+  
+  <meta property="og:article:tag" content="静态博客">
+  
+  <meta property="og:article:tag" content="Hexo">
+  
+  <meta property="og:article:tag" content="建站教程">
+  
+  <meta property="og:article:tag" content="CDN">
+  
+  <meta property="og:article:tag" content="Cloudflare">
+  
+  <meta property="og:article:tag" content="Netlify">
+  
+  <meta property="og:article:tag" content="Vercel">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/github-pages-access/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/CSBook001" class="navbar-menu-item">
+    
+    电子书下载
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gh_pages_banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/gh_pages_banner.webp"
+    alt="GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-10-21T08:40:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-10-21</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3.6k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/github-pages-access/" class="leancloud_visitors" data-flag-title="GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/GitHub-Pages/" class="post-meta-link">GitHub Pages</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/网站建设/" class="post-meta-link">网站建设</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/静态博客/" class="post-meta-link">静态博客</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Hexo/" class="post-meta-link">Hexo</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/建站教程/" class="post-meta-link">建站教程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/CDN/" class="post-meta-link">CDN</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Cloudflare/" class="post-meta-link">Cloudflare</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Netlify/" class="post-meta-link">Netlify</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Vercel/" class="post-meta-link">Vercel</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>GitHub Pages 又打不开了。这句话在中文开发者圈子里出现的频率，差不多和「GitHub Pages 真香」一样高——免费、稳定、绑定仓库自动部署，作为静态博客和项目主页的托管方案几乎没有对手，唯一的死穴是国内访问：时快时慢，隔三差五直接白屏，而且一坏就是好几天。</p>
+<p>这篇用 2026 年 10 月下旬的一轮实测数据，把「GitHub Pages 国内打不开」这件事讲透：到底是什么坏了、怎么 5 分钟自查、为什么网上流传的换 DNS 大法救不了你，以及 5 种真正有效的解决方案——从零成本等待到整体迁移，按你的情况对号入座。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>先查官方状态</strong>：status.github.com，Pages 绿了再怀疑别的（10 月 19 日刚出过一次官方故障）。</li>
+<li><strong>全球能开、国内打不开</strong> = 链路干扰，不是你的站挂了，也不是域名被墙。</li>
+<li><strong>换 DNS、补 A 记录基本没用</strong>：实测四个官方 IP 全部同等被干扰，DNS 层无解。</li>
+<li><strong>最快见效</strong>：套 Cloudflare 代理（不迁移）或整体迁到 Netlify / Vercel。</li>
+<li><strong>国内受众为主且已备案</strong>：腾讯 EdgeOne Pages 是大厂免费选项。</li>
+<li><strong>Gitee Pages 别试了</strong>：2024 年已停服，旧教程全是坑。</li>
+</ul>
+<h2 id="先分清：三种「打不开」是三件事"><a href="#先分清：三种「打不开」是三件事" class="headerlink" title="先分清：三种「打不开」是三件事"></a>先分清：三种「打不开」是三件事</h2><p>排查第一步不是动手改配置，是搞清楚你属于哪种情况。三种可能，处理方式完全不同。</p>
+<p><strong>第一种：GitHub 官方故障。</strong> GitHub Pages 自己挂了，全球都打不开。2026 年 10 月 19 日（北京时间 23:49 到次日 00:56）就发生过一次，Actions、Pages、Webhooks 一起降级约一小时。这种不用你做任何事，打开 status.github.com 确认后等官方修就行。</p>
+<p><strong>第二种：你本地网络的问题。</strong> 路由器抽风、DNS 缓存污染、公司网管的策略限制。判别方法简单：手机关 WiFi 用流量试一次，能开就是你本地宽带或路由的问题，跟 GitHub 没关系。</p>
+<p><strong>第三种：链路干扰（最常见的元凶）。</strong> 你的站全球都能访问，只有国内时通时不通。这是本文的主角，也是 2026 年 10 月这波「GitHub Pages 集体白屏」的真相。下面用实测数据说话。</p>
+<h2 id="5-分钟自查：定位到具体哪一层坏了"><a href="#5-分钟自查：定位到具体哪一层坏了" class="headerlink" title="5 分钟自查：定位到具体哪一层坏了"></a>5 分钟自查：定位到具体哪一层坏了</h2><p>拿一个托管在 GitHub Pages 上的域名（比如你自己的博客），照着做两步。</p>
+<p><strong>第一步，外部视角。</strong> 打开 check-host.net 这类多节点检测工具，跑一次 HTTP 检测。如果海外节点全部 200、国内节点失败，就是链路干扰；如果全球都失败，回到上一节查官方状态。</p>
+<p><strong>第二步，分阶段计时。</strong> 电脑上跑一条命令（Windows 用 curl，系统自带或装一个）：</p>
+<pre class="highlight"><span class="line">curl -o NUL -w "dns=%{time_namelookup} tcp=%{time_connect} tls=%{time_appconnect} ttfb=%{time_starttransfer} code=%{http_code}\n" https://你的域名/</span><br></pre>
+
+<p>多跑几次，看输出的四个数字。这套数字能直接告诉你坏在哪一层：</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>code=000 且 tcp=0.000000</td>
+<td>TCP 握手没完成，连接请求被丢弃——链路层干扰</td>
+</tr>
+<tr>
+<td>dns 很大或失败</td>
+<td>DNS 解析问题，换 223.5.5.5 试试</td>
+</tr>
+<tr>
+<td>tcp 正常但 tls 超过 5 秒</td>
+<td>TLS 握手被拖慢，浏览器端早已超时——同属链路干扰</td>
+</tr>
+<tr>
+<td>全部正常但页面慢</td>
+<td>带宽问题，和「打不开」是两回事</td>
+</tr>
+</tbody></table>
+<h2 id="实测：2026-年-10-月这波干扰长什么样"><a href="#实测：2026-年-10-月这波干扰长什么样" class="headerlink" title="实测：2026 年 10 月这波干扰长什么样"></a>实测：2026 年 10 月这波干扰长什么样</h2><p>下面这组数据来自 2026 年 10 月 21 日下午对一个 GitHub Pages 自定义域名站点的实测，可以当参照模板。</p>
+<p><strong>连续 16 次请求：8 次成功，8 次失败。</strong> 失败的 8 次全部是 <code>tcp=0.000000</code>——TCP 三次握手根本没完成，连接请求发出去就没了。而且失败不是随机的，是成簇出现：连续失败三四个，再恢复一两个，再来一串。这是链路层间歇性干扰的典型形态，不是服务器过载（过载会返回慢，不会直接丢 SYN）。</p>
+<p><strong>连上的请求里，近半数 TLS 握手超过 5 秒。</strong> 8 次成功的 TLS 握手耗时分别是 0.26 秒、0.86 秒、1.17 秒、1.37 秒、5.13 秒、5.43 秒、5.71 秒——后面几次虽然「成功」了，但浏览器等不了这么久，用户看到的还是白屏转圈。</p>
+<p><strong>四个官方 IP 全部中招。</strong> GitHub Pages 官方要求域名配四条 A 记录（185.199.108.153 / 109.153 / 110.153 / 111.153）。逐个测试，三个节点的成功率分别是 4/8、3/8、4/8——没有哪个 IP 是干净的。</p>
+<p><strong>同一时刻的对照组全部正常。</strong> 这是最能说明问题的一组数据：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>成功率</th>
+<th>平均 TLS 握手</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>百度（基线）</td>
+<td>5/5</td>
+<td>0.14 秒</td>
+</tr>
+<tr>
+<td>Vercel</td>
+<td>4/5</td>
+<td>0.17 秒</td>
+</tr>
+<tr>
+<td>Netlify</td>
+<td>5/5</td>
+<td>0.35 秒</td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td>5/5</td>
+<td>0.47 秒</td>
+</tr>
+<tr>
+<td>阿里云 OSS（广州）</td>
+<td>5/5</td>
+<td>0.92 秒</td>
+</tr>
+<tr>
+<td><strong>GitHub Pages 站点</strong></td>
+<td><strong>8/16</strong></td>
+<td><strong>0.26–5.71 秒</strong></td>
+</tr>
+</tbody></table>
+<p>同一台电脑、同一个网络、同一时间段，只有走 185.199 段的请求挂掉。另外用 pages.github.com 的域名去访问同一个 IP，同样失败——说明被干扰的是整个 IP 段的链路，不是某个具体域名被针对。</p>
+<h2 id="为什么换-DNS-救不了你"><a href="#为什么换-DNS-救不了你" class="headerlink" title="为什么换 DNS 救不了你"></a>为什么换 DNS 救不了你</h2><p>网上流传最广的方子是「换 223.5.5.5」和「补齐四条 A 记录」。前者针对 DNS 污染（本地解析到错误 IP），后者针对单点故障（只配一条 A 记录没有冗余）。这两招在各自的场景里是对的，但在 IP 段级干扰面前都是无效操作：</p>
+<ul>
+<li>换 DNS 解析出来的还是那四个 IP，IP 本身全在被干扰的段里；</li>
+<li>补齐四条 A 记录，等于把同一条坏路复制四份——实测四个节点成功率都在五成上下，没有干净的 IP 可路由。</li>
+</ul>
+<p>DNS 层能决定「你去哪个 IP」，决定不了「这个 IP 通不通」。分清这一层，能帮你省掉大量无效折腾。</p>
+<h2 id="5-种解决方案，按你的情况选"><a href="#5-种解决方案，按你的情况选" class="headerlink" title="5 种解决方案，按你的情况选"></a>5 种解决方案，按你的情况选</h2><h3 id="方案一：等待-监测（成本为零）"><a href="#方案一：等待-监测（成本为零）" class="headerlink" title="方案一：等待 + 监测（成本为零）"></a>方案一：等待 + 监测（成本为零）</h3><p>链路干扰历史上多是间歇性的，几天到几周内会缓解或变化。如果你的站访问量不大、不靠它吃饭，挂个监测（UptimeRobot 之类的免费服务，注意选有海外探测点的）等恢复是合理选择。适合：个人项目页、低流量博客。</p>
+<h3 id="方案二：DNS-分流双线部署（不动主站，效果最好）"><a href="#方案二：DNS-分流双线部署（不动主站，效果最好）" class="headerlink" title="方案二：DNS 分流双线部署（不动主站，效果最好）"></a>方案二：DNS 分流双线部署（不动主站，效果最好）</h3><p>思路：域名解析按线路分流——境外线路照旧指向 GitHub Pages，境内线路指向另一个托管平台的域名。国内用户访问走国内可达的节点，海外用户不受影响，GitHub 上的部署流程一行不改。</p>
+<p>具体操作：在 DNSPod（腾讯云域名解析）这类支持分线路的 DNS 服务商处，把 www 记录配两条——「境外」线路 CNAME 到 <code>你的用户名.github.io</code>，「境内」线路 CNAME 到 Vercel 或 EdgeOne Pages 的接入域名（Vercel 是 <code>cname.vercel-dns.com</code>）。另一边的平台用 GitHub 仓库直接构建，或者干脆托管你 <code>hexo d</code> 推上去的静态分支。</p>
+<p>这个方案的妙处是主备合一：就算其中一条线彻底挂了，改一条 DNS 记录就能全量切到另一边。适合：有一定动手能力的站长，想一劳永逸的。</p>
+<h3 id="方案三：Cloudflare-代理（改动最小，见效最快）"><a href="#方案三：Cloudflare-代理（改动最小，见效最快）" class="headerlink" title="方案三：Cloudflare 代理（改动最小，见效最快）"></a>方案三：Cloudflare 代理（改动最小，见效最快）</h3><p>不迁移、不改部署，把域名的 NS 服务器改到 Cloudflare，DNS 记录里 A 记录照旧指向 GitHub Pages 的四个 IP，但开启代理（橙色云朵），SSL/TLS 模式设为 Full。用户访问的是 Cloudflare 的边缘节点，彻底绕开 185.199 段。</p>
+<p>实测 Cloudflare 可达性 5/5，TLS 握手 0.47 秒——不算快，但对「一半请求打不开」的现状是降维打击。代价：免费版国内速度一般、偶尔也有波动，而且 NS 迁移期间解析会短暂生效延迟。适合：想最快止血、不想动部署流程的。</p>
+<h3 id="方案四：整体迁移（Netlify-Vercel-EdgeOne-Pages）"><a href="#方案四：整体迁移（Netlify-Vercel-EdgeOne-Pages）" class="headerlink" title="方案四：整体迁移（Netlify / Vercel / EdgeOne Pages）"></a>方案四：整体迁移（Netlify / Vercel / EdgeOne Pages）</h3><p>托管平台本身换掉，GitHub 仓库继续当代码源，构建交给新平台。</p>
+<ul>
+<li><strong>Netlify</strong>：实测 5/5 全通、TLS 0.35 秒。免费版每月 100GB 带宽（日 PV 三千左右的站月流量约 10GB，远够），支持 GitHub 仓库自动构建、自定义域名自动签 HTTPS。Hexo 迁移几乎零改动。</li>
+<li><strong>Vercel</strong>：实测 4/5、TLS 0.17 秒，速度最好但连通率偶尔抽风。免费版同样 100GB/月。注意 <code>*.vercel.app</code> 默认域名在国内受限，必须绑自定义域名。</li>
+<li><strong>腾讯 EdgeOne Pages</strong>：国内大厂，有长期免费版，支持 GitHub 仓库自动构建，Hexo/Hugo 有预设模板。关键限制：要用国内加速节点，域名必须完成 ICP 备案；未备案只能走它的海外节点，速度优势没了。适合已备案的站。</li>
+</ul>
+<p>迁移时保住 SEO 的三个动作：新旧站并行跑几天再切 DNS；确认所有页面 URL 与原来完全一致；TTL 提前降到 600，选流量低谷切换。</p>
+<h3 id="方案五：多入口冗余"><a href="#方案五：多入口冗余" class="headerlink" title="方案五：多入口冗余"></a>方案五：多入口冗余</h3><p>主站不动，用一个子域名（比如 <code>fast.你的域名</code>）挂一份镜像到国内可达的平台，主页放一行「国内访问慢？试试加速入口」。不优雅，但对「内容站」是最诚实的兜底——用户要的是看到内容，不是欣赏你的架构。</p>
+<h2 id="决策表"><a href="#决策表" class="headerlink" title="决策表"></a>决策表</h2><table>
+<thead>
+<tr>
+<th>你的情况</th>
+<th>推荐方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>个人项目页，流量无所谓</td>
+<td>方案一：等待 + 挂监测</td>
+</tr>
+<tr>
+<td>有动手能力，想一劳永逸</td>
+<td>方案二：DNS 分流双线</td>
+</tr>
+<tr>
+<td>要最快恢复，部署流程不想动</td>
+<td>方案三：Cloudflare 代理</td>
+</tr>
+<tr>
+<td>彻底受够了，愿意花半天迁移</td>
+<td>方案四：Netlify / Vercel</td>
+</tr>
+<tr>
+<td>已备案、国内用户占绝对多数</td>
+<td>方案四的 EdgeOne Pages（国内节点）</td>
+</tr>
+<tr>
+<td>内容站，先保证用户能看到东西</td>
+<td>方案五：多入口冗余</td>
+</tr>
+</tbody></table>
+<p>顺带说一句站长的另一半刚需：部署再稳，<code>git push</code> 到 GitHub 本身也需要一条过得去的网络线路，clone 大仓库、拉依赖的时候尤其明显。网络环境的完整搭建路径在<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a>里有对比分析，想彻底摆脱「时通时断」的可以延伸过去。</p>
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><p><strong>Q：GitHub Pages 是被墙了吗？</strong><br>不是你的域名被单独墙。实测证据：用 pages.github.com 的域名访问同一个 IP 同样失败，说明被干扰的是整个 185.199.108-111.153 IP 段的链路，而不是某个具体网站。这种情况历史上多次出现，通常是间歇性的，几天到几周内会缓解或变化。</p>
+<p><strong>Q：换 DNS 有用吗？</strong><br>作用有限。如果干扰是 IP 段级别的（实测四个官方 IP 成功率都在五成上下），换 DNS 解析出来的还是同样的 IP。换 DNS 只在两种情况有用：你的本地 DNS 被污染返回了错误 IP，或者你只配了一条 A 记录、需要补齐官方要求的四条做冗余——但别指望它解决链路干扰本身。</p>
+<p><strong>Q：套 Cloudflare 能解决吗？</strong><br>能绕开 185.199 段，这是目前不迁移就生效的最快方案。把域名 NS 改到 Cloudflare，A 记录指向 GitHub Pages 并开启代理（橙色云朵），SSL 模式设为 Full。代价是 CF 免费版在国内的速度一般（实测 TLS 握手 0.47 秒），且偶尔也有波动，但对「打不开」这个量级的问题是降维打击。</p>
+<p><strong>Q：Gitee Pages 还能当国内镜像吗？</strong><br>不能。Gitee Pages 已于 2024 年停止服务，现在网上大量旧教程还在推荐它，照着操作只会浪费时间。国内大厂的替代品是腾讯云 EdgeOne Pages（有长期免费版，支持 GitHub 仓库自动构建），但要用国内加速节点需要域名完成 ICP 备案，未备案只能走它的海外节点。</p>
+<p><strong>Q：会不会是 GitHub 官方故障？</strong><br>有可能，先排除这个。打开 status.github.com 看 Pages 的状态，绿了再怀疑链路。2026 年 10 月 19 日（北京时间 23:49 到次日 00:56）GitHub Pages 就出过一次约一小时的官方故障。官方故障和链路干扰的表现不一样：前者是全球性打不开，后者是海外访问正常、只有国内不行——用检测工具跑一遍全球节点就能区分。</p>
+<p><strong>Q：迁移到 Netlify 或 Vercel 会影响 SEO 吗？</strong><br>域名不变、迁移操作得当的话影响很小。关键三点：迁移前新旧站并行跑几天；确认迁移后所有页面的 URL 与原来完全一致；DNS 切换选在流量低谷，TTL 提前降到 600。搜索引擎认的是域名和 URL 结构，不是托管平台。</p>
+<p><strong>Q：EdgeOne Pages 是免费的吗？</strong><br>有长期免费版，静态托管、自动构建、HTTPS 都包含，对个人博客够用。它支持直接关联 GitHub 仓库自动部署，Hexo、Hugo 都有预设模板。限制是：要用国内加速节点，域名必须完成 ICP 备案；未备案只能使用海外节点，速度优势就没了。</p>
+<p><strong>Q：我不是站长，只是想看别人挂在 GitHub Pages 上的网站怎么办？</strong><br>这是你本地网络到海外线路的问题，不是网站的问题。能做的：换个网络环境试试（手机流量和宽带的表现经常不一样）、多刷新几次（间歇性干扰下有概率连上）、或者从根本上解决网络环境。网络环境怎么配，<a href="https://tanqingbo.cn/science-internet-guide/">科学上网完全指南</a>里有完整路径。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>GitHub Pages 的问题从来不是「它不好」，而是它的出口线路在你和它之间隔着一层不可控的东西。这轮实测最有价值的结论其实就一句：<strong>先搞清楚坏在哪一层，再决定动不动手</strong>——官方故障等一等就好，本地网络换条路，链路干扰才值得你上 Cloudflare 或者搬家。</p>
+<p>至于最后一点自知之明：如果你此刻能顺畅读到这篇同样托管在 GitHub Pages 上的文章，要么你的网络环境已经过关，要么链路正在恢复的路上。两者都不是坏事。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/github-pages-access/">https://tanqingbo.cn/github-pages-access/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/best-vps/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        翻墙软件推荐2026：好用稳定的VPN工具下载与全平台配置
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-05-22</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/build-your-own-airport/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        自建机场教程：VPS 搭建机场全流程，彻底掌控自己的网络
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-10-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GitHub-2FA/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GitHub 双因素身份验证（2FA）注册教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/science-internet-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        科学上网方案怎么选：VPN / Clash 机场 / VPS 自建对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-23</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全教程：客户端、订阅与规则分流
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/double-11-vpn-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">2026 双11机场优惠攻略：一枝红杏全年最低折扣与蹲守指南 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E5%88%86%E6%B8%85%EF%BC%9A%E4%B8%89%E7%A7%8D%E3%80%8C%E6%89%93%E4%B8%8D%E5%BC%80%E3%80%8D%E6%98%AF%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-number">2.</span> <span class="toc-text">先分清：三种「打不开」是三件事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%88%86%E9%92%9F%E8%87%AA%E6%9F%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%88%B0%E5%85%B7%E4%BD%93%E5%93%AA%E4%B8%80%E5%B1%82%E5%9D%8F%E4%BA%86"><span class="toc-number">3.</span> <span class="toc-text">5 分钟自查：定位到具体哪一层坏了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%EF%BC%9A2026-%E5%B9%B4-10-%E6%9C%88%E8%BF%99%E6%B3%A2%E5%B9%B2%E6%89%B0%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-number">4.</span> <span class="toc-text">实测：2026 年 10 月这波干扰长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8D%A2-DNS-%E6%95%91%E4%B8%8D%E4%BA%86%E4%BD%A0"><span class="toc-number">5.</span> <span class="toc-text">为什么换 DNS 救不了你</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%8C%E6%8C%89%E4%BD%A0%E7%9A%84%E6%83%85%E5%86%B5%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text">5 种解决方案，按你的情况选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E7%AD%89%E5%BE%85-%E7%9B%91%E6%B5%8B%EF%BC%88%E6%88%90%E6%9C%AC%E4%B8%BA%E9%9B%B6%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">方案一：等待 + 监测（成本为零）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9ADNS-%E5%88%86%E6%B5%81%E5%8F%8C%E7%BA%BF%E9%83%A8%E7%BD%B2%EF%BC%88%E4%B8%8D%E5%8A%A8%E4%B8%BB%E7%AB%99%EF%BC%8C%E6%95%88%E6%9E%9C%E6%9C%80%E5%A5%BD%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">方案二：DNS 分流双线部署（不动主站，效果最好）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9ACloudflare-%E4%BB%A3%E7%90%86%EF%BC%88%E6%94%B9%E5%8A%A8%E6%9C%80%E5%B0%8F%EF%BC%8C%E8%A7%81%E6%95%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">方案三：Cloudflare 代理（改动最小，见效最快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%9B%9B%EF%BC%9A%E6%95%B4%E4%BD%93%E8%BF%81%E7%A7%BB%EF%BC%88Netlify-Vercel-EdgeOne-Pages%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">方案四：整体迁移（Netlify &#x2F; Vercel &#x2F; EdgeOne Pages）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%94%EF%BC%9A%E5%A4%9A%E5%85%A5%E5%8F%A3%E5%86%97%E4%BD%99"><span class="toc-number">6.5.</span> <span class="toc-text">方案五：多入口冗余</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">决策表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>430</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>425</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E5%88%86%E6%B8%85%EF%BC%9A%E4%B8%89%E7%A7%8D%E3%80%8C%E6%89%93%E4%B8%8D%E5%BC%80%E3%80%8D%E6%98%AF%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-number">2.</span> <span class="toc-text">先分清：三种「打不开」是三件事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%88%86%E9%92%9F%E8%87%AA%E6%9F%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%88%B0%E5%85%B7%E4%BD%93%E5%93%AA%E4%B8%80%E5%B1%82%E5%9D%8F%E4%BA%86"><span class="toc-number">3.</span> <span class="toc-text">5 分钟自查：定位到具体哪一层坏了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%EF%BC%9A2026-%E5%B9%B4-10-%E6%9C%88%E8%BF%99%E6%B3%A2%E5%B9%B2%E6%89%B0%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-number">4.</span> <span class="toc-text">实测：2026 年 10 月这波干扰长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8D%A2-DNS-%E6%95%91%E4%B8%8D%E4%BA%86%E4%BD%A0"><span class="toc-number">5.</span> <span class="toc-text">为什么换 DNS 救不了你</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%8C%E6%8C%89%E4%BD%A0%E7%9A%84%E6%83%85%E5%86%B5%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text">5 种解决方案，按你的情况选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E7%AD%89%E5%BE%85-%E7%9B%91%E6%B5%8B%EF%BC%88%E6%88%90%E6%9C%AC%E4%B8%BA%E9%9B%B6%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">方案一：等待 + 监测（成本为零）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9ADNS-%E5%88%86%E6%B5%81%E5%8F%8C%E7%BA%BF%E9%83%A8%E7%BD%B2%EF%BC%88%E4%B8%8D%E5%8A%A8%E4%B8%BB%E7%AB%99%EF%BC%8C%E6%95%88%E6%9E%9C%E6%9C%80%E5%A5%BD%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">方案二：DNS 分流双线部署（不动主站，效果最好）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9ACloudflare-%E4%BB%A3%E7%90%86%EF%BC%88%E6%94%B9%E5%8A%A8%E6%9C%80%E5%B0%8F%EF%BC%8C%E8%A7%81%E6%95%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">方案三：Cloudflare 代理（改动最小，见效最快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%9B%9B%EF%BC%9A%E6%95%B4%E4%BD%93%E8%BF%81%E7%A7%BB%EF%BC%88Netlify-Vercel-EdgeOne-Pages%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">方案四：整体迁移（Netlify &#x2F; Vercel &#x2F; EdgeOne Pages）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%94%EF%BC%9A%E5%A4%9A%E5%85%A5%E5%8F%A3%E5%86%97%E4%BD%99"><span class="toc-number">6.5.</span> <span class="toc-text">方案五：多入口冗余</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">决策表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">76</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">32</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">22</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-21</div>
+        <a href="/github-pages-access/"><div class="recent-posts-item-content">GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-21</div>
+        <a href="/double-11-vpn-guide/"><div class="recent-posts-item-content">2026 双11机场优惠攻略：一枝红杏全年最低折扣与蹲守指南</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-18</div>
+        <a href="/deepseek-v4-1-flash-1017/"><div class="recent-posts-item-content">DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-15</div>
+        <a href="/spotify-premium-guide/"><div class="recent-posts-item-content">Spotify Premium 怎么买便宜（2026）：低价区现状与合租开通攻略</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E5%88%86%E6%B8%85%EF%BC%9A%E4%B8%89%E7%A7%8D%E3%80%8C%E6%89%93%E4%B8%8D%E5%BC%80%E3%80%8D%E6%98%AF%E4%B8%89%E4%BB%B6%E4%BA%8B"><span class="toc-number">2.</span> <span class="toc-text">先分清：三种「打不开」是三件事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%88%86%E9%92%9F%E8%87%AA%E6%9F%A5%EF%BC%9A%E5%AE%9A%E4%BD%8D%E5%88%B0%E5%85%B7%E4%BD%93%E5%93%AA%E4%B8%80%E5%B1%82%E5%9D%8F%E4%BA%86"><span class="toc-number">3.</span> <span class="toc-text">5 分钟自查：定位到具体哪一层坏了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%EF%BC%9A2026-%E5%B9%B4-10-%E6%9C%88%E8%BF%99%E6%B3%A2%E5%B9%B2%E6%89%B0%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-number">4.</span> <span class="toc-text">实测：2026 年 10 月这波干扰长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8D%A2-DNS-%E6%95%91%E4%B8%8D%E4%BA%86%E4%BD%A0"><span class="toc-number">5.</span> <span class="toc-text">为什么换 DNS 救不了你</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%A7%8D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%8C%E6%8C%89%E4%BD%A0%E7%9A%84%E6%83%85%E5%86%B5%E9%80%89"><span class="toc-number">6.</span> <span class="toc-text">5 种解决方案，按你的情况选</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E7%AD%89%E5%BE%85-%E7%9B%91%E6%B5%8B%EF%BC%88%E6%88%90%E6%9C%AC%E4%B8%BA%E9%9B%B6%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">方案一：等待 + 监测（成本为零）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9ADNS-%E5%88%86%E6%B5%81%E5%8F%8C%E7%BA%BF%E9%83%A8%E7%BD%B2%EF%BC%88%E4%B8%8D%E5%8A%A8%E4%B8%BB%E7%AB%99%EF%BC%8C%E6%95%88%E6%9E%9C%E6%9C%80%E5%A5%BD%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">方案二：DNS 分流双线部署（不动主站，效果最好）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9ACloudflare-%E4%BB%A3%E7%90%86%EF%BC%88%E6%94%B9%E5%8A%A8%E6%9C%80%E5%B0%8F%EF%BC%8C%E8%A7%81%E6%95%88%E6%9C%80%E5%BF%AB%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">方案三：Cloudflare 代理（改动最小，见效最快）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%9B%9B%EF%BC%9A%E6%95%B4%E4%BD%93%E8%BF%81%E7%A7%BB%EF%BC%88Netlify-Vercel-EdgeOne-Pages%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">方案四：整体迁移（Netlify &#x2F; Vercel &#x2F; EdgeOne Pages）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%94%EF%BC%9A%E5%A4%9A%E5%85%A5%E5%8F%A3%E5%86%97%E4%BD%99"><span class="toc-number">6.5.</span> <span class="toc-text">方案五：多入口冗余</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">决策表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ"><span class="toc-number">8.</span> <span class="toc-text">FAQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">最后</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
