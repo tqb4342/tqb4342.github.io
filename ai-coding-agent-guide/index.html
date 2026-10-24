@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-10-24T15:55:00.000Z",
+  "dateModified": "2026-10-23T16:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/ai-coding-agent-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_ai_coding_agent.webp",
+  "description": "AI 编程工具 2026 年怎么选？这篇把主流工具按三种形态讲清：终端 CLI Agent（Claude Code、OpenCode、rmux、Hermes、Harness）、桌面云端 Agent（豆包 Agent、小米 MiMo Desktop、GPT-6 Astra）、知识库（LLM Wiki），免费方案、API 从哪来、国内网络怎么解决，一篇配齐。",
+  "keywords": "ai编程工具,ai编程,ai agent,claude code,opencode,ai编程软件,编程agent,codex,ai写代码,免费ai编程,claude code替代,豆包agent,大模型编程,ai编程工具推荐,终端agent,ai coding"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "零基础该从哪个 AI 编程工具入手？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先用免费的。豆包 Agent 在手机上就能遥控电脑干活，不用配任何 API；想正经写代码，Kimi K3 免费额度加 Kimi Code，或者 OpenCode 接国产 API（DeepSeek 便宜），都是零成本起步路线。跑通一个真实小项目，再考虑上 Claude Code 这类付费方案。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Claude Code 和 OpenCode 哪个好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Claude Code 是官方出品、工程质量高，但订阅贵且国内访问要稳定线路；OpenCode 开源免费、支持自定义 API 和 Copilot 账号登录，适合想用便宜模型自己拼方案的人。预算充足追求体验选前者，想省钱爱折腾选后者，两者不冲突，先跑通一个再说。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "用这些工具需要翻墙吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "分情况。豆包、Kimi、DeepSeek 系国产服务国内直连就能用；Claude Code 官方源、OpenAI Codex、Gemini CLI 这些海外服务，下载安装和调用 API 都需要稳定的出海线路，国内直连要么超时要么被墙。网络没解决的，从 Clash 完全教程 起步配置，再回来装工具。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "模型 API 从哪里弄便宜？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三条路：一是国产 API（DeepSeek、Kimi），官方直连便宜，OpenCode、Hermes、Harness 都支持；二是合租平台买 ChatGPT、Claude 账号或镜像站，不用外币卡，环球巴士有 9 折优惠码；三是 OpenRouter 这种聚合中转，一个 key 调多家模型。详细价格和避坑看 AI 大模型怎么买便宜 那篇。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 编程工具会取代程序员吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "短期不会取代，但会拉开差距。现在的 Agent 能独立完成模块级任务（写页面、跑测试、改 bug），但架构设计、需求拆解、技术选型还是要人拍板。现实是：会用 Agent 的人一天干出三天的量，不会用的人迟早被会用的人卷，工具学不学，答案是早学晚学的问题。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "rmux、Hermes、Harness 这些是干嘛的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "都是围绕 Agent 的进阶工具。rmux 是专为 Agent 打造的终端复用器，让 Claude Code 指挥 Codex、Gemini CLI 干活；Hermes Agent 解决多模型切换配置问题；DeepSeek Harness 是插件化 Agent 运行时，模型、工具、界面全都能换。它们适合已经在用 Agent、想搞多 Agent 协作的人，新手先跳过。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型</title>
+  
+  <meta name="description" content="AI 编程工具 2026 年怎么选？这篇把主流工具按三种形态讲清：终端 CLI Agent（Claude Code、OpenCode、rmux、Hermes、Harness）、桌面云端 Agent（豆包 Agent、小米 MiMo Desktop、GPT-6 Astra）、知识库（LLM Wiki...">
+  <meta name="keywords" content="ai编程工具,ai编程,ai agent,claude code,opencode,ai编程软件,编程agent,codex,ai写代码,免费ai编程,claude code替代,豆包agent,大模型编程,ai编程工具推荐,终端agent,ai coding">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/ai-coding-agent-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_ai_coding_agent.webp">
+  
+  
+  <meta property="og:description" content="AI 编程工具 2026 年怎么选？这篇把主流工具按三种形态讲清：终端 CLI Agent（Claude Code、OpenCode、rmux、Hermes、Harness）、桌面云端 Agent（豆包 Agent、小米 MiMo Desktop、GPT-6 Astra）、知识库（LLM Wiki...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-10-24T15:55:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-23T16:00:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="编程">
+  
+  <meta property="og:article:tag" content="AI">
+  
+  <meta property="og:article:tag" content="Agent">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/ai-coding-agent-guide/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_ai_coding_agent.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_ai_coding_agent.webp"
+    alt="AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-10-24T15:55:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-10-24</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.9k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/ai-coding-agent-guide/" class="leancloud_visitors" data-flag-title="AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/编程/" class="post-meta-link">编程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI/" class="post-meta-link">AI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Agent/" class="post-meta-link">Agent</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>2026 年的 AI 编程，「代码补全」已经是上一个时代的东西了。现在的 Agent 自己开终端、装依赖、跑测试、改 bug，一条指令丢过去，回来一个能跑的项目——写代码从「逐行敲」变成了「指挥干活」。</p>
+<p>但工具也多到眼花：Claude Code、OpenCode、Codex、豆包 Agent、小米 MiMo、Hermes、Harness、rmux……每篇教程都只讲自己那个，没人说清它们互相什么关系、你该从哪个下手。我自己挨个用了一遍，这篇就是选型笔记：什么形态、谁免费、钱花在哪、网络怎么解决。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>形态</strong>：AI 编程工具分三种——终端 CLI Agent（专业主力）、桌面/云端 Agent（不开终端也能干活）、知识库自生长（让 AI 管理你的笔记）</li>
+<li><strong>零成本入门</strong>：豆包 Agent 免费用、手机遥控电脑；Kimi K3 免费额度 + Kimi Code 写代码；小米 MiMo Desktop 免费邀测中</li>
+<li><strong>专业主力</strong>：Claude Code 体验最好但要订阅；OpenCode 开源免费、接便宜 API，是国产模型党的主流选</li>
+<li><strong>想看前沿</strong>：GPT-6 Astra 的 Codex 写代码实测（3D 城市、全栈应用）和 Computer Use（AI 自己操作电脑）</li>
+<li><strong>多 Agent 进阶</strong>：rmux + Hermes + Harness，让一个 Agent 指挥一群 Agent</li>
+<li><strong>网络前提</strong>：国产服务直连能用，Claude/OpenAI 系要稳定出海线路，没解决的先看 <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a></li>
+</ul>
+<h2 id="AI-编程工具全景一览"><a href="#AI-编程工具全景一览" class="headerlink" title="AI 编程工具全景一览"></a>AI 编程工具全景一览</h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>形态</th>
+<th>免费吗</th>
+<th>适合谁</th>
+<th>详细攻略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Claude Code</td>
+<td>终端 CLI</td>
+<td>订阅制</td>
+<td>想要最完整体验的开发者</td>
+<td><a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a></td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td>终端 CLI</td>
+<td>开源免费</td>
+<td>想接国产 API 省钱的人</td>
+<td><a href="https://tanqingbo.cn/opencode-guide/">OpenCode 教程</a></td>
+</tr>
+<tr>
+<td>GPT-6 Astra Codex</td>
+<td>云端 + CLI</td>
+<td>订阅制</td>
+<td>追前沿模型能力的开发者</td>
+<td><a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">写代码实测</a></td>
+</tr>
+<tr>
+<td>豆包 Agent</td>
+<td>桌面 + 云电脑</td>
+<td>免费额度</td>
+<td>不写代码但要电脑干活的人</td>
+<td><a href="https://tanqingbo.cn/doubao-agent-guide/">豆包 Agent 实测</a></td>
+</tr>
+<tr>
+<td>小米 MiMo Desktop</td>
+<td>桌面</td>
+<td>免费邀测</td>
+<td>想白嫖「小米版 Codex」的人</td>
+<td><a href="https://tanqingbo.cn/xiaomi-mimo-desktop-guide/">MiMo Desktop 实测</a></td>
+</tr>
+<tr>
+<td>Kimi Code（K3）</td>
+<td>终端 CLI</td>
+<td>免费额度</td>
+<td>零成本入门写代码</td>
+<td><a href="https://tanqingbo.cn/kimi-k3-guide/">Kimi K3 教程</a></td>
+</tr>
+<tr>
+<td>DeepSeek Harness</td>
+<td>Agent 运行时</td>
+<td>开源免费</td>
+<td>爱折腾插件化的玩家</td>
+<td><a href="https://tanqingbo.cn/deepseek-harness/">Harness 教程</a></td>
+</tr>
+<tr>
+<td>Hermes Agent</td>
+<td>终端 CLI</td>
+<td>开源免费</td>
+<td>要在多家模型间切换的人</td>
+<td><a href="https://tanqingbo.cn/hermes-agent-model-config/">Hermes 配置教程</a></td>
+</tr>
+<tr>
+<td>rmux</td>
+<td>终端复用器</td>
+<td>开源免费</td>
+<td>搞多 Agent 协作的进阶玩家</td>
+<td><a href="https://tanqingbo.cn/rmux-agent/">rmux 详解</a></td>
+</tr>
+<tr>
+<td>LLM Wiki</td>
+<td>知识库</td>
+<td>开源免费</td>
+<td>想让笔记自己进化的人</td>
+<td><a href="https://tanqingbo.cn/llm-wiki-guide/">LLM Wiki 搭建</a></td>
+</tr>
+</tbody></table>
+<p>表先放这。往下把三种形态讲清，你回头对着表选，基本一眼就能锁定。</p>
+<h2 id="三种形态：先搞清你要的是哪类"><a href="#三种形态：先搞清你要的是哪类" class="headerlink" title="三种形态：先搞清你要的是哪类"></a>三种形态：先搞清你要的是哪类</h2><h3 id="终端-CLI：Agent-的主战场"><a href="#终端-CLI：Agent-的主战场" class="headerlink" title="终端 CLI：Agent 的主战场"></a>终端 CLI：Agent 的主战场</h3><p>真正的 AI 编程主力都在终端里。Claude Code 是 Anthropic 官方出品，工程质量、上下文管理、权限模式都是标杆，缺点是订阅贵（$20/月起）且国内访问需要稳定线路——好在它支持通过配置接入国产大模型降成本，这条路在 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a> 里有完整步骤。</p>
+<p>OpenCode 是开源免费的那一类：支持自定义 API、Copilot 账号登录、VS Code 和 Cursor 集成，想用 DeepSeek 这种便宜模型自己拼方案的，它是主流选择，baseURL、模型名这些高频坑在 <a href="https://tanqingbo.cn/opencode-guide/">OpenCode 教程</a> 里都列好了。</p>
+<p>再往上还有一层进阶玩法：rmux 是专为 Agent 打造的终端复用器，能让 Claude Code 当总指挥、向 Codex 和 Gemini CLI 指派任务；Hermes 解决的是多家模型来回切换的配置问题；DeepSeek Harness 干脆把模型、工具、界面全部插件化，随换随用。这三个适合已经在终端里跑 Agent 的人，新手先跳过。</p>
+<h3 id="桌面和云端-Agent：不开终端也能干活"><a href="#桌面和云端-Agent：不开终端也能干活" class="headerlink" title="桌面和云端 Agent：不开终端也能干活"></a>桌面和云端 Agent：不开终端也能干活</h3><p>不是所有人都写代码。豆包 Agent（工作任务模式）已经能让你在地铁上用手机遥控家里的电脑：点按钮、填表格、做表格、剪视频，全程可视——几亿普通人版的 Codex，实测流程和坑看 <a href="https://tanqingbo.cn/doubao-agent-guide/">豆包 Agent 实测</a>。两个细节提前知道：Turbo 模式够日常用，Pro 模式额度消耗快；GUI 操控目前 Windows 全量、Mac 只能操控浏览器。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_01.png" alt="豆包 App 的工作任务模式入口：Turbo 与 Pro 两档，可切换连接的电脑设备" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img_01.png" class="lozad post-image"></p>
+<p>小米 MiMo Desktop 是「小米版 Codex」，免费邀测中，一张参考图自动调 Blender 建模 90 多个零件的键盘这种活它真干得出来，申请入口和上手指南在 <a href="https://tanqingbo.cn/xiaomi-mimo-desktop-guide/">MiMo Desktop 实测</a>。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/mimo-futuristic-keyboard-render-result.webp" alt="MiMo Desktop 生成的机械键盘 3D 模型：装配态与 144 零件爆炸态" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/mimo-futuristic-keyboard-render-result.webp" class="lozad post-image"></p>
+<p>想看上限，GPT-6 Astra 两条线都值得看：<a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">写代码实测</a> 里它 18 分钟生成 3D 程序化城市、19 分钟做全栈应用；<a href="https://tanqingbo.cn/GPT-6-Astra-Computer-Use/">Computer Use</a> 则是 AI 自己看屏幕、动鼠标、敲键盘，填表单、更新 CRM 全程不喊人。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/codex-city-chongqing.webp" alt="GPT-6 Astra 生成的 3D 程序化城市「城境」：重庆 8D 魔幻山城，可调密度、地形与光影" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/codex-city-chongqing.webp" class="lozad post-image"></p>
+<h3 id="知识库自生长：让笔记自己进化"><a href="#知识库自生长：让笔记自己进化" class="headerlink" title="知识库自生长：让笔记自己进化"></a>知识库自生长：让笔记自己进化</h3><p>LLM Wiki 是另一条路：不是帮你写代码，而是把散落的原始资料（Raw）自动整理成结构化知识（Wiki），接上 WorkBuddy 或 Codex 加 Obsidian，就是一套会进化的第二大脑，和 RAG 的本质区别、三层架构原理在 <a href="https://tanqingbo.cn/llm-wiki-guide/">LLM Wiki 搭建教程</a> 里讲透了。</p>
+<h2 id="按需求选：四条路线"><a href="#按需求选：四条路线" class="headerlink" title="按需求选：四条路线"></a>按需求选：四条路线</h2><p><strong>路线一：零成本试水</strong>。先豆包 Agent——不用配任何 API，手机装 App、电脑装客户端就能用，额度免费；想试写代码，Kimi K3 免费额度加 Kimi Code（<a href="https://tanqingbo.cn/kimi-k3-guide/">Kimi K3 教程</a>）。先跑通一个真实小任务再谈投入，免得订阅买了吃灰。</p>
+<p><strong>路线二：省钱主力开发</strong>。OpenCode 接 DeepSeek API，成本压到每月几块钱；要图形界面就集成进 VS Code 或 Cursor。对模型有执念的，用 Hermes 在 DeepSeek、Gemini、Kimi 之间随时切换。这条路线全程国内直连，不用碰翻墙问题。</p>
+<p><strong>路线三：上官方完整体验</strong>。Claude Code 订阅（或 GPT-6 Astra），体验上限最高，代价是月费加稳定的出海线路。账号怎么买便宜不用外币卡，看 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型怎么买便宜</a>，合租和镜像方案都有。</p>
+<p><strong>路线四：多 Agent 协作</strong>。已经在用 Claude Code 的人，加 rmux 做终端编排、Harness 做插件运行时，让一个 Agent 指挥一群 Agent 干活——适合有明确多任务并行需求的进阶玩家。</p>
+<h2 id="模型和账号从哪来"><a href="#模型和账号从哪来" class="headerlink" title="模型和账号从哪来"></a>模型和账号从哪来</h2><p>工具本身大多免费，真正花钱的是背后的模型。模型从哪来，直接决定你每个月的账单长什么样：</p>
+<ul>
+<li><strong>国产 API 直连</strong>：DeepSeek、Kimi 官方 API 便宜且国内直连，OpenCode、Hermes、Harness 都支持，开发党性价比首选</li>
+<li><strong>合租/镜像账号</strong>：ChatGPT Plus、Claude 这些海外订阅，官方要 $20/月加外币卡；合租平台拼车价低得多，镜像站连翻墙都省了，价格和 9 折优惠码整理在 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型怎么买便宜</a></li>
+<li><strong>聚合中转</strong>：OpenRouter 一个 key 调多家模型，适合对比党，走 Hermes 配置最顺</li>
+</ul>
+<h2 id="工具之前，先解决网络"><a href="#工具之前，先解决网络" class="headerlink" title="工具之前，先解决网络"></a>工具之前，先解决网络</h2><p>把表拉一遍你会发现：国产系（豆包、Kimi、DeepSeek）国内直连就能用，但 Claude Code 官方安装源、OpenAI Codex、Gemini CLI 这些海外服务，从下载到调用 API 全程都要稳定的出海线路——国内直连要么超时要么被墙，线路不稳的时候 Agent 跑一半断线，比不跑还难受。</p>
+<p>网络怎么解决，按你的情况对号入座：</p>
+<ul>
+<li><strong>从零开始</strong>：<a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a>，装客户端、导入订阅、选节点，10 分钟走完</li>
+<li><strong>想要方案对比</strong>（VPN / 机场 / VPS 怎么选）：<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a></li>
+<li><strong>只用电脑</strong>：<a href="https://tanqingbo.cn/Win-Internet/">Windows 翻墙教程</a></li>
+<li><strong>主要用手机</strong>：<a href="https://tanqingbo.cn/ios-open-internet/">iPhone 科学上网教程</a></li>
+</ul>
+<p>国产直连路线（路线一、二）可以跳过这节；要上官方体验（路线三）和多 Agent 协作（路线四），这关绕不过去。</p>
+<h2 id="避坑清单"><a href="#避坑清单" class="headerlink" title="避坑清单"></a>避坑清单</h2><ol>
+<li><strong>别一上来就买订阅</strong>。先用免费路线跑通一个真实任务，确认自己的使用频率，再决定要不要为 Claude Code 付费——多数人的使用强度，免费额度就够了</li>
+<li><strong>模型配置看清 baseURL 和模型名</strong>。OpenCode 这类工具接自定义 API 的报错，九成出在这两个字段，<a href="https://tanqingbo.cn/opencode-guide/">避坑清单</a> 里逐一列过</li>
+<li><strong>网络不稳别跑长任务</strong>。Agent 任务一跑几十分钟，中途断线前功尽弃，海外线路先测稳再开工</li>
+<li><strong>镜像站和官方账号别混淆</strong>。镜像站便宜免翻墙，但对话记录不绑定你的账号；重度使用建议正经账号，区别在 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型怎么买便宜</a> 里说清了</li>
+<li><strong>Windows 装 Claude Code 先备好 Git Bash</strong>。它原生为 Linux/macOS 设计，Windows 的准备工作在 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a> 第一步就有</li>
+<li><strong>额度比你想的烧得快</strong>。Agent 是按 token 计费的干活模式，跑重活（建模、长动画、全栈生成）一次任务就能吃掉不少额度，Pro 模式尤其明显——跑批量任务前先看计费看板，别月底看账单肉疼</li>
+</ol>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="零基础该从哪个-AI-编程工具入手？"><a href="#零基础该从哪个-AI-编程工具入手？" class="headerlink" title="零基础该从哪个 AI 编程工具入手？"></a>零基础该从哪个 AI 编程工具入手？</h3><p>先用免费的。豆包 Agent 在手机上就能遥控电脑干活，不用配任何 API；想正经写代码，Kimi K3 免费额度加 Kimi Code，或者 OpenCode 接国产 API（DeepSeek 便宜），都是零成本起步路线。跑通一个真实小项目，再考虑上 Claude Code 这类付费方案。</p>
+<h3 id="Claude-Code-和-OpenCode-哪个好？"><a href="#Claude-Code-和-OpenCode-哪个好？" class="headerlink" title="Claude Code 和 OpenCode 哪个好？"></a>Claude Code 和 OpenCode 哪个好？</h3><p>Claude Code 是官方出品、工程质量高，但订阅贵且国内访问要稳定线路；OpenCode 开源免费、支持自定义 API 和 Copilot 账号登录，适合想用便宜模型自己拼方案的人。预算充足追求体验选前者，想省钱爱折腾选后者，两者不冲突，先跑通一个再说。</p>
+<h3 id="用这些工具需要翻墙吗？"><a href="#用这些工具需要翻墙吗？" class="headerlink" title="用这些工具需要翻墙吗？"></a>用这些工具需要翻墙吗？</h3><p>分情况。豆包、Kimi、DeepSeek 系国产服务国内直连就能用；Claude Code 官方源、OpenAI Codex、Gemini CLI 这些海外服务，下载安装和调用 API 都需要稳定的出海线路，国内直连要么超时要么被墙。网络没解决的，从 <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a> 起步配置，再回来装工具。</p>
+<h3 id="模型-API-从哪里弄便宜？"><a href="#模型-API-从哪里弄便宜？" class="headerlink" title="模型 API 从哪里弄便宜？"></a>模型 API 从哪里弄便宜？</h3><p>三条路：一是国产 API（DeepSeek、Kimi），官方直连便宜，OpenCode、Hermes、Harness 都支持；二是合租平台买 ChatGPT、Claude 账号或镜像站，不用外币卡，环球巴士有 9 折优惠码；三是 OpenRouter 这种聚合中转，一个 key 调多家模型。详细价格和避坑看 <a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型怎么买便宜</a> 那篇。</p>
+<h3 id="AI-编程工具会取代程序员吗？"><a href="#AI-编程工具会取代程序员吗？" class="headerlink" title="AI 编程工具会取代程序员吗？"></a>AI 编程工具会取代程序员吗？</h3><p>短期不会取代，但会拉开差距。现在的 Agent 能独立完成模块级任务（写页面、跑测试、改 bug），但架构设计、需求拆解、技术选型还是要人拍板。现实是：会用 Agent 的人一天干出三天的量，不会用的人迟早被会用的人卷，工具学不学，答案是早学晚学的问题。</p>
+<h3 id="rmux、Hermes、Harness-这些是干嘛的？"><a href="#rmux、Hermes、Harness-这些是干嘛的？" class="headerlink" title="rmux、Hermes、Harness 这些是干嘛的？"></a>rmux、Hermes、Harness 这些是干嘛的？</h3><p>都是围绕 Agent 的进阶工具。rmux 是专为 Agent 打造的终端复用器，让 Claude Code 指挥 Codex、Gemini CLI 干活；Hermes Agent 解决多模型切换配置问题；DeepSeek Harness 是插件化 Agent 运行时，模型、工具、界面全都能换。它们适合已经在用 Agent、想搞多 Agent 协作的人，新手先跳过。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>选来选去其实就三个问题：你习惯在哪干活（终端还是桌面）、愿意花多少钱（国产 API 还是海外账号）、网络什么条件（直连够用还是得出海）。这三个答案一定，表格里该点哪篇攻略自己就跳出来了。零基础从豆包和 Kimi 免费起步，开发党走 OpenCode 加 DeepSeek 的省钱路线，追求上限的上 Claude Code 和 GPT-6 Astra。想好了就开工。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/ai-coding-agent-guide/">https://tanqingbo.cn/ai-coding-agent-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/claude-code/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Claude Code 教程：安装配置与实战
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-06-11</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/opencode-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        OpenCode 安装配置教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-17</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/doubao-agent-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        豆包 Agent 实测：手机遥控电脑
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra-Codex-Test/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 写代码实测
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-08</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 大模型怎么买便宜
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  <div class="nav-item-prev">
+    <a href="/fanqiang-maomi/" class="nav-link">
+      <i class="iconfont icon-left nav-prev-icon"></i>
+      <div>
+        <div class="nav-label">上一篇</div>
+        
+        <div class="nav-title">翻墙软件猫咪是什么（2026）：小猫客户端下载与订阅导入 </div>
+        
+      </div>
+    </a>
+  </div>
+  
+  
+  <div class="nav-item-next">
+    <a href="/streaming-bundle-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">流媒体合租怎么买（2026）：全平台价格、平台选择与避坑 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E5%85%A8%E6%99%AF%E4%B8%80%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text">AI 编程工具全景一览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%BD%A2%E6%80%81%EF%BC%9A%E5%85%88%E6%90%9E%E6%B8%85%E4%BD%A0%E8%A6%81%E7%9A%84%E6%98%AF%E5%93%AA%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">三种形态：先搞清你要的是哪类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF-CLI%EF%BC%9AAgent-%E7%9A%84%E4%B8%BB%E6%88%98%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">终端 CLI：Agent 的主战场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%92%8C%E4%BA%91%E7%AB%AF-Agent%EF%BC%9A%E4%B8%8D%E5%BC%80%E7%BB%88%E7%AB%AF%E4%B9%9F%E8%83%BD%E5%B9%B2%E6%B4%BB"><span class="toc-number">3.2.</span> <span class="toc-text">桌面和云端 Agent：不开终端也能干活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%BA%93%E8%87%AA%E7%94%9F%E9%95%BF%EF%BC%9A%E8%AE%A9%E7%AC%94%E8%AE%B0%E8%87%AA%E5%B7%B1%E8%BF%9B%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">知识库自生长：让笔记自己进化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%9C%80%E6%B1%82%E9%80%89%EF%BC%9A%E5%9B%9B%E6%9D%A1%E8%B7%AF%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">按需求选：四条路线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%B4%A6%E5%8F%B7%E4%BB%8E%E5%93%AA%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">模型和账号从哪来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E4%B9%8B%E5%89%8D%EF%BC%8C%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C"><span class="toc-number">6.</span> <span class="toc-text">工具之前，先解决网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%A5%E4%BB%8E%E5%93%AA%E4%B8%AA-AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E5%85%A5%E6%89%8B%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">零基础该从哪个 AI 编程工具入手？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claude-Code-%E5%92%8C-OpenCode-%E5%93%AA%E4%B8%AA%E5%A5%BD%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">Claude Code 和 OpenCode 哪个好？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E8%BF%99%E4%BA%9B%E5%B7%A5%E5%85%B7%E9%9C%80%E8%A6%81%E7%BF%BB%E5%A2%99%E5%90%97%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">用这些工具需要翻墙吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B-API-%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%84%E4%BE%BF%E5%AE%9C%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">模型 API 从哪里弄便宜？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E4%BC%9A%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%EF%BC%9F"><span class="toc-number">8.5.</span> <span class="toc-text">AI 编程工具会取代程序员吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rmux%E3%80%81Hermes%E3%80%81Harness-%E8%BF%99%E4%BA%9B%E6%98%AF%E5%B9%B2%E5%98%9B%E7%9A%84%EF%BC%9F"><span class="toc-number">8.6.</span> <span class="toc-text">rmux、Hermes、Harness 这些是干嘛的？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>434</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>426</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E5%85%A8%E6%99%AF%E4%B8%80%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text">AI 编程工具全景一览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%BD%A2%E6%80%81%EF%BC%9A%E5%85%88%E6%90%9E%E6%B8%85%E4%BD%A0%E8%A6%81%E7%9A%84%E6%98%AF%E5%93%AA%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">三种形态：先搞清你要的是哪类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF-CLI%EF%BC%9AAgent-%E7%9A%84%E4%B8%BB%E6%88%98%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">终端 CLI：Agent 的主战场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%92%8C%E4%BA%91%E7%AB%AF-Agent%EF%BC%9A%E4%B8%8D%E5%BC%80%E7%BB%88%E7%AB%AF%E4%B9%9F%E8%83%BD%E5%B9%B2%E6%B4%BB"><span class="toc-number">3.2.</span> <span class="toc-text">桌面和云端 Agent：不开终端也能干活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%BA%93%E8%87%AA%E7%94%9F%E9%95%BF%EF%BC%9A%E8%AE%A9%E7%AC%94%E8%AE%B0%E8%87%AA%E5%B7%B1%E8%BF%9B%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">知识库自生长：让笔记自己进化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%9C%80%E6%B1%82%E9%80%89%EF%BC%9A%E5%9B%9B%E6%9D%A1%E8%B7%AF%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">按需求选：四条路线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%B4%A6%E5%8F%B7%E4%BB%8E%E5%93%AA%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">模型和账号从哪来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E4%B9%8B%E5%89%8D%EF%BC%8C%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C"><span class="toc-number">6.</span> <span class="toc-text">工具之前，先解决网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%A5%E4%BB%8E%E5%93%AA%E4%B8%AA-AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E5%85%A5%E6%89%8B%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">零基础该从哪个 AI 编程工具入手？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claude-Code-%E5%92%8C-OpenCode-%E5%93%AA%E4%B8%AA%E5%A5%BD%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">Claude Code 和 OpenCode 哪个好？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E8%BF%99%E4%BA%9B%E5%B7%A5%E5%85%B7%E9%9C%80%E8%A6%81%E7%BF%BB%E5%A2%99%E5%90%97%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">用这些工具需要翻墙吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B-API-%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%84%E4%BE%BF%E5%AE%9C%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">模型 API 从哪里弄便宜？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E4%BC%9A%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%EF%BC%9F"><span class="toc-number">8.5.</span> <span class="toc-text">AI 编程工具会取代程序员吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rmux%E3%80%81Hermes%E3%80%81Harness-%E8%BF%99%E4%BA%9B%E6%98%AF%E5%B9%B2%E5%98%9B%E7%9A%84%EF%BC%9F"><span class="toc-number">8.6.</span> <span class="toc-text">rmux、Hermes、Harness 这些是干嘛的？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">77</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">24</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/%E6%B5%81%E5%AA%92%E4%BD%93" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-25</div>
+        <a href="/fanqiang-maomi/"><div class="recent-posts-item-content">翻墙软件猫咪是什么（2026）：小猫客户端下载与订阅导入</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-24</div>
+        <a href="/ai-coding-agent-guide/"><div class="recent-posts-item-content">AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-24</div>
+        <a href="/streaming-bundle-guide/"><div class="recent-posts-item-content">流媒体合租怎么买（2026）：全平台价格、平台选择与避坑</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-23</div>
+        <a href="/free-fanqiang/"><div class="recent-posts-item-content">免费翻墙靠谱吗（2026）：免费梯子的套路与 15 元替代</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E5%85%A8%E6%99%AF%E4%B8%80%E8%A7%88"><span class="toc-number">2.</span> <span class="toc-text">AI 编程工具全景一览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%BD%A2%E6%80%81%EF%BC%9A%E5%85%88%E6%90%9E%E6%B8%85%E4%BD%A0%E8%A6%81%E7%9A%84%E6%98%AF%E5%93%AA%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">三种形态：先搞清你要的是哪类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF-CLI%EF%BC%9AAgent-%E7%9A%84%E4%B8%BB%E6%88%98%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">终端 CLI：Agent 的主战场</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%92%8C%E4%BA%91%E7%AB%AF-Agent%EF%BC%9A%E4%B8%8D%E5%BC%80%E7%BB%88%E7%AB%AF%E4%B9%9F%E8%83%BD%E5%B9%B2%E6%B4%BB"><span class="toc-number">3.2.</span> <span class="toc-text">桌面和云端 Agent：不开终端也能干活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E5%BA%93%E8%87%AA%E7%94%9F%E9%95%BF%EF%BC%9A%E8%AE%A9%E7%AC%94%E8%AE%B0%E8%87%AA%E5%B7%B1%E8%BF%9B%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">知识库自生长：让笔记自己进化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E9%9C%80%E6%B1%82%E9%80%89%EF%BC%9A%E5%9B%9B%E6%9D%A1%E8%B7%AF%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">按需求选：四条路线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%92%8C%E8%B4%A6%E5%8F%B7%E4%BB%8E%E5%93%AA%E6%9D%A5"><span class="toc-number">5.</span> <span class="toc-text">模型和账号从哪来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E4%B9%8B%E5%89%8D%EF%BC%8C%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C"><span class="toc-number">6.</span> <span class="toc-text">工具之前，先解决网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%BF%E5%9D%91%E6%B8%85%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">避坑清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E5%9F%BA%E7%A1%80%E8%AF%A5%E4%BB%8E%E5%93%AA%E4%B8%AA-AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E5%85%A5%E6%89%8B%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">零基础该从哪个 AI 编程工具入手？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Claude-Code-%E5%92%8C-OpenCode-%E5%93%AA%E4%B8%AA%E5%A5%BD%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">Claude Code 和 OpenCode 哪个好？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E8%BF%99%E4%BA%9B%E5%B7%A5%E5%85%B7%E9%9C%80%E8%A6%81%E7%BF%BB%E5%A2%99%E5%90%97%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">用这些工具需要翻墙吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B-API-%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%84%E4%BE%BF%E5%AE%9C%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">模型 API 从哪里弄便宜？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AI-%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7%E4%BC%9A%E5%8F%96%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%EF%BC%9F"><span class="toc-number">8.5.</span> <span class="toc-text">AI 编程工具会取代程序员吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rmux%E3%80%81Hermes%E3%80%81Harness-%E8%BF%99%E4%BA%9B%E6%98%AF%E5%B9%B2%E5%98%9B%E7%9A%84%EF%BC%9F"><span class="toc-number">8.6.</span> <span class="toc-text">rmux、Hermes、Harness 这些是干嘛的？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

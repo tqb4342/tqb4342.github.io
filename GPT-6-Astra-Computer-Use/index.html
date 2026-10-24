@@ -356,9 +356,9 @@ var _hmt = _hmt || [];
     
     </a>
     
-    <a href="/CSBook001" class="navbar-menu-item">
+    <a href="/clash-guide/" class="navbar-menu-item">
     
-    电子书下载
+    Clash教程
     
     </a>
     
@@ -421,7 +421,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>3k 字</span>
+    <span>3.1k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -483,7 +483,7 @@ var _hmt = _hmt || [];
   <div id="section" class="post-content">
 
     <blockquote>
-<p>📚 本文是 <a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 国内使用与购买指南</a> 的姊妹篇——那篇讲模型本身（benchmark、争议、价格），这篇只展开讲它最惊艳的能力 <strong>Computer Use</strong>：AI 自己操作电脑，能干什么、怎么用、国内怎么上手。</p>
+<p>📚 本文是 <a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 国内使用与购买指南</a> 的姊妹篇——那篇讲模型本身（benchmark、争议、价格），这篇只展开讲它最惊艳的能力 <strong>Computer Use</strong>：AI 自己操作电脑，能干什么、怎么用、国内怎么上手。<br>🔧 AI 编程工具怎么选、免费方案有哪些、网络前提怎么解决，总览看<a href="https://tanqingbo.cn/ai-coding-agent-guide/">AI 编程工具怎么选（2026）</a>。</p>
 </blockquote>
 <h2 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h2><p>GPT-6 Astra 发布会上一堆 benchmark 里，真正改变工作方式的是 Computer Use：<strong>AI 自己看屏幕、动鼠标、敲键盘，把一件事从头干到尾</strong>——不是给你一段「操作步骤」让你照着做，是它自己干。</p>
 <p>官方演示里最狠的一个画面：Astra 打开 KiCad（电路设计软件），自己放元器件、自己布线，把一张原理图变成了可制造的 PCB 电路板。设计软件没有 API、没有插件，它就是靠「看屏幕 + 点鼠标」完成的。</p>
@@ -551,7 +551,7 @@ var _hmt = _hmt || [];
 <h3 id="8-设计-PCB-电路板"><a href="#8-设计-PCB-电路板" class="headerlink" title="8. 设计 PCB 电路板"></a>8. 设计 PCB 电路板</h3><p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kicad-official.webp" alt="Computer Use 演示：Astra 在 KiCad 中自动布线设计 PCB" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/kicad-official.webp" class="lozad post-image"></p>
 <p><em>发布会实拍：Astra 打开 KiCad，自己放元器件、自己布线，把原理图转成可制造的 PCB（来源：OpenAI）</em></p>
 <p>这是全场最炸的演示。KiCad 没有任何 API，Astra 纯靠看屏幕操作专业设计软件——这件事的技术含义远超「办公自动化」：<strong>专业工具的门槛正在被 AI 拆掉</strong>。</p>
-<p>官方演示看着完美，民间实测是什么水平？用 Astra 实际复现这个 KiCad 任务，DRC 报了 12 项违规——翻车全过程和另外三个项目（3D 城市生成器、全栈应用、复刻 Cursor）的实测，见 <a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测：Codex 到底强在哪</a>。</p>
+<p>官方演示看着完美，民间实测是什么水平？用 Astra 实际复现这个 KiCad 任务，DRC 报了 12 项违规——翻车全过程和另外三个项目（3D 城市生成器、全栈应用、复刻 Cursor）的实测，见 <a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测：3D 城市与全栈应用</a>。</p>
 <h3 id="9-3D-CAD-几何重构（BenchCAD）"><a href="#9-3D-CAD-几何重构（BenchCAD）" class="headerlink" title="9. 3D CAD 几何重构（BenchCAD）"></a>9. 3D CAD 几何重构（BenchCAD）</h3><p>给它几张不同角度的渲染图，它能反推出 3D CAD 代码，几何重合度 95.9%，API 成本比上代低 43%。逆向工程、旧图纸数字化，这类以前按人天计费的活，成本曲线直接被改写。</p>
 <h3 id="10-长任务异步跑"><a href="#10-长任务异步跑" class="headerlink" title="10. 长任务异步跑"></a>10. 长任务异步跑</h3><p>Computer Use 配套的机制升级：遇到无关紧要的缺失信息它自己补，只有<strong>关键信息缺失才来问你</strong>；你不在的时候它先干别的，你回复了它接着做。这意味着「几小时级别的任务」可以真正放手——你去开会，它在家里干活。</p>
 <h2 id="四、主动追问还是自动补全？"><a href="#四、主动追问还是自动补全？" class="headerlink" title="四、主动追问还是自动补全？"></a>四、主动追问还是自动补全？</h2><p>这是 Astra 在产品层面最值得琢磨的一个设计：<strong>它知道什么时候该问，什么时候不该问</strong>。</p>
@@ -643,7 +643,7 @@ var _hmt = _hmt || [];
 <p>相关阅读：</p>
 <ul>
 <li><a href="https://tanqingbo.cn/GPT-6-Astra/">GPT-6 Astra 国内使用与购买指南（主文）</a></li>
-<li><a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测：Codex 到底强在哪</a></li>
+<li><a href="https://tanqingbo.cn/GPT-6-Astra-Codex-Test/">GPT-6 Astra 写代码实测：3D 城市与全栈应用</a></li>
 <li><a href="https://tanqingbo.cn/ai-tools-guide/">2026 好用的 AI 工具全指南</a></li>
 <li><a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型充值教程：合租/独享/镜像/代充</a></li>
 <li><a href="https://tanqingbo.cn/how-to-signup-chatgpt/">ChatGPT 注册教程 2026：国内用户详细注册指南</a></li>
@@ -699,7 +699,7 @@ var _hmt = _hmt || [];
     
     <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
       <a href="/GPT-6-Astra-Codex-Test/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
-        GPT-6 Astra 写代码实测：3D 城市、全栈应用、复刻 Cursor，Codex 到底强在哪（2026）
+        GPT-6 Astra 写代码实测：3D 城市与全栈应用（2026）
       </a>
       <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-08</span>
     </li>
@@ -715,7 +715,7 @@ var _hmt = _hmt || [];
       <div>
         <div class="nav-label">上一篇</div>
         
-        <div class="nav-title">GPT-6 Astra 写代码实测：3D 城市、全栈应用、复刻 Cursor，Codex 到底强在哪（2026） </div>
+        <div class="nav-title">GPT-6 Astra 写代码实测：3D 城市与全栈应用（2026） </div>
         
       </div>
     </a>
@@ -784,7 +784,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>431</span>
+    <span>434</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -792,7 +792,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>425</span>
+    <span>426</span>
     <span>标签</span>
   </a>
 </div>
@@ -855,14 +855,14 @@ var _hmt = _hmt || [];
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
-          <span class="categories-list-item-badge">32</span>
+          <span class="categories-list-item-badge">33</span>
         </div>
       </a>
     
       <a href="/categories/海外热门">
         <div class="categories-list-item">
           海外热门
-          <span class="categories-list-item-badge">22</span>
+          <span class="categories-list-item-badge">24</span>
         </div>
       </a>
     
@@ -906,7 +906,7 @@ var _hmt = _hmt || [];
     
     <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
     
-    <a href="/tags/Python" title="Python"><div class="tags-list-item">Python</div></a>
+    <a href="/tags/%E6%B5%81%E5%AA%92%E4%BD%93" title="流媒体"><div class="tags-list-item">流媒体</div></a>
     
   </div>
 </div>
@@ -967,23 +967,23 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-25</div>
+        <a href="/fanqiang-maomi/"><div class="recent-posts-item-content">翻墙软件猫咪是什么（2026）：小猫客户端下载与订阅导入</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-24</div>
+        <a href="/ai-coding-agent-guide/"><div class="recent-posts-item-content">AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-24</div>
+        <a href="/streaming-bundle-guide/"><div class="recent-posts-item-content">流媒体合租怎么买（2026）：全平台价格、平台选择与避坑</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-10-23</div>
         <a href="/free-fanqiang/"><div class="recent-posts-item-content">免费翻墙靠谱吗（2026）：免费梯子的套路与 15 元替代</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-10-21</div>
-        <a href="/github-pages-access/"><div class="recent-posts-item-content">GitHub Pages 国内打不开（2026）：原因实测与 5 种解决方案</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-10-21</div>
-        <a href="/double-11-vpn-guide/"><div class="recent-posts-item-content">2026 双11机场优惠攻略：一枝红杏全年最低折扣与蹲守指南</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-10-18</div>
-        <a href="/deepseek-v4-1-flash-1017/"><div class="recent-posts-item-content">DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元</div></a>
       </div>
     
   </div>
@@ -1027,10 +1027,12 @@ var _hmt = _hmt || [];
       <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
       <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
       <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
       <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
       <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
       <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
       <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
     </ul>
   </div>
   <div class="site-nav-col">
@@ -1054,6 +1056,7 @@ var _hmt = _hmt || [];
       <li><a href="/video-websites/">国外视频网站盘点</a></li>
       <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
       <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
       <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
       <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
       <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
