@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-10-25T13:00:00.000Z",
+  "dateModified": "2026-10-25T13:00:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/kimi-k3-1-pro/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_kimi_k31_pro.webp",
+  "description": "Kimi K3.1 Pro 发布实测：全球智能指数第 4、Terminal-Bench 4.0 冲到 65.7，3 万亿参数 1M 上下文，价格只有 GPT-6 Astra 五分之一。实测文字到 Blender 到网页的 3D 建模一条龙、云端 3D Make，以及该不该从 K3 换过来。",
+  "keywords": "Kimi K3.1 Pro,Kimi K3.1,kimi k3.1怎么样,K3.1 Pro实测,Kimi 3D建模,K3.1 Pro跑分,Terminal-Bench,Kimi K3.1 Pro价格,kimi k3.1发布,K3.1 Pro Highspeed,免费3D建模AI,Kimi 3D Make,kimi k3.1 pro怎么用,3D Make怎么用"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI 工具",
+      "item": "https://tanqingbo.cn/categories/AI-工具/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Kimi K3.1 Pro 免费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "免费。K3.1 Pro 已在 kimi.com 网页版和 Kimi App 同步上线，新模型在免费额度里就能用，3D Make 功能也是免费开放，不需要额外付费开会员。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "K3.1 Pro 和 K3 该用哪个？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "直接用 K3.1 Pro。它是基于 K3 做的后训练升级，代码、Agent、知识类基准全面超过 K3，价格反而便宜三分之一，官网入口也是同一个，没有理由留在旧版。K3 的注册和上手流程看 Kimi K3 教程，步骤完全通用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "3D 建模真的不用本地装 Blender？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不用。kimi.com 的 3D Make 功能在云端跑，丢一张草图加一句指令，它自己在云端写脚本、建模、渲染、出网页，GLB 文件下载下来可以直接去 3D 打印。想本地精修的再下载 .blend 文件用 Blender 编辑。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "K3.1 Pro 能替代 GPT-6 Astra 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "分场景。3D 建模和终端 Agent 这类任务已经能正面交锋，价格还便宜 80%；但在部分高难度推理维度，离最强闭源模型仍有差距。国内直连能稳定用是它最大的优势——Astra 需要出海线路，网络没解决的用户，K3.1 Pro 是现实可得的最强档之一。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "K3.1 Pro Highspeed 是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "官方同步推出的高速版模型，智商基本不减，输出速度提升约 3 倍，适合日常对话、轻量任务这类对响应速度敏感、对推理深度要求不高的场景。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Terminal-Bench 65.7 分是什么水平？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Terminal-Bench 4.0 考察 Agent 在真实终端里独立干活的能力，K3.1 Pro 从上一代的 13 分冲到 65.7，距离 Opus 5.5 不到 1 个百分点，属于第一梯队。简单说，让它自己在命令行里装环境、跑脚本、修 bug，已经接近海外最强水平。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  <title>Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四</title>
+  
+  <meta name="description" content="Kimi K3.1 Pro 发布实测：全球智能指数第 4、Terminal-Bench 4.0 冲到 65.7，3 万亿参数 1M 上下文，价格只有 GPT-6 Astra 五分之一。实测文字到 Blender 到网页的 3D 建模一条龙、云端 3D Make，以及该不该从 K3 换过来。">
+  <meta name="keywords" content="Kimi K3.1 Pro,Kimi K3.1,kimi k3.1怎么样,K3.1 Pro实测,Kimi 3D建模,K3.1 Pro跑分,Terminal-Bench,Kimi K3.1 Pro价格,kimi k3.1发布,K3.1 Pro Highspeed,免费3D建模AI,Kimi 3D Make,kimi k3.1 pro怎么用,3D Make怎么用">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/kimi-k3-1-pro/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_kimi_k31_pro.webp">
+  
+  
+  <meta property="og:description" content="Kimi K3.1 Pro 发布实测：全球智能指数第 4、Terminal-Bench 4.0 冲到 65.7，3 万亿参数 1M 上下文，价格只有 GPT-6 Astra 五分之一。实测文字到 Blender 到网页的 3D 建模一条龙、云端 3D Make，以及该不该从 K3 换过来。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-10-25T13:00:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-25T13:00:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="大模型">
+  
+  <meta property="og:article:tag" content="Kimi">
+  
+  <meta property="og:article:tag" content="AI 工具">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <link rel="canonical" href="https://tanqingbo.cn/kimi-k3-1-pro/" />
+  
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-178024758-1');
+</script>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_kimi_k31_pro.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/banner_kimi_k31_pro.webp"
+    alt="Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-10-25T13:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-10-25</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI-工具/" class="post-meta-link">AI 工具</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.6k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/kimi-k3-1-pro/" class="leancloud_visitors" data-flag-title="Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/大模型/" class="post-meta-link">大模型</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Kimi/" class="post-meta-link">Kimi</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-工具/" class="post-meta-link">AI 工具</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>昨天（2026-10-24）Kimi 发了 K3.1 Pro，X 和 reddit 直接刷屏——知名评测机构 Artificial Analysis 给它打了 55 分，全球智能指数第四，比前代暴涨 11 分；Terminal-Bench 4.0 上从 13%飙到 65.7%，距离 Opus 5.5 不到 1 个百分点。</p>
+<p>国产模型前十几乎没有存在感的沉默期，被这一发打破了。下面按分数、实测、价格的顺序挨个过，看完你自己判断要不要换。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>全球智能指数第 4（55 分）</strong>，前代 K3 是 44 分</li>
+<li><strong>Terminal-Bench 4.0 拿 65.7</strong>，终端 Agent 能力第一梯队，距 Opus 5.5 不到 1 个百分点</li>
+<li>3 万亿参数、100 万上下文，<strong>价格只有 GPT-6 Astra 的五分之一</strong>，比 K3 还便宜三分之一</li>
+<li>招牌新技能：<strong>文字/草图 → Blender 建模 → 网页一条龙</strong>，实测 40 分钟交活</li>
+<li><strong>免费额度就能用</strong>，kimi.com 和 Kimi App 已同步上线，3D Make 云端功能免费</li>
+<li>有高速版 K3.1 Pro Highspeed，输出快 3 倍</li>
+</ul>
+<h2 id="分数先看懂：三个数字的含义"><a href="#分数先看懂：三个数字的含义" class="headerlink" title="分数先看懂：三个数字的含义"></a>分数先看懂：三个数字的含义</h2><p>跑分是门票，得知道每张门票代表什么。</p>
+<p><strong>全球智能指数第 4</strong>。Artificial Analysis 的综合智能指数，K3.1 Pro 拿 55 分排第四，前面是 GPT-6 Astra、Opus 5.5、Fable 5.1 这些海外旗舰——reddit 上讨论最凶的就是它超越了 Fable 5.1 这件事。更狠的是评测机构的另一个判断：<strong>权重一旦发布，K3.1 Pro 将登顶开放权重模型榜首</strong>，开源与顶级闭源的差距从 12 分缩到 3 分。官方已确认完整权重两周内放出，到时候榜单还得重洗一次。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_rank_s.webp" alt="Kimi K3.1 Pro 在 Artificial Analysis 智能指数榜单：55 分排全球第四" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_rank_s.webp" class="lozad post-image"></p>
+<p>上图就是 Artificial Analysis 的智能指数榜，K3.1 Pro 的 55 分卡在第四位，身后是一排海外旗舰——这个位置此前从没出现过国产模型的名字。</p>
+<p><strong>Terminal-Bench 4.0：从 13 分飙到 65.7 分</strong>。这个测试考察 Agent 在真实终端里独立干活——装环境、跑命令、排错，全是程序员日常。从上一代 13 分到 65.7 分的跳变，意味着「让 AI 自己在命令行里干活」这件事，它已经摸到 Opus 的门框了。</p>
+<p><strong>成本是 Astra 的五分之一</strong>。同样的钱它干得最多，同样的活它花得最少——Artificial Analysis 判断它在三种思考强度下都落在「性能与单任务成本」的帕累托前沿上。翻译成人话：性价比怪物。</p>
+<p>想系统了解 Kimi 系列怎么注册上手、免费额度怎么用，看 <a href="https://tanqingbo.cn/kimi-k3-guide/">Kimi K3 教程</a>，步骤对 K3.1 Pro 完全通用。</p>
+<h2 id="实测一：文字-→-Blender-→-网页，一条龙"><a href="#实测一：文字-→-Blender-→-网页，一条龙" class="headerlink" title="实测一：文字 → Blender → 网页，一条龙"></a>实测一：文字 → Blender → 网页，一条龙</h2><p>这是 K3.1 Pro 主打的新能力：给它一段文字、一张手绘草图或参考图，它推断形状、比例和空间关系，自己写 Blender 脚本建模，再接上 Three.js 出一个能交互的网页。全程不碰 MCP 连接器、不用外部模型库。</p>
+<p>输入是一张手绘三视图，纸面上标好了全部尺寸：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_sketch_s.webp" alt="手绘三视图草图：标注翼展 8.0、总长 6.2、总高 2.4（单位米）" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_sketch_s.webp" class="lozad post-image"></p>
+<p>实测流程是这样的：这张草图（标注翼展 8.0、总长 6.2、总高 2.4）扔进去，40 分钟后交出来的东西包括：608 行 Blender 脚本、可编辑的 .blend 文件、1.7 MB 的 GLB、一个双击就能打开的网页。<strong>建出来的模型实测尺寸 8.000、6.199、2.400，和草图标注差 1 毫米</strong>。</p>
+<p>过程细节比结果更能说明问题：</p>
+<ul>
+<li>动手前先试探 Blender 5.2 的新接口，确认了才写正式脚本</li>
+<li>验收标准直接写成断言：旋翼直径差 1 毫米就不许导出</li>
+<li>渲染完自己对照草图改了一轮</li>
+<li>网页做完自己开浏览器截了两张图，确认没问题才交差</li>
+<li>六项待办清单，自己一项项划掉</li>
+</ul>
+<p>终端里的实拍长这样——写网页、起本地服务器、待办逐项划掉，全程没有人工介入：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_model_s.webp" alt="K3.1 Pro 终端工作实拍：自己写 viewer 网页、跑静态服务器、逐项完成待办清单" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_model_s.webp" class="lozad post-image"></p>
+<p>机身是样条插出来的流线体，座舱玻璃是吸附在机身上的曲面，桨叶带扭转，四个旋翼的倾转层级从 Blender 一路保留到浏览器里——网页上拉滑块，旋翼真的绕支臂往前倒 90°。写到一半时 100 万上下文才用了 6%。</p>
+<p>最终交付的网页是个可交互的 3D 配置器：换机身配色、拉倾转滑块，尺寸数据直接标在旁边：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_x3_s.webp" alt="交付的网页成品：可交互 3D 配置器，支持换色与倾转滑块" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_x3_s.webp" class="lozad post-image"></p>
+<p>40 分钟是这张草图的上限，不是它的上限。</p>
+<h2 id="云端版：3D-Make，本地不装-Blender-也能干"><a href="#云端版：3D-Make，本地不装-Blender-也能干" class="headerlink" title="云端版：3D Make，本地不装 Blender 也能干"></a>云端版：3D Make，本地不装 Blender 也能干</h2><p>上面那条链路听上去还是程序员姿势？kimi.com 和 Kimi App 上线的 <strong>3D Make 功能</strong>把它变成了普通人姿势：</p>
+<p>把草图和资料直接丢进 Kimi，说一句「参考这些资料，把它的 3D 模型做出来」，它就在云端开工——同样 40 分钟左右，改脚本、跑重建、发现桨叶转起来不对称就改成半整数转速、CSS 动画暂停不一致就修，最后自己开浏览器点一遍，报「无脚本错误或资源缺失」才交版本。</p>
+<p>成品能在线预览、一键发布成网页，GLB 下载下来可以直接去 3D 打印，还能导出视频或实况照片发社交平台。不满意在对话里说，它接着改。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_3dmake_s.webp" alt="kimi.com 3D Make 界面：左侧对话控制，右侧实时 3D 预览与机身配色面板" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_3dmake_s.webp" class="lozad post-image"></p>
+<p>界面就是左边聊、右边转：对话里下指令，右侧窗口实时转模型、换配色、拉倾转滑块，改完直接在同一个窗口里验收。</p>
+<p>以前这是建模师、前端、运营三个人的活，现在是一个输入框。</p>
+<p>网友的实测也炸出一批：4.92 美元在一款绘画应用里画出肖像；虚幻引擎里建了一座云端宫殿成本不到 10 美元；还有那个审美被夸上天的鹈鹕骑自行车 demo。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_x1_s.webp" alt="网友实测：4.92 美元让 K3.1 Pro 在网页画板应用里画出人物肖像" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/k31_x1_s.webp" class="lozad post-image"></p>
+<h2 id="实测二：金融建模，端到端交-Excel"><a href="#实测二：金融建模，端到端交-Excel" class="headerlink" title="实测二：金融建模，端到端交 Excel"></a>实测二：金融建模，端到端交 Excel</h2><p>AI 碰金融翻车是老梗了——写摘要凑合，一遇到跨表公式和估值模型就胡言乱语。K3.1 Pro 这次直接把这块硬骨头啃了：</p>
+<ul>
+<li><strong>OfficeQA Pro v2</strong>（真实金融文档的复杂财务分析）拿下 64.4 分，当前最优</li>
+<li><strong>Frontier Finance</strong>（覆盖标的筛选到盈利分析的整条投资工作流）位列第二</li>
+</ul>
+<p>实测里它交出的是一份英伟达财务模型：不是填表，是<strong>带公式联动的完整 Excel</strong>——经营驱动因子可随情景调整，敏感性分析直接呈现对估值的影响，每项假设都有数据支撑。像极了老练的分析师，或者说，一个真正懂财务逻辑的全栈金融民工。</p>
+<h2 id="高速版：K3-1-Pro-Highspeed"><a href="#高速版：K3-1-Pro-Highspeed" class="headerlink" title="高速版：K3.1 Pro Highspeed"></a>高速版：K3.1 Pro Highspeed</h2><p>同步推出的还有 K3.1 Pro Highspeed：智商基本不减，输出速度提升约 3 倍。日常问答、轻量任务这类对响应速度敏感的场景用高速版，硬核推理和长任务用标准版，各干各的。</p>
+<h2 id="该不该用：和海外旗舰怎么选"><a href="#该不该用：和海外旗舰怎么选" class="headerlink" title="该不该用：和海外旗舰怎么选"></a>该不该用：和海外旗舰怎么选</h2><p>结论分两半。</p>
+<p><strong>能力上</strong>：3D 建模、终端 Agent、金融建模这些任务已经能和 GPT-6 Astra 正面交锋，部分高难度推理维度离最强闭源模型仍有差距——它不是全能冠军，是「前沿模型里最理性的那个选择」。</p>
+<p><strong>现实上</strong>：这才是国产模型真正的护城河。K3.1 Pro 国内直连、免费额度就能用；Astra 和 Opus 得先有稳定的出海线路才能摸到。网络没解决的用户，K3.1 Pro 就是现实可得的最强档。想让家里网络先达标的，从 <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a> 起步；想两边都体验做对比的，<a href="https://tanqingbo.cn/ai-llm-buy-guide/">AI 大模型怎么买便宜</a> 里有不用外币卡的开法。</p>
+<p>编程党还有一层选择：K3 系在 <a href="https://tanqingbo.cn/ai-coding-agent-guide/">AI 编程工具怎么选</a> 的格局里属于「国产直连免费路线」的主力——Kimi Code 的 CLI 和 VS Code 插件对标 Claude Code，K3.1 Pro 的 Agent 能力涨上来之后，这条路线的含金量又高了一截。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="Kimi-K3-1-Pro-免费吗？"><a href="#Kimi-K3-1-Pro-免费吗？" class="headerlink" title="Kimi K3.1 Pro 免费吗？"></a>Kimi K3.1 Pro 免费吗？</h3><p>免费。K3.1 Pro 已在 kimi.com 网页版和 Kimi App 同步上线，新模型在免费额度里就能用，3D Make 功能也是免费开放，不需要额外付费开会员。</p>
+<h3 id="K3-1-Pro-和-K3-该用哪个？"><a href="#K3-1-Pro-和-K3-该用哪个？" class="headerlink" title="K3.1 Pro 和 K3 该用哪个？"></a>K3.1 Pro 和 K3 该用哪个？</h3><p>直接用 K3.1 Pro。它是基于 K3 做的后训练升级，代码、Agent、知识类基准全面超过 K3，价格反而便宜三分之一，官网入口也是同一个，没有理由留在旧版。K3 的注册和上手流程看 <a href="https://tanqingbo.cn/kimi-k3-guide/">Kimi K3 教程</a>，步骤完全通用。</p>
+<h3 id="3D-建模真的不用本地装-Blender？"><a href="#3D-建模真的不用本地装-Blender？" class="headerlink" title="3D 建模真的不用本地装 Blender？"></a>3D 建模真的不用本地装 Blender？</h3><p>不用。kimi.com 的 3D Make 功能在云端跑，丢一张草图加一句指令，它自己在云端写脚本、建模、渲染、出网页，GLB 文件下载下来可以直接去 3D 打印。想本地精修的再下载 .blend 文件用 Blender 编辑。</p>
+<h3 id="K3-1-Pro-能替代-GPT-6-Astra-吗？"><a href="#K3-1-Pro-能替代-GPT-6-Astra-吗？" class="headerlink" title="K3.1 Pro 能替代 GPT-6 Astra 吗？"></a>K3.1 Pro 能替代 GPT-6 Astra 吗？</h3><p>分场景。3D 建模和终端 Agent 这类任务已经能正面交锋，价格还便宜 80%；但在部分高难度推理维度，离最强闭源模型仍有差距。国内直连能稳定用是它最大的优势——Astra 需要出海线路，网络没解决的用户，K3.1 Pro 是现实可得的最强档之一。</p>
+<h3 id="K3-1-Pro-Highspeed-是什么？"><a href="#K3-1-Pro-Highspeed-是什么？" class="headerlink" title="K3.1 Pro Highspeed 是什么？"></a>K3.1 Pro Highspeed 是什么？</h3><p>官方同步推出的高速版模型，智商基本不减，输出速度提升约 3 倍，适合日常对话、轻量任务这类对响应速度敏感、对推理深度要求不高的场景。</p>
+<h3 id="Terminal-Bench-65-7-分是什么水平？"><a href="#Terminal-Bench-65-7-分是什么水平？" class="headerlink" title="Terminal-Bench 65.7 分是什么水平？"></a>Terminal-Bench 65.7 分是什么水平？</h3><p>Terminal-Bench 4.0 考察 Agent 在真实终端里独立干活的能力，K3.1 Pro 从上一代的 13 分冲到 65.7，距离 Opus 5.5 不到 1 个百分点，属于第一梯队。简单说，让它自己在命令行里装环境、跑脚本、修 bug，已经接近海外最强水平。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>K3.1 Pro 这次是真把东西端上来了：全球第四的分数、终端 Agent 第一梯队、3D 建模一条龙、价格砍到 Astra 五分之一，而且免费额度就能用。国模不是掉队了，是在攒大招。对普通用户就一句话——打开 kimi.com 直接试，一张草图丢进 3D Make，40 分钟后你会回来转发的。编程党把 Kimi Code 的模型切到 K3.1 Pro，等同一件事。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/kimi-k3-1-pro/">https://tanqingbo.cn/kimi-k3-1-pro/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/kimi-k3-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Kimi K3 怎么用（2026 免费）：注册上手、编程实测与 Qwen3.8/GLM-5.3 对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-09</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra-Codex-Test/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 写代码实测：3D 城市与全栈应用（2026）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-08</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-coding-agent-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-10-24</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/doubao-agent-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        豆包 Agent 怎么用（2026 实测）：手机遥控电脑做表格、剪视频
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-02</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-llm-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT/Claude/Gemini/Grok 怎么买便宜：国外 AI 大模型充值教程（2026 附 9 折优惠码）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-29</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/fanqiang-maomi/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">翻墙软件猫咪是什么（2026）：小猫客户端下载与订阅导入 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%85%88%E7%9C%8B%E6%87%82%EF%BC%9A%E4%B8%89%E4%B8%AA%E6%95%B0%E5%AD%97%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">分数先看懂：三个数字的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%80%EF%BC%9A%E6%96%87%E5%AD%97-%E2%86%92-Blender-%E2%86%92-%E7%BD%91%E9%A1%B5%EF%BC%8C%E4%B8%80%E6%9D%A1%E9%BE%99"><span class="toc-number">3.</span> <span class="toc-text">实测一：文字 → Blender → 网页，一条龙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E7%AB%AF%E7%89%88%EF%BC%9A3D-Make%EF%BC%8C%E6%9C%AC%E5%9C%B0%E4%B8%8D%E8%A3%85-Blender-%E4%B9%9F%E8%83%BD%E5%B9%B2"><span class="toc-number">4.</span> <span class="toc-text">云端版：3D Make，本地不装 Blender 也能干</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%BA%8C%EF%BC%9A%E9%87%91%E8%9E%8D%E5%BB%BA%E6%A8%A1%EF%BC%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E4%BA%A4-Excel"><span class="toc-number">5.</span> <span class="toc-text">实测二：金融建模，端到端交 Excel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%89%88%EF%BC%9AK3-1-Pro-Highspeed"><span class="toc-number">6.</span> <span class="toc-text">高速版：K3.1 Pro Highspeed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A5%E4%B8%8D%E8%AF%A5%E7%94%A8%EF%BC%9A%E5%92%8C%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">7.</span> <span class="toc-text">该不该用：和海外旗舰怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kimi-K3-1-Pro-%E5%85%8D%E8%B4%B9%E5%90%97%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">Kimi K3.1 Pro 免费吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-%E5%92%8C-K3-%E8%AF%A5%E7%94%A8%E5%93%AA%E4%B8%AA%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">K3.1 Pro 和 K3 该用哪个？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3D-%E5%BB%BA%E6%A8%A1%E7%9C%9F%E7%9A%84%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%A3%85-Blender%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">3D 建模真的不用本地装 Blender？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-%E8%83%BD%E6%9B%BF%E4%BB%A3-GPT-6-Astra-%E5%90%97%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">K3.1 Pro 能替代 GPT-6 Astra 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-Highspeed-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">8.5.</span> <span class="toc-text">K3.1 Pro Highspeed 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terminal-Bench-65-7-%E5%88%86%E6%98%AF%E4%BB%80%E4%B9%88%E6%B0%B4%E5%B9%B3%EF%BC%9F"><span class="toc-number">8.6.</span> <span class="toc-text">Terminal-Bench 65.7 分是什么水平？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>435</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>9</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>427</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%85%88%E7%9C%8B%E6%87%82%EF%BC%9A%E4%B8%89%E4%B8%AA%E6%95%B0%E5%AD%97%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">分数先看懂：三个数字的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%80%EF%BC%9A%E6%96%87%E5%AD%97-%E2%86%92-Blender-%E2%86%92-%E7%BD%91%E9%A1%B5%EF%BC%8C%E4%B8%80%E6%9D%A1%E9%BE%99"><span class="toc-number">3.</span> <span class="toc-text">实测一：文字 → Blender → 网页，一条龙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E7%AB%AF%E7%89%88%EF%BC%9A3D-Make%EF%BC%8C%E6%9C%AC%E5%9C%B0%E4%B8%8D%E8%A3%85-Blender-%E4%B9%9F%E8%83%BD%E5%B9%B2"><span class="toc-number">4.</span> <span class="toc-text">云端版：3D Make，本地不装 Blender 也能干</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%BA%8C%EF%BC%9A%E9%87%91%E8%9E%8D%E5%BB%BA%E6%A8%A1%EF%BC%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E4%BA%A4-Excel"><span class="toc-number">5.</span> <span class="toc-text">实测二：金融建模，端到端交 Excel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%89%88%EF%BC%9AK3-1-Pro-Highspeed"><span class="toc-number">6.</span> <span class="toc-text">高速版：K3.1 Pro Highspeed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A5%E4%B8%8D%E8%AF%A5%E7%94%A8%EF%BC%9A%E5%92%8C%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">7.</span> <span class="toc-text">该不该用：和海外旗舰怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kimi-K3-1-Pro-%E5%85%8D%E8%B4%B9%E5%90%97%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">Kimi K3.1 Pro 免费吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-%E5%92%8C-K3-%E8%AF%A5%E7%94%A8%E5%93%AA%E4%B8%AA%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">K3.1 Pro 和 K3 该用哪个？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3D-%E5%BB%BA%E6%A8%A1%E7%9C%9F%E7%9A%84%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%A3%85-Blender%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">3D 建模真的不用本地装 Blender？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-%E8%83%BD%E6%9B%BF%E4%BB%A3-GPT-6-Astra-%E5%90%97%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">K3.1 Pro 能替代 GPT-6 Astra 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-Highspeed-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">8.5.</span> <span class="toc-text">K3.1 Pro Highspeed 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terminal-Bench-65-7-%E5%88%86%E6%98%AF%E4%BB%80%E4%B9%88%E6%B0%B4%E5%B9%B3%EF%BC%9F"><span class="toc-number">8.6.</span> <span class="toc-text">Terminal-Bench 65.7 分是什么水平？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">77</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">33</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">24</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI 工具">
+        <div class="categories-list-item">
+          AI 工具
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/%E7%BF%BB%E5%A2%99" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/%E7%AE%97%E6%B3%95" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/%E6%9C%BA%E5%9C%BA" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI%E5%B7%A5%E5%85%B7" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6%E4%B8%8B%E8%BD%BD" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/Telegram" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/%E7%94%B5%E6%8A%A5" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/%E4%BB%A3%E7%90%86" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java" title="Java"><div class="tags-list-item">Java</div></a>
+    
+    <a href="/tags/%E6%B5%81%E5%AA%92%E4%BD%93" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-25</div>
+        <a href="/kimi-k3-1-pro/"><div class="recent-posts-item-content">Kimi K3.1 Pro 实测（2026）：草图变 3D 网页，全球第四</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-25</div>
+        <a href="/fanqiang-maomi/"><div class="recent-posts-item-content">翻墙软件猫咪是什么（2026）：小猫客户端下载与订阅导入</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-24</div>
+        <a href="/ai-coding-agent-guide/"><div class="recent-posts-item-content">AI 编程工具怎么选（2026）：Claude Code、OpenCode 对比与选型</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-10-24</div>
+        <a href="/streaming-bundle-guide/"><div class="recent-posts-item-content">流媒体合租怎么买（2026）：全平台价格、平台选择与避坑</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%95%B0%E5%85%88%E7%9C%8B%E6%87%82%EF%BC%9A%E4%B8%89%E4%B8%AA%E6%95%B0%E5%AD%97%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">分数先看懂：三个数字的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%B8%80%EF%BC%9A%E6%96%87%E5%AD%97-%E2%86%92-Blender-%E2%86%92-%E7%BD%91%E9%A1%B5%EF%BC%8C%E4%B8%80%E6%9D%A1%E9%BE%99"><span class="toc-number">3.</span> <span class="toc-text">实测一：文字 → Blender → 网页，一条龙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E7%AB%AF%E7%89%88%EF%BC%9A3D-Make%EF%BC%8C%E6%9C%AC%E5%9C%B0%E4%B8%8D%E8%A3%85-Blender-%E4%B9%9F%E8%83%BD%E5%B9%B2"><span class="toc-number">4.</span> <span class="toc-text">云端版：3D Make，本地不装 Blender 也能干</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%B5%8B%E4%BA%8C%EF%BC%9A%E9%87%91%E8%9E%8D%E5%BB%BA%E6%A8%A1%EF%BC%8C%E7%AB%AF%E5%88%B0%E7%AB%AF%E4%BA%A4-Excel"><span class="toc-number">5.</span> <span class="toc-text">实测二：金融建模，端到端交 Excel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%89%88%EF%BC%9AK3-1-Pro-Highspeed"><span class="toc-number">6.</span> <span class="toc-text">高速版：K3.1 Pro Highspeed</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A5%E4%B8%8D%E8%AF%A5%E7%94%A8%EF%BC%9A%E5%92%8C%E6%B5%B7%E5%A4%96%E6%97%97%E8%88%B0%E6%80%8E%E4%B9%88%E9%80%89"><span class="toc-number">7.</span> <span class="toc-text">该不该用：和海外旗舰怎么选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kimi-K3-1-Pro-%E5%85%8D%E8%B4%B9%E5%90%97%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">Kimi K3.1 Pro 免费吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-%E5%92%8C-K3-%E8%AF%A5%E7%94%A8%E5%93%AA%E4%B8%AA%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">K3.1 Pro 和 K3 该用哪个？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3D-%E5%BB%BA%E6%A8%A1%E7%9C%9F%E7%9A%84%E4%B8%8D%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%A3%85-Blender%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">3D 建模真的不用本地装 Blender？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-%E8%83%BD%E6%9B%BF%E4%BB%A3-GPT-6-Astra-%E5%90%97%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">K3.1 Pro 能替代 GPT-6 Astra 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#K3-1-Pro-Highspeed-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">8.5.</span> <span class="toc-text">K3.1 Pro Highspeed 是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Terminal-Bench-65-7-%E5%88%86%E6%98%AF%E4%BB%80%E4%B9%88%E6%B0%B4%E5%B9%B3%EF%BC%9F"><span class="toc-number">8.6.</span> <span class="toc-text">Terminal-Bench 65.7 分是什么水平？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
