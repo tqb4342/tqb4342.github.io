@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-07-29T09:18:00.000Z",
-  "dateModified": "2026-10-24T16:00:00.000Z",
+  "dateModified": "2026-10-26T09:30:00.000Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -101,7 +101,7 @@
       "name": "Clash 规则分流是什么？和全局代理有何不同？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "规则分流按域名/IP/地区等规则，自动决定流量走代理还是直连（如国内站点直连、海外站点代理），速度更快也更省流量；全局代理则所有流量都走节点。想快速搞懂三种模式怎么选、怎么让国内直连，看 [Clash 分流详解](https://tanqingbo.cn/clash-split-guide/) 这篇。"
+        "text": "规则分流按域名/IP/地区等规则，自动决定流量走代理还是直连（如国内站点直连、海外站点代理），速度更快也更省流量；全局代理则所有流量都走节点。想快速搞懂三种模式怎么选、怎么让国内直连，看 Clash 分流详解 这篇。"
       }
     },
     {
@@ -109,7 +109,7 @@
       "name": "Clash 节点协议怎么选（Vmess / VLESS / Trojan）？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Trojan/Reality 伪装成正常 HTTPS、抗封锁最强，首选；VLESS 轻量快速；VMess 经典但特征较明显；Hysteria2 弱网速度快。一般机场订阅已配好，无需手动选。详见协议详解。"
+        "text": "Trojan/Reality 伪装成正常 HTTPS、抗封锁最强，首选；VLESS 轻量快速；VMess 经典但特征较明显；Hysteria2 弱网速度快。一般机场订阅已配好，无需手动选。详见 协议详解。"
       }
     },
     {
@@ -117,7 +117,7 @@
       "name": "Clash 连不上 / 节点全红怎么办？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "多为订阅过期、节点被封或本地配置问题。先更新订阅、切换节点，再检查 TUN/系统代理是否开启、系统时间是否正确。按 Clash 排障指南逐项排查。"
+        "text": "多为订阅过期、节点被封或本地配置问题。先更新订阅、切换节点，再检查 TUN/系统代理是否开启、系统时间是否正确。按 Clash 排障指南 逐项排查。"
       }
     },
     {
@@ -133,7 +133,7 @@
       "name": "手机端 Clash 用什么客户端？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Android 用 ClashMetaForAndroid（CMFA）；iOS 因系统限制需用 Shadowrocket 或 Stash（付费）。配置思路与电脑端一致：导入订阅→选节点→开启代理。详见各平台教程。"
+        "text": "Android 用 ClashMetaForAndroid（CMFA）；iOS 因系统限制需用 Shadowrocket 或 Stash（付费）。配置思路与电脑端一致：导入订阅→选节点→开启代理。详见 各平台教程。"
       }
     },
     {
@@ -165,6 +165,7 @@
   </script>
   
   <link rel="icon" href="/img/logo.webp">
+  
   <title>Clash 完全教程（2026）：客户端、订阅与规则分流，10 分钟上手</title>
   
   <meta name="description" content="2026 年最全 Clash 教程：一文搞懂 Clash/Mihomo 是什么、怎么下载安装、客户端怎么选、机场订阅怎么买怎么导入、节点从哪来、规则分流与 TUN 模式原理、config.yaml 配置示例与常见故障排查。新手 10 分钟上手。">
@@ -183,7 +184,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-07-29T09:18:00.000Z">
-  <meta property="og:article:modified_time" content="2026-10-24T16:00:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-26T09:30:00.000Z">
   <meta property="og:article:author" content="IT 码 农">
   
   
@@ -205,18 +206,8 @@
   
   
   
- <meta name="yandex-verification" content="6b899e6f05914428" /> 
+ <meta name="yandex-verification" content="6b899e6f05914428" />
  <link rel="canonical" href="https://tanqingbo.cn/clash-guide/" />
-  
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-178024758-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-178024758-1');
-</script>
 
 <!-- 百度自动推送 -->
 <script>
@@ -245,17 +236,6 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
  <!-- 谷歌广告 -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
      crossorigin="anonymous"></script>
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?d87293651eefff721c898f38338ea3a8";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
 
  <!-- 新百度统计 -->
 <script>
@@ -833,7 +813,7 @@ var _hmt = _hmt || [];
 <p><strong>Q1：Clash 是什么？</strong><br>Clash 是一款开源跨平台规则型代理客户端，现由社区分支 Mihomo 维护。它本身不提供节点，而是读取机场订阅、按规则把流量分流到不同节点或直连，是当前最主流的科学上网前端工具。</p>
 <p><strong>Q2：Clash for Windows 和 Clash Verge 有什么区别？</strong><br>Clash for Windows 是经典客户端但已停止维护；Clash Verge（Rev）用 Rust/Tauri 重写、性能更好、持续更新（GitHub 28k+ star），是目前最推荐的选择。两者核心功能一致，均支持订阅导入与规则分流。详见 <a href="https://tanqingbo.cn/clash-verge/">客户端对比</a>。</p>
 <p><strong>Q3：Clash 订阅怎么导入和使用？</strong><br>在机场后台复制”Clash 订阅链接”，打开客户端进入”订阅管理”粘贴并更新，节点列表即出现。选节点、开启系统代理或 TUN 模式即可上网。新手可看 <a href="https://tanqingbo.cn/Clash-VPS/">Clash 保姆级教程</a>。</p>
-<p><strong>Q4：Clash 规则分流是什么？和全局代理有何不同？</strong><br>规则分流按域名/IP/地区等规则，自动决定流量走代理还是直连（如国内站点直连、海外站点代理），速度更快也更省流量；全局代理则所有流量都走节点。详见 <a href="https://tanqingbo.cn/mingci/">规则分流一节</a>。</p>
+<p><strong>Q4：Clash 规则分流是什么？和全局代理有何不同？</strong><br>规则分流按域名/IP/地区等规则，自动决定流量走代理还是直连（如国内站点直连、海外站点代理），速度更快也更省流量；全局代理则所有流量都走节点。想快速搞懂三种模式怎么选、怎么让国内直连，看 <a href="https://tanqingbo.cn/clash-split-guide/">Clash 分流详解</a> 这篇。</p>
 <p><strong>Q5：Clash 节点协议怎么选（Vmess / VLESS / Trojan）？</strong><br>Trojan/Reality 伪装成正常 HTTPS、抗封锁最强，首选；VLESS 轻量快速；VMess 经典但特征较明显；Hysteria2 弱网速度快。一般机场订阅已配好，无需手动选。详见 <a href="https://tanqingbo.cn/protocols/">协议详解</a>。</p>
 <p><strong>Q6：Clash 连不上 / 节点全红怎么办？</strong><br>多为订阅过期、节点被封或本地配置问题。先更新订阅、切换节点，再检查 TUN/系统代理是否开启、系统时间是否正确。按 <a href="https://tanqingbo.cn/troubleshooting/">Clash 排障指南</a> 逐项排查。</p>
 <p><strong>Q7：Clash 和 V2RayN 有什么区别？</strong><br>两者都是代理前端。Clash 强在规则分流与多协议统一管理、配置更直观；V2RayN 更贴近 V2Ray 内核、可调参数更细。多数机场用户更习惯 Clash 的图形化体验。</p>
@@ -1060,7 +1040,7 @@ var _hmt = _hmt || [];
         </div>
       </a>
     
-      <a href="/categories/AI 工具">
+      <a href="/categories/AI-工具">
         <div class="categories-list-item">
           AI 工具
           <span class="categories-list-item-badge">1</span>
@@ -1391,4 +1371,6 @@ var _hmt = _hmt || [];
   </script>
   <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
   
-<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+</body>
+
+</html>
