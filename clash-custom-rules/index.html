@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-08-06T13:50:00.000Z",
-  "dateModified": "2026-08-06T13:50:00.000Z",
+  "dateModified": "2026-10-26T14:20:00.000Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -34,8 +34,8 @@
     "@id": "https://tanqingbo.cn/clash-custom-rules/"
   },
   "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-custom-rules-banner.webp",
-  "description": "Clash 自定义规则怎么设置？本文讲规则工作机制（先命中先赢）、17 种规则类型、GEOIP/GEOSITE 分流、rule-providers 规则集配置，附国内直连、广告拦截、特定服务分流实战场景与可抄模板，以及规则不生效的排查方法。",
-  "keywords": "clash自定义规则,clash规则写法,clash分流规则,clash规则教程,mihomo规则,rule-provider,rule-set,geosite,clash规则集,clash广告拦截,clash规则模板,clash rules,clash geosite,clash规则不生效,clash rule-provider,clash 规则类型,mihomo rules,clash 直连规则,clash 国内直连,clash 广告屏蔽"
+  "description": "Clash 自定义规则怎么设置？本文讲规则工作机制（先命中先赢）、17 种规则类型、GEOIP/GEOSITE 分流、rule-providers 规则集配置，附国内直连、广告拦截、特定服务分流实战场景与可抄模板，以及订阅更新后规则不丢的改法和规则不生效的排查。",
+  "keywords": "clash自定义规则,clash规则写法,clash分流规则,clash规则教程,mihomo规则,rule-provider,rule-set,geosite,clash规则集,clash广告拦截,clash规则模板,clash rules,clash geosite,clash规则不生效,clash rule-provider,clash 规则类型,mihomo rules,clash 直连规则,clash 国内直连,clash 广告屏蔽,clash订阅更新规则丢失,clash规则丢失,clash verge 扩展配置"
 }
   </script>
   
@@ -77,7 +77,7 @@
       "name": "Clash 自定义规则怎么添加？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "编辑配置文件的 rules 段即可。每条规则一行，格式是\"类型,匹配条件,去向\"，例如 DOMAIN-SUFFIX,google.com,PROXY。规则自上而下匹配，第一条命中的生效，最后用 MATCH 兜底。不熟悉 YAML 的话，建议用 Clash Verge Rev 的全局扩展配置（Merge）或本地覆盖功能叠加规则，不要直接改订阅文件。"
+        "text": "编辑配置文件的 rules 段即可。每条规则一行，格式是\"类型,匹配条件,去向\"，例如 DOMAIN-SUFFIX,google.com,PROXY。规则自上而下匹配，第一条命中的生效，最后用 MATCH 兜底。机场订阅用户别直接改订阅文件：Clash Verge Rev 右键订阅卡片选「编辑规则」，把规则填进 prepend，更新订阅也不会丢。"
       }
     },
     {
@@ -114,10 +114,18 @@
     },
     {
       "@type": "Question",
+      "name": "机场订阅更新后，我的自定义规则会丢吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "直接改订阅文件会丢，改在扩展层不会丢。Clash Verge Rev 的链条是订阅原文、全局扩展配置、订阅扩展配置、扩展脚本逐层处理，后面三层独立保存，更新订阅不覆盖。注意 v2.5.5 起在扩展配置里直接写 rules 是整体替换不是追加，想插队用右键订阅的「编辑规则」填 prepend，或用扩展脚本 unshift。"
+      }
+    },
+    {
+      "@type": "Question",
       "name": "机场订阅会被我自定义的规则覆盖吗？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "不会。机场订阅是托管配置，定期自动拉取会覆盖你直接改的内容。推荐做法是用客户端的本地扩展功能（Clash Verge Rev 的全局扩展配置 / Merge）或订阅转换工具的规则叠加，把你的规则插在订阅规则之前，这样订阅更新后你的自定义规则依然生效。"
+        "text": "不会。机场订阅是托管配置，定期自动拉取会覆盖你直接改的内容。推荐做法是把规则写在扩展层（Clash Verge Rev 右键订阅的「编辑规则」prepend，或扩展脚本），插在订阅规则之前，这样订阅更新后你的自定义规则依然生效。"
       }
     },
     {
@@ -152,8 +160,8 @@
   
   <title>Clash / Mihomo 自定义规则完全指南：规则写法、分流配置与规则集（2026）</title>
   
-  <meta name="description" content="Clash 自定义规则怎么设置？本文讲规则工作机制（先命中先赢）、17 种规则类型、GEOIP/GEOSITE 分流、rule-providers 规则集配置，附国内直连、广告拦截、特定服务分流实战场景与可抄模板，以及规则不生效的排查方法。">
-  <meta name="keywords" content="clash自定义规则,clash规则写法,clash分流规则,clash规则教程,mihomo规则,rule-provider,rule-set,geosite,clash规则集,clash广告拦截,clash规则模板,clash rules,clash geosite,clash规则不生效,clash rule-provider,clash 规则类型,mihomo rules,clash 直连规则,clash 国内直连,clash 广告屏蔽">
+  <meta name="description" content="Clash 自定义规则怎么设置？本文讲规则工作机制（先命中先赢）、17 种规则类型、GEOIP/GEOSITE 分流、rule-providers 规则集配置，附国内直连、广告拦截、特定服务分流实战场景与可抄模板，以及订阅更新后规则不丢的改法和规则不生效的排查。">
+  <meta name="keywords" content="clash自定义规则,clash规则写法,clash分流规则,clash规则教程,mihomo规则,rule-provider,rule-set,geosite,clash规则集,clash广告拦截,clash规则模板,clash rules,clash geosite,clash规则不生效,clash rule-provider,clash 规则类型,mihomo rules,clash 直连规则,clash 国内直连,clash 广告屏蔽,clash订阅更新规则丢失,clash规则丢失,clash verge 扩展配置">
   
   
   <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
@@ -163,12 +171,12 @@
   <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-custom-rules-banner.webp">
   
   
-  <meta property="og:description" content="Clash 自定义规则怎么设置？本文讲规则工作机制（先命中先赢）、17 种规则类型、GEOIP/GEOSITE 分流、rule-providers 规则集配置，附国内直连、广告拦截、特定服务分流实战场景与可抄模板，以及规则不生效的排查方法。">
+  <meta property="og:description" content="Clash 自定义规则怎么设置？本文讲规则工作机制（先命中先赢）、17 种规则类型、GEOIP/GEOSITE 分流、rule-providers 规则集配置，附国内直连、广告拦截、特定服务分流实战场景与可抄模板，以及订阅更新后规则不丢的改法和规则不生效的排查。">
   
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-08-06T13:50:00.000Z">
-  <meta property="og:article:modified_time" content="2026-08-06T13:50:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-26T14:20:00.000Z">
   <meta property="og:article:author" content="IT 码 农">
   
   
@@ -439,7 +447,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>2.7k 字</span>
+    <span>3.5k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -660,34 +668,83 @@ var _hmt = _hmt || [];
 <pre class="highlight"><span class="line"><span class="attr">proxy-groups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">"🤖 AI 服务"</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">select</span></span><br><span class="line">    <span class="attr">proxies:</span> [<span class="string">"节点A"</span>, <span class="string">"节点B"</span>, <span class="string">"🚀 节点选择"</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,openai,🤖</span> <span class="string">AI</span> <span class="string">服务</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOSITE,netflix,🎬</span> <span class="string">流媒体</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">GEOIP,CN,DIRECT</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">MATCH,🚀</span> <span class="string">节点选择</span></span><br></pre>
 
 <p>这样 ChatGPT 固定走你选的 AI 节点，其他流量走自动选择，互不干扰。</p>
-<h2 id="六、在机场订阅上叠加自己的规则"><a href="#六、在机场订阅上叠加自己的规则" class="headerlink" title="六、在机场订阅上叠加自己的规则"></a>六、在机场订阅上叠加自己的规则</h2><p>机场订阅是托管配置，直接改的话，下次订阅自动更新就把改动冲掉了（订阅的工作机制见 <a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接完全指南</a>）。推荐做法是<strong>叠加而不是修改</strong>：</p>
-<ul>
-<li><strong>Clash Verge Rev</strong>：用「全局扩展配置」里的 Merge 功能，写一段要追加的 rules，客户端会把它合并到订阅配置上。这是最省事的方式。</li>
-<li><strong>其他客户端</strong>：看是否支持”本地配置覆盖”或”片段”功能；没有的话，可以把订阅转换后另存为本地配置再手动加规则，代价是失去自动更新。</li>
-</ul>
-<p>叠加时记住一个原则：<strong>你的自定义例外要放在订阅原有规则的前面</strong>（Merge 的规则默认插在最前）。不然内网、支付这些必须直连的流量，可能被订阅自己的规则先接走了。</p>
+<h2 id="六、改在哪里才不会丢：订阅、扩展配置与扩展脚本"><a href="#六、改在哪里才不会丢：订阅、扩展配置与扩展脚本" class="headerlink" title="六、改在哪里才不会丢：订阅、扩展配置与扩展脚本"></a>六、改在哪里才不会丢：订阅、扩展配置与扩展脚本</h2><p>先说结论：<strong>直接改订阅文件（或运行配置），更新一次丢一次；改在「扩展」层，订阅怎么更新都不丢。</strong></p>
+<p>机场订阅是托管配置，每次自动更新都会完整覆盖你直接改的内容（订阅的工作机制见 <a href="https://tanqingbo.cn/clash-subscribe-guide/">Clash 订阅链接完全指南</a>）。所以问题的核心从来不是「怎么改」，而是「改在哪一层」。</p>
+<p>Clash Verge Rev（v1.7.x 起）生成最终运行配置的链条是这样的：</p>
+<pre class="highlight"><span class="line">订阅原文 → 全局扩展配置 → 订阅扩展配置 → 扩展脚本 → 应用接管的字段最后写回</span><br></pre>
+
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>是什么</th>
+<th>更新订阅后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>订阅原文</td>
+<td>机场下发的原始 YAML</td>
+<td>整个被覆盖，改这里 = 白干</td>
+</tr>
+<tr>
+<td>全局扩展配置（原 Merge）</td>
+<td>一段 YAML 覆写/合并，对所有订阅生效</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>订阅扩展配置</td>
+<td>同上，只对单个订阅生效</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>扩展脚本（原 Script）</td>
+<td>JavaScript，对配置做任意修改</td>
+<td>保留</td>
+</tr>
+<tr>
+<td>应用设置（设置页开关）</td>
+<td>端口、TUN、DNS 覆写等</td>
+<td>优先级最高，扩展写了这些字段也会被应用接管并弹提示</td>
+</tr>
+</tbody></table>
+<p>入口：右键订阅卡片 → 「编辑扩展配置」/「编辑扩展脚本」；全局扩展在「订阅」页右上角的全局扩展图标里。</p>
+<p><strong>一个必须知道的坑：扩展配置里直接写 <code>rules</code> 是整体替换，不是追加。</strong> v2.5.5 起，<code>rules</code>、<code>hosts</code>、<code>dns</code> 下写出的字段都是整体替换——你在扩展配置里写一段 rules，订阅自己的规则会被整个干掉，只剩你写的这份。想给自己的规则「插队」，用下面两个姿势：</p>
+<p><strong>姿势一：可视化「编辑规则」（最省事，推荐）</strong></p>
+<p>右键订阅卡片 → 「编辑规则」→ 把你的规则填进 <strong>prepend</strong>（插到订阅所有规则之前）或 <strong>append</strong>（加到最后）。v1.7.x 起官方把前插/追加功能放在了这里，更新订阅后依然保留。前面几节写的 <code>GEOSITE,cn,DIRECT</code> 这类规则，往 prepend 里贴就行。</p>
+<p><strong>姿势二：扩展脚本（最灵活）</strong></p>
+<p>右键订阅卡片 → 「编辑扩展脚本」，用 JavaScript 对最终配置做任意修改，比如把一条规则插到最前面：</p>
+<pre class="highlight"><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params">config</span>) </span>{</span><br><span class="line">  config.rules = config.rules || [];</span><br><span class="line">  config.rules.unshift(<span class="string">"DOMAIN-SUFFIX,example.com,DIRECT"</span>);</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">}</span><br></pre>
+
+<p>脚本在扩展配置之后执行，适合做逐条追加这类精细操作。</p>
+<p><strong>更新订阅后的验证（一分钟）：</strong></p>
+<ol>
+<li>更新订阅；</li>
+<li>右键订阅 → 「编辑规则」，确认 prepend 列表还在；</li>
+<li>访问你要分流的域名，打开 Connections 面板看它命中的规则名是不是你那条。</li>
+</ol>
+<p>三个都过，才算真的「不丢」。</p>
+<p><strong>其他客户端</strong>：看是否支持”本地配置覆盖”或”片段”功能；没有的话，可以把订阅转换后另存为本地配置再手动加规则，代价是失去自动更新。</p>
+<p>叠加时记住一个原则：<strong>自定义例外要放在订阅原有规则的前面</strong>（用 prepend 而不是 append）。不然内网、支付这些必须直连的流量，可能被订阅自己的规则先接走。</p>
 <h2 id="七、常见问题"><a href="#七、常见问题" class="headerlink" title="七、常见问题"></a>七、常见问题</h2><p><strong>Clash 自定义规则怎么添加？</strong></p>
-<p>编辑配置文件的 rules 段即可。每条规则一行，格式是”类型,匹配条件,去向”，例如 <code>DOMAIN-SUFFIX,google.com,PROXY</code>。规则自上而下匹配，第一条命中的生效，最后用 MATCH 兜底。不熟悉 YAML 的话，建议用 Clash Verge Rev 的全局扩展配置（Merge）或本地覆盖功能叠加规则，不要直接改订阅文件。</p>
+<p>编辑配置文件的 rules 段即可。每条规则一行，格式是”类型,匹配条件,去向”，例如 <code>DOMAIN-SUFFIX,google.com,PROXY</code>。规则自上而下匹配，第一条命中的生效，最后用 MATCH 兜底。机场订阅用户别直接改订阅文件：Clash Verge Rev 右键订阅卡片选「编辑规则」，把规则填进 prepend，更新订阅也不会丢。</p>
 <p><strong>Clash 的 rule-provider 是什么？</strong></p>
 <p>rule-provider 是把规则放到配置文件外面的一种机制，可以引用本地文件或远程 URL（如 GitHub 上的规则集），并定时自动更新。它有三种 behavior：domain（域名列表）、ipcidr（IP 段列表）、classical（完整规则语法）。常用资源如 Loyalsoldier/clash-rules 的 reject、proxy、direct 规则集。</p>
 <p><strong>GEOIP 和 GEOSITE 有什么区别？</strong></p>
 <p>GEOIP 按 IP 归属地匹配，如 <code>GEOIP,CN,DIRECT</code> 让国内 IP 直连；GEOSITE 按域名分类数据库匹配，如 <code>GEOSITE,google,PROXY</code> 让 Google 域名走代理。GEOIP 管的是 IP 段，GEOSITE 管的是域名分类，两者常搭配使用：国内域名直连 + 国内 IP 直连 + 其余走代理。</p>
 <p><strong>Clash 怎么屏蔽广告？</strong></p>
 <p>用 REJECT 去向即可，例如 <code>GEOSITE,ads,REJECT</code> 或引用现成广告域名规则集 <code>RULE-SET,reject,REJECT</code>。Loyalsoldier/clash-rules 的 reject.txt 收录了常见广告和追踪域名，通过 rule-provider 拉取后自动更新，比手动维护名单省心得多。</p>
+<p><strong>机场订阅更新后，我的自定义规则会丢吗？</strong></p>
+<p>直接改订阅文件会丢，改在扩展层不会丢。Clash Verge Rev 的链条是订阅原文、全局扩展配置、订阅扩展配置、扩展脚本逐层处理，后面三层独立保存，更新订阅不覆盖。注意 v2.5.5 起在扩展配置里直接写 rules 是整体替换不是追加，想插队用右键订阅的「编辑规则」填 prepend，或用扩展脚本 unshift。详细做法见上文第六节。</p>
 <p><strong>机场订阅会被我自定义的规则覆盖吗？</strong></p>
-<p>不会。机场订阅是托管配置，定期自动拉取会覆盖你直接改的内容。推荐做法是用客户端的本地扩展功能（Clash Verge Rev 的全局扩展配置 / Merge）或订阅转换工具的规则叠加，把你的规则插在订阅规则之前，这样订阅更新后你的自定义规则依然生效。</p>
-<p><strong>规则不生效？先看这三个地方：</strong></p>
-<ul>
-<li>顺序。宽泛规则放在精细规则前面，后者永远轮不到。用 Connections 面板确认实际命中的规则。</li>
-<li>名称。rules 里引用的策略组名称必须和 proxy-groups 定义完全一致，区分大小写，emoji 也要一样。</li>
-<li>缩进。配置里不能用 Tab 缩进，冒号后面必须有空格。YAML 报错时第一反应检查缩进。</li>
-</ul>
+<p>不会。机场订阅是托管配置，定期自动拉取会覆盖你直接改的内容。推荐做法是把规则写在扩展层（Clash Verge Rev 右键订阅的「编辑规则」prepend，或扩展脚本），插在订阅规则之前，这样订阅更新后你的自定义规则依然生效。</p>
+<p><strong>Clash 规则不生效怎么办？</strong></p>
+<p>按顺序排查：1) 检查规则顺序，宽松规则放太靠前会拦截后面的例外；2) 确认规则里引用的策略组名称与实际定义完全一致（区分大小写，emoji 也要对上）；3) 在客户端 Connections 面板看每条请求命中了哪条规则；4) 临时把 log-level 设为 debug 查看匹配日志；5) 确认 geosite/geoip 数据源能正常下载更新。</p>
 <p><strong>规则能防 DNS 泄露吗？</strong></p>
-<p>规则只负责分流，DNS 污染要靠 DNS 配置解决。如果开了 fake-ip 模式个别 App 出问题，可以把域名加进 <code>fake-ip-filter</code>。</p>
+<p>不能。规则只负责分流，DNS 污染要靠 DNS 配置解决。如果开了 fake-ip 模式个别 App 出问题，可以把域名加进 <code>fake-ip-filter</code>。</p>
 <p><strong>规则集拉取失败怎么办？</strong></p>
 <p>rule-provider 的 URL 无法访问时，该规则集会被跳过，流量落到后面规则。检查网络连通性、URL 是否失效（GitHub 直连不稳可以换 jsdelivr CDN 镜像），或者换成 <code>type: file</code> 手动维护本地规则。</p>
-<p><strong>还想更精细？</strong></p>
-<p>Mihomo 还支持脚本规则（Script Rules）和子规则（Sub-Rules），可以在主规则命中后继续做二级分流，适合复杂路由场景，新手阶段用不上。</p>
+<p><strong>Mihomo 的脚本规则和子规则是什么？</strong></p>
+<p>Mihomo 还支持脚本规则（Script Rules）和子规则（Sub-Rules），可以在主规则命中后继续做二级分流，适合复杂路由场景。普通用户用 GEOSITE、GEOIP 和 MATCH 的组合就够了，新手阶段用不上脚本规则。</p>
 <p>DIRECT / PROXY / REJECT 这些去向词、规则模式和全局模式的区别，在 <a href="https://tanqingbo.cn/mingci/">Clash 机场专用名词解释字典</a> 里都有。协议层面还不熟的话，先看 <a href="https://tanqingbo.cn/protocols/">2026 Clash 机场各种协议差别介绍与选择指南</a>。Clash 和 Mihomo 的关系见 <a href="https://tanqingbo.cn/mihomo-clash-difference/">Mihomo 是什么？Mihomo 和 Clash 有什么区别</a>，需要接管全局流量再翻 <a href="https://tanqingbo.cn/clash-tun-mode/">Clash TUN 模式完全指南</a>。</p>
 		
   </div>	
@@ -811,7 +868,7 @@ var _hmt = _hmt || [];
 
 <div class="card card-content toc-card" id="mobiletoc">
   <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%84%E5%88%99%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%EF%BC%9A%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%8C%E5%85%88%E5%91%BD%E4%B8%AD%E5%85%88%E8%B5%A2"><span class="toc-number">1.</span> <span class="toc-text">一、规则怎么工作：自上而下，先命中先赢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%84%E5%88%99%E7%B1%BB%E5%9E%8B%E5%85%A8%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">二、规则类型全解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81GEOIP-%E5%92%8C-GEOSITE%EF%BC%9A%E5%9C%B0%E5%8C%BA%E5%88%86%E6%B5%81%E7%9A%84%E4%B8%A4%E4%BB%B6%E5%A5%97"><span class="toc-number">3.</span> <span class="toc-text">三、GEOIP 和 GEOSITE：地区分流的两件套</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81rule-providers%EF%BC%9A%E6%8A%8A%E8%A7%84%E5%88%99%E6%94%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%96%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、rule-providers：把规则放到配置文件外面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E4%B8%AA%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">五、三个常见场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%9C%A8%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%E4%B8%8A%E5%8F%A0%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%84%E5%88%99"><span class="toc-number">6.</span> <span class="toc-text">六、在机场订阅上叠加自己的规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%84%E5%88%99%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%EF%BC%9A%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%8C%E5%85%88%E5%91%BD%E4%B8%AD%E5%85%88%E8%B5%A2"><span class="toc-number">1.</span> <span class="toc-text">一、规则怎么工作：自上而下，先命中先赢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%84%E5%88%99%E7%B1%BB%E5%9E%8B%E5%85%A8%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">二、规则类型全解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81GEOIP-%E5%92%8C-GEOSITE%EF%BC%9A%E5%9C%B0%E5%8C%BA%E5%88%86%E6%B5%81%E7%9A%84%E4%B8%A4%E4%BB%B6%E5%A5%97"><span class="toc-number">3.</span> <span class="toc-text">三、GEOIP 和 GEOSITE：地区分流的两件套</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81rule-providers%EF%BC%9A%E6%8A%8A%E8%A7%84%E5%88%99%E6%94%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%96%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、rule-providers：把规则放到配置文件外面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E4%B8%AA%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">五、三个常见场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%94%B9%E5%9C%A8%E5%93%AA%E9%87%8C%E6%89%8D%E4%B8%8D%E4%BC%9A%E4%B8%A2%EF%BC%9A%E8%AE%A2%E9%98%85%E3%80%81%E6%89%A9%E5%B1%95%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%89%A9%E5%B1%95%E8%84%9A%E6%9C%AC"><span class="toc-number">6.</span> <span class="toc-text">六、改在哪里才不会丢：订阅、扩展配置与扩展脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
 </div></main>
           <aside class="left-column">
             
@@ -866,7 +923,7 @@ var _hmt = _hmt || [];
   <article class="display-when-two-columns spacer">
     <div class="card card-content toc-card">
       <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%84%E5%88%99%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%EF%BC%9A%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%8C%E5%85%88%E5%91%BD%E4%B8%AD%E5%85%88%E8%B5%A2"><span class="toc-number">1.</span> <span class="toc-text">一、规则怎么工作：自上而下，先命中先赢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%84%E5%88%99%E7%B1%BB%E5%9E%8B%E5%85%A8%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">二、规则类型全解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81GEOIP-%E5%92%8C-GEOSITE%EF%BC%9A%E5%9C%B0%E5%8C%BA%E5%88%86%E6%B5%81%E7%9A%84%E4%B8%A4%E4%BB%B6%E5%A5%97"><span class="toc-number">3.</span> <span class="toc-text">三、GEOIP 和 GEOSITE：地区分流的两件套</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81rule-providers%EF%BC%9A%E6%8A%8A%E8%A7%84%E5%88%99%E6%94%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%96%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、rule-providers：把规则放到配置文件外面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E4%B8%AA%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">五、三个常见场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%9C%A8%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%E4%B8%8A%E5%8F%A0%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%84%E5%88%99"><span class="toc-number">6.</span> <span class="toc-text">六、在机场订阅上叠加自己的规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%84%E5%88%99%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%EF%BC%9A%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%8C%E5%85%88%E5%91%BD%E4%B8%AD%E5%85%88%E8%B5%A2"><span class="toc-number">1.</span> <span class="toc-text">一、规则怎么工作：自上而下，先命中先赢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%84%E5%88%99%E7%B1%BB%E5%9E%8B%E5%85%A8%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">二、规则类型全解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81GEOIP-%E5%92%8C-GEOSITE%EF%BC%9A%E5%9C%B0%E5%8C%BA%E5%88%86%E6%B5%81%E7%9A%84%E4%B8%A4%E4%BB%B6%E5%A5%97"><span class="toc-number">3.</span> <span class="toc-text">三、GEOIP 和 GEOSITE：地区分流的两件套</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81rule-providers%EF%BC%9A%E6%8A%8A%E8%A7%84%E5%88%99%E6%94%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%96%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、rule-providers：把规则放到配置文件外面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E4%B8%AA%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">五、三个常见场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%94%B9%E5%9C%A8%E5%93%AA%E9%87%8C%E6%89%8D%E4%B8%8D%E4%BC%9A%E4%B8%A2%EF%BC%9A%E8%AE%A2%E9%98%85%E3%80%81%E6%89%A9%E5%B1%95%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%89%A9%E5%B1%95%E8%84%9A%E6%9C%AC"><span class="toc-number">6.</span> <span class="toc-text">六、改在哪里才不会丢：订阅、扩展配置与扩展脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
     </div>
   </article>
   
@@ -1039,7 +1096,7 @@ var _hmt = _hmt || [];
   
   <article class="card card-content toc-card">
     <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%84%E5%88%99%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%EF%BC%9A%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%8C%E5%85%88%E5%91%BD%E4%B8%AD%E5%85%88%E8%B5%A2"><span class="toc-number">1.</span> <span class="toc-text">一、规则怎么工作：自上而下，先命中先赢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%84%E5%88%99%E7%B1%BB%E5%9E%8B%E5%85%A8%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">二、规则类型全解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81GEOIP-%E5%92%8C-GEOSITE%EF%BC%9A%E5%9C%B0%E5%8C%BA%E5%88%86%E6%B5%81%E7%9A%84%E4%B8%A4%E4%BB%B6%E5%A5%97"><span class="toc-number">3.</span> <span class="toc-text">三、GEOIP 和 GEOSITE：地区分流的两件套</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81rule-providers%EF%BC%9A%E6%8A%8A%E8%A7%84%E5%88%99%E6%94%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%96%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、rule-providers：把规则放到配置文件外面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E4%B8%AA%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">五、三个常见场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%9C%A8%E6%9C%BA%E5%9C%BA%E8%AE%A2%E9%98%85%E4%B8%8A%E5%8F%A0%E5%8A%A0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%84%E5%88%99"><span class="toc-number">6.</span> <span class="toc-text">六、在机场订阅上叠加自己的规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%84%E5%88%99%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%EF%BC%9A%E8%87%AA%E4%B8%8A%E8%80%8C%E4%B8%8B%EF%BC%8C%E5%85%88%E5%91%BD%E4%B8%AD%E5%85%88%E8%B5%A2"><span class="toc-number">1.</span> <span class="toc-text">一、规则怎么工作：自上而下，先命中先赢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A7%84%E5%88%99%E7%B1%BB%E5%9E%8B%E5%85%A8%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">二、规则类型全解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81GEOIP-%E5%92%8C-GEOSITE%EF%BC%9A%E5%9C%B0%E5%8C%BA%E5%88%86%E6%B5%81%E7%9A%84%E4%B8%A4%E4%BB%B6%E5%A5%97"><span class="toc-number">3.</span> <span class="toc-text">三、GEOIP 和 GEOSITE：地区分流的两件套</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81rule-providers%EF%BC%9A%E6%8A%8A%E8%A7%84%E5%88%99%E6%94%BE%E5%88%B0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%96%E9%9D%A2"><span class="toc-number">4.</span> <span class="toc-text">四、rule-providers：把规则放到配置文件外面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%89%E4%B8%AA%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">五、三个常见场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%94%B9%E5%9C%A8%E5%93%AA%E9%87%8C%E6%89%8D%E4%B8%8D%E4%BC%9A%E4%B8%A2%EF%BC%9A%E8%AE%A2%E9%98%85%E3%80%81%E6%89%A9%E5%B1%95%E9%85%8D%E7%BD%AE%E4%B8%8E%E6%89%A9%E5%B1%95%E8%84%9A%E6%9C%AC"><span class="toc-number">6.</span> <span class="toc-text">六、改在哪里才不会丢：订阅、扩展配置与扩展脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">七、常见问题</span></a></li></ol>
   </article>
   
 

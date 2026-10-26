@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-08-16T08:36:00.000Z",
-  "dateModified": "2026-08-16T08:58:00.000Z",
+  "dateModified": "2026-10-26T14:25:00.000Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -144,7 +144,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-08-16T08:36:00.000Z">
-  <meta property="og:article:modified_time" content="2026-08-16T08:58:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-26T14:25:00.000Z">
   <meta property="og:article:author" content="IT 码 农">
   
   
@@ -415,7 +415,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>2k 字</span>
+    <span>2.4k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -548,7 +548,7 @@ var _hmt = _hmt || [];
 <li><code>enhanced-mode: fake-ip</code> 是默认推荐，日常体感最好</li>
 <li><code>default-nameserver</code> 负责「解析 DNS 服务器自己的域名」，必须是纯 IP，漏了它 DoH 地址可能直接连不上</li>
 <li><code>proxy-server-nameserver</code> 专管节点服务器地址的解析，用国内 DNS 就行，节点域名不能被 fake-ip 骗掉</li>
-<li><code>nameserver</code> 放你能直接访问的 DNS，<code>fallback</code> 放走代理的安全 DNS，用于污染兜底</li>
+<li><code>nameserver</code> 放你能直接访问的 DNS；<code>fallback</code> 也是一组普通 DNS 服务器，写进去不等于查询会自动走代理——它出不出代理由 DNS 出站设置决定（<code>respect-rules: true</code> 时跟着分流规则出去，或单独指定出站），把它理解成”污染兜底候选”更准确</li>
 <li><code>fake-ip-filter</code> 把局域网、对真实 IP 敏感的服务排除出去</li>
 </ul>
 <p><strong>用新版 Mihomo（v1.18.10 及以后）的，还有一套更省心的防泄露写法</strong>：加 <code>respect-rules: true</code>（让 DNS 查询自己也遵守分流规则、跟着代理出去），再配一个 <code>direct-nameserver</code>（命中直连的域名用国内 DNS）。这样三个字段各管一摊：<code>proxy-server-nameserver</code> 解析节点、<code>nameserver</code> 管代理流量、<code>direct-nameserver</code> 管直连流量，从结构上就不容易泄露。</p>
@@ -562,13 +562,15 @@ var _hmt = _hmt || [];
 <li>还不行，才是真的查节点和线路</li>
 </ol>
 <h2 id="六、常见问题"><a href="#六、常见问题" class="headerlink" title="六、常见问题"></a>六、常见问题</h2><p><strong>Clash 的 fake-ip 是什么？</strong></p>
-<p>fake-ip 是 Mihomo 的一种 DNS 模式：客户端给访问的域名返回一个假内网 IP，同时把真实域名-IP 映射记在内存里。好处是延迟低、分流判断快；代价是部分依赖真实 IP 的应用会出问题，需要加进 fake-ip-filter 排除。</p>
+<p>fake-ip 是 Mihomo（Clash 内核）的一种 DNS 模式：客户端给你访问的域名返回一个假的内网 IP（如 198.18.x.x），同时把真实域名-IP 映射记在内存里。好处是延迟低、分流判断快、不用频繁查真实 DNS；代价是部分依赖真实 IP 的应用（如某些局域网设备、个别程序）会出问题，需要把它们的域名加进 fake-ip-filter 排除。</p>
+<p>DNS 泄露指你的域名解析请求没有走代理，而是直接发给了本地运营商/默认 DNS，导致你的访问记录暴露到代理外。解决：确认 Clash 开启了 DNS 解析接管（fake-ip 或 redir-host），并给 nameserver 配置走代理的安全 DNS；再用 DNS 泄露检测网站验证显示的是节点地区而非你的真实地区。</p>
 <p><strong>Clash 的 DNS 泄露是什么？怎么解决？</strong></p>
-<p>DNS 泄露指域名解析请求没走代理、直接发给了本地运营商 DNS，导致访问记录暴露。解决：确认 Clash 开启 DNS 接管（fake-ip 或 redir-host），并给 nameserver 配走代理的安全 DNS，再用 dnsleaktest.com 验证。</p>
+<p>很可能是。典型表现：节点测速正常、客户端显示已连接，但页面一直转圈或超时。多因 DNS 解析失败或被污染。排查顺序：重启客户端清缓存；切到 fake-ip 模式；检查 nameserver/fallback 配置；临时换一个公共 DNS（如 1.1.1.1、8.8.8.8）看是否恢复。</p>
 <p><strong>Clash「能连上却打不开网页」是 DNS 的问题吗？</strong></p>
-<p>很可能是。表现是节点测速正常、显示已连接，但页面一直转圈或超时。多因 DNS 解析失败或污染。按顺序排查：重启清缓存、切 fake-ip、检查 nameserver/fallback、临时换公共 DNS。</p>
+<p>nameserver 是主 DNS，用于常规域名解析；fallback 是兜底 DNS，当主 DNS 结果疑似被污染时用它重新解析；proxy-server-nameserver 专用于解析”代理节点自己的域名/服务器地址”，避免用假 IP 解析节点导致连不上。三者分工不同，别混用。</p>
+<p>开着代理，访问 dnsleaktest.com 或 ipleak.net，看显示的 DNS 服务器归属地。如果显示的是节点所在地区（而非你的真实运营商地区），说明没泄露；如果出现国内运营商/本地 DNS，说明泄露了，需要回到 Clash 里补 DNS 接管配置。</p>
 <p><strong>Clash 里 nameserver、fallback、proxy-server-nameserver 分别是什么？</strong></p>
-<p>nameserver 是主 DNS；fallback 是主 DNS 结果疑似被污染时的兜底；proxy-server-nameserver 专用于解析代理节点自己的服务器地址。三者分工不同。</p>
+<p>把出问题的域名加进 fake-ip-filter（排除列表），让这些域名走真实 DNS 解析。常见需排除的：局域网设备域名、NAS、打印机、部分金融/银行 App、个别游戏客户端。如果一批应用都异常，也可以直接切回 redir-host 模式对比定位。</p>
 <p><strong>怎么检测自己有没有 DNS 泄露？</strong></p>
 <p>开着代理访问 dnsleaktest.com 或 ipleak.net，看 DNS 服务器归属地。如果是节点地区就没泄露，冒出国内运营商 DNS 就是泄露了。</p>
 <p><strong>fake-ip 模式某些应用连不上怎么办？</strong></p>

@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-08-13T01:50:00.000Z",
-  "dateModified": "2026-08-13T02:01:00.000Z",
+  "dateModified": "2026-10-26T14:30:00.000Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -35,7 +35,7 @@
   },
   "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/clash-node-testing-banner.webp",
   "description": "Clash 节点怎么测速、怎么看延迟、怎么按延迟选节点？本文讲延迟和带宽的区别、客户端内置测速、url-test 自动测速、测速地址选择，以及测速失败（错误码 443/超时）和延迟过高、测速数字与体感不符的排查方法，附可抄的分组配置。",
-  "keywords": "clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,"
+  "keywords": "clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,clash自动选择频繁切换,clash tolerance,节点自动切换"
 }
   </script>
   
@@ -122,6 +122,14 @@
     },
     {
       "@type": "Question",
+      "name": "Clash 自动选择为什么频繁切换节点？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "url-test 组默认没有切换容差，延迟差几毫秒也会换节点。写上 tolerance 就好：比如 tolerance: 50 表示新节点比当前节点快超过 50 毫秒才切换，求稳写 50 到 150 都合适。再加 lazy: true，这个组没流量时会暂停周期测速，更省。"
+      }
+    },
+    {
+      "@type": "Question",
       "name": "哪个测速地址（URL）比较准？",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -145,7 +153,7 @@
   <title>Clash 节点测速完全指南：延迟怎么测、怎么选节点、测速失败与延迟高怎么排查（2026）</title>
   
   <meta name="description" content="Clash 节点怎么测速、怎么看延迟、怎么按延迟选节点？本文讲延迟和带宽的区别、客户端内置测速、url-test 自动测速、测速地址选择，以及测速失败（错误码 443/超时）和延迟过高、测速数字与体感不符的排查方法，附可抄的分组配置。">
-  <meta name="keywords" content="clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,">
+  <meta name="keywords" content="clash节点测速,clash测速失败,clash节点延迟,mihomo测速,url-test,节点延迟高,clash测速报错,机场节点测速,clash延迟高,节点怎么选,clash测速443,延迟测试,延迟排查,节点时延,clash节点分组,自动测速,clash delay,clash测速很慢,clash自动选择频繁切换,clash tolerance,节点自动切换">
   
   
   <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
@@ -160,7 +168,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-08-13T01:50:00.000Z">
-  <meta property="og:article:modified_time" content="2026-08-13T02:01:00.000Z">
+  <meta property="og:article:modified_time" content="2026-10-26T14:30:00.000Z">
   <meta property="og:article:author" content="IT 码 农">
   
   
@@ -433,7 +441,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>3.5k 字</span>
+    <span>4.1k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -546,7 +554,9 @@ var _hmt = _hmt || [];
 <li><code>type: url-test</code> 让组内周期测速，自动选延迟最低的节点。</li>
 <li><code>url</code> 是测速用的地址，选一个稳定、不消耗太大流量的目标（见下节）。</li>
 <li><code>interval</code> 是测速间隔（秒）。设太短会频繁发测速请求，节点多时流量和后台开销都不小，<strong>300 秒（5 分钟）是常见平衡点</strong>。</li>
+<li><code>tolerance</code> 是<strong>切换容差</strong>（毫秒）。只有当新节点的延迟比当前节点低超过这个值，才会真的切换。比如 <code>tolerance: 50</code>，当前节点 120ms、别的节点 100ms，差 20ms 没超过容差，<strong>不换</strong>。不加这个参数时，延迟差几毫秒也会来回跳——这就是很多人看到「自动选择频繁切换节点」的原因。求稳的话写上 50~150ms 都合适。</li>
 </ul>
+<p><code>lazy</code> 参数也值得知道：写 <code>lazy: true</code> 后，这个组<strong>当前没被任何流量使用时，会暂停周期测速</strong>，省流量也省心；组被再次用到时立刻恢复测速。</p>
 <p><code>url-test</code> 适合「我只想稳、不在乎落地在哪个地区」的场景。如果你需要固定地区（比如看奈飞要锁定某个区），那还是用 <code>select</code> 手动选固定节点更合适——测速只是帮你判断哪个顺，不是越自动越好。</p>
 <h2 id="四、测速地址（URL）怎么选"><a href="#四、测速地址（URL）怎么选" class="headerlink" title="四、测速地址（URL）怎么选"></a>四、测速地址（URL）怎么选</h2><p>测速用哪个地址，直接决定测出来的数字可不可信。几个原则：</p>
 <ul>
@@ -570,7 +580,7 @@ var _hmt = _hmt || [];
 <li><strong>订阅过期 / 节点信息失效</strong>。机场节点会定期更换地址和密码，订阅没更新时，拿到的可能是一堆失效节点。重新拉一次订阅。</li>
 <li><strong>DNS 异常</strong>。DNS 解析失败也会让测速请求发不出去。检查客户端 DNS 配置，或重启客户端清缓存。</li>
 <li><strong>测速请求的 UA 被拒</strong>。见上一节：给测速配置加一个正常的浏览器 <code>User-Agent</code>，很多”全灭但实际能连”就是栽在这。</li>
-<li><strong>错误码 443</strong>。443 通常和 HTTPS 测速目标不可达有关（节点能连但握手失败，或目标被 RST）。换个测速 URL、换个节点基本能绕开。这正是知乎上被问得最多的「Clash 测速报 443」的典型场景。</li>
+<li><strong>错误码 443 报错</strong>。443 通常和 HTTPS 测速目标不可达有关（节点能连但握手失败，或目标被 RST）。换个测速 URL、换个节点基本能绕开。这正是知乎上被问得最多的「Clash 测速报 443」的典型场景。</li>
 </ol>
 <h3 id="5-2-延迟很高，或数字好看但实际卡"><a href="#5-2-延迟很高，或数字好看但实际卡" class="headerlink" title="5.2 延迟很高，或数字好看但实际卡"></a>5.2 延迟很高，或数字好看但实际卡</h3><p>延迟高，先分清是「真高」还是「其实不慢」：</p>
 <p><strong>延迟确实高</strong>（300ms+，且体感也卡）——大概率是链路问题：</p>
@@ -602,16 +612,21 @@ var _hmt = _hmt || [];
 <p>最后补一句：<strong>测速好 ≠ 什么都好用</strong>。延迟再低的节点，IP 纯净度差照样进不去 ChatGPT、解锁不了 Netflix——那是另一套检测标准，怎么查见 <a href="https://tanqingbo.cn/ip-purity-guide/">IP 纯净度检测指南</a>。</p>
 <h2 id="七、常见问题"><a href="#七、常见问题" class="headerlink" title="七、常见问题"></a>七、常见问题</h2><p><strong>Clash 怎么测速节点延迟？</strong></p>
 <p>打开客户端「代理」页面，选中节点组后点「测速」按钮，客户端会向每个节点发一个测速请求并显示延迟（毫秒）。也可以右键节点组或勾选多个节点后批量测速。延迟越低通常越快，但延迟低不等于带宽高，走流量大的场景还要看实际下载速度。</p>
-<p><strong>Clash 节点的延迟是什么？怎么才算好？</strong></p>
 <p>延迟（Delay）是一个测速请求从发出到收到响应的往返时间，单位毫秒。100ms 以内体验很好，100-200ms 日常可用，300ms 以上会有明显卡顿。它反映的是到节点的网络时延，不是节点流量入口的带宽，两者要分开看：打游戏、开会看重延迟，下载大文件更看重带宽。</p>
+<p><strong>Clash 节点的延迟是什么？怎么才算好？</strong></p>
+<p>先分清是单个节点失败还是全部失败。单个节点失败多半是该节点本身挂了或入口被墙，换一个节点即可；全部失败检查：1) 系统代理、TUN 模式是否正常开启；2) 测速用的 URL 是否被阻断（换测速 URL 或节点）；3) 订阅是否过期、节点信息是否已失效（重新拉订阅）；4) DNS 是否异常。443 错误码常和 HTTPS 测速目标不可达有关，换个测速地址通常能解决。</p>
 <p><strong>Clash 测速失败、报错误码 443 或超时怎么办？</strong></p>
-<p>先分清是单个节点失败还是全部失败。单个节点失败多半是该节点本身挂了或入口被墙，换一个节点即可；全部失败检查：系统代理、TUN 模式是否正常开启；测速用的 URL 是否被阻断（换测速 URL 或节点）；订阅是否过期、节点信息是否已失效（重新拉订阅）；DNS 是否异常。443 错误码常和 HTTPS 测速目标不可达有关，换个测速地址通常能解决。</p>
-<p><strong>为什么测速显示延迟很低，实际却很慢？</strong></p>
-<p>这是延迟与带宽的天花板效应。测速只发一个小请求，不代表大流量下的带宽；延迟低但节点出口带宽被占满或限速、或链路丢包严重时，下载依旧慢。反过来延迟高也未必不能下得快。要判断真实速度，用测速站跑一次下载，或开个大文件下载实测，不要只看那个毫秒数。</p>
-<p><strong>为什么很多节点测速都失败，但我其实能连上网？</strong></p>
+<p>这是延迟与带宽的天花板效应。测速只发一个小请求，不代表大流量下的带宽；延迟低但节点出口带宽被占满或限速、或链路丢包严重时，下载依旧慢。反过来延迟高也未必不能下得快。要判断真实速度，用测速站跑一次下载（如 speedtest），或开个大文件下载实测，不要只看那个毫秒数。</p>
 <p>大概率是测速请求被拒，而不是网络真断了。两个高发原因：一是测速用的 User-Agent 为空或默认值，部分节点会拒掉，给测速配置加一个正常的浏览器 UA 即可；二是当前开的是规则模式，测速域名恰好命中了直连规则，数字失真或请求走错了路由。先确认模式和测速地址，再补 UA 试试。</p>
-<p><strong>Clash 怎么让节点自动选最快的（url-test）？</strong></p>
+<p><strong>为什么测速显示延迟很低，实际却很慢？</strong></p>
 <p>用 url-test 类型的策略组。它会周期性地测组内所有节点的延迟，自动切到延迟最低的那个，适合不在乎落地地区、只想稳快的场景。配置里 type 填 url-test，并设置 url（测速地址）和 interval（测速间隔，比如 300 秒）。注意 url-test 会频繁发送测速请求，节点多时频率高，按需使用。</p>
+<p><strong>为什么很多节点测速都失败，但我其实能连上网？</strong></p>
+<p>url-test 组默认没有切换容差，延迟差几毫秒也会换节点。写上 tolerance 就好：比如 tolerance: 50 表示新节点比当前节点快超过 50 毫秒才切换，求稳写 50 到 150 都合适。再加 lazy: true，这个组没流量时会暂停周期测速，更省。</p>
+<p>推荐用稳定的境外 HTTP(S) 服务，比如 Google 的生成器地址 gstatic.com/generate_204（返回 204，不会加载大内容）、Cloudflare 的 cp.cloudflare.com，或机场自己提供的测速地址。别用依赖大文件下载的地址做分组自动测速，会浪费流量。国内直连节点则用国内可达地址如 connect.rom.miui.com/generate_204。</p>
+<p><strong>Clash 怎么让节点自动选最快的（url-test）？</strong></p>
+<p>按顺序：1) 确认你选的是落地离你近的节点（本地到节点入口的时延占大头）；2) 换协议（Reality、Hysteria2 在弱网下表现常优于老协议）；3) 检查是否开了多重代理或系统代理叠加；4) 用 ping 或 tracert 看是本地网络问题还是节点问题；5) 联系机场换线路。记住延迟高低主要由物理距离和线路质量决定，不是你本地配置能硬调下来的。</p>
+<p><strong>Clash 自动选择为什么频繁切换节点？</strong></p>
+<p>url-test 组默认没有切换容差，延迟差几毫秒也会换节点。写上 tolerance 就好：比如 <code>tolerance: 50</code> 表示新节点比当前节点快超过 50 毫秒才切换，求稳写 50 到 150 都合适。再加 <code>lazy: true</code>，这个组没流量时会暂停周期测速，更省。</p>
 <p><strong>哪个测速地址（URL）比较准？</strong></p>
 <p>推荐用稳定的境外 HTTP(S) 服务，比如 Google 的生成器地址 <code>gstatic.com/generate_204</code>（返回 204，不会加载大内容）、Cloudflare 的 <code>cp.cloudflare.com</code>，或机场自己提供的测速地址。别用依赖大文件下载的地址做分组自动测速，会浪费流量。国内直连节点则用国内可达地址如 <code>connect.rom.miui.com/generate_204</code>。</p>
 <p><strong>节点延迟一直很高怎么排查？</strong></p>
