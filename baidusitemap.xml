@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/claude-code/</loc>
+    <lastmod>2026-10-27</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/free-fanqiang/</loc>
     <lastmod>2026-10-27</lastmod>
   </url>
@@ -77,11 +81,11 @@
     <lastmod>2026-10-26</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/kuaili-review/</loc>
+    <loc>https://tanqingbo.cn/kuaili-airport-review/</loc>
     <lastmod>2026-10-26</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/kuaili-airport-review/</loc>
+    <loc>https://tanqingbo.cn/kuaili-review/</loc>
     <lastmod>2026-10-26</lastmod>
   </url>
   <url>
@@ -174,10 +178,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/ai-coding-agent-guide/</loc>
-    <lastmod>2026-10-24</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/claude-code/</loc>
     <lastmod>2026-10-24</lastmod>
   </url>
   <url>
