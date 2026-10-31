@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/archived/</loc>
+    
+    <lastmod>2026-10-31</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/about/</loc>
     
     <lastmod>2026-10-31</lastmod>
@@ -170,13 +177,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/kuaili-airport-review/</loc>
-    
-    <lastmod>2026-10-28</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/national-day-vpn-guide/</loc>
     
     <lastmod>2026-10-28</lastmod>
@@ -185,6 +185,13 @@
   
   <url>
     <loc>https://tanqingbo.cn/openinternet/</loc>
+    
+    <lastmod>2026-10-28</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/kuaili-airport-review/</loc>
     
     <lastmod>2026-10-28</lastmod>
     
@@ -1416,13 +1423,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/archived/</loc>
-    
-    <lastmod>2026-07-23</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/baidu_verify_code-Hh2fKNlEB1.html</loc>
     
     <lastmod>2020-09-15</lastmod>
@@ -1455,14 +1455,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://tanqingbo.cn/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
+    <loc>https://tanqingbo.cn/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
