@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tanqingbo.cn/internet-dir/</loc>
-    <lastmod>2026-11-01</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/science-internet-guide/</loc>
-    <lastmod>2026-11-01</lastmod>
+    <loc>https://tanqingbo.cn/fanqiang-maomi/</loc>
+    <lastmod>2026-11-02</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/how-to-fanqiang/</loc>
+    <lastmod>2026-11-02</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/internet-dir/</loc>
+    <lastmod>2026-11-02</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/fanqiang-software/</loc>
+    <lastmod>2026-11-02</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/science-internet-guide/</loc>
     <lastmod>2026-11-01</lastmod>
   </url>
   <url>
@@ -73,11 +81,11 @@
     <lastmod>2026-10-28</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/clash-guide/</loc>
+    <loc>https://tanqingbo.cn/clash-linux/</loc>
     <lastmod>2026-10-28</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/clash-linux/</loc>
+    <loc>https://tanqingbo.cn/clash-guide/</loc>
     <lastmod>2026-10-28</lastmod>
   </url>
   <url>
@@ -230,10 +238,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/GPT-6-Astra/</loc>
-    <lastmod>2026-10-25</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/fanqiang-maomi/</loc>
     <lastmod>2026-10-25</lastmod>
   </url>
   <url>
