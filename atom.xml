@@ -35,11 +35,11 @@
     
     <category term="科学上网" scheme="https://tanqingbo.cn/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
+    <category term="翻墙软件" scheme="https://tanqingbo.cn/tags/%E7%BF%BB%E5%A2%99%E8%BD%AF%E4%BB%B6/"/>
+    
     <category term="Clash" scheme="https://tanqingbo.cn/tags/Clash/"/>
     
     <category term="梯子" scheme="https://tanqingbo.cn/tags/%E6%A2%AF%E5%AD%90/"/>
-    
-    <category term="翻墙软件" scheme="https://tanqingbo.cn/tags/%E7%BF%BB%E5%A2%99%E8%BD%AF%E4%BB%B6/"/>
     
   </entry>
   
@@ -201,9 +201,9 @@
     
     <category term="科学上网" scheme="https://tanqingbo.cn/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
-    <category term="Clash" scheme="https://tanqingbo.cn/tags/Clash/"/>
-    
     <category term="翻墙软件" scheme="https://tanqingbo.cn/tags/%E7%BF%BB%E5%A2%99%E8%BD%AF%E4%BB%B6/"/>
+    
+    <category term="Clash" scheme="https://tanqingbo.cn/tags/Clash/"/>
     
   </entry>
   
@@ -340,6 +340,8 @@
     
     <category term="科学上网" scheme="https://tanqingbo.cn/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
     
+    <category term="一枝红杏" scheme="https://tanqingbo.cn/tags/%E4%B8%80%E6%9E%9D%E7%BA%A2%E6%9D%8F/"/>
+    
     <category term="翻墙教程" scheme="https://tanqingbo.cn/tags/%E7%BF%BB%E5%A2%99%E6%95%99%E7%A8%8B/"/>
     
     <category term="Clash" scheme="https://tanqingbo.cn/tags/Clash/"/>
@@ -351,8 +353,6 @@
     <category term="双11机场优惠" scheme="https://tanqingbo.cn/tags/%E5%8F%8C11%E6%9C%BA%E5%9C%BA%E4%BC%98%E6%83%A0/"/>
     
     <category term="机场双11" scheme="https://tanqingbo.cn/tags/%E6%9C%BA%E5%9C%BA%E5%8F%8C11/"/>
-    
-    <category term="一枝红杏" scheme="https://tanqingbo.cn/tags/%E4%B8%80%E6%9E%9D%E7%BA%A2%E6%9D%8F/"/>
     
     <category term="机场年付" scheme="https://tanqingbo.cn/tags/%E6%9C%BA%E5%9C%BA%E5%B9%B4%E4%BB%98/"/>
     
@@ -381,9 +381,9 @@
     
     <category term="大模型" scheme="https://tanqingbo.cn/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/"/>
     
-    <category term="Agent" scheme="https://tanqingbo.cn/tags/Agent/"/>
-    
     <category term="DeepSeek" scheme="https://tanqingbo.cn/tags/DeepSeek/"/>
+    
+    <category term="Agent" scheme="https://tanqingbo.cn/tags/Agent/"/>
     
     <category term="V4.1 Flash" scheme="https://tanqingbo.cn/tags/V4-1-Flash/"/>
     
