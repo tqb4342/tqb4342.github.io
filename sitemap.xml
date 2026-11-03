@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tanqingbo.cn/multimodel-game-assets/</loc>
+    
+    <lastmod>2026-11-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/ai-tools-guide/</loc>
+    
+    <lastmod>2026-11-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://tanqingbo.cn/deepseek-v4-1-flash-1017/</loc>
+    
+    <lastmod>2026-11-03</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://tanqingbo.cn/2026-clash-vpn/</loc>
     
     <lastmod>2026-11-03</lastmod>
@@ -23,14 +44,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/ClashForWindows/</loc>
+    <loc>https://tanqingbo.cn/Clash-VPS/</loc>
     
     <lastmod>2026-11-03</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/Clash-VPS/</loc>
+    <loc>https://tanqingbo.cn/ClashForWindows/</loc>
     
     <lastmod>2026-11-03</lastmod>
     
@@ -247,14 +268,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/clash-linux/</loc>
+    <loc>https://tanqingbo.cn/clash-guide/</loc>
     
     <lastmod>2026-10-28</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/clash-guide/</loc>
+    <loc>https://tanqingbo.cn/clash-linux/</loc>
     
     <lastmod>2026-10-28</lastmod>
     
@@ -485,13 +506,6 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/ai-tools-guide/</loc>
-    
-    <lastmod>2026-10-25</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://tanqingbo.cn/doubao-agent-guide/</loc>
     
     <lastmod>2026-10-25</lastmod>
@@ -670,13 +684,6 @@
     <loc>https://tanqingbo.cn/Win-OpenInternet/</loc>
     
     <lastmod>2026-10-21</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://tanqingbo.cn/deepseek-v4-1-flash-1017/</loc>
-    
-    <lastmod>2026-10-18</lastmod>
     
   </url>
   
@@ -1262,14 +1269,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
+    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
     
     <lastmod>2026-09-25</lastmod>
     
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
+    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
     
     <lastmod>2026-09-25</lastmod>
     
@@ -1469,14 +1476,14 @@
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://tanqingbo.cn/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://tanqingbo.cn/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/</loc>
+    <loc>https://tanqingbo.cn/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2026-11-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
