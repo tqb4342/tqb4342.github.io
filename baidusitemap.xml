@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/free-fanqiang/</loc>
+    <lastmod>2026-11-03</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/Clash-Party/</loc>
     <lastmod>2026-11-03</lastmod>
   </url>
@@ -69,11 +73,11 @@
     <lastmod>2026-11-03</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/Clash-VPS/</loc>
+    <loc>https://tanqingbo.cn/ClashForWindows/</loc>
     <lastmod>2026-11-03</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/ClashForWindows/</loc>
+    <loc>https://tanqingbo.cn/Clash-VPS/</loc>
     <lastmod>2026-11-03</lastmod>
   </url>
   <url>
@@ -223,10 +227,6 @@
   <url>
     <loc>https://tanqingbo.cn/open-app/</loc>
     <lastmod>2026-10-28</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/free-fanqiang/</loc>
-    <lastmod>2026-10-27</lastmod>
   </url>
   <url>
     <loc>https://tanqingbo.cn/clash-node-testing/</loc>
