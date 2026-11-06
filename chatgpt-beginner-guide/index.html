@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "ChatGPT 新手入门指南：2026 从零开始的保姆级教程",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-11-06T07:10:00.000Z",
+  "dateModified": "2026-11-06T14:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/chatgpt-beginner-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/chatgpt-beginner-banner.webp",
+  "description": "ChatGPT 从零开始怎么用？这篇新手保姆级教程按顺序讲完三件事：先解决网络（国内不能直连）、再花 10 分钟注册账号（2026 年已不需要国外手机号）、最后从第一句提问开始上手，附提示词写法和新手最常踩的坑。",
+  "keywords": [
+    "ChatGPT入门",
+    "ChatGPT新手教程",
+    "ChatGPT怎么用",
+    "ChatGPT从零开始",
+    "ChatGPT保姆级教程",
+    "ChatGPT注册教程",
+    "ChatGPT使用教程",
+    "ChatGPT免费吗",
+    "ChatGPT新手",
+    "ChatGPT入门指南",
+    "ChatGPT是什么",
+    "ChatGPT国内使用",
+    "ChatGPT基础教程",
+    "ChatGPT上手",
+    "ChatGPT怎么注册",
+    "ChatGPT提问技巧",
+    "ChatGPT打不开怎么办"
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "ChatGPT 新手入门指南：2026 从零开始的保姆级教程"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "ChatGPT 在国内能直接用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能直连。ChatGPT 没有对中国大陆开放，必须先解决网络访问问题再注册使用。网络这步不解决，后面所有步骤都走不动。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ChatGPT 免费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有免费版，日常问答、写作、翻译、学新东西都够用。付费的 Plus 版 20 美元/月，提供更强的模型和更多功能，建议先用免费版跑通用法，确认自己用得频繁再考虑付费。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "2026 年注册 ChatGPT 还需要国外手机号吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不需要。从 2023 年底开始，注册普通 ChatGPT 账号只验证邮箱，不再强制要国外手机号收验证码，国内用户注册门槛比前几年低了很多。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "注册用什么邮箱？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "推荐 Gmail、Outlook 等海外主流邮箱，成功率最高。QQ 邮箱、163 等国内邮箱大概率被拒收或直接注册失败，临时邮箱服务基本被拉黑。Gmail 注册收不到验证码的解法见站内谷歌账号注册教程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "完全零基础，第一步从哪开始？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "先搞网络，再注册，最后再琢磨怎么提问。很多人卡在第一步（网络到不了 OpenAI 的服务器）就开始怀疑自己操作错了，其实是顺序问题。网络、邮箱都正常的话，整个注册流程 10 分钟内能走完。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ChatGPT 怎么提问才出好答案？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三样东西给足：身份（让它扮演什么角色）、上下文（背景资料）、要求（字数、格式、语气）。答案不满意别换话题，直接说哪里不满意让它改，多轮追问比一次到位更高效。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  
+  <title>ChatGPT 新手入门指南：2026 从零开始的保姆级教程</title>
+  
+  <meta name="description" content="ChatGPT 从零开始怎么用？这篇新手保姆级教程按顺序讲完三件事：先解决网络（国内不能直连）、再花 10 分钟注册账号（2026 年已不需要国外手机号）、最后从第一句提问开始上手，附提示词写法和新手最常踩的坑。 身边的人聊 AI 张口闭口 ChatGPT，你也想试试，">
+  <meta name="keywords" content="ChatGPT入门,ChatGPT新手教程,ChatGPT怎么用,ChatGPT从零开始,ChatGPT保姆级教程,ChatGPT注册教程,ChatGPT使用教程,ChatGPT免费吗,ChatGPT新手,ChatGPT入门指南,ChatGPT是什么,ChatGPT国内使用,ChatGPT基础教程,ChatGPT上手,ChatGPT怎么注册,ChatGPT提问技巧,ChatGPT打不开怎么办">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="ChatGPT 新手入门指南：2026 从零开始的保姆级教程 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/chatgpt-beginner-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/chatgpt-beginner-banner.webp">
+  
+  
+  <meta property="og:description" content="ChatGPT 从零开始怎么用？这篇新手保姆级教程按顺序讲完三件事：先解决网络（国内不能直连）、再花 10 分钟注册账号（2026 年已不需要国外手机号）、最后从第一句提问开始上手，附提示词写法和新手最常踩的坑。 身边的人聊 AI 张口闭口 ChatGPT，你也想试试，">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-11-06T07:10:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-06T14:30:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="ChatGPT">
+  
+  <meta property="og:article:tag" content="ChatGPT教程">
+  
+  <meta property="og:article:tag" content="AI工具">
+  
+  <meta property="og:article:tag" content="OpenAI">
+  
+  <meta property="og:article:tag" content="新手入门">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" />
+ <link rel="canonical" href="https://tanqingbo.cn/chatgpt-beginner-guide/" />
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/chatgpt-beginner-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/chatgpt-beginner-banner.webp"
+    alt="ChatGPT 新手入门指南：2026 从零开始的保姆级教程"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      ChatGPT 新手入门指南：2026 从零开始的保姆级教程
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-11-06T07:10:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-11-06</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/chatgpt-beginner-guide/" class="leancloud_visitors" data-flag-title="ChatGPT 新手入门指南：2026 从零开始的保姆级教程">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/ChatGPT/" class="post-meta-link">ChatGPT</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/ChatGPT教程/" class="post-meta-link">ChatGPT教程</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI工具/" class="post-meta-link">AI工具</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/OpenAI/" class="post-meta-link">OpenAI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/新手入门/" class="post-meta-link">新手入门</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>身边的人聊 AI 张口闭口 ChatGPT，你也想试试，结果打开浏览器发现官网压根打不开；搜「ChatGPT 怎么用」，出来的文章一半在讲 2023 年的老界面，另一半直接从付费开始讲。这篇按 2026 年的现状重新写一遍：从网络、注册到问出第一个问题，按顺序走完，零基础也能跟着做完。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>ChatGPT 是什么</strong>：OpenAI 做的 AI 对话助手，能写东西、翻译、改代码、答问题、陪你把一个想法聊深。2022 年底上线，现在是公认的老牌入口。</li>
+<li><strong>国内能用吗</strong>：不能直连，先解决网络。这步没绕开的余地，后面所有步骤都建立在它之上。</li>
+<li><strong>要花钱吗</strong>：免费版就能用，日常需求完全够；Plus（20 美元/月）是重度用户和旗舰模型需求才考虑的事。</li>
+<li><strong>从零开始要多久</strong>：网络顺利的话，注册 10 分钟、问出第一句话再 5 分钟。</li>
+<li><strong>顺序别乱</strong>：网络 → 注册 → 提问。新手最常见的事故是跳过第一步直接注册，然后在「打不开网页」上耗一下午。</li>
+</ul>
+<h2 id="ChatGPT-能帮你干什么"><a href="#ChatGPT-能帮你干什么" class="headerlink" title="ChatGPT 能帮你干什么"></a>ChatGPT 能帮你干什么</h2><p>先把预期摆对：它不是无所不知的神，是一个「你说得越清楚、它答得越好的助手」。2026 年用它干这些事的人最多：</p>
+<ul>
+<li><strong>写和改</strong>：邮件、周报、文案、论文初稿，给它素材和格式要求，它先出一版你再改；</li>
+<li><strong>学东西</strong>：让一个概念换三种说法讲到你能听懂，比搜索引擎翻十几个页面快；</li>
+<li><strong>翻译</strong>：中英互译质量稳，还能保留语气和行业术语；</li>
+<li><strong>代码</strong>：写脚本、找 bug、解释报错，程序员用它当第二双眼睛；</li>
+<li><strong>想事情</strong>：把一个模糊的想法丢给它，让它列角度、挑漏洞、做对比。</li>
+</ul>
+<p>判断自己用不用得上就一条：<strong>你日常工作学习里有没有「写」和「想」的环节</strong>。有，它就能帮你；没有，先别折腾。</p>
+<h2 id="第一步：先解决网络（这步跳不过去）"><a href="#第一步：先解决网络（这步跳不过去）" class="headerlink" title="第一步：先解决网络（这步跳不过去）"></a>第一步：先解决网络（这步跳不过去）</h2><p>ChatGPT 没对中国大陆开放，直接访问会卡在打不开官网这一步。所以「从零开始」真正的第一步不是注册，是网络。</p>
+<table>
+<thead>
+<tr>
+<th>你的情况</th>
+<th>该看的教程</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 电脑</td>
+<td><a href="https://tanqingbo.cn/windows-science-internet/">Windows 科学上网教程</a></td>
+</tr>
+<tr>
+<td>安卓手机</td>
+<td><a href="https://tanqingbo.cn/Android-open-internet/">安卓梯子与 VPN 客户端配置教程</a></td>
+</tr>
+<tr>
+<td>iPhone / iPad</td>
+<td><a href="https://tanqingbo.cn/ios-open-internet/">iOS 科学上网教程</a></td>
+</tr>
+<tr>
+<td>不知道方案怎么选</td>
+<td><a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选：VPN / 机场 / VPS</a></td>
+</tr>
+<tr>
+<td>想要图文一步到位</td>
+<td><a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a></td>
+</tr>
+</tbody></table>
+<p>对 ChatGPT 来说网络方案有个额外要求：<strong>节点要干净</strong>。机房 IP 或者被大量用户共用的节点，容易被 OpenAI 风控拦下（表现为 “Access denied”），注册和使用都会出问题。我自己在用的 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://order.yizhihongxing.org/aff.php?aff=4818">一枝红杏</a> 节点对 ChatGPT / Claude 这类 AI 服务友好，新用户有 3 天 IEPL 专线试用，走完整套注册流程正好够用。另外提一句：机场这行全年唯一的官方折扣窗口在双 11（往年 1 年 7 折起），要长期用的话这个时间点入场最省，蹲守节奏看<a href="https://tanqingbo.cn/double-11-vpn-guide/">双 11 机场优惠攻略</a>。</p>
+<h2 id="第二步：注册账号（10-分钟流程）"><a href="#第二步：注册账号（10-分钟流程）" class="headerlink" title="第二步：注册账号（10 分钟流程）"></a>第二步：注册账号（10 分钟流程）</h2><p>网络通了，注册反而是整条链路里最简单的一环。2026 年的现状比网上老教程说的宽松很多：<strong>不需要国外手机号</strong>，从 2023 年底开始注册普通账号只验证邮箱。</p>
+<p><strong>邮箱先选对</strong>：Gmail、Outlook 这类海外主流邮箱成功率最高；QQ 邮箱、163 大概率被拒收；临时邮箱基本被拉黑。还没有 Gmail 的，先解决邮箱注册（国内手机号收不到谷歌验证码的解法在这篇：<a href="https://tanqingbo.cn/accounts-google/">谷歌账号 Gmail 注册教程</a>），再把 Gmail 开个自动转发到常用邮箱，OpenAI 后续的邮件不会漏。</p>
+<p><strong>注册流程</strong>（全程挂着网络）：</p>
+<ol>
+<li>打开 ChatGPT 官网，点 “Sign up”；</li>
+<li>输入邮箱地址，点 “Continue”；</li>
+<li>设置密码（至少 12 个字符），点 “Continue”；</li>
+<li>去邮箱点 OpenAI 发来的验证链接（”Verify email address”）；</li>
+<li>填姓名和出生日期（<strong>出生日期照实填</strong>，填成不满 13 岁会触发账号限制），完成。</li>
+</ol>
+<p>走到第 4 步收不到邮件的，先检查邮箱垃圾箱，再看是不是邮箱域名被拒——完整的排查和分步截图在这篇：<a href="https://tanqingbo.cn/how-to-signup-chatgpt/">ChatGPT 注册教程：收不到验证码怎么办</a>。</p>
+<p>注册环节的原理说明、哪些网络环境会注册失败，想深究的看 <a href="https://tanqingbo.cn/ChatGPT-VPN/">ChatGPT 国内使用教程</a>，这里不重复展开。</p>
+<h2 id="第三步：问出你的第一个问题"><a href="#第三步：问出你的第一个问题" class="headerlink" title="第三步：问出你的第一个问题"></a>第三步：问出你的第一个问题</h2><p>注册完登录，界面就一个对话框。直接打字就行，中文提问它就用中文答，不用切换任何设置。</p>
+<p>第一句问什么？别浪费在「你好」「你会什么」上，挑一个你真实的小需求试水，比如：</p>
+<ul>
+<li>「帮我把这段话改得口语化一点：」+ 粘贴你写的东西</li>
+<li>「用能听懂的话解释一下什么是 RSS」</li>
+<li>「我要给客户写一封延期道歉邮件，语气诚恳但不卑微，给我一版草稿」</li>
+</ul>
+<p>问完看它的输出，<strong>不满意就说出来</strong>——「太长了，压到 200 字」「第二点没看懂，换个说法」。它会基于上一轮直接调整：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ai-tools-prompt-chat.webp" alt="提示词迭代：不满意就说，AI 马上改" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/ai-tools-prompt-chat.webp" class="lozad post-image"></p>
+<p>这一来一回的迭代，比换个问法重新问高效得多，也是新手和熟练用户拉开差距的地方。</p>
+<h2 id="用出效果的提问公式"><a href="#用出效果的提问公式" class="headerlink" title="用出效果的提问公式"></a>用出效果的提问公式</h2><p>同样的问题，问法不同，答案质量差很多。三板斧记住了就够用：</p>
+<ol>
+<li><strong>给身份</strong>：「你是一个资深前端工程师」比「你懂代码吗」得到的答案专业一个层级；</li>
+<li><strong>给上下文</strong>：让它翻译，把这段话用在什么场合、给谁看说清楚；让它写周报，把这周做了哪几件事列给它；</li>
+<li><strong>给要求</strong>：字数、格式（表格/列表/分点）、语气（正式/口语），说清楚它就不用猜。</li>
+</ol>
+<p>追问三板斧之外的常识：新开一个对话（ChatGPT 的记忆只在本轮会话内），不同话题别挤在一个对话里聊，会互相污染。</p>
+<p>一个容易忽略的点：<strong>免费版和付费版用的不是同一个模型档位</strong>。免费版高峰期会被安排到轻量模型，响应快但深度差一截；Plus 能稳定用当家的旗舰。这也是为什么同一句提问，你和付费朋友拿到的答案质量会不一样——不是你操作有问题，是模型档位在变。</p>
+<h2 id="免费版够不够用，什么时候该考虑-Plus"><a href="#免费版够不够用，什么时候该考虑-Plus" class="headerlink" title="免费版够不够用，什么时候该考虑 Plus"></a>免费版够不够用，什么时候该考虑 Plus</h2><p>2026 年 OpenAI 的产品线：免费版（日常对话、写作、翻译够用）、Plus（20 美元/月，更强的模型和功能）、企业版，旗舰能力在 GPT-6 Astra 上——9 月发布的这代旗舰把综合能力抬了一档，发布详情和怎么上车看<a href="https://tanqingbo.cn/GPT-6-Astra/">这里</a>。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img1.webp" alt="Sam Altman 推文公告 GPT-6 Astra 发布" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/img1.webp" class="lozad post-image"></p>
+<p>给新手的建议就一句：<strong>先免费用两周</strong>。高频用到碰到免费版的天花板（响应慢、高峰期排队、想要旗舰模型）再说。算一笔账再决定：Plus 20 美元/月，按汇率一年折合人民币 1700 元上下，相当于多花一份视频网站年费——如果你每天用它写东西超过半小时，这钱花得值；一周用不了两次，免费版给你的是同一个生态，别为「以后可能重度用」提前付费。真要开 Plus 的，国内卡直接订阅大概率被拒，合租、礼品卡、代充等 9 种路线的对比在这篇：<a href="https://tanqingbo.cn/chatgpt-plus-buy-guide/">ChatGPT Plus 怎么开通：订阅失败与 9 种解决办法</a>。</p>
+<h2 id="新手常见的五个死法"><a href="#新手常见的五个死法" class="headerlink" title="新手常见的五个死法"></a>新手常见的五个死法</h2><ul>
+<li><strong>网页打不开就反复刷新</strong>：这是网络问题，刷新一百次也没用，回到第一步换节点；</li>
+<li><strong>Access denied</strong>：节点 IP 被 OpenAI 风控，换一个干净的节点再试，别死磕同一个；</li>
+<li><strong>出生日期随手填</strong>：填成未成年人触发账号限制，改起来比照实填麻烦十倍；</li>
+<li><strong>一个对话里聊十件事</strong>：上下文互相污染，答案越来越跑偏，不同话题新开对话；</li>
+<li><strong>拿它当搜索引擎用</strong>：问「今天天气」「最新新闻」这类时效问题，它要么不答要么给旧信息——查实时信息走搜索引擎，ChatGPT 的强项是加工你给它的素材。</li>
+</ul>
+<h2 id="学完这篇之后的路线图"><a href="#学完这篇之后的路线图" class="headerlink" title="学完这篇之后的路线图"></a>学完这篇之后的路线图</h2><p>ChatGPT 用顺了，按需求往下走：</p>
+<ul>
+<li><strong>想系统了解 AI 工具生态</strong>（Gemini、Kimi、Claude 怎么选）：<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具哪个好用（2026）</a></li>
+<li><strong>想用 AI 画图</strong>：<a href="https://tanqingbo.cn/gpt-image-2.5-guide/">GPT Images 2.5 教程</a></li>
+<li><strong>写代码想上工具</strong>：<a href="https://tanqingbo.cn/ai-coding-agent-guide/">AI 编程工具怎么选</a></li>
+<li><strong>想要 60+ 海外 AI 工具的完整目录</strong>：<a href="https://tanqingbo.cn/overseas-ai-tools/">国外 AI 工具大全（2026）</a></li>
+</ul>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>ChatGPT 在国内能直接用吗？</strong></p>
+<p>不能直连。ChatGPT 没有对中国大陆开放，必须先解决网络访问问题再注册使用。网络这步不解决，后面所有步骤都走不动。</p>
+<p><strong>ChatGPT 免费吗？</strong></p>
+<p>有免费版，日常问答、写作、翻译、学新东西都够用。付费的 <a href="https://tanqingbo.cn/chatgpt-plus-buy-guide/">Plus 版 20 美元/月</a>，提供更强的模型和更多功能，建议先用免费版跑通用法，确认自己用得频繁再考虑付费。</p>
+<p><strong>2026 年注册 ChatGPT 还需要国外手机号吗？</strong></p>
+<p>不需要。从 2023 年底开始，注册普通 ChatGPT 账号只验证邮箱，不再强制要国外手机号收验证码，国内用户注册门槛比前几年低了很多。</p>
+<p><strong>注册用什么邮箱？</strong></p>
+<p>推荐 Gmail、Outlook 等海外主流邮箱，成功率最高。QQ 邮箱、163 等国内邮箱大概率被拒收或直接注册失败，临时邮箱服务基本被拉黑。<a href="https://tanqingbo.cn/accounts-google/">Gmail 注册</a>收不到验证码的解法见站内谷歌账号注册教程。</p>
+<p><strong>完全零基础，第一步从哪开始？</strong></p>
+<p>先搞网络，再注册，最后再琢磨怎么提问。很多人卡在第一步（网络到不了 OpenAI 的服务器）就开始怀疑自己操作错了，其实是顺序问题。网络、邮箱都正常的话，整个注册流程 10 分钟内能走完。</p>
+<p><strong>ChatGPT 怎么提问才出好答案？</strong></p>
+<p>三样东西给足：身份（让它扮演什么角色）、上下文（背景资料）、要求（字数、格式、语气）。答案不满意别换话题，直接说哪里不满意让它改，多轮追问比一次到位更高效。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/chatgpt-beginner-guide/">https://tanqingbo.cn/chatgpt-beginner-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/how-to-signup-chatgpt/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT 注册教程：国内邮箱注册全流程，收不到验证码怎么办
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-09-17</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/chatgpt-plus-buy-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT Plus 怎么开通（2026）：国内订阅失败与 9 种解决办法
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-10-01</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ChatGPT-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT 国内使用教程：翻墙访问、邮箱注册到上手全流程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具哪个好用（2026）：ChatGPT、Gemini、Kimi 实测对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/GPT-6-Astra/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        GPT-6 Astra 国内怎么用：OpenAI 最强模型使用与购买指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-05</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/telegram-channels-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">电报资源群怎么找：Telegram 频道与群组导航入口合集（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ChatGPT-%E8%83%BD%E5%B8%AE%E4%BD%A0%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">ChatGPT 能帮你干什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%EF%BC%88%E8%BF%99%E6%AD%A5%E8%B7%B3%E4%B8%8D%E8%BF%87%E5%8E%BB%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">第一步：先解决网络（这步跳不过去）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7%EF%BC%8810-%E5%88%86%E9%92%9F%E6%B5%81%E7%A8%8B%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">第二步：注册账号（10 分钟流程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E9%97%AE%E5%87%BA%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">第三步：问出你的第一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E5%87%BA%E6%95%88%E6%9E%9C%E7%9A%84%E6%8F%90%E9%97%AE%E5%85%AC%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">用出效果的提问公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E7%89%88%E5%A4%9F%E4%B8%8D%E5%A4%9F%E7%94%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E8%80%83%E8%99%91-Plus"><span class="toc-number">7.</span> <span class="toc-text">免费版够不够用，什么时候该考虑 Plus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E6%89%8B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AD%BB%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">新手常见的五个死法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E5%AE%8C%E8%BF%99%E7%AF%87%E4%B9%8B%E5%90%8E%E7%9A%84%E8%B7%AF%E7%BA%BF%E5%9B%BE"><span class="toc-number">9.</span> <span class="toc-text">学完这篇之后的路线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>442</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>437</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ChatGPT-%E8%83%BD%E5%B8%AE%E4%BD%A0%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">ChatGPT 能帮你干什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%EF%BC%88%E8%BF%99%E6%AD%A5%E8%B7%B3%E4%B8%8D%E8%BF%87%E5%8E%BB%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">第一步：先解决网络（这步跳不过去）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7%EF%BC%8810-%E5%88%86%E9%92%9F%E6%B5%81%E7%A8%8B%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">第二步：注册账号（10 分钟流程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E9%97%AE%E5%87%BA%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">第三步：问出你的第一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E5%87%BA%E6%95%88%E6%9E%9C%E7%9A%84%E6%8F%90%E9%97%AE%E5%85%AC%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">用出效果的提问公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E7%89%88%E5%A4%9F%E4%B8%8D%E5%A4%9F%E7%94%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E8%80%83%E8%99%91-Plus"><span class="toc-number">7.</span> <span class="toc-text">免费版够不够用，什么时候该考虑 Plus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E6%89%8B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AD%BB%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">新手常见的五个死法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E5%AE%8C%E8%BF%99%E7%AF%87%E4%B9%8B%E5%90%8E%E7%9A%84%E8%B7%AF%E7%BA%BF%E5%9B%BE"><span class="toc-number">9.</span> <span class="toc-text">学完这篇之后的路线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">80</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">25</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/科学上网/" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash/" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/翻墙/" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN/" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/算法/" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT/" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/机场/" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo/" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI工具/" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram/" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/电报/" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/电子书下载/" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/大模型/" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/流媒体/" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+    <a href="/tags/代理/" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java/" title="Java"><div class="tags-list-item">Java</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-06</div>
+        <a href="/chatgpt-beginner-guide/"><div class="recent-posts-item-content">ChatGPT 新手入门指南：2026 从零开始的保姆级教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-04</div>
+        <a href="/telegram-channels-guide/"><div class="recent-posts-item-content">电报资源群怎么找：Telegram 频道与群组导航入口合集（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-03</div>
+        <a href="/multimodel-game-assets/"><div class="recent-posts-item-content">DeepSeek 1017 批量造游戏素材：多模型分工拆解（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-02</div>
+        <a href="/fanqiang-software/"><div class="recent-posts-item-content">梯子软件哪个好用：翻墙软件怎么选（2026 对比指南）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ChatGPT-%E8%83%BD%E5%B8%AE%E4%BD%A0%E5%B9%B2%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">ChatGPT 能帮你干什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%EF%BC%88%E8%BF%99%E6%AD%A5%E8%B7%B3%E4%B8%8D%E8%BF%87%E5%8E%BB%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">第一步：先解决网络（这步跳不过去）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7%EF%BC%8810-%E5%88%86%E9%92%9F%E6%B5%81%E7%A8%8B%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">第二步：注册账号（10 分钟流程）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E9%97%AE%E5%87%BA%E4%BD%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text">第三步：问出你的第一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E5%87%BA%E6%95%88%E6%9E%9C%E7%9A%84%E6%8F%90%E9%97%AE%E5%85%AC%E5%BC%8F"><span class="toc-number">6.</span> <span class="toc-text">用出效果的提问公式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%8D%E8%B4%B9%E7%89%88%E5%A4%9F%E4%B8%8D%E5%A4%9F%E7%94%A8%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E8%80%83%E8%99%91-Plus"><span class="toc-number">7.</span> <span class="toc-text">免费版够不够用，什么时候该考虑 Plus</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E6%89%8B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%94%E4%B8%AA%E6%AD%BB%E6%B3%95"><span class="toc-number">8.</span> <span class="toc-text">新手常见的五个死法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E5%AE%8C%E8%BF%99%E7%AF%87%E4%B9%8B%E5%90%8E%E7%9A%84%E8%B7%AF%E7%BA%BF%E5%9B%BE"><span class="toc-number">9.</span> <span class="toc-text">学完这篇之后的路线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+      <li><a href="/clash-subscribe-guide/">Clash 订阅链接导入教程</a></li>
+      <li><a href="/free-fanqiang/">免费翻墙靠谱吗：梯子避坑</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+      <li><a href="/airport-rate-guide/">机场倍率与流量怎么算</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
