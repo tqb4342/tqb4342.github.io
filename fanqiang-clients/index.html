@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "科学上网客户端大全（2026）：全平台翻墙软件下载清单",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-11-08T07:00:00.000Z",
+  "dateModified": "2026-11-08T07:30:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/fanqiang-clients/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/fanqiang-clients-banner.webp",
+  "description": "科学上网客户端大全：Windows、macOS、Android、iOS、软路由全平台翻墙软件清单，每平台该装哪个、官方 GitHub 下载入口、配套教程直达，附下载避坑三条铁律。2026 年仍在维护的客户端一页汇总，收藏这一篇就够。",
+  "keywords": [
+    "科学上网客户端",
+    "翻墙客户端",
+    "翻墙客户端大全",
+    "科学上网客户端下载",
+    "翻墙软件下载",
+    "梯子客户端下载",
+    "翻墙工具汇总",
+    "科学上网工具",
+    "电脑翻墙客户端",
+    "安卓翻墙客户端",
+    "iOS翻墙客户端",
+    "梯子app下载",
+    "Clash客户端",
+    "v2ray客户端",
+    "Clash下载",
+    "v2rayNG下载",
+    "Shadowrocket下载",
+    "翻墙客户端汇总",
+    "Clash客户端下载"
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "科学上网",
+      "item": "https://tanqingbo.cn/categories/科学上网/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "科学上网客户端大全（2026）：全平台翻墙软件下载清单"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "科学上网客户端哪个好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "按平台直接抄答案：Windows 和 macOS 选 Clash Verge Rev，安卓选 ClashMeta for Android 或 v2rayNG，iOS 选 Spectre 或 Shadowrocket，软路由选 OpenClash 或 Nikki。这些全是 GitHub 开源项目，免费、仍在维护、新协议跟得上。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "这些客户端都是免费的吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "电脑和安卓的主流客户端全部免费开源。iOS 是例外：App Store 里的翻墙客户端基本都收费，而且大多只在美区等外区商店上架，先解决外区 Apple ID 再谈装哪个。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Clash for Windows 还能用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不推荐。它是曾经装机量最大的 Windows 客户端，2023 年底作者删库停更，之后再没安全更新。还在用的建议尽快迁移到 Clash Verge Rev，迁移方法在站内 Clash for Windows 停更专文里。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "客户端和机场订阅是什么关系？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "客户端是装在设备上的软件，负责把订阅里的节点接进来；机场订阅是花钱买的那条链接，里面才是真正干活的境外服务器。客户端免费、订阅收费，一条订阅可以导入全平台所有客户端。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "下载翻墙客户端怎么避免山寨？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "只认 GitHub 官方仓库的 Releases 页面。搜索引擎广告位里的「Clash 官网」九成九是假的，第三方下载站的二次打包版本也不碰。本页所有下载链接都指向官方仓库。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "免费客户端是不是等于免费上网？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不是。客户端免费只解决了软件这一层，节点才是另一回事：免费公共节点晚高峰拥挤、随时失联，日常稳定使用需要机场订阅，月付十几元起。想省钱先试机场的试用额度，别长期挂公共免费节点。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  
+  <title>科学上网客户端大全（2026）：全平台翻墙软件下载清单</title>
+  
+  <meta name="description" content="科学上网客户端大全：Windows、macOS、Android、iOS、软路由全平台翻墙软件清单，每平台该装哪个、官方 GitHub 下载入口、配套教程直达，附下载避坑三条铁律。2026 年仍在维护的客户端一页汇总，收藏这一篇就够。">
+  <meta name="keywords" content="科学上网客户端,翻墙客户端,翻墙客户端大全,科学上网客户端下载,翻墙软件下载,梯子客户端下载,翻墙工具汇总,科学上网工具,电脑翻墙客户端,安卓翻墙客户端,iOS翻墙客户端,梯子app下载,Clash客户端,v2ray客户端,Clash下载,v2rayNG下载,Shadowrocket下载,翻墙客户端汇总,Clash客户端下载">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="科学上网客户端大全（2026）：全平台翻墙软件下载清单 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/fanqiang-clients/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/fanqiang-clients-banner.webp">
+  
+  
+  <meta property="og:description" content="科学上网客户端大全：Windows、macOS、Android、iOS、软路由全平台翻墙软件清单，每平台该装哪个、官方 GitHub 下载入口、配套教程直达，附下载避坑三条铁律。2026 年仍在维护的客户端一页汇总，收藏这一篇就够。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-11-08T07:00:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-08T07:30:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="科学上网">
+  
+  <meta property="og:article:tag" content="Clash">
+  
+  <meta property="og:article:tag" content="翻墙客户端">
+  
+  <meta property="og:article:tag" content="v2ray">
+  
+  <meta property="og:article:tag" content="iOS翻墙">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" />
+ <link rel="canonical" href="https://tanqingbo.cn/fanqiang-clients/" />
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/fanqiang-clients-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/fanqiang-clients-banner.webp"
+    alt="科学上网客户端大全（2026）：全平台翻墙软件下载清单"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      科学上网客户端大全（2026）：全平台翻墙软件下载清单
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-11-08T07:00:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-11-08</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/科学上网/" class="post-meta-link">科学上网</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.8k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/fanqiang-clients/" class="leancloud_visitors" data-flag-title="科学上网客户端大全（2026）：全平台翻墙软件下载清单">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/科学上网/" class="post-meta-link">科学上网</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Clash/" class="post-meta-link">Clash</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/翻墙客户端/" class="post-meta-link">翻墙客户端</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/v2ray/" class="post-meta-link">v2ray</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/iOS翻墙/" class="post-meta-link">iOS翻墙</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>这两年科学上网的协议一年比一年多，客户端跟着一轮换血——去年还是主力的一些软件，今年已经停更甚至删库跑路。网上搜「翻墙客户端下载」，出来的清单大半是 2023 年的老黄历，还在推荐已经死掉的软件。这篇把 2026 年还在正常维护的全平台客户端汇总到一页：每个平台直接告诉你装哪个、去哪下、装完看哪篇教程。可以把本页加为书签，客户端换血时这里会同步更新。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>每平台直接装这个</strong>：Windows / macOS 选 Clash Verge Rev，安卓选 ClashMeta for Android，iOS 选 Spectre 或 Shadowrocket，软路由选 OpenClash——理由和下载入口见下文分平台清单</li>
+<li><strong>全免费吗</strong>：电脑和安卓客户端全免费开源；iOS 是例外，付费加外区 Apple ID，前置流程看 <a href="https://tanqingbo.cn/ios-open-internet/">iPhone 科学上网教程</a></li>
+<li><strong>下载只认一个地方</strong>：各软件的 GitHub 官方仓库 Releases 页面，别碰搜索引擎广告位的「官网」</li>
+<li><strong>客户端只是壳，节点才是核心</strong>：装哪个软件影响顺手程度，节点质量决定快不快稳不稳——这层关系展开看<a href="https://tanqingbo.cn/fanqiang-software/">梯子软件怎么选</a></li>
+<li><strong>新手最常见翻车</strong>：装了免费客户端塞公共免费节点，得出「翻墙不好用」的结论——不是软件不行，是节点不行</li>
+</ul>
+<h2 id="一、先把两层关系摆正"><a href="#一、先把两层关系摆正" class="headerlink" title="一、先把两层关系摆正"></a>一、先把两层关系摆正</h2><p>看清单之前先花 30 秒搞清一件事，能省掉后面一大半折腾。</p>
+<p><strong>客户端是壳</strong>：装在电脑手机上的软件，负责导入节点、开关代理、跑分流规则。这一层全平台开源免费，选错了换一个就行，没有任何成本。</p>
+<p><strong>节点是核心</strong>：机场给你的那条订阅链接，里面才是真正连境外的服务器。快不快、稳不稳、ChatGPT 掉不掉线，七成由这层决定。这层要花钱，怎么选方案看<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a>。</p>
+<p>所以这篇清单解决的是「壳」的问题——每个平台哪个壳最顺手、去哪下。壳选对了，剩下的体验差距全在订阅上。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/aoi_01.webp" alt="科学上网原理：流量经代理服务器中转绕过防火墙" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/aoi_01.webp" class="lozad post-image"></p>
+<h2 id="二、Windows-客户端"><a href="#二、Windows-客户端" class="headerlink" title="二、Windows 客户端"></a>二、Windows 客户端</h2><h3 id="Clash-Verge-Rev（主力推荐）"><a href="#Clash-Verge-Rev（主力推荐）" class="headerlink" title="Clash Verge Rev（主力推荐）"></a>Clash Verge Rev（主力推荐）</h3><p>Windows 上的第一选择。mihomo 内核，订阅导入、节点测速、规则分流一应俱全，界面现代，更新勤快，新手到老手都用它不亏。从下载安装到导入订阅跑通的完整流程，看 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程</a>。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/clash-verge-rev/clash-verge-rev/releases">GitHub Releases</a></p>
+<p>两个新手会慌一下的正常现象：安装包没有微软签名，Windows 装完可能弹「已保护你的电脑」，点「更多信息 → 仍要运行」即可；首次启动连不上网，先检查界面左下角的系统代理开关有没有打开，不是软件坏了。完整排障在 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程</a>。</p>
+<h3 id="Mihomo-Party（活跃维护）"><a href="#Mihomo-Party（活跃维护）" class="headerlink" title="Mihomo Party（活跃维护）"></a>Mihomo Party（活跃维护）</h3><p>近两年冒出来的新派客户端，mihomo 内核，界面是几个 Windows 客户端里最现代的。Clash Verge Rev 用腻了换它换换口味，订阅和配置习惯无缝平移。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mihomo-party-org/mihomo-party/releases">GitHub Releases</a></p>
+<h3 id="v2rayN（活跃维护）"><a href="#v2rayN（活跃维护）" class="headerlink" title="v2rayN（活跃维护）"></a>v2rayN（活跃维护）</h3><p>Windows 老牌全能选手，v2ray 系协议支持最全，功能多到界面略显复杂。主力协议走 Clash 系的用户用不上它，但很多机场的排障文档默认写它，手里备一个不亏。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/2dust/v2rayN/releases">GitHub Releases</a></p>
+<h3 id="Hiddify（活跃维护）"><a href="#Hiddify（活跃维护）" class="headerlink" title="Hiddify（活跃维护）"></a>Hiddify（活跃维护）</h3><p>全平台统一体验的客户端，Windows / macOS / Android / iOS 一个全家桶。多设备党不想每个平台学一套软件，选它。下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hiddify/hiddify-app/releases">GitHub Releases</a></p>
+<h3 id="Clash-for-Windows（已停更）"><a href="#Clash-for-Windows（已停更）" class="headerlink" title="Clash for Windows（已停更）"></a>Clash for Windows（已停更）</h3><p>曾经的 Windows 霸主，2023 年底停更删库。现在没有任何新装理由——还在用它的老用户，<a href="https://tanqingbo.cn/ClashForWindows/">停更原因和迁移指南看这篇</a>，尽快换到 Clash Verge Rev。</p>
+<h2 id="三、macOS-客户端"><a href="#三、macOS-客户端" class="headerlink" title="三、macOS 客户端"></a>三、macOS 客户端</h2><h3 id="Clash-Verge-Rev（主力推荐）-1"><a href="#Clash-Verge-Rev（主力推荐）-1" class="headerlink" title="Clash Verge Rev（主力推荐）"></a>Clash Verge Rev（主力推荐）</h3><p>Windows 那套原封不动搬到 Mac，Intel 和 Apple Silicon 都有安装包。会用一个平台等于会了所有平台，这是跨平台客户端的价值。教程同样看 <a href="https://tanqingbo.cn/clash-verge/">Clash Verge 教程</a>。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/clash-verge-rev/clash-verge-rev/releases">GitHub Releases</a></p>
+<h3 id="Mihomo-Party（活跃维护）-1"><a href="#Mihomo-Party（活跃维护）-1" class="headerlink" title="Mihomo Party（活跃维护）"></a>Mihomo Party（活跃维护）</h3><p>Mac 原生体验做得最好的一个，深色模式、菜单栏控制都到位，Mac 用户可以直接拿它当主力。订阅导入与节点配置的完整流程看 <a href="https://tanqingbo.cn/Clash-Party/">Clash Party 教程</a>。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/mihomo-party-org/mihomo-party/releases">GitHub Releases</a></p>
+<h3 id="Surge（付费）"><a href="#Surge（付费）" class="headerlink" title="Surge（付费）"></a>Surge（付费）</h3><p>Mac 上的专业级选择，稳定性和规则能力是天花板级别，价格也是。重度用户和愿意为工具付费的人用得出它的好。下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://nssurge.com/">官网 nssurge.com</a></p>
+<h2 id="四、Android-客户端"><a href="#四、Android-客户端" class="headerlink" title="四、Android 客户端"></a>四、Android 客户端</h2><h3 id="ClashMeta-for-Android（主力推荐）"><a href="#ClashMeta-for-Android（主力推荐）" class="headerlink" title="ClashMeta for Android（主力推荐）"></a>ClashMeta for Android（主力推荐）</h3><p>安卓 Clash 系的正统续作。mihomo 内核，新协议跟得上，机场订阅直接导入，配置流程看<a href="https://tanqingbo.cn/Android-open-internet/">安卓科学上网教程</a>。</p>
+<p><strong>一个高频踩坑单独提醒</strong>：原版 Clash for Android 已停更在 2.5.12，商店和搜索引擎里搜「Clash for Android」装到的是停更老版。认准 ClashMeta 这个名字。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/MetaCubeX/ClashMetaForAndroid/releases">GitHub Releases</a></p>
+<h3 id="v2rayNG（活跃维护）"><a href="#v2rayNG（活跃维护）" class="headerlink" title="v2rayNG（活跃维护）"></a>v2rayNG（活跃维护）</h3><p>安卓另一大主流，v2ray 系协议通吃，界面简单直接，很多机场的安卓用户手册默认写它。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/2dust/v2rayNG/releases">GitHub Releases</a></p>
+<h3 id="Hiddify（活跃维护）-1"><a href="#Hiddify（活跃维护）-1" class="headerlink" title="Hiddify（活跃维护）"></a>Hiddify（活跃维护）</h3><p>全平台家族的安卓成员，其他设备已经在用 Hiddify 的话，安卓装它保持体验统一。下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hiddify/hiddify-app/releases">GitHub Releases</a></p>
+<h3 id="Surfboard（轻量之选）"><a href="#Surfboard（轻量之选）" class="headerlink" title="Surfboard（轻量之选）"></a>Surfboard（轻量之选）</h3><p>安卓轻量级选手，兼容 Surge 配置。机器性能差、或者只想要一个「能连上就行」的开关，选它。</p>
+<p>下载：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/getsurfboard/surfboard/releases">GitHub Releases</a></p>
+<h2 id="五、iOS-客户端"><a href="#五、iOS-客户端" class="headerlink" title="五、iOS 客户端"></a>五、iOS 客户端</h2><p>iOS 是唯一绕不开钱的平台：App Store 里的翻墙客户端基本都收费，而且大多只在美区等外区商店上架。所以先解决<a href="https://tanqingbo.cn/apple-id-buy-guide/">外区 Apple ID</a>，再谈装哪个，完整流程看 <a href="https://tanqingbo.cn/ios-open-internet/">iPhone 科学上网教程</a>。</p>
+<h3 id="Spectre（付费）"><a href="#Spectre（付费）" class="headerlink" title="Spectre（付费）"></a>Spectre（付费）</h3><p>小火箭 Shadowrocket 同一作者的新作品，iOS 新设备目前的首选，本站 iPhone 教程以它为主线。购买和配置全流程看<a href="https://tanqingbo.cn/ios-open-internet/">这里</a>。</p>
+<h3 id="Shadowrocket（付费，经典）"><a href="#Shadowrocket（付费，经典）" class="headerlink" title="Shadowrocket（付费，经典）"></a>Shadowrocket（付费，经典）</h3><p>iOS 最经典的一个，几美元买断，生态成熟：几乎每家机场的 iOS 文档都默认它。需要美区账号，<a href="https://tanqingbo.cn/apple-id-buy-guide/">美区 Apple ID 购买与防封指南</a>有完整流程。</p>
+<h3 id="Stash（付费）"><a href="#Stash（付费）" class="headerlink" title="Stash（付费）"></a>Stash（付费）</h3><p>iOS 上的 Clash 系，订阅和规则玩法跟桌面端一脉相承。安卓、桌面在用 Clash、想把配置习惯带到 iPhone 的人选它。</p>
+<h3 id="sing-box（付费）"><a href="#sing-box（付费）" class="headerlink" title="sing-box（付费）"></a>sing-box（付费）</h3><p>sing-box 内核的官方 iOS 端，新协议支持最快，配置偏极客向。跟 Clash 的区别想搞明白，看 <a href="https://tanqingbo.cn/sing-box-guide/">sing-box 和 Clash 对比</a>。</p>
+<h2 id="六、软路由与梅林"><a href="#六、软路由与梅林" class="headerlink" title="六、软路由与梅林"></a>六、软路由与梅林</h2><p>想让全家设备无感翻墙，就把客户端装进路由器：代价是折腾成本，收益是手机电视冰箱都不用单独装软件。方向入门看<a href="https://tanqingbo.cn/router-vpn-guide/">路由器翻墙教程</a>。</p>
+<h3 id="OpenClash-Nikki（OpenWrt）"><a href="#OpenClash-Nikki（OpenWrt）" class="headerlink" title="OpenClash / Nikki（OpenWrt）"></a>OpenClash / Nikki（OpenWrt）</h3><p>OpenWrt 软路由的两大主流方案。OpenClash 老牌、资料多；Nikki 新派、内核更新快，二选一即可。OpenClash 仓库：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/vernesong/OpenClash">GitHub</a></p>
+<h3 id="Merlin-Clash-fancyss（华硕梅林）"><a href="#Merlin-Clash-fancyss（华硕梅林）" class="headerlink" title="Merlin Clash / fancyss（华硕梅林）"></a>Merlin Clash / fancyss（华硕梅林）</h3><p>华硕路由刷梅林固件后的两大插件，华硕玩家基本都在这两者之间选。fancyss 偏傻瓜化，Merlin Clash 玩法上限高。fancyss 仓库：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hq450/fancyss">GitHub</a></p>
+<h2 id="七、下载避坑：三条铁律"><a href="#七、下载避坑：三条铁律" class="headerlink" title="七、下载避坑：三条铁律"></a>七、下载避坑：三条铁律</h2><p>清单看完了，下载这一步还有三个坑，踩中一个就前功尽弃。更完整的辨假方法在<a href="https://tanqingbo.cn/fanqiang-maomi/">猫咪专文</a>，这里给最短版本：</p>
+<ul>
+<li><strong>只认 GitHub Releases</strong>：本页所有下载链接都指向官方仓库的发布页。搜出来名字一样、域名不一样的一律不点</li>
+</ul>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/cfw-download-list.webp" alt="反面示例：第三方下载站的二次打包目录，红框内是山寨中文版安装包" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/cfw-download-list.webp" class="lozad post-image"></p>
+<p>上图就是典型的二次打包下载站：文件名跟官方一模一样，旁边混着一个「-Chinese」后缀的中文版安装包——官方从没发过中文特别版，多出来的东西就是别人加进去的。</p>
+<ul>
+<li><strong>广告位里的「官网」是假的</strong>：搜索引擎广告位里的「Clash 官网」「v2ray 官网」九成九是钓鱼，专收着急的新手</li>
+<li><strong>收费的「Clash 系客户端」是山寨</strong>：Clash 系全部开源免费，收软件费的基本是二次打包加料版</li>
+</ul>
+<h2 id="八、客户端不等于节点：最后一步"><a href="#八、客户端不等于节点：最后一步" class="headerlink" title="八、客户端不等于节点：最后一步"></a>八、客户端不等于节点：最后一步</h2><p>软件装好了，最后一件事决定你到底好不好用：节点从哪来。免费公共节点人数挤爆、晚高峰卡到打不开页面、随时失联，属于能凑合但没法日常用的水平——大量「翻墙不好用」的差评，锅都在节点不在软件。</p>
+<p>正经用，两条路：</p>
+<ul>
+<li><strong>省事派</strong>：直接买机场订阅，节点、线路、维护全包，客户端导入一条订阅链接就完事。<a href="https://tanqingbo.cn/yzhx-vpn/">一枝红杏</a> 是本站主推的机场，7 年老牌、有试用额度、对 ChatGPT 等 AI 服务友好，<a href="https://tanqingbo.cn/yzhx-vpn/">实测与套餐价格看这篇</a></li>
+</ul>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/cfw-kb-node-list.webp" alt="机场订阅页：每类客户端都有对应订阅入口，一键复制订阅地址" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/cfw-kb-node-list.webp" class="lozad post-image"></p>
+<p>买完机场拿到的就是上图这样一个页面：Clash、Surge、Shadowrocket 各有各的订阅按钮，点开复制链接，粘进对应客户端就跑起来了——一条订阅喂全平台，这就是「客户端只是壳」的意思。</p>
+<ul>
+<li><strong>折腾派</strong>：自己租 VPS 搭节点，自由度最高，成本和心智负担也最高，适合当学习项目，方案对比看<a href="https://tanqingbo.cn/science-internet-guide/">科学上网方案怎么选</a></li>
+</ul>
+<p>装完客户端、导入订阅之后，分流规则、TUN 模式这些进阶玩法，在 <a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a>里接着学。</p>
+<h2 id="FAQ-常见问题"><a href="#FAQ-常见问题" class="headerlink" title="FAQ 常见问题"></a>FAQ 常见问题</h2><p><strong>科学上网客户端哪个好？</strong></p>
+<p>按平台直接抄答案：Windows 和 macOS 选 Clash Verge Rev，安卓选 ClashMeta for Android 或 v2rayNG，iOS 选 Spectre 或 Shadowrocket，软路由选 OpenClash 或 Nikki。这些全是 GitHub 开源项目，免费、仍在维护、新协议跟得上。</p>
+<p><strong>这些客户端都是免费的吗？</strong></p>
+<p>电脑和安卓的主流客户端全部免费开源。iOS 是例外：App Store 里的翻墙客户端基本都收费，而且大多只在美区等外区商店上架，先解决外区 Apple ID 再谈装哪个。</p>
+<p><strong>Clash for Windows 还能用吗？</strong></p>
+<p>不推荐。它是曾经装机量最大的 Windows 客户端，2023 年底作者删库停更，之后再没安全更新。还在用的建议尽快迁移到 Clash Verge Rev，迁移方法在站内 Clash for Windows 停更专文里。</p>
+<p><strong>客户端和机场订阅是什么关系？</strong></p>
+<p>客户端是装在设备上的软件，负责把订阅里的节点接进来；机场订阅是花钱买的那条链接，里面才是真正干活的境外服务器。客户端免费、订阅收费，一条订阅可以导入全平台所有客户端。</p>
+<p><strong>下载翻墙客户端怎么避免山寨？</strong></p>
+<p>只认 GitHub 官方仓库的 Releases 页面。搜索引擎广告位里的「Clash 官网」九成九是假的，第三方下载站的二次打包版本也不碰。本页所有下载链接都指向官方仓库。</p>
+<p><strong>免费客户端是不是等于免费上网？</strong></p>
+<p>不是。客户端免费只解决了软件这一层，节点才是另一回事：免费公共节点晚高峰拥挤、随时失联，日常稳定使用需要机场订阅，月付十几元起。想省钱先试机场的试用额度，别长期挂公共免费节点。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/fanqiang-clients/">https://tanqingbo.cn/fanqiang-clients/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/fanqiang-software/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        梯子软件哪个好用：翻墙软件怎么选（2026 对比指南）
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-11-02</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash 完全教程（2026）：客户端、订阅与规则分流，10 分钟上手
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-29</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/clash-verge/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash Verge教程：下载安装、导入机场订阅与配置代理全流程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-04</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ClashForWindows/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Clash for Windows 教程（2026）：停更了怎么办、替代与迁移
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-11-14</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ios-open-internet/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        iPhone 科学上网（2026）：Apple ID 获取与 Spectre 配置
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-06-13</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/chatgpt-beginner-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">ChatGPT 新手入门指南：2026 从零开始的保姆级教程 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%8A%8A%E4%B8%A4%E5%B1%82%E5%85%B3%E7%B3%BB%E6%91%86%E6%AD%A3"><span class="toc-number">2.</span> <span class="toc-text">一、先把两层关系摆正</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Windows-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">二、Windows 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Clash Verge Rev（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mihomo-Party%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">Mihomo Party（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2rayN%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">v2rayN（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hiddify%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">Hiddify（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-for-Windows%EF%BC%88%E5%B7%B2%E5%81%9C%E6%9B%B4%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">Clash for Windows（已停更）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81macOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">4.</span> <span class="toc-text">三、macOS 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89-1"><span class="toc-number">4.1.</span> <span class="toc-text">Clash Verge Rev（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mihomo-Party%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89-1"><span class="toc-number">4.2.</span> <span class="toc-text">Mihomo Party（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Surge%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">Surge（付费）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Android-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.</span> <span class="toc-text">四、Android 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ClashMeta-for-Android%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">ClashMeta for Android（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2rayNG%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">v2rayNG（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hiddify%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89-1"><span class="toc-number">5.3.</span> <span class="toc-text">Hiddify（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Surfboard%EF%BC%88%E8%BD%BB%E9%87%8F%E4%B9%8B%E9%80%89%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">Surfboard（轻量之选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81iOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">6.</span> <span class="toc-text">五、iOS 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectre%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">Spectre（付费）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadowrocket%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%8C%E7%BB%8F%E5%85%B8%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">Shadowrocket（付费，经典）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stash%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">Stash（付费）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sing-box%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">sing-box（付费）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8E%E6%A2%85%E6%9E%97"><span class="toc-number">7.</span> <span class="toc-text">六、软路由与梅林</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenClash-Nikki%EF%BC%88OpenWrt%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">OpenClash &#x2F; Nikki（OpenWrt）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Merlin-Clash-fancyss%EF%BC%88%E5%8D%8E%E7%A1%95%E6%A2%85%E6%9E%97%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">Merlin Clash &#x2F; fancyss（华硕梅林）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E4%B8%8B%E8%BD%BD%E9%81%BF%E5%9D%91%EF%BC%9A%E4%B8%89%E6%9D%A1%E9%93%81%E5%BE%8B"><span class="toc-number">8.</span> <span class="toc-text">七、下载避坑：三条铁律</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%8A%82%E7%82%B9%EF%BC%9A%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5"><span class="toc-number">9.</span> <span class="toc-text">八、客户端不等于节点：最后一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">FAQ 常见问题</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>443</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>440</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%8A%8A%E4%B8%A4%E5%B1%82%E5%85%B3%E7%B3%BB%E6%91%86%E6%AD%A3"><span class="toc-number">2.</span> <span class="toc-text">一、先把两层关系摆正</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Windows-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">二、Windows 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Clash Verge Rev（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mihomo-Party%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">Mihomo Party（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2rayN%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">v2rayN（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hiddify%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">Hiddify（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-for-Windows%EF%BC%88%E5%B7%B2%E5%81%9C%E6%9B%B4%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">Clash for Windows（已停更）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81macOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">4.</span> <span class="toc-text">三、macOS 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89-1"><span class="toc-number">4.1.</span> <span class="toc-text">Clash Verge Rev（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mihomo-Party%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89-1"><span class="toc-number">4.2.</span> <span class="toc-text">Mihomo Party（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Surge%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">Surge（付费）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Android-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.</span> <span class="toc-text">四、Android 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ClashMeta-for-Android%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">ClashMeta for Android（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2rayNG%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">v2rayNG（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hiddify%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89-1"><span class="toc-number">5.3.</span> <span class="toc-text">Hiddify（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Surfboard%EF%BC%88%E8%BD%BB%E9%87%8F%E4%B9%8B%E9%80%89%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">Surfboard（轻量之选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81iOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">6.</span> <span class="toc-text">五、iOS 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectre%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">Spectre（付费）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadowrocket%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%8C%E7%BB%8F%E5%85%B8%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">Shadowrocket（付费，经典）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stash%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">Stash（付费）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sing-box%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">sing-box（付费）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8E%E6%A2%85%E6%9E%97"><span class="toc-number">7.</span> <span class="toc-text">六、软路由与梅林</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenClash-Nikki%EF%BC%88OpenWrt%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">OpenClash &#x2F; Nikki（OpenWrt）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Merlin-Clash-fancyss%EF%BC%88%E5%8D%8E%E7%A1%95%E6%A2%85%E6%9E%97%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">Merlin Clash &#x2F; fancyss（华硕梅林）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E4%B8%8B%E8%BD%BD%E9%81%BF%E5%9D%91%EF%BC%9A%E4%B8%89%E6%9D%A1%E9%93%81%E5%BE%8B"><span class="toc-number">8.</span> <span class="toc-text">七、下载避坑：三条铁律</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%8A%82%E7%82%B9%EF%BC%9A%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5"><span class="toc-number">9.</span> <span class="toc-text">八、客户端不等于节点：最后一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">FAQ 常见问题</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">81</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">37</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">25</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/科学上网/" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash/" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/翻墙/" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN/" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/算法/" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT/" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/机场/" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo/" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI工具/" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram/" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/电报/" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/电子书下载/" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/大模型/" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/流媒体/" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+    <a href="/tags/代理/" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java/" title="Java"><div class="tags-list-item">Java</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-08</div>
+        <a href="/fanqiang-clients/"><div class="recent-posts-item-content">科学上网客户端大全（2026）：全平台翻墙软件下载清单</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-06</div>
+        <a href="/chatgpt-beginner-guide/"><div class="recent-posts-item-content">ChatGPT 新手入门指南：2026 从零开始的保姆级教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-04</div>
+        <a href="/telegram-channels-guide/"><div class="recent-posts-item-content">电报资源群怎么找：Telegram 频道与群组导航入口合集（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-03</div>
+        <a href="/multimodel-game-assets/"><div class="recent-posts-item-content">DeepSeek 1017 批量造游戏素材：多模型分工拆解（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%8A%8A%E4%B8%A4%E5%B1%82%E5%85%B3%E7%B3%BB%E6%91%86%E6%AD%A3"><span class="toc-number">2.</span> <span class="toc-text">一、先把两层关系摆正</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Windows-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">3.</span> <span class="toc-text">二、Windows 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">Clash Verge Rev（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mihomo-Party%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">Mihomo Party（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2rayN%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">v2rayN（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hiddify%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">Hiddify（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-for-Windows%EF%BC%88%E5%B7%B2%E5%81%9C%E6%9B%B4%EF%BC%89"><span class="toc-number">3.5.</span> <span class="toc-text">Clash for Windows（已停更）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81macOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">4.</span> <span class="toc-text">三、macOS 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Clash-Verge-Rev%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89-1"><span class="toc-number">4.1.</span> <span class="toc-text">Clash Verge Rev（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mihomo-Party%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89-1"><span class="toc-number">4.2.</span> <span class="toc-text">Mihomo Party（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Surge%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">Surge（付费）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Android-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.</span> <span class="toc-text">四、Android 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ClashMeta-for-Android%EF%BC%88%E4%B8%BB%E5%8A%9B%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">5.1.</span> <span class="toc-text">ClashMeta for Android（主力推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#v2rayNG%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">v2rayNG（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hiddify%EF%BC%88%E6%B4%BB%E8%B7%83%E7%BB%B4%E6%8A%A4%EF%BC%89-1"><span class="toc-number">5.3.</span> <span class="toc-text">Hiddify（活跃维护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Surfboard%EF%BC%88%E8%BD%BB%E9%87%8F%E4%B9%8B%E9%80%89%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">Surfboard（轻量之选）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81iOS-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">6.</span> <span class="toc-text">五、iOS 客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spectre%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">Spectre（付费）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadowrocket%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%8C%E7%BB%8F%E5%85%B8%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">Shadowrocket（付费，经典）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Stash%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">Stash（付费）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sing-box%EF%BC%88%E4%BB%98%E8%B4%B9%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">sing-box（付费）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BD%AF%E8%B7%AF%E7%94%B1%E4%B8%8E%E6%A2%85%E6%9E%97"><span class="toc-number">7.</span> <span class="toc-text">六、软路由与梅林</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OpenClash-Nikki%EF%BC%88OpenWrt%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">OpenClash &#x2F; Nikki（OpenWrt）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Merlin-Clash-fancyss%EF%BC%88%E5%8D%8E%E7%A1%95%E6%A2%85%E6%9E%97%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">Merlin Clash &#x2F; fancyss（华硕梅林）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E4%B8%8B%E8%BD%BD%E9%81%BF%E5%9D%91%EF%BC%9A%E4%B8%89%E6%9D%A1%E9%93%81%E5%BE%8B"><span class="toc-number">8.</span> <span class="toc-text">七、下载避坑：三条铁律</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%8A%82%E7%82%B9%EF%BC%9A%E6%9C%80%E5%90%8E%E4%B8%80%E6%AD%A5"><span class="toc-number">9.</span> <span class="toc-text">八、客户端不等于节点：最后一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAQ-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">FAQ 常见问题</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+      <li><a href="/clash-subscribe-guide/">Clash 订阅链接导入教程</a></li>
+      <li><a href="/free-fanqiang/">免费翻墙靠谱吗：梯子避坑</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+      <li><a href="/airport-rate-guide/">机场倍率与流量怎么算</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

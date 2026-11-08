@@ -1,3 +1,7 @@
+https://tanqingbo.cn/ClashForWindows/
+https://tanqingbo.cn/fanqiang-clients/
+https://tanqingbo.cn/clash-guide/
+https://tanqingbo.cn/fanqiang-software/
 https://tanqingbo.cn/chatgpt-beginner-guide/
 https://tanqingbo.cn/GPT-6-Astra-Computer-Use/
 https://tanqingbo.cn/ai-tools-guide/
@@ -14,7 +18,3 @@ https://tanqingbo.cn/doubao-agent-guide/
 https://tanqingbo.cn/how-to-use-Gemini/
 https://tanqingbo.cn/popcorn/
 https://tanqingbo.cn/win-kuaili/
-https://tanqingbo.cn/build-your-own-airport/
-https://tanqingbo.cn/UNet-Convolutional-Networks-for-Biomedical-Image-Segmentation/
-https://tanqingbo.cn/fully-convolutional-networks-for-semantic-segmentation/
-https://tanqingbo.cn/3D-Convolutional-Neural-Networks-for-Human-Action-Recognition/
