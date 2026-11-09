@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-11-09T07:40:00.000Z",
+  "dateModified": "2026-11-09T07:40:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/claude-design-skill/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/claude-design-skill-banner.webp",
+  "description": "设计师 Elaya 公开的 landing-page-design Skill 拆解：Claude 做 PDF 网页为什么一眼就是 AI 味，字体档位、间距表、圆角嵌套这些具体规则怎么写进 Skill，国内用 Claude 前的网络准备，中文页面照搬拉丁字体的坑，以及把 Skill 喂给 AI 编程工具的完整用法和提示词范例。",
+  "keywords": "Claude网页设计,claude design skill,AI做网页,AI落地页设计,landing page design skill,ai-design-skills,claude做网页,AI网页模板味,AI设计网页,claude写网页,ai-design-skills仓库,Elaya设计,redesign skill,AI改版网站"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Claude 网页设计 Skill 是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "设计师 Elaya 公开的一份 Markdown 设计规则文件，放在 GitHub 仓库 ai-design-skills 里，MIT 许可免费可用。把它交给支持读取规则文件的 AI 编程工具（Claude Code、Cursor 等），AI 生成的落地页会遵守字体、间距、圆角、状态这些具体规范，而不是每生成一次就随机发明一套审美。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "这份 Skill 收费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不收费。仓库 MIT 许可开源，任何人可读可用可改。配套的旧网站改版 Skill redesign-skill 在另一个仓库，同样公开。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "国内能用 Claude 做网页吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能，但 Claude 官网和 API 国内直连不通，先解决网络环境再开工，具体节点和客户端配置看科学上网教程，终端工具的代理细节看 Claude Code 教程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Skill 里的字体和字号档位适用中文页面吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不直接适用。规则里的 Geist、Manrope 等是拉丁字体，中文会回退到系统默认字体，行长和换行观感也完全不同。字体部分要换成自己的中文字体清单，档位思路可以保留。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "不会写代码能用它做网页吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以，配合 Cursor、Claude Code 这类 AI 编程工具，用自然语言描述需求即可。但落地页上线前的事实性内容（用户数、评价、案例）要自己核实填写，AI 会按 Skill 要求留出位置但不该替你编数字。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "哪里下载这份 Skill？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "GitHub 搜 elayadesign/ai-design-skills，打开 skills 目录下的 landing-page-design 文件夹，SKILL.md 就是完整设计规则，直接复制文本即可使用。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  
+  <title>Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）</title>
+  
+  <meta name="description" content="设计师 Elaya 公开的 landing-page-design Skill 拆解：Claude 做 PDF 网页为什么一眼就是 AI 味，字体档位、间距表、圆角嵌套这些具体规则怎么写进 Skill，国内用 Claude 前的网络准备，中文页面照搬拉丁字体的坑，以及把 Skill 喂给 AI 编...">
+  <meta name="keywords" content="Claude网页设计,claude design skill,AI做网页,AI落地页设计,landing page design skill,ai-design-skills,claude做网页,AI网页模板味,AI设计网页,claude写网页,ai-design-skills仓库,Elaya设计,redesign skill,AI改版网站">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/claude-design-skill/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/claude-design-skill-banner.webp">
+  
+  
+  <meta property="og:description" content="设计师 Elaya 公开的 landing-page-design Skill 拆解：Claude 做 PDF 网页为什么一眼就是 AI 味，字体档位、间距表、圆角嵌套这些具体规则怎么写进 Skill，国内用 Claude 前的网络准备，中文页面照搬拉丁字体的坑，以及把 Skill 喂给 AI 编...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-11-09T07:40:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-09T07:40:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="AI">
+  
+  <meta property="og:article:tag" content="Claude">
+  
+  <meta property="og:article:tag" content="网页设计">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" />
+ <link rel="canonical" href="https://tanqingbo.cn/claude-design-skill/" />
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/claude-design-skill-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/claude-design-skill-banner.webp"
+    alt="Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-11-09T07:40:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-11-09</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.2k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/claude-design-skill/" class="leancloud_visitors" data-flag-title="Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/AI/" class="post-meta-link">AI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Claude/" class="post-meta-link">Claude</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/网页设计/" class="post-meta-link">网页设计</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>AI 做的网页已经形成了一套固定审美：大标题、渐变背景、三个并排的功能卡片、一排头像几个数字。单看每一处都挑不出错，拼在一起就是那股熟悉的模板味。</p>
+<p>2026 年 10 月底，设计师 Elaya 在 X 上公开了自己两个月来用 Claude、Cursor 和 Higgsfield 做的一组网页作品，同时把背后支撑的设计规则也开源了——一份叫 <strong>landing-page-design</strong> 的 Skill 文件。灯塔照向人群的营销页、驾驶舱视角的旅行页、漂着宇航员的 404 页，都是同一套规则的产物。</p>
+<p>这份文件值不值得拿来用，下面拆开讲。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>是什么</strong>：设计师写成 Markdown 的落地页设计规则，开源免费（MIT 许可）</li>
+<li><strong>解决什么</strong>：AI 生成网页时审美随机漂移，每次生成发明一套新标准</li>
+<li><strong>怎么用</strong>：把 SKILL.md 文本交给 Claude Code、Cursor 等支持读取规则的工具</li>
+<li><strong>在哪拿</strong>：GitHub 仓库 elayadesign/ai-design-skills，skills 目录下的 SKILL.md</li>
+<li><strong>前置条件</strong>：国内用 Claude 得先解决网络环境，见下一节</li>
+</ul>
+<h2 id="开始之前：网络环境"><a href="#开始之前：网络环境" class="headerlink" title="开始之前：网络环境"></a>开始之前：网络环境</h2><p>Claude 官网和 API 国内直连不通，这是开工前的第一道门槛。浏览器能打开 ChatGPT 不代表终端工具能用 Claude，两回事。</p>
+<p>没解决网络的先看这篇：<a href="https://tanqingbo.cn/clash-guide/">科学上网教程</a>，从客户端到节点一条龙。已经能用 Claude 写代码、但终端经常连接超时的，问题多半出在终端不走系统代理，排查方法在 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a>里写得很细。</p>
+<p>网络通了再往下走，不然后面每一步都会卡在奇怪的超时上。</p>
+<h2 id="一、它管住了-AI-的三个坏习惯"><a href="#一、它管住了-AI-的三个坏习惯" class="headerlink" title="一、它管住了 AI 的三个坏习惯"></a>一、它管住了 AI 的三个坏习惯</h2><p>这份 Skill 最先规定的不是怎么好看，而是<strong>先想清楚</strong>：一个落地页，围绕一种产品、面向一类人、推动一个主要动作。注册、预约演示、下载还是购买，先定下来。</p>
+<p>接着它会逼你回答几个问题：访问者是谁、想解决什么问题、为什么到现在还没行动、从哪里过来、手里有哪些真实的截图和案例。</p>
+<p>这些问题不炫，但直接决定页面长相。同一款视频工具，给没听过的人看，先放成片；给准备试用的人看，给入口和价格就够了。把两种人塞进同一张页面，就会越做越满——AI 味的第一个来源，其实是需求没想清。</p>
+<p>第二个坏习惯是整页重做。Skill 要求按区块推进：首屏、收益、流程、案例，逐块往下。改一句标题没必要让后面的布局跟着重新抽签。</p>
+<p>第三个是「高级一点」这类指令。字体、字号、间距、圆角全部写成了可执行的选择，具体到什么程度，下一节拆。</p>
+<h2 id="二、把审美写成具体规则"><a href="#二、把审美写成具体规则" class="headerlink" title="二、把审美写成具体规则"></a>二、把审美写成具体规则</h2><p><strong>字体</strong>：只允许 Geist、Manrope、Geist Mono、Poppins 几种，一个网站一种主字体，代码和数字界面才补等宽。</p>
+<p><strong>字号</strong>：不能随手写 19 或 22，从既定档位里选。</p>
+<p><strong>间距</strong>：8、12、16、24、32 像素，一张表管到底。这些数字本身没魔法，好处是 AI 做到第三个区块时不会给自己发明新标准。</p>
+<p><strong>圆角</strong>：这是最见功力的一条。外层卡片 16 圆角、内嵌图片经常被 AI 设成同样的 16，看着总不贴合——Skill 规定内层圆角等于外层减去间隙：外 16、间隙 8，里面就用 8。</p>
+<p><strong>布局</strong>：大标题别把一个词单独甩到最后一行；正文别横跨整个屏幕；图标别混用几套粗细不同的线条。</p>
+<p><strong>配色</strong>：限制深色底和渐变的滥用，首屏标题可以用指定的文字渐变。配套的改版 Skill 更直接，把满大街的紫蓝 AI 渐变点了名。</p>
+<p>视觉张力可以从图片、光线和构图来，界面本身不必同时争着发光。</p>
+<h2 id="三、好看之后，还得像个能用的东西"><a href="#三、好看之后，还得像个能用的东西" class="headerlink" title="三、好看之后，还得像个能用的东西"></a>三、好看之后，还得像个能用的东西</h2><p>Skill 对交互状态的要求很全：按钮的划过、按下、键盘聚焦、加载中，空页面不能一片白，报错别只弹一个 Oops，404 也要接着网站的视觉语言做下去——Elaya 那个宇航员 404 页就是示范。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/claude-design-skill-states.webp" alt="按钮的五种交互状态与空状态示意" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/claude-design-skill-states.webp" class="lozad post-image"></p>
+<p>失效链接、没有返回入口、表单不校验、图片没有替代文字，这些都在交付检查清单里。</p>
+<p>一句话：AI 写出能打开的页面之后，还得把这些状态补齐，页面才算做完。</p>
+<h2 id="四、中文页面别照抄"><a href="#四、中文页面别照抄" class="headerlink" title="四、中文页面别照抄"></a>四、中文页面别照抄</h2><p>这是用之前必须知道的一件事：规则里的字体是拉丁字体，中文会回退到系统默认，行长和换行观感完全不同。字体部分要换成自己的中文字体清单，档位和间距的思路可以保留。</p>
+<p>动效也别全盘照搬。文件里连大段标语的逐字显现都设成了必选项，每张页面都这么做，很快会长出另一种模板味。</p>
+<p>还有一条底线：Skill 建议把整齐的假数字改成更自然的数字来消除占位感，但真实上线时，用户数、评分、客户评价必须用真实材料。小数点不会把编造变成证据。</p>
+<h2 id="五、怎么用：完整流程"><a href="#五、怎么用：完整流程" class="headerlink" title="五、怎么用：完整流程"></a>五、怎么用：完整流程</h2><ol>
+<li>打开仓库，复制 skills/landing-page-design/SKILL.md 的文本</li>
+<li>交给支持读取规则文件的工具——Claude Code、Cursor 都行，工具怎么选看 <a href="https://tanqingbo.cn/ai-coding-agent-guide/">AI 编程 Agent 横评</a></li>
+<li>第一次别让它改全站，先让它结合现有页面列问题和首屏建议</li>
+</ol>
+<p>可以直接抄的起手提示词：</p>
+<blockquote>
+<p>先阅读这份设计规则和我的现有页面。页面面向第一次了解产品的人，主要动作是预约演示。请先列出影响理解和视觉一致性的问题，再给首屏修改建议，保留现有功能。没有依据的客户评价和数字不要补写。</p>
+</blockquote>
+<p>手里已经有网站、只想改版不想重做的，配套还有一份 redesign-skill：先读现有代码查框架和样式，诊断过宽的正文、全居中、三列等大卡片这些症状，然后按字体配色 → 交互状态 → 布局间距的顺序小步改，不推倒重来。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Claude 网页设计 Skill 是什么？</strong></p>
+<p>设计师 Elaya 公开的一份 Markdown 设计规则文件，放在 GitHub 仓库 ai-design-skills 里，MIT 许可免费可用。把它交给支持读取规则文件的 AI 编程工具（Claude Code、Cursor 等），AI 生成的落地页会遵守字体、间距、圆角、状态这些具体规范，而不是每生成一次就随机发明一套审美。</p>
+<p><strong>这份 Skill 收费吗？</strong></p>
+<p>不收费。仓库 MIT 许可开源，任何人可读可用可改。配套的旧网站改版 Skill redesign-skill 在另一个仓库，同样公开。</p>
+<p><strong>国内能用 Claude 做网页吗？</strong></p>
+<p>能，但 Claude 官网和 API 国内直连不通，先解决网络环境再开工，具体节点和客户端配置看<a href="https://tanqingbo.cn/clash-guide/">科学上网教程</a>，终端工具的代理细节看 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a>。</p>
+<p><strong>Skill 里的字体和字号档位适用中文页面吗？</strong></p>
+<p>不直接适用。规则里的 Geist、Manrope 等是拉丁字体，中文会回退到系统默认字体，行长和换行观感也完全不同。字体部分要换成自己的中文字体清单，档位思路可以保留。</p>
+<p><strong>不会写代码能用它做网页吗？</strong></p>
+<p>可以，配合 Cursor、Claude Code 这类 AI 编程工具，用自然语言描述需求即可。但落地页上线前的事实性内容（用户数、评价、案例）要自己核实填写，AI 会按 Skill 要求留出位置但不该替你编数字。</p>
+<p><strong>哪里下载这份 Skill？</strong></p>
+<p>GitHub 搜 elayadesign/ai-design-skills，打开 skills 目录下的 landing-page-design 文件夹，SKILL.md 就是完整设计规则，直接复制文本即可使用。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这份 Skill 最值得学的不是那几个字号档位，而是它把「不满意」往下拆的能力：到底是字太散、图片没在讲同一件事，还是按钮和报错根本没做完。判断写清楚了、沉淀成文件了，下次就不必再从「帮我做得高级一点」开始。</p>
+<p>AI 工具的横评和选型在 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具指南</a>，刚起步的从 <a href="https://tanqingbo.cn/chatgpt-beginner-guide/">ChatGPT 入门</a>开始补基础。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/claude-design-skill/">https://tanqingbo.cn/claude-design-skill/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/claude-code/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        Claude Code 教程：安装配置与国内使用全指南
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-06-11</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-coding-agent-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 编程 Agent 怎么选：主流工具横评
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-10-24</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/ai-tools-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        AI 工具哪个好用：主流大模型实测对比
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-07-30</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/chatgpt-beginner-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        ChatGPT 新手入门：从零开始的保姆级教程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-11-06</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/opencode-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        OpenCode 教程：更轻量的免费替代
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-17</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/fanqiang-clients/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">科学上网客户端大全（2026）：全平台翻墙软件下载清单 </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%83%E7%AE%A1%E4%BD%8F%E4%BA%86-AI-%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9D%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">3.</span> <span class="toc-text">一、它管住了 AI 的三个坏习惯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%8A%E5%AE%A1%E7%BE%8E%E5%86%99%E6%88%90%E5%85%B7%E4%BD%93%E8%A7%84%E5%88%99"><span class="toc-number">4.</span> <span class="toc-text">二、把审美写成具体规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%A5%BD%E7%9C%8B%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%BF%98%E5%BE%97%E5%83%8F%E4%B8%AA%E8%83%BD%E7%94%A8%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="toc-number">5.</span> <span class="toc-text">三、好看之后，还得像个能用的东西</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%AD%E6%96%87%E9%A1%B5%E9%9D%A2%E5%88%AB%E7%85%A7%E6%8A%84"><span class="toc-number">6.</span> <span class="toc-text">四、中文页面别照抄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%94%A8%EF%BC%9A%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">五、怎么用：完整流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>444</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>442</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%83%E7%AE%A1%E4%BD%8F%E4%BA%86-AI-%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9D%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">3.</span> <span class="toc-text">一、它管住了 AI 的三个坏习惯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%8A%E5%AE%A1%E7%BE%8E%E5%86%99%E6%88%90%E5%85%B7%E4%BD%93%E8%A7%84%E5%88%99"><span class="toc-number">4.</span> <span class="toc-text">二、把审美写成具体规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%A5%BD%E7%9C%8B%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%BF%98%E5%BE%97%E5%83%8F%E4%B8%AA%E8%83%BD%E7%94%A8%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="toc-number">5.</span> <span class="toc-text">三、好看之后，还得像个能用的东西</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%AD%E6%96%87%E9%A1%B5%E9%9D%A2%E5%88%AB%E7%85%A7%E6%8A%84"><span class="toc-number">6.</span> <span class="toc-text">四、中文页面别照抄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%94%A8%EF%BC%9A%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">五、怎么用：完整流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">81</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">25</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/科学上网/" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash/" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/翻墙/" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN/" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/算法/" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT/" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/机场/" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo/" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI工具/" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram/" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/电报/" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/电子书下载/" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/大模型/" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/流媒体/" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+    <a href="/tags/代理/" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java/" title="Java"><div class="tags-list-item">Java</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-09</div>
+        <a href="/claude-design-skill/"><div class="recent-posts-item-content">Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-08</div>
+        <a href="/fanqiang-clients/"><div class="recent-posts-item-content">科学上网客户端大全（2026）：全平台翻墙软件下载清单</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-06</div>
+        <a href="/chatgpt-beginner-guide/"><div class="recent-posts-item-content">ChatGPT 新手入门指南：2026 从零开始的保姆级教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-04</div>
+        <a href="/telegram-channels-guide/"><div class="recent-posts-item-content">电报资源群怎么找：Telegram 频道与群组导航入口合集（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AE%83%E7%AE%A1%E4%BD%8F%E4%BA%86-AI-%E7%9A%84%E4%B8%89%E4%B8%AA%E5%9D%8F%E4%B9%A0%E6%83%AF"><span class="toc-number">3.</span> <span class="toc-text">一、它管住了 AI 的三个坏习惯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%8A%E5%AE%A1%E7%BE%8E%E5%86%99%E6%88%90%E5%85%B7%E4%BD%93%E8%A7%84%E5%88%99"><span class="toc-number">4.</span> <span class="toc-text">二、把审美写成具体规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%A5%BD%E7%9C%8B%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%BF%98%E5%BE%97%E5%83%8F%E4%B8%AA%E8%83%BD%E7%94%A8%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="toc-number">5.</span> <span class="toc-text">三、好看之后，还得像个能用的东西</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%AD%E6%96%87%E9%A1%B5%E9%9D%A2%E5%88%AB%E7%85%A7%E6%8A%84"><span class="toc-number">6.</span> <span class="toc-text">四、中文页面别照抄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%80%8E%E4%B9%88%E7%94%A8%EF%BC%9A%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">五、怎么用：完整流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+      <li><a href="/clash-subscribe-guide/">Clash 订阅链接导入教程</a></li>
+      <li><a href="/free-fanqiang/">免费翻墙靠谱吗：梯子避坑</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+      <li><a href="/airport-rate-guide/">机场倍率与流量怎么算</a></li>
+      
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>

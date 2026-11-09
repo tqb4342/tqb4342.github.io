@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/claude-code/</loc>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/claude-design-skill/</loc>
+    <lastmod>2026-11-09</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/ClashForWindows/</loc>
     <lastmod>2026-11-08</lastmod>
   </url>
@@ -58,10 +66,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/Open-Internet2/</loc>
-    <lastmod>2026-11-03</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/claude-code/</loc>
     <lastmod>2026-11-03</lastmod>
   </url>
   <url>
@@ -741,11 +745,11 @@
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
+    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
+    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
