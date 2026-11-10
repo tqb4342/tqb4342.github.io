@@ -521,6 +521,29 @@ pre[class*='highlight'] {
 .card-author .author-card-society .author-card-society-icon a .iconfont {
   font-size: 1.3rem;
 }
+.card-author .author-ai-tools {
+  margin-top: 1.2rem;
+  padding: 0.5rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-white-color);
+  background: linear-gradient(135deg, #3273dc, #1f5bab);
+  border-radius: 1.1rem;
+  box-shadow: 0 3px 10px rgba(50,115,220,0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-author .author-ai-tools .iconfont {
+  font-size: 1.3rem;
+}
+.card-author .author-ai-tools:hover {
+  color: var(--text-white-color);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(50,115,220,0.45);
+}
 @media (max-width: 862px) {
   .card-author {
     display: none;
