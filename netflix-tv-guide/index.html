@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-11-11T14:30:00.000Z",
+  "dateModified": "2026-11-11T14:50:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/netflix-tv-guide/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/netflix-tv-guide-banner.webp",
+  "description": "电视上看奈飞是硬需求：大屏配 4K 才是 Netflix 的正确打开方式。但国产智能电视装不了官方 App，普通盒子只有标清。本文讲清五条上电视的路线（Apple TV、认证盒子、游戏主机、投屏）、4K 的三个硬条件，以及电视端网络怎么解决。",
+  "keywords": "电视看netflix,电视上看奈飞,netflix电视,奈飞电视版,netflix电视盒子,智能电视看netflix,电视盒子装netflix,appletv看netflix,netflix 4k,电视netflix怎么安装,netflix智能电视,电视看奈飞怎么弄,netflix安装到电视,电视盒子netflix只有标清,netflix投屏,电视看奈飞怎么弄,netflix怎么投屏到电视,appletv看奈飞,电视盒子看netflix只有480p"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "海外热门",
+      "item": "https://tanqingbo.cn/categories/海外热门/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "国产智能电视能直接装 Netflix 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不能。Netflix App 只上架它官方认证的电视和盒子系统，国产电视（小米、海信、TCL 国内版）的系统里既没有 Netflix 应用商店入口，侧装了 App 也过不了它的设备认证。想在电视上看，标准路线是外接一个认证设备：Apple TV、Chromecast with Google TV、Fire TV Stick 或国际版小米盒子。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么我的安卓盒子装了 Netflix 只有标清？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Netflix 的画质跟着 DRM 等级走：支持 Widevine L1 的设备能开 HD/4K，只有 L3 的设备会被限制在 480P 左右——大部分便宜的山寨盒子和老盒子都是 L3。买盒子前搜一下「型号 + Widevine」，或者直接走 Netflix 官网公布的认证设备列表，最稳。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Apple TV 看奈飞值不值？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "值，而且是最省心的电视端方案：系统原生带 Netflix App，DRM 等级完整，4K HDR 都支持，登录即用。缺点就一个——机器本身要一千多块。如果你不止看奈飞，Apple TV 上的 Disney+、YouTube TV 等海外应用同样是原生支持，一台机器解决整个海外流媒体，长期看性价比不低。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "电视上看 4K 需要什么条件？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "三个硬条件缺一不可：订阅必须是 Premium 档（标准档封顶 1080P）、设备支持 4K 且 DRM 等级够（Apple TV、认证盒子）、网络持续 15Mbps 以上（4K 码率是 1080P 的三倍左右，网络不够会自动降档）。官方 Premium 190 元/月，合租 Premium 每月 16 元起，4K 画质与官方完全一致，详情看奈飞合租攻略。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "手机能投屏到电视上看奈飞吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "分方式：AirPlay 不行——Netflix 出于版权考虑屏蔽了 AirPlay 投屏，iPhone 用户在电视上只能借 Apple TV 的原生 App；Chromecast 可以，手机里点投屏按钮，由电视端的 Chromecast 设备直接拉流。国产电视自带的「无线投屏/Miracast」画面是把手机屏幕镜像出去，版权 App 大多会黑屏，别指望这条路。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "电视和盒子怎么解决网络问题？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "电视端设备装不了翻墙客户端，Netflix 也不走系统代理，所以网络必须在更底层解决：路由器一级做分流（OpenClash、软路由），让全屋设备自动走代理，电视无感直连。路由器方案怎么搭看路由器翻墙教程。没有软路由的，游戏主机党也可以参考给主机单独配网络代理的做法。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  
+  <title>电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程</title>
+  
+  <meta name="description" content="电视上看奈飞是硬需求：大屏配 4K 才是 Netflix 的正确打开方式。但国产智能电视装不了官方 App，普通盒子只有标清。本文讲清五条上电视的路线（Apple TV、认证盒子、游戏主机、投屏）、4K 的三个硬条件，以及电视端网络怎么解决。">
+  <meta name="keywords" content="电视看netflix,电视上看奈飞,netflix电视,奈飞电视版,netflix电视盒子,智能电视看netflix,电视盒子装netflix,appletv看netflix,netflix 4k,电视netflix怎么安装,netflix智能电视,电视看奈飞怎么弄,netflix安装到电视,电视盒子netflix只有标清,netflix投屏,电视看奈飞怎么弄,netflix怎么投屏到电视,appletv看奈飞,电视盒子看netflix只有480p">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/netflix-tv-guide/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/netflix-tv-guide-banner.webp">
+  
+  
+  <meta property="og:description" content="电视上看奈飞是硬需求：大屏配 4K 才是 Netflix 的正确打开方式。但国产智能电视装不了官方 App，普通盒子只有标清。本文讲清五条上电视的路线（Apple TV、认证盒子、游戏主机、投屏）、4K 的三个硬条件，以及电视端网络怎么解决。">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-11-11T14:30:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-11T14:50:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="Netflix">
+  
+  <meta property="og:article:tag" content="奈飞">
+  
+  <meta property="og:article:tag" content="流媒体">
+  
+  <meta property="og:article:tag" content="智能电视">
+  
+  <meta property="og:article:tag" content="电视盒子">
+  
+  <meta property="og:article:tag" content="Apple TV">
+  
+  <meta property="og:article:tag" content="4K">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" />
+ <link rel="canonical" href="https://tanqingbo.cn/netflix-tv-guide/" />
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/netflix-tv-guide-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/netflix-tv-guide-banner.webp"
+    alt="电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-11-11T14:30:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-11-11</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/海外热门/" class="post-meta-link">海外热门</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>2.7k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/netflix-tv-guide/" class="leancloud_visitors" data-flag-title="电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">loading</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/Netflix/" class="post-meta-link">Netflix</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/奈飞/" class="post-meta-link">奈飞</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/流媒体/" class="post-meta-link">流媒体</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/智能电视/" class="post-meta-link">智能电视</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/电视盒子/" class="post-meta-link">电视盒子</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Apple-TV/" class="post-meta-link">Apple TV</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/4K/" class="post-meta-link">4K</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>手机上看奈飞是「能看」，电视上看才是「正确的打开方式」——大屏加 4K HDR，是 Netflix 拍那些高预算剧集时假设的观看环境。但真到动手装，问题来了：国产智能电视的应用商店里根本没有 Netflix，随便买个盒子装上 App 只有标清画质，手机投屏又一堆黑屏。</p>
+<p>这篇讲清楚电视上看奈飞的完整路线：哪些设备能装、为什么有的只有标清、4K 的硬条件，以及电视端网络这个最容易被忽略的前置问题。</p>
+<h2 id="30-秒速答：你的设备该走哪条路"><a href="#30-秒速答：你的设备该走哪条路" class="headerlink" title="30 秒速答：你的设备该走哪条路"></a>30 秒速答：你的设备该走哪条路</h2><table>
+<thead>
+<tr>
+<th>你的情况</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有 Apple TV</td>
+<td>原生 App 登录即用，最省心，4K 无坑</td>
+</tr>
+<tr>
+<td>想买安卓盒子</td>
+<td>只买 Netflix 认证款，杂牌盒子只有标清</td>
+</tr>
+<tr>
+<td>家里是国产智能电视</td>
+<td>电视本身没戏，外接认证设备</td>
+</tr>
+<tr>
+<td>有 PS5 / Xbox</td>
+<td>直接装 App，画质完整支持</td>
+</tr>
+<tr>
+<td>只想手机投屏</td>
+<td>Chromecast 可以，AirPlay 被 Netflix 屏蔽</td>
+</tr>
+<tr>
+<td>还没有账号</td>
+<td>合租 Premium 每月 16 元起，4K 画质与官方一致</td>
+</tr>
+</tbody></table>
+<h2 id="先解决网络：电视端装不了客户端"><a href="#先解决网络：电视端装不了客户端" class="headerlink" title="先解决网络：电视端装不了客户端"></a>先解决网络：电视端装不了客户端</h2><p>这一步比选设备还关键。手机电脑上，装个 Clash 客户端就能翻墙；但电视和盒子的系统里装不了这些客户端，Netflix App 也不理会系统代理设置。也就是说，<strong>电视端的网络必须在路由器一级解决</strong>：路由器跑 OpenClash 或软路由做分流，全屋设备自动走代理，电视无感直连，什么都不用配。</p>
+<p>路由器方案从选硬件到跑通的全部流程，写在<a href="https://tanqingbo.cn/router-vpn-guide/">路由器翻墙教程</a>里。还没有机场订阅的，先看<a href="https://tanqingbo.cn/clash-guide/">Clash 完全教程</a>把订阅搞定，一枝红杏这类对流媒体友好的机场在<a href="https://tanqingbo.cn/yzhx-vpn/">机场评测</a>里有实测。</p>
+<p>网络不通，后面所有步骤都是白折腾。先验证：电视浏览器能打开 netflix.com，再往下走。</p>
+<h2 id="路线一：Apple-TV（最省心）"><a href="#路线一：Apple-TV（最省心）" class="headerlink" title="路线一：Apple TV（最省心）"></a>路线一：Apple TV（最省心）</h2><p>苹果的电视盒子是海外流媒体的「万能钥匙」：Netflix App 系统原生自带，DRM 等级完整，4K HDR Dolby Vision 全支持，登录账号即用，没有侧载没有认证折腾。</p>
+<p>唯一门槛是价格，Apple TV 4K 一千多元。省钱的路子有两个：苹果官网的官翻区（翻新机带全新电池和外壳、同样一年保修，便宜一两百）；以及海淘美版（硬件全球通用，电源适配器宽电压）。但如果你看的不止奈飞——Disney+、YouTube TV、Max 这些海外流媒体在 Apple TV 上同样是原生支持——一台机器解决整个客厅的海外内容，摊下来不算贵。</p>
+<p>买的时候认准 Apple TV 4K 型号（HD 版不带 4K 输出），登录 Apple ID 区域不影响 Netflix 登录。</p>
+<h2 id="路线二：Netflix-认证的安卓盒子"><a href="#路线二：Netflix-认证的安卓盒子" class="headerlink" title="路线二：Netflix 认证的安卓盒子"></a>路线二：Netflix 认证的安卓盒子</h2><p>安卓盒子便宜（两三百起），但<strong>只有 Netflix 官方认证的款才能正常用</strong>。认证的意义有两层：App 能从 Google Play 正常安装，且 DRM 等级达到 HD/4K 标准。</p>
+<p>常见的认证款：</p>
+<ul>
+<li><strong>Chromecast with Google TV</strong>：谷歌亲儿子，认证完整，带遥控器，性价比高</li>
+<li><strong>Fire TV Stick</strong>（亚马逊）：国际市场主流，认准 4K 版</li>
+<li><strong>小米盒子国际版（Mi Box / Mi TV Stick）</strong>：注意是国际版，国内小米电视不在认证列表里</li>
+</ul>
+<p>设备在不在认证列表，以 Netflix 官网的认证设备页为准——这个列表会更新，买新盒子前查一次最稳。</p>
+<h3 id="杂牌盒子为什么只有标清"><a href="#杂牌盒子为什么只有标清" class="headerlink" title="杂牌盒子为什么只有标清"></a>杂牌盒子为什么只有标清</h3><p>很多人踩的坑在这：随便买个「安卓 9.0 电视盒子」，侧载装上了 Netflix App，能登录能播放，但画质死活上不去，卡在 480P 一片糊。原因不是网络，是 <strong>DRM 等级</strong>：Netflix 的 HD/4K 只对支持 Widevine L1 的设备开放，便宜杂牌盒子和老款盒子普遍只有 L3，无论你网速多快、订的哪档会员，画质都被锁死在标清。</p>
+<p>买盒子前搜「盒子型号 + Widevine」，查不到结果的直接放弃。已经买了的，当普通视频播放器用吧，看奈飞就别指望了。</p>
+<h2 id="路线三：游戏主机（躺着白捡）"><a href="#路线三：游戏主机（躺着白捡）" class="headerlink" title="路线三：游戏主机（躺着白捡）"></a>路线三：游戏主机（躺着白捡）</h2><p>PS5、Xbox Series X/S 的应用商店都有 Netflix，DRM 完整，4K 支持，装上登录就能看。如果家里本来就有主机，这是零成本路线，连设备都不用买。</p>
+<p><strong>一个必须注意的坑：国行主机不行。</strong>国行 PS5 和国行 Xbox 锁的是国服商店，商店里没有 Netflix，改区也绕不过硬件层面的区域限制。必须是海外版主机才有完整的流媒体应用。二手海外版 PS5 价格和光盘版国行差不多，游戏照玩、流媒体白送。</p>
+<h2 id="路线四：手机投屏（分方式）"><a href="#路线四：手机投屏（分方式）" class="headerlink" title="路线四：手机投屏（分方式）"></a>路线四：手机投屏（分方式）</h2><p>投屏看着最简单，坑反而最集中：</p>
+<ul>
+<li><strong>AirPlay 不行</strong>：Netflix 出于版权考虑屏蔽了 AirPlay。iPhone 在电视上播放，只能走 Apple TV 的原生 App</li>
+<li><strong>Chromecast 可以</strong>：手机 App 里点投屏图标，电视端的 Chromecast 设备直接拉流，画质完整</li>
+<li><strong>国产电视的「无线投屏」基本没戏</strong>：那是屏幕镜像，版权 App 检测到镜像会主动黑屏，只闻声不见画</li>
+</ul>
+<h2 id="4K-的三个硬条件"><a href="#4K-的三个硬条件" class="headerlink" title="4K 的三个硬条件"></a>4K 的三个硬条件</h2><p>前面反复提到 4K，把它拆开讲清楚，缺一个都开不了：</p>
+<ol>
+<li><strong>会员档位</strong>：Netflix 的 4K 只在 Premium 档开放，标准档封顶 1080P</li>
+<li><strong>设备</strong>：支持 4K 输出且 DRM 等级够（Apple TV 4K、认证盒子、PS5/Xbox 都满足）</li>
+<li><strong>网络</strong>：Netflix 官方口径是 4K 需要 15Mbps 持续带宽（1080P 是 5Mbps），4K 码率是 1080P 的三倍左右，代理带宽不够会自动降到低档位——所以节点要选大带宽的流媒体专线，跨境绕远的节点容易掉速</li>
+</ol>
+<p>账算下来很直白：为了电视上的 4K，官方 Premium 要 190 元/月，一年 2280 元。合租路线每月 16 元起，一年 192 元，<strong>差出一个 Apple TV 的钱</strong>。4K 画质、HDR、下载权限与官方完全一致，怎么选、哪个平台靠谱、会不会封号，<a href="https://tanqingbo.cn/netflix-16yuan/">奈飞合租攻略</a>里写得比较全——电视大屏用户恰恰是合租 Premium 最划算的人群，因为标准档 1080P 在大屏上糊得明显。环球巴士的合租上车页长这样，Netflix 常年在热门品类前排：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260827104516423.png" alt="环球巴士合租平台上车页的影音品类列表，Netflix 在合租卡片前排" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/image-20260827104516423.png" class="lozad post-image"></p>
+<h2 id="登录之后的设置"><a href="#登录之后的设置" class="headerlink" title="登录之后的设置"></a>登录之后的设置</h2><ul>
+<li><strong>中文字幕</strong>：剧集播放页右上角「音频与字幕」里选，大部分原创剧有简体中文字幕；界面语言的设置路径见<a href="https://tanqingbo.cn/Netflix-VPN/">奈飞全教程</a></li>
+<li><strong>画质档位</strong>：App 内设置 → 播放 → 选「高」，默认可能是「自动」，网络波动时会偷偷降档</li>
+<li><strong>下载观看</strong>：认证设备上 Premium 支持下载到本地，电视盒子存储小的注意空间</li>
+</ul>
+<h2 id="三个坑，提前避开"><a href="#三个坑，提前避开" class="headerlink" title="三个坑，提前避开"></a>三个坑，提前避开</h2><p><strong>别买「Netflix 专用盒」的营销话术</strong>。某些卖家把普通盒子刷个系统就号称「奈飞专用」，实际是 L3 级别标清画质。判断标准只有一个：Netflix 官方认证列表里有没有这个型号。</p>
+<p><strong>别指望国产电视的应用商店</strong>。搜出来的「Netflix」要么是搬运视频的山寨 App，要么是套壳浏览器，和正版没有关系。国产电视上奈飞的唯一正路是外接认证设备。</p>
+<p><strong>先通网络再买设备</strong>。设备到位网络没通，所有投入都躺着吃灰。路由器方案是电视端唯一正解，具体搭建看<a href="https://tanqingbo.cn/router-vpn-guide/">路由器翻墙教程</a>。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="国产智能电视能直接装-Netflix-吗？"><a href="#国产智能电视能直接装-Netflix-吗？" class="headerlink" title="国产智能电视能直接装 Netflix 吗？"></a>国产智能电视能直接装 Netflix 吗？</h3><p>不能。Netflix App 只上架它官方认证的电视和盒子系统，国产电视（小米、海信、TCL 国内版）的系统里既没有 Netflix 应用商店入口，侧装了 App 也过不了它的设备认证。想在电视上看，标准路线是外接一个认证设备：Apple TV、Chromecast with Google TV、Fire TV Stick 或国际版小米盒子。</p>
+<h3 id="为什么我的安卓盒子装了-Netflix-只有标清？"><a href="#为什么我的安卓盒子装了-Netflix-只有标清？" class="headerlink" title="为什么我的安卓盒子装了 Netflix 只有标清？"></a>为什么我的安卓盒子装了 Netflix 只有标清？</h3><p>Netflix 的画质跟着 DRM 等级走：支持 Widevine L1 的设备能开 HD/4K，只有 L3 的设备会被限制在 480P 左右——大部分便宜的山寨盒子和老盒子都是 L3。买盒子前搜一下「型号 + Widevine」，或者直接走 Netflix 官网公布的认证设备列表，最稳。</p>
+<h3 id="Apple-TV-看奈飞值不值？"><a href="#Apple-TV-看奈飞值不值？" class="headerlink" title="Apple TV 看奈飞值不值？"></a>Apple TV 看奈飞值不值？</h3><p>值，而且是最省心的电视端方案：系统原生带 Netflix App，DRM 等级完整，4K HDR 都支持，登录即用。缺点就一个——机器本身要一千多块。如果你不止看奈飞，Apple TV 上的 Disney+、YouTube TV 等海外应用同样是原生支持，一台机器解决整个海外流媒体，长期看性价比不低。</p>
+<h3 id="电视上看-4K-需要什么条件？"><a href="#电视上看-4K-需要什么条件？" class="headerlink" title="电视上看 4K 需要什么条件？"></a>电视上看 4K 需要什么条件？</h3><p>三个硬条件缺一不可：订阅必须是 Premium 档（标准档封顶 1080P）、设备支持 4K 且 DRM 等级够（Apple TV、认证盒子）、网络持续 15Mbps 以上（4K 码率是 1080P 的三倍左右，网络不够会自动降档）。官方 Premium 190 元/月，合租 Premium 每月 16 元起，4K 画质与官方完全一致，详情看<a href="https://tanqingbo.cn/netflix-16yuan/">奈飞合租攻略</a>。</p>
+<h3 id="手机能投屏到电视上看奈飞吗？"><a href="#手机能投屏到电视上看奈飞吗？" class="headerlink" title="手机能投屏到电视上看奈飞吗？"></a>手机能投屏到电视上看奈飞吗？</h3><p>分方式：AirPlay 不行——Netflix 出于版权考虑屏蔽了 AirPlay 投屏，iPhone 用户在电视上只能借 Apple TV 的原生 App；Chromecast 可以，手机里点投屏按钮，由电视端的 Chromecast 设备直接拉流。国产电视自带的「无线投屏/Miracast」画面是把手机屏幕镜像出去，版权 App 大多会黑屏，别指望这条路。</p>
+<h3 id="电视和盒子怎么解决网络问题？"><a href="#电视和盒子怎么解决网络问题？" class="headerlink" title="电视和盒子怎么解决网络问题？"></a>电视和盒子怎么解决网络问题？</h3><p>电视端设备装不了翻墙客户端，Netflix 也不走系统代理，所以网络必须在更底层解决：路由器一级做分流（OpenClash、软路由），让全屋设备自动走代理，电视无感直连。路由器方案怎么搭看<a href="https://tanqingbo.cn/router-vpn-guide/">路由器翻墙教程</a>。没有软路由的，游戏主机党也可以参考给主机单独配网络代理的做法。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>电视上看奈飞，说穿了就三件事：网络在路由器一级解决、设备走认证路线、会员上 Premium 档。三件事各自有现成的攻略承接——网络看<a href="https://tanqingbo.cn/router-vpn-guide/">路由器翻墙</a>，合租看<a href="https://tanqingbo.cn/netflix-16yuan/">奈飞合租攻略</a>，账号注册和基础设置看<a href="https://tanqingbo.cn/Netflix-VPN/">奈飞全教程</a>。都通了之后，大屏 4K 的《鱿鱼游戏》才是它该有的样子。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/netflix-tv-guide/">https://tanqingbo.cn/netflix-tv-guide/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content" style="margin-top: 16px;">
+  <div style="font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--text-primary, #2c2c2a);">相关文章</div>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/Netflix-VPN/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        奈飞（Netflix）全教程：注册、观看与账号购买
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-07-16</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/netflix-16yuan/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        奈飞合租怎么买便宜：16 元/月可靠吗与避坑
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-08-27</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/router-vpn-guide/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        路由器翻墙教程：OpenWrt + Clash 软路由全流程
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-28</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/goingbus/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        环球巴士怎么样：流媒体与 AI 工具合租实测
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2026-09-17</span>
+    </li>
+    
+    <li style="padding: 8px 0; border-bottom: 1px solid var(--border-tertiary, rgba(0,0,0,0.08));">
+      <a href="/video-websites/" style="color: var(--text-primary, #2c2c2a); text-decoration: none; font-size: 14px; line-height: 1.6;">
+        国外视频网站有哪些：流媒体平台清单
+      </a>
+      <span style="font-size: 12px; color: var(--text-tertiary, #999); margin-left: 8px;">2025-09-30</span>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav">
+  
+  
+  <div class="nav-item-next">
+    <a href="/claude-design-skill/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
+    var oldLoadVa = window.onload;
+    window.onload = function () {
+      oldLoadVa && oldLoadVa();
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    };
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94%EF%BC%9A%E4%BD%A0%E7%9A%84%E8%AE%BE%E5%A4%87%E8%AF%A5%E8%B5%B0%E5%93%AA%E6%9D%A1%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答：你的设备该走哪条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%EF%BC%9A%E7%94%B5%E8%A7%86%E7%AB%AF%E8%A3%85%E4%B8%8D%E4%BA%86%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">2.</span> <span class="toc-text">先解决网络：电视端装不了客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%80%EF%BC%9AApple-TV%EF%BC%88%E6%9C%80%E7%9C%81%E5%BF%83%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">路线一：Apple TV（最省心）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%BA%8C%EF%BC%9ANetflix-%E8%AE%A4%E8%AF%81%E7%9A%84%E5%AE%89%E5%8D%93%E7%9B%92%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">路线二：Netflix 认证的安卓盒子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%82%E7%89%8C%E7%9B%92%E5%AD%90%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E6%9C%89%E6%A0%87%E6%B8%85"><span class="toc-number">4.1.</span> <span class="toc-text">杂牌盒子为什么只有标清</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%89%EF%BC%9A%E6%B8%B8%E6%88%8F%E4%B8%BB%E6%9C%BA%EF%BC%88%E8%BA%BA%E7%9D%80%E7%99%BD%E6%8D%A1%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">路线三：游戏主机（躺着白捡）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E5%9B%9B%EF%BC%9A%E6%89%8B%E6%9C%BA%E6%8A%95%E5%B1%8F%EF%BC%88%E5%88%86%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">路线四：手机投屏（分方式）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4K-%E7%9A%84%E4%B8%89%E4%B8%AA%E7%A1%AC%E6%9D%A1%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">4K 的三个硬条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E4%B9%8B%E5%90%8E%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">8.</span> <span class="toc-text">登录之后的设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%9D%91%EF%BC%8C%E6%8F%90%E5%89%8D%E9%81%BF%E5%BC%80"><span class="toc-number">9.</span> <span class="toc-text">三个坑，提前避开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BD%E4%BA%A7%E6%99%BA%E8%83%BD%E7%94%B5%E8%A7%86%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%A3%85-Netflix-%E5%90%97%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">国产智能电视能直接装 Netflix 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E7%9A%84%E5%AE%89%E5%8D%93%E7%9B%92%E5%AD%90%E8%A3%85%E4%BA%86-Netflix-%E5%8F%AA%E6%9C%89%E6%A0%87%E6%B8%85%EF%BC%9F"><span class="toc-number">10.2.</span> <span class="toc-text">为什么我的安卓盒子装了 Netflix 只有标清？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apple-TV-%E7%9C%8B%E5%A5%88%E9%A3%9E%E5%80%BC%E4%B8%8D%E5%80%BC%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">Apple TV 看奈飞值不值？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%A7%86%E4%B8%8A%E7%9C%8B-4K-%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E6%9D%A1%E4%BB%B6%EF%BC%9F"><span class="toc-number">10.4.</span> <span class="toc-text">电视上看 4K 需要什么条件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E8%83%BD%E6%8A%95%E5%B1%8F%E5%88%B0%E7%94%B5%E8%A7%86%E4%B8%8A%E7%9C%8B%E5%A5%88%E9%A3%9E%E5%90%97%EF%BC%9F"><span class="toc-number">10.5.</span> <span class="toc-text">手机能投屏到电视上看奈飞吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%A7%86%E5%92%8C%E7%9B%92%E5%AD%90%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">10.6.</span> <span class="toc-text">电视和盒子怎么解决网络问题？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">11.</span> <span class="toc-text">写在最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>445</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>446</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<a class="author-ai-tools" href="https://aisurf.cc/ai-tools/" target="_blank" rel="noopener external nofollow noreferrer" title="精选 100 个 AI 工具，分类清晰持续更新">
+  <i class="iconfont icon-fenlei"></i>
+  AI 工具箱
+</a>
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94%EF%BC%9A%E4%BD%A0%E7%9A%84%E8%AE%BE%E5%A4%87%E8%AF%A5%E8%B5%B0%E5%93%AA%E6%9D%A1%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答：你的设备该走哪条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%EF%BC%9A%E7%94%B5%E8%A7%86%E7%AB%AF%E8%A3%85%E4%B8%8D%E4%BA%86%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">2.</span> <span class="toc-text">先解决网络：电视端装不了客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%80%EF%BC%9AApple-TV%EF%BC%88%E6%9C%80%E7%9C%81%E5%BF%83%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">路线一：Apple TV（最省心）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%BA%8C%EF%BC%9ANetflix-%E8%AE%A4%E8%AF%81%E7%9A%84%E5%AE%89%E5%8D%93%E7%9B%92%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">路线二：Netflix 认证的安卓盒子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%82%E7%89%8C%E7%9B%92%E5%AD%90%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E6%9C%89%E6%A0%87%E6%B8%85"><span class="toc-number">4.1.</span> <span class="toc-text">杂牌盒子为什么只有标清</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%89%EF%BC%9A%E6%B8%B8%E6%88%8F%E4%B8%BB%E6%9C%BA%EF%BC%88%E8%BA%BA%E7%9D%80%E7%99%BD%E6%8D%A1%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">路线三：游戏主机（躺着白捡）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E5%9B%9B%EF%BC%9A%E6%89%8B%E6%9C%BA%E6%8A%95%E5%B1%8F%EF%BC%88%E5%88%86%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">路线四：手机投屏（分方式）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4K-%E7%9A%84%E4%B8%89%E4%B8%AA%E7%A1%AC%E6%9D%A1%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">4K 的三个硬条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E4%B9%8B%E5%90%8E%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">8.</span> <span class="toc-text">登录之后的设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%9D%91%EF%BC%8C%E6%8F%90%E5%89%8D%E9%81%BF%E5%BC%80"><span class="toc-number">9.</span> <span class="toc-text">三个坑，提前避开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BD%E4%BA%A7%E6%99%BA%E8%83%BD%E7%94%B5%E8%A7%86%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%A3%85-Netflix-%E5%90%97%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">国产智能电视能直接装 Netflix 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E7%9A%84%E5%AE%89%E5%8D%93%E7%9B%92%E5%AD%90%E8%A3%85%E4%BA%86-Netflix-%E5%8F%AA%E6%9C%89%E6%A0%87%E6%B8%85%EF%BC%9F"><span class="toc-number">10.2.</span> <span class="toc-text">为什么我的安卓盒子装了 Netflix 只有标清？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apple-TV-%E7%9C%8B%E5%A5%88%E9%A3%9E%E5%80%BC%E4%B8%8D%E5%80%BC%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">Apple TV 看奈飞值不值？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%A7%86%E4%B8%8A%E7%9C%8B-4K-%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E6%9D%A1%E4%BB%B6%EF%BC%9F"><span class="toc-number">10.4.</span> <span class="toc-text">电视上看 4K 需要什么条件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E8%83%BD%E6%8A%95%E5%B1%8F%E5%88%B0%E7%94%B5%E8%A7%86%E4%B8%8A%E7%9C%8B%E5%A5%88%E9%A3%9E%E5%90%97%EF%BC%9F"><span class="toc-number">10.5.</span> <span class="toc-text">手机能投屏到电视上看奈飞吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%A7%86%E5%92%8C%E7%9B%92%E5%AD%90%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">10.6.</span> <span class="toc-text">电视和盒子怎么解决网络问题？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">11.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">81</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">38</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/科学上网/" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash/" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/翻墙/" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN/" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/算法/" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT/" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/机场/" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo/" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI工具/" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram/" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/流媒体/" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+    <a href="/tags/电报/" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/电子书下载/" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/大模型/" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/代理/" title="代理"><div class="tags-list-item">代理</div></a>
+    
+    <a href="/tags/Java/" title="Java"><div class="tags-list-item">Java</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-11</div>
+        <a href="/netflix-tv-guide/"><div class="recent-posts-item-content">电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-09</div>
+        <a href="/claude-design-skill/"><div class="recent-posts-item-content">Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-08</div>
+        <a href="/fanqiang-clients/"><div class="recent-posts-item-content">科学上网客户端大全（2026）：全平台翻墙软件下载清单</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-06</div>
+        <a href="/chatgpt-beginner-guide/"><div class="recent-posts-item-content">ChatGPT 新手入门指南：2026 从零开始的保姆级教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94%EF%BC%9A%E4%BD%A0%E7%9A%84%E8%AE%BE%E5%A4%87%E8%AF%A5%E8%B5%B0%E5%93%AA%E6%9D%A1%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答：你的设备该走哪条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%EF%BC%9A%E7%94%B5%E8%A7%86%E7%AB%AF%E8%A3%85%E4%B8%8D%E4%BA%86%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">2.</span> <span class="toc-text">先解决网络：电视端装不了客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%80%EF%BC%9AApple-TV%EF%BC%88%E6%9C%80%E7%9C%81%E5%BF%83%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">路线一：Apple TV（最省心）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%BA%8C%EF%BC%9ANetflix-%E8%AE%A4%E8%AF%81%E7%9A%84%E5%AE%89%E5%8D%93%E7%9B%92%E5%AD%90"><span class="toc-number">4.</span> <span class="toc-text">路线二：Netflix 认证的安卓盒子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%82%E7%89%8C%E7%9B%92%E5%AD%90%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E6%9C%89%E6%A0%87%E6%B8%85"><span class="toc-number">4.1.</span> <span class="toc-text">杂牌盒子为什么只有标清</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E4%B8%89%EF%BC%9A%E6%B8%B8%E6%88%8F%E4%B8%BB%E6%9C%BA%EF%BC%88%E8%BA%BA%E7%9D%80%E7%99%BD%E6%8D%A1%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">路线三：游戏主机（躺着白捡）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%BA%BF%E5%9B%9B%EF%BC%9A%E6%89%8B%E6%9C%BA%E6%8A%95%E5%B1%8F%EF%BC%88%E5%88%86%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">路线四：手机投屏（分方式）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4K-%E7%9A%84%E4%B8%89%E4%B8%AA%E7%A1%AC%E6%9D%A1%E4%BB%B6"><span class="toc-number">7.</span> <span class="toc-text">4K 的三个硬条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E4%B9%8B%E5%90%8E%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-number">8.</span> <span class="toc-text">登录之后的设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%9D%91%EF%BC%8C%E6%8F%90%E5%89%8D%E9%81%BF%E5%BC%80"><span class="toc-number">9.</span> <span class="toc-text">三个坑，提前避开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BD%E4%BA%A7%E6%99%BA%E8%83%BD%E7%94%B5%E8%A7%86%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%A3%85-Netflix-%E5%90%97%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">国产智能电视能直接装 Netflix 吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E7%9A%84%E5%AE%89%E5%8D%93%E7%9B%92%E5%AD%90%E8%A3%85%E4%BA%86-Netflix-%E5%8F%AA%E6%9C%89%E6%A0%87%E6%B8%85%EF%BC%9F"><span class="toc-number">10.2.</span> <span class="toc-text">为什么我的安卓盒子装了 Netflix 只有标清？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apple-TV-%E7%9C%8B%E5%A5%88%E9%A3%9E%E5%80%BC%E4%B8%8D%E5%80%BC%EF%BC%9F"><span class="toc-number">10.3.</span> <span class="toc-text">Apple TV 看奈飞值不值？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%A7%86%E4%B8%8A%E7%9C%8B-4K-%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%E6%9D%A1%E4%BB%B6%EF%BC%9F"><span class="toc-number">10.4.</span> <span class="toc-text">电视上看 4K 需要什么条件？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E8%83%BD%E6%8A%95%E5%B1%8F%E5%88%B0%E7%94%B5%E8%A7%86%E4%B8%8A%E7%9C%8B%E5%A5%88%E9%A3%9E%E5%90%97%EF%BC%9F"><span class="toc-number">10.5.</span> <span class="toc-text">手机能投屏到电视上看奈飞吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E8%A7%86%E5%92%8C%E7%9B%92%E5%AD%90%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">10.6.</span> <span class="toc-text">电视和盒子怎么解决网络问题？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">11.</span> <span class="toc-text">写在最后</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
+.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 10px}
+.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
+.site-nav a:hover{color:#1e80ff}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章：</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程：</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+      <li><a href="/clash-subscribe-guide/">Clash 订阅链接导入教程</a></li>
+      <li><a href="/free-fanqiang/">免费翻墙靠谱吗：梯子避坑</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门：</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评：</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+      <li><a href="/airport-rate-guide/">机场倍率与流量怎么算</a></li>
+      <li><a href="/double-11-vpn-guide/">双11 机场优惠折扣攻略</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>Copyright ©
+          
+          2020 -
+          
+          2026
+        </span>
+        &nbsp;
+        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
+      </div>
+		<!--
+		<div class="footer-dsc">
+			<center><span>
+			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
+			</span></center>
+		</div>
+		-->
+    </div>
+
+    
+    
+    
+	
+    
+	
+
+	<div class="footer-dsc">
+	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+	<span id="busuanzi_container_site_pv">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> &nbsp;|&nbsp
+	<span id="busuanzi_container_site_uv">
+		本站总访客数<span id="busuanzi_value_site_uv"></span>次
+	</span>
+	</div>
+	
+	
+	
+</footer>
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+</body>
+
+</html>
