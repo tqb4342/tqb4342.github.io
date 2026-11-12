@@ -146,6 +146,8 @@
   
   <meta property="og:article:tag" content="Mihomo">
   
+  <meta property="og:article:tag" content="rule-provider">
+  
   <meta property="og:article:tag" content="去广告">
   
   <meta property="og:article:tag" content="广告拦截">
@@ -153,8 +155,6 @@
   <meta property="og:article:tag" content="Loyalsoldier">
   
   <meta property="og:article:tag" content="REJECT">
-  
-  <meta property="og:article:tag" content="rule-provider">
   
   
   
@@ -441,6 +441,11 @@ var _hmt = _hmt || [];
       
       <span class="dot"></span>
       
+        <a href="/tags/rule-provider/" class="post-meta-link">rule-provider</a>
+      
+      
+      <span class="dot"></span>
+      
         <a href="/tags/去广告/" class="post-meta-link">去广告</a>
       
       
@@ -457,11 +462,6 @@ var _hmt = _hmt || [];
       <span class="dot"></span>
       
         <a href="/tags/REJECT/" class="post-meta-link">REJECT</a>
-      
-      
-      <span class="dot"></span>
-      
-        <a href="/tags/rule-provider/" class="post-meta-link">rule-provider</a>
       
     </div>
   </div>
@@ -697,10 +697,10 @@ var _hmt = _hmt || [];
   <div id="vcomments"></div>
   
   <script>
-    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js");
-    var oldLoadVa = window.onload;
-    window.onload = function () {
-      oldLoadVa && oldLoadVa();
+    // 注意：不能用 window.onload 初始化——hexo-offline-popup 注入的 sw-register
+    // 脚本会在页面尾部无链式覆盖 window.onload，把这里的初始化整个闷死
+    // （阅读量/评论全部失效）。改用 loadScript 回调，与 GA/lazyload/fslightbox 一致。
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js", function () {
       new Valine({
         el: '#vcomments',
         appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
@@ -720,7 +720,7 @@ var _hmt = _hmt || [];
         enableQQ: 'false',
         requiredFields: [],
       });
-    };
+    });
   </script>
 
 </div>
