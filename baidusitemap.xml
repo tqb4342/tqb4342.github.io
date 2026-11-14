@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tanqingbo.cn/ladder-guide/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/science-internet-guide/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/clash-guide/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
+    <loc>https://tanqingbo.cn/fanqiang-clients/</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
     <loc>https://tanqingbo.cn/router-vpn-guide/</loc>
     <lastmod>2026-11-11</lastmod>
   </url>
@@ -49,10 +65,6 @@
     <lastmod>2026-11-10</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/clash-guide/</loc>
-    <lastmod>2026-11-10</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/clash-verge/</loc>
     <lastmod>2026-11-10</lastmod>
   </url>
@@ -69,10 +81,6 @@
     <lastmod>2026-11-10</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/science-internet-guide/</loc>
-    <lastmod>2026-11-10</lastmod>
-  </url>
-  <url>
     <loc>https://tanqingbo.cn/yzhx-vpn/</loc>
     <lastmod>2026-11-10</lastmod>
   </url>
@@ -86,10 +94,6 @@
   </url>
   <url>
     <loc>https://tanqingbo.cn/ClashForWindows/</loc>
-    <lastmod>2026-11-08</lastmod>
-  </url>
-  <url>
-    <loc>https://tanqingbo.cn/fanqiang-clients/</loc>
     <lastmod>2026-11-08</lastmod>
   </url>
   <url>
@@ -749,11 +753,11 @@
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
+    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
-    <loc>https://tanqingbo.cn/telegram-two-way-restriction/</loc>
+    <loc>https://tanqingbo.cn/telegram-useful-features/</loc>
     <lastmod>2026-09-25</lastmod>
   </url>
   <url>
