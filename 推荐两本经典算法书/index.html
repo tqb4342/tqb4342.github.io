@@ -777,17 +777,29 @@ var _hmt = _hmt || [];
   <footer class="footer">
   
 <style>
-.site-nav{max-width:1080px;margin:0 auto;padding:28px 20px 8px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:left}
-.site-nav h4{margin:0 0 14px;font-size:15px;color:#2c3e50;font-weight:600}
+.site-nav{max-width:1080px;margin:0 auto;padding:26px 20px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px 30px;text-align:left;position:relative}
+.site-nav::before{content:'';position:absolute;top:0;left:20px;right:20px;height:1px;background:linear-gradient(90deg,rgba(50,115,220,0),rgba(50,115,220,0.3),rgba(50,115,220,0))}
+.site-nav h4{margin:0 0 13px;font-size:14px;color:#2c3e50;font-weight:700;display:flex;align-items:center;gap:8px}
+.site-nav h4::before{content:'';display:inline-block;width:3px;height:14px;border-radius:2px;background:#3273dc;flex:none}
 .site-nav ul{list-style:none;margin:0;padding:0}
-.site-nav li{margin:0 0 10px}
-.site-nav a{font-size:13px;color:#5f6b76;text-decoration:none;line-height:1.5}
-.site-nav a:hover{color:#1e80ff}
+.site-nav li{margin:0 0 9px;transition:transform .18s ease}
+.site-nav li:hover{transform:translateX(3px)}
+.site-nav a{font-size:13px;color:#57636e;text-decoration:none;line-height:1.55;transition:color .15s ease}
+.site-nav a:hover{color:#3273dc}
 @media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.site-nav{grid-template-columns:1fr;gap:20px}}
+[data-user-color-scheme='dark'] .site-nav h4{color:#dbe2ea}
+[data-user-color-scheme='dark'] .site-nav a{color:#9aa7b5}
+[data-user-color-scheme='dark'] .site-nav a:hover{color:#6596e5}
+@media (prefers-color-scheme:dark){
+  :root:not([data-user-color-scheme]) .site-nav h4{color:#dbe2ea}
+  :root:not([data-user-color-scheme]) .site-nav a{color:#9aa7b5}
+  :root:not([data-user-color-scheme]) .site-nav a:hover{color:#6596e5}
+}
 </style>
 <div class="site-nav">
   <div class="site-nav-col">
-    <h4>热门文章：</h4>
+    <h4>热门文章</h4>
     <ul>
       <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
       <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
@@ -802,7 +814,7 @@ var _hmt = _hmt || [];
     </ul>
   </div>
   <div class="site-nav-col">
-    <h4>实操教程：</h4>
+    <h4>实操教程</h4>
     <ul>
       <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
       <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
@@ -817,7 +829,7 @@ var _hmt = _hmt || [];
     </ul>
   </div>
   <div class="site-nav-col">
-    <h4>海外热门：</h4>
+    <h4>海外热门</h4>
     <ul>
       <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
       <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
@@ -832,7 +844,7 @@ var _hmt = _hmt || [];
     </ul>
   </div>
   <div class="site-nav-col">
-    <h4>真实测评：</h4>
+    <h4>真实测评</h4>
     <ul>
       <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
       <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
@@ -848,48 +860,36 @@ var _hmt = _hmt || [];
   </div>
 </div>
 
-  <div class="footer-container">
-    <div>
-      <div class="footer-dsc">
-        <span>Copyright ©
-          
-          2020 -
-          
-          2026
-        </span>
-        &nbsp;
-        <a href="/" class="footer-link">科&nbsp;学&nbsp;上&nbsp;网 </a>
-      </div>
-		<!--
-		<div class="footer-dsc">
-			<center><span>
-			<a href="https://tanqingbo.cn/CSBook001/" target="_blank">计算机专业最全电子书PDF下载</a> - <a href="https://tanqingbo.cn/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/" target="_blank">科学上网</a>
-			</span></center>
-		</div>
-		-->
+  <div class="footer-meta">
+    <div class="footer-meta-divider"></div>
+    <div class="footer-meta-main">
+      <span>Copyright ©
+        
+        2020 -
+        
+        2026
+      </span>
+      <a href="/" class="footer-site-link">科&nbsp;学&nbsp;上&nbsp;网</a>
+      <span class="footer-meta-sep">|</span>
+      <span class="footer-friend">友情链接</span>
+      <a href="https://aisurf.cc/" rel="external nofollow noreferrer" class="footer-friend-link" target="_blank">AI冲浪指南</a>
     </div>
 
     
-    
-    
-	
-    
-	
 
-	<div class="footer-dsc">
-	<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-	<span id="busuanzi_container_site_pv">
-		本站总访问量<span id="busuanzi_value_site_pv"></span>次
-	</span> &nbsp;|&nbsp
-	<span id="busuanzi_container_site_uv">
-		本站总访客数<span id="busuanzi_value_site_uv"></span>次
-	</span>
-	</div>
-	
-	
-	
+    <div class="footer-meta-stats">
+      <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+      </script>
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="footer-meta-sep">|</span>
+      <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span>
+    </div>
+  </div>
+
+  
+  
 </footer>
+
   <a role="button" id="scrollbutton" class="basebutton" >
   <i class="iconfont icon-arrowleft button-icon"></i>
 </a>
