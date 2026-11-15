@@ -919,13 +919,45 @@ var _hmt = _hmt || [];
 
     
 
-    <div class="footer-meta-stats">
-      <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-      </script>
+    <div class="footer-meta-stats" id="footer-stats" style="display:none">
       <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
       <span class="footer-meta-sep">|</span>
       <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span>
     </div>
+    <script>
+    /* 不蒜子自愈式加载器：服务不稳（常 502/超时），默认隐藏，缓存秒显，拉到数据才显示 */
+    (function () {
+      var wrap = document.getElementById('footer-stats');
+      if (!wrap) return;
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var uv = document.getElementById('busuanzi_value_site_uv');
+      var show = function () { wrap.style.display = ''; };
+
+      /* 回访秒显：3 天内的缓存 */
+      var cache = null;
+      try { cache = JSON.parse(localStorage.getItem('bzs-site-stats') || 'null'); } catch (e) {}
+      var fresh = !!(cache && cache.pv && (Date.now() - cache.t < 2592e5));
+      if (fresh) { pv.textContent = cache.pv; uv.textContent = cache.uv; show(); }
+
+      /* 拉新数据（JSONP 直连 API，不依赖官方 JS 文件） */
+      var done = false;
+      var cb = 'BusuanziCallback_' + Date.now();
+      window[cb] = function (d) {
+        done = true;
+        try { delete window[cb]; } catch (e) { window[cb] = null; }
+        if (d && d.site_pv) {
+          pv.textContent = d.site_pv;
+          uv.textContent = d.site_uv;
+          show();
+          try { localStorage.setItem('bzs-site-stats', JSON.stringify({ pv: d.site_pv, uv: d.site_uv, t: Date.now() })); } catch (e) {}
+        }
+      };
+      var s = document.createElement('script');
+      s.src = 'https://busuanzi.ibruce.info/busuanzi?jsonpCallback=' + cb;
+      s.onerror = function () { /* 失败静默：有缓存保缓存，无缓存整行保持隐藏 */ };
+      document.body.appendChild(s);
+    })();
+    </script>
   </div>
 
   
