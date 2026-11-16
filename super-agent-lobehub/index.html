@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-11-16T14:10:00.000Z",
+  "dateModified": "2026-11-16T14:10:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/super-agent-lobehub/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/super-agent-lobehub-banner.webp",
+  "description": "DeepSeek Harness 团队 Super-agent 设计的核心拆解：为什么 Agent 再强也困在单次对话里，连续、高效、主动、持久四个词怎么落地；以及用 LobeHub 搭全 AI 团队的完整实战——主管 Agent 派活、本地 Codex 和 Claude Code 执行、每日自动巡检、真实翻车现场与派活规矩，国内使用的网络准备也在内。",
+  "keywords": "Super-agent,super agent设计,LobeHub,LobeChat,多Agent协作,AI团队,Agent工作流,主管Agent,LobeHub教程,AI自动化,Agent任务分派,自动巡检,DeepSeek super agent,LobeHub实战"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Super-agent 是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DeepSeek Harness 团队提出的更自主的 Agent 系统设计。多个 Worker 并行执行、各自保留独立上下文，按需连接工具环境，外部 Watchdog 监控异常和进展，数据库保存会话状态。目标是连续、高效、主动、持久，让任务不困在单次对话里，能持续往前滚。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "LobeHub 免费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "开源免费。GitHub 仓库 lobehub/lobehub 有 80k 以上 star，前身是聊天工具 LobeChat，2025 年转型为 Agent 平台。自己搭建使用不收费，但背后调用的模型 API 按各厂商计费。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "不会写代码能用 LobeHub 搭 AI 团队吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "网页端建群组、配角色规则可以纯界面操作。但想让本地 Codex、Claude Code 进团队干活，命令行基础绕不开，协作规则里的 git 分支、PR、worktree 这些概念也需要大致看懂，完全不碰代码会比较吃力。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "国内能用 LobeHub 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能，开源项目可以自己部署。但调 GPT、Claude 这类海外模型 API 国内直连不畅，先解决网络环境再开工，否则 Agent 跑一半卡在超时上，损失的是整段任务。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "主管 Agent 和执行 Agent 差在哪？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "主管负责拆需求、分派任务、定验收标准，不亲自干活；执行 Agent 各自有明确的职责、工具和运行环境，只接主管划清范围的工作。分工依据就是每个成员能干什么、在哪个环境里干。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "任务什么时候用委派、什么时候建 Task？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "当前群聊里已经明确的工作，用委派卡片直接交给对应 Agent；反复执行、跨天保留进度的工作（比如每日巡检）用独立 Task，每轮执行有自己的话题记录，进度和未解决项都能接续。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  
+  <title>Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）</title>
+  
+  <meta name="description" content="DeepSeek Harness 团队 Super-agent 设计的核心拆解：为什么 Agent 再强也困在单次对话里，连续、高效、主动、持久四个词怎么落地；以及用 LobeHub 搭全 AI 团队的完整实战——主管 Agent 派活、本地 Codex 和 Claude Code 执行、每日自动...">
+  <meta name="keywords" content="Super-agent,super agent设计,LobeHub,LobeChat,多Agent协作,AI团队,Agent工作流,主管Agent,LobeHub教程,AI自动化,Agent任务分派,自动巡检,DeepSeek super agent,LobeHub实战">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026） - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/super-agent-lobehub/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/super-agent-lobehub-banner.webp">
+  
+  
+  <meta property="og:description" content="DeepSeek Harness 团队 Super-agent 设计的核心拆解：为什么 Agent 再强也困在单次对话里，连续、高效、主动、持久四个词怎么落地；以及用 LobeHub 搭全 AI 团队的完整实战——主管 Agent 派活、本地 Codex 和 Claude Code 执行、每日自动...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-11-16T14:10:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-16T14:10:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="AI">
+  
+  <meta property="og:article:tag" content="Agent">
+  
+  <meta property="og:article:tag" content="LobeHub">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" />
+ <link rel="canonical" href="https://tanqingbo.cn/super-agent-lobehub/" />
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/super-agent-lobehub-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/super-agent-lobehub-banner.webp"
+    alt="Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-11-16T14:10:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-11-16</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>4.4k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/super-agent-lobehub/" class="leancloud_visitors" data-flag-title="Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">--</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/AI/" class="post-meta-link">AI</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/Agent/" class="post-meta-link">Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/LobeHub/" class="post-meta-link">LobeHub</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>Agent 的单体能力这一年涨得飞快，写代码、查资料、做总结，样样能打。但多数人用起来还是那个老样子：开一个对话，交代任务，拿结果，关掉。换下一个任务，再开一个对话，之前聊过的上下文自己想办法续上。</p>
+<p>同时开四五个会话，人的注意力先崩。任务一多，Agent 反而成了新的负担。</p>
+<p>DeepSeek Harness 团队发过一篇《Super-agent 设计探索，迈向更自主的 Agent 系统》，讲的就是怎么让 Agent 系统从「单次对话工具」变成「持续干活的团队」。公众号作者苍何照着这个思路，用开源的 LobeHub 在自己的工作里跑通了一整套，这篇文章把两边的内容合起来讲透。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>Super-agent 是什么</strong>：多个 Worker 并行执行、各自独立上下文，Watchdog 监控异常，任务是连续、持久往前滚的，不困在单次对话</li>
+<li><strong>核心问题</strong>：普通多 Agent 架构里人仍是瓶颈——任务堆着等人确认，人一忙整条线停</li>
+<li><strong>工具</strong>：LobeHub，开源（80k+ star），前身 LobeChat，2025 年转型 Agent 平台</li>
+<li><strong>玩法</strong>：1 个主管 Agent 派活 + 多个执行 Agent 干活，本地 Codex、Claude Code 都能拉进团队</li>
+<li><strong>前置条件</strong>：国内调海外模型 API 直连不畅，先解决网络，见下一节</li>
+</ul>
+<h2 id="开始之前：网络环境"><a href="#开始之前：网络环境" class="headerlink" title="开始之前：网络环境"></a>开始之前：网络环境</h2><p>LobeHub 本身开源免费，但真正干活要调模型 API。想让主管用 Claude 规划、执行 Agent 用 Codex 跑代码，GPT、Claude 这些 API 国内直连都不通畅。</p>
+<p>没解决网络的先看<a href="https://tanqingbo.cn/clash-guide/">科学上网教程</a>，从客户端到节点一条龙。已经能访问官网、但终端里的 Claude Code、Codex 频繁连接超时的，问题多半在终端不走系统代理，排查方法写在 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a>里，<a href="https://tanqingbo.cn/codex-install-guide/">Codex 安装指南</a>里也有对应一节。</p>
+<p>网络不通就开工，Agent 跑到一半卡死，损失的是整段任务上下文，不只是几秒钟的等待。</p>
+<h2 id="一、Super-agent-到底想解决什么"><a href="#一、Super-agent-到底想解决什么" class="headerlink" title="一、Super-agent 到底想解决什么"></a>一、Super-agent 到底想解决什么</h2><p>DeepSeek 那篇文章的出发点很直白：过去一年 Agent 单体越来越强，但都困在单次的对话里。切换对话要主动记忆上下文，同时进行的 Session 一多，人就跟不上了。</p>
+<p>它的解法是一套分工结构：具体工作由多个 Worker 并行执行，各自保留独立上下文，按需连接实际的工具环境。已有任务的后续消息，沿订阅通道直接送到对应 Worker，少绕一遍 Router。底下用数据库保存会话状态，外部一个 Watchdog 监控异常和执行进展。</p>
+<p>这几部分配合起来，系统可以同时接活、持续执行，出了问题还能恢复工作。整篇文章浓缩下来就四个词：<strong>连续、高效、主动、持久</strong>。</p>
+<p>另一个值得注意的形态是 Personal Agent：在个人助手场景下持续观察信息流、协助处理事务，具备全局感知的上下文。这类场景是 Super-agent 最先落地的土壤。</p>
+<h2 id="二、你搭的多-Agent-架构，为什么卡住了"><a href="#二、你搭的多-Agent-架构，为什么卡住了" class="headerlink" title="二、你搭的多 Agent 架构，为什么卡住了"></a>二、你搭的多 Agent 架构，为什么卡住了</h2><p>很多人（包括苍何自己）都试过搭多 Agent 架构，openclaw、hermes 火的时候跟风搭过复杂的一套，最后发现一个共同问题：<strong>系统里做信息筛选和决策的，还是人</strong>。</p>
+<p>一个典型死法：搭一个搜集热点的 Agent，把每日热点丢给团队 Agent，然后等人确认这些热点做不做选题。热点少的时候还行，量一大，人的精力根本顾不过来——搜集本身变得没意义，整条线卡在等人点头上。</p>
+<p>人成了瓶颈，这不叫自主，也不叫主动。判断 Super-agent 是不是真跑起来了，就看一点：<strong>主管不在、你不在的时候，工作有没有机会自己往前滚</strong>。</p>
+<h2 id="三、LobeHub：从聊天工具到-Agent-平台"><a href="#三、LobeHub：从聊天工具到-Agent-平台" class="headerlink" title="三、LobeHub：从聊天工具到 Agent 平台"></a>三、LobeHub：从聊天工具到 Agent 平台</h2><p>自己从零搭一套 Super-agent 对没技术背景的人太重。GitHub 上已经长出了成熟方案，LobeHub 是其中一个。</p>
+<p>它的前身叫 LobeChat，最早一批用 GPT 的人基本都听说过，2025 年改名为 LobeHub，从聊天工具转型成 Agent 平台，现在 80k 以上的 star。开源地址在 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lobehub/lobehub">github.com/lobehub/lobehub</a>。</p>
+<p>最有说服力的一件事：LobeHub 团队已经用 LobeHub 持续开发和迭代 LobeHub 自己。看一个真实案例——</p>
+<p>主管 Agent Nasa 发现一个问题：LobeHub 原本支持给任务单独指定模型，但只能在网页上操作，Agent 通过工具或命令行创建任务时缺这个入口。想让一个模型负责规划、另一个模型执行，就卡在这里。</p>
+<p>Nasa 查清问题后创建任务 T-1149，分派给基于 Claude Code 的执行 Agent Dario，任务里写明现状、要补齐的入口和验收要求。Dario 交付了 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lobehub/lobehub/pull/21852">PR #21852</a>：给内置任务工具和命令行补上指定模型的能力，交付记录附带修改说明、测试结果、验收报告，还有需要部署后继续验证的部分。这条 PR 已经合并。</p>
+<p>有意思的地方在于：Agent 这次补上的能力，恰好是让后续 Agent 分工执行更顺畅的能力。自己跑通自己的流程，再让流程帮自己跑得更快——「持久」该有的样子。</p>
+<h2 id="四、搭自己的团队：1-个主管，6-个执行"><a href="#四、搭自己的团队：1-个主管，6-个执行" class="headerlink" title="四、搭自己的团队：1 个主管，6 个执行"></a>四、搭自己的团队：1 个主管，6 个执行</h2><p>苍何的实践是拿它维护自己的内容网站。先把想要的分工和协作方式告诉构建助手，搭一个产品研发群：<strong>1 名主管 Agent，6 名执行 Agent</strong>，角色、规则、流程一次配好。除了 LobeHub 自带的 Agent，还把本地的 Codex、Claude Code 接了进来，让团队能用上实际项目里的工具。</p>
+<p>第一次实操是全站内容审查。主管把任务交给内容主编：对照官方资料检查代码仓库和线上页面，整理问题证据、修改建议与验收标准。为什么先找主编——这轮要判断的是信息有没有过时、结论有没有来源、哪些页面值得优先更新，主编被设定为<strong>默认只读</strong>的审查职责；需要本地验证或改文件时，再交给有开发环境的 Codex、Claude Code，最后安排 Reviewer 独立复核。</p>
+<p>分工的依据就一条：每个成员的职责、工具和执行环境。主管派活时必须把四样东西一起交过去：目标、输入材料、允许修改的范围、验收要求。少一样，下一个成员就接不住。</p>
+<h2 id="五、本地环境怎么接"><a href="#五、本地环境怎么接" class="headerlink" title="五、本地环境怎么接"></a>五、本地环境怎么接</h2><p>顺着 LobeHub 的开源实现看，CLI 连接方式是 <code>lh connect</code> 连接设备网关，收到执行请求后在本机启动对应的 Agent 运行流程。请求里包含 Agent 类型、工作目录、提示词和话题标识——云端分派的工作，就这样落到具体机器和具体目录上。设备连接的实现代码在<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lobehub/lobehub/blob/canary/apps/cli/src/commands/connect.ts">仓库 apps/cli 目录</a>里。</p>
+<p>所以接入本地 Codex、Claude Code 的顺序是：先确保本机 CLI 能正常用（装法和排障见 <a href="https://tanqingbo.cn/claude-code/">Claude Code 教程</a>、<a href="https://tanqingbo.cn/codex-install-guide/">Codex 安装指南</a>），再通过桌面端或 CLI 连接器接入设备，给执行成员配好环境和工作目录。</p>
+<p>能力边界也要清楚：能否读写文件、运行命令、推送代码，取决于本机文件权限、CLI 执行限制，以及 Git 和 GitHub 的登录授权状态。云端派活只是指令，真权限在你本机。</p>
+<h2 id="六、派活前把规矩立好"><a href="#六、派活前把规矩立好" class="headerlink" title="六、派活前把规矩立好"></a>六、派活前把规矩立好</h2><p>这是整套实践里最值得抄的部分。执行者开工前必须先做三件事：读仓库的 AGENTS.md，检查 <code>git status</code>、当前分支和基线 commit；已有未提交修改要保留；多人同时写代码用独立 worktree 隔离，无法隔离就先串行。</p>
+<p>授权范围分级写死：允许改文件、允许 push、允许提 PR、允许合并和发布，分别说明。典型的一次委派卡片里写明了目标仓库、基线 commit、涉及文件、主编检查到的问题、官方资料链接，以及「可以提交 PR，但不合并、不发布」的边界——主管交给执行者的，是一份可以独立执行的工作说明，不是一句「你去改一下」。</p>
+<p>交付也有硬要求：带回文件修改摘要、实际运行的命令与结果、commit 和 PR 链接。Reviewer 要复核具体版本，后面又提交了新 commit 就要检查受影响部分，没跑过的测试、没验证过的页面必须写出来。LobeHub 还开源了一套 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/lobehub/acceptance">Acceptance</a> 验收工具：把需求拆成检查项，附上产品截图、录屏和日志汇总成报告，人逐项接受或提修改意见。</p>
+<p>下面这张真实验收页能直观看到它长什么样：需求被拆成 C1-C5 六个检查项，每项挂着可点击核验的证据入口（T-2 任务运行状态、报告链接、CLI 盘点原始记录），C5 因为云端发布被登录状态阻塞标黄待处理——该验收的验收，该打回的打回，界面上按钮就这三个：</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/acceptance-ui.webp" alt="LobeHub Acceptance 验收界面：需求拆成检查项逐项核验，每项带证据链接，C5 因发布阻塞标黄待处理" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/acceptance-ui.webp" class="lozad post-image"></p>
+<h2 id="七、委派与-Task：什么时候用哪个"><a href="#七、委派与-Task：什么时候用哪个" class="headerlink" title="七、委派与 Task：什么时候用哪个"></a>七、委派与 Task：什么时候用哪个</h2><p>内容审查暴露出网站最大的问题是时效性——官方有新消息没及时同步，信息就慢一拍。这次改完，下次更新还得有人盯。于是下一步是配自动巡检：主管分析需求后，内容比对交给内容主编，定时巡检交给 Lobe 助手，后续按设定时间自动发起检查。</p>
+<p>这项巡检建成了独立的 T-2 Task，北京时间每天 9 点执行，任务页里留着每轮运行记录，主管、Lobe 助手与内容主编的交接评论都在下面。</p>
+<p>什么时候直接委派、什么时候建 Task，判断标准很清晰：<strong>当前群聊里已经明确的工作，用委派卡片交给对应 Agent；反复执行、跨天保留进度的工作，用独立 Task</strong>。每轮执行有自己的话题记录，一次话题归档后，后续巡检仍按计划继续。要管理更多依赖和复核轮次时，优先放进可持续跟踪的任务里。</p>
+<p>上下文交接也有具体落点：长报告保存在 Agent Documents，链接贴进任务评论；代码变更留在仓库和 PR；后续巡检从评论里的检查进度、未解决项和报告链接接着查。前一步的产物，变成下一步的输入。</p>
+<h2 id="八、真实的翻车现场"><a href="#八、真实的翻车现场" class="headerlink" title="八、真实的翻车现场"></a>八、真实的翻车现场</h2><p>这套系统不是稳态运行的神器，翻车记录反而最有参考价值。</p>
+<p>第一起：内容主编要归档巡检报告，打不开预期的父文档，工具返回 <code>Document not found</code> 和 <code>Parent not found</code>。它的处理是把本轮报告暂存在自己的 Agent Documents，把链接和阻塞原因写回任务评论，说明预期归档位置没更新。主管随后的调整：后续轮次先用任务评论保存检查进度、去重线索和未解决项，再尝试建立可用的归档位置。</p>
+<p>注意这个细节——文件存好了、链接传过去了、接手的人能读到，是<strong>三个需要分别确认的环节</strong>，一个都不能想当然。</p>
+<p>第二起：Lobe 助手尝试设置独立 Verify，写入后再次查询却显示 <code>not configured</code>。它转而配置任务 Review，设置 <code>autoRetry=true</code>、<code>maxIterations=2</code>。但首轮没有独立判定单，所以不能据此认定已经复核通过。</p>
+<p>PR 被打回、依赖变化、执行失败的处理也提前约定了：失败原因和证据留在原任务，修复后提交新版本，按新 commit 复核；上游结论变化时重新检查受影响的下游工作；缺权限或需要扩大范围时，先报告阻塞，由主管协调或回来找人确认。</p>
+<h2 id="九、入口放进微信，任务自己跑"><a href="#九、入口放进微信，任务自己跑" class="headerlink" title="九、入口放进微信，任务自己跑"></a>九、入口放进微信，任务自己跑</h2><p>任务入口不必守在 LobeHub 的界面里，可以接进平时用的聊天工具。苍何把它接入了微信，在微信里让它找 X 上最近一周用 opus 5.5 做视频的优秀案例，收到需求后它分配子代理开始搜索——想到一个调研问题，微信里就能交办下去。</p>
+<p>更大的一次任务是短视频选题调研：分析抖音上 AI 工具、AI 效率、AI 编程相关作品，结合评论区整理真实需求。Lobe 把调研拆成两条线，创建子助理并行检索，右侧面板实时显示运行中的任务和本机 CPU、内存、磁盘占用，点开子助理能看到执行过程和输出。</p>
+<p>两条线完成后汇总成分析报告：账号体量、视频数据、内容深度、标题和评论反馈，再往下梳理选题策略、推荐的视频结构和要避开的坑，最后还整理出一份实战手册，从冷启动、选题到脚本撰写、拍摄和复盘。整个任务跑了大约一小时，交到手里的既有分析结果，也有下一步可以直接动手的内容。</p>
+<p>「主动」在这套系统里有了可执行的 definition：什么时候检查、遇到什么情况介入、可以处理到哪一步、哪些地方需要回来找人确认。条件不讲清楚，主动就是添乱；讲清楚了，每轮执行留了证据，才能逐步把持续跟进交出去。</p>
+<h2 id="十、核心能力是项目管理"><a href="#十、核心能力是项目管理" class="headerlink" title="十、核心能力是项目管理"></a>十、核心能力是项目管理</h2><p>实践下来感受最深的一点：前一步做完，工作有机会接着往下走。网站审查发现的问题接到了实际修改和 PR；担心内容过时，接到了自动巡检；调研完成，接到了可执行的手册。单个 Agent 再强，困在单次对话里，工作就断在对话边界；有了主管分派和任务衔接，任务才有机会自己往下滚。</p>
+<p>用了一段时间之后，对 Agent 的理解会变。一开始以为用 Agent 是把自己替换掉，后来发现根本不是：重复的、靠信息量驱动的执行确实可以交出去，剩下的反而是更需要你的部分——判断值不值得做、结果有没有达标、下一步往哪走。</p>
+<p>能把 Agent 用好的人，核心能力可能不是会写提示词，而是懂目标拆解、懂验收标准、懂推动迭代。</p>
+<p>说白了，这一套本质就是项目管理。只不过你管的这个团队，全是 AI。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>Super-agent 是什么？</strong></p>
+<p>DeepSeek Harness 团队提出的更自主的 Agent 系统设计。多个 Worker 并行执行、各自保留独立上下文，按需连接工具环境，外部 Watchdog 监控异常和进展，数据库保存会话状态。目标是连续、高效、主动、持久，让任务不困在单次对话里，能持续往前滚。</p>
+<p><strong>LobeHub 免费吗？</strong></p>
+<p>开源免费。GitHub 仓库 lobehub/lobehub 有 80k 以上 star，前身是聊天工具 LobeChat，2025 年转型为 Agent 平台。自己搭建使用不收费，但背后调用的模型 API 按各厂商计费。</p>
+<p><strong>不会写代码能用 LobeHub 搭 AI 团队吗？</strong></p>
+<p>网页端建群组、配角色规则可以纯界面操作。但想让本地 Codex、Claude Code 进团队干活，命令行基础绕不开，协作规则里的 git 分支、PR、worktree 这些概念也需要大致看懂，完全不碰代码会比较吃力。</p>
+<p><strong>国内能用 LobeHub 吗？</strong></p>
+<p>能，开源项目可以自己部署。但调 GPT、Claude 这类海外模型 API 国内直连不畅，先解决网络环境再开工，否则 Agent 跑一半卡在超时上，损失的是整段任务。</p>
+<p><strong>主管 Agent 和执行 Agent 差在哪？</strong></p>
+<p>主管负责拆需求、分派任务、定验收标准，不亲自干活；执行 Agent 各自有明确的职责、工具和运行环境，只接主管划清范围的工作。分工依据就是每个成员能干什么、在哪个环境里干。</p>
+<p><strong>任务什么时候用委派、什么时候建 Task？</strong></p>
+<p>当前群聊里已经明确的工作，用委派卡片直接交给对应 Agent；反复执行、跨天保留进度的工作（比如每日巡检）用独立 Task，每轮执行有自己的话题记录，进度和未解决项都能接续。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这套实践里最值钱的不是 LobeHub 这个工具，而是那几条派活规矩：目标、范围、验收一起交，交付物和复核标准提前写死，翻车时证据留在原任务。这些本来就是项目管理里百年沉淀下来的东西，换到全 AI 团队一样成立。</p>
+<p>工具怎么选、各主流 AI 编程 Agent 怎么对比，看 <a href="https://tanqingbo.cn/ai-coding-agent-guide/">AI 编程 Agent 横评</a>；想先了解各家大模型的基础差异，从 <a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具指南</a>入手。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/super-agent-lobehub/">https://tanqingbo.cn/super-agent-lobehub/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content related-card">
+  <div class="related-title">相关文章</div>
+  <ul class="related-list">
+    
+    <li class="related-item">
+      <a href="/ai-coding-agent-guide/" class="related-link">
+        <span class="related-post-title">AI 编程 Agent 怎么选：主流工具横评</span>
+        <span class="related-date">2026-10-24</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/claude-code/" class="related-link">
+        <span class="related-post-title">Claude Code 教程：安装配置与国内使用全指南</span>
+        <span class="related-date">2026-06-11</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/rmux-agent/" class="related-link">
+        <span class="related-post-title">rmux：让一个 Agent 指挥一群 Agent 的终端神器</span>
+        <span class="related-date">2026-07-08</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/codex-install-guide/" class="related-link">
+        <span class="related-post-title">Codex 安装教程：从零配置 OpenAI 编程 Agent</span>
+        <span class="related-date">2026-10-30</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/ai-tools-guide/" class="related-link">
+        <span class="related-post-title">AI 工具哪个好用：主流大模型实测对比</span>
+        <span class="related-date">2026-07-30</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav nav-post">
+  
+  
+  <div class="nav-item-next">
+    <a href="/ladder-guide/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">挂梯子是什么意思？怎么挂梯子（2026 电脑/手机保姆级教程） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    // 注意：不能用 window.onload 初始化——hexo-offline-popup 注入的 sw-register
+    // 脚本会在页面尾部无链式覆盖 window.onload，把这里的初始化整个闷死
+    // （阅读量/评论全部失效）。改用 loadScript 回调，与 GA/lazyload/fslightbox 一致。
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js", function () {
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    });
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Super-agent-%E5%88%B0%E5%BA%95%E6%83%B3%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">一、Super-agent 到底想解决什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%A0%E6%90%AD%E7%9A%84%E5%A4%9A-Agent-%E6%9E%B6%E6%9E%84%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%A1%E4%BD%8F%E4%BA%86"><span class="toc-number">4.</span> <span class="toc-text">二、你搭的多 Agent 架构，为什么卡住了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81LobeHub%EF%BC%9A%E4%BB%8E%E8%81%8A%E5%A4%A9%E5%B7%A5%E5%85%B7%E5%88%B0-Agent-%E5%B9%B3%E5%8F%B0"><span class="toc-number">5.</span> <span class="toc-text">三、LobeHub：从聊天工具到 Agent 平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%90%AD%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9B%A2%E9%98%9F%EF%BC%9A1-%E4%B8%AA%E4%B8%BB%E7%AE%A1%EF%BC%8C6-%E4%B8%AA%E6%89%A7%E8%A1%8C"><span class="toc-number">6.</span> <span class="toc-text">四、搭自己的团队：1 个主管，6 个执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E6%80%8E%E4%B9%88%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">五、本地环境怎么接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%B4%BE%E6%B4%BB%E5%89%8D%E6%8A%8A%E8%A7%84%E7%9F%A9%E7%AB%8B%E5%A5%BD"><span class="toc-number">8.</span> <span class="toc-text">六、派活前把规矩立好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%A7%94%E6%B4%BE%E4%B8%8E-Task%EF%BC%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%93%AA%E4%B8%AA"><span class="toc-number">9.</span> <span class="toc-text">七、委派与 Task：什么时候用哪个</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%9C%9F%E5%AE%9E%E7%9A%84%E7%BF%BB%E8%BD%A6%E7%8E%B0%E5%9C%BA"><span class="toc-number">10.</span> <span class="toc-text">八、真实的翻车现场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%A5%E5%8F%A3%E6%94%BE%E8%BF%9B%E5%BE%AE%E4%BF%A1%EF%BC%8C%E4%BB%BB%E5%8A%A1%E8%87%AA%E5%B7%B1%E8%B7%91"><span class="toc-number">11.</span> <span class="toc-text">九、入口放进微信，任务自己跑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%A0%B8%E5%BF%83%E8%83%BD%E5%8A%9B%E6%98%AF%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"><span class="toc-number">12.</span> <span class="toc-text">十、核心能力是项目管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">13.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">14.</span> <span class="toc-text">写在最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>447</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>448</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<a class="author-ai-tools" href="https://aisurf.cc/ai-tools/" target="_blank" rel="noopener external nofollow noreferrer" title="精选 100 个 AI 工具，分类清晰持续更新">
+  <i class="iconfont icon-fenlei"></i>
+  AI 工具箱
+</a>
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Super-agent-%E5%88%B0%E5%BA%95%E6%83%B3%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">一、Super-agent 到底想解决什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%A0%E6%90%AD%E7%9A%84%E5%A4%9A-Agent-%E6%9E%B6%E6%9E%84%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%A1%E4%BD%8F%E4%BA%86"><span class="toc-number">4.</span> <span class="toc-text">二、你搭的多 Agent 架构，为什么卡住了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81LobeHub%EF%BC%9A%E4%BB%8E%E8%81%8A%E5%A4%A9%E5%B7%A5%E5%85%B7%E5%88%B0-Agent-%E5%B9%B3%E5%8F%B0"><span class="toc-number">5.</span> <span class="toc-text">三、LobeHub：从聊天工具到 Agent 平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%90%AD%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9B%A2%E9%98%9F%EF%BC%9A1-%E4%B8%AA%E4%B8%BB%E7%AE%A1%EF%BC%8C6-%E4%B8%AA%E6%89%A7%E8%A1%8C"><span class="toc-number">6.</span> <span class="toc-text">四、搭自己的团队：1 个主管，6 个执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E6%80%8E%E4%B9%88%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">五、本地环境怎么接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%B4%BE%E6%B4%BB%E5%89%8D%E6%8A%8A%E8%A7%84%E7%9F%A9%E7%AB%8B%E5%A5%BD"><span class="toc-number">8.</span> <span class="toc-text">六、派活前把规矩立好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%A7%94%E6%B4%BE%E4%B8%8E-Task%EF%BC%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%93%AA%E4%B8%AA"><span class="toc-number">9.</span> <span class="toc-text">七、委派与 Task：什么时候用哪个</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%9C%9F%E5%AE%9E%E7%9A%84%E7%BF%BB%E8%BD%A6%E7%8E%B0%E5%9C%BA"><span class="toc-number">10.</span> <span class="toc-text">八、真实的翻车现场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%A5%E5%8F%A3%E6%94%BE%E8%BF%9B%E5%BE%AE%E4%BF%A1%EF%BC%8C%E4%BB%BB%E5%8A%A1%E8%87%AA%E5%B7%B1%E8%B7%91"><span class="toc-number">11.</span> <span class="toc-text">九、入口放进微信，任务自己跑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%A0%B8%E5%BF%83%E8%83%BD%E5%8A%9B%E6%98%AF%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"><span class="toc-number">12.</span> <span class="toc-text">十、核心能力是项目管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">13.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">14.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">39</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/科学上网/" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash/" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/翻墙/" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN/" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/算法/" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT/" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/机场/" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo/" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI工具/" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram/" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/流媒体/" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+    <a href="/tags/电报/" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/电子书下载/" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/梯子/" title="梯子"><div class="tags-list-item">梯子</div></a>
+    
+    <a href="/tags/大模型/" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/代理/" title="代理"><div class="tags-list-item">代理</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-16</div>
+        <a href="/super-agent-lobehub/"><div class="recent-posts-item-content">Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-14</div>
+        <a href="/ladder-guide/"><div class="recent-posts-item-content">挂梯子是什么意思？怎么挂梯子（2026 电脑/手机保姆级教程）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-11</div>
+        <a href="/netflix-tv-guide/"><div class="recent-posts-item-content">电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-09</div>
+        <a href="/claude-design-skill/"><div class="recent-posts-item-content">Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Super-agent-%E5%88%B0%E5%BA%95%E6%83%B3%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">一、Super-agent 到底想解决什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BD%A0%E6%90%AD%E7%9A%84%E5%A4%9A-Agent-%E6%9E%B6%E6%9E%84%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%A1%E4%BD%8F%E4%BA%86"><span class="toc-number">4.</span> <span class="toc-text">二、你搭的多 Agent 架构，为什么卡住了</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81LobeHub%EF%BC%9A%E4%BB%8E%E8%81%8A%E5%A4%A9%E5%B7%A5%E5%85%B7%E5%88%B0-Agent-%E5%B9%B3%E5%8F%B0"><span class="toc-number">5.</span> <span class="toc-text">三、LobeHub：从聊天工具到 Agent 平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%90%AD%E8%87%AA%E5%B7%B1%E7%9A%84%E5%9B%A2%E9%98%9F%EF%BC%9A1-%E4%B8%AA%E4%B8%BB%E7%AE%A1%EF%BC%8C6-%E4%B8%AA%E6%89%A7%E8%A1%8C"><span class="toc-number">6.</span> <span class="toc-text">四、搭自己的团队：1 个主管，6 个执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E6%80%8E%E4%B9%88%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">五、本地环境怎么接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%B4%BE%E6%B4%BB%E5%89%8D%E6%8A%8A%E8%A7%84%E7%9F%A9%E7%AB%8B%E5%A5%BD"><span class="toc-number">8.</span> <span class="toc-text">六、派活前把规矩立好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%A7%94%E6%B4%BE%E4%B8%8E-Task%EF%BC%9A%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%93%AA%E4%B8%AA"><span class="toc-number">9.</span> <span class="toc-text">七、委派与 Task：什么时候用哪个</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%9C%9F%E5%AE%9E%E7%9A%84%E7%BF%BB%E8%BD%A6%E7%8E%B0%E5%9C%BA"><span class="toc-number">10.</span> <span class="toc-text">八、真实的翻车现场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%A5%E5%8F%A3%E6%94%BE%E8%BF%9B%E5%BE%AE%E4%BF%A1%EF%BC%8C%E4%BB%BB%E5%8A%A1%E8%87%AA%E5%B7%B1%E8%B7%91"><span class="toc-number">11.</span> <span class="toc-text">九、入口放进微信，任务自己跑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%A0%B8%E5%BF%83%E8%83%BD%E5%8A%9B%E6%98%AF%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86"><span class="toc-number">12.</span> <span class="toc-text">十、核心能力是项目管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">13.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">14.</span> <span class="toc-text">写在最后</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:26px 20px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px 30px;text-align:left;position:relative}
+.site-nav::before{content:'';position:absolute;top:0;left:20px;right:20px;height:1px;background:linear-gradient(90deg,rgba(50,115,220,0),rgba(50,115,220,0.3),rgba(50,115,220,0))}
+.site-nav h4{margin:0 0 13px;font-size:14px;color:#2c3e50;font-weight:700;display:flex;align-items:center;gap:8px}
+.site-nav h4::before{content:'';display:inline-block;width:3px;height:14px;border-radius:2px;background:#3273dc;flex:none}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 9px;transition:transform .18s ease}
+.site-nav li:hover{transform:translateX(3px)}
+.site-nav a{font-size:13px;color:#57636e;text-decoration:none;line-height:1.55;transition:color .15s ease}
+.site-nav a:hover{color:#3273dc}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.site-nav{grid-template-columns:1fr;gap:20px}}
+[data-user-color-scheme='dark'] .site-nav h4{color:#dbe2ea}
+[data-user-color-scheme='dark'] .site-nav a{color:#9aa7b5}
+[data-user-color-scheme='dark'] .site-nav a:hover{color:#6596e5}
+@media (prefers-color-scheme:dark){
+  :root:not([data-user-color-scheme]) .site-nav h4{color:#dbe2ea}
+  :root:not([data-user-color-scheme]) .site-nav a{color:#9aa7b5}
+  :root:not([data-user-color-scheme]) .site-nav a:hover{color:#6596e5}
+}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+      <li><a href="/clash-subscribe-guide/">Clash 订阅链接导入教程</a></li>
+      <li><a href="/free-fanqiang/">免费翻墙靠谱吗：梯子避坑</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+      <li><a href="/airport-rate-guide/">机场倍率与流量怎么算</a></li>
+      <li><a href="/double-11-vpn-guide/">双11 机场优惠折扣攻略</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-meta">
+    <div class="footer-meta-divider"></div>
+    <div class="footer-meta-main">
+      <span>Copyright ©
+        
+        2020 -
+        
+        2026
+      </span>
+      <a href="/" class="footer-site-link">科&nbsp;学&nbsp;上&nbsp;网</a>
+      <span class="footer-meta-sep">|</span>
+      <span class="footer-friend">友情链接</span>
+      <a href="https://aisurf.cc/" rel="external nofollow noreferrer" class="footer-friend-link" target="_blank">AI冲浪指南</a>
+    </div>
+
+    
+
+    <div class="footer-meta-stats" id="footer-stats" style="display:none">
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="footer-meta-sep">|</span>
+      <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span>
+    </div>
+    <script>
+    /* 不蒜子自愈式加载器：服务不稳（常 502/超时），默认隐藏，缓存秒显，拉到数据才显示 */
+    (function () {
+      var wrap = document.getElementById('footer-stats');
+      if (!wrap) return;
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var uv = document.getElementById('busuanzi_value_site_uv');
+      var show = function () { wrap.style.display = ''; };
+
+      /* 回访秒显：3 天内的缓存 */
+      var cache = null;
+      try { cache = JSON.parse(localStorage.getItem('bzs-site-stats') || 'null'); } catch (e) {}
+      var fresh = !!(cache && cache.pv && (Date.now() - cache.t < 2592e5));
+      if (fresh) { pv.textContent = cache.pv; uv.textContent = cache.uv; show(); }
+
+      /* 拉新数据（JSONP 直连 API，不依赖官方 JS 文件） */
+      var done = false;
+      var cb = 'BusuanziCallback_' + Date.now();
+      window[cb] = function (d) {
+        done = true;
+        try { delete window[cb]; } catch (e) { window[cb] = null; }
+        if (d && d.site_pv) {
+          pv.textContent = d.site_pv;
+          uv.textContent = d.site_uv;
+          show();
+          try { localStorage.setItem('bzs-site-stats', JSON.stringify({ pv: d.site_pv, uv: d.site_uv, t: Date.now() })); } catch (e) {}
+        }
+      };
+      var s = document.createElement('script');
+      s.src = 'https://busuanzi.ibruce.info/busuanzi?jsonpCallback=' + cb;
+      s.onerror = function () { /* 失败静默：有缓存保缓存，无缓存整行保持隐藏 */ };
+      document.body.appendChild(s);
+    })();
+    </script>
+  </div>
+
+  
+  
+</footer>
+
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
