@@ -1709,6 +1709,164 @@ mjx-container svg:focus {
     border-bottom-color: #8fb4f0;
   }
 }
+.post-meta.post-show-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem 0.75rem;
+  font-size: 0.88rem;
+  color: var(--text-light-color);
+  line-height: 1.7;
+  margin-bottom: 0.25rem;
+}
+.post-meta.post-show-meta .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+}
+.post-meta.post-show-meta .meta-item time {
+  font-variant-numeric: tabular-nums;
+}
+.post-meta.post-show-meta .meta-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex-shrink: 0;
+  opacity: 0.72;
+}
+.post-meta.post-show-meta .meta-sep {
+  width: 1px;
+  height: 0.85rem;
+  background-color: var(--border-color);
+  flex-shrink: 0;
+}
+.post-meta.post-show-meta .post-meta-link {
+  display: inline-block;
+  padding: 0 0.62rem;
+  border: 1px solid rgba(50,115,220,0.38);
+  border-radius: 999px;
+  color: #3273dc;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.65;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.post-meta.post-show-meta .post-meta-link:hover {
+  background-color: #3273dc;
+  border-color: #3273dc;
+  color: #fff;
+}
+.post-meta.post-show-meta .meta-views {
+  background-color: rgba(50,115,220,0.07);
+  border-radius: 999px;
+  padding: 0.12rem 0.72rem 0.14rem;
+}
+.post-meta.post-show-meta .meta-views .meta-icon {
+  opacity: 0.9;
+  color: #3273dc;
+}
+.post-meta.post-show-meta .meta-views .meta-views-label {
+  font-style: normal;
+}
+.post-meta.post-show-meta .meta-views .leancloud-visitors-count {
+  font-style: normal;
+  font-weight: 600;
+  color: #3273dc;
+  font-variant-numeric: tabular-nums;
+}
+.post-meta.post-show-meta .leancloud_visitors {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.post-meta.post-tags-row {
+  margin-top: 0.1rem;
+}
+.post-meta.post-tags-row .meta-item {
+  flex-wrap: wrap;
+  row-gap: 0.3rem;
+}
+.post-meta.post-tags-row .tag-pill {
+  display: inline-block;
+  padding: 0 0.55rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-light-color);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+}
+.post-meta.post-tags-row .tag-pill:hover {
+  border-color: #3273dc;
+  color: #3273dc;
+  background-color: rgba(50,115,220,0.05);
+}
+.card-content header .post-show-meta:last-child {
+  position: relative;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.3rem;
+}
+.card-content header .post-show-meta:last-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(50,115,220,0), rgba(50,115,220,0.25), rgba(50,115,220,0));
+}
+@media (max-width: 640px) {
+  .post-meta.post-show-meta .meta-sep {
+    display: none;
+  }
+}
+[data-user-color-scheme='dark'] .post-meta.post-show-meta .post-meta-link {
+  border-color: rgba(101,150,229,0.45);
+  color: #8fb4f0;
+}
+[data-user-color-scheme='dark'] .post-meta.post-show-meta .post-meta-link:hover {
+  background-color: #3d6cc0;
+  border-color: #3d6cc0;
+  color: #fff;
+}
+[data-user-color-scheme='dark'] .post-meta.post-show-meta .meta-views {
+  background-color: rgba(101,150,229,0.13);
+}
+[data-user-color-scheme='dark'] .post-meta.post-show-meta .meta-views .meta-icon {
+  color: #8fb4f0;
+}
+[data-user-color-scheme='dark'] .post-meta.post-show-meta .meta-views .leancloud-visitors-count {
+  color: #8fb4f0;
+}
+[data-user-color-scheme='dark'] .post-meta.post-show-meta .tag-pill:hover {
+  border-color: #6596e5;
+  color: #8fb4f0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) .post-meta.post-show-meta .post-meta-link {
+    border-color: rgba(101,150,229,0.45);
+    color: #8fb4f0;
+  }
+  :root:not([data-user-color-scheme]) .post-meta.post-show-meta .post-meta-link:hover {
+    background-color: #3d6cc0;
+    border-color: #3d6cc0;
+    color: #fff;
+  }
+  :root:not([data-user-color-scheme]) .post-meta.post-show-meta .meta-views {
+    background-color: rgba(101,150,229,0.13);
+  }
+  :root:not([data-user-color-scheme]) .post-meta.post-show-meta .meta-views .meta-icon {
+    color: #8fb4f0;
+  }
+  :root:not([data-user-color-scheme]) .post-meta.post-show-meta .meta-views .leancloud-visitors-count {
+    color: #8fb4f0;
+  }
+  :root:not([data-user-color-scheme]) .post-meta.post-show-meta .tag-pill:hover {
+    border-color: #6596e5;
+    color: #8fb4f0;
+  }
+}
 .image-wrapper {
   overflow: hidden;
   display: block;
