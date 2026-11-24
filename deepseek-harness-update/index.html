@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#fff" id="theme-color">
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3",
+  "author": {
+    "@type": "Person",
+    "name": "IT码农",
+    "url": "https://tanqingbo.cn/about/"
+  },
+  "datePublished": "2026-11-24T06:40:00.000Z",
+  "dateModified": "2026-11-24T07:05:00.000Z",
+  "publisher": {
+    "@type": "Organization",
+    "name": "科学上网教程 | VPN推荐与Clash配置指南",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tanqingbo.cn/img/logo.webp"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tanqingbo.cn/deepseek-harness-update/"
+  },
+  "image": "https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/deepseek-harness-update-banner.webp",
+  "description": "DeepSeek Harness v0.2.3-alpha.1 大更新逐项解读：任务时间线插件让 Agent 执行不再是黑盒，独立 Code Review 页面支持与 Agent 协作审代码，Git 仓库可直接当插件源（私有仓库也行），飞书企业微信钉钉等 7 类连接器接入，Computer Use 实验性支持 Windows；另有 Python PTC 移除、Cordis 4.0 接口变更这些升级前必须知道的破坏性改动。",
+  "keywords": "deepseek harness更新,deepseek harness v0.2.3,dsh更新,deepseek harness时间线,deepseek harness代码审阅,deepseek harness插件市场,deepseek harness连接器,deepseek harness computer use,deepseek harness windows,dsh插件源,git仓库插件,deepseek harness ptc,Python PTC移除,deepseek harness升级,cordis 4.0"
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "首页",
+      "item": "https://tanqingbo.cn/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AI大模型",
+      "item": "https://tanqingbo.cn/categories/AI大模型/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3"
+    }
+  ]
+}
+  </script>
+  
+  
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "DeepSeek Harness v0.2.3 更新了什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一口气加了 Agent 任务时间线插件（层级任务树加阻塞事项记录）、独立 Code Review 代码审阅页面、会话状态区、实验性 Auto review 权限模式；插件市场支持把 Git 仓库直接当插件来源（私有仓库也行）；新增 Linear、Notion、腾讯文档、飞书、企业微信、腾讯会议、钉钉 7 类连接器；MCP 加入 OAuth 授权与工具按需加载；Computer Use 实验性支持 Windows。更新量远超一个小版本该有的体量。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Python PTC 被移除，之前用 PTC 模式的怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "v0.2.3-alpha.1 直接移除了 Python PTC 支持，Node PTC 则改为默认在多次调用之间保留变量。之前在 PTC 模式里跑批量任务的，要么切到 Node PTC 重新验证一遍流程，要么回到标准模式分批执行。Cordis 同时升到 4.0.0-rc.12，插件接口和工作目录参数都变了。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "独立 Code Review 页面解决什么问题？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "之前 Agent 写完代码只能看一句任务完成，改动要自己去仓库里翻。现在与当前用户相关的 GitHub PR 可以集中在一个页面查看，修改说明、涉及文件、代码差异直接对照着看，拿不准的修改还能在页面里和 Agent 协作审阅。GitLab 的 Merge Request 同样支持审阅和合并，页面还开放插件扩展。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Git 仓库当插件源有什么用？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "企业内部开发的 Agent 插件——检查内部代码规范、访问企业知识库、跑自动化测试这类——平时放在私有 Git 仓库里不公开。现在可以直接把这个仓库添加进插件市场，团队成员照常浏览安装，不用为了方便装插件把内部工具挪到公共仓库。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Windows 现在能用 DeepSeek Harness 的 Computer Use 了吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "实验性支持。Agent 可以通过鼠标键盘操作 Windows 界面，点按钮、输入文字，还能通过 cua-mcp 把电脑操作能力提供给其他 Agent 系统调用。注意这是实验性特性，稳定性和权限管理还有待观察，生产环境先用 macOS 版或等后续版本更稳妥。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "已经写了自定义插件，升级要注意什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "两件事：Cordis 升级到 4.0.0-rc.12，插件接口、工作目录参数和配置方式都跟着变了，自定义插件大概率要改代码适配；另外 Node.js 版本要求也有调整（alpha.2 就是为此跟进发布的）。升级前先看官方更新日志，确认自己用到的接口有没有在变更清单里。"
+      }
+    }
+  ]
+}
+  </script>
+  
+  <link rel="icon" href="/img/logo.webp">
+  
+  <title>DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3</title>
+  
+  <meta name="description" content="DeepSeek Harness v0.2.3-alpha.1 大更新逐项解读：任务时间线插件让 Agent 执行不再是黑盒，独立 Code Review 页面支持与 Agent 协作审代码，Git 仓库可直接当插件源（私有仓库也行），飞书企业微信钉钉等 7 类连接器接入，Computer Use...">
+  <meta name="keywords" content="deepseek harness更新,deepseek harness v0.2.3,dsh更新,deepseek harness时间线,deepseek harness代码审阅,deepseek harness插件市场,deepseek harness连接器,deepseek harness computer use,deepseek harness windows,dsh插件源,git仓库插件,deepseek harness ptc,Python PTC移除,deepseek harness升级,cordis 4.0">
+  
+  
+  <meta property="og:site_name" content="科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:title" content="DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3 - 科学上网教程 | VPN推荐与Clash配置指南">
+  <meta property="og:url" content="https://tanqingbo.cn/deepseek-harness-update/">
+  
+  <meta property="og:image" content="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/deepseek-harness-update-banner.webp">
+  
+  
+  <meta property="og:description" content="DeepSeek Harness v0.2.3-alpha.1 大更新逐项解读：任务时间线插件让 Agent 执行不再是黑盒，独立 Code Review 页面支持与 Agent 协作审代码，Git 仓库可直接当插件源（私有仓库也行），飞书企业微信钉钉等 7 类连接器接入，Computer Use...">
+  
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:published_time" content="2026-11-24T06:40:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-24T07:05:00.000Z">
+  <meta property="og:article:author" content="IT 码 农">
+  
+  
+  <meta property="og:article:tag" content="DeepSeek">
+  
+  <meta property="og:article:tag" content="AI Agent">
+  
+  <meta property="og:article:tag" content="DeepSeek Harness">
+  
+  <meta property="og:article:tag" content="更新">
+  
+  
+  
+  
+  
+ <meta name="yandex-verification" content="6b899e6f05914428" />
+ <link rel="canonical" href="https://tanqingbo.cn/deepseek-harness-update/" />
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- 360自动推送 -->
+<script>
+(function(){
+var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script>
+
+ <!-- 谷歌广告 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2917586537958464"
+     crossorigin="anonymous"></script>
+
+ <!-- 新百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b155bf6262460f92ed2a15f7df7a9bdd";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+ <!--
+<link rel="preconnect" href="https://tanqingbo.cn/" crossorigin>
+ --> 
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+    var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+      }
+    };
+    setDarkmode();
+  </script>
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  </script>
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  
+  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  
+  
+  <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
+  
+  
+  
+  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  
+  
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css">
+
+  
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 5.1.1">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="科学上网教程 | VPN推荐与Clash配置指南" type="application/atom+xml">
+</head>
+
+
+<body>
+  <div class="wrapper">
+    
+    <nav class="navbar">
+  <div class="navbar-logo">
+    <span class="navbar-logo-main">
+      
+      <img class="navbar-logo-img" src="/img/logo.webp" alt="tanqingbo.cn IT码农的技术博客 logo">
+      
+      <span class="navbar-logo-dsc">科&nbsp;学&nbsp;上&nbsp;网</span>
+    </span>
+  </div>
+  <div class="navbar-menu">
+    
+    <a href="/" class="navbar-menu-item">
+    
+    首页
+    
+    </a>
+    
+    <a href="/science-internet-guide/" class="navbar-menu-item">
+    
+    科学上网
+    
+    </a>
+    
+    <a href="/ai-tools-guide/" class="navbar-menu-item">
+    
+    AI 工具
+    
+    </a>
+    
+    <a href="/telegram-guide/" class="navbar-menu-item">
+    
+    Telegram
+    
+    </a>
+    
+    <a href="/clash-guide/" class="navbar-menu-item">
+    
+    Clash教程
+    
+    </a>
+    
+    <a href="/archived" class="navbar-menu-item">
+    
+    归档
+    
+    </a>
+    
+    <a href="/about" class="navbar-menu-item">
+    
+    关于
+    
+    </a>
+    
+    <a href="/links" class="navbar-menu-item">
+    
+    友链
+    
+    </a>
+    
+    <a class="navbar-menu-item darknavbar" id="dark"><i class="iconfont icon-weather"></i></a>
+    <a class="navbar-menu-item searchnavbar" id="search"><i class="iconfont icon-search" style="font-size: 1.2rem; font-weight: 400;"></i></a>
+  </div>
+</nav>
+    
+    <div id="local-search" style="display: none;">
+      <input class="navbar-menu-item" id="search-input" placeholder="请输入搜索内容...">
+      <div id="search-content"></div>
+    </div>
+    
+    <div class="section-wrap">
+      <div class="container">
+        <div class="columns">
+          <main class="main-column">
+<div class="image-wrapper">
+  <img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/deepseek-harness-update-banner.webp" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/deepseek-harness-update-banner.webp"
+    alt="DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3"
+    srcset="data:image/svg+xml,%3Csvg%20xmlns=&#39;http://www.w3.org/2000/svg&#39;%20viewBox=&#39;0%200%20300%20300&#39;%3E%3C/svg%3E"
+    class="image lozad">
+</div>
+
+<article class="card card-content">
+  
+  <header>
+    <h1 class="post-title">
+      DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2026-11-24T06:40:00.000Z" style="display: flex; align-items: center;">
+      <i class="iconfont icon-calendar" style="margin-right: 2px;"></i>
+      <span>2026-11-24</span>
+    </time>
+    
+    <span class="dot"></span>
+    
+    <a href="/categories/AI大模型/" class="post-meta-link">AI大模型</a>
+    
+    
+    
+    <span class="dot"></span>
+    <span>3k 字</span>
+    
+	&nbsp;&nbsp;
+	  <!-- id 将作为查询条件 -->
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
+		<span id="/deepseek-harness-update/" class="leancloud_visitors" data-flag-title="DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3">
+			<em class="post-meta-item-text">阅读量 </em>
+			<i class="leancloud-visitors-count">--</i>
+		</span>
+	</div>
+	
+  </div>
+  
+  
+  
+  <div class="post-meta post-show-meta" style="margin-top: -10px;">
+    <div style="display: flex; align-items: center;">
+      <i class="iconfont icon-biaoqian" style="margin-right: 2px; font-size: 1.15rem;"></i>
+      
+      
+        <a href="/tags/DeepSeek/" class="post-meta-link">DeepSeek</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/AI-Agent/" class="post-meta-link">AI Agent</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/DeepSeek-Harness/" class="post-meta-link">DeepSeek Harness</a>
+      
+      
+      <span class="dot"></span>
+      
+        <a href="/tags/更新/" class="post-meta-link">更新</a>
+      
+    </div>
+  </div>
+  
+  
+
+
+		
+  </header>
+  
+
+  
+  <div id="section" class="post-content">
+
+    <p>版本号是最会骗人的东西。</p>
+<p>DeepSeek Harness 这次从 v0.2.2 升到 v0.2.3-alpha.1，看版本号是个不起眼的小更新，翻开更新日志，长度直接超预期。有铁粉感慨：这帮「疯子」在 0.2.2 和 0.2.3-alpha.1 之间搞出的改动，把破坏性变更都算上，比不少软件从 V2 升到 V3 还多。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-00.webp" alt="海外开发者的评价：DSH 在 0.2.2 和 0.2.3-alpha.1 之间搞出的改动比不少软件从 V2 升到 V3 还多" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-00.webp" class="lozad post-image"></p>
+<p>Agent 任务时间线、独立代码审阅页面、会话状态区、Git 插件源、七类办公连接器、Windows 电脑操作——一口气全安排上了。种种迹象表明，DSH 正在从一个 Agent 工具加速进化成一个完整的 Agent 工作平台。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-01.webp" alt="v0.2.3 新增功能清单：插件市场 Git 源、时间线插件、代码审阅页面、会话状态区、7 类连接器、Web 远程登录、MCP OAuth 等" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-01.webp" class="lozad post-image"></p>
+<p>还没装过 DeepSeek Harness 的，先看<a href="https://tanqingbo.cn/deepseek-harness/">安装与四种模式教程</a>再回来，这篇讲的是它更新了什么。</p>
+<h2 id="30-秒速答"><a href="#30-秒速答" class="headerlink" title="30 秒速答"></a>30 秒速答</h2><ul>
+<li><strong>更新多大</strong>：版本号 v0.2.2→v0.2.3-alpha.1，实际改动量堪比大版本，同一天还跟进了 alpha.2</li>
+<li><strong>看得见的</strong>：任务时间线插件、独立 Code Review 页、会话状态区、Auto review 权限模式</li>
+<li><strong>生态的</strong>：Git 仓库（含私有）直接当插件源；Linear、Notion、腾讯文档、飞书、企业微信、腾讯会议、钉钉 7 类连接器</li>
+<li><strong>底层的</strong>：MCP 工具按需加载省上下文；Computer Use 实验性支持 Windows</li>
+<li><strong>要小心的</strong>：Python PTC 直接移除、Cordis 升 4.0 接口变更，自定义插件要改代码</li>
+<li><strong>网络前提</strong>：本体和 DeepSeek API 国内直连可用，插件市场和海外连接器要另说，见下节</li>
+</ul>
+<h2 id="开始之前：网络环境"><a href="#开始之前：网络环境" class="headerlink" title="开始之前：网络环境"></a>开始之前：网络环境</h2><p>DSH 本体是 npx 本地运行，DeepSeek API 国内直连也没问题，这是它对国内用户友好的地方。但更新涉及的两块要海外网络：从 GitHub 拉插件和更新日志、连接 Linear、Notion 这类海外服务。</p>
+<p>没解决网络的先看<a href="https://tanqingbo.cn/clash-guide/">科学上网教程</a>。已经在用 DSH 但装插件经常超时的，大概率也是网络链路问题，不是插件本身坏了。</p>
+<h2 id="一、Agent-干到哪儿了，进度条里全有"><a href="#一、Agent-干到哪儿了，进度条里全有" class="headerlink" title="一、Agent 干到哪儿了，进度条里全有"></a>一、Agent 干到哪儿了，进度条里全有</h2><p>用过 Agent 的人都懂一个痛点：任务一复杂，智能体在做什么、卡在哪个环节，就成了黑盒。你只能盯着光标等，或者反复问「现在到哪了」。</p>
+<p>这次新增的实验性时间线插件就是冲这个来的：沿着层级关系展示任务和执行状态，连 Blockers（阻塞事项）都能单独记录。哪个环节推不动了，打开任务树和进展报告直接看对应信息——排查卡点从「问 Agent」变成「看仪表盘」。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-03.webp" alt="时间线插件界面：发布评审任务进度 70%，间隔报告记录 14:15 开始运行验证、14:00 已检查变更" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-03.webp" class="lozad post-image"></p>
+<p>配套还有新增的会话状态区域：工作目录、代码变更请求、子 Agent、任务和插件状态集中显示，可以停靠在侧边，分区顺序支持拖动调整。一个界面看清整个会话的家底。会话还加了已读/未读状态，后台跑完的任务，哪些你还没看过结果，会单独提醒——不用再挨个点回去翻。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-04.webp" alt="DeepSeek Harness 新版主界面：左侧工作区按项目管理会话，输入框支持模式切换与文件引用" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-04.webp" class="lozad post-image"></p>
+<p>权限侧还有个实验性的 Auto review 模式：Agent 每次调用受支持的工具，先交给模型审查一遍再执行。相当于给 Agent 的每次动手加了一道自动安检。举个真实场景：Agent 想跑一条你没要求过的删目录命令，模型先拦下来，弹窗交给你决定——拒绝，或者允许这一次。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-05.webp" alt="Auto review 权限模式示意：模型拒绝未要求的 rm -rf 调用，用户可选拒绝或允许一次" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-05.webp" class="lozad post-image"></p>
+<h2 id="二、代码审阅：AI-也得交作业给人看"><a href="#二、代码审阅：AI-也得交作业给人看" class="headerlink" title="二、代码审阅：AI 也得交作业给人看"></a>二、代码审阅：AI 也得交作业给人看</h2><p>这轮更新里最提气的是独立的 Code Review 页面。</p>
+<p>之前的流程是：Agent 写完代码，甩一句「任务已完成」，改动自己去仓库里翻。现在与当前用户相关的 GitHub PR 集中放在审阅页面里，修改说明、涉及文件、具体代码差异直接对照着看——哪几行删了、哪几行新加，一目了然。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-06.webp" alt="Code Review 页面示意：会话关联 GitHub PR，检查状态、评审意见与代码差异对照查看" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-06.webp" class="lozad post-image"></p>
+<p>遇到拿不准的修改，还能在页面内和 Agent 协作审阅。页面本身也支持插件扩展，开发者可以加自己的审阅视图、代码行注解、工具栏和评论框里的操作入口。GitLab 同样获得支持，可以审阅和合并 Merge Request。</p>
+<p>多 Agent 同时改代码的场景也照顾到了：Git Worktree 做了优化，可以自定义分支名称、从远程分支创建工作树。一个 Agent 修登录功能，另一个改支付接口，各自在独立工作树里处理，互不干扰，改完统一走代码审阅。会话侧栏的「变更请求与工作树」开关（实验性）就是管这块的，关联的 PR、检查状态、评审意见都挂在对应会话下面。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-02.webp" alt="会话侧栏的变更请求与工作树开关（实验性）：集中跟踪关联 GitHub PR 的检查状态与代码差异" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-02.webp" class="lozad post-image"></p>
+<p>AI 程序员现在不仅得交作业，连代码评审都安排得明明白白。</p>
+<h2 id="三、私有-Git-仓库直接装插件"><a href="#三、私有-Git-仓库直接装插件" class="headerlink" title="三、私有 Git 仓库直接装插件"></a>三、私有 Git 仓库直接装插件</h2><p>插件市场的升级对企业用户是个实打实的利好：<strong>Git 仓库现在可以直接添加为插件来源，公开、私有仓库都支持</strong>。</p>
+<p>典型场景：一家公司内部开发了一套 Agent 插件——有的检查内部代码规范，有的访问企业知识库，有的专门跑自动化测试。这些工具平时放在私有 Git 仓库里，不准备公开。以前想让团队成员装，要么手动分发，要么咬牙把内部工具挪到公共仓库。</p>
+<p>现在直接把仓库添加进插件市场，团队照常浏览、安装，内部工具留在内部。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-07.webp" alt="添加插件对话框：支持输入 GitHub 仓库地址作为插件来源，安装源可选中国大陆镜像源" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-07.webp" class="lozad post-image"></p>
+<p>两个对国内用户实用的细节：安装源里有「中国大陆镜像源」可选，拉插件不用海外网络也快；官方在安装框里明晃晃提醒了一句——插件在本机以你的权限运行，来源不明的插件可能读取和泄露你的数据，装之前先想清楚来源。</p>
+<p>连接器名单也扩了一波：Linear、Notion、腾讯文档、飞书、企业微信、腾讯会议、钉钉，一共 7 类。项目管理、知识库、协作文档、团队沟通、在线会议，办公常用的几类工具都覆盖到了。在插件页面完成账号连接或授权，就能在对话中调用对应服务；连接器账号统一管理，MCP 还加入了 OAuth 授权与凭据自动刷新。</p>
+<p>工具越接越多，模型的上下文也得省着花——每个 MCP 工具都自带名称、参数和功能说明，几十个一起加载，光「告诉模型有哪些工具可用」就占掉不少 Token。于是有了新的可选 MCP 工具按需加载模式：需要什么工具，再加载对应的定义。连工具说明书都开始精打细算了。</p>
+<h2 id="四、Windows-电脑操作上车"><a href="#四、Windows-电脑操作上车" class="headerlink" title="四、Windows 电脑操作上车"></a>四、Windows 电脑操作上车</h2><p>Computer Use 开始实验性支持 Windows：Agent 可以通过鼠标、键盘操作电脑界面，点击按钮、输入文字，还能通过 cua-mcp 把电脑操作能力提供给其他 Agent 系统调用。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-08.webp" alt="更新日志中的 Computer Use 条目：macOS 统一系统键盘输入授权，Windows 新增实验性支持" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-08.webp" class="lozad post-image"></p>
+<p>macOS 这边的键鼠授权做了统一，Web 连接模式增加了远程登录。注意「实验性」三个字的分量——想在自己主力机上放开的，建议再等等。</p>
+<h2 id="五、升级前必读：这批破坏性变更"><a href="#五、升级前必读：这批破坏性变更" class="headerlink" title="五、升级前必读：这批破坏性变更"></a>五、升级前必读：这批破坏性变更</h2><p>小版本号掩盖不了里面的硬改动，升级前这几条要过一遍：</p>
+<p><strong>Python PTC 支持直接移除</strong>。之前教程里的四种模式，PTC 模式承担批量执行类任务，这一刀砍的是它的 Python 路线。Node PTC 保留但行为变了：默认在多次调用之间保留变量。用 PTC 跑批量任务的工作流，升级后要重新验证。</p>
+<p><strong>Cordis 升级到了 4.0.0-rc.12 版本</strong>，插件接口、工作目录参数和配置方式跟着变了一轮。已经写了自定义插件的，这次升级大概率要顺手改自己的代码。</p>
+<p><strong>Node.js 版本要求有调整</strong>，24.x 系列要 24.22.3 及以上、26.x 系列要 26.13.1 及以上，官方同一天跟进发布的 v0.2.3-alpha.2 就是干这个的。装环境时先对一眼自己的 Node 版本。</p>
+<p><img src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-09.webp" alt="v0.2.3-alpha.2 发布页：Node.js 版本要求调整为 24.22.3、26.13.1 及以上" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://tqb4342.oss-cn-guangzhou.aliyuncs.com/img/dsh-v023-09.webp" class="lozad post-image"></p>
+<p>完整变更清单看官方更新日志：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/deepseek-ai/deepseek-harness/releases">github.com/deepseek-ai/deepseek-harness/releases</a>。</p>
+<p>照这个迭代速度——alpha.1 和 alpha.2 同一天发——接下来几周大概率还有新东西。DSH 从 Agent 工具进化成 Agent 工作平台的方向，已经越来越清晰了。</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p><strong>DeepSeek Harness v0.2.3 更新了什么？</strong></p>
+<p>一口气加了 Agent 任务时间线插件（层级任务树加阻塞事项记录）、独立 Code Review 代码审阅页面、会话状态区、实验性 Auto review 权限模式；插件市场支持把 Git 仓库直接当插件来源（私有仓库也行）；新增 Linear、Notion、腾讯文档、飞书、企业微信、腾讯会议、钉钉 7 类连接器；MCP 加入 OAuth 授权与工具按需加载；Computer Use 实验性支持 Windows。更新量远超一个小版本该有的体量。</p>
+<p><strong>Python PTC 被移除，之前用 PTC 模式的怎么办？</strong></p>
+<p>v0.2.3-alpha.1 直接移除了 Python PTC 支持，Node PTC 则改为默认在多次调用之间保留变量。之前在 PTC 模式里跑批量任务的，要么切到 Node PTC 重新验证一遍流程，要么回到标准模式分批执行。Cordis 同时升到 4.0.0-rc.12，插件接口和工作目录参数都变了。</p>
+<p><strong>独立 Code Review 页面解决什么问题？</strong></p>
+<p>之前 Agent 写完代码只能看一句任务完成，改动要自己去仓库里翻。现在与当前用户相关的 GitHub PR 可以集中在一个页面查看，修改说明、涉及文件、代码差异直接对照着看，拿不准的修改还能在页面里和 Agent 协作审阅。GitLab 的 Merge Request 同样支持审阅和合并，页面还开放插件扩展。</p>
+<p><strong>Git 仓库当插件源有什么用？</strong></p>
+<p>企业内部开发的 Agent 插件——检查内部代码规范、访问企业知识库、跑自动化测试这类——平时放在私有 Git 仓库里不公开。现在可以直接把这个仓库添加进插件市场，团队成员照常浏览安装，不用为了方便装插件把内部工具挪到公共仓库。</p>
+<p><strong>Windows 现在能用 DeepSeek Harness 的 Computer Use 了吗？</strong></p>
+<p>实验性支持。Agent 可以通过鼠标键盘操作 Windows 界面，点按钮、输入文字，还能通过 cua-mcp 把电脑操作能力提供给其他 Agent 系统调用。注意这是实验性特性，稳定性和权限管理还有待观察，生产环境先用 macOS 版或等后续版本更稳妥。</p>
+<p><strong>已经写了自定义插件，升级要注意什么？</strong></p>
+<p>两件事：Cordis 升级到 4.0.0-rc.12，插件接口、工作目录参数和配置方式都跟着变了，自定义插件大概率要改代码适配；另外 Node.js 版本要求也有调整（alpha.2 就是为此跟进发布的）。升级前先看官方更新日志，确认自己用到的接口有没有在变更清单里。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>这次更新最值得琢磨的不是某个单点功能，而是整体走向：时间线解决「看不见」、审阅页解决「不放心」、插件源和连接器解决「接不进来」——全是 Agent 从玩具走向生产环境路上的真实关卡。跟 DSH 团队之前那篇 Super-agent 设计探索是同一条线：Agent 系统要连续、持久地干活，工程配套得先跟上。</p>
+<p>装 Harness 的完整流程和四种模式详解在 <a href="https://tanqingbo.cn/deepseek-harness/">DeepSeek Harness 教程</a>；想让多个 Agent 组成团队互相派活的完整玩法看 <a href="https://tanqingbo.cn/super-agent-lobehub/">Super-agent 实战</a>；各 AI 编程工具怎么选，<a href="https://tanqingbo.cn/ai-coding-agent-guide/">横评在这里</a>。</p>
+		
+  </div>	
+
+<div>
+  
+  <div class="post-note note-warning copyright" style="margin-top: 42px">
+    <p><span style="font-weight: bold;">作者：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/about">IT码农</a></p>
+    <p><span style="font-weight: bold;">文章链接：</span><a target="_blank" rel="nofollow noopener noreferrer" href="https://tanqingbo.cn/deepseek-harness-update/">https://tanqingbo.cn/deepseek-harness-update/</a></p>
+    <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+  </div>
+  
+  </div>
+</article>
+
+
+<div class="card card-content related-card">
+  <div class="related-title">相关文章</div>
+  <ul class="related-list">
+    
+    <li class="related-item">
+      <a href="/deepseek-harness/" class="related-link">
+        <span class="related-post-title">DeepSeek Harness 是什么：安装与四种模式教程</span>
+        <span class="related-date">2026-08-18</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/super-agent-lobehub/" class="related-link">
+        <span class="related-post-title">Super-agent 设计解读与 LobeHub 实战</span>
+        <span class="related-date">2026-11-16</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/ai-coding-agent-guide/" class="related-link">
+        <span class="related-post-title">AI 编程 Agent 怎么选：主流工具横评</span>
+        <span class="related-date">2026-10-24</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/claude-code/" class="related-link">
+        <span class="related-post-title">Claude Code 教程：AI 编程进阶指南</span>
+        <span class="related-date">2026-06-11</span>
+      </a>
+    </li>
+    
+    <li class="related-item">
+      <a href="/ai-tools-guide/" class="related-link">
+        <span class="related-post-title">AI 工具哪个好用：主流大模型实测对比</span>
+        <span class="related-date">2026-07-30</span>
+      </a>
+    </li>
+    
+  </ul>
+</div>
+
+<div class="nav nav-post">
+  
+  
+  <div class="nav-item-next">
+    <a href="/super-agent-lobehub/" class="nav-link">
+      <div>
+        <div class="nav-label">下一篇</div>
+        
+        <div class="nav-title">Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026） </div>
+        
+      </div>
+      <i class="iconfont icon-right nav-next-icon"></i>
+    </a>
+  </div>
+  
+</div>
+
+<div class="card card-content comment-card" style="margin-top: 16px;">
+  <div class="comment-card-title">评论</div>
+  
+  <div id="vcomments"></div>
+  
+  <script>
+    // 注意：不能用 window.onload 初始化——hexo-offline-popup 注入的 sw-register
+    // 脚本会在页面尾部无链式覆盖 window.onload，把这里的初始化整个闷死
+    // （阅读量/评论全部失效）。改用 loadScript 回调，与 GA/lazyload/fslightbox 一致。
+    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js", function () {
+      new Valine({
+        el: '#vcomments',
+        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
+        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
+        placeholder: 'Just go go',
+        path: window.location.pathname,
+        avatar: 'mp',
+        meta: ["nick","mail","link"],
+        pageSize: '10',
+        lang: '',
+        visitor: 'true',
+        highlight: true,
+        recordIP: false,
+        
+        
+        
+        enableQQ: 'false',
+        requiredFields: [],
+      });
+    });
+  </script>
+
+</div>
+
+<div class="card card-content toc-card" id="mobiletoc">
+  <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Agent-%E5%B9%B2%E5%88%B0%E5%93%AA%E5%84%BF%E4%BA%86%EF%BC%8C%E8%BF%9B%E5%BA%A6%E6%9D%A1%E9%87%8C%E5%85%A8%E6%9C%89"><span class="toc-number">3.</span> <span class="toc-text">一、Agent 干到哪儿了，进度条里全有</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%A3%E7%A0%81%E5%AE%A1%E9%98%85%EF%BC%9AAI-%E4%B9%9F%E5%BE%97%E4%BA%A4%E4%BD%9C%E4%B8%9A%E7%BB%99%E4%BA%BA%E7%9C%8B"><span class="toc-number">4.</span> <span class="toc-text">二、代码审阅：AI 也得交作业给人看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A7%81%E6%9C%89-Git-%E4%BB%93%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">三、私有 Git 仓库直接装插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Windows-%E7%94%B5%E8%84%91%E6%93%8D%E4%BD%9C%E4%B8%8A%E8%BD%A6"><span class="toc-number">6.</span> <span class="toc-text">四、Windows 电脑操作上车</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8D%87%E7%BA%A7%E5%89%8D%E5%BF%85%E8%AF%BB%EF%BC%9A%E8%BF%99%E6%89%B9%E7%A0%B4%E5%9D%8F%E6%80%A7%E5%8F%98%E6%9B%B4"><span class="toc-number">7.</span> <span class="toc-text">五、升级前必读：这批破坏性变更</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol>
+</div></main>
+          <aside class="left-column">
+            
+            <div class="card card-author">
+              
+<img src="/img/logo.webp" class="author-img" alt="IT码农 - tanqingbo.cn 博客作者头像">
+
+<p class="author-name">IT&nbsp;码&nbsp;农</p>
+<p class="author-description">专注于AI教程与科学上网</p>
+<div class="author-message">
+  <a class="author-posts-count" href="/archives">
+    <span>448</span>
+    <span>文章</span>
+  </a>
+  <a class="author-categories-count" href="/categories">
+    <span>8</span>
+    <span>分类</span>
+  </a>
+  <a class="author-tags-count" href="/tags">
+    <span>449</span>
+    <span>标签</span>
+  </a>
+</div>
+
+<div class="author-card-society">
+  
+    <div class="author-card-society-icon">
+      <a href="/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E4%B9%8BVPN%E7%AF%87/">
+        <i class="iconfont icon-wechat society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/tqb4342">
+        <i class="iconfont icon-github society-icon"></i>
+      </a>
+    </div>
+  
+    <div class="author-card-society-icon">
+      <a href="/Win-OpenInternet/">
+        <i class="iconfont icon-sina society-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<a class="author-ai-tools" href="https://aisurf.cc/ai-tools/" target="_blank" rel="noopener external nofollow noreferrer" title="精选 100 个 AI 工具，分类清晰持续更新">
+  <i class="iconfont icon-fenlei"></i>
+  AI 工具箱
+</a>
+            </div>
+            
+            <div class="sticky-tablet">
+  
+  
+  <article class="display-when-two-columns spacer">
+    <div class="card card-content toc-card">
+      <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Agent-%E5%B9%B2%E5%88%B0%E5%93%AA%E5%84%BF%E4%BA%86%EF%BC%8C%E8%BF%9B%E5%BA%A6%E6%9D%A1%E9%87%8C%E5%85%A8%E6%9C%89"><span class="toc-number">3.</span> <span class="toc-text">一、Agent 干到哪儿了，进度条里全有</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%A3%E7%A0%81%E5%AE%A1%E9%98%85%EF%BC%9AAI-%E4%B9%9F%E5%BE%97%E4%BA%A4%E4%BD%9C%E4%B8%9A%E7%BB%99%E4%BA%BA%E7%9C%8B"><span class="toc-number">4.</span> <span class="toc-text">二、代码审阅：AI 也得交作业给人看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A7%81%E6%9C%89-Git-%E4%BB%93%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">三、私有 Git 仓库直接装插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Windows-%E7%94%B5%E8%84%91%E6%93%8D%E4%BD%9C%E4%B8%8A%E8%BD%A6"><span class="toc-number">6.</span> <span class="toc-text">四、Windows 电脑操作上车</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8D%87%E7%BA%A7%E5%89%8D%E5%BF%85%E8%AF%BB%EF%BC%9A%E8%BF%99%E6%89%B9%E7%A0%B4%E5%9D%8F%E6%80%A7%E5%8F%98%E6%9B%B4"><span class="toc-number">7.</span> <span class="toc-text">五、升级前必读：这批破坏性变更</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol>
+    </div>
+  </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header"><i class="iconfont icon-fenlei" style="padding-right: 2px;"></i>分类</div>
+  <div class="categories-list">
+    
+    
+      <a href="/categories/科学上网">
+        <div class="categories-list-item">
+          科学上网
+          <span class="categories-list-item-badge">82</span>
+        </div>
+      </a>
+    
+      <a href="/categories/编程学习">
+        <div class="categories-list-item">
+          编程学习
+          <span class="categories-list-item-badge">68</span>
+        </div>
+      </a>
+    
+      <a href="/categories/AI大模型">
+        <div class="categories-list-item">
+          AI大模型
+          <span class="categories-list-item-badge">40</span>
+        </div>
+      </a>
+    
+      <a href="/categories/海外热门">
+        <div class="categories-list-item">
+          海外热门
+          <span class="categories-list-item-badge">26</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    
+<div class="tags-card">
+  <div class="tags-header"><i class="iconfont icon-biaoqian" style="padding-right: 2px;"></i>热门标签</div>
+  <div class="tags-list">
+    
+    <a href="/tags/科学上网/" title="科学上网"><div class="tags-list-item">科学上网</div></a>
+    
+    <a href="/tags/Clash/" title="Clash"><div class="tags-list-item">Clash</div></a>
+    
+    <a href="/tags/翻墙/" title="翻墙"><div class="tags-list-item">翻墙</div></a>
+    
+    <a href="/tags/VPN/" title="VPN"><div class="tags-list-item">VPN</div></a>
+    
+    <a href="/tags/算法/" title="算法"><div class="tags-list-item">算法</div></a>
+    
+    <a href="/tags/ChatGPT/" title="ChatGPT"><div class="tags-list-item">ChatGPT</div></a>
+    
+    <a href="/tags/机场/" title="机场"><div class="tags-list-item">机场</div></a>
+    
+    <a href="/tags/Mihomo/" title="Mihomo"><div class="tags-list-item">Mihomo</div></a>
+    
+    <a href="/tags/AI工具/" title="AI工具"><div class="tags-list-item">AI工具</div></a>
+    
+    <a href="/tags/Telegram/" title="Telegram"><div class="tags-list-item">Telegram</div></a>
+    
+    <a href="/tags/流媒体/" title="流媒体"><div class="tags-list-item">流媒体</div></a>
+    
+    <a href="/tags/电报/" title="电报"><div class="tags-list-item">电报</div></a>
+    
+    <a href="/tags/电子书下载/" title="电子书下载"><div class="tags-list-item">电子书下载</div></a>
+    
+    <a href="/tags/梯子/" title="梯子"><div class="tags-list-item">梯子</div></a>
+    
+    <a href="/tags/大模型/" title="大模型"><div class="tags-list-item">大模型</div></a>
+    
+    <a href="/tags/代理/" title="代理"><div class="tags-list-item">代理</div></a>
+    
+  </div>
+</div>
+
+  </article>
+  
+  
+</div>
+          </aside>
+          <aside class="right-column">
+            <div class="sticky-widescreen">
+
+<!--
+<article class="card card-content toc-card">
+<div style="">
+    <div style="float: left; width: 130px; height: 136px;">
+        <img class="adv" style="width: 100%; height: 100%; border: solid 1px #ddd;" src="/img/ewm.webp" alt="微信公众号 技术于货 二维码">
+    </div>
+    <div style="float: left; margin-left: 17px; margin-top: 12px;">
+        <div style="color:red; font-size: 18px; margin-bottom: 12px;margin-left: 4px;">关注我的公众号</div>
+        <small style="font-size: 0.9em;">
+            →「技术于货」每日推送<br>
+            →「免费资料」随时领取<br>
+            →「签到活动」每周福利<br>
+        </small>
+    </div>
+    <div style="clear: both;"></div>
+	<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+    <a href="/CSBook001/" target="_blank" style="color:orange;font-size: 15px;" rel="noopener noreferrer">扫描上方二维码，关注我的公众号</a>
+    <br>
+    <div style="height: 8px;"></div>
+    更多干货，等你来看，我在微信上等你!
+</div>
+</div>
+</article>
+-->
+
+<article class="card card-content toc-card">
+<div class="xingqiu-img"> <a href="/clash-guide/" target="_self"><img src="/img/202603151.webp" alt="科学上网工具推荐 - IT码农的互联网导航"></a></div>
+<!--
+<div style="clear: both;"></div>
+<div style="font-size: 0.8em; margin: 15px 0 10px 0;">
+	<strong><span style="caret-color: red;font-size: 15px;color: rgb(77, 168, 238);"><a href="https://tanqingbo.cn/about/" title="计算机专业经典书籍下载">扫码加入星球你将收获：</a></span></strong>
+    <div style="height: 8px;"></div>
+    1、主流互联网中找不到的副业赚钱方法，帮助你闷声赚钱；
+	<div style="height: 5px;"></div>
+	2、分享我的投资理财方法以及互联网中各种流量陷阱和套路；
+	<div style="height: 5px;"></div>
+	3、无限次向我提问，咨询成长方法、求学困惑、副业赚钱等问题。
+</div>
+-->
+</article>
+
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header"><i class="iconfont icon-wenzhang_huaban" style="padding-right: 2px;"></i>最近文章</div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-24</div>
+        <a href="/deepseek-harness-update/"><div class="recent-posts-item-content">DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-16</div>
+        <a href="/super-agent-lobehub/"><div class="recent-posts-item-content">Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-14</div>
+        <a href="/ladder-guide/"><div class="recent-posts-item-content">挂梯子是什么意思？怎么挂梯子（2026 电脑/手机保姆级教程）</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-11</div>
+        <a href="/netflix-tv-guide/"><div class="recent-posts-item-content">电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+  <article class="card card-content toc-card">
+    <div class="toc-header"><i class="iconfont icon-menu" style="padding-right: 2px;"></i>目录</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#30-%E7%A7%92%E9%80%9F%E7%AD%94"><span class="toc-number">1.</span> <span class="toc-text">30 秒速答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E4%B9%8B%E5%89%8D%EF%BC%9A%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83"><span class="toc-number">2.</span> <span class="toc-text">开始之前：网络环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Agent-%E5%B9%B2%E5%88%B0%E5%93%AA%E5%84%BF%E4%BA%86%EF%BC%8C%E8%BF%9B%E5%BA%A6%E6%9D%A1%E9%87%8C%E5%85%A8%E6%9C%89"><span class="toc-number">3.</span> <span class="toc-text">一、Agent 干到哪儿了，进度条里全有</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%A3%E7%A0%81%E5%AE%A1%E9%98%85%EF%BC%9AAI-%E4%B9%9F%E5%BE%97%E4%BA%A4%E4%BD%9C%E4%B8%9A%E7%BB%99%E4%BA%BA%E7%9C%8B"><span class="toc-number">4.</span> <span class="toc-text">二、代码审阅：AI 也得交作业给人看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%A7%81%E6%9C%89-Git-%E4%BB%93%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">三、私有 Git 仓库直接装插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Windows-%E7%94%B5%E8%84%91%E6%93%8D%E4%BD%9C%E4%B8%8A%E8%BD%A6"><span class="toc-number">6.</span> <span class="toc-text">四、Windows 电脑操作上车</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8D%87%E7%BA%A7%E5%89%8D%E5%BF%85%E8%AF%BB%EF%BC%9A%E8%BF%99%E6%89%B9%E7%A0%B4%E5%9D%8F%E6%80%A7%E5%8F%98%E6%9B%B4"><span class="toc-number">7.</span> <span class="toc-text">五、升级前必读：这批破坏性变更</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">9.</span> <span class="toc-text">写在最后</span></a></li></ol>
+  </article>
+  
+
+
+  
+  
+  
+</div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+  
+<style>
+.site-nav{max-width:1080px;margin:0 auto;padding:26px 20px 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px 30px;text-align:left;position:relative}
+.site-nav::before{content:'';position:absolute;top:0;left:20px;right:20px;height:1px;background:linear-gradient(90deg,rgba(50,115,220,0),rgba(50,115,220,0.3),rgba(50,115,220,0))}
+.site-nav h4{margin:0 0 13px;font-size:14px;color:#2c3e50;font-weight:700;display:flex;align-items:center;gap:8px}
+.site-nav h4::before{content:'';display:inline-block;width:3px;height:14px;border-radius:2px;background:#3273dc;flex:none}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav li{margin:0 0 9px;transition:transform .18s ease}
+.site-nav li:hover{transform:translateX(3px)}
+.site-nav a{font-size:13px;color:#57636e;text-decoration:none;line-height:1.55;transition:color .15s ease}
+.site-nav a:hover{color:#3273dc}
+@media (max-width:768px){.site-nav{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.site-nav{grid-template-columns:1fr;gap:20px}}
+[data-user-color-scheme='dark'] .site-nav h4{color:#dbe2ea}
+[data-user-color-scheme='dark'] .site-nav a{color:#9aa7b5}
+[data-user-color-scheme='dark'] .site-nav a:hover{color:#6596e5}
+@media (prefers-color-scheme:dark){
+  :root:not([data-user-color-scheme]) .site-nav h4{color:#dbe2ea}
+  :root:not([data-user-color-scheme]) .site-nav a{color:#9aa7b5}
+  :root:not([data-user-color-scheme]) .site-nav a:hover{color:#6596e5}
+}
+</style>
+<div class="site-nav">
+  <div class="site-nav-col">
+    <h4>热门文章</h4>
+    <ul>
+      <li><a href="/clash-guide/">Clash 科学上网完全教程</a></li>
+      <li><a href="/best-vpn/">VPN 推荐 2026：翻墙梯子搭建指南</a></li>
+      <li><a href="/VPN202607/">2026 科学上网保姆级教程</a></li>
+      <li><a href="/clash-verge/">Clash Verge 下载安装教程</a></li>
+      <li><a href="/fanqiang-maomi/">翻墙软件猫咪是什么</a></li>
+      <li><a href="/science-internet-guide/">科学上网方案怎么选：三大方案对比</a></li>
+      <li><a href="/netflix-16yuan/">奈飞 Netflix 合租怎么买便宜</a></li>
+      <li><a href="/vpn-freego/">科学上网完全指南（2026）</a></li>
+      <li><a href="/ai-tools-guide/">AI 工具完全指南 2026</a></li>
+      <li><a href="/ai-coding-agent-guide/">AI 编程工具怎么选 2026</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>实操教程</h4>
+    <ul>
+      <li><a href="/Win-OpenInternet/">Windows 电脑翻墙教程：从零开始</a></li>
+      <li><a href="/ios-open-internet/">iPhone 苹果手机翻墙教程</a></li>
+      <li><a href="/Android-open-internet/">安卓手机翻墙教程</a></li>
+      <li><a href="/clash-linux/">Linux 科学上网教程（mihomo）</a></li>
+      <li><a href="/best-vps/">翻墙软件推荐 2026：VPN 工具下载</a></li>
+      <li><a href="/telegram-register-guide/">Telegram 下载注册教程</a></li>
+      <li><a href="/how-to-signup-chatgpt/">ChatGPT 注册教程</a></li>
+      <li><a href="/chatgpt-plus-buy-guide/">ChatGPT Plus 开通教程</a></li>
+      <li><a href="/clash-subscribe-guide/">Clash 订阅链接导入教程</a></li>
+      <li><a href="/free-fanqiang/">免费翻墙靠谱吗：梯子避坑</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>海外热门</h4>
+    <ul>
+      <li><a href="/Telegram/">Telegram 搜索机器人 Top10</a></li>
+      <li><a href="/telegram-guide/">Telegram 下载注册与中文设置</a></li>
+      <li><a href="/open-app/">翻墙后必下的国外 App</a></li>
+      <li><a href="/video-websites/">国外视频网站盘点</a></li>
+      <li><a href="/GPT-6-Astra/">GPT-6 Astra 使用与购买指南</a></li>
+      <li><a href="/popcorn/">爆米花流媒体五平台合租</a></li>
+      <li><a href="/streaming-bundle-guide/">流媒体合租怎么买总览</a></li>
+      <li><a href="/icloud/">iCloud+ 合租便宜方案</a></li>
+      <li><a href="/steam-guide/">Steam 外服联机指南</a></li>
+      <li><a href="/apple-id-buy-guide/">美区苹果 ID 购买与防封</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-col">
+    <h4>真实测评</h4>
+    <ul>
+      <li><a href="/magic-vpn/">科学上网实用攻略2026</a></li>
+      <li><a href="/yzhx-vpn/">一枝红杏机场实测</a></li>
+      <li><a href="/kuaili-review/">快狸机场怎么样</a></li>
+      <li><a href="/choose2/">Clash 机场怎么选避坑</a></li>
+      <li><a href="/goingbus/">环球巴士合租平台实测</a></li>
+      <li><a href="/ai-llm-buy-guide/">AI 大模型怎么买便宜：合租充值教程</a></li>
+      <li><a href="/accounts-google/">谷歌账号(Gmail)注册与购买</a></li>
+      <li><a href="/Netflix-VPN/">Netflix VPN 推荐</a></li>
+      <li><a href="/airport-rate-guide/">机场倍率与流量怎么算</a></li>
+      <li><a href="/double-11-vpn-guide/">双11 机场优惠折扣攻略</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="footer-meta">
+    <div class="footer-meta-divider"></div>
+    <div class="footer-meta-main">
+      <span>Copyright ©
+        
+        2020 -
+        
+        2026
+      </span>
+      <a href="/" class="footer-site-link">科&nbsp;学&nbsp;上&nbsp;网</a>
+      <span class="footer-meta-sep">|</span>
+      <span class="footer-friend">友情链接</span>
+      <a href="https://aisurf.cc/" rel="external nofollow noreferrer" class="footer-friend-link" target="_blank">AI冲浪指南</a>
+    </div>
+
+    
+
+    <div class="footer-meta-stats" id="footer-stats" style="display:none">
+      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+      <span class="footer-meta-sep">|</span>
+      <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span>
+    </div>
+    <script>
+    /* 不蒜子自愈式加载器：服务不稳（常 502/超时），默认隐藏，缓存秒显，拉到数据才显示 */
+    (function () {
+      var wrap = document.getElementById('footer-stats');
+      if (!wrap) return;
+      var pv = document.getElementById('busuanzi_value_site_pv');
+      var uv = document.getElementById('busuanzi_value_site_uv');
+      var show = function () { wrap.style.display = ''; };
+
+      /* 回访秒显：3 天内的缓存 */
+      var cache = null;
+      try { cache = JSON.parse(localStorage.getItem('bzs-site-stats') || 'null'); } catch (e) {}
+      var fresh = !!(cache && cache.pv && (Date.now() - cache.t < 2592e5));
+      if (fresh) { pv.textContent = cache.pv; uv.textContent = cache.uv; show(); }
+
+      /* 拉新数据（JSONP 直连 API，不依赖官方 JS 文件） */
+      var done = false;
+      var cb = 'BusuanziCallback_' + Date.now();
+      window[cb] = function (d) {
+        done = true;
+        try { delete window[cb]; } catch (e) { window[cb] = null; }
+        if (d && d.site_pv) {
+          pv.textContent = d.site_pv;
+          uv.textContent = d.site_uv;
+          show();
+          try { localStorage.setItem('bzs-site-stats', JSON.stringify({ pv: d.site_pv, uv: d.site_uv, t: Date.now() })); } catch (e) {}
+        }
+      };
+      var s = document.createElement('script');
+      s.src = 'https://busuanzi.ibruce.info/busuanzi?jsonpCallback=' + cb;
+      s.onerror = function () { /* 失败静默：有缓存保缓存，无缓存整行保持隐藏 */ };
+      document.body.appendChild(s);
+    })();
+    </script>
+  </div>
+
+  
+  
+</footer>
+
+  <a role="button" id="scrollbutton" class="basebutton" >
+  <i class="iconfont icon-arrowleft button-icon"></i>
+</a>
+<a role="button" id="menubutton" class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a role="button" id="popbutton" class="basebutton">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a role="button" id="darkbutton" class="basebutton darkwidget">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a role="button" id="searchbutton" class="basebutton searchwidget">
+  <i class="iconfont icon-search button-icon"></i>
+</a>
+
+  
+  
+  
+
+  
+  
+  <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img');
+    var i;
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a');
+      wrapper.setAttribute('data-fslightbox', 'gallery');
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'));
+      wrapper.style.cssText = 'width: 100%; display: flex; justify-content: center;';
+      img[i].before(wrapper);
+      wrapper.append(img[i]);
+    }
+    refreshFsLightbox();
+  }
+</script>
+<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+  
+  
+  
+<script src="/js/main.js"></script>
+
+  
+  
+  <script>
+    var addLazyload = function () {
+      var observer = lozad('.lozad', {
+        load: function (el) {
+          el.srcset = el.getAttribute('data-src');
+        },
+        loaded: function (el) {
+          el.classList.add('loaded');
+        }
+      });
+      observer.observe();
+    }
+  </script>
+  <script>loadScript("/js/lib/lozad.min.js", addLazyload)</script>
+  
+  
+  <script>
+    var googleAnalytics = function() {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178024758-1');
+    }
+  </script>
+  <script>loadScript("https://www.googletagmanager.com/gtag/js?id=" + "UA-178024758-1", googleAnalytics)</script>
+  
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

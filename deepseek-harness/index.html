@@ -20,7 +20,7 @@
     "url": "https://tanqingbo.cn/about/"
   },
   "datePublished": "2026-08-18T06:23:18.000Z",
-  "dateModified": "2026-10-26T09:50:00.000Z",
+  "dateModified": "2026-11-24T07:00:00.000Z",
   "publisher": {
     "@type": "Organization",
     "name": "科学上网教程 | VPN推荐与Clash配置指南",
@@ -144,7 +144,7 @@
   
   <meta property="og:type" content="article">
   <meta property="og:article:published_time" content="2026-08-18T06:23:18.000Z">
-  <meta property="og:article:modified_time" content="2026-10-26T09:50:00.000Z">
+  <meta property="og:article:modified_time" content="2026-11-24T07:00:00.000Z">
   <meta property="og:article:author" content="IT 码 农">
   
   
@@ -415,7 +415,7 @@ var _hmt = _hmt || [];
     
     
     <span class="dot"></span>
-    <span>3.9k 字</span>
+    <span>4k 字</span>
     
 	&nbsp;&nbsp;
 	  <!-- id 将作为查询条件 -->
@@ -494,7 +494,7 @@ var _hmt = _hmt || [];
     <blockquote>
 <p>📚 本文是 tanqingbo.cn「<a href="https://tanqingbo.cn/ai-tools-guide/">AI 工具完全指南（2026）</a>」专题的配套教程。想系统了解 ChatGPT、Gemini、Kimi、DeepSeek 等主流模型怎么选，以及 AI 编程 / Agent 工具怎么入门，先看总览页。<br>🔧 AI 编程工具怎么选、免费方案有哪些、网络前提怎么解决，总览看<a href="https://tanqingbo.cn/ai-coding-agent-guide/">AI 编程工具怎么选（2026）</a>。</p>
 </blockquote>
-<h2 id="DeepSeek-Harness-是什么，怎么装，怎么用"><a href="#DeepSeek-Harness-是什么，怎么装，怎么用" class="headerlink" title="DeepSeek Harness 是什么，怎么装，怎么用"></a>DeepSeek Harness 是什么，怎么装，怎么用</h2><p>DeepSeek 最近开源了一个很有意思的项目，DeepSeek Harness（简称 dsh）。</p>
+<h2 id="DeepSeek-Harness-是什么，怎么装，怎么用"><a href="#DeepSeek-Harness-是什么，怎么装，怎么用" class="headerlink" title="DeepSeek Harness 是什么，怎么装，怎么用"></a>DeepSeek Harness 是什么，怎么装，怎么用</h2><p>DeepSeek 最近开源了一个很有意思的项目，DeepSeek Harness（简称 dsh）。2026 年 11 月的 v0.2.3 更新加了任务时间线、独立代码审阅页和 Git 插件源，变化不小，单独写了一篇<a href="https://tanqingbo.cn/deepseek-harness-update/">v0.2.3 更新解读</a>，本文保持安装与模式教程主线。</p>
 <p>很多人第一次看到 Harness 这个词，会下意识把它当成另一个聊天客户端——就像之前的 <a href="https://tanqingbo.cn/claude-code/">Claude Code</a>。</p>
 <p>打开以后才发现，它允许用户拆开 Agent 的组成部分，换模型、加工具、改权限，也可以装插件，甚至自己写一个新插件。</p>
 <p>这件事值得好好聊聊。</p>
@@ -554,7 +554,7 @@ var _hmt = _hmt || [];
 <p>如果它能创建这个文档并写入指定内容，模型、工作区和基础写入能力就已经接通了。</p>
 <p><img src="https://pic1.zhimg.com/v2-d6f77c25337429f6fdf6fe8a70a6b9b2_1440w.jpg" alt="img" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://pic1.zhimg.com/v2-d6f77c25337429f6fdf6fe8a70a6b9b2_1440w.jpg" class="lozad post-image"></p>
 <h2 id="四种运行模式怎么选：标准-PTC-极简-创造"><a href="#四种运行模式怎么选：标准-PTC-极简-创造" class="headerlink" title="四种运行模式怎么选：标准 / PTC / 极简 / 创造"></a>四种运行模式怎么选：标准 / PTC / 极简 / 创造</h2><p>标准模式适合普通任务。整理文件、改文档、分析资料和处理代码，都可以先从这里开始。</p>
-<p>PTC 模式适合步骤较多、需要批量执行的任务。批量读取文件、按同一规则处理数据、连续完成一组标准动作，这类任务更适合交给它。</p>
+<p>PTC 模式适合步骤较多、需要批量执行的任务。批量读取文件、按同一规则处理数据、连续完成一组标准动作，这类任务更适合交给它。注意：v0.2.3-alpha.1 起 Python PTC 已被移除，Node PTC 也改为默认在多次调用之间保留变量，在 PTC 里跑批量任务的升级前先看<a href="https://tanqingbo.cn/deepseek-harness-update/">更新解读</a>。</p>
 <p>极简模式保留的预设更少，更接近直接观察模型怎样处理任务。它更适合开发者测试，一般用户很少需要。</p>
 <p>创造模式把插件组合能力开放出来。你可以添加社区插件，也可以让 Agent 按照开发文档制作新插件。</p>
 <p>如果你的目的只是完成日常任务，先用标准模式。等你确实遇到默认能力做不了的事情，再进入创造模式。</p>
@@ -668,9 +668,9 @@ var _hmt = _hmt || [];
     </li>
     
     <li class="related-item">
-      <a href="/deepseek-v4-1-flash-1017/" class="related-link">
-        <span class="related-post-title">DeepSeek V4.1 Flash 1017（2026）：许愿式编程与单任务 1.3 元</span>
-        <span class="related-date">2026-10-18</span>
+      <a href="/deepseek-harness-update/" class="related-link">
+        <span class="related-post-title">DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3</span>
+        <span class="related-date">2026-11-24</span>
       </a>
     </li>
     
@@ -754,7 +754,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>447</span>
+    <span>448</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -762,7 +762,7 @@ var _hmt = _hmt || [];
     <span>分类</span>
   </a>
   <a class="author-tags-count" href="/tags">
-    <span>448</span>
+    <span>449</span>
     <span>标签</span>
   </a>
 </div>
@@ -829,7 +829,7 @@ var _hmt = _hmt || [];
       <a href="/categories/AI大模型">
         <div class="categories-list-item">
           AI大模型
-          <span class="categories-list-item-badge">39</span>
+          <span class="categories-list-item-badge">40</span>
         </div>
       </a>
     
@@ -941,6 +941,11 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-24</div>
+        <a href="/deepseek-harness-update/"><div class="recent-posts-item-content">DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-11-16</div>
         <a href="/super-agent-lobehub/"><div class="recent-posts-item-content">Super-agent 设计解读：用 LobeHub 搭一个全 AI 团队（2026）</div></a>
       </div>
@@ -953,11 +958,6 @@ var _hmt = _hmt || [];
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-11-11</div>
         <a href="/netflix-tv-guide/"><div class="recent-posts-item-content">电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-11-09</div>
-        <a href="/claude-design-skill/"><div class="recent-posts-item-content">Claude 网页设计 Skill：AI 做的落地页怎么摆脱模板味（2026）</div></a>
       </div>
     
   </div>
