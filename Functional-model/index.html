@@ -219,7 +219,7 @@ var _hmt = _hmt || [];
   
   
   
-  <link rel="prefetch" href="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js" as="script">
+  <link rel="prefetch" href="https://s4.zstatic.net/npm/twikoo@2.0.17/dist/twikoo.min.js" as="script">
   
   
   
@@ -356,10 +356,13 @@ var _hmt = _hmt || [];
 	  <!-- id 将作为查询条件 -->
     <div style="display: flex; align-items: center;">
       <i class="iconfont icon-wodebaobiao" style="margin-right: 2px; font-size: 1.15rem;"></i>
-		<span id="/Functional-model/" class="leancloud_visitors" data-flag-title="Keras解析之函数式（Functional）模型">
+      
+		<span class="leancloud_visitors" data-flag-title="Keras解析之函数式（Functional）模型">
 			<em class="post-meta-item-text">阅读量 </em>
-			<i class="leancloud-visitors-count">--</i>
+			<!-- twikoo 客户端 init 时自动找 #twikoo_visitors 填数并计数（localhost 不计数）；path 用 location.pathname 与库内 /slug/ 形态一致 -->
+			<i id="twikoo_visitors" class="leancloud-visitors-count">--</i>
 		</span>
+		
 	</div>
 	
   </div>
@@ -465,34 +468,25 @@ var _hmt = _hmt || [];
 <div class="card card-content comment-card" style="margin-top: 16px;">
   <div class="comment-card-title">评论</div>
   
-  <div id="vcomments"></div>
-  
+  <div id="tcomment"></div>
+
   <script>
-    // 注意：不能用 window.onload 初始化——hexo-offline-popup 注入的 sw-register
-    // 脚本会在页面尾部无链式覆盖 window.onload，把这里的初始化整个闷死
-    // （阅读量/评论全部失效）。改用 loadScript 回调，与 GA/lazyload/fslightbox 一致。
-    loadScript("https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js", function () {
-      new Valine({
-        el: '#vcomments',
-        appId: 'RtYsYDbddUcoEbJrbQcpPgP2-gzGzoHsz',
-        appKey: 'M8e7BRAbupxzxRVSoj9JkJ5E',
-        placeholder: 'Just go go',
+    // 与 valine.ejs 同架构：不能用 window.onload（hexo-offline-popup 的
+    // sw-register 会闷死初始化），一律 loadScript 回调。
+    // 阅读量：twikoo.init() 会自动调 COUNTER_GET（自增 + 查询），并把结果填进
+    // #twikoo_visitors 元素（post.ejs 已挂 id）；localhost 下自动不计数。
+    // 不要在这里再手动发 COUNTER_GET——会双计数。
+    loadScript("https://s4.zstatic.net/npm/twikoo@2.0.17/dist/twikoo.min.js", function () {
+      twikoo.init({
+        envId: 'https://tqb-twikoo.netlify.app/.netlify/functions/twikoo',
+        el: '#tcomment',
+        // path 原样传 location.pathname，与 counter 库中 /slug/ 形态一致
         path: window.location.pathname,
-        avatar: 'mp',
-        meta: ["nick","mail","link"],
-        pageSize: '10',
-        lang: '',
-        visitor: 'true',
-        highlight: true,
-        recordIP: false,
-        
-        
-        
-        enableQQ: 'false',
-        requiredFields: [],
+        lang: 'zh-CN'
       });
     });
   </script>
+
 
 </div>
 
