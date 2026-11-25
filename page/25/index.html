@@ -138,16 +138,13 @@ var _hmt = _hmt || [];
   <link rel="preload" href="//at.alicdn.com/t/font_1946621_f7g5jnuftcf.css" as="style" >
   <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
   
-  <link rel="preload" href="//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js" as="script">
+  <link rel="preload" href="/js/lib/fslightbox.min.js" as="script">
   
   
   <link rel="preload" href="/js/lib/lozad.min.js" as="script">
   
   
   
-  
-  
-  <link rel="prefetch" href="//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-svg.js" as="script">
   
   
   
@@ -264,6 +261,8 @@ var _hmt = _hmt || [];
 
 
 
+
+
 <div class="card">
   
   <a href="/Java-learing-map/" class="image-wrapper">
@@ -320,8 +319,6 @@ var _hmt = _hmt || [];
 
 
 
-
-
 <div class="nav">
   
   <div class="nav-item-prev">
@@ -357,7 +354,7 @@ var _hmt = _hmt || [];
 <p class="author-description">专注于AI教程与科学上网</p>
 <div class="author-message">
   <a class="author-posts-count" href="/archives">
-    <span>448</span>
+    <span>449</span>
     <span>文章</span>
   </a>
   <a class="author-categories-count" href="/categories">
@@ -411,7 +408,7 @@ var _hmt = _hmt || [];
       <a href="/categories/科学上网">
         <div class="categories-list-item">
           科学上网
-          <span class="categories-list-item-badge">82</span>
+          <span class="categories-list-item-badge">83</span>
         </div>
       </a>
     
@@ -987,9 +984,13 @@ var _hmt = _hmt || [];
     
       
         
+      
+    
+      
+        
           <a href="/archives/2026" class="archive-card-list-item">
               2026
-              <span class="archive-card-list-item-badge">123</span>
+              <span class="archive-card-list-item-badge">124</span>
           </a>
         
         
@@ -1455,6 +1456,11 @@ var _hmt = _hmt || [];
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2026-11-25</div>
+        <a href="/best-vpn-guide/"><div class="recent-posts-item-content">翻墙VPN推荐（2026）：梯子怎么选、避坑清单到全平台安装</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-11-24</div>
         <a href="/deepseek-harness-update/"><div class="recent-posts-item-content">DeepSeek Harness大升级！任务时间线、代码审阅、Git插件市场齐发，小版本更新堪比V2升V3</div></a>
       </div>
@@ -1467,11 +1473,6 @@ var _hmt = _hmt || [];
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2026-11-14</div>
         <a href="/ladder-guide/"><div class="recent-posts-item-content">挂梯子是什么意思？怎么挂梯子（2026 电脑/手机保姆级教程）</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2026-11-11</div>
-        <a href="/netflix-tv-guide/"><div class="recent-posts-item-content">电视上看奈飞（2026）：智能电视、盒子与 Apple TV 安装教程</div></a>
       </div>
     
   </div>
@@ -1987,9 +1988,13 @@ var _hmt = _hmt || [];
     
       
         
+      
+    
+      
+        
           <a href="/archives/2026" class="archive-card-list-item">
               2026
-              <span class="archive-card-list-item-badge">123</span>
+              <span class="archive-card-list-item-badge">124</span>
           </a>
         
         
@@ -2511,46 +2516,13 @@ var _hmt = _hmt || [];
     </div>
 
     
-
-    <div class="footer-meta-stats" id="footer-stats" style="display:none">
-      <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-      <span class="footer-meta-sep">|</span>
-      <span id="busuanzi_container_site_uv">本站总访客数<span id="busuanzi_value_site_uv"></span>次</span>
+    <div class="footer-meta-main footer-meta-stats">
+      <span>全站总访问量</span>
+      <span class="footer-stats-num">118.7 万+</span>
     </div>
-    <script>
-    /* 不蒜子自愈式加载器：服务不稳（常 502/超时），默认隐藏，缓存秒显，拉到数据才显示 */
-    (function () {
-      var wrap = document.getElementById('footer-stats');
-      if (!wrap) return;
-      var pv = document.getElementById('busuanzi_value_site_pv');
-      var uv = document.getElementById('busuanzi_value_site_uv');
-      var show = function () { wrap.style.display = ''; };
+    
 
-      /* 回访秒显：3 天内的缓存 */
-      var cache = null;
-      try { cache = JSON.parse(localStorage.getItem('bzs-site-stats') || 'null'); } catch (e) {}
-      var fresh = !!(cache && cache.pv && (Date.now() - cache.t < 2592e5));
-      if (fresh) { pv.textContent = cache.pv; uv.textContent = cache.uv; show(); }
-
-      /* 拉新数据（JSONP 直连 API，不依赖官方 JS 文件） */
-      var done = false;
-      var cb = 'BusuanziCallback_' + Date.now();
-      window[cb] = function (d) {
-        done = true;
-        try { delete window[cb]; } catch (e) { window[cb] = null; }
-        if (d && d.site_pv) {
-          pv.textContent = d.site_pv;
-          uv.textContent = d.site_uv;
-          show();
-          try { localStorage.setItem('bzs-site-stats', JSON.stringify({ pv: d.site_pv, uv: d.site_uv, t: Date.now() })); } catch (e) {}
-        }
-      };
-      var s = document.createElement('script');
-      s.src = 'https://busuanzi.ibruce.info/busuanzi?jsonpCallback=' + cb;
-      s.onerror = function () { /* 失败静默：有缓存保缓存，无缓存整行保持隐藏 */ };
-      document.body.appendChild(s);
-    })();
-    </script>
+    
   </div>
 
   
@@ -2576,9 +2548,6 @@ var _hmt = _hmt || [];
   
   
   
-
-  
-  
   <script>
   var addImgLayout = function () {
     var img = document.querySelectorAll('.post-content img');
@@ -2594,13 +2563,12 @@ var _hmt = _hmt || [];
     refreshFsLightbox();
   }
 </script>
-<script>loadScript("//cdn.jsdelivr.net/npm/fslightbox@3.1.0/index.min.js", addImgLayout)</script>
+<script>loadScript("/js/lib/fslightbox.min.js", addImgLayout)</script>
   
   
   
 <script src="/js/main.js"></script>
 
-  
   
   <script>
     var addLazyload = function () {
