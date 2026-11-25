@@ -469,11 +469,16 @@ var _hmt = _hmt || [];
         lang: 'zh-CN'
       });
       // 阅读量数字千分位格式化（33241 → 33,241）
+      // 必须带 f !== t 守卫：<1000 的数字格式化后不变，无守卫会在
+      // MutationObserver 里「赋值→触发→再赋值」无限循环冻死页面
       var _vEl = document.getElementById('twikoo_visitors');
       if (_vEl) {
         var _fmt = function () {
           var t = (_vEl.textContent || '').trim();
-          if (/^\d+$/.test(t)) _vEl.textContent = Number(t).toLocaleString('en-US');
+          if (/^\d+$/.test(t)) {
+            var f = Number(t).toLocaleString('en-US');
+            if (f !== t) _vEl.textContent = f;
+          }
         };
         _fmt();
         new MutationObserver(_fmt).observe(_vEl, { childList: true });

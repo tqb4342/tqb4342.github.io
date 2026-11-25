@@ -91,9 +91,9 @@
   <meta property="og:article:author" content="IT 码 农">
   
   
-  <meta property="og:article:tag" content="电子书下载">
-  
   <meta property="og:article:tag" content="Python图书">
+  
+  <meta property="og:article:tag" content="电子书下载">
   
   
   
@@ -367,9 +367,9 @@ var _hmt = _hmt || [];
     <span class="meta-item">
       <i class="iconfont icon-biaoqian"></i>
       
-      <a href="/tags/电子书下载/" class="tag-pill">电子书下载</a>
-      
       <a href="/tags/Python图书/" class="tag-pill">Python图书</a>
+      
+      <a href="/tags/电子书下载/" class="tag-pill">电子书下载</a>
       
     </span>
   </div>
@@ -663,11 +663,16 @@ var _hmt = _hmt || [];
         lang: 'zh-CN'
       });
       // 阅读量数字千分位格式化（33241 → 33,241）
+      // 必须带 f !== t 守卫：<1000 的数字格式化后不变，无守卫会在
+      // MutationObserver 里「赋值→触发→再赋值」无限循环冻死页面
       var _vEl = document.getElementById('twikoo_visitors');
       if (_vEl) {
         var _fmt = function () {
           var t = (_vEl.textContent || '').trim();
-          if (/^\d+$/.test(t)) _vEl.textContent = Number(t).toLocaleString('en-US');
+          if (/^\d+$/.test(t)) {
+            var f = Number(t).toLocaleString('en-US');
+            if (f !== t) _vEl.textContent = f;
+          }
         };
         _fmt();
         new MutationObserver(_fmt).observe(_vEl, { childList: true });
